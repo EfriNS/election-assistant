@@ -1,0 +1,53 @@
+# Changelog
+
+## 2026-03-28 — Project Kickoff + Competitive Research
+
+### Project Setup
+- Created `README.md` (public-facing), `README.txt` (superseded, to delete), `REQUIREMENTS.md`, `TODO.md`, `LICENSE` (MIT), `.gitignore`
+- Initialized git repo with `main` branch; created private GitHub repo at https://github.com/EfriNS/election-assistant
+- `Screenshots/` excluded from repo (internal reference material)
+- `CLAUDE.md` and `docs/` excluded from initial commit (internal Claude Code scaffolding)
+
+### Requirements Captured (`REQUIREMENTS.md`)
+Key decisions documented:
+- **Goal**: Free public tool matching Israeli voters to parties by values; Hebrew-first, multilingual
+- **Audience**: General public, wide distribution
+- **Data**: Official party platforms only; verbatim quotations with source URL + date; no social media
+- **Parties**: All parties; explicit "no platform available" for those without one
+- **Curation**: Semi-automatic ingestion + human (advisor) review
+- **Cost cap**: ~$50/month
+- **Interaction model**: Hybrid — structured quiz engine + AI explanation layer (not freeform chatbot)
+- **Open questions** explicitly preserved (technical approach, question design, pipeline design, cost model)
+
+### Competitive Research (`docs/COMPETITIVE-RESEARCH.md`)
+**Israeli landscape:**
+- No active VAA exists for Israel; the only one ever built (JPost/IDI, 2009) is dead
+- Proven demand: 600K users in a single election with no marketing infrastructure
+- Other Israeli tools (HaMadad, Kaplan map, Elector) are not party-matching tools
+
+**International tools analyzed:**
+- Wahl-O-Mat (Germany): binary quiz, 38q, parties self-report, ~26.5M uses/election; most trusted globally
+- Vote Compass (Vox Pop Labs): 6-point slider, 30–40q, 2D compass visualization, media partnerships
+- ISideWith (US/global): 70–100q with nuance follow-ups, editorial party data, best mobile UX
+- Kieskompas (Netherlands): 30q, expert-calibrated 2D placement, strongest academic methodology
+- Smartvote (Switzerland): 75q, individual candidate matching, self-reported data
+
+**Academic research findings:**
+- VAAs increase turnout 8–22%; shift vote preferences 1–10%
+- Optimal question count: 30–35 (completion drops sharply above 40–50)
+- Importance weighting improves match quality but only 20–30% use it when optional → make it mandatory
+- Framing bias, populist inflation, and algorithmic opacity are the top design pitfalls
+- Users specifically distrust chatbot-style VAAs on political topics
+
+**Gap analysis — our differentiators:**
+- Verbatim quotations from official platforms: 0 out of all major tools do this
+- Coalition modeling (which coalition scenario do I enable?): 0 out of all major tools do this; globally unique; highly relevant to Israel
+- Hebrew-first multilingual (Hebrew + Arabic + Russian + English)
+- Active Israeli VAA: first in 12+ years
+- Israel needs 3–4 political axes (security, religion/state, socioeconomic, Arab-Jewish) — standard 2D model is inadequate
+
+### Interaction Model Defined (`REQUIREMENTS.md`)
+Documented the hybrid model rationale:
+- Structured quiz = engine (deterministic, auditable, consistent)
+- AI = explanation + adaptation layer (follow-up depth, result narrative, quotation surfacing, tone)
+- Freeform chatbot as primary interface explicitly ruled out (inconsistency, opacity, hallucination risk, trust research)

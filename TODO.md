@@ -2,7 +2,8 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Project kickoff + requirements gathering** - README finalized, key decisions documented (timeline, scope, languages, curation model). (2026-03-28)
+- **Competitive research + interaction model** - Israeli VAA gap confirmed (none active since 2009), 5 international tools analyzed, hybrid model defined. (2026-03-28)
+- **Project kickoff + requirements gathering** - README, REQUIREMENTS.md, GitHub repo, key decisions documented. (2026-03-28)
 
 > See CHANGELOG.md for complete details.
 
@@ -10,13 +11,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Competitive research: existing Israeli election tools** (~2-3 hours)
-   - Identify current tools (Vote Compass, Mevcharim, others)
-   - Assess: are they maintained? What gaps exist? What do they do well?
-   - Also: scan international equivalents (Wahl-O-Mat, ISideWith, etc.) for UX/feature inspiration
-   - Output: competitive brief → inform solution design
-
-2. **Solution design + options evaluation** (~3-4 hours)
+1. **Solution design + options evaluation** (~3-4 hours)
    - Brainstorm functional + technical options (quiz, AI agent, hybrid)
    - Evaluate against: UX friction, cost model, trust/auditability, maintenance burden
    - Decision: what to build
@@ -66,11 +61,11 @@
 - **Cost model**: API-based → builder pays; must rate-limit and cap costs
 
 ### Open Questions
-- What is the recommended technical approach? (quiz vs. AI agent vs. hybrid)
-- What tone/style should the tool use? (formal, informal, user-selectable?)
-- Should the project be open-sourced from the start, or later?
-- How to handle parties whose platform hasn't been updated in years?
-- What's the cost cap / acceptable spend per month?
+- What is the recommended technical approach? (hybrid confirmed; exact implementation TBD in solution design)
+- What tone/style should the tool use? (formal, informal, user-selectable?) → TBD in UX design
+- Should the project be open-sourced from the start, or later? → public after MVP
+- How many questions? → research says 30–35 is optimal; exact set TBD
+- Ingestion pipeline design, admin UI → TBD in technical design phase
 
 ### Future Ideas
 - Candidate profile pages (experience, voting record)

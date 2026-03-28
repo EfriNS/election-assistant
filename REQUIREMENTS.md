@@ -66,6 +66,30 @@ A civic-minded individual currently helps friends choose which party to vote for
 - Should go deeper than the current manual process (more follow-up questions, better matching nuance)
 - The advisor will provide high-level guidelines for the flow; AI should drive the actual question logic from those
 
+### Interaction Model: Hybrid (Not Freeform Chatbot)
+
+The tool must **not** use a freeform chatbot as its primary interface. A structured quiz is the engine; AI is the explanation and adaptation layer on top.
+
+**Why freeform chatbot is wrong for this use case:**
+- **Inconsistency**: Two users with identical values could get different results because their conversations went differently — a voting tool must be explainably fair
+- **Opaque reasoning**: Users can't audit why they matched a party; on political topics, black boxes are immediately suspected of bias
+- **Hallucination risk**: Freeform AI can confidently state wrong or outdated party positions with no guardrail
+- **Research finding**: Academic studies show users trust chatbot-style VAAs *less* on political topics than any other domain
+
+**What the hybrid model looks like:**
+
+| Layer | Owner | Examples |
+|---|---|---|
+| Question set | Human-curated, neutrality-tested | "Should the minimum wage be raised?" |
+| Matching algorithm | Deterministic, auditable, published | Weighted proximity scoring |
+| Adaptive depth | AI | "You flagged education as a priority — here's a follow-up on curriculum policy" |
+| Result explanation | AI | "You matched 78% with Party X — you agree on security but diverge on housing" |
+| Platform quotations | AI surfaces from curated data | "Party X's 2026 platform states: '...'" |
+| Follow-up Q&A | AI | "Tell me more about Party X's position on Arab-Israeli relations" |
+| Tone adaptation | AI | Formal vs. casual register per user preference |
+
+The quiz determines the match. The AI makes it human, adaptive, and explainable. The user can always see the underlying quiz answers and scores — the AI never overrides them.
+
 ---
 
 ## Open Questions (To Be Resolved After Research & Design)
