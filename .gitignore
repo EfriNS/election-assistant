@@ -3,8 +3,9 @@
 .env.*
 secrets/
 
-# Claude Code local state
-.claude/
+# Claude Code local state (settings.json and commands/ are tracked)
+.claude/settings.local.json
+.claude/settings.local.json.BAK
 
 # OS
 .DS_Store

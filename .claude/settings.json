@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "Bash(gcloud logging read *)",
+      "Bash(gcloud compute instances list *)"
+    ]
+  }
+}
