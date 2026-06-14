@@ -6,100 +6,100 @@ import Link from "next/link";
 // ─── Topics ───────────────────────────────────────────────────────────────────
 
 const TOPICS = [
-  { id: "security", label: "ביטחון ומדיניות חוץ" },
-  { id: "economy",  label: "כלכלה ותעסוקה" },
-  { id: "housing",  label: "דיור ועלות מחיה" },
-  { id: "education",label: "חינוך" },
-  { id: "health",   label: "בריאות" },
-  { id: "religion", label: "דת ומדינה" },
-  { id: "justice",  label: "שלטון החוק ומערכת המשפט" },
-  { id: "equality", label: "זכויות אדם ומיעוטים" },
+  { id: "security",  label: "ביטחון ומדיניות חוץ" },
+  { id: "economy",   label: "כלכלה ותעסוקה" },
+  { id: "housing",   label: "דיור ועלות מחיה" },
+  { id: "education", label: "חינוך" },
+  { id: "health",    label: "בריאות" },
+  { id: "religion",  label: "דת ומדינה" },
+  { id: "justice",   label: "שלטון החוק ומערכת המשפט" },
+  { id: "equality",  label: "זכויות אדם ומיעוטים" },
 ];
 
-// ─── Within-topic priority questions ──────────────────────────────────────────
-// Each topic has one question asking what the user wants done, not whether they
-// agree with a statement. Four concrete approaches to choose from.
+// ─── Within-topic value questions ─────────────────────────────────────────────
+// Each question asks what the user cares about most / what worries them most
+// within the topic — NOT which policy they prefer.
 
-type Option = { id: string; text: string; scores: number[] }; // scores = [peace, home, center, right, welfare]
+type Option = { id: string; text: string; scores: number[] }; // [peace, home, center, right, welfare]
 type TopicQ = { question: string; options: Option[] };
 
 const PRIORITY_QUESTIONS: Record<string, TopicQ> = {
   security: {
-    question: "מה הגישה הנכונה לחיזוק הביטחון של ישראל?",
+    question: "בתחום הביטחון — מה הכי מדאיג אותך?",
     options: [
-      { id: "force",     text: "עוצמה צבאית והרתעה — כוח הוא השפה היחידה שמבינים",           scores: [-2, 2, 0, 2, -1] },
-      { id: "diplomacy", text: "הסכמי שלום ופתרון מדיני — ביטחון אמיתי מגיע מהסדרים",         scores: [2, -2, 1, -2, 1] },
-      { id: "borders",   text: "שמירה קפדנית על גבולות — לא מלחמה, לא ויתורים",               scores: [0, 1, 2, 1, 0] },
-      { id: "regional",  text: "שיתוף פעולה אזורי ונורמליזציה — קואליציה נגד איומים משותפים", scores: [1, 0, 1, 0, 1] },
+      { id: "attacks",  text: "הגנה מיידית — עצירת הרקטות, המנהרות, והמתקפות",          scores: [-1, 2, 0, 2, -1] },
+      { id: "peace",    text: "הסדר קבוע — שלא נחיה בלופ של מלחמות ללא סוף",             scores: [2, -2, 1, -2, 1] },
+      { id: "autonomy", text: "עצמאות — שלא נהיה תלויים לצמיתות בנשק ותמיכה מחו\"ל",    scores: [0, 1, 2, 1, 0] },
+      { id: "image",    text: "מעמד ישראל — שלא נהפוך לפריה בינלאומית",                  scores: [1, 0, 1, -1, 1] },
     ],
   },
   economy: {
-    question: "מה הכי דחוף לשפר מבחינה כלכלית?",
+    question: "בכלכלה — מה הכי מכביד עליך?",
     options: [
-      { id: "wages",   text: "העלאת שכר המינימום ושיפור תנאי העובדים",          scores: [1, -1, 0, -2, 2] },
-      { id: "taxes",   text: "הפחתת מיסים לעסקים כדי לעודד צמיחה ותעסוקה",     scores: [-1, 2, 1, 2, -2] },
-      { id: "welfare", text: "הרחבת רשת הביטחון הסוציאלי לחלשים",              scores: [1, -2, 0, -2, 2] },
-      { id: "infra",   text: "השקעה בתשתיות וטכנולוגיה לצמיחה ארוכת טווח",    scores: [0, 1, 2, 0, 1] },
+      { id: "costliving", text: "יוקר המחיה — המשכורת לא מגיעה לסוף החודש",              scores: [1, -1, 0, -1, 2] },
+      { id: "future",     text: "עתיד הדור הצעיר — קשה להסתדר בלי עזרה מההורים",         scores: [1, -1, 1, -1, 2] },
+      { id: "inequality", text: "פערים — הבוגרים מתעשרים, הפועלים נסגרים",               scores: [1, -2, 0, -2, 2] },
+      { id: "growth",     text: "עצירת הצמיחה — ישראל מפגרת כלכלית מהיכולת שלה",        scores: [-1, 2, 2, 2, -1] },
     ],
   },
   housing: {
-    question: "מה הדרך הנכונה לפתור את משבר הדיור?",
+    question: "בדיור — מה הכי לוחץ אצלך?",
     options: [
-      { id: "public",     text: "בנייה ציבורית ממשלתית בהיקף גדול להשכרה במחיר מפוקח",   scores: [1, -2, 0, -2, 2] },
-      { id: "market",     text: "תמריצי שוק ומענקים לרוכשי דירה ראשונה",                 scores: [-1, 2, 1, 2, -1] },
-      { id: "bureaucracy",text: "פישוט בירוקרטיה ויעול תהליכי תכנון ובנייה",              scores: [0, 1, 2, 1, 0] },
-      { id: "investors",  text: "מיסוי על דירות ריקות ומשקיעים מרובי נכסים",              scores: [1, -2, 0, -1, 2] },
+      { id: "rent",     text: "שכירות — שכר הדירה גבוה ואי אפשר לחסוך",                  scores: [1, -1, 0, -1, 2] },
+      { id: "buy",      text: "רכישה — דירה היא חלום שהדור הצעיר לא יכול להרשות",        scores: [0, 1, 1, 1, 0] },
+      { id: "location", text: "מיקום — רוצה לגור קרוב לעבודה, לא בפריפריה",              scores: [0, 0, 2, 0, 1] },
+      { id: "homeless", text: "חסרי דיור — שיש אנשים ישנים ברחוב זה בלתי נסלח",          scores: [1, -2, 0, -1, 2] },
     ],
   },
   education: {
-    question: "מה עדיפות ראשונה במדיניות החינוך?",
+    question: "בחינוך — מה הכי חשוב לך?",
     options: [
-      { id: "funding",   text: "מימון ציבורי מוגבר לכלל מוסדות החינוך",            scores: [1, -1, 1, -1, 2] },
-      { id: "uniform",   text: "תוכנית לימודים אחידה לכל ילד, ללא יוצא מן הכלל",  scores: [0, 0, 1, 1, 0] },
-      { id: "autonomy",  text: "אוטונומיה מגזרית — כל קהילה מנהלת את חינוכה",     scores: [-1, 1, 0, 1, -1] },
-      { id: "higher",    text: "השקעה בהשכלה גבוהה ומחקר לחיזוק הכלכלה",          scores: [1, 2, 2, 1, 1] },
+      { id: "quality", text: "איכות — מורים מעולים שמשתכרים בהתאם",                      scores: [1, 0, 2, 0, 2] },
+      { id: "equal",   text: "שוויון — כל ילד מקבל אותה הזדמנות, ללא קשר לרקע",          scores: [2, -1, 1, -1, 2] },
+      { id: "values",  text: "ערכים — בית ספר שמעביר זהות, מורשת, ולאום",                scores: [-1, 1, 0, 2, -1] },
+      { id: "skills",  text: "כישורים — הכנה אמיתית לשוק העבודה של המאה ה-21",           scores: [0, 2, 2, 1, 1] },
     ],
   },
   health: {
-    question: "מה הפתרון הנכון למשבר הבריאות?",
+    question: "בבריאות — מה הכי מדאיג אותך?",
     options: [
-      { id: "basket",   text: "הרחבת משמעותית של סל הבריאות הציבורי",          scores: [1, -1, 1, -1, 2] },
-      { id: "digital",  text: "דיגיטציה ויעול לקיצור תורים ושיפור נגישות",     scores: [0, 1, 2, 1, 0] },
-      { id: "doctors",  text: "תמרוץ רופאים ואחיות למנוע עזיבה לחו\"ל",        scores: [1, 0, 1, 0, 1] },
-      { id: "private",  text: "פתיחה לתחרות פרטית כדי לשפר איכות שירות",      scores: [-1, 2, 0, 2, -2] },
+      { id: "wait",    text: "תורים — חודשים להמתין לרופא מומחה זה מסכן חיים",            scores: [0, 1, 2, 1, 1] },
+      { id: "cost",    text: "עלות — טיפולים שלא בסל עולים הון שאין לכולם",              scores: [1, -1, 0, -1, 2] },
+      { id: "doctors", text: "בריחת רופאים — הרפואה הטובה עוזבת לחו\"ל",                 scores: [1, 0, 1, 0, 1] },
+      { id: "gaps",    text: "פערים — ביישובים מסוימים הרפואה הרבה יותר גרועה",           scores: [1, -1, 0, -1, 2] },
     ],
   },
   religion: {
-    question: "מהי העמדה הנכונה בשאלת דת ומדינה?",
+    question: "בדת ומדינה — מה הכי מפריע לך?",
     options: [
-      { id: "separate", text: "הפרדת דת ומדינה מלאה — נישואין אזרחיים, תחבורה בשבת",    scores: [2, -2, 1, -2, 2] },
-      { id: "statusquo",text: "שמירה על הסטטוס קוו הדתי הקיים",                          scores: [-1, 1, 0, 1, -1] },
-      { id: "pluralism",text: "הכרה בכל הזרמים היהודיים — רפורמי, קונסרבטיבי, חילוני",   scores: [2, -1, 1, -1, 1] },
-      { id: "services", text: "שיפור שירותי הדת הקיימים ללא שינוי המדיניות",              scores: [-1, 0, 0, 1, 0] },
+      { id: "coercion",  text: "כפייה — אני רוצה לחיות לפי ערכיי, לא לפי הרבנות",        scores: [2, -2, 1, -2, 2] },
+      { id: "identity",  text: "זהות — מדינת ישראל מאבדת את אופייה היהודי",               scores: [-2, 1, 0, 2, -1] },
+      { id: "pluralism", text: "הכרה — הזרם הדתי שלי (רפורמי/קונסרבטיבי) לא מוכר",       scores: [2, -1, 1, -1, 1] },
+      { id: "marriage",  text: "נישואין — אי אפשר להינשא אזרחית בישראל",                  scores: [2, -2, 1, -2, 2] },
     ],
   },
   justice: {
-    question: "מה הגישה הנכונה לסוגיית מערכת המשפט?",
+    question: "במערכת המשפט — מה הכי חשוב לך?",
     options: [
-      { id: "independent",text: "עצמאות מלאה לבית המשפט — ללא מגבלות על סמכות הביקורת",  scores: [2, -2, 1, -2, 1] },
-      { id: "accountable",text: "שינוי אופן מינוי שופטים לשיקוף רחב יותר של הציבור",    scores: [-1, 1, 0, 2, -1] },
-      { id: "consensus",  text: "רפורמה מוסכמת בלבד — שינויים רק בהסכמה רחבה",           scores: [1, 0, 2, 0, 1] },
-      { id: "knesset",    text: "עיקרון ריבונות הכנסת — הנבחרים ימשלו ללא וטו שיפוטי",  scores: [-2, 2, -1, 2, -1] },
+      { id: "independence", text: "עצמאות — שופטים שלא תלויים בפוליטיקאים שמינו אותם",   scores: [2, -2, 1, -2, 1] },
+      { id: "oversight",    text: "ביקורת — גם בית המשפט צריך מישהו שיאזן אותו",          scores: [-1, 2, 0, 2, -1] },
+      { id: "consensus",    text: "יציבות — שינויים משפטיים רק בהסכמה רחבה",              scores: [1, 0, 2, 0, 1] },
+      { id: "diversity",    text: "ייצוג — בית המשפט צריך לשקף את כל הציבור הישראלי",    scores: [0, 1, 1, 1, 0] },
     ],
   },
   equality: {
-    question: "מה הצעד החשוב ביותר לקידום שוויון?",
+    question: "בזכויות אדם ושוויון — מה הכי חשוב לך?",
     options: [
-      { id: "law",       text: "חוק שוויון מפורש לכל אזרח, ללא הבחנה",                       scores: [2, -1, 1, -2, 2] },
-      { id: "represent", text: "הגברת ייצוג מגזרים מוחלשים בגופים ציבוריים ובצבא",          scores: [1, -1, 1, -1, 2] },
-      { id: "character", text: "שמירה על האופי היהודי-דמוקרטי תוך שוויון אישי",             scores: [0, 1, 1, 2, 0] },
-      { id: "lgbtq",     text: "שוויון מלא לקהילת הלהט\"ב, כולל נישואין",                   scores: [2, -2, 1, -2, 2] },
+      { id: "law",       text: "חוק ברור — הגנה משפטית מפורשת מפני אפליה",               scores: [2, -1, 1, -2, 2] },
+      { id: "represent", text: "ייצוג — מיעוטים חייבים להיות חלק ממוסדות המדינה",         scores: [1, -1, 1, -1, 2] },
+      { id: "character", text: "אופי יהודי — שמירת הרוב היהודי והאופי הלאומי",            scores: [-1, 1, 0, 2, -1] },
+      { id: "lgbtq",     text: "LGBTQ+ — כולם ראויים לחיות בכבוד וללא אפליה",             scores: [2, -2, 1, -2, 2] },
     ],
   },
 };
 
 // ─── Party matching ────────────────────────────────────────────────────────────
-// scores index: [peace, home, center, right, welfare]
+
 const PARTY_NAMES = ["מפלגת השלום", "הבית שלנו", "המרכז", "ימין חזק", "מפלגת הרווחה"];
 
 function calcResults(ranked: string[], answers: Record<string, string>) {
@@ -107,13 +107,13 @@ function calcResults(ranked: string[], answers: Record<string, string>) {
   const weights = [0, 0, 0, 0, 0];
 
   ranked.forEach((topicId, rankIndex) => {
-    const weight = ranked.length - rankIndex; // top-ranked topic gets highest weight
+    const weight = ranked.length - rankIndex;
     const chosenId = answers[topicId];
     const option = PRIORITY_QUESTIONS[topicId]?.options.find((o) => o.id === chosenId);
     if (!option) return;
     option.scores.forEach((score, pi) => {
       totals[pi] += weight * score;
-      weights[pi] += weight * 2; // max possible contribution
+      weights[pi] += weight * 2;
     });
   });
 
@@ -127,22 +127,23 @@ function calcResults(ranked: string[], answers: Record<string, string>) {
 
 type Step = "rank" | "questions" | "results";
 
+const MIN_TOPICS = 3;
+
 export default function PrototypeB() {
   const [step, setStep] = useState<Step>("rank");
-  // ranked = ordered list of selected topic IDs (index 0 = top priority)
   const [ranked, setRanked] = useState<string[]>([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
-  // ── Ranking phase ──────────────────────────────────────────────────────────
   const toggleTopic = (id: string) => {
     if (ranked.includes(id)) {
       setRanked(ranked.filter((r) => r !== id));
-    } else if (ranked.length < 4) {
+    } else {
       setRanked([...ranked, id]);
     }
   };
 
+  // ── Ranking phase ──────────────────────────────────────────────────────────
   if (step === "rank") {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
@@ -150,10 +151,10 @@ export default function PrototypeB() {
           <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</Link>
           <h1 className="text-2xl font-bold mb-2">מה חשוב לך?</h1>
           <p className="text-gray-500 text-sm mb-2 leading-relaxed">
-            בחר עד 4 נושאים שחשובים לך, <strong>לפי סדר חשיבות</strong>.
+            בחר לפחות {MIN_TOPICS} נושאים שחשובים לך, <strong>לפי סדר חשיבות</strong>.
             הנושא הראשון שתלחץ עליו יהיה העדיפות הגבוהה ביותר שלך.
           </p>
-          <p className="text-xs text-gray-400 mb-8">לחץ על נושא כדי לבחור אותו; לחץ שוב כדי להסיר.</p>
+          <p className="text-xs text-gray-400 mb-8">לחץ שוב על נושא כדי להסיר אותו.</p>
 
           <div className="grid grid-cols-2 gap-3 mb-8">
             {TOPICS.map((t) => {
@@ -166,8 +167,6 @@ export default function PrototypeB() {
                   className={`relative border-2 rounded-xl p-4 text-right transition-all ${
                     selected
                       ? "border-emerald-500 bg-emerald-50"
-                      : ranked.length >= 4
-                      ? "border-gray-200 bg-gray-50 opacity-40 cursor-not-allowed"
                       : "border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
                   }`}
                 >
@@ -197,12 +196,12 @@ export default function PrototypeB() {
           )}
 
           <button
-            onClick={() => setStep("questions")}
-            disabled={ranked.length < 2}
+            onClick={() => { setQuestionIndex(0); setStep("questions"); }}
+            disabled={ranked.length < MIN_TOPICS}
             className="w-full bg-emerald-600 text-white py-4 rounded-xl font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-40"
           >
-            {ranked.length < 2
-              ? `בחר לפחות 2 נושאים (נבחרו ${ranked.length})`
+            {ranked.length < MIN_TOPICS
+              ? `בחר לפחות ${MIN_TOPICS} נושאים (נבחרו ${ranked.length})`
               : `המשך — ${ranked.length} נושאים נבחרו`}
           </button>
         </div>
@@ -226,18 +225,34 @@ export default function PrototypeB() {
       }
     };
 
+    const handleSkip = () => {
+      if (questionIndex + 1 < ranked.length) {
+        setQuestionIndex(questionIndex + 1);
+      } else {
+        setStep("results");
+      }
+    };
+
+    const handleBack = () => {
+      if (questionIndex === 0) {
+        setStep("rank");
+      } else {
+        setQuestionIndex(questionIndex - 1);
+      }
+    };
+
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
           <div className="flex justify-between items-center mb-8">
-            <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">← חזרה</Link>
+            <button onClick={handleBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
             <span className="text-sm text-gray-400">{questionIndex + 1} / {ranked.length}</span>
           </div>
 
           <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
             <div
               className="h-full bg-emerald-500 rounded-full transition-all"
-              style={{ width: `${((questionIndex) / ranked.length) * 100}%` }}
+              style={{ width: `${(questionIndex / ranked.length) * 100}%` }}
             />
           </div>
 
@@ -249,7 +264,7 @@ export default function PrototypeB() {
           </div>
           <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 mb-6">
             {q.options.map((opt) => (
               <button
                 key={opt.id}
@@ -260,6 +275,13 @@ export default function PrototypeB() {
               </button>
             ))}
           </div>
+
+          <button
+            onClick={handleSkip}
+            className="w-full text-sm text-gray-400 hover:text-gray-600 text-center py-2"
+          >
+            דלג על שאלה זו
+          </button>
         </div>
       </main>
     );
@@ -270,7 +292,12 @@ export default function PrototypeB() {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</Link>
+        <button
+          onClick={() => { setQuestionIndex(ranked.length - 1); setStep("questions"); }}
+          className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block"
+        >
+          ← חזרה
+        </button>
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
         <p className="text-gray-500 text-sm mb-1">
           המשקל ניתן לפי סדר העדיפויות שבחרת:
