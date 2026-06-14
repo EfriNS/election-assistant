@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
 const SYSTEM_PROMPT = `אתה עוזר ניטרלי שעוזר לאנשים לגלות לאיזו מפלגה פוליטית הם הכי קרובים.
@@ -21,14 +21,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "GEMINI_API_KEY not configured" }, { status: 500 });
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
-    systemInstruction: SYSTEM_PROMPT,
-  });
+  const ai = new GoogleGenAI({ apiKey });
 
-  // Convert messages to Gemini format
+  // Convert prior turns to Gemini history format (exclude the last user message)
   const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
@@ -37,12 +32,21 @@ export async function POST(req: NextRequest) {
   const lastMessage = messages[messages.length - 1];
 
   try {
-    const chat = model.startChat({ history });
-    const result = await chat.sendMessage(lastMessage.content);
-    const text = result.response.text();
-    return NextResponse.json({ content: text });
+    const chat = ai.chats.create({
+      model: "gemini-3.5-flash",
+      history,
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+        temperature: 0.7,
+        maxOutputTokens: 600,
+      },
+    });
+
+    const response = await chat.sendMessage({ message: lastMessage.content });
+    return NextResponse.json({ content: response.text });
   } catch (err) {
-    console.error("Gemini error:", err);
-    return NextResponse.json({ error: "שגיאה בתקשורת עם ה-AI" }, { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Gemini error:", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
