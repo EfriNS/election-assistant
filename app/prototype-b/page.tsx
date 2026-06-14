@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PARTIES } from "@/lib/parties";
+import PartyResultCard from "@/components/PartyResultCard";
 
 // ─── Topics ───────────────────────────────────────────────────────────────────
 
@@ -19,7 +20,9 @@ const TOPICS = [
 // ─── Within-topic value questions ─────────────────────────────────────────────
 // Questions ask what worries / matters most to the user within each topic.
 // Scores indexed by party order from lib/parties.ts:
-//   [hadash, labor, yeshatid, unity, beitenu, likud, shas]
+//   [hadash, democrats, beyahad, yashar, beitenu, likud, shas]
+// NOTE: rough estimates — not verified against current party platforms.
+// ביחד and ישר! scored based on founders' known positions (Lapid/Bennett, Eisenkot).
 
 type Option = { id: string; text: string; scores: number[] };
 type TopicQ = { question: string; options: Option[] };
@@ -28,73 +31,73 @@ const PRIORITY_QUESTIONS: Record<string, TopicQ> = {
   security: {
     question: "בתחום הביטחון — מה הכי מדאיג אותך?",
     options: [
-      { id: "attacks",  text: "הגנה מיידית — עצירת הרקטות, המנהרות, והמתקפות",           scores: [-2, 0, 0, 1, 1, 2, 1] },
-      { id: "peace",    text: "הסדר קבוע — שלא נחיה בלופ של מלחמות ללא סוף",              scores: [2, 2, 1, 0, -1, -2, -1] },
-      { id: "autonomy", text: "עצמאות — שלא נהיה תלויים לצמיתות בנשק ותמיכה מחו\"ל",     scores: [1, 0, 1, 1, 2, 1, 0] },
-      { id: "image",    text: "מעמד ישראל — שלא ניקלע לבדידות דיפלומטית בינלאומית",       scores: [1, 1, 2, 1, 0, -1, 0] },
+      { id: "attacks",  text: "הגנה מיידית — עצירת הרקטות, המנהרות, והמתקפות",           scores: [-2,  0,  0,  1,  1,  2,  1] },
+      { id: "peace",    text: "הסדר קבוע — שלא נחיה בלופ של מלחמות ללא סוף",              scores: [ 2,  2,  1,  0, -1, -2, -1] },
+      { id: "autonomy", text: "עצמאות — שלא נהיה תלויים לצמיתות בנשק ותמיכה מחו\"ל",     scores: [ 1,  0,  1,  1,  2,  1,  0] },
+      { id: "image",    text: "מעמד ישראל — שלא ניקלע לבדידות דיפלומטית בינלאומית",       scores: [ 1,  1,  2,  1,  0, -1,  0] },
     ],
   },
   economy: {
     question: "בכלכלה — מה הכי מכביד עליך?",
     options: [
-      { id: "costliving", text: "יוקר המחיה — המשכורת לא מגיעה לסוף החודש",               scores: [2, 2, 2, 1, 1, 0, 2] },
-      { id: "future",     text: "עתיד הדור הצעיר — קשה להסתדר בלי עזרה מההורים",          scores: [1, 2, 2, 1, 1, 0, 1] },
-      { id: "inequality", text: "פערים — הבוגרים מתעשרים, הפועלים נסגרים",                scores: [2, 2, 1, 0, 0, -1, 2] },
-      { id: "growth",     text: "עצירת הצמיחה — ישראל מפגרת כלכלית מהיכולת שלה",         scores: [-1, 0, 1, 2, 2, 2, 0] },
+      { id: "costliving", text: "יוקר המחיה — המשכורת לא מגיעה לסוף החודש",               scores: [ 2,  2,  2,  1,  1,  0,  2] },
+      { id: "future",     text: "עתיד הדור הצעיר — קשה להסתדר בלי עזרה מההורים",          scores: [ 1,  2,  2,  1,  1,  0,  1] },
+      { id: "inequality", text: "פערים — הבוגרים מתעשרים, הפועלים נסגרים",                scores: [ 2,  2,  1,  0,  0, -1,  2] },
+      { id: "growth",     text: "עצירת הצמיחה — ישראל מפגרת כלכלית מהיכולת שלה",         scores: [-1,  0,  1,  2,  2,  2,  0] },
     ],
   },
   housing: {
     question: "בדיור — מה הכי לוחץ אצלך?",
     options: [
-      { id: "rent",     text: "שכירות — שכר הדירה גבוה ואי אפשר לחסוך",                   scores: [2, 2, 1, 1, 0, 0, 2] },
-      { id: "buy",      text: "רכישה — דירה היא חלום שהדור הצעיר לא יכול להרשות",         scores: [0, 1, 2, 1, 1, 1, 1] },
-      { id: "location", text: "מיקום — רוצה לגור קרוב לעבודה, לא בפריפריה",               scores: [0, 0, 1, 2, 1, 1, 0] },
-      { id: "homeless", text: "חסרי דיור — שיש אנשים ישנים ברחוב זה בלתי נסלח",           scores: [2, 2, 1, 0, 0, -1, 2] },
+      { id: "rent",     text: "שכירות — שכר הדירה גבוה ואי אפשר לחסוך",                   scores: [ 2,  2,  1,  1,  0,  0,  2] },
+      { id: "buy",      text: "רכישה — דירה היא חלום שהדור הצעיר לא יכול להרשות",         scores: [ 0,  1,  2,  1,  1,  1,  1] },
+      { id: "location", text: "מיקום — רוצה לגור קרוב לעבודה, לא בפריפריה",               scores: [ 0,  0,  1,  2,  1,  1,  0] },
+      { id: "homeless", text: "חסרי דיור — שיש אנשים ישנים ברחוב זה בלתי נסלח",           scores: [ 2,  2,  1,  0,  0, -1,  2] },
     ],
   },
   education: {
     question: "בחינוך — מה הכי חשוב לך?",
     options: [
-      { id: "quality", text: "איכות — מורים מעולים שמשתכרים בהתאם",                       scores: [1, 2, 2, 1, 1, 1, 0] },
-      { id: "equal",   text: "שוויון — כל ילד מקבל אותה הזדמנות, ללא קשר לרקע",           scores: [2, 2, 1, 1, 1, 0, -1] },
-      { id: "values",  text: "ערכים — בית ספר שמעביר זהות, מורשת, ולאום",                 scores: [-1, 0, 0, 1, 0, 2, 2] },
-      { id: "skills",  text: "כישורים — הכנה אמיתית לשוק העבודה של המאה ה-21",            scores: [1, 1, 2, 2, 2, 1, 0] },
+      { id: "quality", text: "איכות — מורים מעולים שמשתכרים בהתאם",                       scores: [ 1,  2,  2,  1,  1,  1,  0] },
+      { id: "equal",   text: "שוויון — כל ילד מקבל אותה הזדמנות, ללא קשר לרקע",           scores: [ 2,  2,  1,  1,  1,  0, -1] },
+      { id: "values",  text: "ערכים — בית ספר שמעביר זהות, מורשת, ולאום",                 scores: [-1,  0,  0,  1,  0,  2,  2] },
+      { id: "skills",  text: "כישורים — הכנה אמיתית לשוק העבודה של המאה ה-21",            scores: [ 1,  1,  2,  2,  2,  1,  0] },
     ],
   },
   health: {
     question: "בבריאות — מה הכי מדאיג אותך?",
     options: [
-      { id: "wait",    text: "תורים — חודשים להמתין לרופא מומחה זה מסכן חיים",             scores: [1, 1, 2, 2, 1, 1, 1] },
-      { id: "cost",    text: "עלות — טיפולים שלא בסל עולים הון שאין לכולם",               scores: [2, 2, 1, 1, 0, 0, 2] },
-      { id: "doctors", text: "בריחת רופאים — הרפואה הטובה עוזבת לחו\"ל",                  scores: [1, 1, 2, 2, 2, 1, 0] },
-      { id: "gaps",    text: "פערים — ביישובים מסוימים הרפואה הרבה יותר גרועה",            scores: [2, 2, 1, 1, 0, 0, 2] },
+      { id: "wait",    text: "תורים — חודשים להמתין לרופא מומחה זה מסכן חיים",             scores: [ 1,  1,  2,  2,  1,  1,  1] },
+      { id: "cost",    text: "עלות — טיפולים שלא בסל עולים הון שאין לכולם",               scores: [ 2,  2,  1,  1,  0,  0,  2] },
+      { id: "doctors", text: "בריחת רופאים — הרפואה הטובה עוזבת לחו\"ל",                  scores: [ 1,  1,  2,  2,  2,  1,  0] },
+      { id: "gaps",    text: "פערים — ביישובים מסוימים הרפואה הרבה יותר גרועה",            scores: [ 2,  2,  1,  1,  0,  0,  2] },
     ],
   },
   religion: {
     question: "בדת ומדינה — מה הכי מפריע לך?",
     options: [
-      { id: "coercion",  text: "כפייה — אני רוצה לחיות לפי ערכיי, לא לפי הרבנות",         scores: [2, 2, 2, 1, 2, 0, -2] },
-      { id: "identity",  text: "זהות — מדינת ישראל מאבדת את אופייה היהודי",                scores: [-2, -1, -1, 1, 1, 1, 2] },
-      { id: "pluralism", text: "הכרה — הזרם הדתי שלי (רפורמי/קונסרבטיבי) לא מוכר",        scores: [1, 2, 2, 1, 2, 0, -2] },
-      { id: "marriage",  text: "נישואין — אי אפשר להינשא אזרחית בישראל",                   scores: [2, 2, 2, 1, 2, -1, -2] },
+      { id: "coercion",  text: "כפייה — אני רוצה לחיות לפי ערכיי, לא לפי הרבנות",         scores: [ 2,  2,  2,  1,  2,  0, -2] },
+      { id: "identity",  text: "זהות — מדינת ישראל מאבדת את אופייה היהודי",                scores: [-2, -1, -1,  1,  1,  1,  2] },
+      { id: "pluralism", text: "הכרה — הזרם הדתי שלי (רפורמי/קונסרבטיבי) לא מוכר",        scores: [ 1,  2,  2,  1,  2,  0, -2] },
+      { id: "marriage",  text: "נישואין — אי אפשר להינשא אזרחית בישראל",                   scores: [ 2,  2,  2,  1,  2, -1, -2] },
     ],
   },
   justice: {
     question: "במערכת המשפט — מה הכי חשוב לך?",
     options: [
-      { id: "independence", text: "עצמאות — שופטים שלא תלויים בפוליטיקאים שמינו אותם",    scores: [2, 2, 2, 1, 1, -2, -1] },
-      { id: "oversight",    text: "ביקורת — גם בית המשפט צריך מישהו שיאזן אותו",           scores: [-1, -1, -1, 0, 0, 2, 2] },
-      { id: "consensus",    text: "יציבות — שינויים משפטיים רק בהסכמה רחבה",               scores: [1, 1, 1, 2, 1, 0, 0] },
-      { id: "diversity",    text: "ייצוג — בית המשפט צריך לשקף את כל הציבור הישראלי",     scores: [2, 1, 1, 1, 0, 1, 2] },
+      { id: "independence", text: "עצמאות — שופטים שלא תלויים בפוליטיקאים שמינו אותם",    scores: [ 2,  2,  2,  1,  1, -2, -1] },
+      { id: "oversight",    text: "ביקורת — גם בית המשפט צריך מישהו שיאזן אותו",           scores: [-1, -1, -1,  0,  0,  2,  2] },
+      { id: "consensus",    text: "יציבות — שינויים משפטיים רק בהסכמה רחבה",               scores: [ 1,  1,  1,  2,  1,  0,  0] },
+      { id: "diversity",    text: "ייצוג — בית המשפט צריך לשקף את כל הציבור הישראלי",     scores: [ 2,  1,  1,  1,  0,  1,  2] },
     ],
   },
   equality: {
     question: "בזכויות אדם ושוויון — מה הכי חשוב לך?",
     options: [
-      { id: "law",       text: "חוק ברור — הגנה משפטית מפורשת מפני אפליה",                 scores: [2, 2, 2, 1, 1, 0, -1] },
-      { id: "represent", text: "ייצוג — מיעוטים חייבים להיות חלק ממוסדות המדינה",          scores: [2, 2, 1, 1, 0, 0, 0] },
-      { id: "character", text: "אופי יהודי — שמירת הרוב היהודי והאופי הלאומי",             scores: [-2, -1, 0, 1, 1, 2, 2] },
-      { id: "lgbtq",     text: "LGBTQ+ — כולם ראויים לחיות בכבוד וללא אפליה",              scores: [2, 2, 2, 1, 1, -1, -2] },
+      { id: "law",       text: "חוק ברור — הגנה משפטית מפורשת מפני אפליה",                 scores: [ 2,  2,  2,  1,  1,  0, -1] },
+      { id: "represent", text: "ייצוג — מיעוטים חייבים להיות חלק ממוסדות המדינה",          scores: [ 2,  2,  1,  1,  0,  0,  0] },
+      { id: "character", text: "אופי יהודי — שמירת הרוב היהודי והאופי הלאומי",             scores: [-2, -1,  0,  1,  1,  2,  2] },
+      { id: "lgbtq",     text: "LGBTQ+ — כולם ראויים לחיות בכבוד וללא אפליה",              scores: [ 2,  2,  2,  1,  1, -1, -2] },
     ],
   },
 };
@@ -301,30 +304,18 @@ export default function PrototypeB() {
         <p className="text-gray-500 text-sm mb-1">
           המשקל ניתן לפי סדר העדיפויות שבחרת:
         </p>
-        <ol className="text-xs text-gray-400 mb-6 list-decimal list-inside">
+        <ol className="text-xs text-gray-400 mb-4 list-decimal list-inside">
           {ranked.map((id) => (
             <li key={id}>{TOPICS.find((t) => t.id === id)?.label}</li>
           ))}
         </ol>
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
+          <strong>שיטת החישוב:</strong> הציונות מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
+        </div>
 
         <div className="flex flex-col gap-3">
           {results.map((r, i) => (
-            <div
-              key={r.id}
-              className={`rounded-xl p-4 ${i === 0 ? "bg-emerald-50 border-2 border-emerald-300" : "bg-white border border-gray-200"}`}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-semibold">{i + 1}. {r.name}</span>
-                <span className="font-bold text-emerald-700">{r.score}%</span>
-              </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
-                <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${r.score}%` }} />
-              </div>
-              <p className="text-xs text-gray-500 mb-1">{r.description}</p>
-              <a href={r.website} target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-600 hover:underline">
-                לאתר הרשמי ↗
-              </a>
-            </div>
+            <PartyResultCard key={r.id} party={r} rank={i} accentColor="emerald" />
           ))}
         </div>
         <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>

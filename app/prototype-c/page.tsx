@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { PARTIES } from "@/lib/parties";
+import PartyResultCard from "@/components/PartyResultCard";
 
 const DILEMMAS = [
   {
@@ -49,15 +50,16 @@ const DILEMMAS = [
   },
 ];
 
-// Party leanings per dilemma (order matches lib/parties.ts: hadash, labor, yeshatid, unity, beitenu, likud, shas)
+// Party leanings per dilemma (order matches lib/parties.ts: hadash, democrats, beyahad, yashar, beitenu, likud, shas)
 // 0 = strongly optionA, 1 = strongly optionB, 0.5 = neutral
+// NOTE: rough estimates — not verified against current party platforms
 const PARTY_LEANINGS: number[][] = [
-  [0, 0, 0.5, 0.5, 1, 1, 0],      // דיור
-  [0, 0, 0, 0.5, 1, 1, 1],        // עזה
-  [0.5, 0, 0, 0, 0, 0.5, 1],      // גיוס
-  [0, 0, 0, 0.5, 0, 1, 1],        // שפיטה
-  [0, 0, 0.5, 0.5, 1, 1, 0.5],    // אנרגיה
-  [0.5, 0, 0, 0, 0, 0.5, 1],      // חינוך
+  [0,   0,   0.5, 0.5, 1,   1,   0  ], // דיור
+  [0,   0,   0,   0.5, 1,   1,   1  ], // עזה
+  [0.5, 0,   0,   0,   0,   0.5, 1  ], // גיוס
+  [0,   0,   0,   0.5, 0,   1,   1  ], // שפיטה
+  [0,   0,   0.5, 0.5, 1,   1,   0.5], // אנרגיה
+  [0.5, 0,   0,   0,   0,   0.5, 1  ], // חינוך
 ];
 
 function calcResults(answers: Record<number, "A" | "B">) {
@@ -93,22 +95,13 @@ export default function PrototypeC() {
         <div className="w-full max-w-xl">
           <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</Link>
           <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-          <p className="text-gray-500 text-sm mb-8">על סמך הבחירות שעשית בדילמות:</p>
+          <p className="text-gray-500 text-sm mb-4">על סמך הבחירות שעשית בדילמות:</p>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
+            <strong>שיטת החישוב:</strong> הציונות מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
+          </div>
           <div className="flex flex-col gap-3">
             {results.map((r, i) => (
-              <div key={r.id} className={`rounded-xl p-4 ${i === 0 ? "bg-amber-50 border-2 border-amber-300" : "bg-white border border-gray-200"}`}>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold">{i + 1}. {r.name}</span>
-                  <span className="font-bold text-amber-700">{r.score}%</span>
-                </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
-                  <div className="h-full bg-amber-400 rounded-full" style={{ width: `${r.score}%` }} />
-                </div>
-                <p className="text-xs text-gray-500 mb-1">{r.description}</p>
-                <a href={r.website} target="_blank" rel="noopener noreferrer" className="text-xs text-amber-600 hover:underline">
-                  לאתר הרשמי ↗
-                </a>
-              </div>
+              <PartyResultCard key={r.id} party={r} rank={i} accentColor="amber" />
             ))}
           </div>
           <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
