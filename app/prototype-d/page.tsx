@@ -5,17 +5,21 @@ import Link from "next/link";
 
 type Message = { role: "user" | "assistant"; content: string };
 
+const INTRO_MESSAGE: Message = {
+  role: "assistant",
+  content: "שלום! אני עוזר הבחירות.\n\nאשאל אותך שאלות על נושאים שחשובים לך — ביטחון, כלכלה, דיור, חינוך ועוד. בסוף השיחה אסביר לאיזו מפלגה אתה הכי קרוב, ולמה.\n\nאין תשובות נכונות או לא נכונות — ענה בכנות לפי מה שאתה באמת חושב.\n\nמוכן? כתוב כל דבר כדי להתחיל.",
+};
+
 function MessageBubble({ msg }: { msg: Message }) {
   const isUser = msg.role === "user";
   return (
     <div className={`flex ${isUser ? "justify-start" : "justify-end"} mb-4`}>
       <div
-        className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+        className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
           isUser
             ? "bg-white border border-gray-200 text-gray-800"
             : "bg-purple-600 text-white"
         }`}
-        // Render bold markdown from AI responses
         dangerouslySetInnerHTML={{
           __html: msg.content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -27,17 +31,22 @@ function MessageBubble({ msg }: { msg: Message }) {
 }
 
 export default function PrototypeD() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([INTRO_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, loading]);
 
   const sendMessage = async (content: string) => {
+    setError(null);
+    // Include all messages except the static intro in the API history,
+    // since the intro is a hardcoded UI element, not a real AI turn.
+    const conversationHistory = messages.slice(1);
     const next: Message[] = [...messages, { role: "user", content }];
     setMessages(next);
     setInput("");
@@ -47,30 +56,16 @@ export default function PrototypeD() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: [...conversationHistory, { role: "user", content }] }),
       });
       const data = await res.json();
       if (data.content) {
         setMessages([...next, { role: "assistant", content: data.content }]);
+      } else {
+        setError(data.error ?? "לא התקבלה תשובה מה-AI. נסה שוב.");
       }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const start = async () => {
-    setStarted(true);
-    setLoading(true);
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: "התחל" }] }),
-      });
-      const data = await res.json();
-      if (data.content) {
-        setMessages([{ role: "assistant", content: data.content }]);
-      }
+    } catch {
+      setError("שגיאת רשת — בדוק חיבור לאינטרנט ונסה שוב.");
     } finally {
       setLoading(false);
     }
@@ -86,13 +81,13 @@ export default function PrototypeD() {
           </div>
           <h1 className="text-2xl font-bold mb-3">שיחה עם עוזר AI</h1>
           <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-            עוזר חכם ישוחח איתך על הנושאים שחשובים לך, ובסוף יגלה לאיזו מפלגה אתה הכי קרוב — עם הסבר.
+            עוזר חכם ישוחח איתך על הנושאים שחשובים לך, ובסוף יגלה לאיזו מפלגה אתה הכי קרוב — עם הסבר מפורט.
           </p>
           <p className="text-xs text-gray-400 mb-8">
-            השיחה מנוהלת על ידי Gemini AI. עמדות המפלגות הן פיקטיביות לצורכי הדגמה.
+            מנוהל על ידי Gemini AI · עמדות המפלגות הן פיקטיביות לצורכי הדגמה
           </p>
           <button
-            onClick={start}
+            onClick={() => setStarted(true)}
             className="w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors"
           >
             התחל שיחה
@@ -104,7 +99,6 @@ export default function PrototypeD() {
 
   return (
     <main className="h-screen flex flex-col">
-      {/* Header */}
       <div className="border-b border-gray-200 bg-white px-4 py-3 flex items-center gap-3 shrink-0">
         <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">← חזרה</Link>
         <div className="w-px h-4 bg-gray-200" />
@@ -112,14 +106,20 @@ export default function PrototypeD() {
         <span className="text-sm font-medium">עוזר הבחירות</span>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <div className="max-w-xl mx-auto">
           {messages.map((msg, i) => <MessageBubble key={i} msg={msg} />)}
           {loading && (
             <div className="flex justify-end mb-4">
-              <div className="bg-purple-600 text-white px-4 py-3 rounded-2xl text-sm">
+              <div className="bg-purple-100 text-purple-600 px-4 py-3 rounded-2xl text-sm">
                 <span className="animate-pulse">מקליד...</span>
+              </div>
+            </div>
+          )}
+          {error && (
+            <div className="flex justify-end mb-4">
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-2xl text-sm">
+                {error}
               </div>
             </div>
           )}
@@ -127,13 +127,17 @@ export default function PrototypeD() {
         </div>
       </div>
 
-      {/* Input */}
       <div className="border-t border-gray-200 bg-white px-4 py-3 shrink-0">
         <div className="max-w-xl mx-auto flex gap-3">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && input.trim()) { e.preventDefault(); sendMessage(input.trim()); } }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey && input.trim()) {
+                e.preventDefault();
+                sendMessage(input.trim());
+              }
+            }}
             placeholder="כתוב כאן..."
             disabled={loading}
             className="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-400 disabled:opacity-50"

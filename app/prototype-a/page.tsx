@@ -15,7 +15,7 @@ const STATEMENTS = [
 const OPTIONS = [
   { value: 2, label: "מסכים מאוד" },
   { value: 1, label: "מסכים" },
-  { value: 0, label: "אדיש / לא יודע" },
+  { value: 0, label: "אין לי עמדה" },
   { value: -1, label: "לא מסכים" },
   { value: -2, label: "לא מסכים בכלל" },
 ];

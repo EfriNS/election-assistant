@@ -171,7 +171,7 @@ export default function PrototypeB() {
           <p className="text-xs font-medium text-emerald-600 uppercase tracking-wider mb-3">{currentTopic.label}</p>
           <h2 className="text-2xl font-bold leading-snug mb-10">{currentQ.text}</h2>
           <div className="flex flex-col gap-3">
-            {[{ v: 2, l: "מסכים מאוד" }, { v: 1, l: "מסכים" }, { v: 0, l: "אדיש / לא יודע" }, { v: -1, l: "לא מסכים" }, { v: -2, l: "לא מסכים בכלל" }].map((o) => (
+            {[{ v: 2, l: "מסכים מאוד" }, { v: 1, l: "מסכים" }, { v: 0, l: "אין לי עמדה" }, { v: -1, l: "לא מסכים" }, { v: -2, l: "לא מסכים בכלל" }].map((o) => (
               <button key={o.v} onClick={() => handleAnswer(o.v)}
                 className="border-2 border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 rounded-xl py-4 px-5 text-right font-medium transition-all">
                 {o.l}
