@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { PARTIES } from "@/lib/parties";
 
 const DILEMMAS = [
   {
@@ -48,24 +49,27 @@ const DILEMMAS = [
   },
 ];
 
-const PARTIES = [
-  { name: "מפלגת השלום", leanings: [0, 1, 0, 0, 0, 1] },
-  { name: "הבית שלנו", leanings: [1, 0, 1, 1, 1, 1] },
-  { name: "המרכז", leanings: [0, 0.5, 0.5, 0, 0, 0.5] },
-  { name: "ימין חזק", leanings: [1, 0, 0, 1, 1, 1] },
-  { name: "מפלגת הרווחה", leanings: [0, 1, 0.5, 0, 0, 0] },
+// Party leanings per dilemma (order matches lib/parties.ts: hadash, labor, yeshatid, unity, beitenu, likud, shas)
+// 0 = strongly optionA, 1 = strongly optionB, 0.5 = neutral
+const PARTY_LEANINGS: number[][] = [
+  [0, 0, 0.5, 0.5, 1, 1, 0],      // דיור
+  [0, 0, 0, 0.5, 1, 1, 1],        // עזה
+  [0.5, 0, 0, 0, 0, 0.5, 1],      // גיוס
+  [0, 0, 0, 0.5, 0, 1, 1],        // שפיטה
+  [0, 0, 0.5, 0.5, 1, 1, 0.5],    // אנרגיה
+  [0.5, 0, 0, 0, 0, 0.5, 1],      // חינוך
 ];
 
 function calcResults(answers: Record<number, "A" | "B">) {
   const vals = DILEMMAS.map((d) => (answers[d.id] === "A" ? 0 : answers[d.id] === "B" ? 1 : 0.5));
-  return PARTIES.map((p) => {
+  return PARTIES.map((party, pi) => {
     const answered = DILEMMAS.filter((d) => answers[d.id] !== undefined);
-    if (answered.length === 0) return { name: p.name, score: 0 };
-    const match = answered.reduce((s, d, _i) => {
+    if (answered.length === 0) return { ...party, score: 0 };
+    const match = answered.reduce((s, d) => {
       const idx = DILEMMAS.indexOf(d);
-      return s + (1 - Math.abs(vals[idx] - p.leanings[idx]));
+      return s + (1 - Math.abs(vals[idx] - PARTY_LEANINGS[idx][pi]));
     }, 0);
-    return { name: p.name, score: Math.round((match / answered.length) * 100) };
+    return { ...party, score: Math.round((match / answered.length) * 100) };
   }).sort((a, b) => b.score - a.score);
 }
 
@@ -92,18 +96,22 @@ export default function PrototypeC() {
           <p className="text-gray-500 text-sm mb-8">על סמך הבחירות שעשית בדילמות:</p>
           <div className="flex flex-col gap-3">
             {results.map((r, i) => (
-              <div key={r.name} className={`rounded-xl p-4 ${i === 0 ? "bg-amber-50 border-2 border-amber-300" : "bg-white border border-gray-200"}`}>
+              <div key={r.id} className={`rounded-xl p-4 ${i === 0 ? "bg-amber-50 border-2 border-amber-300" : "bg-white border border-gray-200"}`}>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-semibold">{i + 1}. {r.name}</span>
                   <span className="font-bold text-amber-700">{r.score}%</span>
                 </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
                   <div className="h-full bg-amber-400 rounded-full" style={{ width: `${r.score}%` }} />
                 </div>
+                <p className="text-xs text-gray-500 mb-1">{r.description}</p>
+                <a href={r.website} target="_blank" rel="noopener noreferrer" className="text-xs text-amber-600 hover:underline">
+                  לאתר הרשמי ↗
+                </a>
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-300 mt-8 text-center">מפלגות פיקטיביות · לצורכי הדגמה בלבד</p>
+          <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
         </div>
       </main>
     );
@@ -140,11 +148,7 @@ export default function PrototypeC() {
             );
           })}
           <button
-            onClick={() => {
-              const next = { ...answers, [current.id]: "A" as const };
-              setAnswers(next);
-              if (Object.keys(next).length === DILEMMAS.length) setDone(true);
-            }}
+            onClick={() => handleAnswer(current.id, "A")}
             className="text-sm text-gray-400 hover:text-gray-600 text-center py-2"
           >
             דלג על שאלה זו

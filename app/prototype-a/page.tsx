@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { PARTIES } from "@/lib/parties";
 
 const STATEMENTS = [
   { id: 1, text: "ישראל צריכה לקדם פתרון שתי מדינות לסכסוך הישראלי-פלסטיני", topic: "ביטחון ומדיניות חוץ" },
@@ -20,24 +21,28 @@ const OPTIONS = [
   { value: -2, label: "לא מסכים בכלל" },
 ];
 
-// Fictional placeholder parties
-const PARTIES = [
-  { name: "מפלגת השלום", positions: [2, 1, 2, 1, 0, 2] },
-  { name: "הבית שלנו", positions: [-2, 0, -1, 0, -1, -2] },
-  { name: "המרכז", positions: [0, 1, 1, 1, 1, 1] },
-  { name: "ימין חזק", positions: [-1, -1, -2, -1, 2, -2] },
-  { name: "מפלגת הרווחה", positions: [1, 2, 0, 2, 1, 1] },
+// Party positions per statement (order matches lib/parties.ts: hadash, labor, yeshatid, unity, beitenu, likud, shas)
+// Values: -2 (strongly oppose) to +2 (strongly support) on each statement
+const PARTY_POSITIONS: number[][] = [
+  [2, 2, 2, 2, 1, 2],    // חד"ש-תע"ל
+  [1, 2, 2, 2, 1, 2],    // העבודה
+  [0, 1, 2, 1, 2, 2],    // יש עתיד
+  [0, 1, 1, 1, 2, 1],    // המחנה הממלכתי
+  [-1, 0, 2, 1, 2, 1],   // ישראל ביתנו
+  [-2, 0, -1, 0, -1, -2], // ליכוד
+  [-1, 2, -2, 2, -2, -1], // ש"ס
 ];
 
-function matchScore(userAnswers: Record<number, number>): { name: string; score: number }[] {
-  return PARTIES.map((party) => {
+function matchScore(userAnswers: Record<number, number>) {
+  return PARTIES.map((party, pi) => {
+    const positions = PARTY_POSITIONS[pi];
     const answered = STATEMENTS.filter((s) => userAnswers[s.id] !== undefined);
-    if (answered.length === 0) return { name: party.name, score: 0 };
+    if (answered.length === 0) return { ...party, score: 0 };
     const total = answered.reduce((sum, s) => {
-      const diff = Math.abs((userAnswers[s.id] ?? 0) - party.positions[s.id - 1]);
+      const diff = Math.abs((userAnswers[s.id] ?? 0) - positions[s.id - 1]);
       return sum + (4 - diff);
     }, 0);
-    return { name: party.name, score: Math.round((total / (answered.length * 4)) * 100) };
+    return { ...party, score: Math.round((total / (answered.length * 4)) * 100) };
   }).sort((a, b) => b.score - a.score);
 }
 
@@ -58,18 +63,22 @@ export default function PrototypeA() {
           <p className="text-gray-500 text-sm mb-8">על סמך תשובותיך, כך דורגו המפלגות:</p>
           <div className="flex flex-col gap-3">
             {results.map((r, i) => (
-              <div key={r.name} className={`rounded-xl p-4 ${i === 0 ? "bg-blue-50 border-2 border-blue-300" : "bg-white border border-gray-200"}`}>
+              <div key={r.id} className={`rounded-xl p-4 ${i === 0 ? "bg-blue-50 border-2 border-blue-300" : "bg-white border border-gray-200"}`}>
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-semibold">{i + 1}. {r.name}</span>
                   <span className="font-bold text-blue-700">{r.score}%</span>
                 </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
                   <div className="h-full bg-blue-400 rounded-full transition-all" style={{ width: `${r.score}%` }} />
                 </div>
+                <p className="text-xs text-gray-500 mb-1">{r.description}</p>
+                <a href={r.website} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">
+                  לאתר הרשמי ↗
+                </a>
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-300 mt-8 text-center">מפלגות פיקטיביות · לצורכי הדגמה בלבד</p>
+          <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
         </div>
       </main>
     );
@@ -85,7 +94,6 @@ export default function PrototypeA() {
           <span className="text-sm text-gray-400">{progress} / {STATEMENTS.length}</span>
         </div>
 
-        {/* Progress bar */}
         <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
           <div className="h-full bg-blue-500 rounded-full transition-all duration-300" style={{ width: `${(progress / STATEMENTS.length) * 100}%` }} />
         </div>
