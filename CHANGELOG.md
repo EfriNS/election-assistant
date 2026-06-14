@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-06-14 — Solution Design + Prototyping Approach
+
+### Decisions Made
+
+**Prototyping strategy**: Build 4 clickable UX prototypes before committing to a technical approach. Show to real users (voters) and the advisor for feedback. Prototypes vary on *how questions are asked* — the highest-leverage UX decision.
+
+**4 prototypes defined** (see `docs/SOLUTION-DESIGN.md` for full rationale):
+- **A — הצהרות (Statements)**: Classic agree/disagree binary quiz, 25–30 questions, linear flow. Wahl-O-Mat model.
+- **B — עדיפויות (Priority-First)**: User weights 8–10 topic areas first, then answers deeper questions on their top priorities only.
+- **C — דילמות (Dilemmas)**: Concrete trade-off scenarios instead of abstract ideological statements.
+- **D — שיחה (Conversation)**: AI-guided structured dialogue; structured rubric underneath, conversational surface on top.
+
+**Tech stack decided**:
+- Framework: Next.js (React), scaffolded in this repo
+- Hosting: Vercel (already connected to GitHub; auto-deploys on push)
+- AI (prototype D): Google Gemini free tier (`gemini-2.0-flash` via `@google/generative-ai`)
+- Language: Hebrew from the start; RTL layout
+
+**Rejected approaches** (with rationale in `docs/SOLUTION-DESIGN.md`):
+- Lovable: Free tier too limited for 4 prototypes; vendor lock-in; poor RTL support
+- Claude.ai "skill"/Project: Requires Claude accounts (barrier for general public); no reproducible results; opaque to users
+
+**Gemini API key**: stored in `.env.local` (gitignored) for local dev; Vercel environment variable for deployment. Pattern follows cv-refinery project.
+
+### Infrastructure
+- `.gitignore` updated for Node.js / Next.js artifacts
+- `docs/SOLUTION-DESIGN.md` created
+
+---
+
 ## 2026-03-28 — Project Kickoff + Competitive Research
 
 ### Project Setup
