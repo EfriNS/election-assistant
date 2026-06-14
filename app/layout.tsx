@@ -12,15 +12,15 @@ export const metadata: Metadata = {
   description: "גלה לאיזו מפלגה אתה הכי קרוב",
 };
 
-// VERCEL_GIT_COMMIT_SHA is set automatically by Vercel at build time (server-side only, no NEXT_PUBLIC_ needed)
-const buildId = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local";
+// BUILD_ID is injected by next.config.ts at build time (works both locally and on Vercel)
+const buildId = process.env.BUILD_ID ?? "dev";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={rubik.variable}>
       <body className="bg-gray-50 text-gray-900 font-sans antialiased">
         {children}
-        <div className="fixed bottom-2 right-2 text-xs text-gray-400 select-none pointer-events-none">
+        <div className="fixed bottom-2 right-2 text-xs text-gray-500 select-none pointer-events-none">
           {buildId}
         </div>
       </body>
