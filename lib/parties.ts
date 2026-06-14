@@ -38,14 +38,15 @@ export const PARTIES: Party[] = [
     name: "ביחד",
     subtitle: "בנט / לפיד",
     description: "מרכז — ממשל נקי, חינוך, הפרדת דת ומדינה.",
-    website: "", // verify current URL
+    website: "https://bennett2026.org.il/",
   },
   {
     id: "yashar",
     name: "ישר!",
     subtitle: "איזנקוט",
     description: "מרכז-ימין — ביטחון לאומי, שקיפות, ממשל אחראי.",
-    website: "", // verify current URL
+    website: "https://yasharwitheisenkot.com",
+    platformUrl: "https://yasharwitheisenkot.com/topic/missions/",
   },
   {
     id: "beitenu",
