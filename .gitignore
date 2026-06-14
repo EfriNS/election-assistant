@@ -1,7 +1,17 @@
 # Environment & secrets
 .env
 .env.*
+.env.local
 secrets/
+!.env.example
+
+# Node.js / Next.js
+node_modules/
+.next/
+out/
+dist/
+build/
+.vercel/
 
 # Claude Code local state (settings.json and commands/ are tracked)
 .claude/settings.local.json
@@ -17,3 +27,4 @@ Thumbs.db
 
 # Internal reference material
 Screenshots/
+.vercel
