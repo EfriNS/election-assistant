@@ -31,7 +31,7 @@ export default function PartyResultCard({ party, rank, accentColor }: Props) {
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
       <p className="text-xs text-gray-500 mb-2">{party.description}</p>
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex gap-4 flex-wrap items-center">
         {party.website ? (
           <a href={party.website} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>
             אתר המפלגה ↗
@@ -41,10 +41,10 @@ export default function PartyResultCard({ party, rank, accentColor }: Props) {
         )}
         {party.platformUrl ? (
           <a href={party.platformUrl} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>
-            פלטפורמה רשמית ↗
+            {party.platformLabel ?? "מצע רשמי"} ↗
           </a>
         ) : (
-          <span className="text-xs text-gray-300">אין פלטפורמה מפורסמת</span>
+          <span className="text-xs text-red-400 font-medium">אין מצע מפורסם</span>
         )}
       </div>
     </div>
