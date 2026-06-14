@@ -6,7 +6,7 @@ const prototypes = [
     letter: "א",
     title: "הצהרות",
     subtitle: "Quiz קלאסי",
-    description: "ענה על 6 הצהרות — הסכם, התנגד, או היה אדיש. פשוט, ישיר, וניתן לביקורת.",
+    description: "ענה על 6 הצהרות — הסכם, התנגד, או ציין שאין לך עמדה. פשוט, ישיר, וניתן לביקורת.",
     time: "~5 דקות",
     color: "bg-blue-50 border-blue-200 hover:border-blue-400",
     badge: "bg-blue-100 text-blue-700",
