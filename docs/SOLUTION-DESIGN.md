@@ -1,7 +1,7 @@
 # Election Assistant — Solution Design
 
-**Status**: Prototyping phase (4 UX prototypes under development)
-**Last updated**: 2026-06-14
+**Status**: User testing phase (all 4 prototypes live at election-assistant-snowy.vercel.app)
+**Last updated**: 2026-06-16
 
 ---
 
@@ -112,11 +112,11 @@ Each prototype tests a distinct question-asking model. All share the same underl
 - Push to feature branch → preview URL (shareable for user testing)
 
 ### AI (Prototype D)
-**Google Gemini free tier** via `@google/generative-ai` npm package.
-- Primary model: `gemini-2.0-flash` (fast, free tier, generous limits)
-- Fallback: `gemini-1.5-flash-8b`
+**Google Gemini free tier** via `@google/genai` npm package v2.8.0.
+- Model: `gemini-3.5-flash` (current; user explicitly required this model)
+- `maxOutputTokens: 2000` (600 caused truncation mid-sentence)
 - API key: `GEMINI_API_KEY` env var (`.env.local` locally, Vercel env var in production)
-- Pattern: same as `cv-refinery` project
+- API shape: `ai.chats.create({model, history, config: {systemInstruction}})` then `chat.sendMessage({message})`
 
 ### Key env vars
 ```
@@ -159,11 +159,13 @@ After user testing, the following decisions will be made:
 ## Next Steps
 
 1. ✅ Design decisions documented
-2. 🔲 Scaffold Next.js app in repo root
-3. 🔲 Build prototype A (simplest — no AI)
-4. 🔲 Build prototype B
-5. 🔲 Build prototype C
-6. 🔲 Build prototype D (requires Gemini integration)
-7. 🔲 Deploy to Vercel preview URL
-8. 🔲 User testing (voters + advisor)
+2. ✅ Scaffold Next.js app in repo root
+3. ✅ Build prototype A (statements quiz)
+4. ✅ Build prototype B (priority-first, with value/concern question framing)
+5. ✅ Build prototype C (dilemmas)
+6. ✅ Build prototype D (Gemini AI conversation)
+7. ✅ Deploy to Vercel production URL (election-assistant-snowy.vercel.app)
+8. 🔲 User testing (voters + advisor) — **in progress, link shared**
 9. 🔲 Synthesize feedback → decide on final approach
+10. 🔲 Expert review of party position scores (especially ביחד, ישר!)
+11. 🔲 Phased plan + MVP definition once prototype winner is known

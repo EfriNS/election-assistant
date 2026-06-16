@@ -1,5 +1,91 @@
 # Changelog
 
+## 2026-06-14–16 — UX Prototypes Built, Deployed, and Sent for User Testing
+
+### What We Built
+
+Four interactive Hebrew RTL prototypes deployed to https://election-assistant-snowy.vercel.app:
+
+| | Prototype | Model |
+|--|--|--|
+| א | הצהרות | 6 agree/disagree statements, 5-point scale |
+| ב | עדיפויות | Click-to-rank topics → value/concern question per topic |
+| ג | דילמות | 6 concrete policy trade-off scenarios |
+| ד | שיחה | AI conversation (Gemini gemini-3.5-flash) |
+
+All prototypes use real 2026 Israeli parties, show a methodology disclaimer, and render a build ID badge for feedback traceability.
+
+### Real 2026 Party List (corrected by advisor)
+
+Source of truth: `lib/parties.ts`. Ordered left→right spectrum:
+
+| ID | Name | Note |
+|--|--|--|
+| hadash | חד"ש-תע"ל | |
+| democrats | הדמוקרטים | Formerly העבודה |
+| beyahad | ביחד | Formerly יש עתיד + Bennett; subtitle בנט/לפיד |
+| yashar | ישר! | New party; subtitle איזנקוט; links to missions page, not formal מצע |
+| beitenu | ישראל ביתנו | |
+| likud | ליכוד | |
+| shas | ש"ס | |
+
+Removed: המחנה הממלכתי (dissolved).
+
+**Party scoring**: manual estimates based on known public positions — **not verified against current party platforms**. Results pages show methodology disclaimer. New parties (ביחד, ישר!) especially need expert review.
+
+### מצע (Platform) Transparency
+
+Every party result card shows:
+- "אתר המפלגה ↗" link (or "אתר לא ידוע" if missing)
+- `platformUrl` present → clickable link with `platformLabel` (or "מצע רשמי")
+- `platformUrl` absent → "אין מצע מפורסם" in red
+
+Currently, only ישר! has a link (`yasharwitheisenkot.com/topic/missions/`) labeled "משימות (לא מצע)" — honest about it not being a formal platform.
+
+### Gemini Integration (Prototype D)
+
+- Package: `@google/genai` v2.8.0 (replaced deprecated `@google/generative-ai`)
+- Model: `gemini-3.5-flash` (current Google model; explicitly required by user)
+- `maxOutputTokens: 2000` — was 600, was truncating responses mid-sentence
+- System prompt includes structured rubric with all 7 parties; requires per-party explanation tied to what user said in chat
+
+### Build ID / Version Badge
+
+- `next.config.ts` resolves git SHA at build time (`VERCEL_GIT_COMMIT_SHA?.slice(0,7)` || `git rev-parse --short HEAD`)
+- Injected as `BUILD_ID` env var; rendered in `app/layout.tsx` as fixed badge bottom-right
+- `text-gray-500` for visibility without distraction
+- Required because collecting user feedback via screenshots — needed version traceability
+
+### Key UX Decisions (Prototype B)
+
+Questions are value/concern framing, not policy prescriptions: "מה הכי מדאיג אותך ב[נושא]?" rather than "what policy do you prefer?". Min 3 topics, no max cap. Skip and back buttons both work correctly. Back from first question → ranking step; skip on last question → results.
+
+### Files Created/Changed
+
+- `app/layout.tsx` — RTL layout, Rubik font, build ID badge
+- `app/page.tsx` — landing page; "שאלון קלאסי" (not "Quiz"); 4 prototype cards
+- `app/prototype-a/page.tsx` — statements quiz; PARTY_POSITIONS 7×6
+- `app/prototype-b/page.tsx` — priority-first; click-to-rank + per-topic questions
+- `app/prototype-c/page.tsx` — dilemmas; PARTY_LEANINGS 6×7
+- `app/prototype-d/page.tsx` — AI conversation; static intro + real Gemini chat
+- `app/api/chat/route.ts` — server-side Gemini API route
+- `lib/parties.ts` — shared party metadata (single source of truth)
+- `components/PartyResultCard.tsx` — shared result card with מצע logic
+- `next.config.ts` — BUILD_ID injection
+- `vercel.json` — `{"framework":"nextjs"}` (Vercel couldn't auto-detect framework)
+- `.gitignore` — `.env.local` excluded; API keys never committed
+
+### Technical Fixes Applied
+
+- Migrated Gemini SDK (`@google/generative-ai` → `@google/genai` v2.8.0)
+- Deployed Next.js 16 (security fix; 15.3.3 was blocked)
+- "פריה" (accidental Hebrew for "her fruit") → "בדידות דיפלומטית"
+- "Quiz" → "שאלון"; "פלטפורמה" → "מצע" throughout
+- Version badge: fixed 3 times (invisible → wrong env var → build-time injection)
+- Added `vercel.json` when Vercel couldn't auto-detect Next.js
+
+---
+
 ## 2026-06-14 — Solution Design + Prototyping Approach
 
 ### Decisions Made

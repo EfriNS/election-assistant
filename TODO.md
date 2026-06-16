@@ -2,8 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **4 UX prototypes built + deployed** - All 4 prototypes live at election-assistant-snowy.vercel.app; real parties, Gemini AI, sent to users for testing. (2026-06-16)
+- **Solution design** - 4 prototype models defined, Next.js + Vercel + Gemini stack selected. (2026-06-14)
 - **Competitive research + interaction model** - Israeli VAA gap confirmed (none active since 2009), 5 international tools analyzed, hybrid model defined. (2026-03-28)
-- **Project kickoff + requirements gathering** - README, REQUIREMENTS.md, GitHub repo, key decisions documented. (2026-03-28)
 
 > See CHANGELOG.md for complete details.
 
@@ -11,28 +12,23 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Solution design + options evaluation** (~3-4 hours)
-   - Brainstorm functional + technical options (quiz, AI agent, hybrid)
-   - Evaluate against: UX friction, cost model, trust/auditability, maintenance burden
-   - Decision: what to build
-   - Output: recommended approach with trade-offs
+1. **Synthesize user testing feedback** - Collect responses from friends/testers; decide which prototype(s) to pursue. Which feels most natural? Trustworthy? Complete?
 
-3. **UX prototype: "full experience" walkthrough** (~4-6 hours)
-   - Sketch the end-to-end user journey (onboarding → questions → results → "why")
-   - Address: tone/formality selection, multi-language, missing-platform handling
-   - Output: mockup or clickable prototype (Lovable candidate)
+2. **Verify party position scores with domain expert** - All 7 parties' scoring arrays in prototype A/B/C are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד) and ישר! (איזנקוט) which are new.
 
-4. **Phased plan + MVP definition** (~2-3 hours)
+3. **Phased plan + MVP definition** (~2-3 hours)
    - Define MVP scope (Hebrew-only? Which parties? Which question set?)
    - Identify phases: MVP → v1 → extensions (candidate records, multi-country)
    - Output: phased roadmap
 
-5. ⏸️ **Party platform data ingestion design** — _blocked on: solution design decision_
+4. **Add מצע links as parties publish them** - Only ישר! has a platform-adjacent link today. Monitor ביחד, הדמוקרטים, ש"ס, etc. Update `lib/parties.ts` as links appear.
+
+5. ⏸️ **Party platform data ingestion design** — _blocked on: prototype winner chosen_
    - Design semi-automatic ingestion pipeline (scrape + human review/approval)
    - Handle missing platforms gracefully ("Party X has not published a platform")
    - Handle platform versioning + timestamps (for exact quotations with citations)
 
-6. ⏸️ **Build MVP** — _blocked on: phased plan approved_
+6. ⏸️ **Build MVP** — _blocked on: prototype winner chosen + phased plan_
 
 7. ⏸️ **Multi-language support** (~varies) — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
