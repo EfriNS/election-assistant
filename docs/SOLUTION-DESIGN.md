@@ -79,7 +79,7 @@ Each prototype tests a distinct question-asking model. All share the same underl
 
 **Expected time**: 10–15 min (variable)
 
-**AI**: Google Gemini free tier (`gemini-2.0-flash`). Structured rubric kept in system prompt; party platform data passed as context. AI cannot deviate from provided data.
+**AI**: Google Gemini free tier (`gemini-3.5-flash`). Structured rubric kept in system prompt; party platform data passed as context. AI cannot deviate from provided data.
 
 ---
 
@@ -156,6 +156,102 @@ After user testing, the following decisions will be made:
 
 ---
 
+---
+
+## User Testing Round 1 — Design Refinements (2026-06-16)
+
+After initial feedback from 2 users (see `docs/user-testing/round-1-feedback.md`), the following decisions were made for the next prototype iteration.
+
+### AI Error Handling (Prototype D)
+
+**Decision**: Return structured error codes from the API route; render human-friendly Hebrew messages in the UI.
+
+**Problem**: The Gemini SDK throws errors whose `.message` contains the raw API JSON response (e.g., the full 429 payload). This was passed directly to the UI, showing a wall of technical JSON to the user — at the worst possible moment (just before getting results).
+
+**Implementation**: `route.ts` inspects the error and returns `{ errorCode: "QUOTA_EXCEEDED" | "SERVER_ERROR" | ... }`. The client renders a friendly Hebrew message per code.
+
+**Rejected**: Passing raw error strings to the client (current state) — leaks internal API detail and is incomprehensible to users.
+
+---
+
+### AI Quota / Budget Strategy (Prototype D)
+
+**Decision**: Turn limit with automatic synthesis trigger (Option A).
+
+**Problem**: A user hit the Gemini free-tier daily request quota mid-conversation, right before receiving results — the most frustrating possible failure point. The free tier quota is shared across all users with no per-user enforcement.
+
+**Note on model**: `gemini-3.5-flash` is the correct model ID (designed for agentic use, 1M token context). Despite appearing non-existent in some LLM training data, it is current and valid per the [official docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash).
+
+**Options considered**:
+
+| Option | Description | Verdict |
+|--------|-------------|---------|
+| **A — Turn limit + auto-synthesis** | Cap at 8 user turns; on turn 8 the AI is prompted to synthesize and rank. User always gets results; usage is predictable (≤9 calls/session). | **Chosen** |
+| B — Per-IP daily limit | Track requests per IP in a KV store; block after N sessions. | Rejected for now — adds infrastructure, doesn't fix mid-conversation cutoff, easily circumvented |
+| C — User's own account (Gem / BYOK) | Redirect to a Gemini Gem, or require user to paste an API key. | Rejected — too much friction for general public; removes embedded UX |
+| D — Drop AI chat | Remove Prototype D from testing. | Rejected — AI chat had the highest engagement; valuable to keep testing |
+
+**Rationale**: Option A is the only zero-infrastructure approach that guarantees the user reaches the results step. It also makes the conversation feel structured rather than open-ended, which may improve completion rates. Option B is the natural next layer when distributing widely.
+
+**Revisit when**: Wider distribution — add per-IP limiting (Option B) on top of the turn limit at that point. Longer term, evaluate paid tier if costs are predictable.
+
+---
+
+### Topic Selection Clarity (Prototype B)
+
+**Decision**: Live counter + contextual "המשך" button state.
+
+**Problem**: User 1 selected exactly 3 topics and stopped, not realizing she could (and should) select more. She read "at least 3" as "exactly 3."
+
+**Implementation**:
+- Subtitle copy updated: explicitly states "ככל שתבחרי יותר נושאים, כך התוצאה תהיה מדויקת יותר"
+- Live counter below the grid: "בחרת 3 נושאים — ניתן לבחור עוד"
+- "המשך" button disabled with reason text ("בחר עוד [N] נושאים") until ≥3 selected
+
+---
+
+### Terminology Hints (Prototypes A, C)
+
+**Decision**: Info icon (?) next to unfamiliar terms, expanding an inline one-line definition on tap.
+
+**Problem**: User 2 (age 16–18) did not understand terms like "כלכלת שוק", "מדינת רווחה". Without context, these force guessing or create anxiety that may cause drop-off.
+
+**Options considered**:
+
+| Option | Description | Verdict |
+|--------|-------------|---------|
+| **A — Info icon (?)** | Small "?" next to the term; tap reveals a one-line Hebrew definition inline. Touch-friendly, doesn't interrupt flow. | **Chosen** |
+| B — Tap the term | Dotted underline on the term; tap expands definition below. | Good alternative; slightly less discoverable |
+| C — Glossary page | Help link at the top; takes user to a separate page. | Rejected — breaks the flow, adds navigation friction |
+
+**Rationale**: Option A is universally recognizable, works on mobile and desktop, and keeps the definition in context without navigating away.
+
+---
+
+### Priority Ranking UX (Prototype B)
+
+**Decision**: Replace strict ordered ranking with importance buckets — implemented as a segmented button row per topic.
+
+**Problem**: Strict rank ordering ("drag to 1st, 2nd, 3rd…") forces false precision. A topic ranked 3rd vs. 4th may matter equally; the forced order adds noise to the matching signal.
+
+**User insight (User 1)**: Intuitively preferred placing topics in named importance levels over sorting them in sequence. Her mental model was drag-and-drop columns.
+
+**Options considered**:
+
+| Option | Description | Verdict |
+|--------|-------------|---------|
+| **A — Segmented button row** | Each topic has 4 labeled buttons (קריטי / חשוב מאוד / חשוב / פחות חשוב) inline. Tap to assign. | **Chosen** |
+| B — Drag-and-drop columns | User 1's original mental model. | Rejected — complex to implement, poor mobile UX |
+| C — Slider per topic | Used in an earlier prototype. | Rejected — imprecise on mobile; semantic meaning of positions unclear without labels |
+
+**UX details**:
+- All topics start unassigned (no default bucket)
+- "פחות חשוב" is an explicit fourth bucket, visually de-emphasized (muted color/weight) to distinguish from "unassigned"
+- Gate: "המשך" requires ≥3 topics assigned to "חשוב" or above
+- Matching weights: קריטי=4, חשוב מאוד=3, חשוב=2, פחות חשוב=1, unassigned=0
+
+---
+
 ## Next Steps
 
 1. ✅ Design decisions documented
@@ -165,7 +261,8 @@ After user testing, the following decisions will be made:
 5. ✅ Build prototype C (dilemmas)
 6. ✅ Build prototype D (Gemini AI conversation)
 7. ✅ Deploy to Vercel production URL (election-assistant-snowy.vercel.app)
-8. 🔲 User testing (voters + advisor) — **in progress, link shared**
-9. 🔲 Synthesize feedback → decide on final approach
-10. 🔲 Expert review of party position scores (especially ביחד, ישר!)
-11. 🔲 Phased plan + MVP definition once prototype winner is known
+8. ✅ User testing round 1 (2 users, 2026-06-15) — see `docs/user-testing/round-1-feedback.md`
+9. 🔲 Apply round-1 fixes (error handling, turn limit, topic clarity, hints, priority buckets) → redeploy for round 2
+10. 🔲 User testing round 2 → synthesize feedback → decide on final approach
+11. 🔲 Expert review of party position scores (especially ביחד, ישר!)
+12. 🔲 Phased plan + MVP definition once prototype winner is known

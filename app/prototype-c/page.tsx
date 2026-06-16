@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { PARTIES } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
+import { TermHint } from "@/components/TermHint";
 
 const DILEMMAS = [
   {
@@ -12,6 +13,7 @@ const DILEMMAS = [
     question: "הממשלה מתלבטת בין שתי גישות לפתרון משבר הדיור:",
     optionA: { label: "בנייה ציבורית", text: "בנות עשרות אלפי דירות ציבוריות להשכרה במחיר מפוקח" },
     optionB: { label: "תמריצי שוק", text: "לתת הטבות מס ומענקים לרוכשי דירה ראשונה בשוק החופשי" },
+    hint: '"שוק חופשי" — מודל כלכלי שבו מחירי הדיור נקבעים לפי היצע וביקוש, ללא תקרת מחיר ממשלתית. "בנייה ציבורית" — המדינה בונה ומשכירה דירות במחיר נמוך מהשוק.',
   },
   {
     id: 2,
@@ -19,6 +21,7 @@ const DILEMMAS = [
     question: "מה צריך לקרות בעזה לאחר סיום הלחימה?",
     optionA: { label: "שלטון בינלאומי", text: "הקמת ממשל בינלאומי-ערבי זמני בעזה, ללא נוכחות צבאית ישראלית קבועה" },
     optionB: { label: "שליטה ישראלית", text: "ישראל שומרת על שליטה ביטחונית מלאה בעזה לטווח ארוך, עד להסדר מדיני קבוע" },
+    hint: '"ממשל בינלאומי-ערבי זמני" — ניהול הרצועה על ידי קואליציה של מדינות זרות (כגון מדינות ערב או האו"ם), עד להקמת שלטון פלסטיני עצמאי.',
   },
   {
     id: 3,
@@ -123,7 +126,12 @@ export default function PrototypeC() {
           <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${(answered / DILEMMAS.length) * 100}%` }} />
         </div>
 
-        <p className="text-xs font-medium text-amber-600 uppercase tracking-wider mb-3">{current.topic}</p>
+        <p className="text-xs font-medium text-amber-600 uppercase tracking-wider mb-2">{current.topic}</p>
+        {"hint" in current && current.hint && (
+          <div className="mb-4">
+            <TermHint definition={current.hint} />
+          </div>
+        )}
         <h2 className="text-xl font-bold leading-snug mb-8">{current.question}</h2>
 
         <div className="flex flex-col gap-4">

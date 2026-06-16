@@ -14,30 +14,37 @@ const SYSTEM_PROMPT = `אתה עוזר ניטרלי שעוזר לאנשים לג
 
 התחל את השיחה בברכה קצרה ובשאלה הראשונה על נושא הביטחון.`;
 
+const SYNTHESIS_INSTRUCTION = `
+
+**הוראה מיוחדת — סיום שיחה:**
+הגעת למגבלת השיחה. אל תשאל שאלות נוספות.
+סכם כעת את עמדות המשתמש ותן את הדירוג הסופי של המפלגות לפי הקרבה אליו.
+השתמש בפורמט הנדרש: "**[מספר]. [שם מפלגה]** — [הסבר]"`;
+
 export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
+  const { messages, isFinalTurn } = await req.json();
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: "GEMINI_API_KEY not configured" }, { status: 500 });
+    return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });
   }
 
   const ai = new GoogleGenAI({ apiKey });
 
-  // Convert prior turns to Gemini history format (exclude the last user message)
   const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
 
   const lastMessage = messages[messages.length - 1];
+  const systemInstruction = SYSTEM_PROMPT + (isFinalTurn ? SYNTHESIS_INSTRUCTION : "");
 
   try {
     const chat = ai.chats.create({
       model: "gemini-3.5-flash",
       history,
       config: {
-        systemInstruction: SYSTEM_PROMPT,
+        systemInstruction,
         temperature: 0.7,
         maxOutputTokens: 2000,
       },
@@ -48,6 +55,17 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("Gemini error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+
+    const isQuota =
+      message.includes("429") ||
+      message.includes("RESOURCE_EXHAUSTED") ||
+      message.toLowerCase().includes("quota");
+    const isAuth =
+      message.includes("401") ||
+      message.includes("403") ||
+      message.includes("API_KEY");
+
+    const errorCode = isQuota ? "QUOTA_EXCEEDED" : isAuth ? "AUTH_ERROR" : "SERVER_ERROR";
+    return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
   }
 }

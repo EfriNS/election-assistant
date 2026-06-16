@@ -4,14 +4,30 @@ import { useState } from "react";
 import Link from "next/link";
 import { PARTIES } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
+import { TermHint } from "@/components/TermHint";
 
 const STATEMENTS = [
-  { id: 1, text: "ישראל צריכה לקדם פתרון שתי מדינות לסכסוך הישראלי-פלסטיני", topic: "ביטחון ומדיניות חוץ" },
+  {
+    id: 1,
+    text: "ישראל צריכה לקדם פתרון שתי מדינות לסכסוך הישראלי-פלסטיני",
+    topic: "ביטחון ומדיניות חוץ",
+    hint: 'הסדר מדיני שבו יוקמו שתי מדינות נפרדות — ישראל ופלסטין — עם גבולות מוסכמים, בדרך כלל על בסיס קווי 1967.',
+  },
   { id: 2, text: "יש להעלות את שכר המינימום משמעותית בשנים הקרובות", topic: "כלכלה" },
-  { id: 3, text: "נישואין אזרחיים צריכים להיות חוקיים בישראל", topic: "דת ומדינה" },
+  {
+    id: 3,
+    text: "נישואין אזרחיים צריכים להיות חוקיים בישראל",
+    topic: "דת ומדינה",
+    hint: 'נישואין המוכרים על ידי המדינה ואינם מחייבים טקס דתי. כיום בישראל, הנישואין מנוהלים אך ורק על ידי הרבנות הראשית (ליהודים) ועל ידי מוסדות דתיים לשאר.',
+  },
   { id: 4, text: "הממשלה צריכה להגביר את מימון הדיור הציבורי להשכרה", topic: "דיור" },
   { id: 5, text: "יש לחייב גיוס שווה לצבא לכלל האזרחים, כולל חרדים", topic: "ביטחון ושוויון" },
-  { id: 6, text: "מערכת המשפט ובית המשפט העליון צריכים להישאר עצמאיים מהכנסת", topic: "שלטון החוק" },
+  {
+    id: 6,
+    text: "מערכת המשפט ובית המשפט העליון צריכים להישאר עצמאיים מהכנסת",
+    topic: "שלטון החוק",
+    hint: 'שאלה האם בית המשפט העליון יוכל לפסול חוקי כנסת הפוגעים בזכויות יסוד — או שהכנסת יכולה לעקוף פסיקות אלה. זהו ליבת ה"רפורמה המשפטית" שעמדה בלב המחאה של 2023.',
+  },
 ];
 
 const OPTIONS = [
@@ -94,7 +110,12 @@ export default function PrototypeA() {
 
         {stmt ? (
           <div>
-            <p className="text-xs font-medium text-blue-600 uppercase tracking-wider mb-3">{stmt.topic}</p>
+            <p className="text-xs font-medium text-blue-600 uppercase tracking-wider mb-2">{stmt.topic}</p>
+            {"hint" in stmt && stmt.hint && (
+              <div className="mb-4">
+                <TermHint definition={stmt.hint} />
+              </div>
+            )}
             <h2 className="text-2xl font-bold leading-snug mb-10">{stmt.text}</h2>
             <div className="flex flex-col gap-3">
               {OPTIONS.map((opt) => (

@@ -17,12 +17,21 @@ const TOPICS = [
   { id: "equality",  label: "זכויות אדם ומיעוטים" },
 ];
 
-// ─── Within-topic value questions ─────────────────────────────────────────────
-// Questions ask what worries / matters most to the user within each topic.
+// ─── Importance buckets ────────────────────────────────────────────────────────
+
+const BUCKETS = [
+  { value: 4, label: "קריטי",      activeClass: "bg-emerald-600 text-white border-emerald-600" },
+  { value: 3, label: "חשוב מאוד",  activeClass: "bg-emerald-400 text-white border-emerald-400" },
+  { value: 2, label: "חשוב",       activeClass: "bg-emerald-200 text-emerald-800 border-emerald-300" },
+  { value: 1, label: "פחות חשוב",  activeClass: "bg-gray-200 text-gray-500 border-gray-300" },
+] as const;
+
+const MIN_IMPORTANT = 3; // minimum topics at bucket ≥ 2
+
+// ─── Within-topic questions ────────────────────────────────────────────────────
 // Scores indexed by party order from lib/parties.ts:
 //   [hadash, democrats, beyahad, yashar, beitenu, likud, shas]
 // NOTE: rough estimates — not verified against current party platforms.
-// ביחד and ישר! scored based on founders' known positions (Lapid/Bennett, Eisenkot).
 
 type Option = { id: string; text: string; scores: number[] };
 type TopicQ = { question: string; options: Option[] };
@@ -104,24 +113,24 @@ const PRIORITY_QUESTIONS: Record<string, TopicQ> = {
 
 // ─── Party matching ────────────────────────────────────────────────────────────
 
-function calcResults(ranked: string[], answers: Record<string, string>) {
+function calcResults(buckets: Record<string, number>, answers: Record<string, string>) {
   const totals = new Array(PARTIES.length).fill(0);
-  const weights = new Array(PARTIES.length).fill(0);
+  const maxPossible = new Array(PARTIES.length).fill(0);
 
-  ranked.forEach((topicId, rankIndex) => {
-    const weight = ranked.length - rankIndex;
+  Object.entries(buckets).forEach(([topicId, weight]) => {
+    if (weight === 0) return;
     const chosenId = answers[topicId];
     const option = PRIORITY_QUESTIONS[topicId]?.options.find((o) => o.id === chosenId);
     if (!option) return;
     option.scores.forEach((score, pi) => {
-      totals[pi] += weight * score;
-      weights[pi] += weight * 2;
+      totals[pi] += weight * (score + 2); // normalize -2..+2 → 0..4
+      maxPossible[pi] += weight * 4;
     });
   });
 
   return PARTIES.map((party, i) => ({
     ...party,
-    score: weights[i] > 0 ? Math.round(((totals[i] + weights[i]) / (2 * weights[i])) * 100) : 50,
+    score: maxPossible[i] > 0 ? Math.round((totals[i] / maxPossible[i]) * 100) : 50,
   })).sort((a, b) => b.score - a.score);
 }
 
@@ -129,82 +138,92 @@ function calcResults(ranked: string[], answers: Record<string, string>) {
 
 type Step = "rank" | "questions" | "results";
 
-const MIN_TOPICS = 3;
-
 export default function PrototypeB() {
   const [step, setStep] = useState<Step>("rank");
-  const [ranked, setRanked] = useState<string[]>([]);
+  const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
-  const toggleTopic = (id: string) => {
-    if (ranked.includes(id)) {
-      setRanked(ranked.filter((r) => r !== id));
-    } else {
-      setRanked([...ranked, id]);
-    }
+  const setBucket = (topicId: string, value: number) => {
+    setBuckets((prev) => ({ ...prev, [topicId]: prev[topicId] === value ? 0 : value }));
   };
 
-  // ── Ranking phase ──────────────────────────────────────────────────────────
+  // Topics with importance ≥ 2, sorted highest bucket first, then lower buckets
+  const topicsToAsk = Object.entries(buckets)
+    .filter(([, w]) => w > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+
+  const importantCount = Object.values(buckets).filter((w) => w >= 2).length;
+  const canProceed = importantCount >= MIN_IMPORTANT;
+
+  // ── Bucket assignment phase ────────────────────────────────────────────────
   if (step === "rank") {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
           <a href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</a>
-          <h1 className="text-2xl font-bold mb-2">מה חשוב לך?</h1>
-          <p className="text-gray-500 text-sm mb-2 leading-relaxed">
-            בחר לפחות {MIN_TOPICS} נושאים שחשובים לך, <strong>לפי סדר חשיבות</strong>.
-            הנושא הראשון שתלחץ עליו יהיה העדיפות הגבוהה ביותר שלך.
+          <h1 className="text-2xl font-bold mb-2">כמה כל נושא חשוב לך?</h1>
+          <p className="text-gray-500 text-sm mb-1 leading-relaxed">
+            לכל נושא — בחר את רמת החשיבות שלו עבורך.
+            ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
           </p>
-          <p className="text-xs text-gray-400 mb-8">לחץ שוב על נושא כדי להסיר אותו.</p>
+          <p className="text-xs text-gray-400 mb-8">
+            יש לסמן לפחות {MIN_IMPORTANT} נושאים כ"חשוב" או יותר כדי להמשיך.
+          </p>
 
-          <div className="grid grid-cols-2 gap-3 mb-8">
+          <div className="flex flex-col gap-3 mb-8">
             {TOPICS.map((t) => {
-              const rank = ranked.indexOf(t.id);
-              const selected = rank !== -1;
+              const selected = buckets[t.id] ?? 0;
               return (
-                <button
+                <div
                   key={t.id}
-                  onClick={() => toggleTopic(t.id)}
-                  className={`relative border-2 rounded-xl p-4 text-right transition-all ${
-                    selected
-                      ? "border-emerald-500 bg-emerald-50"
-                      : "border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
+                  className={`border-2 rounded-xl p-4 transition-all ${
+                    selected >= 2
+                      ? "border-emerald-300 bg-emerald-50/40"
+                      : selected === 1
+                      ? "border-gray-200 bg-gray-50"
+                      : "border-gray-200"
                   }`}
                 >
-                  {selected && (
-                    <span className="absolute top-2 left-2 w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">
-                      {rank + 1}
-                    </span>
-                  )}
-                  <span className="text-sm font-medium leading-snug">{t.label}</span>
-                </button>
+                  <p className="text-sm font-medium mb-3 text-right">{t.label}</p>
+                  <div className="flex gap-2 flex-row-reverse">
+                    {BUCKETS.map((b) => (
+                      <button
+                        key={b.value}
+                        onClick={() => setBucket(t.id, b.value)}
+                        className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all ${
+                          selected === b.value
+                            ? b.activeClass
+                            : "border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600 bg-white"
+                        }`}
+                      >
+                        {b.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               );
             })}
           </div>
 
-          {ranked.length > 0 && (
-            <div className="bg-gray-50 rounded-xl p-4 mb-6">
-              <p className="text-xs text-gray-500 font-medium mb-2">סדר העדיפויות שלך:</p>
-              <ol className="space-y-1">
-                {ranked.map((id, i) => (
-                  <li key={id} className="text-sm text-gray-700">
-                    <span className="font-bold text-emerald-600">{i + 1}.</span>{" "}
-                    {TOPICS.find((t) => t.id === id)?.label}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
+          <div className="mb-4 text-center text-sm text-gray-500">
+            {importantCount < MIN_IMPORTANT ? (
+              <span>סומנו {importantCount} נושאים כ"חשוב" או יותר — יש לסמן לפחות {MIN_IMPORTANT}</span>
+            ) : (
+              <span className="text-emerald-600">
+                {importantCount} נושאים סומנו כחשובים
+                {importantCount < TOPICS.length && " — ניתן לסמן עוד"}
+              </span>
+            )}
+          </div>
 
           <button
             onClick={() => { setQuestionIndex(0); setStep("questions"); }}
-            disabled={ranked.length < MIN_TOPICS}
+            disabled={!canProceed}
             className="w-full bg-emerald-600 text-white py-4 rounded-xl font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-40"
           >
-            {ranked.length < MIN_TOPICS
-              ? `בחר לפחות ${MIN_TOPICS} נושאים (נבחרו ${ranked.length})`
-              : `המשך — ${ranked.length} נושאים נבחרו`}
+            המשך
           </button>
         </div>
       </main>
@@ -213,14 +232,15 @@ export default function PrototypeB() {
 
   // ── Question phase ─────────────────────────────────────────────────────────
   if (step === "questions") {
-    const topicId = ranked[questionIndex];
+    const topicId = topicsToAsk[questionIndex];
     const topic = TOPICS.find((t) => t.id === topicId)!;
     const q = PRIORITY_QUESTIONS[topicId];
+    const bucketLabel = BUCKETS.find((b) => b.value === (buckets[topicId] ?? 0))?.label;
 
     const handleAnswer = (optionId: string) => {
       const next = { ...answers, [topicId]: optionId };
       setAnswers(next);
-      if (questionIndex + 1 < ranked.length) {
+      if (questionIndex + 1 < topicsToAsk.length) {
         setQuestionIndex(questionIndex + 1);
       } else {
         setStep("results");
@@ -228,7 +248,7 @@ export default function PrototypeB() {
     };
 
     const handleSkip = () => {
-      if (questionIndex + 1 < ranked.length) {
+      if (questionIndex + 1 < topicsToAsk.length) {
         setQuestionIndex(questionIndex + 1);
       } else {
         setStep("results");
@@ -248,20 +268,22 @@ export default function PrototypeB() {
         <div className="w-full max-w-xl">
           <div className="flex justify-between items-center mb-8">
             <button onClick={handleBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-            <span className="text-sm text-gray-400">{questionIndex + 1} / {ranked.length}</span>
+            <span className="text-sm text-gray-400">{questionIndex + 1} / {topicsToAsk.length}</span>
           </div>
 
           <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
             <div
               className="h-full bg-emerald-500 rounded-full transition-all"
-              style={{ width: `${(questionIndex / ranked.length) * 100}%` }}
+              style={{ width: `${(questionIndex / topicsToAsk.length) * 100}%` }}
             />
           </div>
 
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold text-white bg-emerald-600 rounded-full w-5 h-5 flex items-center justify-center shrink-0">
-              {questionIndex + 1}
-            </span>
+            {bucketLabel && (
+              <span className="text-xs text-white bg-emerald-600 rounded-full px-2 py-0.5 shrink-0">
+                {bucketLabel}
+              </span>
+            )}
             <p className="text-xs font-medium text-emerald-700 uppercase tracking-wider">{topic.label}</p>
           </div>
           <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
@@ -278,10 +300,7 @@ export default function PrototypeB() {
             ))}
           </div>
 
-          <button
-            onClick={handleSkip}
-            className="w-full text-sm text-gray-400 hover:text-gray-600 text-center py-2"
-          >
+          <button onClick={handleSkip} className="w-full text-sm text-gray-400 hover:text-gray-600 text-center py-2">
             דלג על שאלה זו
           </button>
         </div>
@@ -290,25 +309,38 @@ export default function PrototypeB() {
   }
 
   // ── Results phase ──────────────────────────────────────────────────────────
-  const results = calcResults(ranked, answers);
+  const results = calcResults(buckets, answers);
+
+  const bucketGroups = BUCKETS.map((b) => ({
+    ...b,
+    topics: TOPICS.filter((t) => (buckets[t.id] ?? 0) === b.value).map((t) => t.label),
+  })).filter((g) => g.topics.length > 0);
+
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
         <button
-          onClick={() => { setQuestionIndex(ranked.length - 1); setStep("questions"); }}
+          onClick={() => { setQuestionIndex(topicsToAsk.length - 1); setStep("questions"); }}
           className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block"
         >
           ← חזרה
         </button>
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-        <p className="text-gray-500 text-sm mb-1">
-          המשקל ניתן לפי סדר העדיפויות שבחרת:
-        </p>
-        <ol className="text-xs text-gray-400 mb-4 list-decimal list-inside">
-          {ranked.map((id) => (
-            <li key={id}>{TOPICS.find((t) => t.id === id)?.label}</li>
+        <p className="text-gray-500 text-sm mb-3">משוקלל לפי מה שסימנת כחשוב:</p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {bucketGroups.map((g) => (
+            <div key={g.value} className="text-xs text-gray-500">
+              <span className={`inline-block px-2 py-0.5 rounded-full font-medium mr-1 ${
+                g.value >= 3 ? "bg-emerald-100 text-emerald-700" :
+                g.value === 2 ? "bg-emerald-50 text-emerald-600" :
+                "bg-gray-100 text-gray-400"
+              }`}>{g.label}</span>
+              {g.topics.join("، ")}
+            </div>
           ))}
-        </ol>
+        </div>
+
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
           <strong>שיטת החישוב:</strong> הציונות מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
         </div>
