@@ -22,14 +22,32 @@ const SYNTHESIS_INSTRUCTION = `
 השתמש בפורמט הנדרש: "**[מספר]. [שם מפלגה]** — [הסבר]"`;
 
 export async function POST(req: NextRequest) {
-  const { messages, isFinalTurn } = await req.json();
+  const { messages, isFinalTurn, sessionId } = await req.json();
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });
   }
 
-  const ai = new GoogleGenAI({ apiKey });
+  const heliconeKey = process.env.HELICONE_API_KEY;
+  const turnNumber = messages.filter((m: { role: string }) => m.role === "user").length;
+
+  const ai = new GoogleGenAI({
+    apiKey,
+    ...(heliconeKey && {
+      httpOptions: {
+        baseUrl: "https://gateway.helicone.ai",
+        headers: {
+          "Helicone-Auth": `Bearer ${heliconeKey}`,
+          "Helicone-Target-URL": "https://generativelanguage.googleapis.com",
+          ...(sessionId && { "Helicone-Session-Id": sessionId }),
+          "Helicone-Session-Path": `/turn-${turnNumber}`,
+          "Helicone-Property-Prototype": "d",
+          "Helicone-Property-Final-Turn": isFinalTurn ? "true" : "false",
+        },
+      },
+    }),
+  });
 
   const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
     role: m.role === "assistant" ? "model" : "user",

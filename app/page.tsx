@@ -84,7 +84,7 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="text-xs text-center text-gray-300 mt-12">
+        <p className="text-xs text-center text-gray-500 mt-12">
           אב-טיפוס בלבד · התוכן לא מייצג עמדות פוליטיות אמיתיות
         </p>
       </div>

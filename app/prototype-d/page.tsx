@@ -48,6 +48,7 @@ export default function PrototypeD() {
   const [started, setStarted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [finished, setFinished] = useState(false);
+  const [sessionId] = useState(() => crypto.randomUUID());
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function PrototypeD() {
         body: JSON.stringify({
           messages: [...conversationHistory, { role: "user", content }],
           isFinalTurn,
+          sessionId,
         }),
       });
       const data = await res.json();
