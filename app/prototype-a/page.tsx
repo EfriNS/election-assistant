@@ -116,7 +116,7 @@ export default function PrototypeA() {
       <div className="w-full max-w-xl">
         <div className="flex justify-between items-center mb-8">
           <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-          <span className="text-sm text-gray-400">{progress} / {STATEMENTS.length}</span>
+          <span className="text-sm text-gray-400" dir="ltr">{progress} / {STATEMENTS.length}</span>
         </div>
 
         <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">

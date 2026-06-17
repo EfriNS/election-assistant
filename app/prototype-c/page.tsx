@@ -134,7 +134,7 @@ export default function PrototypeC() {
       <div className="w-full max-w-xl">
         <div className="flex justify-between items-center mb-8">
           <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-          <span className="text-sm text-gray-400">{answered + 1} / {DILEMMAS.length}</span>
+          <span className="text-sm text-gray-400" dir="ltr">{answered + 1} / {DILEMMAS.length}</span>
         </div>
         <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
           <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${(answered / DILEMMAS.length) * 100}%` }} />

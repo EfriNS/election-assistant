@@ -268,7 +268,7 @@ export default function PrototypeB() {
         <div className="w-full max-w-xl">
           <div className="flex justify-between items-center mb-8">
             <button onClick={handleBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-            <span className="text-sm text-gray-400">{questionIndex + 1} / {topicsToAsk.length}</span>
+            <span className="text-sm text-gray-400" dir="ltr">{questionIndex + 1} / {topicsToAsk.length}</span>
           </div>
 
           <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
