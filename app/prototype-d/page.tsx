@@ -123,7 +123,12 @@ export default function PrototypeD() {
       const data = await res.json();
       if (data.content) {
         setMessages([...next, { role: "assistant", content: data.content }]);
-        if (isFinalTurn) {
+        // Detect synthesis turn: AI mentions 5+ party names in one response (ranking),
+        // or the hard turn-limit fired. The system prompt uses **N. party** format.
+        const PARTY_NAMES = ['הדמוקרטים', 'ליכוד', 'ש"ס', 'ביחד', 'ישר', 'ישראל ביתנו', 'חד"ש'];
+        const partyMentions = PARTY_NAMES.filter((n) => data.content.includes(n)).length;
+        const isSynthesis = isFinalTurn || partyMentions >= 5;
+        if (isSynthesis) {
           setFinished(true);
           setShowResults(true);
           setResultsLoading(true);
