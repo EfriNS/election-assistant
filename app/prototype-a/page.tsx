@@ -69,6 +69,7 @@ export default function PrototypeA() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [done, setDone] = useState(false);
+  const [confirmHome, setConfirmHome] = useState(false);
 
   const current = STATEMENTS.findIndex((s) => answers[s.id] === undefined);
   const progress = Object.keys(answers).length;
@@ -103,7 +104,21 @@ export default function PrototypeA() {
               <PartyResultCard key={r.id} party={r} rank={i} accentColor="blue" />
             ))}
           </div>
-          <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+          <div className="mt-8 text-center">
+            <p className="text-xs text-gray-300 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+            {!confirmHome ? (
+              <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
+                ← חזרה לדף הבית
+              </button>
+            ) : (
+              <div className="flex items-center justify-center gap-2 text-sm">
+                <span className="text-gray-500">התוצאות לא ישמרו —</span>
+                <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
+                <span className="text-gray-300">|</span>
+                <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     );

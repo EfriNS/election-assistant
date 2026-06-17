@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
 
@@ -139,7 +140,9 @@ function calcResults(buckets: Record<string, number>, answers: Record<string, st
 type Step = "rank" | "questions" | "results";
 
 export default function PrototypeB() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("rank");
+  const [confirmHome, setConfirmHome] = useState(false);
   const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -350,7 +353,21 @@ export default function PrototypeB() {
             <PartyResultCard key={r.id} party={r} rank={i} accentColor="emerald" />
           ))}
         </div>
-        <p className="text-xs text-gray-300 mt-8 text-center">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+        <div className="mt-8 text-center">
+          <p className="text-xs text-gray-300 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+          {!confirmHome ? (
+            <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
+              ← חזרה לדף הבית
+            </button>
+          ) : (
+            <div className="flex items-center justify-center gap-2 text-sm">
+              <span className="text-gray-500">התוצאות לא ישמרו —</span>
+              <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
+              <span className="text-gray-300">|</span>
+              <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

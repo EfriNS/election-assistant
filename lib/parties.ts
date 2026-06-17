@@ -15,7 +15,7 @@ export type Party = {
   description: string;  // one-line tagline shown in results
   website: string;      // general party homepage (empty string if unknown)
   platformUrl?: string; // URL to official מצע or closest available substitute
-  platformLabel?: string; // overrides "מצע רשמי" label — use when URL is NOT a real מצע (e.g. "משימות")
+  platformLabel?: string; // overrides "מצע רשמי" label — use when URL is NOT a real מצע (e.g. "יעדים (לא מצע)")
 };
 
 // Ordered left→right on the general political spectrum.
@@ -48,7 +48,7 @@ export const PARTIES: Party[] = [
     description: "מרכז-ימין — ביטחון לאומי, שקיפות, ממשל אחראי.",
     website: "https://yasharwitheisenkot.com",
     platformUrl: "https://yasharwitheisenkot.com/topic/missions/",
-    platformLabel: "משימות (לא מצע)",
+    platformLabel: "יעדים (לא מצע)",
   },
   {
     id: "beitenu",
