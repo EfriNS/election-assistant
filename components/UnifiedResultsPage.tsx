@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Party } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
+import ShareButton from "@/components/ShareButton";
 
 type AiData = {
   profile: string;
@@ -104,6 +105,11 @@ export default function UnifiedResultsPage({
         {/* Methodology disclaimer */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-6 text-xs text-gray-500 leading-relaxed">
           <strong>שיטת החישוב:</strong> {METHODOLOGY}
+        </div>
+
+        {/* Share */}
+        <div className="mt-8 flex justify-center">
+          <ShareButton variant="prominent" />
         </div>
 
         {/* Home navigation */}

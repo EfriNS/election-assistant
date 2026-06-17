@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
 
 const prototypes = [
   {
@@ -84,9 +85,12 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="text-xs text-center text-gray-500 mt-12">
-          אב-טיפוס בלבד · התוכן לא מייצג עמדות פוליטיות אמיתיות
-        </p>
+        <div className="mt-12 flex flex-col items-center gap-3">
+          <p className="text-xs text-center text-gray-500">
+            אב-טיפוס בלבד · התוכן לא מייצג עמדות פוליטיות אמיתיות
+          </p>
+          <ShareButton variant="subtle" />
+        </div>
       </div>
     </main>
   );
