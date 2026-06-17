@@ -1,5 +1,80 @@
 # Changelog
 
+## 2026-06-17 — Analytics Debugging, UX Polish, Pre-Round-2 Fixes
+
+### What We Did
+
+Third session of the day. Debugged and improved all three analytics integrations (ContentSquare, Clarity, Hotjar), fixed several UX and copy issues, and completed pre-round-2 preparation (home navigation, confirmation dialogs, text fixes).
+
+### Analytics Stack Overhaul
+
+**ContentSquare — VPV tracking** (`2d7b4c6`):
+- Root cause of 0 session replays: ContentSquare doesn't auto-detect SPA route changes.
+- Added `components/ContentSquareTracker.tsx` — a client component using `usePathname()` that pushes `["trackPageview", pathname]` to `window._uxa` on every navigation.
+- `window._uxa` initialized defensively before each push to handle race condition (component fires before CS script loads; CS drains the queue on load).
+
+**ContentSquare — script moved to `<head>`** (`105beb5`):
+- Original placement: `<Script strategy="afterInteractive">` at bottom of `<body>`. CS's own docs say "paste as high as possible in `<head>`".
+- Changed to `<script defer src="...">` inside `<head>` in `layout.tsx`. Confirmed via `curl` that it renders as `<script defer="" src="...">` in the actual HTML.
+- Sessions started appearing in replay after this fix — but free plan samples only 5% of sessions (next paid tier "Growth" at $591/mo samples 15%; 100% requires "Pro" = call sales). Kept CS for what it is.
+
+**Microsoft Clarity added** (`403d2bf`):
+- Added inline init script to `<head>` via `dangerouslySetInnerHTML`. Tag ID: `x8iv051fpw`.
+- Recordings appeared immediately. Sessions showed as "live" (expected — moves to "recordings" once tab closes + processing completes).
+
+**Hotjar re-added** (`ac87389`):
+- ContentSquare free tier too limited for reliable replay data. Hotjar re-added alongside Clarity and CS.
+- Tag ID: `6732665`. Same inline pattern in `<head>`. Hotjar confirmed "recordings on the way".
+
+**Vercel Analytics**:
+- Had 0 records. Root cause: `live: false` in project config (no custom domain). Resolved via Vercel dashboard toggle. Not a code change.
+
+**npm audit fix --force incident**:
+- `npm audit fix --force` downgraded `@vercel/analytics` v2→v1.1.4. v1 lacks the `/next` subpath export used in `layout.tsx`, breaking the build. The underlying vulnerability (postcss in Next.js internals) has no viable fix (npm's "fix" would downgrade Next.js to 9.3.3). Reverted the downgrade; accepted the known limitation.
+
+### UX Fixes
+
+**Question counter direction** (`4104f04`):
+- RTL page direction was rendering "1 / 6" as "6 / 1" in prototypes A, B, C.
+- Fixed with `dir="ltr"` on each counter `<span>`. Works correctly for both RTL and future LTR language support.
+
+**Home button with confirmation** (`4285770`, `510905e`):
+- Added "← חזרה לדף הבית" at the bottom of results screens in prototypes A, B, C.
+- Inline confirmation pattern: click → shows "התשובות והתוצאות יאבדו — בטוח | ביטול".
+- Prototype D chat header: same pattern but rendered inline in the compact header. Pre-start screen kept as plain Link (no data to lose).
+- Prototype B: `useRouter` added (wasn't imported).
+
+**Prototype B — min topics emphasis** (`510905e`):
+- "לפחות 3 נושאים" instruction was `text-xs text-gray-400` — easy to miss (round-1 feedback).
+- Changed to `text-sm text-gray-600` with `<strong>לפחות {MIN_IMPORTANT} נושאים</strong>`.
+
+### Copy Fixes
+
+- `904bb32` — AI prompt option 4: "אחר — ספר לי בחופשיות" → "משהו אחר — במילים שלך" (gender-neutral, more natural)
+- `4285770` — ישר! platform label: "משימות (לא מצע)" → "יעדים (לא מצע)" ("missions" was a literal translation of the URL slug; "יעדים" is natural political Hebrew for "goals")
+- `59c8fbe` — confirmation warning: "התוצאות לא ישמרו" → "התשובות והתוצאות יאבדו" (more accurate — results are never saved)
+- `59c8fbe` — disclaimer text: `text-gray-300` → `text-gray-500` (was nearly invisible)
+- `854a1f1` — typo: "הציונות מבוסס" → "הציון מבוסס" ("Zionism" vs "the score") across A, B, C
+- `66893e6` — Democrats: added constitution link (`democrats.org.il/.../constitution_240725.pdf`) labeled "חוקה (לא מצע)", parallel to ישר!'s "יעדים (לא מצע)"
+
+### Commits
+
+```
+510905e feat: add home confirmation to chat header + emphasize min topics in prototype-b
+ac87389 feat: add Hotjar tracking tag to <head>
+66893e6 feat: add Democrats constitution link to results (labeled "חוקה (לא מצע)")
+403d2bf feat: add Microsoft Clarity tracking tag to <head>
+854a1f1 fix: correct typo "הציונות" → "הציון" in scoring disclaimer
+59c8fbe fix: improve home confirmation text and disclaimer color
+4285770 feat: add home button with confirmation to results screens + fix party label
+105beb5 fix: move ContentSquare tag to <head> with defer per CS instructions
+904bb32 fix: replace forced "ספר לי בחופשיות" with gender-neutral "במילים שלך"
+4104f04 fix: force LTR direction on question counter spans
+2d7b4c6 feat: add ContentSquare virtual page view tracking for SPA navigation
+```
+
+---
+
 ## 2026-06-17 — AI Chat Flow Fixes, Back Navigation, Text Quality, ContentSquare
 
 ### What We Did
