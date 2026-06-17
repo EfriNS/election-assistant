@@ -171,8 +171,8 @@ export default function PrototypeB() {
             לכל נושא — בחר את רמת החשיבות שלו עבורך.
             ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
           </p>
-          <p className="text-xs text-gray-400 mb-8">
-            יש לסמן לפחות {MIN_IMPORTANT} נושאים כ"חשוב" או יותר כדי להמשיך.
+          <p className="text-sm text-gray-600 mb-8">
+            יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים</strong> כ"חשוב" או יותר כדי להמשיך.
           </p>
 
           <div className="flex flex-col gap-3 mb-8">

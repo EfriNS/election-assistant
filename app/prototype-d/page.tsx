@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -47,6 +48,8 @@ export default function PrototypeD() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const [confirmHome, setConfirmHome] = useState(false);
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [finished, setFinished] = useState(false);
   const [sessionId] = useState(() => crypto.randomUUID());
@@ -158,9 +161,18 @@ export default function PrototypeD() {
   return (
     <main className="h-screen flex flex-col">
       <div className="border-b border-gray-200 bg-white px-4 py-3 flex items-center gap-3 shrink-0">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">
-          ← חזרה
-        </Link>
+        {!confirmHome ? (
+          <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
+            ← חזרה
+          </button>
+        ) : (
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-gray-500">השיחה תאבד —</span>
+            <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
+            <span className="text-gray-300">|</span>
+            <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
+          </div>
+        )}
         <div className="w-px h-4 bg-gray-200" />
         <div className="w-2 h-2 bg-purple-500 rounded-full" />
         <span className="text-sm font-medium">עוזר הבחירות</span>
