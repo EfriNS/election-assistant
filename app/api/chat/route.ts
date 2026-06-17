@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
+import { Langfuse } from "langfuse";
 
 const SYSTEM_PROMPT = `אתה עוזר ניטרלי שעוזר לאנשים לגלות לאיזו מפלגה פוליטית הם הכי קרובים.
 
@@ -21,6 +22,15 @@ const SYNTHESIS_INSTRUCTION = `
 סכם כעת את עמדות המשתמש ותן את הדירוג הסופי של המפלגות לפי הקרבה אליו.
 השתמש בפורמט הנדרש: "**[מספר]. [שם מפלגה]** — [הסבר]"`;
 
+function makeLangfuse() {
+  if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
+  return new Langfuse({
+    secretKey: process.env.LANGFUSE_SECRET_KEY,
+    publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+    baseUrl: process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
+  });
+}
+
 export async function POST(req: NextRequest) {
   const { messages, isFinalTurn, sessionId } = await req.json();
 
@@ -29,25 +39,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });
   }
 
-  const heliconeKey = process.env.HELICONE_API_KEY;
   const turnNumber = messages.filter((m: { role: string }) => m.role === "user").length;
+  const model = "gemini-3.1-flash-lite";
 
-  const ai = new GoogleGenAI({
-    apiKey,
-    ...(heliconeKey && {
-      httpOptions: {
-        baseUrl: "https://gateway.helicone.ai",
-        headers: {
-          "Helicone-Auth": `Bearer ${heliconeKey}`,
-          "Helicone-Target-URL": "https://generativelanguage.googleapis.com",
-          ...(sessionId && { "Helicone-Session-Id": sessionId }),
-          "Helicone-Session-Path": `/turn-${turnNumber}`,
-          "Helicone-Property-Prototype": "d",
-          "Helicone-Property-Final-Turn": isFinalTurn ? "true" : "false",
-        },
-      },
-    }),
+  const langfuse = makeLangfuse();
+  const trace = langfuse?.trace({
+    name: "conversation-turn",
+    sessionId: sessionId ?? undefined,
+    metadata: { turnNumber, isFinalTurn, prototype: "d" },
   });
+  const generation = trace?.generation({
+    name: "gemini-response",
+    model,
+    input: messages,
+  });
+
+  const ai = new GoogleGenAI({ apiKey });
 
   const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
     role: m.role === "assistant" ? "model" : "user",
@@ -59,16 +66,16 @@ export async function POST(req: NextRequest) {
 
   try {
     const chat = ai.chats.create({
-      model: "gemini-3.1-flash-lite",
+      model,
       history,
-      config: {
-        systemInstruction,
-        temperature: 0.7,
-        maxOutputTokens: 2000,
-      },
+      config: { systemInstruction, temperature: 0.7, maxOutputTokens: 2000 },
     });
 
     const response = await chat.sendMessage({ message: lastMessage.content });
+    generation?.update({ output: response.text ?? "" });
+    generation?.end();
+    await langfuse?.flushAsync();
+
     return NextResponse.json({ content: response.text });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -84,6 +91,10 @@ export async function POST(req: NextRequest) {
       message.includes("API_KEY");
 
     const errorCode = isQuota ? "QUOTA_EXCEEDED" : isAuth ? "AUTH_ERROR" : "SERVER_ERROR";
+    generation?.update({ output: errorCode, level: "ERROR" });
+    generation?.end();
+    await langfuse?.flushAsync();
+
     return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
   }
 }
