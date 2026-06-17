@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const chat = ai.chats.create({
-      model: "gemini-3.5-flash",
+      model: "gemini-3.1-flash-lite",
       history,
       config: {
         systemInstruction,

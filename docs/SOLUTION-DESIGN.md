@@ -113,7 +113,7 @@ Each prototype tests a distinct question-asking model. All share the same underl
 
 ### AI (Prototype D)
 **Google Gemini free tier** via `@google/genai` npm package v2.8.0.
-- Model: `gemini-3.5-flash` (current; user explicitly required this model)
+- Model: `gemini-3.1-flash-lite` (switched from `gemini-3.5-flash` which has RPD=20 on free tier; lite has RPD=500, RPM=10 — sufficient for prototype testing)
 - `maxOutputTokens: 2000` (600 caused truncation mid-sentence)
 - API key: `GEMINI_API_KEY` env var (`.env.local` locally, Vercel env var in production)
 - API shape: `ai.chats.create({model, history, config: {systemInstruction}})` then `chat.sendMessage({message})`
@@ -180,7 +180,7 @@ After initial feedback from 2 users (see `docs/user-testing/round-1-feedback.md`
 
 **Problem**: A user hit the Gemini free-tier daily request quota mid-conversation, right before receiving results — the most frustrating possible failure point. The free tier quota is shared across all users with no per-user enforcement.
 
-**Note on model**: `gemini-3.5-flash` is the correct model ID (designed for agentic use, 1M token context). Despite appearing non-existent in some LLM training data, it is current and valid per the [official docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash).
+**Note on model**: `gemini-3.5-flash` is valid and was used initially (designed for agentic use, 1M token context, RPD=20 free tier). Switched to `gemini-3.1-flash-lite` (RPD=500) after confirming the 20 RPD limit was exhausted by 2 users in a single day of testing.
 
 **Options considered**:
 
