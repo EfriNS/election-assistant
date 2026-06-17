@@ -5,7 +5,14 @@ import Link from "next/link";
 
 type Message = { role: "user" | "assistant"; content: string };
 
-const MAX_TURNS = 8;
+const MAX_TURNS = 50;
+
+// Shown immediately on chat open (not sent to the API — API sees only the real conversation).
+const INTRO_MESSAGE: Message = {
+  role: "assistant",
+  content:
+    "שלום! אני עוזר הבחירות.\n\nאשאל אותך שאלות על נושאים שחשובים לך — ביטחון, כלכלה, דיור, חינוך ועוד. בסוף השיחה אסביר לאיזו מפלגה אתה הכי קרוב, ולמה.\n\nאין תשובות נכונות או לא נכונות — ענה בכנות לפי מה שאתה באמת חושב.",
+};
 
 const ERROR_MESSAGES: Record<string, string> = {
   QUOTA_EXCEEDED:
@@ -13,12 +20,6 @@ const ERROR_MESSAGES: Record<string, string> = {
   AUTH_ERROR: "שגיאה בהגדרות המערכת. אנא דווח על הבעיה.",
   SERVER_ERROR: "אירעה שגיאה בשרת. נסה שוב.",
   NETWORK_ERROR: "שגיאת רשת — בדוק חיבור לאינטרנט ונסה שוב.",
-};
-
-const INTRO_MESSAGE: Message = {
-  role: "assistant",
-  content:
-    "שלום! אני עוזר הבחירות.\n\nאשאל אותך שאלות על נושאים שחשובים לך — ביטחון, כלכלה, דיור, חינוך ועוד. בסוף השיחה אסביר לאיזו מפלגה אתה הכי קרוב, ולמה.\n\nאין תשובות נכונות או לא נכונות — ענה בכנות לפי מה שאתה באמת חושב.\n\nמוכן? כתוב כל דבר כדי להתחיל.",
 };
 
 function MessageBubble({ msg }: { msg: Message }) {
@@ -50,13 +51,42 @@ export default function PrototypeD() {
   const [finished, setFinished] = useState(false);
   const [sessionId] = useState(() => crypto.randomUUID());
   const bottomRef = useRef<HTMLDivElement>(null);
+  const autoStartedRef = useRef(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Auto-start: call the AI immediately when the user enters the chat,
+  // so the kickoff "say anything to start" turn doesn't consume a MAX_TURNS slot.
+  useEffect(() => {
+    if (!started || autoStartedRef.current) return;
+    autoStartedRef.current = true;
+    setLoading(true);
+    fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: "התחל" }],
+        isFinalTurn: false,
+        sessionId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.content) {
+          setMessages([INTRO_MESSAGE, { role: "assistant", content: data.content }]);
+        } else {
+          setError(data.errorCode ?? "SERVER_ERROR");
+        }
+      })
+      .catch(() => setError("NETWORK_ERROR"))
+      .finally(() => setLoading(false));
+  }, [started, sessionId]);
+
   const sendMessage = async (content: string) => {
     setError(null);
+    // slice(1) skips the static INTRO_MESSAGE so it's never sent to the API
     const conversationHistory = messages.slice(1);
     const userTurnsSoFar = conversationHistory.filter((m) => m.role === "user").length;
     const isFinalTurn = userTurnsSoFar >= MAX_TURNS - 1;
@@ -90,8 +120,10 @@ export default function PrototypeD() {
     }
   };
 
+  // userTurnCount is based on messages (which no longer includes a static intro message)
   const userTurnCount = messages.filter((m) => m.role === "user").length;
-  const isNearLimit = userTurnCount === MAX_TURNS - 2 && !finished;
+  // isNearLimit fires exactly 1 turn before synthesis — so the banner and the final turn align
+  const isNearLimit = userTurnCount === MAX_TURNS - 1 && !finished;
   const isAtLimit = userTurnCount >= MAX_TURNS - 1 && !finished;
 
   if (!started) {
