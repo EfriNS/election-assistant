@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **AI chat flow + back nav + text fixes** - Auto-start (removes wasted kickoff turn), isNearLimit off-by-one fixed, MAX_TURNS→50, back navigation fixed in A+C, copy errors fixed. (2026-06-17)
 - **User testing round 1 + UX fixes** - Feedback from 2 users captured; error handling, turn limit, priority buckets, term hints, analytics, Langfuse deployed. (2026-06-17)
 - **4 UX prototypes built + deployed** - All 4 prototypes live at election-assistant-snowy.vercel.app; real parties, Gemini AI, sent to users for testing. (2026-06-16)
-- **Solution design** - 4 prototype models defined, Next.js + Vercel + Gemini stack selected. (2026-06-14)
 
 > See CHANGELOG.md for complete details.
 

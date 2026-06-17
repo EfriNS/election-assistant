@@ -1,5 +1,70 @@
 # Changelog
 
+## 2026-06-17 — AI Chat Flow Fixes, Back Navigation, Text Quality, ContentSquare
+
+### What We Did
+
+Second wave of fixes after user testing. Addressed structural bugs in the AI conversation flow, broken back navigation across all fixed-option prototypes, and miscellaneous copy errors.
+
+### Tracking: Hotjar → ContentSquare (`b1457be`)
+
+- Removed Hotjar inline script (`HOTJAR_SITE_ID = 6507347`) from `app/layout.tsx`
+- Replaced with ContentSquare: `<Script src="https://t.contentsquare.net/uxa/fe934643ecf38.js" strategy="afterInteractive" />`
+- Hotjar was acquired by ContentSquare; this is the migration path
+
+### AI Chat Flow Overhaul (`b1457be`)
+
+**Problem 1 — Wasted kickoff turn**: The static INTRO_MESSAGE ended with "מוכן? כתוב כל דבר כדי להתחיל", forcing the user to type anything to start. That first message burned 1 of 8 `MAX_TURNS` just for kickoff, leaving only 6 real topic turns + 1 synthesis.
+
+**Fix — Auto-start**: A `useEffect` (gated by `autoStartedRef` to prevent React StrictMode double-invoke) fires when the user enters the chat. It calls the API with a hidden `{ role: "user", content: "התחל" }` message not shown in the UI. The AI responds with the first question, which appears after the INTRO_MESSAGE prefix. All 8 `MAX_TURNS` are now real user turns.
+
+**Problem 2 — isNearLimit off by one**: The "עוד תשובה אחת — ואז אסכם" banner appeared at `userTurnCount === MAX_TURNS - 2 = 6`, but synthesis only triggered at turn 8. The banner fired 2 turns early, creating the UX sequence: banner → another question → "שאלה אחרונה" placeholder → another question → synthesis.
+
+**Fix**: Changed `isNearLimit = userTurnCount === MAX_TURNS - 1`. Banner and "שאלה אחרונה" placeholder now both fire at turn 7, and turn 8 is the actual final turn. One warning, one final turn.
+
+**Restored INTRO_MESSAGE**: Static prefix displayed instantly on chat open (no loading delay). Text trimmed — removed "מוכן? כתוב כל דבר כדי להתחיל". API never receives this message (`conversationHistory = messages.slice(1)`).
+
+### MAX_TURNS Raised 8 → 50 (`b1457be`)
+
+- **Rationale**: Flash-lite cost is ~$0.002/conversation; bottleneck is API requests/day (free tier: 1,500), not tokens. 8 turns left only 6 meaningful topic exchanges. 50 is a generous safety net.
+- **AI natural ending**: System prompt says "אחרי כ-8-10 נושאים, סכם" — the AI concludes around turn 10–15 naturally. 50 is abuse protection, not a UX boundary.
+- **Implication**: `isNearLimit` and `isAtLimit` banners now only appear in extreme edge cases (turn 49), not during normal use.
+- **Decision against progress bar**: Since most conversations end well before 50 turns (AI decides naturally), a turn-count progress bar would show "3/50" when the AI wraps up — meaningless and misleading. A topic tracker would be better UX but requires structured AI output.
+
+### System Prompt Improvements (`e029847`)
+
+- **No duplicate greeting**: System prompt previously said "התחל בברכה קצרה" — but INTRO_MESSAGE already greeted the user, causing two "שלום!" messages. Changed to "פתח ישירות בשאלה הראשונה...ללא ברכה נוספת".
+- **Follow-up cap**: Added "אל תשאל יותר מ-2 שאלות על אותו נושא" to prevent the AI from spending 3–4 turns on one topic and never reaching others.
+- **Numbered options**: When the AI presents answer options, it now formats them as a numbered list (1., 2., 3.) with "4. אחר — ספר לי בחופשיות" appended. User still answers with free text.
+
+### Back Navigation Fixed — Prototype A and C (`e029847`)
+
+**Problem**: In prototype-a (הצהרות) and prototype-c (דילמות), the "← חזרה" button was a `<Link href="/">` that always went to the landing page. Users had no way to reconsider a previous answer.
+
+**Fix — Prototype A**:
+- Added `goBack()` function: removes the answer for the most recently answered statement (`answers[STATEMENTS[current - 1].id]`) using `setAnswers((prev) => { delete copy[id]; return copy; })`.
+- From Q1: `router.push("/")` — goes to landing page.
+- From results screen: `setDone(false)` + removes last answer (goes back to Q6, not the intermediate "ענית על כל השאלות" screen).
+- Replaced `Link` import with `useRouter` (no other Link usage in this component).
+
+**Fix — Prototype C**: Same pattern. `answered = Object.keys(answers).length` tracks position; back removes `DILEMMAS[answered - 1].id`.
+
+**Prototype B**: Back navigation was already correct (`handleBack` function with proper question-step logic). No change needed.
+
+### Text Quality Fixes (`e029847`)
+
+- **Prototype B economy option**: "פערים — הבוגרים מתעשרים, הפועלים נסגרים" was nonsensical ("הפועלים נסגרים" has no meaning in this context). Fixed to: "פערים — בעלי הון מתעשרים, השכירים נשארים מאחור".
+- **Prototype C housing dilemma**: "בנות עשרות אלפי דירות" → "לבנות עשרות אלפי דירות" (infinitive verb missing "ל" prefix).
+
+### Commits
+
+```
+e029847 fix: back navigation, text fixes, AI prompt improvements
+b1457be feat: replace Hotjar with ContentSquare, fix AI chat flow, raise turn limit
+```
+
+---
+
 ## 2026-06-16–17 — User Testing Round 1: Feedback Captured + UX Fixes + Analytics
 
 ### What We Did

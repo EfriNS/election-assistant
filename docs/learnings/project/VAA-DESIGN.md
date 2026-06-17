@@ -56,6 +56,24 @@
 
 ---
 
+## AI Conversation Design (Prototype D Learnings)
+
+19. **Auto-start removes a wasted "kickoff" turn** — If the chat opens with "type anything to start", the user's first message burns an API call on a non-substantive exchange. Better: fire the API call automatically on chat entry (hidden from state), let the AI open with the first real question. All turn budget is then for real content. Implementation: `useEffect` gated by a `useRef` flag to prevent React StrictMode double-invoke.
+
+20. **isNearLimit warning must fire exactly 1 turn before the event** — An off-by-one (warning at turn N-2 instead of N-1) creates a confusing UX: the user sees "one more question" but the AI asks two more before synthesizing. Trace: isNearLimit uses `messages` state (post-response), isFinalTurn uses `conversationHistory` (pre-submit). Keep both thresholds at `MAX_TURNS - 1` so they refer to the same turn.
+
+21. **Turn limit is a cost proxy, not a UX boundary — set it generously** — The real cost driver for Gemini Flash-lite is API requests/day (free tier: 1,500/day), not tokens. Cost per conversation is ~$0.002 on paid tier. A tight turn limit (8) was leaving only 6 meaningful topic turns; 50 lets the AI conclude naturally (around turn 10–15 per system prompt) with the hard limit as abuse protection only. Progress bars showing "3/50" when the AI wraps up at turn 13 would be misleading — don't add them unless tracking topic coverage (not turn count).
+
+22. **System prompt double-greeting when combining static prefix + AI first turn** — A static intro card (shown instantly, no API latency) + an AI-generated first message creates duplicate greetings if the prompt says "start with a greeting". Fix: instruct the AI to skip the greeting ("המשתמש כבר ראה הסבר...פתח ישירות בשאלה") and trim the "כתוב כל דבר להתחיל" from the static intro.
+
+23. **Format AI-presented options as numbered list with free-text escape** — When the AI lists answer options as a prose paragraph, users don't know if they must choose one. Better: instruct the AI to present options as numbered lines (1., 2., 3.) with a final "4. אחר — ספר לי בחופשיות". Keep the answer field as free text — users can pick a number or write anything.
+
+24. **Conversational tangents (e.g., rhymes) don't harm the assessment** — A user asked "תוכל לשאול אותי את זה בחרוזים?" and the AI answered in rhyme. The subsequent political assessment was unaffected. Allowing personality/humor in the AI exchange increases engagement with no meaningful cost to result quality. Don't suppress this — it makes the tool feel human.
+
+25. **Per-topic follow-up cap prevents topic starvation** — Without a cap, the AI may ask 3–4 follow-ups on security and never reach housing or health. System prompt should say "אל תשאל יותר מ-2 שאלות על אותו נושא לפני שתמשיך הלאה". This ensures breadth across 8 topics within a ~12-turn conversation.
+
+---
+
 ## Competitive Landscape Quick Reference
 
 | Tool | Key insight for us |
