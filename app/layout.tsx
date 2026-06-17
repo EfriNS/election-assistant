@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import ContentSquareTracker from "@/components/ContentSquareTracker";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {buildId}
         </div>
         <Analytics />
+        <ContentSquareTracker />
         <Script
           src="https://t.contentsquare.net/uxa/fe934643ecf38.js"
           strategy="afterInteractive"
