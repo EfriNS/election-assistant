@@ -115,7 +115,7 @@ export default function PrototypeC() {
           <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
           <p className="text-gray-500 text-sm mb-4">על סמך הבחירות שעשית בדילמות:</p>
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
-            <strong>שיטת החישוב:</strong> הציונות מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
+            <strong>שיטת החישוב:</strong> הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
           </div>
           <div className="flex flex-col gap-3">
             {results.map((r, i) => (
