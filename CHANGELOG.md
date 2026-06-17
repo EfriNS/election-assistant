@@ -1,5 +1,74 @@
 # Changelog
 
+## 2026-06-16–17 — User Testing Round 1: Feedback Captured + UX Fixes + Analytics
+
+### What We Did
+
+After testing with 2 users on build `e48ca79`, captured structured feedback and shipped all critical fixes before round 2. Also added analytics and LLM observability.
+
+### User Testing Round 1 Findings
+
+Feedback captured in `docs/user-testing/round-1-feedback.md`. Key issues:
+- **Prototype D**: Raw Gemini API error JSON shown to users when quota exhausted (worst possible UX)
+- **Prototype D**: Free tier quota (`gemini-3.5-flash` RPD=20) exhausted by 2 users in a single day
+- **Prototype B**: "Select at least 3 topics" read as "exactly 3" — users stopped early
+- **Prototypes A, C**: Teen user (age 16–18) didn't understand terms like "כלכלת שוק", "מדינת רווחה"
+- **Prototype B**: Strict rank-ordering of priorities was cognitively demanding and imprecise
+
+### UX Fixes (`7efabc0`)
+
+**Prototype D — Friendly error messages**: `route.ts` now returns structured error codes (`QUOTA_EXCEEDED`, `AUTH_ERROR`, `SERVER_ERROR`, `NETWORK_ERROR`). Frontend maps codes to friendly Hebrew strings. Previous behavior: raw Gemini SDK error JSON exposed to users.
+
+**Prototype D — Turn limit + auto-synthesis**: `MAX_TURNS = 8`. On turn 8, `isFinalTurn: true` is passed to the API, which appends `SYNTHESIS_INSTRUCTION` to the system prompt, forcing party ranking output. User always reaches results; usage is capped at ≤9 API calls/session.
+
+**Prototype B — Topic selection clarity**: Subtitle updated to explain "ככל שתבחרי יותר נושאים, כך התוצאה תהיה מדויקת יותר". Live counter below grid: "בחרת N נושאים — ניתן לבחור עוד". Button disabled with reason text until ≥3 selected.
+
+**Prototype B — Priority buckets**: Replaced strict rank-ordering with importance-level buckets. Each topic gets a row of 4 buttons: קריטי (4) / חשוב מאוד (3) / חשוב (2) / פחות חשוב (1). Matching weights are the bucket values. Gate: ≥3 topics at bucket ≥2.
+
+**Prototypes A, C — Term hints** (`components/TermHint.tsx`): Expandable `?` button inline next to unfamiliar terms. Tap reveals one-line Hebrew definition; tap again to close. Added to: שתי מדינות, נישואין אזרחיים, עצמאות משפט (Prototype A); שוק חופשי, ממשל בינלאומי (Prototype C).
+
+**Footer**: `text-gray-300` → `text-gray-500` for improved readability.
+
+### Analytics (`422b079`)
+
+- **Vercel Analytics**: `@vercel/analytics/next` — `<Analytics />` in `app/layout.tsx`
+- **Hotjar**: Site ID `6507347` (same account as cv-refinery). Added via `next/script` with `strategy="afterInteractive"`
+- Initially implemented Helicone for LLM tracking; discovered new signups closed at us.helicone.ai → removed
+
+### Env File Cleanup (`2104444`)
+
+- Deleted `.env` — contained cv-refinery credentials (wrong project, should not exist)
+- `.env.example` — documentation file, committed, describes all env vars
+- `.env.local` — real keys, gitignored
+
+### Gemini Model Switch (`8727c6d`)
+
+- **Problem**: `gemini-3.5-flash` has RPD=20 on free tier — exhausted by 2 users testing in one afternoon (confirmed via Google AI Studio dashboard: 89 calls June 15)
+- **Fix**: Switched to `gemini-3.1-flash-lite` — RPD=500, RPM=10 (25× more headroom)
+- **Tradeoff**: Slightly older model; quality difference not significant for structured political Q&A
+- **Revisit**: If RPD=500 is exhausted by wider distribution, evaluate paid tier
+
+### Langfuse LLM Observability (`f5d901f`, `3ec0623`)
+
+- Package: `langfuse` npm (direct SDK, not OTel — simpler for Next.js serverless API routes)
+- Tracks each conversation turn: sessionId (via `crypto.randomUUID()` in client), turn number, isFinalTurn flag, model, input messages, output text
+- Pattern: `langfuse.trace() → trace.generation() → generation.update() → generation.end() → langfuse.flushAsync()` — `flushAsync` is critical for serverless (process exits before background flush completes)
+- Keys stored in `.env.local` and Vercel environment variables; gracefully bypassed if keys absent
+- Langfuse agent skill installed via `npx skills add` from github.com/langfuse/skills
+
+### Commits
+
+```
+3ec0623 feat: add Langfuse agent skill + Langfuse API keys configured
+f5d901f feat: replace Helicone with Langfuse for LLM conversation tracking
+8727c6d fix: switch AI model from gemini-3.5-flash to gemini-3.1-flash-lite
+2104444 chore: clean up env files
+422b079 feat: analytics — Vercel Analytics, Hotjar, Helicone LLM tracking
+7efabc0 fix: round-1 UX fixes — error handling, turn limit, priority buckets, term hints
+```
+
+---
+
 ## 2026-06-14–16 — UX Prototypes Built, Deployed, and Sent for User Testing
 
 ### What We Built

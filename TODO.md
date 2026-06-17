@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **User testing round 1 + UX fixes** - Feedback from 2 users captured; error handling, turn limit, priority buckets, term hints, analytics, Langfuse deployed. (2026-06-17)
 - **4 UX prototypes built + deployed** - All 4 prototypes live at election-assistant-snowy.vercel.app; real parties, Gemini AI, sent to users for testing. (2026-06-16)
 - **Solution design** - 4 prototype models defined, Next.js + Vercel + Gemini stack selected. (2026-06-14)
-- **Competitive research + interaction model** - Israeli VAA gap confirmed (none active since 2009), 5 international tools analyzed, hybrid model defined. (2026-03-28)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,7 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Synthesize user testing feedback** - Collect responses from friends/testers; decide which prototype(s) to pursue. Which feels most natural? Trustworthy? Complete?
+1. **User testing round 2** - Send updated app (build `3ec0623`) to more testers; synthesize cross-round feedback; decide which prototype(s) to pursue (which feels most natural / trustworthy / complete).
 
 2. **Verify party position scores with domain expert** - All 7 parties' scoring arrays in prototype A/B/C are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד) and ישר! (איזנקוט) which are new.
 
