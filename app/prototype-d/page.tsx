@@ -3,8 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { PARTIES } from "@/lib/parties";
+import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 
 type Message = { role: "user" | "assistant"; content: string };
+
+type ResultsData = {
+  profile: string;
+  scores: Record<string, number>;
+  partyBlurbs: Record<string, string>;
+  groundings: unknown[];
+};
 
 const MAX_TURNS = 50;
 
@@ -56,12 +65,15 @@ export default function PrototypeD() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const autoStartedRef = useRef(false);
 
+  // Results state
+  const [resultsData, setResultsData] = useState<ResultsData | null>(null);
+  const [resultsLoading, setResultsLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  // Auto-start: call the AI immediately when the user enters the chat,
-  // so the kickoff "say anything to start" turn doesn't consume a MAX_TURNS slot.
   useEffect(() => {
     if (!started || autoStartedRef.current) return;
     autoStartedRef.current = true;
@@ -89,7 +101,6 @@ export default function PrototypeD() {
 
   const sendMessage = async (content: string) => {
     setError(null);
-    // slice(1) skips the static INTRO_MESSAGE so it's never sent to the API
     const conversationHistory = messages.slice(1);
     const userTurnsSoFar = conversationHistory.filter((m) => m.role === "user").length;
     const isFinalTurn = userTurnsSoFar >= MAX_TURNS - 1;
@@ -112,7 +123,29 @@ export default function PrototypeD() {
       const data = await res.json();
       if (data.content) {
         setMessages([...next, { role: "assistant", content: data.content }]);
-        if (isFinalTurn) setFinished(true);
+        if (isFinalTurn) {
+          setFinished(true);
+          setShowResults(true);
+          setResultsLoading(true);
+
+          const fullConversation: Message[] = [
+            ...conversationHistory,
+            { role: "user", content },
+            { role: "assistant", content: data.content },
+          ];
+
+          fetch("/api/results-d", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: fullConversation }),
+          })
+            .then((r) => r.json())
+            .then((d) => {
+              if (d.profile && d.scores && d.partyBlurbs) setResultsData(d);
+            })
+            .catch(() => {})
+            .finally(() => setResultsLoading(false));
+        }
       } else {
         setError(data.errorCode ?? "SERVER_ERROR");
       }
@@ -123,12 +156,11 @@ export default function PrototypeD() {
     }
   };
 
-  // userTurnCount is based on messages (which no longer includes a static intro message)
   const userTurnCount = messages.filter((m) => m.role === "user").length;
-  // isNearLimit fires exactly 1 turn before synthesis — so the banner and the final turn align
   const isNearLimit = userTurnCount === MAX_TURNS - 1 && !finished;
   const isAtLimit = userTurnCount >= MAX_TURNS - 1 && !finished;
 
+  // ── Welcome screen ──────────────────────────────────────────────────────────
   if (!started) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4">
@@ -158,6 +190,50 @@ export default function PrototypeD() {
     );
   }
 
+  // ── Loading screen (extracting results after final turn) ────────────────────
+  if (showResults && resultsLoading) {
+    return (
+      <main className="h-screen flex flex-col items-center justify-center px-4">
+        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+          <span className="text-3xl">💬</span>
+        </div>
+        <p className="text-purple-700 font-medium mb-1">מנתח את השיחה...</p>
+        <p className="text-gray-400 text-sm">מכין את התוצאות שלך</p>
+      </main>
+    );
+  }
+
+  // ── Results screen ──────────────────────────────────────────────────────────
+  if (showResults && !resultsLoading) {
+    if (!resultsData) {
+      // Extraction failed — offer to go back to the chat transcript
+      return (
+        <main className="h-screen flex flex-col items-center justify-center px-4 text-center">
+          <p className="text-gray-500 mb-2">לא הצלחנו לטעון את התוצאות.</p>
+          <p className="text-gray-400 text-sm mb-6">ניתן לראות את סיכום השיחה בחלון הצ'אט.</p>
+          <button onClick={() => setShowResults(false)} className="text-purple-600 text-sm hover:text-purple-800">
+            ← חזרה לשיחה
+          </button>
+        </main>
+      );
+    }
+
+    const rankedResults = PARTIES
+      .map((p) => ({ ...p, score: resultsData.scores[p.id] ?? 0 }))
+      .sort((a, b) => b.score - a.score);
+
+    return (
+      <UnifiedResultsPage
+        results={rankedResults}
+        accentColor="purple"
+        onBack={() => setShowResults(false)}
+        externalAiData={{ profile: resultsData.profile, partyBlurbs: resultsData.partyBlurbs }}
+        externalAiLoading={false}
+      />
+    );
+  }
+
+  // ── Chat screen ─────────────────────────────────────────────────────────────
   return (
     <main className="h-screen flex flex-col">
       <div className="border-b border-gray-200 bg-white px-4 py-3 flex items-center gap-3 shrink-0">
@@ -210,8 +286,16 @@ export default function PrototypeD() {
 
           {finished && (
             <div className="flex justify-center mb-4">
-              <div className="text-xs text-gray-400 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2">
-                השיחה הסתיימה — לתוצאות נוספות נסה את אחת הדרכים האחרות בדף הבית.
+              <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-center">
+                <p className="text-xs text-gray-400 mb-2">השיחה הסתיימה</p>
+                {resultsData && (
+                  <button
+                    onClick={() => setShowResults(true)}
+                    className="text-sm text-purple-600 hover:text-purple-800 font-medium"
+                  >
+                    ראה תוצאות מפורטות ←
+                  </button>
+                )}
               </div>
             </div>
           )}

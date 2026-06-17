@@ -12,35 +12,51 @@ type AiData = {
 
 type Props = {
   results: Array<Party & { score: number }>;
-  userAnswersSummary: string;
-  accentColor: "blue" | "emerald" | "amber";
+  userAnswersSummary?: string;
+  accentColor: "blue" | "emerald" | "amber" | "purple";
   onBack: () => void;
+  // When provided, skips the internal /api/results call (used by prototype D)
+  externalAiData?: AiData | null;
+  externalAiLoading?: boolean;
 };
 
 const METHODOLOGY =
   "הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.";
 
-export default function UnifiedResultsPage({ results, userAnswersSummary, accentColor, onBack }: Props) {
+export default function UnifiedResultsPage({
+  results,
+  userAnswersSummary,
+  accentColor,
+  onBack,
+  externalAiData,
+  externalAiLoading,
+}: Props) {
   const router = useRouter();
   const [confirmHome, setConfirmHome] = useState(false);
-  const [aiData, setAiData] = useState<AiData | null>(null);
-  const [aiLoading, setAiLoading] = useState(true);
+  const [internalAiData, setInternalAiData] = useState<AiData | null>(null);
+  const [internalAiLoading, setInternalAiLoading] = useState(true);
+
+  // If either external prop is passed, D is managing AI data — skip internal fetch
+  const isExternal = externalAiData !== undefined || externalAiLoading !== undefined;
+  const aiData = isExternal ? externalAiData : internalAiData;
+  const aiLoading = isExternal ? (externalAiLoading ?? false) : internalAiLoading;
 
   useEffect(() => {
+    if (isExternal) return;
     fetch("/api/results", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        answersSummary: userAnswersSummary,
+        answersSummary: userAnswersSummary ?? "",
         topParties: results.map((r) => ({ id: r.id, name: r.name, score: r.score })),
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.profile && data.partyBlurbs) setAiData(data);
+        if (data.profile && data.partyBlurbs) setInternalAiData(data);
       })
       .catch(() => {})
-      .finally(() => setAiLoading(false));
+      .finally(() => setInternalAiLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
