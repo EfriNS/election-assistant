@@ -4,6 +4,8 @@ type Props = {
   party: Party & { score: number };
   rank: number;
   accentColor: "blue" | "emerald" | "amber";
+  aiBlurb?: string;
+  aiLoading?: boolean;
 };
 
 const COLORS = {
@@ -12,7 +14,7 @@ const COLORS = {
   amber:   { highlight: "bg-amber-50 border-amber-300",     bar: "bg-amber-400",   score: "text-amber-700",  link: "text-amber-600"  },
 };
 
-export default function PartyResultCard({ party, rank, accentColor }: Props) {
+export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading }: Props) {
   const c = COLORS[accentColor];
   const isTop = rank === 0;
 
@@ -31,6 +33,17 @@ export default function PartyResultCard({ party, rank, accentColor }: Props) {
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
       <p className="text-xs text-gray-500 mb-2">{party.description}</p>
+      {(aiLoading || aiBlurb) && (
+        <div className="mt-1 mb-2 pt-2 border-t border-gray-100">
+          {aiLoading && !aiBlurb ? (
+            <p className="text-xs text-indigo-300 animate-pulse">✦ מנתח התאמה...</p>
+          ) : (
+            <p className="text-xs text-gray-500 leading-relaxed">
+              <span className="text-indigo-400 ml-1">✦</span>{aiBlurb}
+            </p>
+          )}
+        </div>
+      )}
       <div className="flex gap-4 flex-wrap items-center">
         {party.website ? (
           <a href={party.website} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>

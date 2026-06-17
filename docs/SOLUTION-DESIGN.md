@@ -252,6 +252,82 @@ After initial feedback from 2 users (see `docs/user-testing/round-1-feedback.md`
 
 ---
 
+## Unified Results Design (2026-06-17)
+
+### The Problem
+
+The four prototypes produced two incompatible results experiences:
+
+- **A / B / C (quiz-based)**: Deterministic scoring → ranked party cards with score %, description, and links. Trustworthy and auditable, but impersonal. The results page has no memory of *why* the user answered as they did.
+- **D (AI conversation)**: Free-form narrative in a chat bubble. Personalized and contextualized, but non-deterministic, visually inconsistent, and no external links.
+
+Both have distinct value. The question is how to combine them.
+
+---
+
+### Design Principle: Two Separate Jobs
+
+**Deterministic = trust anchor.** Every percentage number, every ranking, every party link must be computed by the matrix and never touched by the AI. This is what users can audit and compare with others.
+
+**AI = meaning-making.** The AI's job is exclusively to explain *why* — to connect the user's specific stated values to why a party ranked higher or lower. It does not score; it narrates.
+
+---
+
+### Options Considered
+
+| Option | Description | Verdict |
+|--------|-------------|---------|
+| **1 — AI micro-blurbs on existing cards** | After scoring, call AI once to generate a 1-2 sentence "why this fits you" per top-3 card. Party scores remain deterministic. | Simpler MVP, chosen for prototype stage |
+| **2 — Unified Results Component** | Shared `<UnifiedResultsPage>` with: AI profile summary (above), deterministic party cards (with AI micro-blurb per top-3), methodology disclaimer (below). | **Chosen — best balance for prototype** |
+| **3 — D emits structured output** | Instruct the AI in D to end with a JSON score block; parse client-side; render same party cards. D's scores would be AI-generated, not deterministic. | Right long-term direction, not prototype-ready |
+
+---
+
+### Decision: Option 2 — Unified Results Component
+
+**Implementation** (`components/UnifiedResultsPage.tsx`):
+
+```
+[AI PROFILE SUMMARY]       ← indigo box, loads async after mount
+  "על פי תשובותיך, אתה מדגיש..."
+
+[PARTY CARDS — deterministic]
+  #1 ביחד — 78%            ← score from matrix, not AI
+  ▓▓▓▓▓▓▓▓░░
+  "מרכז — ממשל נקי..."
+  ✦ "הצבעות שלך על גיוס ונישואין..."  ← AI micro-blurb (top 3 only)
+  אתר ↗   מצע ↗
+
+  #2 הדמוקרטים — 71%
+  ...
+
+[METHODOLOGY DISCLAIMER]   ← bottom, static
+  "הציון מבוסס על הערכה ידנית..."
+```
+
+**What's always deterministic:** scores, rankings, all external links.
+**What's always AI:** profile summary paragraph, per-party micro-blurbs (1-2 sentences).
+**Degradation:** if AI call fails, cards still show normally with no blurbs. No error shown to user.
+
+**API route**: `POST /api/results` receives `{ answersSummary: string, topParties: [{id, name, score}] }`, returns `{ profile: string, partyBlurbs: { [partyId]: string } }`.
+
+**Answer summary format per prototype:**
+- A (statements): `"[topic]: "[statement]" — [agree/disagree]"` per answered question
+- B (priorities): `"[topic] ([bucket]): [chosen concern text]"` sorted by weight
+- C (dilemmas): `"[topic]: [option label] — [option text]"` per answered dilemma
+
+---
+
+### Prototype D — Current State and Future Direction
+
+Prototype D is **left unchanged** for now — the chat UI is its own UX experiment and conflating it with the structured results would blur what's being tested.
+
+**Longer-term direction (post-prototype, close to Option 3):** When a winner is chosen, D's final turn would emit structured data matching the Option 2 format exactly: deterministic-equivalent scores (from the AI's internal rubric), micro-blurbs, and eventually groundings (verbatim party platform quotations). This would let D share the `<UnifiedResultsPage>` component while keeping its conversational input phase.
+
+The key difference from Option 3 as described above: the AI would not just emit raw scores, but a richer structure: `{ scores, partyBlurbs, profile, groundings: [{ partyId, quote, sourceUrl }] }`. The groundings field is the differentiating feature of the final product (see `REQUIREMENTS.md`).
+
+---
+
 ## Next Steps
 
 1. ✅ Design decisions documented
@@ -262,7 +338,8 @@ After initial feedback from 2 users (see `docs/user-testing/round-1-feedback.md`
 6. ✅ Build prototype D (Gemini AI conversation)
 7. ✅ Deploy to Vercel production URL (election-assistant-snowy.vercel.app)
 8. ✅ User testing round 1 (2 users, 2026-06-15) — see `docs/user-testing/round-1-feedback.md`
-9. 🔲 Apply round-1 fixes (error handling, turn limit, topic clarity, hints, priority buckets) → redeploy for round 2
-10. 🔲 User testing round 2 → synthesize feedback → decide on final approach
-11. 🔲 Expert review of party position scores (especially ביחד, ישר!)
-12. 🔲 Phased plan + MVP definition once prototype winner is known
+9. ✅ Apply round-1 fixes (error handling, turn limit, topic clarity, hints, priority buckets)
+10. ✅ Unified results design — Option 2 implemented for A/B/C (`UnifiedResultsPage` + `/api/results`)
+11. 🔲 User testing round 2 → synthesize feedback → decide on final approach
+12. 🔲 Expert review of party position scores (especially ביחד, ישר!)
+13. 🔲 Phased plan + MVP definition once prototype winner is known

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
-import PartyResultCard from "@/components/PartyResultCard";
 import { TermHint } from "@/components/TermHint";
+import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 
 const DILEMMAS = [
   {
@@ -65,6 +65,16 @@ const PARTY_LEANINGS: number[][] = [
   [0.5, 0,   0,   0,   0,   0.5, 1  ], // חינוך
 ];
 
+function buildAnswersSummary(answers: Record<number, "A" | "B">): string {
+  return DILEMMAS
+    .filter((d) => answers[d.id] !== undefined)
+    .map((d) => {
+      const opt = answers[d.id] === "A" ? d.optionA : d.optionB;
+      return `${d.topic}: ${opt.label} — ${opt.text}`;
+    })
+    .join("\n");
+}
+
 function calcResults(answers: Record<number, "A" | "B">) {
   const vals = DILEMMAS.map((d) => (answers[d.id] === "A" ? 0 : answers[d.id] === "B" ? 1 : 0.5));
   return PARTIES.map((party, pi) => {
@@ -82,7 +92,6 @@ export default function PrototypeC() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, "A" | "B">>({});
   const [done, setDone] = useState(false);
-  const [confirmHome, setConfirmHome] = useState(false);
 
   const answered = Object.keys(answers).length;
   const current = DILEMMAS.find((d) => answers[d.id] === undefined);
@@ -107,38 +116,13 @@ export default function PrototypeC() {
   };
 
   if (done) {
-    const results = calcResults(answers);
     return (
-      <main className="min-h-screen flex flex-col items-center px-4 py-12">
-        <div className="w-full max-w-xl">
-          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
-          <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-          <p className="text-gray-500 text-sm mb-4">על סמך הבחירות שעשית בדילמות:</p>
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
-            <strong>שיטת החישוב:</strong> הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
-          </div>
-          <div className="flex flex-col gap-3">
-            {results.map((r, i) => (
-              <PartyResultCard key={r.id} party={r} rank={i} accentColor="amber" />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
-            {!confirmHome ? (
-              <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
-                ← חזרה לדף הבית
-              </button>
-            ) : (
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
-                <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
-                <span className="text-gray-300">|</span>
-                <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
+      <UnifiedResultsPage
+        results={calcResults(answers)}
+        userAnswersSummary={buildAnswersSummary(answers)}
+        accentColor="amber"
+        onBack={goBack}
+      />
     );
   }
 

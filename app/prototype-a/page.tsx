@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
-import PartyResultCard from "@/components/PartyResultCard";
 import { TermHint } from "@/components/TermHint";
+import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 
 const STATEMENTS = [
   {
@@ -52,6 +52,17 @@ const PARTY_POSITIONS: number[][] = [
   [-1,  2, -2,  2, -2, -1],   // ש"ס
 ];
 
+const ANSWER_LABELS: Record<string, string> = {
+  "2": "מסכים מאוד", "1": "מסכים", "0": "אין עמדה", "-1": "לא מסכים", "-2": "לא מסכים בכלל",
+};
+
+function buildAnswersSummary(answers: Record<number, number>): string {
+  return STATEMENTS
+    .filter((s) => answers[s.id] !== undefined)
+    .map((s) => `${s.topic}: "${s.text}" — ${ANSWER_LABELS[String(answers[s.id])]}`)
+    .join("\n");
+}
+
 function matchScore(userAnswers: Record<number, number>) {
   return PARTIES.map((party, pi) => {
     const positions = PARTY_POSITIONS[pi];
@@ -69,7 +80,6 @@ export default function PrototypeA() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [done, setDone] = useState(false);
-  const [confirmHome, setConfirmHome] = useState(false);
 
   const current = STATEMENTS.findIndex((s) => answers[s.id] === undefined);
   const progress = Object.keys(answers).length;
@@ -89,38 +99,13 @@ export default function PrototypeA() {
   };
 
   if (done) {
-    const results = matchScore(answers);
     return (
-      <main className="min-h-screen flex flex-col items-center px-4 py-12">
-        <div className="w-full max-w-xl">
-          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
-          <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-          <p className="text-gray-500 text-sm mb-4">על סמך תשובותיך, כך דורגו המפלגות:</p>
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
-            <strong>שיטת החישוב:</strong> הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
-          </div>
-          <div className="flex flex-col gap-3">
-            {results.map((r, i) => (
-              <PartyResultCard key={r.id} party={r} rank={i} accentColor="blue" />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
-            {!confirmHome ? (
-              <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
-                ← חזרה לדף הבית
-              </button>
-            ) : (
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
-                <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
-                <span className="text-gray-300">|</span>
-                <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
+      <UnifiedResultsPage
+        results={matchScore(answers)}
+        userAnswersSummary={buildAnswersSummary(answers)}
+        accentColor="blue"
+        onBack={goBack}
+      />
     );
   }
 

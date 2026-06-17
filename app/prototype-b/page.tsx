@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
-import PartyResultCard from "@/components/PartyResultCard";
+import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 
 // ─── Topics ───────────────────────────────────────────────────────────────────
 
@@ -112,6 +111,25 @@ const PRIORITY_QUESTIONS: Record<string, TopicQ> = {
   },
 };
 
+// ─── Answer summary for AI ────────────────────────────────────────────────────
+
+const BUCKET_LABELS: Record<number, string> = {
+  4: "קריטי", 3: "חשוב מאוד", 2: "חשוב", 1: "פחות חשוב",
+};
+
+function buildAnswersSummary(buckets: Record<string, number>, answers: Record<string, string>): string {
+  return TOPICS
+    .filter((t) => (buckets[t.id] ?? 0) > 0)
+    .sort((a, b) => (buckets[b.id] ?? 0) - (buckets[a.id] ?? 0))
+    .map((t) => {
+      const weight = buckets[t.id];
+      const option = PRIORITY_QUESTIONS[t.id]?.options.find((o) => o.id === answers[t.id]);
+      const answerText = option ? option.text : "לא ענה";
+      return `${t.label} (${BUCKET_LABELS[weight]}): ${answerText}`;
+    })
+    .join("\n");
+}
+
 // ─── Party matching ────────────────────────────────────────────────────────────
 
 function calcResults(buckets: Record<string, number>, answers: Record<string, string>) {
@@ -140,9 +158,7 @@ function calcResults(buckets: Record<string, number>, answers: Record<string, st
 type Step = "rank" | "questions" | "results";
 
 export default function PrototypeB() {
-  const router = useRouter();
   const [step, setStep] = useState<Step>("rank");
-  const [confirmHome, setConfirmHome] = useState(false);
   const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -312,63 +328,12 @@ export default function PrototypeB() {
   }
 
   // ── Results phase ──────────────────────────────────────────────────────────
-  const results = calcResults(buckets, answers);
-
-  const bucketGroups = BUCKETS.map((b) => ({
-    ...b,
-    topics: TOPICS.filter((t) => (buckets[t.id] ?? 0) === b.value).map((t) => t.label),
-  })).filter((g) => g.topics.length > 0);
-
   return (
-    <main className="min-h-screen flex flex-col items-center px-4 py-12">
-      <div className="w-full max-w-xl">
-        <button
-          onClick={() => { setQuestionIndex(topicsToAsk.length - 1); setStep("questions"); }}
-          className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block"
-        >
-          ← חזרה
-        </button>
-        <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-        <p className="text-gray-500 text-sm mb-3">משוקלל לפי מה שסימנת כחשוב:</p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {bucketGroups.map((g) => (
-            <div key={g.value} className="text-xs text-gray-500">
-              <span className={`inline-block px-2 py-0.5 rounded-full font-medium mr-1 ${
-                g.value >= 3 ? "bg-emerald-100 text-emerald-700" :
-                g.value === 2 ? "bg-emerald-50 text-emerald-600" :
-                "bg-gray-100 text-gray-400"
-              }`}>{g.label}</span>
-              {g.topics.join("، ")}
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
-          <strong>שיטת החישוב:</strong> הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.
-        </div>
-
-        <div className="flex flex-col gap-3">
-          {results.map((r, i) => (
-            <PartyResultCard key={r.id} party={r} rank={i} accentColor="emerald" />
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
-          {!confirmHome ? (
-            <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
-              ← חזרה לדף הבית
-            </button>
-          ) : (
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
-              <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
-              <span className="text-gray-300">|</span>
-              <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </main>
+    <UnifiedResultsPage
+      results={calcResults(buckets, answers)}
+      userAnswersSummary={buildAnswersSummary(buckets, answers)}
+      accentColor="emerald"
+      onBack={() => { setQuestionIndex(topicsToAsk.length - 1); setStep("questions"); }}
+    />
   );
 }
