@@ -105,14 +105,14 @@ export default function PrototypeA() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <p className="text-xs text-gray-300 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+            <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
             {!confirmHome ? (
               <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
                 ← חזרה לדף הבית
               </button>
             ) : (
               <div className="flex items-center justify-center gap-2 text-sm">
-                <span className="text-gray-500">התוצאות לא ישמרו —</span>
+                <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
                 <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">בטוח</button>
                 <span className="text-gray-300">|</span>
                 <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">ביטול</button>
