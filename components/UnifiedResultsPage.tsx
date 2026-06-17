@@ -52,7 +52,12 @@ export default function UnifiedResultsPage({ results, userAnswersSummary, accent
         </button>
 
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-        <p className="text-gray-500 text-sm mb-5">על סמך תשובותיך, כך דורגו המפלגות:</p>
+        <p className="text-gray-500 text-sm mb-4">על סמך תשובותיך, כך דורגו המפלגות:</p>
+
+        {/* Prototype caveat */}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-5 text-xs text-amber-800 leading-relaxed">
+          <strong>שימו לב — כלי ניסיוני:</strong> עמדות המפלגות מבוססות על הערכה ידנית חלקית, לא על ניתוח מלא של מצעים רשמיים. השתמשו בתוצאות כנקודת פתיחה בלבד.
+        </div>
 
         {/* AI profile summary */}
         {(aiLoading || aiData?.profile) && (
@@ -87,7 +92,7 @@ export default function UnifiedResultsPage({ results, userAnswersSummary, accent
 
         {/* Home navigation */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עשוי להיות לא מדויק</p>
+          <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עלול להיות לא מדויק</p>
           {!confirmHome ? (
             <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
               ← חזרה לדף הבית
