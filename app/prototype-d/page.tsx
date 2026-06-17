@@ -130,8 +130,7 @@ export default function PrototypeD() {
         const isSynthesis = isFinalTurn || partyMentions >= 5;
         if (isSynthesis) {
           setFinished(true);
-          setShowResults(true);
-          setResultsLoading(true);
+          setResultsLoading(true); // extraction runs in background; user reads synthesis first
 
           const fullConversation: Message[] = [
             ...conversationHistory,
@@ -293,14 +292,16 @@ export default function PrototypeD() {
             <div className="flex justify-center mb-4">
               <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-center">
                 <p className="text-xs text-gray-400 mb-2">השיחה הסתיימה</p>
-                {resultsData && (
+                {resultsLoading ? (
+                  <p className="text-xs text-purple-400 animate-pulse">מכין תוצאות מפורטות...</p>
+                ) : resultsData ? (
                   <button
                     onClick={() => setShowResults(true)}
                     className="text-sm text-purple-600 hover:text-purple-800 font-medium"
                   >
                     ראה תוצאות מפורטות ←
                   </button>
-                )}
+                ) : null}
               </div>
             </div>
           )}
