@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Unified results page + prototype D extraction** - `UnifiedResultsPage` shared across A/B/C/D; AI profile summary + micro-blurbs; `/api/results` + `/api/results-d`; synthesis detection fix. (2026-06-17)
 - **Analytics + UX polish + pre-round-2 fixes** - Clarity/Hotjar/CS debugged; home button+confirmation on all prototypes; copy fixes (הציונות, counter direction, option 4 text, party labels). (2026-06-17)
 - **AI chat flow + back nav + text fixes** - Auto-start, isNearLimit off-by-one fixed, MAX_TURNS→50, back navigation fixed in A+C, copy errors fixed. (2026-06-17)
-- **User testing round 1 + UX fixes** - Feedback from 2 users captured; error handling, turn limit, priority buckets, term hints, analytics, Langfuse deployed. (2026-06-17)
 
 > See CHANGELOG.md for complete details.
 

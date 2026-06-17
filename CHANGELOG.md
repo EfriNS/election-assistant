@@ -1,5 +1,56 @@
 # Changelog
 
+## 2026-06-17 — Unified Results Page + Prototype D Extraction
+
+### What We Did
+
+Designed and implemented a unified results experience across all four prototypes. A/B/C now show a shared `UnifiedResultsPage` with deterministic party scores (unchanged) + an AI personalization layer (profile summary + per-party micro-blurbs). Prototype D gets the same results page via post-conversation extraction: after the AI gives its synthesis, `/api/results-d` analyzes the full transcript and produces structured scores + blurbs, then transitions to `UnifiedResultsPage`.
+
+### Design Decisions (documented in `docs/SOLUTION-DESIGN.md`)
+
+- **Two-job principle**: deterministic = trust anchor (scores, rankings, links); AI = meaning-making (profile summary, "why this party fits you"). Never conflated.
+- **Three options considered**: (1) AI micro-blurbs on existing cards, (2) Unified component with both layers, (3) D emits structured output. Chose option 2.
+- **Prototype D approach**: post-conversation extraction (Option A) — chat flow unchanged, extraction fires in background, user reads the AI's conversational synthesis first, then clicks "ראה תוצאות מפורטות ←" to see the structured page.
+- **Future D direction**: full structured output `{ scores, partyBlurbs, profile, groundings }` — groundings require party platform database (post-prototype).
+- **Grounding vision**: per-topic evidence — "Party A says 'quote'" — drives direction rather than gap; show alignment/partial/gap with citation, not a number.
+
+### New Files
+
+- `app/api/results/route.ts` — AI personalization for A/B/C. Receives `answersSummary` + ranked party list, returns `{ profile, partyBlurbs }`.
+- `app/api/results-d/route.ts` — Post-conversation extraction for D. Receives full transcript, returns `{ profile, scores, partyBlurbs, groundings: [] }`.
+- `components/UnifiedResultsPage.tsx` — Shared results component. Indigo profile summary box (AI, loads async) + party cards (deterministic) with per-card micro-blurbs (AI, top 3 only) + amber prototype caveat banner + methodology disclaimer.
+
+### Modified Files
+
+- `components/PartyResultCard.tsx` — Added `aiBlurb?: string`, `aiLoading?: boolean` props; added `"purple"` accent color.
+- `components/UnifiedResultsPage.tsx` — Added `externalAiData / externalAiLoading` props so D can bypass internal `/api/results` call; added `"purple"` accent; added prototype caveat banner.
+- `app/prototype-a/page.tsx` — Replaced inline results block with `<UnifiedResultsPage>`; added `buildAnswersSummary()`.
+- `app/prototype-b/page.tsx` — Same; `buildAnswersSummary()` formats topic importance buckets + chosen concern text.
+- `app/prototype-c/page.tsx` — Same; `buildAnswersSummary()` formats dilemma choices.
+- `app/prototype-d/page.tsx` — Added `resultsData / resultsLoading / showResults` state; synthesis detection by party-mention count (≥5 party names = synthesis turn); extraction fires in background; user reads chat synthesis first; button → structured results.
+
+### Bug Fixes
+
+- **Synthesis detection**: `isFinalTurn` only triggered at turn 50 (hard cap), but AI naturally concludes around turn 8–10. Fixed by counting party name mentions in the response — 5+ = synthesis. `isFinalTurn` remains as fallback.
+- **Premature transition**: First version set `showResults = true` immediately when synthesis detected, hiding the chat response. Fixed: extraction runs in background, user reads the synthesis in the chat, button appears when results are ready.
+- **Negative object keys**: `{ -1: "לא מסכים" }` is invalid JS syntax. Fixed with string keys `{ "-1": "לא מסכים" }`.
+
+### Wording Fix
+
+- "עשוי להיות לא מדויק" → "עלול להיות לא מדויק" in results footer.
+
+### Commits
+
+```
+c5905da fix: show synthesis in chat before transitioning to results page
+2733998 fix: detect synthesis turn in prototype D by party mention count
+c5e4415 feat: unified results page for prototype D via post-conversation extraction
+f321c19 fix: add prototype caveat banner + fix "עלול" wording on results page
+552e70e feat: unified results page for prototypes A/B/C with AI personalization layer
+```
+
+---
+
 ## 2026-06-17 — Analytics Debugging, UX Polish, Pre-Round-2 Fixes
 
 ### What We Did

@@ -74,6 +74,16 @@
 
 ---
 
+## Unified Results Design (Implemented 2026-06-17)
+
+26. **Two-job principle for hybrid AI/deterministic results** — Deterministic computation = trust anchor (percentages, rankings, external links — users can compare notes). AI = meaning-making (profile summary, "why this party fits *you* specifically"). Never conflate. If the AI generates scores, they're non-auditable; if the matrix generates scores, they're explainable. For the prototype, matrix scores + AI explanation is the right split even though the matrix positions are rough estimates. (#first:2026-06-17)
+
+27. **Grounding means showing direction + quote, not a contribution number** — "Party A says 'X', which contributed 8 points to your score" is confusing. "ביחד: ✅ התאמה — 'נחוקק נישואין אזרחיים'" is actionable. Users want to judge whether the match is meaningful, not verify a formula. Show evidence; let the user decide the weight. Display: alignment (✅) / partial (⚠️) / gap (❌) + verbatim quote + source. This is also the most legally defensible format (directly attributable to party). (#first:2026-06-17)
+
+28. **The `groundings: []` skeleton field buys forward-compatibility for free** — Adding the field to the API response now (as an empty array) means the `UnifiedResultsPage` component doesn't need to change when the party platform database is ready. The UI can check `groundings.length > 0` to conditionally render the evidence panel. Cost: zero. Value: no refactoring needed when real data arrives. (#first:2026-06-17)
+
+29. **Prototype D results page: unified layout, AI-generated scores are acceptable at prototype stage** — The matrix in A/B/C is also expert-assigned estimates, not verified platform text. AI scores from a full conversation transcript are not inherently less reliable than a matrix row set by hand. At prototype stage the distinction matters less than the UX pattern being testable. Label the methodology clearly ("מבוסס על ניתוח השיחה") — but don't withhold the results page from D users because scores aren't "deterministic". (#first:2026-06-17)
+
 ## Competitive Landscape Quick Reference
 
 | Tool | Key insight for us |
