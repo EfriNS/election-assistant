@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
 import { TermHint } from "@/components/TermHint";
@@ -11,7 +11,7 @@ const DILEMMAS = [
     id: 1,
     topic: "דיור",
     question: "הממשלה מתלבטת בין שתי גישות לפתרון משבר הדיור:",
-    optionA: { label: "בנייה ציבורית", text: "בנות עשרות אלפי דירות ציבוריות להשכרה במחיר מפוקח" },
+    optionA: { label: "בנייה ציבורית", text: "לבנות עשרות אלפי דירות ציבוריות להשכרה במחיר מפוקח" },
     optionB: { label: "תמריצי שוק", text: "לתת הטבות מס ומענקים לרוכשי דירה ראשונה בשוק החופשי" },
     hint: '"שוק חופשי" — מודל כלכלי שבו מחירי הדיור נקבעים לפי היצע וביקוש, ללא תקרת מחיר ממשלתית. "בנייה ציבורית" — המדינה בונה ומשכירה דירות במחיר נמוך מהשוק.',
   },
@@ -79,11 +79,25 @@ function calcResults(answers: Record<number, "A" | "B">) {
 }
 
 export default function PrototypeC() {
+  const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, "A" | "B">>({});
   const [done, setDone] = useState(false);
 
   const answered = Object.keys(answers).length;
   const current = DILEMMAS.find((d) => answers[d.id] === undefined);
+
+  const removeAnswer = (id: number) =>
+    setAnswers((prev) => { const copy = { ...prev }; delete copy[id]; return copy; });
+
+  const goBack = () => {
+    if (done) {
+      setDone(false);
+      removeAnswer(DILEMMAS[DILEMMAS.length - 1].id);
+      return;
+    }
+    if (answered === 0) { router.push("/"); return; }
+    removeAnswer(DILEMMAS[answered - 1].id);
+  };
 
   const handleAnswer = (id: number, choice: "A" | "B") => {
     const next = { ...answers, [id]: choice };
@@ -96,7 +110,7 @@ export default function PrototypeC() {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</Link>
+          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
           <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
           <p className="text-gray-500 text-sm mb-4">על סמך הבחירות שעשית בדילמות:</p>
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
@@ -119,7 +133,7 @@ export default function PrototypeC() {
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
         <div className="flex justify-between items-center mb-8">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">← חזרה</Link>
+          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
           <span className="text-sm text-gray-400">{answered + 1} / {DILEMMAS.length}</span>
         </div>
         <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">

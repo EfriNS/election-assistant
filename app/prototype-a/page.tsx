@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import PartyResultCard from "@/components/PartyResultCard";
 import { TermHint } from "@/components/TermHint";
@@ -66,18 +66,33 @@ function matchScore(userAnswers: Record<number, number>) {
 }
 
 export default function PrototypeA() {
+  const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [done, setDone] = useState(false);
 
   const current = STATEMENTS.findIndex((s) => answers[s.id] === undefined);
   const progress = Object.keys(answers).length;
 
+  const removeAnswer = (id: number) =>
+    setAnswers((prev) => { const copy = { ...prev }; delete copy[id]; return copy; });
+
+  const goBack = () => {
+    if (done) {
+      setDone(false);
+      removeAnswer(STATEMENTS[STATEMENTS.length - 1].id);
+      return;
+    }
+    if (current === -1) { removeAnswer(STATEMENTS[STATEMENTS.length - 1].id); return; }
+    if (current === 0) { router.push("/"); return; }
+    removeAnswer(STATEMENTS[current - 1].id);
+  };
+
   if (done) {
     const results = matchScore(answers);
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</Link>
+          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
           <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
           <p className="text-gray-500 text-sm mb-4">על סמך תשובותיך, כך דורגו המפלגות:</p>
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-xs text-gray-500 leading-relaxed">
@@ -100,7 +115,7 @@ export default function PrototypeA() {
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
         <div className="flex justify-between items-center mb-8">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">← חזרה</Link>
+          <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
           <span className="text-sm text-gray-400">{progress} / {STATEMENTS.length}</span>
         </div>
 
