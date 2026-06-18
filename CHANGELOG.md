@@ -1,5 +1,58 @@
 # Changelog
 
+## 2026-06-19 — Round 3 Design: Prototype E + Modified D
+
+### What We Did
+
+Pure design session — no code changes. Processed round 2 user testing feedback, developed the full round 3 design direction, and fully documented it in `docs/SOLUTION-DESIGN.md`.
+
+### Round 2 Feedback Processed
+
+New file: `docs/user-testing/round-2-feedback.md`
+
+- **User 1** (50–60, Android, 11:28 min): Liked new priorities screen. Disliked dilemmas — skip button invisible, felt forced. Ideal flow: priorities → AI conversation. Missed the "see details" screen in results. Translation bug: "לא מגיעה" → "לא מספיקה".
+- **User 2** (teenager, iPhone, 18:46 min): Liked terminology hints + AI in results. Rejected AI chat flow (D) — first question too complex, less visual. Preferred flows 1 and 2.
+- **Cross-round pattern**: Both users want AI in results, not necessarily in input. User 1 wants AI after priorities. User 2 wants structured entry regardless.
+
+### Round 3 Design Decisions (in `docs/SOLUTION-DESIGN.md`)
+
+**Convergence**: 4 prototypes → 2. A, B, C removed from homepage (routes kept alive).
+
+**Landing page** (new design):
+- Tone signal: two mini-cards showing example question fragments (multi-choice format, not open questions). ענייני = policy-focused options. אישי = personal-concern options. User picks by feel, no abstract labels.
+- Depth signal: `[ בקצרה ]` / `[ בהרחבה ]` (register-based, not time-based — avoids pressuring users).
+- Flow choice: primary CTA → Prototype E; small text link → Prototype D. E is recommended default, D accessible but not equal-weight.
+
+**Prototype E** (new):
+- Flow: priorities → opener question (from tone-selected set) → AI follow-up questions as structured tappable cards (not chat bubbles) → optional free text → UnifiedResultsPage.
+- Party scores: hardcoded from opener answers (same mechanism as B). Follow-up Q&A feeds AI explanation layer only.
+- AI follow-ups: generated at runtime per topic; aim to (a) go deeper on the user's concern and (b) surface distinguishing dimensions between similar-looking parties.
+- Depth setting controls: number of follow-ups per topic (1 vs 2) and which topics get follow-ups (top-importance-only vs all).
+- Accent color: teal.
+
+**Two question sets** (key design decision — audit-first):
+- NOT a clean split: existing B questions are not uniformly אישי. Justice and equality topics already read as civic/ענייני; religion options are policy positions. Headers tend to be אישי, options vary.
+- Implementation approach: audit each of 8 topics, assign to dominant register, clean inconsistent options, then write the counterpart. Some existing questions will end up in the ענייני set.
+- Both sets independently scored — options differ enough that party mappings differ too.
+
+**Modified Prototype D**:
+- Priorities screen added as step 1 (same as B/E). Current welcome screen removed.
+- System prompt augmented with user's priorities + tone preference + depth preference.
+- Rest unchanged (turn limit, synthesis detection, `/api/results-d`, `UnifiedResultsPage`).
+
+**Bug fixes included in round 3 scope**:
+- C skip button records "A" instead of skipping (`prototype-c/page.tsx:169`)
+- C skip button visually too small/light
+- Translation: "המשכורת לא מגיעה" → "לא מספיקה" (`prototype-b/page.tsx:52`)
+
+**Deferred to production**: tradeoff questions, AI-scored follow-up answers, real party platform grounding.
+
+### Key Design Insight
+
+Taste signals on the landing page are **calibration** (tuning the experience) not **routing** (choosing a flow). Tone and depth preferences apply inside both E and D — they're independent of which path the user takes. Conflating calibration with routing leads to over-simplified binary choices that bundle too many dimensions into one tap.
+
+---
+
 ## 2026-06-17 — Unified Results Page + Prototype D Extraction
 
 ### What We Did

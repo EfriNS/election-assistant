@@ -328,6 +328,229 @@ The key difference from Option 3 as described above: the AI would not just emit 
 
 ---
 
+---
+
+## Round 3 — Convergence Design (2026-06-19)
+
+### Context
+
+Rounds 1 and 2 (see `docs/user-testing/`) established enough signal to converge. Key findings:
+
+- Both users want AI in the **results** layer (already shipped)
+- Both users preferred the **priorities** (B) format as an entry point
+- **User 1** (50–60): Wants priorities → deep, personal AI follow-up conversation
+- **User 2** (teenager): Prefers structured questions; bounced off D's first AI question — likely a mix of format and tone, not just complexity
+- Neither user is satisfied by any single prototype as-is
+- **Dilemmas (C)** had weakest reception from both; **Quiz (A)** is liked but impersonal
+
+**Decision**: Stop A/B/C/D side-by-side testing. Converge to two paths — **Prototype E** (new) and **Modified D** — with a redesigned landing page. A, B, C are removed from the homepage but their routes remain accessible.
+
+---
+
+### Overall Architecture
+
+```
+Landing page
+    ├── [tone signal: ענייני / אישי]   ← example question cards
+    ├── [depth signal: בקצרה / בהרחבה] ← register-based
+    └── [ → בואו נתחיל ]  (E path)
+        + small text link → שיחה חופשית (D path)
+            ↓
+    Priorities screen (same for E and D)
+            ↓
+    ┌───────────────────┐   ┌───────────────────┐
+    │   Prototype E     │   │   Prototype D     │
+    │ structured + AI   │   │   AI chat with    │
+    │   follow-ups      │   │  priorities ctx   │
+    └───────────────────┘   └───────────────────┘
+            ↓                       ↓
+         UnifiedResultsPage  (shared, unchanged)
+```
+
+Both paths collect tone + depth preferences on the landing page and carry them through the experience.
+
+---
+
+### Landing Page — New Design
+
+**Replaces** the current 4-card prototype grid.
+
+#### Tone signal — example question cards
+
+Two mini-cards side by side, each showing a fragment of the actual question format (multi-choice, not open question). User taps the card whose style they prefer:
+
+| Card 1 — ענייני | Card 2 — אישי |
+|---|---|
+| `"בכלכלה — מה הגישה העדיפה עליך?"` | `"בכלכלה — מה הכי מכביד עליך?"` |
+| `[ הגדלת שכר מינימום ]` `[ הורדת מסים ]` | `[ המשכורת לא מספיקה ]` `[ יוקר הדירות ]` |
+
+The card content is drawn from the actual question sets (see below) so users see exactly what they are signing up for. No abstract labels needed.
+
+**What tone controls:**
+- Which question set is used in E (ענייני or אישי — two independent sets, see below)
+- AI system prompt register in E's follow-ups: formal/policy language vs. warm/personal language
+- AI system prompt register in D: analytical and civic-framed vs. conversational and experience-framed
+
+**What tone does NOT change:** The priorities screen (step 1 for both paths) stays identical.
+
+#### Depth signal
+
+Two options, register-based:
+
+`[ בקצרה ]` &nbsp;&nbsp; `[ בהרחבה ]`
+
+**What depth controls:**
+
+| | בקצרה | בהרחבה |
+|---|---|---|
+| E — follow-ups per topic | 1 | 2 |
+| E — topics covered | Only topics marked קריטי / חשוב מאוד | All topics marked חשוב or above |
+| D — conversation turns before synthesis | 4–6 | 8–12 |
+| AI follow-up complexity | Focused, concrete | Explores nuance; surfaces dimensions that distinguish similar-seeming parties |
+
+#### Flow choice
+
+No equal-weight fork. E is the default (primary CTA button). D is available as a lower-weight option:
+
+```
+          ┌────────────────────────┐
+          │   ← בואו נתחיל         │   primary CTA → Prototype E
+          └────────────────────────┘
+
+     מעדיפ/ה שיחה חופשית עם AI? לחץ כאן   ← small text → Prototype D
+```
+
+This treats E as the recommended path while keeping D accessible. Users who want a conversation will actively seek the link; users who are uncertain or neutral default to E.
+
+---
+
+### Prototype E — Full Spec
+
+**Step 1: Priorities** (identical to current B step 1)
+- 8 topics, 4 importance buckets (קריטי / חשוב מאוד / חשוב / פחות חשוב)
+- Minimum 3 topics at "חשוב" or above to proceed
+- No changes to this screen
+
+**Step 2: Per-topic questions** — for each topic in importance order:
+
+1. **Opener question** — selected from ענייני or אישי question set based on landing preference (see question sets below)
+2. User taps an answer
+3. Brief loading state → AI returns **1 or 2 follow-up questions** (based on depth setting), rendered as structured tappable cards — **not** chat bubbles
+4. User answers follow-up(s) → advance to next topic
+
+**Follow-up question format** (AI output must be structured JSON):
+```json
+{
+  "question": "...",
+  "options": ["...", "...", "..."]
+}
+```
+The AI generates follow-ups that do two things: (a) go deeper on the user's concern for that topic, and (b) where parties with similar-looking opener answers actually differ in practice, surface that distinguishing dimension. The AI is not limited to what the user tapped — it may open a related angle that matters for party differentiation.
+
+**Step 3: Optional close**
+After all topics: `"יש עוד משהו שחשוב לך שנדע?"` — single optional free-text field → submit.
+
+**Step 4: Results**
+- Party **scores and ranking**: calculated from opener answers using the same hardcoded scoring matrix as B (weighted by importance bucket). Follow-up answers are context-only for the AI layer, not fed into the score formula.
+- **userAnswersSummary**: built from opener + follow-up answers combined, passed to `/api/results`
+- AI layer generates profile + party blurbs as in A/B/C today (no change to `/api/results`)
+- Renders `<UnifiedResultsPage>` — unchanged
+
+**Accent color**: teal (distinct from A=blue, B=emerald, C=amber, D=purple)
+
+---
+
+### Two Question Sets — ענייני / אישי
+
+Both sets cover the same 8 topics with the same structure: one question + 4 options. Party scores are **independently calibrated per set** — the options describe genuinely different positions that map differently to parties, not just rewordings of the same answers.
+
+**Structural pattern:**
+
+| | אישי | ענייני |
+|---|---|---|
+| Question frame | "מה הכי [מכביד / מדאיג / לוחץ] עליך?" | "מה הגישה / העמדה / הפתרון שנכון לך?" |
+| Option style | Personal experience, first-person concern | Policy position, what the state should do |
+| Scores | Calibrated per option | Separately calibrated — options differ |
+
+#### Implementation approach — audit first
+
+The existing `PRIORITY_QUESTIONS` in `prototype-b/page.tsx` is **not uniformly אישי**. A pre-implementation audit of all 8 topics found:
+
+| Topic | Header | Options |
+|---|---|---|
+| ביטחון | אישי ("מה הכי מדאיג אותך?") | Mixed — some personal, some civic ("מעמד ישראל") |
+| כלכלה | אישי ("מה הכי מכביד עליך?") | Mostly אישי; "עצירת הצמיחה" leans ענייני |
+| דיור | אישי ("מה הכי לוחץ אצלך?") | Mostly אישי |
+| חינוך | Mixed ("מה הכי חשוב לך?") | Mixed — "ערכים", "כישורים" feel civic |
+| בריאות | אישי ("מה הכי מדאיג אותך?") | Mostly אישי |
+| דת ומדינה | אישי ("מה הכי מפריע לך?") | Civic — "כפייה", "הכרה", "נישואין" are policy positions |
+| שפיטה | Mixed ("מה הכי חשוב לך?") | Fully civic — all 4 options are institutional positions |
+| שוויון | Mixed ("מה הכי חשוב לך?") | Civic — "חוק ברור", "ייצוג", "אופי יהודי" |
+
+**Implementation steps per topic:**
+1. Decide which register is **dominant** for the existing question (header + options together)
+2. Assign it to that set (אישי or ענייני); clean up any internally inconsistent options to match
+3. Write the **counterpart** for the other set from scratch, with independently calibrated scores
+4. Result: two clean, internally consistent sets across all 8 topics
+
+Not all existing questions will end up in the אישי set — some (e.g., שפיטה, שוויון) are more naturally ענייני and should be assigned there, with an אישי counterpart written.
+
+#### Economy topic — worked example
+
+*אישי:*
+> "בכלכלה — מה הכי מכביד עליך?"
+> - "יוקר המחיה — המשכורת לא מספיקה לסוף החודש" `[2,2,2,1,1,0,2]`
+> - "עתיד הדור הצעיר — קשה להסתדר בלי עזרה מההורים" `[1,2,2,1,1,0,1]`
+> - "פערים — בעלי הון מתעשרים, השכירים נשארים מאחור" `[2,2,1,0,0,-1,2]`
+> - "עצירת הצמיחה — ישראל מפגרת כלכלית מהיכולת שלה" `[-1,0,1,2,2,2,0]`
+
+*ענייני (to be written):*
+> "בכלכלה — מה הגישה הנכונה לך?"
+> - "הגדלת שכר מינימום ורשתות ביטחון סוציאלי" → scores TBD
+> - "הורדת מסים ועידוד שוק תחרותי שיוזיל מחירים" → scores TBD
+> - "מיסוי פרוגרסיבי כדי לצמצם פערים" → scores TBD
+> - "השקעה בתשתיות וטכנולוגיה לצמיחה כלכלית" → scores TBD
+
+Scores should be calibrated against the same rubric as the personal set (party order from `lib/parties.ts`: hadash, democrats, beyahad, yashar, beitenu, likud, shas).
+
+**Translation fix included:** `prototype-b/page.tsx` line 52 — "המשכורת לא מגיעה לסוף החודש" → "המשכורת לא מספיקה לסוף החודש"
+
+---
+
+### Prototype D (Modified)
+
+**Changes from current D:**
+
+1. **Priorities as step 1** — before the chat UI, the user goes through the same priorities screen as B/E. The current D welcome screen ("שלום! אני עוזר הבחירות...") is removed; the landing page serves that function.
+
+2. **System prompt augmented** with:
+   - User's priorities: topic IDs + importance bucket weights, in descending importance order
+   - Tone: `"ענייני"` → formal register, policy vocabulary, analytical framing. `"אישי"` → warm, first-person, conversational, experience-based framing.
+   - Depth: `"בקצרה"` → reach synthesis in 4–6 turns. `"בהרחבה"` → 8–12 turns before synthesis.
+
+3. **Everything else unchanged** — turn limit, synthesis detection, `/api/results-d` extraction, `UnifiedResultsPage`.
+
+---
+
+### Bug Fixes Included in Round 3
+
+| Bug | Location | Fix |
+|---|---|---|
+| Skip in Dilemmas records "A" instead of skipping | `prototype-c/page.tsx:169` | `handleSkip()` should advance without recording an answer |
+| Skip button visually hard to find | `prototype-c/page.tsx` | Increase visual weight (larger text, distinct color or border) |
+| Translation: "לא מגיעה" | `prototype-b/page.tsx:52` | Replace with "לא מספיקה" |
+
+---
+
+### Deferred to Production Build
+
+- **Tradeoff questions** (e.g., "more to public health but higher taxes vs. more to security but less health"): valuable design direction, but requires (a) well-researched hardcoded question sets, and (b) validation that parties are actually distinguishable on these dimensions. Not in round 3 scope.
+- **AI-generated scores for follow-up answers**: follow-up Q&A currently feeds only the AI explanation layer, not the deterministic score. In production, scoring follow-ups properly requires either hardcoded option scores (brittle) or a validated AI-scoring layer (complex). Defer.
+- **Grounding against real party platforms**: all current party position scores are rough estimates. Production requires domain expert review + citations.
+- **Taste calibration refinement**: if round 3 shows the ענייני/אישי signal is confusing or underused, revisit for production.
+
+---
+
 ## Next Steps
 
 1. ✅ Design decisions documented
@@ -340,6 +563,8 @@ The key difference from Option 3 as described above: the AI would not just emit 
 8. ✅ User testing round 1 (2 users, 2026-06-15) — see `docs/user-testing/round-1-feedback.md`
 9. ✅ Apply round-1 fixes (error handling, turn limit, topic clarity, hints, priority buckets)
 10. ✅ Unified results design — Option 2 implemented for A/B/C (`UnifiedResultsPage` + `/api/results`)
-11. 🔲 User testing round 2 → synthesize feedback → decide on final approach
-12. 🔲 Expert review of party position scores (especially ביחד, ישר!)
-13. 🔲 Phased plan + MVP definition once prototype winner is known
+11. ✅ User testing round 2 (2 users, 2026-06-18) — see `docs/user-testing/round-2-feedback.md`
+12. 🔲 **Round 3 implementation** (Prototype E + modified D + new landing page — see Round 3 section above)
+13. 🔲 User testing round 3 → final UX validation
+14. 🔲 Expert review of party position scores (especially ביחד, ישר!) — before any wider distribution
+15. 🔲 Phased plan + MVP definition: real data, grounding, infrastructure

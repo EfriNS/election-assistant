@@ -84,6 +84,22 @@
 
 29. **Prototype D results page: unified layout, AI-generated scores are acceptable at prototype stage** — The matrix in A/B/C is also expert-assigned estimates, not verified platform text. AI scores from a full conversation transcript are not inherently less reliable than a matrix row set by hand. At prototype stage the distinction matters less than the UX pattern being testable. Label the methodology clearly ("מבוסס על ניתוח השיחה") — but don't withhold the results page from D users because scores aren't "deterministic". (#first:2026-06-17)
 
+## Round 3 UX Design Learnings (2026-06-19)
+
+30. **Taste signals = calibration, not routing** — The instinct is to use landing-page preference signals to route users into different flows (E or D). Wrong mental model. Tone and depth preferences are *calibration* — they tune how the experience runs, independent of which flow the user is in. Conflating calibration with routing produces a single binary choice that bundles too many dimensions (depth + tone + format) into one tap. Separate them: routing (E vs D) is one decision; tone (ענייני/אישי) is another; depth (בקצרה/בהרחבה) is a third. (#first:2026-06-19)
+
+31. **Audit existing content before assuming register** — The existing B question set was assumed to be uniformly "personal/אישי". Wrong. Justice and equality topic options are already civic/ענייני; religion options describe policy positions. Headers tend personal, options vary. Any time a design calls for "two versions of existing content", audit first to classify what you actually have — don't assume the existing set belongs entirely to one category and build the other from scratch. (#first:2026-06-19)
+
+32. **Show actual question format in landing-page preference signals** — When asking users to choose between formal vs. personal question styles, show example question *fragments in the actual format they'll encounter* (multi-choice cards, not open questions). Abstract labels ("ישיר" / "שיחותי") require users to know themselves; a concrete fragment lets them react. The preview doubles as the label. Corollary: update the landing page example cards whenever the question content changes. (#first:2026-06-19)
+
+33. **Avoid time-based framing for depth signals** — "~5 minutes" vs "~15 minutes" pressures users and misrepresents what depth means (it's about question complexity/count, not how fast someone reads/types). Register-based framing ("בקצרה" / "בהרחבה") sets expectation about scope without implying speed. This matters especially for an audience that includes slower/more deliberate readers. (#first:2026-06-19)
+
+34. **User feedback often encodes multiple independent UX dimensions — don't bundle them** — When a user says "I want it to feel personal and also to go deep", they're expressing two separate preferences: tone and depth. If you collapse these into a single binary choice ("fast/light" vs "deep/personal"), you exclude the valid combinations (deep+formal, light+personal). Before designing a preference selector, list the dimensions explicitly and decide which can be decoupled. (#first:2026-06-19)
+
+35. **Priorities-first is a strong anchor — don't skip it even for the "chat" path** — Both round 1 and round 2 users gravitated toward the priorities screen. Prototype D (current) bypasses it, going directly to free chat. For round 3, priorities is step 1 for everyone, including D. The priorities screen provides structural grounding that makes the subsequent AI conversation feel purposeful rather than open-ended. The AI should receive priorities as context so it doesn't have to rediscover them through conversation. (#first:2026-06-19)
+
+---
+
 ## Competitive Landscape Quick Reference
 
 | Tool | Key insight for us |
