@@ -3,7 +3,7 @@ import { Party } from "@/lib/parties";
 type Props = {
   party: Party & { score: number };
   rank: number;
-  accentColor: "blue" | "emerald" | "amber" | "purple";
+  accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   aiBlurb?: string;
   aiLoading?: boolean;
 };
@@ -13,6 +13,7 @@ const COLORS = {
   emerald: { highlight: "bg-emerald-50 border-emerald-300", bar: "bg-emerald-400", score: "text-emerald-700", link: "text-emerald-600" },
   amber:   { highlight: "bg-amber-50 border-amber-300",     bar: "bg-amber-400",   score: "text-amber-700",   link: "text-amber-600"  },
   purple:  { highlight: "bg-purple-50 border-purple-300",   bar: "bg-purple-400",  score: "text-purple-700",  link: "text-purple-600" },
+  teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-400",    score: "text-teal-700",    link: "text-teal-600"   },
 };
 
 export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading }: Props) {

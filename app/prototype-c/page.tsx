@@ -91,28 +91,28 @@ function calcResults(answers: Record<number, "A" | "B">) {
 export default function PrototypeC() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, "A" | "B">>({});
-  const [done, setDone] = useState(false);
+  const [idx, setIdx] = useState(0); // current dilemma index (includes skipped)
 
-  const answered = Object.keys(answers).length;
-  const current = DILEMMAS.find((d) => answers[d.id] === undefined);
-
-  const removeAnswer = (id: number) =>
-    setAnswers((prev) => { const copy = { ...prev }; delete copy[id]; return copy; });
+  const done = idx >= DILEMMAS.length;
+  const current = done ? null : DILEMMAS[idx];
 
   const goBack = () => {
-    if (done) {
-      setDone(false);
-      removeAnswer(DILEMMAS[DILEMMAS.length - 1].id);
-      return;
-    }
-    if (answered === 0) { router.push("/"); return; }
-    removeAnswer(DILEMMAS[answered - 1].id);
+    if (done) { setIdx(DILEMMAS.length - 1); return; }
+    if (idx === 0) { router.push("/"); return; }
+    const prevIdx = idx - 1;
+    setIdx(prevIdx);
+    // remove answer for the dilemma we're going back to, so user can re-answer it
+    const prevId = DILEMMAS[prevIdx].id;
+    setAnswers((prev) => { const copy = { ...prev }; delete copy[prevId]; return copy; });
   };
 
   const handleAnswer = (id: number, choice: "A" | "B") => {
-    const next = { ...answers, [id]: choice };
-    setAnswers(next);
-    if (Object.keys(next).length === DILEMMAS.length) setDone(true);
+    setAnswers((prev) => ({ ...prev, [id]: choice }));
+    setIdx((prev) => prev + 1);
+  };
+
+  const handleSkip = () => {
+    setIdx((prev) => prev + 1); // advance without recording answer
   };
 
   if (done) {
@@ -133,10 +133,10 @@ export default function PrototypeC() {
       <div className="w-full max-w-xl">
         <div className="flex justify-between items-center mb-8">
           <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-          <span className="text-sm text-gray-400" dir="ltr">{answered + 1} / {DILEMMAS.length}</span>
+          <span className="text-sm text-gray-400" dir="ltr">{idx + 1} / {DILEMMAS.length}</span>
         </div>
         <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
-          <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${(answered / DILEMMAS.length) * 100}%` }} />
+          <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${(idx / DILEMMAS.length) * 100}%` }} />
         </div>
 
         <p className="text-xs font-medium text-amber-600 uppercase tracking-wider mb-2">{current.topic}</p>
@@ -162,8 +162,8 @@ export default function PrototypeC() {
             );
           })}
           <button
-            onClick={() => handleAnswer(current.id, "A")}
-            className="text-sm text-gray-400 hover:text-gray-600 text-center py-2"
+            onClick={handleSkip}
+            className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center"
           >
             דלג על שאלה זו
           </button>
