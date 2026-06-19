@@ -20,23 +20,34 @@ type ConversationEntry = {
   followUpQA: FollowUpQA[];
 };
 
-type TopicRef = { id: string; label: string };
+type TopicRef = { label: string; question: string };
 
 function buildPrompt(
   conversationSoFar: ConversationEntry[],
-  currentTopic: { label: string; openerQuestion: string; openerAnswer: string },
+  currentTopic: {
+    label: string;
+    openerQuestion: string;
+    openerAnswer: string;
+    followUpQA: FollowUpQA[];
+  },
   nextTopic: TopicRef | null,
   tone: string,
-  maxFollowUps: number
+  depth: string,
+  followUpsAskedThisTopic: number
 ): string {
   const register =
     tone === "personal"
-      ? "חמה ומשוחחת — שפת יומיום, גוף ראשון"
-      : "עניינית ומנתחת — שפת מדיניות ציבורית";
+      ? "Everyday language, warm and informal, use first person"
+      : "Analytical and policy-focused, formal register";
+
+  const depthGuide =
+    depth === "deep"
+      ? "aim for 1–3 follow-ups per topic"
+      : "aim for 0–1 follow-ups per topic";
 
   const historyBlock =
     conversationSoFar.length === 0
-      ? "זהו הנושא הראשון בשיחה."
+      ? "This is the first topic in the conversation."
       : conversationSoFar
           .map((e) => {
             let line = `${e.topicLabel}: "${e.openerAnswer}"`;
@@ -45,38 +56,52 @@ function buildPrompt(
           })
           .join("\n");
 
-  const nextTopicLine = nextTopic
-    ? `הנושא הבא: ${nextTopic.label}`
-    : "זהו הנושא האחרון בשיחה.";
+  const followUpQABlock =
+    currentTopic.followUpQA.length === 0
+      ? ""
+      : "\nFollow-up Q&A on this topic so far:\n" +
+        currentTopic.followUpQA.map((fq) => `  Q: ${fq.question}\n  A: ${fq.answer}`).join("\n");
 
-  return `You are a neutral political survey advisor. Respond ONLY in Hebrew.
+  const nextTopicBlock = nextTopic
+    ? `Next topic: ${nextTopic.label}\nNext question: ${nextTopic.question}`
+    : "This is the last topic in the conversation.";
+
+  return `You are a neutral political advisor conducting a structured survey to help users identify which Israeli party best matches their views. Respond ONLY in Hebrew.
 Style: ${register}
-Always use masculine form (מבין, מסכים, שואל וכו׳).
+Always use masculine Hebrew form (מבין, מסכים, שואל וכו׳).
 
 **Conversation so far:**
 ${historyBlock}
 
 **Current topic:** ${currentTopic.label}
-Question: ${currentTopic.openerQuestion}
-User's answer: ${currentTopic.openerAnswer}
+Opener: ${currentTopic.openerQuestion}
+User's answer: ${currentTopic.openerAnswer}${followUpQABlock}
 
-${nextTopicLine}
+${nextTopicBlock}
+
+**Depth guidance:** ${depthGuide}
+You have asked ${followUpsAskedThisTopic} follow-up(s) on this topic so far.
 
 **Your task — return JSON only, no markdown:**
 
-1. Follow-up question (optional, max ${maxFollowUps}):
-   - If the answer is clear enough → return null for followUp
-   - If there's a nuance worth clarifying → create one follow-up with 3-4 concise options + "אחר — פרט" last
-   - Optionally add a "hint" field: a short Hebrew definition (1-2 sentences) if the follow-up question contains jargon or a term that may be unfamiliar. Omit if the question is already plain.
+Decide whether to ask a follow-up question or transition to the next topic.
 
-2. Transition to next topic (if exists):
-   - A short sentence (up to 2) acknowledging the user's answer and bridging to the next topic
-   - If this is the last topic → return null for nextPrologue
+- If following up:
+  - prologue (REQUIRED, non-null): 1–2 sentences that acknowledge the user's specific answer and naturally lead into the follow-up question. This is the ONLY place for bridging/contextualizing language.
+  - question: a direct, neutral question in interrogative form (e.g. "כיצד...?", "מה לדעתך...?"). Do NOT start the question with phrases like "כדי להעמיק..." or "בהמשך ל..." — those belong in the prologue.
+  - options: 3–4 concise answer options + "אחר — פרט" last.
+  - hint (optional): 1–2 sentence Hebrew definition if the question uses unfamiliar jargon.
+
+- If transitioning (or this is the last topic):
+  - prologue (REQUIRED, non-null): 1–3 sentences that briefly wrap up the current topic and naturally introduce the next one. Reference the next topic's question if it helps the transition feel natural.
+  - followUp: null.
+
+prologue is ALWAYS non-null — never omit it or return null for it.
 
 Format:
-{"followUp":{"question":"...","options":["...","...","...","אחר — פרט"],"hint":"..."},"nextPrologue":"..."}
+{"prologue":"...","followUp":{"question":"...","options":["...","...","...","אחר — פרט"],"hint":"..."}}
 
-(Return null for any field with no content)`;
+(followUp is null when transitioning. Omit hint field if not needed.)`;
 }
 
 export async function POST(req: NextRequest) {
@@ -85,38 +110,38 @@ export async function POST(req: NextRequest) {
     currentTopic,
     nextTopic,
     tone,
-    maxFollowUps,
+    depth,
+    followUpsAskedThisTopic,
   }: {
     conversationSoFar: ConversationEntry[];
-    currentTopic: { label: string; openerQuestion: string; openerAnswer: string };
+    currentTopic: { label: string; openerQuestion: string; openerAnswer: string; followUpQA: FollowUpQA[] };
     nextTopic: TopicRef | null;
     tone: string;
-    maxFollowUps: number;
+    depth: string;
+    followUpsAskedThisTopic: number;
   } = await req.json();
 
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return NextResponse.json({ followUp: null, nextPrologue: null });
+  if (!apiKey) return NextResponse.json({ prologue: null, followUp: null });
 
   const model = "gemini-3.1-flash-lite";
-  const prompt = buildPrompt(conversationSoFar, currentTopic, nextTopic, tone, maxFollowUps);
+  const prompt = buildPrompt(
+    conversationSoFar, currentTopic, nextTopic, tone, depth, followUpsAskedThisTopic
+  );
 
   const langfuse = makeLangfuse();
   const trace = langfuse?.trace({
     name: "follow-up-generation",
-    metadata: { prototype: "e", topic: currentTopic.label, tone, maxFollowUps },
+    metadata: { prototype: "e", topic: currentTopic.label, tone, depth, followUpsAskedThisTopic },
   });
-  const generation = trace?.generation({
-    name: "gemini-follow-up",
-    model,
-    input: prompt,
-  });
+  const generation = trace?.generation({ name: "gemini-follow-up", model, input: prompt });
 
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { temperature: 0.7, maxOutputTokens: 400 },
+      config: { temperature: 0.7, maxOutputTokens: 500 },
     });
 
     const text = response.text ?? "";
@@ -125,7 +150,7 @@ export async function POST(req: NextRequest) {
       generation?.update({ output: "", level: "WARNING" });
       generation?.end();
       await langfuse?.flushAsync();
-      return NextResponse.json({ followUp: null, nextPrologue: null });
+      return NextResponse.json({ prologue: null, followUp: null });
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
@@ -134,14 +159,19 @@ export async function POST(req: NextRequest) {
     await langfuse?.flushAsync();
 
     const followUp = parsed.followUp
-      ? { question: parsed.followUp.question, options: parsed.followUp.options, hint: parsed.followUp.hint ?? undefined }
+      ? {
+          question: parsed.followUp.question,
+          options: parsed.followUp.options,
+          hint: parsed.followUp.hint ?? undefined,
+        }
       : null;
-    return NextResponse.json({ followUp, nextPrologue: parsed.nextPrologue ?? null });
+
+    return NextResponse.json({ prologue: parsed.prologue || null, followUp });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    return NextResponse.json({ followUp: null, nextPrologue: null });
+    return NextResponse.json({ prologue: null, followUp: null });
   }
 }
