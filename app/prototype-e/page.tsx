@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TopicQ } from "@/lib/questions";
@@ -115,6 +115,21 @@ function PrototypeEInner() {
     .filter(([, w]) => w > 0)
     .sort((a, b) => b[1] - a[1])
     .map(([id]) => id);
+
+  // Restore "Other" input state when navigating back to an already-answered opener
+  useEffect(() => {
+    if (step !== "questions" || topicPhase !== "opener") return;
+    const tid = topicsToAsk[questionIndex];
+    if (!tid) return;
+    if (openerAnswers[tid] === "other") {
+      setShowOpenerInput(true);
+      setOpenerDraft(openerTexts[tid] ?? "");
+    } else {
+      setShowOpenerInput(false);
+      setOpenerDraft("");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionIndex, topicPhase, step]);
 
   // ── Build conversation history for API ──────────────────────────────────────
   const buildConversationSoFar = (upToIndex: number) =>
@@ -432,20 +447,27 @@ function PrototypeEInner() {
         <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
 
         <div className="flex flex-col gap-3 mb-4">
-          {q.options.map((opt) => (
-            <button key={opt.id}
-              onClick={() => handleOpenerAnswer(opt.id, opt.text)}
-              className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all">
-              {opt.text}
-            </button>
-          ))}
+          {q.options.map((opt) => {
+            const selected = openerAnswers[topicId] === opt.id;
+            return (
+              <button key={opt.id}
+                onClick={() => handleOpenerAnswer(opt.id, opt.text)}
+                className={`border-2 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all ${
+                  selected
+                    ? "border-teal-500 bg-teal-50 text-teal-900"
+                    : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
+                }`}>
+                {opt.text}
+              </button>
+            );
+          })}
 
           {/* "אחר — פרט" */}
           <div>
             <button
-              onClick={() => { setShowOpenerInput(true); setOpenerDraft(""); }}
+              onClick={() => { setShowOpenerInput(true); setOpenerDraft(openerTexts[topicId] ?? ""); }}
               className={`w-full border-2 rounded-xl py-3 px-5 text-right text-sm transition-all ${
-                showOpenerInput
+                showOpenerInput || openerAnswers[topicId] === "other"
                   ? "border-teal-400 bg-teal-50 text-teal-700"
                   : "border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-600"
               }`}
