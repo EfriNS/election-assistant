@@ -278,7 +278,7 @@ function PrototypeEInner() {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <button onClick={() => { setStep("questions"); setQuestionIndex(topicsToAsk.length - 1); }}
+          <button onClick={() => { setStep("questions"); setQuestionIndex(topicsToAsk.length - 1); setTopicPhase("opener"); setFollowUpIdx(0); }}
             className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
           <h2 className="text-xl font-bold mb-3">משהו שרצית להוסיף?</h2>
           <p className="text-sm text-gray-500 mb-6">
