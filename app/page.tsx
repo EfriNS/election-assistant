@@ -2,24 +2,29 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL } from "@/lib/questions";
 
 type Tone = "formal" | "personal";
 type Depth = "short" | "deep";
 
-// Economy question fragments shown as preview cards on the landing page
-const PREVIEW = {
-  formal: {
+const ADVISOR_STYLES: { tone: Tone; label: string; tagline: string; description: string }[] = [
+  {
+    tone: "formal",
     label: "ענייני",
-    question: QUESTIONS_FORMAL.economy.question,
-    options: QUESTIONS_FORMAL.economy.options.slice(0, 2).map((o) => o.text.split(" — ")[0]),
+    tagline: "שאלות בשפת מדיניות",
+    description: "נדבר על עמדות ופתרונות — מה צריך לקרות לדעתך",
   },
-  personal: {
-    label: "אישי",
-    question: QUESTIONS_PERSONAL.economy.question,
-    options: QUESTIONS_PERSONAL.economy.options.slice(0, 2).map((o) => o.text.split(" — ")[0]),
+  {
+    tone: "personal",
+    label: "זורם",
+    tagline: "שאלות בשפת יומיום",
+    description: "נדבר על מה שמרגיש לך נכון ומה מדאיג אותך",
   },
-};
+];
+
+const DEPTH_OPTIONS: { depth: Depth; label: string; description: string }[] = [
+  { depth: "short", label: "ממוקד", description: "נושאים מרכזיים, תשובות מהירות" },
+  { depth: "deep",  label: "מעמיק", description: "יותר שאלות, תמונה מלאה יותר" },
+];
 
 export default function Home() {
   const router = useRouter();
@@ -32,93 +37,91 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-16">
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-md">
 
         {/* Headline */}
-        <div className="text-center mb-10">
-          <p className="text-sm font-medium text-gray-400 tracking-widest mb-3">אב-טיפוס לבדיקה</p>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">עוזר הבחירות</h1>
-          <p className="text-lg text-gray-500">
-            מצא לאיזו מפלגה אתה הכי קרוב — בצורה שקופה, ללא עיוות.
+        <div className="text-center mb-12">
+          <p className="text-xs font-medium text-gray-400 tracking-widest uppercase mb-3">אב-טיפוס</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">עוזר הבחירות</h1>
+          <p className="text-gray-400 text-sm">
+            מצאו לאיזו מפלגה אתם הכי קרובים — בצורה שקופה, ללא עיוות
           </p>
         </div>
 
-        {/* Tone selector */}
+        {/* Advisor style */}
         <div className="mb-8">
-          <p className="text-sm font-medium text-gray-700 mb-3 text-center">
-            בחר את הסגנון שמתאים לך:
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            מי אני כיועץ?
           </p>
           <div className="grid grid-cols-2 gap-3">
-            {(["formal", "personal"] as const).map((t) => {
-              const p = PREVIEW[t];
+            {ADVISOR_STYLES.map(({ tone: t, label, tagline, description }) => {
               const selected = tone === t;
               return (
                 <button
                   key={t}
                   onClick={() => setTone(t)}
-                  className={`border-2 rounded-2xl p-4 text-right transition-all ${
+                  className={`rounded-2xl p-4 text-right transition-all border-2 ${
                     selected
                       ? "border-teal-500 bg-teal-50"
-                      : "border-gray-200 hover:border-gray-300 bg-white"
+                      : "border-gray-200 bg-white hover:border-gray-300"
                   }`}
                 >
-                  <p className={`text-xs font-bold mb-2 ${selected ? "text-teal-700" : "text-gray-400"}`}>
-                    {p.label}
+                  <p className={`text-lg font-bold mb-1 ${selected ? "text-teal-700" : "text-gray-800"}`}>
+                    {label}
                   </p>
-                  <p className="text-xs font-medium text-gray-700 mb-2 leading-snug">{p.question}</p>
-                  <ul className="space-y-1">
-                    {p.options.map((opt, i) => (
-                      <li key={i} className="text-xs text-gray-500 flex items-start gap-1">
-                        <span className="text-gray-300 shrink-0">·</span>
-                        <span>{opt}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className={`text-xs font-medium mb-2 ${selected ? "text-teal-600" : "text-gray-400"}`}>
+                    {tagline}
+                  </p>
+                  <p className="text-xs text-gray-500 leading-snug">{description}</p>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Depth selector */}
+        {/* Depth */}
         <div className="mb-10">
-          <p className="text-sm font-medium text-gray-700 mb-3 text-center">כמה עומק?</p>
-          <div className="flex gap-3 justify-center">
-            {(["short", "deep"] as const).map((d) => (
-              <button
-                key={d}
-                onClick={() => setDepth(d)}
-                className={`px-8 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                  depth === d
-                    ? "border-teal-500 bg-teal-50 text-teal-700"
-                    : "border-gray-200 text-gray-500 hover:border-gray-300"
-                }`}
-              >
-                {d === "short" ? "בקצרה" : "בהרחבה"}
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-gray-400 text-center mt-2">
-            {depth === "short" ? "שאלה אחת לנושא עם שאלת המשך אחת" : "שאלה אחת לנושא עם שתי שאלות המשך"}
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            עומק השיחה
           </p>
+          <div className="grid grid-cols-2 gap-3">
+            {DEPTH_OPTIONS.map(({ depth: d, label, description }) => {
+              const selected = depth === d;
+              return (
+                <button
+                  key={d}
+                  onClick={() => setDepth(d)}
+                  className={`rounded-2xl p-4 text-right transition-all border-2 ${
+                    selected
+                      ? "border-teal-500 bg-teal-50"
+                      : "border-gray-200 bg-white hover:border-gray-300"
+                  }`}
+                >
+                  <p className={`text-lg font-bold mb-1 ${selected ? "text-teal-700" : "text-gray-800"}`}>
+                    {label}
+                  </p>
+                  <p className="text-xs text-gray-500 leading-snug">{description}</p>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Primary CTA */}
+        {/* CTA */}
         <button
           onClick={() => handleStart("/prototype-e")}
-          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors mb-4"
+          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors mb-4"
         >
-          ← בואו נתחיל
+          התחילו ←
         </button>
 
-        {/* D link */}
         <p className="text-center text-sm text-gray-400 mb-10">
-          מעדיפ/ה שיחה חופשית עם AI?{" "}
+          מעדיפים שיחה חופשית עם AI?{" "}
           <button
             onClick={() => handleStart("/prototype-d")}
             className="text-teal-600 hover:text-teal-800 underline"
           >
-            לחץ כאן
+            לחצו כאן
           </button>
         </p>
 

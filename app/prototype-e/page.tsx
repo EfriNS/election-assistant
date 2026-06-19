@@ -125,7 +125,7 @@ function PrototypeEInner() {
           </button>
           <h2 className="text-xl font-bold mb-3">משהו שרצית להוסיף?</h2>
           <p className="text-sm text-gray-500 mb-6">
-            אם יש עמדה חשובה שלא עלתה, אפשר לכתוב כאן. זה יעזור לנתח את הפרופיל שלך טוב יותר.
+            אם יש עמדה חשובה שלא עלתה, אפשר לכתוב כאן — זה יעזור לקבל המלצה מדויקת יותר.
           </p>
           <textarea
             value={closeText}
