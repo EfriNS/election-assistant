@@ -120,6 +120,16 @@
 
 44. **"אחר — פרט" free text reaches AI context but not structured scores** — The structured question format (opener + follow-up with labeled options) maps option IDs to party score arrays. Free-text answers can't be mapped to a score — they can only flow into the AI's conversation context and appear in the user's summary. This is an acceptable tradeoff: the user's open-ended view enriches the AI explanation; the scoring remains from the labeled options. Don't try to score free text; acknowledge the limitation explicitly in design decisions. (#first:2026-06-19)
 
+45. **Unified API call per answer produces more coherent conversation than split calls** — Pre-computing a follow-up immediately after the opener answer (before the user even sees it) creates a "cold" follow-up with no prologue and stale context. Generating follow-up AND prologue together in one call after each answer — with the full conversation history + next topic's actual question text — produces noticeably better bridging. Latency is acceptable because users expect a brief pause after submitting an answer. (#first:2026-06-19)
+
+46. **Follow-up questions need two explicit context cues: a label AND an answer recap** — A topic chip alone doesn't communicate "you're still on topic N, going deeper." Users need: (a) an explicit `↳ שאלת המשך` label marking the question as a follow-up, and (b) a visual recap of their opener answer ("ענית: ...") so the connection to what they said is immediate. Without these, users experience follow-ups as mysterious new questions. (#first:2026-06-19)
+
+47. **LLM will bake bridging language into question field unless explicitly forbidden** — Even with a "write a prologue" instruction, the model tends to prefix questions with contextualizing phrases ("כדי להעמיק בגישה זו, כיצד...") unless the prompt explicitly says: "do NOT start the question with phrases like X — those belong in prologue only." State the prohibition and give concrete examples of the forbidden pattern. (#first:2026-06-19)
+
+48. **Back navigation in a branching conversation must be a stack, not a topic jump** — Pressing back from topic N+1 should restore the last follow-up of topic N (the actual screen the user was on), not the opener. This requires storing full follow-up Q+A (with options) in state, not just the answer text. Popping the last stored follow-up and re-presenting it is the right UX; re-answering it discards subsequent follow-ups, which is correct since branching may differ. (#first:2026-06-19)
+
+49. **Loading verbs should start at a random index** — Cycling loading verbs always starting at index 0 means fast API responses always show the same word. Random start gives variety across interactions without any UX cost. Overlap between formal and informal verb lists confuses users about which register they're in — keep the two lists completely distinct. (#first:2026-06-19)
+
 ---
 
 ## Competitive Landscape Quick Reference

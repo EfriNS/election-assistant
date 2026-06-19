@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Round 3 implementation: Prototype E + modified D** - Full build: shared PrioritiesStep, lib/questions.ts (2 registers × 8 topics), Prototype E (priorities→structured+AI follow-ups), modified D (priorities→chat), advisor landing page, prologue UI polish. (2026-06-19)
-- **Round 3 design: Prototype E + modified D** - Full round 3 design spec in SOLUTION-DESIGN.md; two question sets (ענייני/אישי); new landing page tone + depth signals; E + D spec. (2026-06-19)
-- **Unified results page + prototype D extraction** - `UnifiedResultsPage` shared across A/B/C/D; AI profile summary + micro-blurbs; `/api/results` + `/api/results-d`; synthesis detection fix. (2026-06-17)
+- **Round 3 UX polish + unified follow-up architecture** — Rewrote follow-up state machine (1 API call/answer), fixed back navigation stack, hints across all 8 topics, follow-up context cues (recap + label), animated loading verbs, landing page sessionStorage. (2026-06-19)
+- **Round 3 implementation: Prototype E + modified D** — Full build: shared PrioritiesStep, lib/questions.ts (2 registers × 8 topics), Prototype E (priorities→structured+AI follow-ups), modified D (priorities→chat), advisor landing page, prologue UI polish. (2026-06-19)
+- **Round 3 design: Prototype E + modified D** — Full round 3 design spec in SOLUTION-DESIGN.md; two question sets (ענייני/אישי); new landing page tone + depth signals; E + D spec. (2026-06-19)
 
 > See CHANGELOG.md for complete details.
 

@@ -1,5 +1,90 @@
 # Changelog
 
+## 2026-06-19 — Round 3 UX Polish + Unified Follow-up Architecture
+
+### What We Built
+
+Post-round-3 testing session: rewrote the follow-up architecture, fixed back navigation, and improved several UX details in Prototype E. 7 files changed.
+
+### Architectural Change: Unified Follow-up API
+
+Old architecture (2 separate API calls per topic):
+1. Opener answer → `/api/follow-up` → pre-cached follow-up question
+2. Follow-up answer → no API call; advance to next topic with cached prologue
+
+Problems: cold follow-up appearance (no prologue on first follow-up), stale pre-cached prologues, model only knew topic labels (not actual next question text).
+
+New architecture (1 API call per answer):
+- Every answer (opener or follow-up) triggers a single `/api/follow-up` call
+- Always returns `{ prologue: string | null, followUp: { question, options, hint? } | null }`
+- Model receives: full conversation history + current topic full Q&A + next topic's actual question text + `followUpsAskedThisTopic` count
+- Model governs pacing; frontend has hard cap of 4 follow-ups per topic
+
+### `app/api/follow-up/route.ts` — Rewritten
+
+New input shape:
+```typescript
+{ conversationSoFar, currentTopic: { label, openerQuestion, openerAnswer, followUpQA[] },
+  nextTopic: { label, question } | null, tone, depth, followUpsAskedThisTopic }
+```
+New output shape: `{ prologue: string | null, followUp: { question, options, hint? } | null }`
+
+Prompt improvements:
+- English instructions + Hebrew output (better Gemini compliance)
+- Prologue marked REQUIRED/non-null in both follow-up and transition cases
+- Explicit ban on bridging language inside `question` field
+- Depth guidance replaces `maxFollowUps` integer cap
+- Langfuse observability retained
+
+### `app/prototype-e/page.tsx` — State Machine Rewrite
+
+Old state (8 vars): `topicPhase`, `followUpIdx`, `openerAnswers`, `openerTexts`, `followUps`, `followUpAnswers`, `prologues`, `followUpLoading`
+
+New state (5 vars): `topicQA` (Record<topicId, TopicQA>), `currentFollowUp`, `currentPrologue`, `followUpsAskedThisTopic`, `loading`
+
+`TopicQA` type stores full follow-up `{ question, options, hint?, answer }` — enabling precise back navigation.
+
+Back navigation now works as a stack:
+- Back from follow-up #N → restores follow-up #N-1 (pops from stored, re-answers)
+- Back from topic N+1 opener → restores topic N's last follow-up
+- Re-answering a restored follow-up discards subsequent follow-ups (correct branching behavior)
+
+### UX Improvements
+
+**Follow-up context cues** — Follow-up screens now show:
+- `↳ שאלת המשך` label next to topic chip
+- Opener answer recap in teal-bordered quote block above the AI prologue
+
+**Loading animation** — Replaced static "רגע..." with cycling verbs that start at a random index. Two distinct lists with zero overlap:
+- Formal: מנתח / שוקל / חושב / מגבש
+- Informal: מקשיב / מעכל / מהרהר / מתבשל / מתפלסף
+
+**Landing page persistence** — Tone and depth selections now persist in `sessionStorage`; navigating back to `/` restores choices.
+
+**Hints** — Expanded to all 8 topics in both question registers. `Option.term` field enables specific term labeling (`מה זה "פריפריה"?` instead of generic `מה זה אומר?`). TermHint anchored visually to its option with right-side teal border.
+
+**API prompts** — All 4 API routes (`/api/follow-up`, `/api/results`, `/api/results-d`, `/api/chat`) rewritten with English instructions + Hebrew output for better model compliance.
+
+**Bug fixes:**
+- Close step back button now resets `topicPhase` to opener (previously bounced back to close)
+- Prologue forced non-null in prompt; model no longer bakes bridging language into question field
+
+### Commits
+
+```
+c445162 content: rewrite questions — policy positions in plain language, new religion options
+87250ea feat: round 3 feedback — hints, Hotjar, English prompts
+c7f903d fix: close step back button resets topicPhase to opener
+53bcc84 feat(prototype-e): unified state machine — one API call per answer
+37a7e24 fix(follow-up): enforce prologue split from question in prompt
+813f490 fix(prototype-e): back navigation restores previous follow-up question
+9a02834 ui(prototype-e): animate loading verb instead of "רגע..."
+a677d39 ui(prototype-e): follow-up context cues + loading verb fixes
+20bc100 Merge feature/questions-rewrite
+```
+
+---
+
 ## 2026-06-19 — Round 3 Implementation: Prototype E + Modified D
 
 ### What We Built
