@@ -1,0 +1,176 @@
+"use client";
+
+// Shared priorities-ranking step used by prototypes B, D, and E.
+
+const TOPICS = [
+  { id: "security",  label: "ביטחון ומדיניות חוץ" },
+  { id: "economy",   label: "כלכלה ותעסוקה" },
+  { id: "housing",   label: "דיור ועלות מחיה" },
+  { id: "education", label: "חינוך" },
+  { id: "health",    label: "בריאות" },
+  { id: "religion",  label: "דת ומדינה" },
+  { id: "justice",   label: "שלטון החוק ומערכת המשפט" },
+  { id: "equality",  label: "זכויות אדם ומיעוטים" },
+];
+
+const BUCKETS = [
+  { value: 4, label: "קריטי" },
+  { value: 3, label: "חשוב מאוד" },
+  { value: 2, label: "חשוב" },
+  { value: 1, label: "פחות חשוב" },
+] as const;
+
+const MIN_IMPORTANT = 3;
+
+type AccentColor = "emerald" | "teal" | "purple";
+
+const ACCENT: Record<AccentColor, {
+  bucket4: string; bucket3: string; bucket2: string; bucket1: string;
+  cardActive: string; cardPending: string;
+  button: string; buttonHover: string;
+  counter: string;
+}> = {
+  emerald: {
+    bucket4: "bg-emerald-600 text-white border-emerald-600",
+    bucket3: "bg-emerald-400 text-white border-emerald-400",
+    bucket2: "bg-emerald-200 text-emerald-800 border-emerald-300",
+    bucket1: "bg-gray-200 text-gray-500 border-gray-300",
+    cardActive: "border-emerald-300 bg-emerald-50/40",
+    cardPending: "border-gray-200 bg-gray-50",
+    button: "bg-emerald-600 text-white hover:bg-emerald-700",
+    buttonHover: "hover:border-emerald-400",
+    counter: "text-emerald-600",
+  },
+  teal: {
+    bucket4: "bg-teal-600 text-white border-teal-600",
+    bucket3: "bg-teal-400 text-white border-teal-400",
+    bucket2: "bg-teal-200 text-teal-800 border-teal-300",
+    bucket1: "bg-gray-200 text-gray-500 border-gray-300",
+    cardActive: "border-teal-300 bg-teal-50/40",
+    cardPending: "border-gray-200 bg-gray-50",
+    button: "bg-teal-600 text-white hover:bg-teal-700",
+    buttonHover: "hover:border-teal-400",
+    counter: "text-teal-600",
+  },
+  purple: {
+    bucket4: "bg-purple-600 text-white border-purple-600",
+    bucket3: "bg-purple-400 text-white border-purple-400",
+    bucket2: "bg-purple-200 text-purple-800 border-purple-300",
+    bucket1: "bg-gray-200 text-gray-500 border-gray-300",
+    cardActive: "border-purple-300 bg-purple-50/40",
+    cardPending: "border-gray-200 bg-gray-50",
+    button: "bg-purple-600 text-white hover:bg-purple-700",
+    buttonHover: "hover:border-purple-400",
+    counter: "text-purple-600",
+  },
+};
+
+type Props = {
+  buckets: Record<string, number>;
+  setBuckets: (b: Record<string, number>) => void;
+  onContinue: () => void;
+  accentColor?: AccentColor;
+  onBack?: () => void;
+};
+
+export default function PrioritiesStep({
+  buckets,
+  setBuckets,
+  onContinue,
+  accentColor = "emerald",
+  onBack,
+}: Props) {
+  const c = ACCENT[accentColor];
+
+  const setBucket = (topicId: string, value: number) => {
+    setBuckets({ ...buckets, [topicId]: buckets[topicId] === value ? 0 : value });
+  };
+
+  const importantCount = Object.values(buckets).filter((w) => w >= 2).length;
+  const canProceed = importantCount >= MIN_IMPORTANT;
+
+  const bucketActiveClass: Record<number, string> = {
+    4: c.bucket4, 3: c.bucket3, 2: c.bucket2, 1: c.bucket1,
+  };
+
+  return (
+    <main className="min-h-screen flex flex-col items-center px-4 py-12">
+      <div className="w-full max-w-xl">
+        {onBack && (
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); onBack(); }}
+            className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block"
+          >
+            ← חזרה
+          </a>
+        )}
+        <h1 className="text-2xl font-bold mb-2">כמה כל נושא חשוב לך?</h1>
+        <p className="text-gray-500 text-sm mb-1 leading-relaxed">
+          לכל נושא — בחר את רמת החשיבות שלו עבורך.
+          ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
+        </p>
+        <p className="text-sm text-gray-600 mb-8">
+          יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים</strong> כ"חשוב" או יותר כדי להמשיך.
+        </p>
+
+        <div className="flex flex-col gap-3 mb-8">
+          {TOPICS.map((t) => {
+            const selected = buckets[t.id] ?? 0;
+            return (
+              <div
+                key={t.id}
+                className={`border-2 rounded-xl p-4 transition-all ${
+                  selected >= 2
+                    ? c.cardActive
+                    : selected === 1
+                    ? c.cardPending
+                    : "border-gray-200"
+                }`}
+              >
+                <p className="text-sm font-medium mb-3 text-right">{t.label}</p>
+                <div className="flex gap-2 flex-row-reverse">
+                  {BUCKETS.map((b) => (
+                    <button
+                      key={b.value}
+                      onClick={() => setBucket(t.id, b.value)}
+                      className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all ${
+                        selected === b.value
+                          ? bucketActiveClass[b.value]
+                          : "border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600 bg-white"
+                      }`}
+                    >
+                      {b.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mb-4 text-center text-sm text-gray-500">
+          {importantCount < MIN_IMPORTANT ? (
+            <span>סומנו {importantCount} נושאים כ"חשוב" או יותר — יש לסמן לפחות {MIN_IMPORTANT}</span>
+          ) : (
+            <span className={c.counter}>
+              {importantCount} נושאים סומנו כחשובים
+              {importantCount < TOPICS.length && " — ניתן לסמן עוד"}
+            </span>
+          )}
+        </div>
+
+        <button
+          onClick={onContinue}
+          disabled={!canProceed}
+          className={`w-full py-4 rounded-xl font-semibold transition-colors disabled:opacity-40 ${c.button}`}
+        >
+          המשך
+        </button>
+      </div>
+    </main>
+  );
+}
+
+export { TOPICS, MIN_IMPORTANT };
+export type { AccentColor };

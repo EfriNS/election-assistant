@@ -14,7 +14,7 @@ type AiData = {
 type Props = {
   results: Array<Party & { score: number }>;
   userAnswersSummary?: string;
-  accentColor: "blue" | "emerald" | "amber" | "purple";
+  accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
   externalAiData?: AiData | null;

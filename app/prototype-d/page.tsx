@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
+import PrioritiesStep from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -14,8 +15,6 @@ type ResultsData = {
   partyBlurbs: Record<string, string>;
   groundings: unknown[];
 };
-
-const MAX_TURNS = 50;
 
 // Shown immediately on chat open (not sent to the API — API sees only the real conversation).
 const INTRO_MESSAGE: Message = {
@@ -52,11 +51,17 @@ function MessageBubble({ msg }: { msg: Message }) {
   );
 }
 
-export default function PrototypeD() {
+function PrototypeDInner() {
+  const searchParams = useSearchParams();
+  const tone = searchParams.get("tone") ?? "formal";
+  const depth = searchParams.get("depth") ?? "short";
+  const maxTurns = depth === "deep" ? 10 : 5;
+
+  const [step, setStep] = useState<"rank" | "chat">("rank");
+  const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [messages, setMessages] = useState<Message[]>([INTRO_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [started, setStarted] = useState(false);
   const [confirmHome, setConfirmHome] = useState(false);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -74,8 +79,9 @@ export default function PrototypeD() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Auto-start the AI conversation when chat step begins
   useEffect(() => {
-    if (!started || autoStartedRef.current) return;
+    if (step !== "chat" || autoStartedRef.current) return;
     autoStartedRef.current = true;
     setLoading(true);
     fetch("/api/chat", {
@@ -85,6 +91,10 @@ export default function PrototypeD() {
         messages: [{ role: "user", content: "התחל" }],
         isFinalTurn: false,
         sessionId,
+        priorities: buckets,
+        tone,
+        depth,
+        maxTurns,
       }),
     })
       .then((res) => res.json())
@@ -97,13 +107,14 @@ export default function PrototypeD() {
       })
       .catch(() => setError("NETWORK_ERROR"))
       .finally(() => setLoading(false));
-  }, [started, sessionId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   const sendMessage = async (content: string) => {
     setError(null);
     const conversationHistory = messages.slice(1);
     const userTurnsSoFar = conversationHistory.filter((m) => m.role === "user").length;
-    const isFinalTurn = userTurnsSoFar >= MAX_TURNS - 1;
+    const isFinalTurn = userTurnsSoFar >= maxTurns - 1;
 
     const next: Message[] = [...messages, { role: "user", content }];
     setMessages(next);
@@ -118,19 +129,22 @@ export default function PrototypeD() {
           messages: [...conversationHistory, { role: "user", content }],
           isFinalTurn,
           sessionId,
+          priorities: buckets,
+          tone,
+          depth,
+          maxTurns,
         }),
       });
       const data = await res.json();
       if (data.content) {
         setMessages([...next, { role: "assistant", content: data.content }]);
-        // Detect synthesis turn: AI mentions 5+ party names in one response (ranking),
-        // or the hard turn-limit fired. The system prompt uses **N. party** format.
+        // Detect synthesis: AI mentions 5+ party names (ranking), or hard turn-limit fired.
         const PARTY_NAMES = ['הדמוקרטים', 'ליכוד', 'ש"ס', 'ביחד', 'ישר', 'ישראל ביתנו', 'חד"ש'];
         const partyMentions = PARTY_NAMES.filter((n) => data.content.includes(n)).length;
         const isSynthesis = isFinalTurn || partyMentions >= 5;
         if (isSynthesis) {
           setFinished(true);
-          setResultsLoading(true); // extraction runs in background; user reads synthesis first
+          setResultsLoading(true);
 
           const fullConversation: Message[] = [
             ...conversationHistory,
@@ -161,36 +175,19 @@ export default function PrototypeD() {
   };
 
   const userTurnCount = messages.filter((m) => m.role === "user").length;
-  const isNearLimit = userTurnCount === MAX_TURNS - 1 && !finished;
-  const isAtLimit = userTurnCount >= MAX_TURNS - 1 && !finished;
+  const isNearLimit = userTurnCount === maxTurns - 1 && !finished;
+  const isAtLimit = userTurnCount >= maxTurns - 1 && !finished;
 
-  // ── Welcome screen ──────────────────────────────────────────────────────────
-  if (!started) {
+  // ── Rank step (replaces welcome screen) ────────────────────────────────────
+  if (step === "rank") {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center px-4">
-        <div className="w-full max-w-md text-center">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 mb-12 inline-block">
-            ← חזרה
-          </Link>
-          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-3xl">💬</span>
-          </div>
-          <h1 className="text-2xl font-bold mb-3">שיחה עם עוזר AI</h1>
-          <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-            עוזר חכם ישוחח איתך על הנושאים שחשובים לך, ובסוף יגלה לאיזו מפלגה אתה הכי קרוב —
-            עם הסבר מפורט.
-          </p>
-          <p className="text-xs text-gray-400 mb-8">
-            מנוהל על ידי Gemini AI · עמדות המפלגות הן פיקטיביות לצורכי הדגמה
-          </p>
-          <button
-            onClick={() => setStarted(true)}
-            className="w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors"
-          >
-            התחל שיחה
-          </button>
-        </div>
-      </main>
+      <PrioritiesStep
+        buckets={buckets}
+        setBuckets={setBuckets}
+        accentColor="purple"
+        onBack={() => { window.location.href = "/"; }}
+        onContinue={() => setStep("chat")}
+      />
     );
   }
 
@@ -210,7 +207,6 @@ export default function PrototypeD() {
   // ── Results screen ──────────────────────────────────────────────────────────
   if (showResults && !resultsLoading) {
     if (!resultsData) {
-      // Extraction failed — offer to go back to the chat transcript
       return (
         <main className="h-screen flex flex-col items-center justify-center px-4 text-center">
           <p className="text-gray-500 mb-2">לא הצלחנו לטעון את התוצאות.</p>
@@ -337,5 +333,13 @@ export default function PrototypeD() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function PrototypeD() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">טוען...</div>}>
+      <PrototypeDInner />
+    </Suspense>
   );
 }

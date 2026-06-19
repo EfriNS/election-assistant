@@ -2,6 +2,56 @@ import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
 
+const TOPIC_LABELS: Record<string, string> = {
+  security:  "ביטחון ומדיניות חוץ",
+  economy:   "כלכלה ותעסוקה",
+  housing:   "דיור ועלות מחיה",
+  education: "חינוך",
+  health:    "בריאות",
+  religion:  "דת ומדינה",
+  justice:   "שלטון החוק ומערכת המשפט",
+  equality:  "זכויות אדם ומיעוטים",
+};
+
+const BUCKET_LABELS: Record<number, string> = {
+  4: "קריטי", 3: "חשוב מאוד", 2: "חשוב", 1: "פחות חשוב",
+};
+
+function buildContextBlock(
+  priorities: Record<string, number>,
+  tone: string,
+  depth: string
+): string {
+  const sorted = Object.entries(priorities)
+    .filter(([, w]) => w > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id, w]) => `${TOPIC_LABELS[id] ?? id} (${BUCKET_LABELS[w] ?? w})`)
+    .join(", ");
+
+  if (!sorted) return "";
+
+  const register =
+    tone === "personal"
+      ? "חמה ומשוחחת — שפת חיים יומיומיים, גוף ראשון"
+      : "עניינית ומנתחת — שפת מדיניות ציבורית";
+
+  const depthNote =
+    depth === "deep"
+      ? "שיחה מעמיקה — 8–12 תורות לפני סיכום"
+      : "שיחה קצרה — 4–6 תורות לפני סיכום";
+
+  return `**הקשר המשתמש:**
+עדיפויות (מהגבוה לנמוך): ${sorted}
+סגנון: ${register}
+עומק: ${depthNote}
+
+התחל מהנושאים שדורגו גבוה ביותר.
+
+---
+
+`;
+}
+
 const SYSTEM_PROMPT = `אתה עוזר ניטרלי שעוזר לאנשים לגלות לאיזו מפלגה פוליטית הם הכי קרובים.
 
 **חשוב מאוד:**
@@ -33,7 +83,7 @@ function makeLangfuse() {
 }
 
 export async function POST(req: NextRequest) {
-  const { messages, isFinalTurn, sessionId } = await req.json();
+  const { messages, isFinalTurn, sessionId, priorities, tone, depth } = await req.json();
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -47,7 +97,7 @@ export async function POST(req: NextRequest) {
   const trace = langfuse?.trace({
     name: "conversation-turn",
     sessionId: sessionId ?? undefined,
-    metadata: { turnNumber, isFinalTurn, prototype: "d" },
+    metadata: { turnNumber, isFinalTurn, prototype: "d", tone: tone ?? null, depth: depth ?? null },
   });
   const generation = trace?.generation({
     name: "gemini-response",
@@ -63,7 +113,8 @@ export async function POST(req: NextRequest) {
   }));
 
   const lastMessage = messages[messages.length - 1];
-  const systemInstruction = SYSTEM_PROMPT + (isFinalTurn ? SYNTHESIS_INSTRUCTION : "");
+  const contextBlock = priorities ? buildContextBlock(priorities, tone ?? "formal", depth ?? "short") : "";
+  const systemInstruction = contextBlock + SYSTEM_PROMPT + (isFinalTurn ? SYNTHESIS_INSTRUCTION : "");
 
   try {
     const chat = ai.chats.create({

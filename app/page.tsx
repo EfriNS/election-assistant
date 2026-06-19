@@ -1,96 +1,133 @@
-import Link from "next/link";
-import ShareButton from "@/components/ShareButton";
+"use client";
 
-const prototypes = [
-  {
-    id: "a",
-    letter: "א",
-    title: "הצהרות",
-    subtitle: "שאלון קלאסי",
-    description: "ענה על 6 הצהרות — הסכם, התנגד, או ציין שאין לך עמדה. פשוט, ישיר, וניתן לביקורת.",
-    time: "~5 דקות",
-    color: "bg-blue-50 border-blue-200 hover:border-blue-400",
-    badge: "bg-blue-100 text-blue-700",
-  },
-  {
-    id: "b",
-    letter: "ב",
-    title: "עדיפויות",
-    subtitle: "קודם מה חשוב לך",
-    description: "דרג את הנושאים שחשובים לך — ואז ענה על שאלות רק בנושאים שבחרת.",
-    time: "~8 דקות",
-    color: "bg-emerald-50 border-emerald-200 hover:border-emerald-400",
-    badge: "bg-emerald-100 text-emerald-700",
-  },
-  {
-    id: "c",
-    letter: "ג",
-    title: "דילמות",
-    subtitle: "מצבים אמיתיים",
-    description: "בחר במדיניות המועדפת עליך במבחר נושאים שמשפיעים על חייך.",
-    time: "~6 דקות",
-    color: "bg-amber-50 border-amber-200 hover:border-amber-400",
-    badge: "bg-amber-100 text-amber-700",
-  },
-  {
-    id: "d",
-    letter: "ד",
-    title: "שיחה",
-    subtitle: "עם עוזר AI",
-    description: "שוחח בחופשיות עם עוזר חכם שיבין את עמדותיך ויסביר לאיזו מפלגה אתה קרוב.",
-    time: "~10 דקות",
-    color: "bg-purple-50 border-purple-200 hover:border-purple-400",
-    badge: "bg-purple-100 text-purple-700",
-  },
-];
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+type Tone = "formal" | "personal";
+type Depth = "short" | "deep";
 
 export default function Home() {
+  const router = useRouter();
+  const [tone, setTone] = useState<Tone | null>(null);
+  const [depth, setDepth] = useState<Depth | null>(null);
+  const ready = tone !== null && depth !== null;
+
+  const handleStart = (path: "/prototype-e" | "/prototype-d") => {
+    if (!ready) return;
+    router.push(`${path}?tone=${tone}&depth=${depth}`);
+  };
+
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-16">
-      <div className="w-full max-w-2xl">
-        <div className="text-center mb-12">
-          <p className="text-sm font-medium text-gray-400 tracking-widest mb-3">אב-טיפוס לבדיקה</p>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">עוזר הבחירות</h1>
-          <p className="text-lg text-gray-500">
-            מצא לאיזו מפלגה אתה הכי קרוב — בצורה שקופה, ללא עיוות.
+      <div className="w-full max-w-md">
+
+        {/* Headline */}
+        <div className="mb-12">
+          <p className="text-xs font-medium text-gray-400 tracking-widest uppercase mb-3">אב-טיפוס</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-3">עוזר הבחירות</h1>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            גלו איפה אתם עומדים מול המפלגות — בצורה שקופה ומנומקת
           </p>
         </div>
 
-        <p className="text-sm text-center text-gray-400 mb-6">
-          4 גרסאות שונות של הכלי — נשמח לשמוע איזו מרגישה הכי נכונה לך.
+        {/* Advisor style */}
+        <div className="mb-2">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+            מי אני כיועץ שלכם?
+          </p>
+          <div className="flex flex-col gap-3">
+            {([
+              { t: "formal"   as Tone, label: "ענייני", desc: "נדבר בשפת מדיניות ועמדות" },
+              { t: "personal" as Tone, label: "זורם",   desc: "נדבר בשפת יומיום ודאגות" },
+            ]).map(({ t, label, desc }) => (
+              <button
+                key={t}
+                onClick={() => setTone(t)}
+                className="flex items-center gap-3 text-right py-2 group"
+              >
+                <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
+                  tone === t ? "border-teal-500" : "border-gray-300 group-hover:border-gray-400"
+                }`}>
+                  {tone === t && <span className="w-2 h-2 rounded-full bg-teal-500 block" />}
+                </span>
+                <span>
+                  <span className={`font-semibold text-base ${tone === t ? "text-teal-700" : "text-gray-800"}`}>
+                    {label}
+                  </span>
+                  <span className="text-gray-400 text-sm"> — {desc}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-100 my-6" />
+
+        {/* Depth */}
+        <div className="mb-10">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+            עד כמה להעמיק?
+          </p>
+          <div className="flex flex-col gap-3">
+            {([
+              { d: "short" as Depth, label: "ממוקד", desc: "נושאים מרכזיים, תשובות מהירות" },
+              { d: "deep"  as Depth, label: "מעמיק", desc: "יותר שאלות, תמונה מלאה יותר" },
+            ]).map(({ d, label, desc }) => (
+              <button
+                key={d}
+                onClick={() => setDepth(d)}
+                className="flex items-center gap-3 text-right py-2 group"
+              >
+                <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
+                  depth === d ? "border-teal-500" : "border-gray-300 group-hover:border-gray-400"
+                }`}>
+                  {depth === d && <span className="w-2 h-2 rounded-full bg-teal-500 block" />}
+                </span>
+                <span>
+                  <span className={`font-semibold text-base ${depth === d ? "text-teal-700" : "text-gray-800"}`}>
+                    {label}
+                  </span>
+                  <span className="text-gray-400 text-sm"> — {desc}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-100 mb-6" />
+
+        {/* CTA */}
+        <button
+          onClick={() => handleStart("/prototype-e")}
+          disabled={!ready}
+          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors mb-4 disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          התחילו ←
+        </button>
+
+        <p className="text-center text-sm text-gray-400 mb-10">
+          מעדיפים שיחה חופשית עם AI?{" "}
+          <button
+            onClick={() => handleStart("/prototype-d")}
+            disabled={!ready}
+            className="text-teal-600 hover:text-teal-800 underline disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            לחצו כאן
+          </button>
         </p>
 
-        <div className="flex flex-col gap-4">
-          {prototypes.map((p) => (
-            <Link
-              key={p.id}
-              href={`/prototype-${p.id}`}
-              className={`border-2 rounded-2xl p-6 transition-all duration-150 ${p.color}`}
-            >
-              <div className="flex items-start gap-4">
-                <div className={`text-xl font-bold px-3 py-1 rounded-lg ${p.badge} shrink-0`}>
-                  {p.letter}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <h2 className="text-xl font-bold">{p.title}</h2>
-                    <span className="text-sm text-gray-500">{p.subtitle}</span>
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-2">{p.description}</p>
-                  <span className="text-xs text-gray-400">{p.time}</span>
-                </div>
-                <span className="text-gray-300 text-2xl shrink-0">←</span>
-              </div>
-            </Link>
-          ))}
+        {/* Footer */}
+        <div className="border-t border-gray-100 pt-6 text-center">
+          <p className="text-xs text-gray-400 mb-2">גרסאות קודמות לבדיקה:</p>
+          <div className="flex justify-center gap-4 text-xs text-gray-400">
+            <a href="/prototype-a" className="hover:text-gray-600">א — הצהרות</a>
+            <a href="/prototype-b" className="hover:text-gray-600">ב — עדיפויות</a>
+            <a href="/prototype-c" className="hover:text-gray-600">ג — דילמות</a>
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-3">
-          <p className="text-xs text-center text-gray-500">
-            אב-טיפוס בלבד · התוכן לא מייצג עמדות פוליטיות אמיתיות
-          </p>
-          <ShareButton variant="subtle" />
-        </div>
       </div>
     </main>
   );
