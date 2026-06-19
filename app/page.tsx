@@ -26,7 +26,7 @@ export default function Home() {
           <p className="text-xs font-medium text-gray-400 tracking-widest uppercase mb-3">אב-טיפוס</p>
           <h1 className="text-3xl font-bold text-gray-900 mb-3">עוזר הבחירות</h1>
           <p className="text-gray-500 text-sm leading-relaxed">
-            גלו איפה אתם עומדים מול כל המפלגות — בצורה שקופה ומנומקת
+            גלו איפה אתם עומדים מול המפלגות — בצורה שקופה ומנומקת
           </p>
         </div>
 
@@ -106,10 +106,6 @@ export default function Home() {
         >
           התחילו ←
         </button>
-
-        <p className="text-center text-xs text-gray-400 mb-8">
-          ניטרלי · שקוף · ללא הרשמה
-        </p>
 
         <p className="text-center text-sm text-gray-400 mb-10">
           מעדיפים שיחה חופשית עם AI?{" "}
