@@ -288,12 +288,8 @@ function PrototypeEInner() {
             className="w-full border border-gray-300 rounded-xl p-4 text-sm leading-relaxed h-36 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 mb-4"
             dir="rtl" />
           <button onClick={() => setStep("results")}
-            className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors mb-3">
-            לתוצאות →
-          </button>
-          <button onClick={() => setStep("results")}
-            className="w-full text-sm text-gray-400 hover:text-gray-600 text-center py-2">
-            דלג — עבור לתוצאות
+            className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors">
+            ← לתוצאות
           </button>
         </div>
       </main>
@@ -439,7 +435,7 @@ function PrototypeEInner() {
 
         {/* AI prologue — transition from previous topic */}
         {prologue && (
-          <p className="text-sm text-gray-500 italic leading-relaxed mb-4">{prologue}</p>
+          <p className="text-sm text-gray-600 leading-relaxed mb-6">{prologue}</p>
         )}
 
         <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
