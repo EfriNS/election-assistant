@@ -463,8 +463,8 @@ function PrototypeEInner() {
                   {opt.text}
                 </button>
                 {opt.hint && (
-                  <div className="mt-1 mr-2">
-                    <TermHint definition={opt.hint} />
+                  <div className="mt-1.5 mr-3 border-r-2 border-teal-100 pr-2">
+                    <TermHint definition={opt.hint} label={opt.term ? `מה זה "${opt.term}"?` : "מה זה אומר?"} />
                   </div>
                 )}
               </div>
