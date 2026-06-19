@@ -27,8 +27,8 @@ const BUCKET_LABELS: Record<number, string> = {
 const OTHER_OPTION = "אחר — פרט";
 const FOLLOW_UP_HARD_CAP = 4;
 
-const LOADING_VERBS_FORMAL = ["שוקל...", "מנתח...", "מגבש...", "שוקל..."];
-const LOADING_VERBS_PERSONAL = ["חושב...", "מקשיב...", "שוקל...", "מגבש...", "מעכל..."];
+const LOADING_VERBS_FORMAL = ["מנתח...", "שוקל...", "חושב...", "מגבש..."];
+const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...", "מתבשל...", "מתפלסף..."];
 
 // ─── Scoring ──────────────────────────────────────────────────────────────────
 
@@ -118,6 +118,7 @@ function PrototypeEInner() {
   useEffect(() => {
     if (!loading) { setLoadingVerbIdx(0); return; }
     const verbs = tone === "personal" ? LOADING_VERBS_PERSONAL : LOADING_VERBS_FORMAL;
+    setLoadingVerbIdx(Math.floor(Math.random() * verbs.length));
     const id = setInterval(() => {
       setLoadingVerbIdx((v) => (v + 1) % verbs.length);
     }, 1400);
@@ -429,12 +430,25 @@ function PrototypeEInner() {
 
   // ── Follow-up question ───────────────────────────────────────────────────────
   if (currentFollowUp) {
+    const openerAnswerText = topicQA[topicId]?.openerAnswerText;
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
           <Header />
 
-          <p className="text-xs font-medium text-teal-600 uppercase tracking-wider mb-4">{topic.label}</p>
+          {/* Topic + follow-up label */}
+          <div className="flex items-center gap-2 mb-4">
+            <p className="text-xs font-medium text-teal-600 uppercase tracking-wider">{topic.label}</p>
+            <span className="text-xs text-gray-400">↳ שאלת המשך</span>
+          </div>
+
+          {/* Opener answer recap */}
+          {openerAnswerText && (
+            <div className="border-r-2 border-teal-200 pr-3 mb-5">
+              <p className="text-xs text-gray-400 mb-0.5">ענית:</p>
+              <p className="text-sm text-gray-500 leading-snug">{openerAnswerText}</p>
+            </div>
+          )}
 
           {currentPrologue && (
             <p className="text-sm text-gray-600 leading-relaxed mb-6">{currentPrologue}</p>

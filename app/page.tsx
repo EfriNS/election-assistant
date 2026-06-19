@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Tone = "formal" | "personal";
@@ -11,6 +11,16 @@ export default function Home() {
   const [tone, setTone] = useState<Tone | null>(null);
   const [depth, setDepth] = useState<Depth | null>(null);
   const ready = tone !== null && depth !== null;
+
+  useEffect(() => {
+    const t = sessionStorage.getItem("landing_tone") as Tone | null;
+    const d = sessionStorage.getItem("landing_depth") as Depth | null;
+    if (t) setTone(t);
+    if (d) setDepth(d);
+  }, []);
+
+  const handleTone = (t: Tone) => { setTone(t); sessionStorage.setItem("landing_tone", t); };
+  const handleDepth = (d: Depth) => { setDepth(d); sessionStorage.setItem("landing_depth", d); };
 
   const handleStart = (path: "/prototype-e" | "/prototype-d") => {
     if (!ready) return;
@@ -42,7 +52,7 @@ export default function Home() {
             ]).map(({ t, label, desc }) => (
               <button
                 key={t}
-                onClick={() => setTone(t)}
+                onClick={() => handleTone(t)}
                 className="flex items-center gap-3 text-right py-2 group"
               >
                 <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
@@ -76,7 +86,7 @@ export default function Home() {
             ]).map(({ d, label, desc }) => (
               <button
                 key={d}
-                onClick={() => setDepth(d)}
+                onClick={() => handleDepth(d)}
                 className="flex items-center gap-3 text-right py-2 group"
               >
                 <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
