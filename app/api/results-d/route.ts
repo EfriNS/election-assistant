@@ -3,30 +3,30 @@ import { NextRequest, NextResponse } from "next/server";
 
 type Message = { role: "user" | "assistant"; content: string };
 
-const SYSTEM_PROMPT = `אתה מנתח שיחה פוליטית ומחלץ ממנה פרופיל ערכי מובנה.
+const SYSTEM_PROMPT = `You analyze a political conversation and extract a structured values profile. All output must be in Hebrew.
 
-קיבלת תמלול של שיחה שבה עוזר AI שאל משתמש על עמדותיו הפוליטיות.
+You receive a transcript of a conversation where an AI advisor asked a user about their political positions.
 
-תפקידך:
-1. profile — 2–3 משפטים המסכמים את הפרופיל הפוליטי של המשתמש. פנה אליו בגוף שני.
-2. scores — ציון התאמה 0–100 לכל מפלגה, על סמך מה שהמשתמש אמר בשיחה בלבד. 100 = התאמה מלאה, 0 = ניגוד מוחלט.
-3. partyBlurbs — לשלוש המפלגות שקיבלו ציון גבוה ביותר: 1–2 משפטים המסבירים את ההתאמה תוך הזכרת דברים ספציפיים שהמשתמש אמר.
-4. groundings — החזר רשימה ריקה (יתווסף בגרסה עתידית).
+Your task:
+1. profile — 2–3 sentences summarizing the user's political profile. Address the user in second person (Hebrew: אתה/את).
+2. scores — match score 0–100 for each party, based solely on what the user said in the conversation. 100 = perfect match, 0 = complete opposition.
+3. partyBlurbs — for the 3 highest-scoring parties: 1–2 sentences explaining the match, citing specific things the user said.
+4. groundings — return an empty list (will be added in a future version).
 
-המפלגות (id → שם ועמדה כללית):
-hadash   → חד"ש-תע"ל (שמאל יהודי-ערבי — שלום, שוויון, זכויות עובדים)
-democrats → הדמוקרטים (מרכז-שמאל — רווחה, שוויון חברתי, הסדר מדיני)
-beyahad  → ביחד בנט/לפיד (מרכז — ממשל נקי, חינוך, הפרדת דת ומדינה)
-yashar   → ישר! איזנקוט (מרכז-ימין — ביטחון לאומי, שקיפות, ממשל אחראי)
-beitenu  → ישראל ביתנו (ימין חילוני — הפרדת דת ומדינה, עמדות ביטחוניות נוקשות)
-likud    → ליכוד (ימין לאומי — ביטחון חזק, כלכלת שוק, שמרנות חברתית)
-shas     → ש"ס (ימין דתי-ספרדי — ערכים מסורתיים, דאגה לשכבות חלשות)
+Parties (id → name and general position):
+hadash    → חד"ש-תע"ל (Jewish-Arab left — peace, equality, workers' rights)
+democrats → הדמוקרטים (center-left — welfare, social equality, political settlement)
+beyahad   → ביחד בנט/לפיד (center — clean governance, education, separation of religion and state)
+yashar    → ישר! איזנקוט (center-right — national security, transparency, responsible governance)
+beitenu   → ישראל ביתנו (secular right — separation of religion and state, tough security positions)
+likud     → ליכוד (national right — strong security, market economy, social conservatism)
+shas      → ש"ס (religious-Sephardic right — traditional values, care for weaker classes)
 
-כללים:
-- עברית בלבד
-- גוף שני בכל הטקסטים
-- הblurbs חייבים להתייחס לדברים ספציפיים שהמשתמש אמר — לא לתיאורים כלליים של המפלגה
-- החזר JSON בלבד, ללא markdown fences:
+Rules:
+- Hebrew output only
+- Second person in all texts
+- Blurbs must reference specific things the user said — not general party descriptions
+- Return JSON only, no markdown fences:
 {"profile":"...","scores":{"hadash":0,"democrats":0,"beyahad":0,"yashar":0,"beitenu":0,"likud":0,"shas":0},"partyBlurbs":{"<id>":"<blurb>"},"groundings":[]}`;
 
 export async function POST(req: NextRequest) {
@@ -36,10 +36,10 @@ export async function POST(req: NextRequest) {
   if (!apiKey) return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });
 
   const transcript = messages
-    .map((m) => `[${m.role === "user" ? "משתמש" : "עוזר"}]: ${m.content}`)
+    .map((m) => `[${m.role === "user" ? "User" : "Advisor"}]: ${m.content}`)
     .join("\n\n");
 
-  const userMessage = `להלן תמלול השיחה:\n\n${transcript}\n\nאנא נתח ספציפי לשיחה זו.`;
+  const userMessage = `Here is the conversation transcript:\n\n${transcript}\n\nPlease analyze this specific conversation.`;
 
   const ai = new GoogleGenAI({ apiKey });
 

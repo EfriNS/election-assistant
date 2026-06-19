@@ -6,10 +6,11 @@ import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TopicQ } from "@/lib/questions";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
+import { TermHint } from "@/components/TermHint";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
-type FollowUpQ = { question: string; options: string[] };
+type FollowUpQ = { question: string; options: string[]; hint?: string };
 type Step = "rank" | "questions" | "close" | "results";
 
 const BUCKET_LABELS: Record<number, string> = {
@@ -112,7 +113,7 @@ function PrototypeEInner() {
   const [closeText, setCloseText] = useState("");
 
   const topicsToAsk = Object.entries(buckets)
-    .filter(([, w]) => w > 0)
+    .filter(([, w]) => w >= 2)
     .sort((a, b) => b[1] - a[1])
     .map(([id]) => id);
 
@@ -284,6 +285,7 @@ function PrototypeEInner() {
             אם יש עמדה חשובה שלא עלתה, אפשר לכתוב כאן — זה יעזור לקבל המלצה מדויקת יותר.
           </p>
           <textarea value={closeText} onChange={(e) => setCloseText(e.target.value)}
+            data-hj-allow
             placeholder="כאן תוכל לכתוב בחופשיות..."
             className="w-full border border-gray-300 rounded-xl p-4 text-sm leading-relaxed h-36 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 mb-4"
             dir="rtl" />
@@ -354,7 +356,12 @@ function PrototypeEInner() {
           </div>
 
           <p className="text-xs font-medium text-teal-600 uppercase tracking-wider mb-4">{topic.label}</p>
-          <h2 className="text-xl font-bold leading-snug mb-8">{currentFollowUp.question}</h2>
+          <h2 className="text-xl font-bold leading-snug mb-3">{currentFollowUp.question}</h2>
+          {currentFollowUp.hint && (
+            <div className="mb-6">
+              <TermHint definition={currentFollowUp.hint} />
+            </div>
+          )}
 
           <div className="flex flex-col gap-3 mb-4">
             {currentFollowUp.options.map((opt, i) => {
@@ -376,6 +383,7 @@ function PrototypeEInner() {
                       <div className="mt-2">
                         <textarea
                           autoFocus
+                          data-hj-allow
                           value={followUpDraft}
                           onChange={(e) => setFollowUpDraft(e.target.value)}
                           placeholder="כתבו כאן..."
@@ -444,15 +452,22 @@ function PrototypeEInner() {
           {q.options.map((opt) => {
             const selected = openerAnswers[topicId] === opt.id;
             return (
-              <button key={opt.id}
-                onClick={() => handleOpenerAnswer(opt.id, opt.text)}
-                className={`border-2 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all ${
-                  selected
-                    ? "border-teal-500 bg-teal-50 text-teal-900"
-                    : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
-                }`}>
-                {opt.text}
-              </button>
+              <div key={opt.id}>
+                <button
+                  onClick={() => handleOpenerAnswer(opt.id, opt.text)}
+                  className={`w-full border-2 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all ${
+                    selected
+                      ? "border-teal-500 bg-teal-50 text-teal-900"
+                      : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
+                  }`}>
+                  {opt.text}
+                </button>
+                {opt.hint && (
+                  <div className="mt-1 mr-2">
+                    <TermHint definition={opt.hint} />
+                  </div>
+                )}
+              </div>
             );
           })}
 
@@ -472,6 +487,7 @@ function PrototypeEInner() {
               <div className="mt-2">
                 <textarea
                   autoFocus
+                  data-hj-allow
                   value={openerDraft}
                   onChange={(e) => setOpenerDraft(e.target.value)}
                   placeholder="כתבו כאן..."
