@@ -428,15 +428,7 @@ function PrototypeEInner() {
           <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
         </div>
 
-        {/* AI prologue — transition from previous topic */}
-        {prologue && (
-          <div className="flex items-start gap-2 bg-indigo-50 border border-indigo-100 rounded-xl px-4 py-3 mb-8">
-            <span className="text-indigo-300 text-xs mt-0.5 shrink-0">✦</span>
-            <p className="text-sm text-indigo-800 leading-relaxed">{prologue}</p>
-          </div>
-        )}
-
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-3">
           {bucketLabel && (
             <span className="text-xs text-white bg-teal-600 rounded-full px-2 py-0.5 shrink-0">
               {bucketLabel}
@@ -444,6 +436,12 @@ function PrototypeEInner() {
           )}
           <p className="text-xs font-medium text-teal-700 uppercase tracking-wider">{topic.label}</p>
         </div>
+
+        {/* AI prologue — transition from previous topic */}
+        {prologue && (
+          <p className="text-sm text-gray-500 italic leading-relaxed mb-4">{prologue}</p>
+        )}
+
         <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
 
         <div className="flex flex-col gap-3 mb-4">
