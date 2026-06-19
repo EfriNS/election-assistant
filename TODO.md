@@ -2,8 +2,8 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Round 3 design: Prototype E + modified D** - Full round 3 design spec in SOLUTION-DESIGN.md; two question sets (ענייני/אישי) with audit-first approach; new landing page with tone + depth signals; Prototype E flow spec; Modified D spec. (2026-06-19)
-- **Round 2 user testing + feedback** - 2 users tested; documented in round-2-feedback.md; AI-first entry rejected by teenager; User 1 wants priorities→AI hybrid; tone/depth calibration design direction established. (2026-06-18)
+- **Round 3 implementation: Prototype E + modified D** - Full build: shared PrioritiesStep, lib/questions.ts (2 registers × 8 topics), Prototype E (priorities→structured+AI follow-ups), modified D (priorities→chat), advisor landing page, prologue UI polish. (2026-06-19)
+- **Round 3 design: Prototype E + modified D** - Full round 3 design spec in SOLUTION-DESIGN.md; two question sets (ענייני/אישי); new landing page tone + depth signals; E + D spec. (2026-06-19)
 - **Unified results page + prototype D extraction** - `UnifiedResultsPage` shared across A/B/C/D; AI profile summary + micro-blurbs; `/api/results` + `/api/results-d`; synthesis detection fix. (2026-06-17)
 
 > See CHANGELOG.md for complete details.
@@ -12,7 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Round 3 implementation** - Build Prototype E + modified D + new landing page per `docs/SOLUTION-DESIGN.md` (Round 3 section). Start with question set audit (classify existing 8 B questions as ענייני/אישי, write counterparts), then landing page, then E flow, then D modification, then bug fixes.
+1. **Round 3 user testing** - Test Prototype E + modified D with real users. Focus: does prologue feel natural? Does ענייני/זורם distinction land? Does the close step add value or just delay?
 
 2. **Verify Gemini quota error handling** - Round 1 critical bug; fix went in but was never tested under load. Try hitting the limit intentionally in prototype D to confirm user-friendly error displays (not raw JSON).
 

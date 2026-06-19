@@ -100,6 +100,28 @@
 
 ---
 
+## Prototype E UX Learnings (2026-06-19 — Implementation)
+
+36. **Advisor persona framing solves the "what am I choosing?" problem** — Earlier landing page designs showed tone cards with bullet options that looked like the quiz had already started, or used abstract labels ("ישיר" / "שיחותי") that required self-knowledge. Reframing as "מי אני כיועץ שלכם?" (ענייני/זורם) made the selection click for users because they were choosing a personality, not an abstract concept. Key insight: the selector should describe the *advisor*, not the *user's self-classification*. (#first:2026-06-19)
+
+37. **"Trust" micro-copy can backfire** — "ניטרלי · שקוף · ללא הרשמה" was intended to reassure users about privacy and bias. The user called it "too sleezy" — it read as marketing copy on a site that was supposed to be neutral. Don't protest too much. If the tool is neutral, the experience should demonstrate it; explaining it is counterproductive. (#first:2026-06-19)
+
+38. **No defaults on preference selectors reduces anchor bias** — Starting with one option pre-selected caused users to stick with it without reading the alternative. No-default forces engagement with both options. The cost (slightly higher friction) is worth it for a tool where preference calibration directly affects the quality of the match. (#first:2026-06-19)
+
+39. **AI prologue should be typographically integrated, not boxed** — When an AI-generated transition sentence appears in a distinct colored card (indigo box, ✦ bullet), it breaks the question flow — it feels like a modal interruption rather than a natural bridge. The prologue is a transitional sentence: it should render in the same column, in lighter text (`text-gray-600`), without background, border, or special bullet. Users read it as context, not as an AI "widget". (#first:2026-06-19)
+
+40. **Topic chips as anchors belong before the contextual transition** — Rendering the topic label (e.g., "חשוב מאוד · דיור ועלות מחיה") after the prologue loses its orienting function — the user reads the AI's transition sentence without knowing what topic is coming. Chips first → prologue second → question third. The chip announces where we're going; the prologue bridges how we got there; the question is the payload. (#first:2026-06-19)
+
+41. **In RTL Hebrew UI, arrow direction must match reading direction** — "לתוצאות →" points right (screen-right), which is *away from* the next step in a right-to-left reading context. RTL forward motion uses ← (screen-left). Always use `← [action]` for "proceed" and `→ [back]` for "go back" in Hebrew UIs. Opposite of English convention. (#first:2026-06-19)
+
+42. **Redundant CTAs dilute trust — one clear action is enough** — The close step had both "לתוצאות ←" (primary) and "דלג — עבור לתוצאות" (secondary skip). Both did the same thing. Two buttons for the same action signals confusion about what the first button does. Remove the secondary; if the user doesn't want to write anything, the primary CTA covers them. (#first:2026-06-19)
+
+43. **AI gender consistency requires explicit prompt instruction** — Without a gender constraint, Hebrew AI output switches between male and female verb forms (מבין/מבינה) across turns. The model defaults to whichever form "feels right" in context. Solution: add "דבר תמיד בלשון זכר (מבין, מסכים, שואל וכו׳)" explicitly to the system/generation prompt. This is a Hebrew-specific requirement — most AI prompt guides don't cover it. (#first:2026-06-19)
+
+44. **"אחר — פרט" free text reaches AI context but not structured scores** — The structured question format (opener + follow-up with labeled options) maps option IDs to party score arrays. Free-text answers can't be mapped to a score — they can only flow into the AI's conversation context and appear in the user's summary. This is an acceptable tradeoff: the user's open-ended view enriches the AI explanation; the scoring remains from the labeled options. Don't try to score free text; acknowledge the limitation explicitly in design decisions. (#first:2026-06-19)
+
+---
+
 ## Competitive Landscape Quick Reference
 
 | Tool | Key insight for us |

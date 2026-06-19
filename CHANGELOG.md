@@ -1,5 +1,80 @@
 # Changelog
 
+## 2026-06-19 — Round 3 Implementation: Prototype E + Modified D
+
+### What We Built
+
+Full implementation of the Round 3 design. 11 files changed, 1,349 insertions. Deployed to production.
+
+### New: `lib/questions.ts`
+
+Two complete question registers (8 topics each):
+- `QUESTIONS_FORMAL` — policy framing ("מה הגישה הנכונה?"), 4 options each
+- `QUESTIONS_PERSONAL` — concern framing ("מה הכי מדאיג אותך?"), 4 options each
+- Party scores: 7-element arrays `[hadash, democrats, beyahad, yashar, beitenu, likud, shas]`
+- All scores marked as rough estimates pending expert review (TODO #3)
+
+### New: `components/PrioritiesStep.tsx`
+
+Shared rank component used by B, D, E. Props: `{ buckets, setBuckets, onContinue, accentColor?, onBack? }`. Accent variants: `emerald` (B), `teal` (E), `purple` (D). Exports `TOPICS`, `MIN_IMPORTANT`, `AccentColor`.
+
+### New: `app/prototype-e/page.tsx`
+
+Full Prototype E flow: rank → questions → close → results.
+- Reads `tone` + `depth` from URL params (`/prototype-e?tone=formal&depth=short`)
+- Adaptive follow-ups: AI decides 0 or 1 per topic; depth is a cap (short=1, deep=2)
+- Full conversation history passed to `/api/follow-up` on every call
+- "אחר — פרט" as 5th dashed-border option with textarea, submits free text
+- Back navigation: restores previous selection highlight (teal) and "other" draft
+- Prologue: AI transition sentence between topics (not a chat message — integrated into question flow)
+- Close step: optional free text → results (single "← לתוצאות" CTA)
+- Accent: teal throughout
+
+### New: `app/api/follow-up/route.ts`
+
+POST endpoint. Input: `{ conversationSoFar[], currentTopic, nextTopic, tone, maxFollowUps }`. Output: `{ followUp: {question, options[]} | null, nextPrologue: string | null }`. Prompt instructs: male form always, decide if follow-up needed, always append "אחר — פרט", write prologue for next topic transition.
+
+### Modified: `app/page.tsx` — New Landing Page
+
+Advisor persona framing ("מי אני כיועץ שלכם?") replaced tone cards. Editorial radio style (Option C after user UX review). Two sections separated by dividers:
+- ענייני / זורם — tone of voice selection
+- ממוקד / מעמיק — depth selection
+No defaults; CTA disabled until both chosen. Removed "ניטרלי · שקוף · ללא הרשמה" tagline. "המפלגות" not "כל המפלגות".
+
+### Modified: `app/prototype-d/page.tsx` — Priorities Step Added
+
+Replaced welcome screen with `<PrioritiesStep accentColor="purple" />`. Reads `tone`, `depth` from URL params. `maxTurns` = 5 (short) or 10 (deep). Passes `priorities, tone, depth` to `/api/chat`.
+
+### Modified: `app/api/chat/route.ts`
+
+Added `buildContextBlock(priorities, tone, depth)` prepended to system prompt. Accepts `priorities`, `tone`, `depth`, `maxTurns` from request body. Added `tone`, `depth` to Langfuse metadata.
+
+### UX Polish (multiple iterations)
+
+- Prologue rendering: topic chips above prologue → prologue as `text-gray-600` (no italic, no indigo box, no ✦) → question heading. `mb-6` spacing between prologue and question.
+- Close step: arrow flipped to `← לתוצאות` (RTL-correct). Redundant "דלג" button removed.
+- Advisor gender: explicit "דבר תמיד בלשון זכר" in follow-up prompt after AI switched genders mid-flow.
+- Close step copy: "לקבל המלצה מדויקת יותר" (removed "לנתח את הפרופיל שלך" — felt like profiling).
+
+### Commits
+
+```
+bbb85d9 ui: darken prologue text, add spacing, fix arrow direction, remove redundant skip button
+18b3d4c ui: move topic chips above prologue, restyle prologue as plain italic text
+80ec258 fix: back nav shows previous selection; advisor uses male form
+cdda53e feat: E — AI prologue, adaptive follow-ups, "אחר — פרט" option
+c101c26 fix: landing page copy — remove trust tagline, fix party count claim
+73ea4d1 feat: no default selection on landing page
+5e0a47f feat: landing page — editorial radio style (Option C)
+5ea1160 feat: redesign landing page with advisor persona framing
+48201e4 feat: phase 4 — modified prototype D with priorities step + context-aware chat
+1ed1598 feat: phase 3 — Prototype E (priorities + structured questions + AI follow-ups)
+dd17a6b feat: phase 2 — new landing page with tone/depth selector
+6eefc97 feat: phase 1 — shared question sets, PrioritiesStep component, teal accent, bug fixes
+```
+
+---
+
 ## 2026-06-19 — Round 3 Design: Prototype E + Modified D
 
 ### What We Did
