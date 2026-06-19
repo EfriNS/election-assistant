@@ -8,10 +8,12 @@ type Depth = "short" | "deep";
 
 export default function Home() {
   const router = useRouter();
-  const [tone, setTone] = useState<Tone>("formal");
-  const [depth, setDepth] = useState<Depth>("short");
+  const [tone, setTone] = useState<Tone | null>(null);
+  const [depth, setDepth] = useState<Depth | null>(null);
+  const ready = tone !== null && depth !== null;
 
   const handleStart = (path: "/prototype-e" | "/prototype-d") => {
+    if (!ready) return;
     router.push(`${path}?tone=${tone}&depth=${depth}`);
   };
 
@@ -99,7 +101,8 @@ export default function Home() {
         {/* CTA */}
         <button
           onClick={() => handleStart("/prototype-e")}
-          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors mb-4"
+          disabled={!ready}
+          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors mb-4 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           התחילו ←
         </button>
@@ -112,7 +115,8 @@ export default function Home() {
           מעדיפים שיחה חופשית עם AI?{" "}
           <button
             onClick={() => handleStart("/prototype-d")}
-            className="text-teal-600 hover:text-teal-800 underline"
+            disabled={!ready}
+            className="text-teal-600 hover:text-teal-800 underline disabled:opacity-40 disabled:cursor-not-allowed"
           >
             לחצו כאן
           </button>
