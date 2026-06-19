@@ -17,7 +17,7 @@ type Step = "rank" | "questions" | "close" | "results";
 type TopicQA = {
   openerAnswerId: string;    // option id (for scoring); "other" for free-text
   openerAnswerText: string;  // display text (for conversation summary)
-  followUps: { question: string; answer: string }[];
+  followUps: { question: string; options: string[]; hint?: string; answer: string }[];
 };
 
 const BUCKET_LABELS: Record<number, string> = {
@@ -140,7 +140,7 @@ function PrototypeEInner() {
         topicLabel: topic.label,
         openerQuestion: questionSet[tid]?.question ?? "",
         openerAnswer: qa?.openerAnswerText ?? "",
-        followUpQA: qa?.followUps ?? [],
+        followUpQA: (qa?.followUps ?? []).map(({ question, answer }) => ({ question, answer })),
       };
     });
 
@@ -167,25 +167,45 @@ function PrototypeEInner() {
     setOpenerDraft("");
     setShowFollowUpInput(false);
     setFollowUpDraft("");
+    setCurrentPrologue(null);
 
     if (currentFollowUp !== null) {
-      // Return to opener — restore "other" input if needed
-      setCurrentFollowUp(null);
-      setCurrentPrologue(null);
+      // On a follow-up: go back to the previous follow-up, or opener if none
       const tid = topicsToAsk[questionIndex];
-      const qa = topicQA[tid];
-      if (qa?.openerAnswerId === "other") {
-        setShowOpenerInput(true);
-        setOpenerDraft(qa.openerAnswerText ?? "");
+      const stored = topicQA[tid]?.followUps ?? [];
+      if (stored.length > 0) {
+        const prev = stored[stored.length - 1];
+        setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+        setFollowUpsAskedThisTopic(stored.length);
+        setTopicQA((qa) => ({
+          ...qa,
+          [tid]: { ...qa[tid], followUps: stored.slice(0, -1) },
+        }));
+      } else {
+        setCurrentFollowUp(null);
+        setFollowUpsAskedThisTopic(0);
+        // useEffect restores "other" textarea if needed
       }
     } else {
+      // On an opener
       if (questionIndex === 0) {
         setStep("rank");
       } else {
+        const prevTopicId = topicsToAsk[questionIndex - 1];
+        const prevStored = topicQA[prevTopicId]?.followUps ?? [];
         setQuestionIndex((i) => i - 1);
-        setCurrentFollowUp(null);
-        setCurrentPrologue(null);
-        setFollowUpsAskedThisTopic(0);
+        if (prevStored.length > 0) {
+          const prev = prevStored[prevStored.length - 1];
+          setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+          setFollowUpsAskedThisTopic(prevStored.length);
+          setTopicQA((qa) => ({
+            ...qa,
+            [prevTopicId]: { ...qa[prevTopicId], followUps: prevStored.slice(0, -1) },
+          }));
+        } else {
+          setCurrentFollowUp(null);
+          setFollowUpsAskedThisTopic(0);
+        }
       }
     }
   };
@@ -194,7 +214,7 @@ function PrototypeEInner() {
   const callFollowUpAPI = async (
     topicId: string,
     openerAnswerText: string,
-    followUpQA: { question: string; answer: string }[],
+    followUpQA: { question: string; options: string[]; hint?: string; answer: string }[],
     askedCount: number
   ) => {
     const topic = TOPICS.find((t) => t.id === topicId)!;
@@ -209,7 +229,7 @@ function PrototypeEInner() {
           label: topic.label,
           openerQuestion: questionSet[topicId]?.question ?? "",
           openerAnswer: openerAnswerText,
-          followUpQA,
+          followUpQA: followUpQA.map(({ question, answer }) => ({ question, answer })),
         },
         nextTopic: nextTopicId
           ? {
@@ -261,7 +281,7 @@ function PrototypeEInner() {
 
     const newFollowUps = [
       ...(topicQA[topicId]?.followUps ?? []),
-      { question: answeredFollowUp.question, answer: answerText },
+      { question: answeredFollowUp.question, options: answeredFollowUp.options, hint: answeredFollowUp.hint, answer: answerText },
     ];
     setTopicQA((prev) => ({
       ...prev,
