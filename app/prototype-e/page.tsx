@@ -27,6 +27,9 @@ const BUCKET_LABELS: Record<number, string> = {
 const OTHER_OPTION = "אחר — פרט";
 const FOLLOW_UP_HARD_CAP = 4;
 
+const LOADING_VERBS_FORMAL = ["שוקל...", "מנתח...", "מגבש...", "שוקל..."];
+const LOADING_VERBS_PERSONAL = ["חושב...", "מקשיב...", "שוקל...", "מגבש...", "מעכל..."];
+
 // ─── Scoring ──────────────────────────────────────────────────────────────────
 
 function calcResults(
@@ -109,6 +112,17 @@ function PrototypeEInner() {
   const [followUpDraft, setFollowUpDraft] = useState("");
 
   const [closeText, setCloseText] = useState("");
+
+  // Cycling loading verb
+  const [loadingVerbIdx, setLoadingVerbIdx] = useState(0);
+  useEffect(() => {
+    if (!loading) { setLoadingVerbIdx(0); return; }
+    const verbs = tone === "personal" ? LOADING_VERBS_PERSONAL : LOADING_VERBS_FORMAL;
+    const id = setInterval(() => {
+      setLoadingVerbIdx((v) => (v + 1) % verbs.length);
+    }, 1400);
+    return () => clearInterval(id);
+  }, [loading, tone]);
 
   const topicsToAsk = Object.entries(buckets)
     .filter(([, w]) => w >= 2)
@@ -402,11 +416,12 @@ function PrototypeEInner() {
 
   // ── Loading ──────────────────────────────────────────────────────────────────
   if (loading) {
+    const verbs = tone === "personal" ? LOADING_VERBS_PERSONAL : LOADING_VERBS_FORMAL;
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
           <Header />
-          <p className="text-sm text-teal-500 animate-pulse text-center mt-16">רגע...</p>
+          <p className="text-sm text-teal-500 animate-pulse text-center mt-16">{verbs[loadingVerbIdx]}</p>
         </div>
       </main>
     );
