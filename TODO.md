@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Round 3 user testing** — Users happy with current version; Prototype E validated. Ready to define MVP. (2026-06-21)
 - **Round 3 UX polish + unified follow-up architecture** — Rewrote follow-up state machine (1 API call/answer), fixed back navigation stack, hints across all 8 topics, follow-up context cues (recap + label), animated loading verbs, landing page sessionStorage. (2026-06-19)
 - **Round 3 implementation: Prototype E + modified D** — Full build: shared PrioritiesStep, lib/questions.ts (2 registers × 8 topics), Prototype E (priorities→structured+AI follow-ups), modified D (priorities→chat), advisor landing page, prologue UI polish. (2026-06-19)
-- **Round 3 design: Prototype E + modified D** — Full round 3 design spec in SOLUTION-DESIGN.md; two question sets (ענייני/אישי); new landing page tone + depth signals; E + D spec. (2026-06-19)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,34 +12,29 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Round 3 user testing** - Test Prototype E + modified D with real users. Focus: does prologue feel natural? Does ענייני/זורם distinction land? Does the close step add value or just delay?
+1. **Phase 0 kickoff: advisor review packet** — `docs/advisor-review/questions-review.md` generated via `npm run export:questions`. Share with advisor for score validation + neutrality audit. Meeting this week. (See docs/PHASED-ROADMAP.md §0.1 + §0.6)
 
 2. **Verify Gemini quota error handling** - Round 1 critical bug; fix went in but was never tested under load. Try hitting the limit intentionally in prototype D to confirm user-friendly error displays (not raw JSON).
 
 3. **Verify party position scores with domain expert** - All 7 parties' scoring arrays in prototype A/B/C are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד) and ישר! (איזנקוט) which are new.
 
-4. **Phased plan + MVP definition** (~2-3 hours)
-   - Define MVP scope (Hebrew-only? Which parties? Which question set?)
-   - Identify phases: MVP → v1 → extensions (candidate records, multi-country)
-   - Output: phased roadmap
+4. **Add מצע links as parties publish them** - ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-5. **Add מצע links as parties publish them** - ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
-
-6. ⏸️ **Party platform data ingestion design** — _blocked on: prototype winner chosen_
+5. **Party platform data ingestion design** — Prototype E chosen. Design semi-automatic ingestion pipeline (scrape + human review/approval). Handle missing platforms gracefully. Handle versioning + timestamps for citations. (See PHASED-ROADMAP.md Phase 0.2)
    - Design semi-automatic ingestion pipeline (scrape + human review/approval)
    - Handle missing platforms gracefully ("Party X has not published a platform")
    - Handle platform versioning + timestamps (for exact quotations with citations)
 
-7. ⏸️ **Build MVP** — _blocked on: prototype winner chosen + phased plan_
+6. ⏸️ **Build MVP** — _blocked on: Phase 0 prerequisites (advisor review, real platform data, quota hardening)_
 
-8. ⏸️ **Multi-language support** (~varies) — _blocked on: MVP working in Hebrew_
+7. ⏸️ **Multi-language support** (~varies) — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
    - Party platforms remain in Hebrew; answers/explanations translated
 
-9. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
+8. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
    - Experience, notable actions/votes (official sources only, no social media)
 
-10. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+9. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
