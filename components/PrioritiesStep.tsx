@@ -11,6 +11,7 @@ const TOPICS = [
   { id: "religion",  label: "דת ומדינה" },
   { id: "justice",   label: "שלטון החוק ומערכת המשפט" },
   { id: "equality",  label: "זכויות אדם ומיעוטים" },
+  { id: "ecology",   label: "סביבה ואנרגיה" },
 ];
 
 const BUCKETS = [
