@@ -1,5 +1,45 @@
 # Changelog
 
+## 2026-06-22 — Scoring architecture: free-text inputs are a unified design problem
+
+### What We Did
+
+Architecture discussion session — no code changes. Identified and named a blocking design gap that must be resolved before implementing follow-up scoring or the grounding UX layer.
+
+### Key Insight: "other" opener answers ≠ bug → unified free-text scoring problem
+
+Previous session noted that `openerAnswerId = "other"` causes topics to silently contribute 0 to the score (no matching option in score arrays). This session identified that this framing was wrong: **"other" answers contain free-text expressing the user's actual position** — the same information structure as a follow-up answer. There is no bug; there is a design gap: any free-text input (whether from an opener "other" field or a follow-up answer) requires AI-assisted scoring, not a deterministic lookup.
+
+This unifies two previously separate problems into one:
+- Follow-up scoring (discussed in previous sessions)
+- Opener "other" scoring (newly identified)
+
+**Unified architecture needed**: any free-text user input → AI scores it against party positions → explanation tells the user WHY party X aligns with what they said (not just that the score changed).
+
+### Key Design Questions Identified (now TODO #2)
+
+Before implementing follow-up scoring or Phase 0.2 grounding UX, the following must be designed:
+
+1. **AI grounding requirement**: AI cannot reliably assign party scores from free text using only training data — too likely to be outdated or inaccurate for a civic tool. The AI needs party positions from the grounding database as context. This means: **free-text scoring must launch alongside (or after) the grounding database**, not before it.
+
+2. **Explanation obligation**: Score changes from free text must be explained: "Party X aligns with your answer because [reason grounded in their platform]." Saying "your answer changed the score" without explaining the party's position is epistemically insufficient for a civic tool.
+
+3. **Weighting model for "other" openers**: When `openerAnswerId = "other"`, there is no deterministic opener score — AI scoring is the only source of truth. This requires a third case in the blending formula: `other + no follow-ups → AI score (100%); other + follow-ups → AI scores (100% from combined conversation); regular + follow-ups → 50/50 blend`.
+
+4. **Grounding fidelity**: Platform citations may not exist at the sub-nuance level that follow-up questions explore. The design must handle: (a) exact citation available, (b) topic-level citation available (indirect match), (c) no citation yet (reasoning from training knowledge, clearly labeled).
+
+5. **Unified vs. separate code paths**: "other" answers and follow-up answers may be fed to the same API endpoint or different ones — needs explicit decision.
+
+### Architectural Sequencing Constraint
+
+Follow-up scoring (originally planned as standalone Phase 0 task) is now **blocked on**:
+- The design above (TODO #2)
+- Grounding database having at least partial data (Phase 0.2)
+
+**Build MVP** dependency chain updated: `advisor review (§0.1) || grounding design (#2)` → `platform data (§0.2)` → `free-text scoring implementation` → `MVP build`.
+
+---
+
 ## 2026-06-22 — Lint fix + domain live
 
 ### What We Did
