@@ -61,7 +61,7 @@ The MVP build is largely a **hardening and data-grounding exercise** on top of t
 - Graceful Gemini quota degradation: results still show without AI blurbs if quota is hit
 - Rate limiting / per-session call caps to keep costs within the $50/month ceiling
 - Methodology disclosure on results page (updated to reflect real data sourcing)
-- Production domain (.co.il or .org.il — TBD)
+- Production domain: **voteassist.me** (registered 2026-06-22, Dreamhost)
 - Public GitHub repository with transparent methodology
 
 ### Hard Out (MVP)
@@ -139,7 +139,7 @@ The deterministic score matrix is the trust anchor of the tool — a bug here co
 - These tests should run in CI and block deployment if they fail
 
 #### 0.8 Infrastructure hardening
-- Custom domain registered (.co.il or .org.il) — see Section 5 for domain discussion
+- ✅ Custom domain registered: **voteassist.me** (Dreamhost, 2026-06-22) — connect to Vercel
 - Vercel production env vars confirmed (GEMINI_API_KEY, Langfuse keys)
 - Basic error monitoring active
 - Langfuse tracing capturing all AI calls for production observability
