@@ -314,7 +314,7 @@ This is not a phase — it runs throughout the product lifetime.
 | User feedback mechanism | ✅ Decided | Google Form at bottom of results page for MVP; migrate to proper store in v1 if volume warrants. |
 | Open source: timing + checklist | ✅ Decided | Simultaneously with MVP launch. Requires: license, secrets audit, code cleanup, README, CONTRIBUTING.md. |
 | Cost fallback if Gemini free tier exhausted | **Deferred** | Discuss closer to MVP launch. Per-IP rate limiting is the primary mitigation in Phase 0. |
-| Custom domain name | **Open** | Brainstorm: `bechira.co.il`, `matzpen.co.il`, `kol-ishi.co.il`. Domain must convey: civic, trustworthy, voter-oriented. Decision before Phase 0.8. |
+| Custom domain name | ✅ Decided | **`voteassist.me`** — descriptive (no marketing needed), personal (`.me` = "assist me"), universal across Hebrew/Russian/Arabic/English speakers, not time-bound. Register before launch. |
 | Site UI: redesign vs. polish | **Open** | Scope is polish (not redesign). Needs discussion on exactly what feels prototype-y and must change for MVP. |
 | Data storage format for groundings | **Open** | TypeScript constant (`lib/groundings.ts`) vs. separate JSON files per party. Either works for MVP; JSON files are easier for the advisor to inspect and diff. Decide in Phase 0.2. |
 
