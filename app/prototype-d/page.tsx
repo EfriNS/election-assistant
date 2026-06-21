@@ -210,7 +210,7 @@ function PrototypeDInner() {
       return (
         <main className="h-screen flex flex-col items-center justify-center px-4 text-center">
           <p className="text-gray-500 mb-2">לא הצלחנו לטעון את התוצאות.</p>
-          <p className="text-gray-400 text-sm mb-6">ניתן לראות את סיכום השיחה בחלון הצ'אט.</p>
+          <p className="text-gray-400 text-sm mb-6">ניתן לראות את סיכום השיחה בחלון הצ&apos;אט.</p>
           <button onClick={() => setShowResults(false)} className="text-purple-600 text-sm hover:text-purple-800">
             ← חזרה לשיחה
           </button>

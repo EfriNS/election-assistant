@@ -84,6 +84,38 @@ function buildAnswersSummary(
   return lines.join("\n");
 }
 
+// ─── Shared sub-components ────────────────────────────────────────────────────
+
+function CyclingVerb({ verbs }: { verbs: string[] }) {
+  const [idx, setIdx] = useState(() => Math.floor(Math.random() * verbs.length));
+  useEffect(() => {
+    const id = setInterval(() => setIdx((v) => (v + 1) % verbs.length), 1400);
+    return () => clearInterval(id);
+  }, [verbs.length]);
+  return <>{verbs[idx]}</>;
+}
+
+interface QuestionHeaderProps {
+  questionIndex: number;
+  totalSteps: number;
+  progressPct: number;
+  onBack: () => void;
+}
+
+function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack }: QuestionHeaderProps) {
+  return (
+    <>
+      <div className="flex justify-between items-center mb-8">
+        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
+        <span className="text-sm text-gray-400" dir="ltr">{questionIndex + 1} / {totalSteps}</span>
+      </div>
+      <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
+        <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
+      </div>
+    </>
+  );
+}
+
 // ─── Inner component ──────────────────────────────────────────────────────────
 
 function PrototypeEInner() {
@@ -113,30 +145,21 @@ function PrototypeEInner() {
 
   const [closeText, setCloseText] = useState("");
 
-  // Cycling loading verb
-  const [loadingVerbIdx, setLoadingVerbIdx] = useState(0);
-  useEffect(() => {
-    if (!loading) { setLoadingVerbIdx(0); return; }
-    const verbs = tone === "personal" ? LOADING_VERBS_PERSONAL : LOADING_VERBS_FORMAL;
-    setLoadingVerbIdx(Math.floor(Math.random() * verbs.length));
-    const id = setInterval(() => {
-      setLoadingVerbIdx((v) => (v + 1) % verbs.length);
-    }, 1400);
-    return () => clearInterval(id);
-  }, [loading, tone]);
 
   const topicsToAsk = Object.entries(buckets)
     .filter(([, w]) => w >= 2)
     .sort((a, b) => b[1] - a[1])
     .map(([id]) => id);
 
-  // Restore "Other" input when navigating back to an already-answered opener
+  // Restore "Other" input when navigating back to an already-answered opener.
+  // setState in effect body is intentional: syncing UI state from navigation history.
   useEffect(() => {
     if (step !== "questions" || currentFollowUp !== null) return;
     const tid = topicsToAsk[questionIndex];
     if (!tid) return;
     const qa = topicQA[tid];
     if (qa?.openerAnswerId === "other") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowOpenerInput(true);
       setOpenerDraft(qa.openerAnswerText ?? "");
     } else {
@@ -402,27 +425,14 @@ function PrototypeEInner() {
   const totalSteps = topicsToAsk.length;
   const progressPct = ((questionIndex + (currentFollowUp ? 0.5 : 0)) / totalSteps) * 100;
 
-  // ── Shared header ─────────────────────────────────────────────────────────────
-  const Header = () => (
-    <>
-      <div className="flex justify-between items-center mb-8">
-        <button onClick={goBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
-        <span className="text-sm text-gray-400" dir="ltr">{questionIndex + 1} / {totalSteps}</span>
-      </div>
-      <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
-        <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
-      </div>
-    </>
-  );
-
   // ── Loading ──────────────────────────────────────────────────────────────────
   if (loading) {
     const verbs = tone === "personal" ? LOADING_VERBS_PERSONAL : LOADING_VERBS_FORMAL;
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <Header />
-          <p className="text-sm text-teal-500 animate-pulse text-center mt-16">{verbs[loadingVerbIdx]}</p>
+          <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
+          <p className="text-sm text-teal-500 animate-pulse text-center mt-16"><CyclingVerb verbs={verbs} /></p>
         </div>
       </main>
     );
@@ -434,7 +444,7 @@ function PrototypeEInner() {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <Header />
+          <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
 
           {/* Topic + follow-up label */}
           <div className="flex items-center gap-2 mb-4">
@@ -522,7 +532,7 @@ function PrototypeEInner() {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
-        <Header />
+        <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
 
         <div className="flex items-center gap-2 mb-3">
           {bucketLabel && (

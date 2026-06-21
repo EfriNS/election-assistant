@@ -1,23 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Tone = "formal" | "personal";
 type Depth = "short" | "deep";
 
+const getStorage = (key: string) =>
+  typeof window !== "undefined" ? sessionStorage.getItem(key) : null;
+
 export default function Home() {
   const router = useRouter();
-  const [tone, setTone] = useState<Tone | null>(null);
-  const [depth, setDepth] = useState<Depth | null>(null);
+  const [tone, setTone] = useState<Tone | null>(() => getStorage("landing_tone") as Tone | null);
+  const [depth, setDepth] = useState<Depth | null>(() => getStorage("landing_depth") as Depth | null);
   const ready = tone !== null && depth !== null;
-
-  useEffect(() => {
-    const t = sessionStorage.getItem("landing_tone") as Tone | null;
-    const d = sessionStorage.getItem("landing_depth") as Depth | null;
-    if (t) setTone(t);
-    if (d) setDepth(d);
-  }, []);
 
   const handleTone = (t: Tone) => { setTone(t); sessionStorage.setItem("landing_tone", t); };
   const handleDepth = (d: Depth) => { setDepth(d); sessionStorage.setItem("landing_depth", d); };
