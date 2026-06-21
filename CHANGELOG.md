@@ -1,5 +1,53 @@
 # Changelog
 
+## 2026-06-21 — Phased Roadmap + MVP Definition
+
+### What We Did
+
+Planning session: closed out round 3 user testing, defined the MVP plan, and produced the tools needed for the advisor review meeting this week.
+
+### Prototype Decision
+
+Prototype E confirmed as the MVP interaction model. Round 3 user testing complete — both users satisfied. The MVP is a hardening + data-grounding exercise on top of the existing prototype codebase, not a rewrite.
+
+### docs/PHASED-ROADMAP.md (new)
+
+Full phased plan covering:
+- **Phase 0** (pre-launch, weeks 1–6): advisor score review, neutrality audit, platform data collection + archiving, grounding UX (multi-quote + contrary/absent indicators), security hardening (rate limiting, prompt injection, AI guardrails, no PII logging), scoring unit tests, domain, infrastructure
+- **Phase 1 MVP** (weeks 7–12): grounding layer in results, updated results API, site UI polish, open-source checklist (license + cleanup), aggregate analytics, user feedback mechanism (Google Form), soft launch, public launch
+- **Phase 2 v1** (months 4–5): Russian + Arabic UI, semi-automatic ingestion pipeline, admin/curation UI, shareable results, tradeoff questions, coalition modeling spike
+- **Phase 3+** (post-election): candidate records, multi-country, open-source community, post-election retrospective
+- **Ongoing**: content improvement pipeline (question review workflow, platform data maintenance, Langfuse tracking for AI prompt quality)
+- **Key decisions resolved**: grounding data model (`{ text, aspect, sourceUrl, archivePath, dateRetrieved, contrary?, absent? }`), security requirements, analytics approach (aggregate-only, no PII), user feedback mechanism, open-source timing + checklist, domain name
+- **Domain**: `voteassist.me` — descriptive, universal, personal `.me` angle, no time-bounding
+
+### scripts/export-questions-review.ts (new)
+
+Advisor review export tool. Run `npm run export:questions` to generate `docs/advisor-review/questions-review.md`: all 8 topics × 2 registers as markdown tables with party names as score columns and an "Advisor Notes" column. Ready to share with the advisor.
+
+### docs/advisor-review/questions-review.md (new)
+
+Generated review packet for the advisor meeting (this week). 16 question sets, both registers, all 7 parties' scores, bilingual instructions.
+
+### TODO.md
+
+- Round 3 user testing marked complete (moved to recently completed)
+- Item #1 is now: Phase 0 kickoff — share advisor review packet
+- Party platform ingestion design unblocked (prototype winner now chosen)
+- Build MVP blocker updated (now waiting on Phase 0 prerequisites, not on prototype selection)
+
+### Open questions remaining
+
+Three items still need discussion: site UI scope (polish vs. redesign specifics), groundings data format (TypeScript constant vs. JSON files), and a pre-existing `npm run lint` failure to investigate (Next.js 16 CLI change, unrelated to this session's work).
+
+### Commits
+
+- `80aa550` plan: phased roadmap + MVP definition + advisor review export
+- `37b08e7` plan: resolve domain name — voteassist.me
+- `58858e8` Merge feature/mvp-planning
+
+---
+
 ## 2026-06-19 — Round 3 UX Polish + Unified Follow-up Architecture
 
 ### What We Built

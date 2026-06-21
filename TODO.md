@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Round 3 user testing** — Users happy with current version; Prototype E validated. Ready to define MVP. (2026-06-21)
-- **Round 3 UX polish + unified follow-up architecture** — Rewrote follow-up state machine (1 API call/answer), fixed back navigation stack, hints across all 8 topics, follow-up context cues (recap + label), animated loading verbs, landing page sessionStorage. (2026-06-19)
-- **Round 3 implementation: Prototype E + modified D** — Full build: shared PrioritiesStep, lib/questions.ts (2 registers × 8 topics), Prototype E (priorities→structured+AI follow-ups), modified D (priorities→chat), advisor landing page, prologue UI polish. (2026-06-19)
+- **Phased roadmap + MVP definition** — Prototype E confirmed winner. PHASED-ROADMAP.md, advisor review export tool, domain (voteassist.me). (2026-06-21)
+- **Round 3 user testing** — Users happy with current version; Prototype E validated. (2026-06-21)
+- **Round 3 UX polish + unified follow-up architecture** — Rewrote follow-up state machine (1 API call/answer), fixed back navigation stack, hints across all 8 topics, follow-up context cues (recap + label), animated loading verbs. (2026-06-19)
 
 > See CHANGELOG.md for complete details.
 
