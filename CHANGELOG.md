@@ -1,5 +1,49 @@
 # Changelog
 
+## 2026-06-22 — Lint fix + domain live
+
+### What We Did
+
+Fixed the broken `npm run lint` and connected the production domain `voteassist.me` to Vercel.
+
+### fix: npm run lint (broken since Next.js 16 upgrade)
+
+Root cause: Next.js 16 removed the `next lint` CLI command entirely. The `package.json` `lint` script still called `next lint`, which errored with "no such directory: .../lint".
+
+**Fix:**
+- Installed `eslint` (v9.39.4) + `eslint-config-next` (v16.2.9) as devDependencies
+- Created `eslint.config.mjs` (ESLint 9 flat config format) importing `eslint-config-next`
+- Updated `package.json` lint script: `"next lint"` → `"eslint ."`
+
+**11 lint errors fixed across 5 files:**
+
+- `app/page.tsx` — Replaced `useEffect` + `setState` pattern for sessionStorage reads with lazy `useState` initializers (`() => typeof window !== "undefined" ? sessionStorage.getItem(...)  : null`). Proper fix: avoid effect entirely for external-storage-on-mount reads.
+- `app/prototype-e/page.tsx` — Three fixes:
+  1. Extracted `CyclingVerb` component (module-level) — eliminates the loading verb `useState` + `useEffect` that called `setState` synchronously in effect body. Lazy `useState` initializer picks random start; `setInterval` callback handles cycling.
+  2. Extracted `QuestionHeader` component (module-level) — fixes "Cannot create components during render" error (was defined as `const Header = () =>` inside the render function, recreated every render).
+  3. Added targeted `// eslint-disable-next-line react-hooks/set-state-in-effect` for the back-navigation restore effect (legitimate pattern: syncing `showOpenerInput`/`openerDraft` from navigation history — no cleaner alternative without major refactor).
+- `app/prototype-d/page.tsx` — Escaped `'` → `&apos;` in JSX text content.
+- `components/PrioritiesStep.tsx` — Escaped `"` → `&quot;` in two JSX text nodes.
+- `app/layout.tsx` — Removed stale `eslint-disable-next-line @next/next/no-sync-scripts` comment (rule no longer fires; `<script defer>` is not sync).
+
+### Domain: voteassist.me live
+
+- Domain registered at Dreamhost ($2.99/year, 2026-06-22)
+- Connected to Vercel: A record `@ → 76.76.21.21`, apex redirect to www disabled
+- SSL auto-provisioned by Vercel; `https://voteassist.me` returns HTTP 200
+- Phase 0.8 domain item marked done in PHASED-ROADMAP.md
+
+### Domain decision process (2026-06-22)
+
+Alternatives considered and rejected: `votingwiz.com` (playful/"cool" connotation wrong for civic tool), `voteaide.com` (AIDS association risk for non-native speakers), `voteadvisor.com` (extremely expensive), `voteassistance.com`/`votinghelper.com` (too long, passive). Final: `voteassist.me` — "assist" is universally understood, no ambiguity, `.me` acceptable for word-of-mouth–shared civic tool.
+
+### Commits
+
+- `e6b4aa7` fix(lint): replace removed next lint with ESLint direct invocation
+- `96e437e` docs: confirm domain voteassist.me (registered 2026-06-22, Dreamhost)
+
+---
+
 ## 2026-06-21 — Phased Roadmap + MVP Definition
 
 ### What We Did

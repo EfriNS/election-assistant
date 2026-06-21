@@ -141,3 +141,13 @@
 | ISideWith | Nuanced answers + issue weighting; editorial party data works without party cooperation |
 | Kieskompas | Best academic methodology; expert-calibrated axes; 2D model is its limitation |
 | Smartvote | Individual candidate matching — relevant if we ever go beyond party-level |
+
+---
+
+## Domain / Branding for Civic Tools (#first:2026-06-22)
+
+23. **Civic tools need descriptive names, not brand names** — A name that requires marketing to explain what it does ("kolvote", "matzpen", "neatvote") is a higher trust bar than one that is self-explanatory ("voteassist"). Users need to understand what they're clicking before they give political trust to a tool.
+
+24. **Word connotation risks matter for non-native-speaker audiences** — "aide" was rejected for `voteaide.com` despite being a legitimate English word because it risks AIDS association for non-native English speakers reading quickly. For a multilingual (Hebrew/Russian/Arabic) audience, prefer common English words with no ambiguous connotations over formal/rare synonyms.
+
+25. **`.me` is acceptable for personal/civic tools distributed by word-of-mouth** — `.com` is preferable, but `.me` reads naturally for a tool with a personal-help framing ("vote assist me") and is not a trust barrier when users receive a link directly. Chosen domain: `voteassist.me`.

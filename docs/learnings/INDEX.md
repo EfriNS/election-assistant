@@ -300,7 +300,7 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2025-12-26 (added universal/COMPETITIVE-RESEARCH.md - comprehensive multi-source validation methodology from Entry 008/009 learnings)
+**Last Updated**: 2026-06-22 (added project/NEXTJS-REACT-PATTERNS.md — Next.js 16 lint setup, lazy useState for storage reads, module-level components; updated project/VAA-DESIGN.md — domain/branding principles for civic tools)
 **Archive**: Full retrospective history available in [RETROSPECTIVES-2025-10-archive.md](../../RETROSPECTIVES-2025-10-archive.md)
 
 **Structure Change (2025-01-07)**:
