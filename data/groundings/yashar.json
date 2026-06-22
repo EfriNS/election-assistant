@@ -1,17 +1,197 @@
 {
   "platformAvailable": true,
-  "platformLabel": "יעדים (לא מצע)",
-  "sourceUrl": "https://yasharwitheisenkot.com/topic/missions/",
+  "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
+  "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated health or ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf",
   "topics": {
-    "security": [],
-    "economy": [],
-    "housing": [],
-    "education": [],
-    "health": [],
-    "religion": [],
-    "justice": [],
-    "equality": [],
+    "security": [
+      {
+        "text": "נגבש ונפעל לפי תפיסת ביטחון חדשה. נחזק את צה\"ל, נבצר את הביטחון בגבולות ונהפוך את ישראל למעצמה איזורית.",
+        "aspect": "military-deterrence",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נחתור להרחבת מעגל השלום, להבטחת רוב יהודי מוצק לדורות ולביסוס מעמדה של ישראל בעולם.",
+        "aspect": "peace-expansion",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נקים ועדת חקירה ממלכתית לחקר טבח ה-7 באוקטובר, העשור שלפניו וניהול המלחמה.",
+        "aspect": "oct7-accountability",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "economy": [
+      {
+        "text": "נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות ונעמיד את המעמד המשרת והיצרני בלב המדיניות הכלכלית.",
+        "aspect": "productive-class-first",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.",
+        "aspect": "service-based-incentives",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "במסגרת תכנית לאומית למלחמה ביוקר המחיה: נפרק מוקדי ריכוזיות, נחזק תחרות ונטמיע אימוץ תקינה בינלאומית.",
+        "aspect": "cost-of-living",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.",
+        "aspect": "periphery-investment",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "housing": [
+      {
+        "text": "תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.",
+        "aspect": "service-based-housing-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "No standalone housing policy; housing mentioned only as benefit tied to national service"
+      }
+    ],
+    "education": [
+      {
+        "text": "ניתן עדיפות ברורה ומובהקת לחינוך הממלכתי.",
+        "aspect": "state-education-priority",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "ננהיג לימודי ליבה לכל ונחזק את הליבה הערכית המחנכת את ילדי ישראל ברוח מגילת העצמאות.",
+        "aspect": "core-curriculum",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נבזר סמכויות ונחזק את המורים והמנהלים בקצה – בסמכויות ובתקציבים.",
+        "aspect": "teacher-empowerment",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נחזק את הלימודים הטכנולוגיים לצד הטמעת תכנים בנושא מסורת ישראל.",
+        "aspect": "tech-and-tradition",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "health": [
+      {
+        "text": "נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.",
+        "aspect": "periphery-health-investment",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "No dedicated health policy; health mentioned only as part of general periphery investment"
+      }
+    ],
+    "religion": [
+      {
+        "text": "נעביר את חוק 'שירות ממלכתי לכל' שיביא לשילוב הציבור החרדי והערבי במסגרות המתאימות, בראש ובראשונה לצה\"ל. השוויון בנטל אינו רק צורך ביטחוני דחוף, אלא תנאי ללכידות החברה הישראלית והערבות ההדדית.",
+        "aspect": "equal-service-burden",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "פטור מגיוס לחרדים"
+      },
+      {
+        "text": "הממשלה תקדם יהדות מכילה ומכבדת, תוך הרחבת העצמאות של רשויות מקומיות וקהילות לעצב פתרונות בהתאם לאופיין וערכיהן.",
+        "aspect": "inclusive-judaism",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "להבטיח שכל אזרח יוכל לשמור על אורח חייו ואמונתו, תוך שמירה על זכויות האחר.",
+        "aspect": "lifestyle-freedom",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "justice": [
+      {
+        "text": "נכבד את הכרעת הרוב, זכויות המיעוט, זכויות האדם, שלטון החוק והמנהל התקין, ונשמור על תקשורת חופשית ומערכת משפט עצמאית.",
+        "aspect": "rule-of-law",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נחוקק את חוק יסוד החקיקה שיחזק את עצמאות וסמכות הכנסת.",
+        "aspect": "separation-of-powers",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "כהונתו של ראש הממשלה תוגבל לשתי קדנציות ויצומצמו משרדי ממשלה מיותרים.",
+        "aspect": "term-limits",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נצא למהלך נרחב לשיקום השירות הציבורי, שיסיים את עידן המינויים הלא מקצועיים, הג'ובים וסידורי העבודה ברשויות הממשלתיות.",
+        "aspect": "professional-civil-service",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נצא למלחמת חורמה נגד שחיתות, פשע מאורגן ופרוטקשן.",
+        "aspect": "anti-corruption",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "equality": [
+      {
+        "text": "נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות.",
+        "aspect": "full-societal-integration",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נחזק את הספר, נקרב את הפריפריה ונצמצם פערים חברתיים וגאוגרפיים באמצעות תיקצוב דיפרנציאלי.",
+        "aspect": "geographic-equality",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "נממש תוכנית לאומית למיגור האלימות בחברה הערבית והכללית.",
+        "aspect": "arab-society-security",
+        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
     "ecology": []
   }
 }
