@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TopicQ } from "@/lib/questions";
+import { getGroundingsForTopic } from "@/lib/groundings";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
@@ -18,6 +19,7 @@ type TopicQA = {
   openerAnswerId: string;    // option id (for scoring); "other" for free-text
   openerAnswerText: string;  // display text (for conversation summary)
   followUps: { question: string; options: string[]; hint?: string; answer: string }[];
+  coveredAspects?: string[]; // aspect labels targeted by follow-up questions (for dedup in follow-up generation)
 };
 
 const BUCKET_LABELS: Record<number, string> = {
@@ -32,22 +34,54 @@ const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...",
 
 // ─── Scoring ──────────────────────────────────────────────────────────────────
 
+// Weight applied to AI-derived score when blending with the deterministic option score.
+// Topics with a fixed-option opener + follow-up answers: blend at this ratio.
+// Topics with a free-text "other" opener: AI score used at full weight (no option score available).
+// This constant should be reviewed by the domain advisor before public launch.
+const FOLLOW_UP_AI_WEIGHT = 0.5;
+
 function calcResults(
   buckets: Record<string, number>,
   topicQA: Record<string, TopicQA>,
-  questionSet: Record<string, TopicQ>
+  questionSet: Record<string, TopicQ>,
+  aiScores?: Record<string, Record<string, number | null>>
 ) {
   const totals = new Array(PARTIES.length).fill(0);
   const maxPossible = new Array(PARTIES.length).fill(0);
 
   Object.entries(buckets).forEach(([topicId, weight]) => {
     if (weight === 0) return;
-    const chosenId = topicQA[topicId]?.openerAnswerId;
+    const qa = topicQA[topicId];
+    const chosenId = qa?.openerAnswerId;
     const option = questionSet[topicId]?.options.find((o) => o.id === chosenId);
-    if (!option) return;
-    option.scores.forEach((score, pi) => {
-      totals[pi] += weight * (score + 2);
-      maxPossible[pi] += weight * 4;
+    const isOtherOpener = chosenId === "other";
+    const hasFollowUps = (qa?.followUps?.length ?? 0) > 0;
+
+    PARTIES.forEach((party, pi) => {
+      const aiScore = aiScores?.[topicId]?.[party.id];
+      const hasAiScore = typeof aiScore === "number";
+
+      let effectiveScore: number | null = null;
+
+      if (isOtherOpener) {
+        // No option score exists; AI comparison against platform text is the only signal
+        effectiveScore = hasAiScore ? aiScore : null;
+      } else if (hasFollowUps && hasAiScore) {
+        // Blend: opener option score + AI score derived from follow-up answers
+        const deterministicScore = option?.scores[pi] ?? 0;
+        effectiveScore =
+          deterministicScore * (1 - FOLLOW_UP_AI_WEIGHT) + aiScore * FOLLOW_UP_AI_WEIGHT;
+      } else if (option) {
+        // Pure deterministic: fixed-option opener, no follow-ups or AI unavailable
+        effectiveScore = option.scores[pi];
+      }
+      // null effectiveScore: no data for this party on this topic — skip entirely
+      // (both totals and maxPossible stay at 0 for this party+topic, which is correct)
+
+      if (effectiveScore !== null) {
+        totals[pi] += weight * (effectiveScore + 2);
+        maxPossible[pi] += weight * 4;
+      }
     });
   });
 
@@ -145,6 +179,9 @@ function PrototypeEInner() {
 
   const [closeText, setCloseText] = useState("");
 
+  // AI-derived alignment scores from /api/score-topics (topicId → partyId → score or null)
+  const [aiScores, setAiScores] = useState<Record<string, Record<string, number | null>> | undefined>(undefined);
+  const [isScoring, setIsScoring] = useState(false);
 
   const topicsToAsk = Object.entries(buckets)
     .filter(([, w]) => w >= 2)
@@ -168,6 +205,46 @@ function PrototypeEInner() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIndex, currentFollowUp, step]);
+
+  // Fire /api/score-topics when entering the close step. This runs in the background while
+  // the user writes their close-step text, hiding latency before results render.
+  useEffect(() => {
+    if (step !== "close") return;
+
+    const topicsForScoring = topicsToAsk
+      .filter((tid) => {
+        const qa = topicQA[tid];
+        if (!qa) return false;
+        return qa.openerAnswerId === "other" || (qa.followUps?.length ?? 0) > 0;
+      })
+      .map((tid) => {
+        const qa = topicQA[tid];
+        const topic = TOPICS.find((t) => t.id === tid)!;
+        return {
+          topicId: tid,
+          topicLabel: topic.label,
+          openerQuestion: questionSet[tid]?.question ?? "",
+          openerAnswer: qa.openerAnswerText,
+          followUpQA: qa.followUps.map(({ question, answer }) => ({ question, answer })),
+        };
+      });
+
+    if (topicsForScoring.length === 0) return;
+
+    setIsScoring(true);
+    fetch("/api/score-topics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topics: topicsForScoring }),
+    })
+      .then((r) => r.json())
+      .then((data: { scores?: Record<string, Record<string, number | null>>; errorCode?: string }) => {
+        if (data.scores) setAiScores(data.scores);
+      })
+      .catch(() => { /* silently degrade: calcResults falls back to deterministic-only */ })
+      .finally(() => setIsScoring(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   // ── Build conversation history for API ──────────────────────────────────────
   const buildConversationSoFar = (upToIndex: number) =>
@@ -253,10 +330,34 @@ function PrototypeEInner() {
     topicId: string,
     openerAnswerText: string,
     followUpQA: { question: string; options: string[]; hint?: string; answer: string }[],
-    askedCount: number
+    askedCount: number,
+    openerAnswerId?: string
   ) => {
     const topic = TOPICS.find((t) => t.id === topicId)!;
     const nextTopicId = topicsToAsk[questionIndex + 1] ?? null;
+
+    // Build party grounding data for this topic (parties with actual quotes only)
+    const groundingMap = getGroundingsForTopic(topicId);
+    const partyGroundings = PARTIES
+      .filter((p) => (groundingMap[p.id]?.length ?? 0) > 0)
+      .map((p) => ({
+        partyId: p.id,
+        partyName: p.name,
+        entries: groundingMap[p.id].map((e) => ({
+          text: e.text,
+          aspect: e.aspect,
+          contrary: e.contrary,
+        })),
+      }));
+
+    // Current deterministic scores (used by the model to identify which parties are close)
+    const currentRankings = calcResults(buckets, topicQA, questionSet);
+    const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
+
+    const coveredAspects = topicQA[topicId]?.coveredAspects ?? [];
+
+    // Force at least one follow-up for "other" (free-text) opener answers
+    const forceFollowUp = openerAnswerId === "other" && askedCount === 0;
 
     const res = await fetch("/api/follow-up", {
       method: "POST",
@@ -278,10 +379,17 @@ function PrototypeEInner() {
         tone,
         depth,
         followUpsAskedThisTopic: askedCount,
+        partyGroundings,
+        currentScores,
+        coveredAspects,
+        forceFollowUp,
       }),
     });
 
-    return res.json() as Promise<{ prologue: string | null; followUp: FollowUpQ | null }>;
+    return res.json() as Promise<{
+      prologue: string | null;
+      followUp: (FollowUpQ & { targetedAspect?: string }) | null;
+    }>;
   };
 
   // ── Opener answer handler ───────────────────────────────────────────────────
@@ -297,11 +405,20 @@ function PrototypeEInner() {
     setLoading(true);
 
     try {
-      const data = await callFollowUpAPI(topicId, optionText, [], 0);
+      const data = await callFollowUpAPI(topicId, optionText, [], 0, optionId);
       if (data.followUp?.question) {
         setCurrentPrologue(data.prologue ?? null);
         setCurrentFollowUp(data.followUp);
         setFollowUpsAskedThisTopic(1);
+        if (data.followUp.targetedAspect) {
+          setTopicQA((prev) => ({
+            ...prev,
+            [topicId]: {
+              ...prev[topicId],
+              coveredAspects: [...(prev[topicId]?.coveredAspects ?? []), data.followUp!.targetedAspect!],
+            },
+          }));
+        }
       } else {
         advanceToNextTopic(data.prologue ?? null);
       }
@@ -341,12 +458,22 @@ function PrototypeEInner() {
         topicId,
         topicQA[topicId]?.openerAnswerText ?? "",
         newFollowUps,
-        followUpsAskedThisTopic
+        followUpsAskedThisTopic,
+        topicQA[topicId]?.openerAnswerId
       );
       if (data.followUp?.question) {
         setCurrentPrologue(data.prologue ?? null);
         setCurrentFollowUp(data.followUp);
         setFollowUpsAskedThisTopic((n) => n + 1);
+        if (data.followUp.targetedAspect) {
+          setTopicQA((prev) => ({
+            ...prev,
+            [topicId]: {
+              ...prev[topicId],
+              coveredAspects: [...(prev[topicId]?.coveredAspects ?? []), data.followUp!.targetedAspect!],
+            },
+          }));
+        }
       } else {
         advanceToNextTopic(data.prologue ?? null);
       }
@@ -407,9 +534,16 @@ function PrototypeEInner() {
 
   // ── Results step ─────────────────────────────────────────────────────────────
   if (step === "results") {
+    if (isScoring) {
+      return (
+        <main className="min-h-screen flex flex-col items-center justify-center px-4">
+          <p className="text-sm text-teal-500 animate-pulse">מחשב תוצאות מדויקות...</p>
+        </main>
+      );
+    }
     return (
       <UnifiedResultsPage
-        results={calcResults(buckets, topicQA, questionSet)}
+        results={calcResults(buckets, topicQA, questionSet, aiScores)}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
         accentColor="teal"
         onBack={() => setStep("close")}

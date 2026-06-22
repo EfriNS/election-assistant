@@ -1,0 +1,17 @@
+{
+  "platformAvailable": true,
+  "platformLabel": "יעדים (לא מצע)",
+  "sourceUrl": "https://yasharwitheisenkot.com/topic/missions/",
+  "archiveDir": "docs/sources/yashar/",
+  "topics": {
+    "security": [],
+    "economy": [],
+    "housing": [],
+    "education": [],
+    "health": [],
+    "religion": [],
+    "justice": [],
+    "equality": [],
+    "ecology": []
+  }
+}

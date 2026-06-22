@@ -1,0 +1,17 @@
+{
+  "platformAvailable": true,
+  "platformLabel": "חוקה (לא מצע)",
+  "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+  "archiveDir": "docs/sources/democrats/",
+  "topics": {
+    "security": [],
+    "economy": [],
+    "housing": [],
+    "education": [],
+    "health": [],
+    "religion": [],
+    "justice": [],
+    "equality": [],
+    "ecology": []
+  }
+}
