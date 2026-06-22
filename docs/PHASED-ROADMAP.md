@@ -56,7 +56,9 @@ The MVP build is largely a **hardening and data-grounding exercise** on top of t
 - Two question registers (ענייני, אישי) × 8 topics = 16 validated question-answer sets
 - Verbatim quotations from official party platforms shown in results, with source URL and date
 - Explicit disclosure when a party has no published platform ("המפלגה לא פרסמה מצע רשמי")
-- Deterministic scoring (the current weighted matrix approach)
+- Deterministic scoring for topics with fixed-option opener answers (no follow-ups)
+- AI-assisted scoring for topics with free-text input ("other" opener or follow-up answers): user's stated position compared to party platform quotes → alignment score per party (see `docs/FREE-TEXT-SCORING-DESIGN.md`)
+- Follow-up questions redesigned to probe party-differentiating sub-dimensions, not just "go deeper"
 - AI explanation layer: profile summary + per-party micro-blurbs (top 3 parties), grounded in cited platform data
 - Graceful Gemini quota degradation: results still show without AI blurbs if quota is hit
 - Rate limiting / per-session call caps to keep costs within the $50/month ceiling
@@ -73,7 +75,6 @@ The MVP build is largely a **hardening and data-grounding exercise** on top of t
 - Admin/curation UI — v1
 - Automated platform ingestion pipeline — v1 (manual data entry for MVP)
 - Tradeoff questions — v1
-- AI-scored follow-up answers feeding the deterministic score — v1
 - User accounts, saved results, shareable profiles — v1
 - Analytics dashboard — v1
 
@@ -92,17 +93,23 @@ This phase is entirely off-public. Nothing ships until Phase 0 is complete.
 All 7 parties' scoring arrays in `lib/questions.ts` are currently manual estimates. ביחד (בנט/לפיד) and ישר! (איזנקוט) are new parties — scores are particularly uncertain.
 - Work: advisor reviews all 16 question sets (8 topics × 2 registers) and signs off on party score vectors
 - **Advisor review format:** `docs/advisor-review/questions-review.md` — auto-generated via `npm run export:questions`. Shows each topic in both registers as markdown tables with party names as columns and an "Advisor Notes" column. Advisor annotates inline; developer applies corrections to `lib/questions.ts` manually.
+- **Sub-dimension definitions (new):** For each topic, the advisor should also define 2–4 key sub-dimensions where parties most clearly diverge (e.g., for housing: "tenant protection" vs. "supply-side reform"). These aspects scaffold both follow-up question generation and grounding data tagging in Phase 0.2. See `docs/FREE-TEXT-SCORING-DESIGN.md`.
 - Each question set should carry a review date annotation after sign-off
-- Output: `lib/questions.ts` scores annotated with expert review date; `lib/parties.ts` updated with real platform URLs
+- Output: `lib/questions.ts` scores annotated with expert review date; `lib/parties.ts` updated with real platform URLs; per-topic aspect taxonomy documented
 
-#### 0.2 Official party platform data collection + source archiving
+#### 0.2 Official party platform data collection + source archiving + follow-up scoring implementation
 For each party with a published platform: download, convert to markdown, extract verbatim quotes relevant to each topic, record source URL + date.
 - Parties with known platform resources: הדמוקרטים (constitution PDF), ישר! (missions page, not a formal platform)
 - Parties currently without: ביחד, ש"ס, ליכוד, ביתנו, חד"ש — monitor weekly; ingest as they publish
 - **Source archiving:** Store copies in `docs/sources/<partyId>/YYYY-MM-DD-<description>.md` (PDFs converted to markdown). External URLs change; the archive is the authoritative source. Host on GitHub (public repo = public archive), not the production site (avoids serving large documents to voters).
-- **Data model:** Each grounding entry is `{ text: string, aspect: string, sourceUrl: string, archivePath: string, dateRetrieved: string }`. A party+topic can have multiple entries (multiple aspects). Add optional `contrary?: string` (a position the party explicitly opposes) and `absent?: boolean` (no known position on this topic).
+- **Data model:** Each grounding entry is `{ text: string, aspect: string, sourceUrl: string, archivePath: string, dateRetrieved: string }`. Tag each quote with the `aspect` defined in Phase 0.1. A party+topic can have multiple entries (multiple aspects). Add optional `contrary?: string` (a position the party explicitly opposes) and `absent?: boolean` (no known position on this topic).
 - For parties without a platform: confirm and document; show explicit disclosure in results ("המפלגה לא פרסמה מצע רשמי")
 - Output: `lib/groundings.ts` (or a separate JSON data directory) mapping party + topic → grounding entries
+- **Follow-up scoring (new — see `docs/FREE-TEXT-SCORING-DESIGN.md`):**
+  - Implement `/api/score-topics` route: receives user's complete topic Q&A + party platform quotes per topic; returns alignment score per party per topic (−2 to +2), null for parties with no quote
+  - Redesign `/api/follow-up` prompt to receive party platform data and generate party-differentiating questions targeting the aspects defined in Phase 0.1
+  - Update `calcResults` to merge AI-derived scores (where available) with deterministic option scores (fallback)
+  - Langfuse tracing on all scoring calls
 
 #### 0.3 Grounding integration into results UX
 Design and build the "grounding" display on the results page.
@@ -234,7 +241,7 @@ A minimal web UI or scripted workflow for the advisor to review platform quotes,
 Concrete policy tradeoffs have higher discriminant validity than value statements. Requires validated question-answer sets with party positions — cannot be built before Phase 0 expert review is complete. Integrate as an optional "deeper dive" section after the main E flow.
 
 #### 2.5 AI-scored follow-up answers
-Follow-up Q&A currently feeds only the AI explanation layer, not the deterministic score. v1 would experiment with mapping follow-up answers back into the score matrix. Requires careful calibration to avoid eroding the deterministic trust anchor.
+Moved to MVP (Phase 0.2). See `docs/FREE-TEXT-SCORING-DESIGN.md`.
 
 #### 2.6 Shareable results
 Users generate a results link or image card to share. Must preserve privacy (no PII in share URL). Aggregate anonymized data shown optionally ("37% of users matched ביחד as their top party").
@@ -302,7 +309,7 @@ This is not a phase — it runs throughout the product lifetime.
 | $50/month cost cap | ✅ Decided | Gemini free tier (RPD=500 on gemini-3.1-flash-lite). Fallback needed — see risks. |
 | Official party platforms only (no social media) | ✅ Decided | |
 | Repository goes public after MVP | ✅ Decided | Recommend: simultaneously with live launch. |
-| Scoring matrix is deterministic; AI is explanation only | ✅ Decided | Core architectural invariant. AI never overrides scores. |
+| Scoring: deterministic for fixed-option answers; AI-assisted for free-text | ✅ Decided | AI compares user's free-text answers to provided party platform quotes → alignment score. AI does not apply political judgment beyond provided texts. See `docs/FREE-TEXT-SCORING-DESIGN.md`. |
 | Verbatim quotations as primary trust evidence | ✅ Decided | MVP requirement; implementation is Phase 0. |
 | Prototype D in MVP or deferred | ✅ Decided | Keep all prototypes (routes stay live, links hidden from landing). No further development investment in D for MVP. |
 | Which parties get citations in MVP | ✅ Decided | All 7 if platforms available; never hold launch waiting for a single party. |
