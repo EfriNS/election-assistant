@@ -1,5 +1,52 @@
 # Changelog
 
+## 2026-06-22 — Free-text scoring design decided + advisor review updated
+
+### What We Did
+
+Design session — no app code changes. Resolved the scoring architecture for free-text inputs (follow-up answers and "other" opener answers) and updated the advisor review tooling.
+
+### Key Decision: Free-text scoring is an MVP requirement, not v1
+
+The "AI is explanation only" invariant was protecting against the wrong thing. If follow-up answers don't affect party scores, the depth setting is cosmetic and the tool misleads users. The correct design:
+
+- **Mechanism**: For any topic where the user expressed a position in free text, the system scores that topic by comparing the user's complete Q&A to verbatim party platform quotes → AI outputs an alignment score per party (−2 to +2)
+- **Follow-up question redesign**: Prompt now receives party platform quotes + current score distribution; AI generates questions that probe the sub-dimension where currently-close parties most clearly diverge — not just "go deeper"
+- **Invariant updated**: "Party scores come from expert-reviewed platform data. AI compares user answers to provided party texts — it does not apply political judgment beyond what is provided."
+- **Data dependency**: Requires party platform quotes tagged with `aspect` (sub-dimension). Produced by Phase 0.2 alongside the grounding data.
+
+Moved from v1 deferral to MVP scope. See `docs/FREE-TEXT-SCORING-DESIGN.md`.
+
+### Roadmap changes (docs/PHASED-ROADMAP.md)
+
+- Removed "AI-scored follow-up answers feeding the deterministic score — v1" from Hard Out
+- Added to Hard In: AI-assisted scoring for free-text topics + follow-up question redesign
+- Phase 0.2 scope expanded to include `/api/score-topics` implementation and follow-up prompt redesign
+- Decisions table invariant updated
+- Phase 2.5 marked as moved to MVP
+
+### Advisor review packet updates (docs/advisor-review/)
+
+- **Sub-dimension question** added per topic: advisor defines 2–4 aspects where parties diverge (used to scaffold follow-up generation and grounding data tagging)
+- **New instruction section** (§5) explaining why sub-dimensions are needed
+- **HTML export**: `npm run export:questions` now generates both `.md` and `.html`; HTML has proper RTL layout, color-coded score cells (+2 green → −2 red), yellow sub-dimension boxes, print-friendly CSS
+
+### Files changed
+
+- `docs/FREE-TEXT-SCORING-DESIGN.md` — new, full design spec
+- `docs/PHASED-ROADMAP.md` — Hard In/Out, Phase 0.2, Phase 2.5, decisions table
+- `docs/advisor-review/questions-review.md` — regenerated with sub-dimension sections
+- `docs/advisor-review/questions-review.html` — new HTML export
+- `scripts/export-questions-review.ts` — sub-dimension rendering + HTML generation
+- `TODO.md` — item #2 closed; item #5 (platform data) scope expanded
+
+### Commits
+
+- `e4af2f7` docs: free-text scoring design — follow-up answers score against party platform data (MVP)
+- `2117136` feat: add sub-dimension question + HTML export to advisor review packet
+
+---
+
 ## 2026-06-22 — Scoring architecture: free-text inputs are a unified design problem
 
 ### What We Did
