@@ -12,24 +12,22 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Phase 0 kickoff: advisor review packet** — `docs/advisor-review/questions-review.md` generated via `npm run export:questions`. Share with advisor for score validation + neutrality audit. Meeting this week. (See docs/PHASED-ROADMAP.md §0.1 + §0.6)
+1. **Harden Gemini quota error handling across all flows** — `/api/chat` (flow D) already detects 429 and returns `{ errorCode: "QUOTA_EXCEEDED" }`, but it's untested. `/api/follow-up` and `/api/results` (flow E) have no quota handling at all — a Gemini 429 there returns a raw 500, silently breaking the primary flow. Two-part fix: (a) add quota detection to `/api/follow-up` and `/api/results` (copy pattern from `/api/chat`); (b) write unit tests for all three routes that mock a Gemini 429 and assert the correct `errorCode` response. No need to exhaust real quota — mock-based tests only.
 
-2. **Verify Gemini quota error handling** - Round 1 critical bug; fix went in but was never tested under load. Try hitting the limit intentionally in prototype D to confirm user-friendly error displays (not raw JSON).
+2. **Verify party position scores with domain expert** — All 10 parties' scoring arrays are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד), ישר! (איזנקוט), רע"ם, יהדות התורה, and עוצמה יהודית. Aspect slugs in grounding JSONs are placeholders — finalize alongside score review.
 
-3. **Verify party position scores with domain expert** - All 10 parties' scoring arrays are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד), ישר! (איזנקוט), רע"ם, יהדות התורה, and עוצמה יהודית. Aspect slugs in grounding JSONs are placeholders — advisor review (item #1) will finalize them.
+3. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-4. **Add מצע links as parties publish them** - ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
+4. ⏸️ **Build MVP** — _blocked on: advisor score review (item #2), quota hardening (item #1)_
 
-5. ⏸️ **Build MVP** — _blocked on: Phase 0 prerequisites (advisor review, real platform data, quota hardening)_
-
-8. ⏸️ **Multi-language support** (~varies) — _blocked on: MVP working in Hebrew_
+5. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
    - Party platforms remain in Hebrew; answers/explanations translated
 
-9. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
+6. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
    - Experience, notable actions/votes (official sources only, no social media)
 
-10. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+7. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
