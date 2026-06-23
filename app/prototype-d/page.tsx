@@ -139,7 +139,7 @@ function PrototypeDInner() {
       if (data.content) {
         setMessages([...next, { role: "assistant", content: data.content }]);
         // Detect synthesis: AI mentions 5+ party names (ranking), or hard turn-limit fired.
-        const PARTY_NAMES = ['הדמוקרטים', 'ליכוד', 'ש"ס', 'ביחד', 'ישר', 'ישראל ביתנו', 'חד"ש'];
+        const PARTY_NAMES = PARTIES.map(p => p.name);
         const partyMentions = PARTY_NAMES.filter((n) => data.content.includes(n)).length;
         const isSynthesis = isFinalTurn || partyMentions >= 5;
         if (isSynthesis) {

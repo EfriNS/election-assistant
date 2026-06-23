@@ -26,7 +26,7 @@ const TOPIC_LABELS: Record<string, string> = {
 const SHORT_NAMES = PARTIES.map(p => {
   const n = p.name;
   if (n.includes("ביתנו")) return "ביתנו";
-  if (n.includes('חד"ש')) return 'חד"ש';
+  if (n.includes('חד"ש')) return 'חד"ש-תע"ל';
   if (n.includes("דמוקרטים")) return "דמוקרטים";
   return n;
 });
