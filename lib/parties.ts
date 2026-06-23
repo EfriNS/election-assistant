@@ -29,6 +29,13 @@ export const PARTIES: Party[] = [
     website: "https://hadash.org.il",
   },
   {
+    id: "raam",
+    name: 'רע"ם',
+    subtitle: "עבאס",
+    description: "מפלגה אסלאמית ערבית — זכויות אזרחים ערבים, סגירת פערים כלכליים, שתי מדינות.",
+    website: "",
+  },
+  {
     id: "democrats",
     name: "הדמוקרטים",
     description: "מרכז-שמאל — מדינת רווחה, שוויון חברתי, ושאיפה להסדר מדיני.",
@@ -69,5 +76,18 @@ export const PARTIES: Party[] = [
     name: 'ש"ס',
     description: "ימין דתי-ספרדי — ערכים מסורתיים, דאגה לשכבות חלשות.",
     website: "https://shasnet.org.il",
+  },
+  {
+    id: "yahadut-hatorah",
+    name: "יהדות התורה",
+    description: "ימין חרדי אשכנזי — פטור מגיוס, חינוך תורני, מונופול הרבנות.",
+    website: "",
+  },
+  {
+    id: "otzmah-yehudit",
+    name: "עוצמה יהודית",
+    subtitle: "בן גביר",
+    description: "ימין קיצוני לאומי-דתי — ריבונות מהנהר לים, 'קפיטליזם יהודי', הוצאת אויבים.",
+    website: "https://ozma-yeudit.co.il",
   },
 ];
