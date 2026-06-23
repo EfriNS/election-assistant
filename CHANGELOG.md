@@ -1,5 +1,72 @@
 # Changelog
 
+## 2026-06-23/24 — Party platform grounding data + scoring tables expanded to 10 parties
+
+### What We Did
+
+Collected party platform grounding data for all 10 parties, expanded score arrays from 7 → 10, and implemented the `/api/score-topics` endpoint for AI-assisted free-text scoring.
+
+### Grounding Data Collected (data/groundings/ + docs/sources/)
+
+All 10 parties now have JSON grounding files with verbatim Hebrew platform quotes tagged by topic:
+
+| Party | Entries | Source |
+|---|---|---|
+| חד"ש-תע"ל | 20+ | hadash.org.il principles + maki.org.il |
+| רע"ם | 19 | Coalition agreement Bennett-Lapid 2021 (Calcalist PDF) + IDI + JVL + ECFR |
+| הדמוקרטים | 30+ | Constitution PDF 2025 + yes-democrats commitments |
+| ביחד | 20+ | Bennett2026 plans page |
+| ישר! | 25+ | Yashar 10-steps page |
+| ישראל ביתנו | 20+ | Party platform page |
+| ליכוד | 15 | Party constitution 2016 (no formal platform since ~2009) |
+| ש"ס | 20+ | IDI principles 2006 + 2022 coalition positions |
+| יהדות התורה | 15 | IDI + Hiddush coalition positions |
+| עוצמה יהודית | 24 | ozma-yeudit.com/program/ + JVL + IDI + coalition agreement 37th gov |
+
+### Scoring Tables Expanded (lib/parties.ts + lib/questions.ts)
+
+- Added 3 new parties to `lib/parties.ts` in correct left→right spectrum order:
+  - `raam` at index 1 (between hadash and democrats)
+  - `yahadut-hatorah` at index 8
+  - `otzmah-yehudit` at index 9
+- New order: `[hadash, raam, democrats, beyahad, yashar, beitenu, likud, shas, yahadut-hatorah, otzmah-yehudit]`
+- All 73 score arrays in `lib/questions.ts` (FORMAL + PERSONAL registers) expanded from 7 → 10 elements
+- Scores for new parties derived from grounding data
+
+### API + Infrastructure
+
+- `app/api/score-topics/route.ts` — new endpoint. Receives user Q&A (per topic), fetches party grounding quotes, sends to AI for alignment scoring (−2 to +2 per party). Handles missing platform gracefully.
+- `app/api/follow-up/route.ts` — redesigned prompt: now receives party platform quotes + current score distribution to generate party-differentiating questions
+- `lib/groundings.ts` — helper to load and filter grounding entries by topic and party
+- `tests/calcResults.test.ts`, `tests/scoreTopicsPrompt.test.ts` — new test coverage
+
+### Fixes
+
+- `lib/questions.ts`: typo `לדעתל` → `לדעתך`; hyphen → em dash in economy question header
+- `lib/questions.ts`: loanword `מהלופ` → `מסבבים אינסופיים של מלחמות` in formal security/peace option
+- `חד"ש` → `חד"ש-תע"ל` in export script and advisor review doc (regenerated)
+- `app/prototype-d/page.tsx`: replaced hardcoded `PARTY_NAMES` with `PARTIES.map(p => p.name)` — stays in sync automatically
+
+### Files Changed
+
+- `lib/parties.ts` — 3 new party entries
+- `lib/questions.ts` — all score arrays 7 → 10 elements; header comment updated
+- `lib/groundings.ts` — new
+- `data/groundings/` — 10 JSON files (all new)
+- `docs/sources/` — 10 archive markdown files (all new)
+- `app/api/score-topics/route.ts` — new
+- `app/api/follow-up/route.ts` — prompt redesigned
+- `app/prototype-d/page.tsx` — dynamic PARTY_NAMES
+- `scripts/export-questions-review.ts` — full party name fix
+- `docs/advisor-review/questions-review.md/html` — regenerated with 10 parties + correct name
+- `tests/calcResults.test.ts`, `tests/scoreTopicsPrompt.test.ts`, `vitest.config.ts` — new
+
+### Commits
+
+`ba5a016` `773592f` `32b822f` `2c509bd` `fa8f4cf` `4fb274f` `846bafd` `1e3d3c4` `65d23ed` `e3b8ac3` `1068426`
+
+---
+
 ## 2026-06-22 — Free-text scoring design decided + advisor review updated
 
 ### What We Did

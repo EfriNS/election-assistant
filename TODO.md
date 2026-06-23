@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Party grounding data + scoring expansion** — All 10 parties grounded (verbatim platform quotes); score arrays expanded 7→10; `/api/score-topics` + follow-up redesign implemented. (2026-06-23/24)
 - **Free-text scoring design** — Decided: follow-up answers scored against party platform data (not proxies); follow-up questions redesigned to probe party-differentiating sub-dimensions; moved from v1 to MVP. See `docs/FREE-TEXT-SCORING-DESIGN.md`. (2026-06-22)
 - **Scoring architecture discussion** — Resolved that free-text scoring ("other" + follow-ups) is a unified design problem; added as blocking prerequisite before Phase 0.2 implementation. (2026-06-22)
-- **Ecology topic + advisor review polish** — Added 9th topic (סביבה ואנרגיה) throughout app; improved advisor review instructions and export script. (2026-06-22)
 
 > See CHANGELOG.md for complete details.
 
@@ -16,19 +16,11 @@
 
 2. **Verify Gemini quota error handling** - Round 1 critical bug; fix went in but was never tested under load. Try hitting the limit intentionally in prototype D to confirm user-friendly error displays (not raw JSON).
 
-3. **Verify party position scores with domain expert** - All 7 parties' scoring arrays in prototype A/B/C are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד) and ישר! (איזנקוט) which are new.
+3. **Verify party position scores with domain expert** - All 10 parties' scoring arrays are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד), ישר! (איזנקוט), רע"ם, יהדות התורה, and עוצמה יהודית. Aspect slugs in grounding JSONs are placeholders — advisor review (item #1) will finalize them.
 
 4. **Add מצע links as parties publish them** - ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-5. **Party platform data collection + follow-up scoring implementation** — Phase 0.2 (expanded scope). Collect verbatim platform quotes per party per topic; tag with aspect taxonomy from advisor review (§0.1). Implement follow-up scoring and redesign follow-up generation. (See PHASED-ROADMAP.md §0.2 and `docs/FREE-TEXT-SCORING-DESIGN.md`)
-   - Collect quotes from הדמוקרטים (constitution PDF), ישר! (missions page); monitor others
-   - Tag each quote with aspect defined in advisor review (2–4 aspects per topic)
-   - Implement `/api/score-topics`: compare user Q&A to party quotes → alignment scores
-   - Redesign `/api/follow-up` prompt to generate party-differentiating questions
-   - Update `calcResults` to merge AI scores (free-text topics) with deterministic scores (fixed-option topics)
-   - Handle missing platform gracefully ("המפלגה לא פרסמה מצע רשמי")
-
-6. ⏸️ **Build MVP** — _blocked on: Phase 0 prerequisites (advisor review, real platform data, quota hardening)_
+5. ⏸️ **Build MVP** — _blocked on: Phase 0 prerequisites (advisor review, real platform data, quota hardening)_
 
 8. ⏸️ **Multi-language support** (~varies) — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers

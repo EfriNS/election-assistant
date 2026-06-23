@@ -163,3 +163,13 @@
 52. **Score explanations must trace to party positions, not just user preferences** — Saying "your answer moved party X's score up" is insufficient. The obligation is to explain WHY the party aligns: "Party X aligns with your position because [reason grounded in their platform]." This is not a UX nicety — it's the core trust mechanism for AI-assisted scoring. Without it, the score change is unauditable and legally indefensible. At launch, topic-level citations are acceptable where sub-nuance citations don't exist; clearly label cases where the AI is reasoning from general knowledge rather than a specific document. (#first:2026-06-22)
 
 53. **"Other" opener answers create a different blending formula** — For regular openers: `topic_score = opener_score × 0.5 + followup_score × 0.5`. For "other" openers: there is no pre-defined opener score, so `topic_score = ai_score × 1.0` (AI scores the full free text, including the opener "other" text and any follow-up conversation). This means "other" users depend entirely on AI scoring — make sure the follow-up flow triggers for "other" answers, even if follow-ups wouldn't otherwise be generated. (#first:2026-06-22)
+
+---
+
+## Grounding Data Implementation (2026-06-23/24)
+
+54. **Hebrew gershayim (U+05F4) required inside JSON strings for party abbreviations** — Abbreviations like `רע"מ` use a regular `"` double-quote, which breaks JSON parsing if placed inside a JSON string value. Replace with the Hebrew gershayim character `״` (U+05F4): `רע״מ`. This affects any Hebrew abbreviation that includes a quotation mark inside a JSON string. Always test `JSON.parse()` on grounding files after editing. (#first:2026-06-23)
+
+55. **Score arrays indexed by party order must exactly match lib/parties.ts** — The score arrays in `lib/questions.ts` are positionally indexed to the `PARTIES` array. When adding parties, inserting at a new index shifts all subsequent indices. After any change: run `grep -oP 'scores: \[([^\]]+)\]' lib/questions.ts | awk -F',' '{print NF}' | sort -u` to verify all arrays have exactly N elements where N = PARTIES.length. A mismatch silently produces wrong scores — no type error, no runtime crash. (#first:2026-06-23)
+
+56. **Derive display/detection lists from PARTIES source of truth — never hardcode** — Hardcoded party name arrays in components (e.g., synthesis detection in prototype-d, column headers in export script) go stale when parties are added or renamed. Use `PARTIES.map(p => p.name)` or `PARTIES.map(p => SHORT_NAME_FN(p))` everywhere. The moment a list is hardcoded it's wrong as soon as the party roster changes. (#first:2026-06-23)
