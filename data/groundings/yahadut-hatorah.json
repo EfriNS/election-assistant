@@ -1,0 +1,94 @@
+{
+  "platformAvailable": false,
+  "platformLabel": "עמדות מממשלה ה-37 (2022) + ניתוחי IDI ו-Hiddush — אין מצע רשמי",
+  "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
+  "archiveDir": "docs/sources/yahadut-hatorah/",
+  "_note": "UTJ (Yahadut Hatorah) is an alliance of Agudat Yisrael and Degel Hatorah — non-Zionist Haredi Ashkenazi parties. No formal 2026 platform, no active party website found. Data sourced from IDI party profile, IDI analysis of 37th government coalition agreement (Dec 2022), IDI article on Basic Law: Torah Study, and Hiddush documentation. The party is narrowly sectoral: almost all activity concerns Haredi community interests. Economy/security/ecology topics are essentially absent. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review.",
+  "topics": {
+    "security": [
+      {
+        "text": "עמדות המפלגה בתחום המדיניות והביטחון נקבעות על פי שיקולים תורניים ולא ביטחוניים-מדיניים.",
+        "aspect": "torah-determines-security-policy",
+        "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "Party is non-Zionist; has no ideological commitment to the state as a national project. Security stance driven by Torah rulings, not strategic doctrine."
+      }
+    ],
+    "economy": [
+      {
+        "text": "בנושאים כלכליים המפלגה תומכת בגישה סוציאל-דמוקרטית, בשל החולשה הסוציו-אקונומית של מצביעיה.",
+        "aspect": "social-democratic-welfare",
+        "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "General characterization from IDI, not a specific policy commitment."
+      }
+    ],
+    "housing": [],
+    "education": [
+      {
+        "text": "השוואת שכר מורים בחינוך העצמאי (החרדי) לשכר מורים במכללות; עדכון תקציב שעות ההוראה בבסיס התקציב; מיליארדי שקלים לחינוך החרדי בהסכם הקואליציוני.",
+        "aspect": "haredi-education-budget",
+        "sourceUrl": "https://www.idi.org.il/articles/46842",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "התנגדות להכנסת לימודי ליבה (מתמטיקה, אנגלית, מדעים) לבתי ספר חרדיים.",
+        "aspect": "oppose-core-curriculum",
+        "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "חוק לימודי ליבה חובה בכלל המוסדות המתוקצבים"
+      }
+    ],
+    "health": [],
+    "religion": [
+      {
+        "text": "חוק יסוד: תורה — לימוד תורה מוכר כשירות משמעותי למדינה ולעם ישראל; לא ייגבה מחיר כלכלי מלומדי תורה על אי-שירות; אין יעדי גיוס לחרדים. כל חברי הכנסת מיהדות התורה חתמו.",
+        "aspect": "basic-law-torah-haredi-draft-exemption",
+        "sourceUrl": "https://en.idi.org.il/articles/64690",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "גיוס חרדים לצה\"ל; ביטול פטורים ממסים ותשלומים"
+      },
+      {
+        "text": "ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד). ביטול סמכות רבני הערים לגיור — הסמכות מוחזרת לרבנות הראשית; גיורים פרטיים לא יוכרו.",
+        "aspect": "rabbinate-monopoly-kashrut-conversion",
+        "sourceUrl": "https://www.idi.org.il/articles/46842",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "כשרות פרטית; גיור על ידי רבני ערים; הכרה בגיורי רפורמה"
+      },
+      {
+        "text": "שמירת הסטאטוס קוו הדתי וניהול מחלוקות הדת על פי פסיקת הרבנות הראשית; התנגדות לביקורת שיפוטית בתחום הדת.",
+        "aspect": "religious-status-quo-rabbinate-authority",
+        "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "justice": [
+      {
+        "text": "תמיכה בפסקת ההתגברות ובהחלשת הביקורת השיפוטית כחלק מהקואליציה. ח\"כ פינדרוס (יו\"ר): \"חלומי להביא ד-9 ולפוצץ את הבניין של בית המשפט העליון.\"",
+        "aspect": "weaken-supreme-court",
+        "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "עצמאות מערכת המשפט; ביקורת שיפוטית על חקיקה דתית"
+      }
+    ],
+    "equality": [
+      {
+        "text": "הסכם הקואליציוני 2022: 4% בלבד מהסעיפים מתייחסים לצרכי נשים חרדיות; אין התייחסות לבריאות נשים, אלימות במשפחה, עגינות.",
+        "aspect": "minimal-womens-rights-in-coalition",
+        "sourceUrl": "https://www.idi.org.il/articles/46926",
+        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "Observed gap in coalition agreement per IDI analysis, not an explicit stated position — reflects party priorities rather than a direct policy stance."
+      }
+    ],
+    "ecology": []
+  }
+}

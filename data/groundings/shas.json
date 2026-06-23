@@ -1,0 +1,171 @@
+{
+  "platformAvailable": false,
+  "platformLabel": "מסמך עקרונות התנועה (2006, IDI) + עמדות קואליציוניות 2022 — אין מצע רשמי",
+  "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+  "archiveDir": "docs/sources/shas/",
+  "_note": "Shas has no official 2026 election platform. Official website (shas.org.il) timed out during collection. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review.",
+  "topics": {
+    "security": [
+      {
+        "text": "תנועת ש\"ס מבקשת ושואפת לחיות בשלום ובטחון עם שכנותינו מדינות ערב, על פי סידורי בטחון שמטרתם להגן על כל נפש מישראל.",
+        "aspect": "peace-with-security-guarantees",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "תנועת ש\"ס תומכת בפיתוח כל חבלי ארץ ישראל: יהודה ושומרון, פיתוח הנגב והגליל. המשך פיתוח ההתיישבות ביהודה ושומרון על פי החלטות הכנסת והממשלה.",
+        "aspect": "settlement-development",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "economy": [
+      {
+        "text": "אידיאולוגיה כלכלית שמרנית המאמצת ומקדשת את ערכי הגלובליזציה, התחרות החופשית, הפרטת מוסדות רווחה ושירותים — מאיימת על צביון המדינה ופוגעת במסכת הערכים היהודים החשובים של שוויון, צדקה, חמלה וערבות הדדית.",
+        "aspect": "anti-neoliberal-welfare-state",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "כלכלה ניאו-ליברלית, הפרטה, צמצום מעורבות ממשלתית"
+      },
+      {
+        "text": "החזרת קצבאות הילדים. הצבת יעד אבטחה ויעד עוני כמדיניות ממשלתית, כך שמדי שנה יפחתו לפחות ב-1% לשנה.",
+        "aspect": "child-allowances-poverty-targets",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "חקיקת חוק פנסיה חובה, שיבטיח חיים בכבוד לפורשים ממעגל העבודה. העלאת קצבאות הזקנה באופן הדרגתי לרמה של 1/3 מהשכר הממוצע במשק.",
+        "aspect": "mandatory-pension-elderly",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "הגדלת התמריצים במיסוי למשתכרים משכורות נמוכות מהשכר הממוצע במשק (מס הכנסה שלילי). ביטול הסדרי העסקה זמניים של עובדים באמצעות חברות כח אדם.",
+        "aspect": "earned-income-tax-credit-labor-rights",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "housing": [
+      {
+        "text": "יצירת מלאי דיור ציבורי ודיור להשכרה מסובסדת ארוכת טווח, שיסייע בפתרונות דיור זמינים לאוכלוסיות החלשות בישראל.",
+        "aspect": "public-housing-rental",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "סיוע לזוגות צעירים ולמשפחות עם שלושה ילדים ומעלה לשם יצירת תנאי דיור הולמים. סיוע בשכר דירה מוגדל לנכים קשים, לקשישים, למשפחות חד-הוריות ולמשפחות ברוכות ילדים.",
+        "aspect": "housing-aid-families",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "education": [
+      {
+        "text": "השוואת התקציבים לחינוך בין כל זרמי החינוך ובין הפריפריה והמרכז.",
+        "aspect": "equal-education-budgets",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "חינוך חינם מגיל הגן ועד לסיום הלימודים התיכוניים והישיבתיים וסבסוד הלימודים באקדמיה לסטודנטים משכבות חלשות (שכר לימוד פרוגרסיבי).",
+        "aspect": "free-education-kindergarten-yeshiva",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "תנועת ש\"ס תומכת בתכנית הליבה של דו\"ח ועדת דוברת, ואף מיישמת אותו בבתי הספר של 'מעין החינוך התורני', תוך התאמות לאופי הלימוד התורני הייחודי לה.",
+        "aspect": "core-curriculum-mayan",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "health": [
+      {
+        "text": "תנועת ש\"ס רואה כערך עליון הבטחת נגישות הוגנת ושוויונית לשירותי בריאות ציבוריים לכל אזרחי המדינה. המדינה צריכה לסבסד שירותי בריאות ייחודיים הנובעים מחידושי הרפואה.",
+        "aspect": "universal-equal-healthcare",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "מתן סל תרופות מצילות חיים לכל אזרחי המדינה. הכללת הפסיכיאטריה והגריאטריה לסל שירותי הבריאות המסופק על ידי קופות החולים.",
+        "aspect": "expanded-health-basket",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "religion": [
+      {
+        "text": "שמירת הסטאטוס קוו במדינה, כדי לשמור על צביונה היהודי. תנועת ש\"ס מאמינה כי חוסנה הפנימי של המדינה מושתת על האמונה בבורא עולם ועל קיום מצוות התורה.",
+        "aspect": "status-quo-jewish-character",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "הצעת חוק יסוד: תורה — לימוד תורה הוא ערך יסוד במורשת העם היהודי; המוקדשים ללימוד תורה יוכרו כמבצעים שירות משמעותי למדינה ולעם ישראל, ולא ייגבה מהם מחיר כלכלי על אי-שירות. כל חברי הכנסת מש\"ס חתמו על ההצעה.",
+        "aspect": "basic-law-torah-study-haredi-draft",
+        "sourceUrl": "https://en.idi.org.il/articles/64690",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "גיוס חרדים לצה\"ל; ביטול פטורים ממיסים ותשלומים"
+      },
+      {
+        "text": "דרעי הגיש חוק המעגן סמכות בלעדית לגופי הרבנות הממלכתיים על הגיור; ביטול גיורים פרטיים מחוץ לרבנות. ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד).",
+        "aspect": "rabbinate-monopoly-conversion-kashrut",
+        "sourceUrl": "https://hiddush.org/subchannel-80-0-Shas.aspx",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "גיור פרטי, גיור על ידי רבני ערים, כשרות פרטית"
+      }
+    ],
+    "justice": [
+      {
+        "text": "תנועת ש\"ס מאמינה בקיומה של מדינת ישראל כמדינת העם היהודי, מדינה מושתתת על ערכי הדמוקרטיה על פי תורת ישראל.",
+        "aspect": "democracy-according-to-torah",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "The 2006 document has no specific judiciary positions. In the 2022-2023 coalition, Shas supported the judicial override legislation (פסקת התגברות) as a coalition partner."
+      }
+    ],
+    "equality": [
+      {
+        "text": "תנועת ש\"ס תפעל לחקיקת חוק זכויות חברתיות שיאגד את הזכויות הבסיסיות: הזכות לחינוך, הזכות לעבודה, הזכות לבריאות, הזכות לדיור, הזכות לשירותי רווחה, הזכות לביטחון סוציאלי.",
+        "aspect": "social-rights-legislation",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "העדפה מתקנת כלפי נשים במקומות עבודה ממשלתיים וציבוריים. עידוד והכוונת נשים לרכוש השכלה מקצועית ואקדמית.",
+        "aspect": "womens-affirmative-action",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "ecology": [
+      {
+        "text": "תנועת ש\"ס מאמינה בשימור הטבע והנוף כחלק חשוב בחיינו על אדמת ארץ הקודש. לטיפוח איכות הסביבה משמעות יהודית עמוקה, כחלק משמירה על היצירה האלוהית. חקיקת חוקים שמטרתם הגנה על הטבע, על מקורות המים ועל חופי הים.",
+        "aspect": "nature-preservation-jewish-value",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ]
+  }
+}

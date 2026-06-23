@@ -1,0 +1,130 @@
+{
+  "platformAvailable": false,
+  "platformLabel": "8 עקרונות (hadash.org.il) + עקרונות יסוד מק\"י — אין מצע בחירות רשמי",
+  "sourceUrl": "https://hadash.org.il",
+  "archiveDir": "docs/sources/hadash/",
+  "_note": "Hadash is a joint front (not a single party) uniting Maki (Israeli Communist Party) and other groups. The 2022/2026 electoral list is חד\"ש-תע\"ל — a joint list with Ahmad Tibi's Taal party. Entries here are based on Hadash/Maki positions; Taal positions not separately documented. No formal 2026 platform. Three sources: hadash.org.il (8 principles), maki.org.il foundational principles, and zoha.org.il economic analysis. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Housing topic is thin (no dedicated policy found).",
+  "topics": {
+    "security": [
+      {
+        "text": "שלום ישראלי-פלסטיני וישראלי-ערבי צודק, כולל ויציב. סיום הכיבוש; הקמת שתי מדינות עצמאיות עם ירושלים כבירת שתיהן; נסיגה לגבולות 1967 כולל רמת הגולן.",
+        "aspect": "two-state-1967-borders",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "סיפוח שטחים; ביסוס ההתנחלויות"
+      },
+      {
+        "text": "פתרון צודק לבעיית הפליטים הפלסטינים על פי החלטות האו\"ם.",
+        "aspect": "palestinian-refugee-right-of-return",
+        "sourceUrl": "https://maki.org.il/%d7%a2%d7%a7%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%99%d7%a1%d7%95%d7%93/",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "איסור הנשק להשמדה המונית.",
+        "aspect": "disarmament-wmd",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "economy": [
+      {
+        "text": "העלאת שכר המינימום ל-70% מהשכר הממוצע במשק. ביטול העסקה קבלנית ודרך חברות כוח-אדם. תשלום תוספת יוקר לכלל העובדים במשק.",
+        "aspect": "minimum-wage-labor-rights",
+        "sourceUrl": "https://zoha.org.il/116306/",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "העסקה קבלנית ודרך חברות כוח-אדם"
+      },
+      {
+        "text": "הקמת קרן פנסיה ממשלתית ללא מטרות רווח. הגדלת כלל קצבאות הביטוח הלאומי.",
+        "aspect": "state-pension-fund-allowances",
+        "sourceUrl": "https://zoha.org.il/116306/",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
+        "aspect": "anti-privatization-worker-rights",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "הפרטת שירותים ציבוריים"
+      }
+    ],
+    "housing": [
+      {
+        "text": "הגנת האינטרסים של תושבי שכונות המצוקה ועיירות הפיתוח.",
+        "aspect": "distress-neighborhoods-development-towns",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "_note": "Housing not addressed as a standalone topic. This is the closest available reference."
+      }
+    ],
+    "education": [
+      {
+        "text": "חינוך חינם מהגן ועד האוניברסיטה.",
+        "aspect": "free-education-all-levels",
+        "sourceUrl": "https://zoha.org.il/116306/",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "health": [],
+    "religion": [
+      {
+        "text": "הפרדת הדת מהמדינה.",
+        "aspect": "separation-religion-state",
+        "sourceUrl": "https://maki.org.il/%d7%a2%d7%a7%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%99%d7%a1%d7%95%d7%93/",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "שמירת הסטאטוס קוו הדתי; מדינת הלכה"
+      }
+    ],
+    "justice": [
+      {
+        "text": "הגנת החירויות הדמוקרטיות. מאבק בפשיזם ובגזענות.",
+        "aspect": "democratic-freedoms-anti-fascism",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "equality": [
+      {
+        "text": "שוויון האוכלוסייה הערבית בישראל — זכויות המיעוט הערבי כמיעוט לאומי.",
+        "aspect": "arab-citizens-equality",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23",
+        "contrary": "אפליה של האזרחים הערבים; הגדרת ישראל כמדינת העם היהודי בלבד"
+      },
+      {
+        "text": "ביטול האפליה העדתית בכל התחומים.",
+        "aspect": "anti-ethnic-discrimination",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "שוויון זכויות האישה בכל התחומים.",
+        "aspect": "womens-equality",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ],
+    "ecology": [
+      {
+        "text": "שמירת איכות הסביבה.",
+        "aspect": "environmental-protection",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-06-23"
+      }
+    ]
+  }
+}

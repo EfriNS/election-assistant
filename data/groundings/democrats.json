@@ -1,0 +1,250 @@
+{
+  "platformAvailable": true,
+  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026",
+  "sourceUrl": "https://yes.democrats.org.il",
+  "archiveDir": "docs/sources/democrats/",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Topics 'health' and 'ecology' are not yet available from this source; see archive doc for details. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+  "topics": {
+    "security": [
+      {
+        "text": "נוביל יוזמה מדינית אזורית ונקדם נורמליזציה עם סעודיה",
+        "aspect": "regional-normalization",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נביא לסגירת כל זירות הלחימה - עזה, לבנון וסוריה",
+        "aspect": "end-armed-conflict",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נבלום את הסיפוח, נילחם בטרור היהודי ונקדם אלטרנטיבה פלסטינית מתונה",
+        "aspect": "two-state-path",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "סיפוח שטחים"
+      },
+      {
+        "text": "נקים ועדת חקירה ממלכתית ונשקם את מערכת הביטחון, ננקה אותה מפוליטיקה",
+        "aspect": "security-accountability",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.",
+        "aspect": "peace-settlement",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "שקידה קפדנית על בטחון מדינת-ישראל, הרחקת כל סכנה לקיומה והבטחת ריבונותה, שלומה ושלמותה. מדיניות הביטחון תושתת על היערכות כוללת של הצבא והעם ועל התעצמותו המרתיעה של צה\"ל כדי כושר מלא להדוף כל אויב ולהביט כל תוקפן.",
+        "aspect": "military-deterrence",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "economy": [
+      {
+        "text": "במקום כסף למקורבים ולמשתמטים, נגדיל משמעותית את ההשקעה בשירותים חברתיים",
+        "aspect": "social-spending",
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "תקציב לגורמים פוליטיים על חשבון שירותים ציבוריים"
+      },
+      {
+        "text": "מלחמת חורמה ביוקר המחיה באמצעות מלחמה במונופולים",
+        "aspect": "cost-of-living",
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נדאג לצרכי המשפחות הצעירות, נשפר את תנאי העבודה, נשפר את איכות המסגרות",
+        "aspect": "working-conditions",
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "הכוונת השכר והמיסוי במגמה לקדם את השוויון הכלכלי והחברתי, להטיב את רמת שכרם של העובדים בייצור ולשמור על הערך הריאלי של השכר.",
+        "aspect": "progressive-taxation",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "housing": [
+      {
+        "text": "נדאג לדיור בר השגה - התחדשות עירונית, שכירות ארוכת טווח ודיור ציבורי",
+        "aspect": "affordable-housing",
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "education": [
+      {
+        "text": "נבטל את האפליה התקציבית נגד החינוך הממלכתי, ונוביל לשוויון בין כל תלמידי ישראל",
+        "aspect": "budget-equality",
+        "sourceUrl": "https://yes.democrats.org.il/topics/education",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "אפליה תקציבית בין זרמי חינוך"
+      },
+      {
+        "text": "נחייב חינוך לאזרחות ודמוקרטיה לכולם",
+        "aspect": "civic-values",
+        "sourceUrl": "https://yes.democrats.org.il/topics/education",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נחזק את מעמד עובדי ועובדות ההוראה והניהול ונשפר את תנאי ההעסקה",
+        "aspect": "teacher-quality",
+        "sourceUrl": "https://yes.democrats.org.il/topics/education",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נפסיק את מימון הרשתות החרדיות המפלגתיות - חינוך ממלכתי-חרדי לכל ילד חרדי",
+        "aspect": "haredi-integration",
+        "sourceUrl": "https://yes.democrats.org.il/topics/education",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "מימון ממשלתי לרשתות חינוך חרדיות בלי פיקוח"
+      },
+      {
+        "text": "התקדמות לקראת חינוך על-יסודי חינם וחתירה לקראת שוויון אפשרויות למען מעוטי היכולת, הן בחינוך העל-יסודי והן בחינוך הגבוה.",
+        "aspect": "education-access",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "health": [],
+    "religion": [
+      {
+        "text": "נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואים וגירושים",
+        "aspect": "civil-marriage",
+        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "מונופול הרבנות על נישואים וגירושים"
+      },
+      {
+        "text": "נפרק את מונופול הרבנות בגיור ובכשרות",
+        "aspect": "rabbinate-monopoly",
+        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נאבק על מרחב ציבורי חופשי ונקדם תחבורה ציבורית בשבת",
+        "aspect": "sabbath-public-space",
+        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נוביל שיוויון מוחלט בנטל",
+        "aspect": "military-equal-burden",
+        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "פטור מגיוס לחרדים"
+      },
+      {
+        "text": "שמירה על חופש המצפון והדת, בלא כפייה דתית או אנטי דתית, תוך סובלנות הדדית וסיפוק הצרכים הדתיים הציבוריים.",
+        "aspect": "conscience-freedom",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "justice": [
+      {
+        "text": "נבצר את הזכויות האזרחיות והחברתיות בחוקי יסוד וניתן להם מעמד עליון",
+        "aspect": "basic-laws-civil-rights",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נחזק את הכנסת ואת עקרון הפרדת הרשויות",
+        "aspect": "separation-of-powers",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נבטיח כי בכירים בצמרת הביטחון ובשירות המדינה ועובדי ציבור ישרתו את החוק",
+        "aspect": "public-servant-accountability",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נבטל את כל חוקי ההפיכה המשטרית, ונחוקק את חוק יסוד החקיקה",
+        "aspect": "anti-judicial-overhaul",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "חוקי ההפיכה המשטרית"
+      },
+      {
+        "text": "נחוקק את חוקי הגבלת הכהונה ונלחם בשחיתות",
+        "aspect": "anti-corruption",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "עמידה על משמר הדמוקרטיה הישראלית, כיבוד מוסדותיה ושמירה על העיקרון של הפרדת הרשויות; הבטחת חירות הביטוי וקיום השפעתם של האזרחים על מעשיו של הממשל באמצעות נבחריהם.",
+        "aspect": "separation-of-powers",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "equality": [
+      {
+        "text": "נקדם שוויון זכויות מלא בחוק לקהילה הגאה, כולל שוויון בזכות להורות, למשפחה ולנישואים",
+        "aspect": "lgbtq-rights",
+        "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "נאסור טיפולי המרה, נחזק את האכיפה נגד אפליה, נכיר בנפגעי פשעי שנאה ונפסיק את התמיכה הציבורית בארגונים להט\"בופוביים",
+        "aspect": "lgbtq-protection",
+        "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-06-22",
+        "contrary": "תמיכה ציבורית בארגונים להט\"בופוביים"
+      },
+      {
+        "text": "שקידה על עקרונות השוויון וזכויות האדם ללא הבדל מוצא, דת, עדה ומין; חלוקה צודקת של ההכנסה הלאומית, צמצום הפער הכלכלי, המקצועי, ההשכלתי והחברתי בין השכבות השונות.",
+        "aspect": "civil-equality",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      },
+      {
+        "text": "שילובם של האזרחים מבני המיעוטים בחייה של מדינת-ישראל; כיבוד ייחודם התרבותי ועצמאותם הדתית; העלאת רמת חייהם ושיתופם המלא במנהל הציבורי.",
+        "aspect": "minority-integration",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
+        "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
+        "dateRetrieved": "2026-06-22"
+      }
+    ],
+    "ecology": []
+  }
+}
