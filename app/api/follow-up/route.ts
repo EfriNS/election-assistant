@@ -228,9 +228,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ prologue: parsed.prologue || null, followUp });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
+    const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
+    if (isQuota) return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
     return NextResponse.json({ prologue: null, followUp: null });
   }
 }

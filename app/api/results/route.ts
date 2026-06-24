@@ -90,9 +90,13 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("Results AI error:", msg);
+    const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    return NextResponse.json({ errorCode: "SERVER_ERROR" }, { status: 500 });
+    return NextResponse.json(
+      { errorCode: isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR" },
+      { status: isQuota ? 429 : 500 }
+    );
   }
 }
