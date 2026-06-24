@@ -616,18 +616,22 @@ function PrototypeEInner() {
           <div className="flex flex-col gap-3 mb-4">
             {currentFollowUp.options.map((opt, i) => {
               const isOther = opt === OTHER_OPTION;
+              const num = i + 1;
               if (isOther) {
                 return (
                   <div key={i}>
                     <button
                       onClick={() => { setShowFollowUpInput(true); setFollowUpDraft(""); }}
-                      className={`w-full border-2 rounded-xl py-3 px-5 text-right text-sm transition-all ${
+                      className={`w-full border-2 rounded-xl py-4 px-5 text-sm transition-all flex items-center gap-3 ${
                         showFollowUpInput
                           ? "border-teal-400 bg-teal-50 text-teal-700"
-                          : "border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-600"
+                          : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
                       }`}
                     >
-                      {opt}
+                      <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
+                      <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+                        showFollowUpInput ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
+                      }`}>{num}</span>
                     </button>
                     {showFollowUpInput && (
                       <div className="mt-2">
@@ -636,7 +640,7 @@ function PrototypeEInner() {
                           data-hj-allow
                           value={followUpDraft}
                           onChange={(e) => setFollowUpDraft(e.target.value)}
-                          placeholder="כתבו כאן..."
+                          placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
                           className="w-full border border-teal-300 rounded-xl p-3 text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-teal-400"
                           dir="rtl"
                         />
@@ -653,9 +657,10 @@ function PrototypeEInner() {
                 );
               }
               return (
-                <button key={i} onClick={() => handleFollowUpAnswer(opt)}
-                  className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all">
-                  {opt}
+                <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${opt}`)}
+                  className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3">
+                  <span className="flex-1 text-right leading-snug">{opt}</span>
+                  <span className="shrink-0 w-6 h-6 rounded-full border border-gray-300 text-gray-400 flex items-center justify-center text-xs font-mono">{num}</span>
                 </button>
               );
             })}
@@ -692,18 +697,23 @@ function PrototypeEInner() {
         <h2 className="text-xl font-bold leading-snug mb-8">{q.question}</h2>
 
         <div className="flex flex-col gap-3 mb-4">
-          {q.options.map((opt) => {
+          {q.options.map((opt, i) => {
             const selected = topicQA[topicId]?.openerAnswerId === opt.id;
+            const num = i + 1;
             return (
               <div key={opt.id}>
                 <button
-                  onClick={() => handleOpenerAnswer(opt.id, opt.text)}
-                  className={`w-full border-2 rounded-xl py-4 px-5 text-right font-medium text-sm leading-snug transition-all ${
+                  onClick={() => handleOpenerAnswer(opt.id, `${num}. ${opt.text}`)}
+                  className={`w-full border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 ${
                     selected
                       ? "border-teal-500 bg-teal-50 text-teal-900"
                       : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
-                  }`}>
-                  {opt.text}
+                  }`}
+                >
+                  <span className="flex-1 text-right leading-snug">{opt.text}</span>
+                  <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+                    selected ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
+                  }`}>{num}</span>
                 </button>
                 {opt.hint && (
                   <div className="mt-1.5 mr-3 border-r-2 border-teal-100 pr-2">
@@ -714,17 +724,22 @@ function PrototypeEInner() {
             );
           })}
 
-          {/* "אחר — פרט" */}
+          {/* "כתבו בעצמכם" — equal partner option */}
           <div>
             <button
-              onClick={() => { setShowOpenerInput(true); setOpenerDraft(topicQA[topicId]?.openerAnswerText ?? ""); }}
-              className={`w-full border-2 rounded-xl py-3 px-5 text-right text-sm transition-all ${
+              onClick={() => { setShowOpenerInput(true); setOpenerDraft(topicQA[topicId]?.openerAnswerId === "other" ? (topicQA[topicId]?.openerAnswerText ?? "") : ""); }}
+              className={`w-full border-2 rounded-xl py-4 px-5 text-sm transition-all flex items-center gap-3 ${
                 showOpenerInput || topicQA[topicId]?.openerAnswerId === "other"
                   ? "border-teal-400 bg-teal-50 text-teal-700"
-                  : "border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-600"
+                  : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
               }`}
             >
-              {OTHER_OPTION}
+              <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
+              <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+                showOpenerInput || topicQA[topicId]?.openerAnswerId === "other"
+                  ? "border-teal-400 text-teal-600"
+                  : "border-gray-300 text-gray-400"
+              }`}>{q.options.length + 1}</span>
             </button>
             {showOpenerInput && (
               <div className="mt-2">
@@ -733,7 +748,7 @@ function PrototypeEInner() {
                   data-hj-allow
                   value={openerDraft}
                   onChange={(e) => setOpenerDraft(e.target.value)}
-                  placeholder="כתבו כאן..."
+                  placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
                   className="w-full border border-teal-300 rounded-xl p-3 text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-teal-400"
                   dir="rtl"
                 />
