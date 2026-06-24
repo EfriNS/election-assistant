@@ -82,7 +82,14 @@ export async function POST(req: NextRequest) {
     const parsed = JSON.parse(text);
     if (!parsed.profile || !parsed.partyBlurbs) throw new Error("unexpected shape");
 
-    generation?.update({ output: text });
+    generation?.update({
+      output: text,
+      usage: {
+        input:  response.usageMetadata?.promptTokenCount    ?? 0,
+        output: response.usageMetadata?.candidatesTokenCount ?? 0,
+        unit:   "TOKENS",
+      },
+    });
     generation?.end();
     await langfuse?.flushAsync();
 

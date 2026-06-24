@@ -125,7 +125,14 @@ export async function POST(req: NextRequest) {
     });
 
     const response = await chat.sendMessage({ message: lastMessage.content });
-    generation?.update({ output: response.text ?? "" });
+    generation?.update({
+      output: response.text ?? "",
+      usage: {
+        input:  response.usageMetadata?.promptTokenCount    ?? 0,
+        output: response.usageMetadata?.candidatesTokenCount ?? 0,
+        unit:   "TOKENS",
+      },
+    });
     generation?.end();
     await langfuse?.flushAsync();
 
