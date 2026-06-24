@@ -619,47 +619,38 @@ function PrototypeEInner() {
               const num = i + 1;
               if (isOther) {
                 return (
-                  <div key={i}>
-                    <button
-                      onClick={() => { setShowFollowUpInput(true); setFollowUpDraft(""); }}
-                      className={`w-full border-2 rounded-xl py-4 px-5 text-sm transition-all flex items-center gap-3 ${
-                        showFollowUpInput
-                          ? "border-teal-400 bg-teal-50 text-teal-700"
-                          : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
-                      }`}
-                    >
-                      <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
-                        showFollowUpInput ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
-                      }`}>{num}</span>
-                      <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
-                    </button>
-                    {showFollowUpInput && (
-                      <div className="mt-2">
-                        <textarea
-                          autoFocus
-                          data-hj-allow
-                          value={followUpDraft}
-                          onChange={(e) => setFollowUpDraft(e.target.value)}
-                          placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
-                          className="w-full border border-teal-300 rounded-xl p-3 text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                          dir="rtl"
-                        />
+                  <div key={i} className={`border-2 rounded-xl px-5 py-4 flex items-start gap-3 transition-all ${
+                    followUpDraft.trim() ? "border-teal-400 bg-teal-50" : "border-gray-200"
+                  }`}>
+                    <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold mt-0.5 ${
+                      followUpDraft.trim() ? "border-teal-400 text-teal-600" : "border-gray-400 text-gray-700"
+                    }`}>{num}</span>
+                    <div className="flex-1">
+                      <textarea
+                        data-hj-allow
+                        value={followUpDraft}
+                        onChange={(e) => setFollowUpDraft(e.target.value)}
+                        placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
+                        className="w-full text-sm resize-none bg-transparent focus:outline-none placeholder-gray-400 leading-snug text-right"
+                        rows={2}
+                        dir="rtl"
+                      />
+                      {followUpDraft.trim() && (
                         <button
-                          onClick={() => followUpDraft.trim() && handleFollowUpAnswer(followUpDraft.trim())}
-                          disabled={!followUpDraft.trim()}
-                          className="mt-2 w-full bg-teal-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-teal-700 disabled:opacity-40 transition-colors"
+                          onClick={() => handleFollowUpAnswer(followUpDraft.trim())}
+                          className="mt-2 w-full bg-teal-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-teal-700 transition-colors"
                         >
                           המשך ←
                         </button>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 );
               }
               return (
                 <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${opt}`)}
                   className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3">
-                  <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-300 text-gray-400 flex items-center justify-center text-sm font-semibold">{num}</span>
+                  <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-400 text-gray-700 flex items-center justify-center text-sm font-semibold">{num}</span>
                   <span className="flex-1 text-right leading-snug">{opt}</span>
                 </button>
               );
@@ -711,7 +702,7 @@ function PrototypeEInner() {
                   }`}
                 >
                   <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
-                    selected ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
+                    selected ? "border-teal-400 text-teal-600" : "border-gray-400 text-gray-700"
                   }`}>{num}</span>
                   <span className="flex-1 text-right leading-snug">{opt.text}</span>
                 </button>
@@ -724,43 +715,36 @@ function PrototypeEInner() {
             );
           })}
 
-          {/* "כתבו בעצמכם" — equal partner option */}
-          <div>
-            <button
-              onClick={() => { setShowOpenerInput(true); setOpenerDraft(topicQA[topicId]?.openerAnswerId === "other" ? (topicQA[topicId]?.openerAnswerText ?? "") : ""); }}
-              className={`w-full border-2 rounded-xl py-4 px-5 text-sm transition-all flex items-center gap-3 ${
-                showOpenerInput || topicQA[topicId]?.openerAnswerId === "other"
-                  ? "border-teal-400 bg-teal-50 text-teal-700"
-                  : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
-              }`}
-            >
-              <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
-                showOpenerInput || topicQA[topicId]?.openerAnswerId === "other"
-                  ? "border-teal-400 text-teal-600"
-                  : "border-gray-300 text-gray-400"
-              }`}>{q.options.length + 1}</span>
-              <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
-            </button>
-            {showOpenerInput && (
-              <div className="mt-2">
-                <textarea
-                  autoFocus
-                  data-hj-allow
-                  value={openerDraft}
-                  onChange={(e) => setOpenerDraft(e.target.value)}
-                  placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
-                  className="w-full border border-teal-300 rounded-xl p-3 text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                  dir="rtl"
-                />
+          {/* "כתבו בעצמכם" — always-open free text */}
+          <div className={`border-2 rounded-xl px-5 py-4 flex items-start gap-3 transition-all ${
+            topicQA[topicId]?.openerAnswerId === "other" || openerDraft.trim()
+              ? "border-teal-400 bg-teal-50"
+              : "border-gray-200"
+          }`}>
+            <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold mt-0.5 ${
+              topicQA[topicId]?.openerAnswerId === "other" || openerDraft.trim()
+                ? "border-teal-400 text-teal-600"
+                : "border-gray-400 text-gray-700"
+            }`}>{q.options.length + 1}</span>
+            <div className="flex-1">
+              <textarea
+                data-hj-allow
+                value={openerDraft}
+                onChange={(e) => setOpenerDraft(e.target.value)}
+                placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
+                className="w-full text-sm resize-none bg-transparent focus:outline-none placeholder-gray-400 leading-snug text-right"
+                rows={2}
+                dir="rtl"
+              />
+              {openerDraft.trim() && (
                 <button
-                  onClick={() => openerDraft.trim() && handleOpenerAnswer("other", openerDraft.trim())}
-                  disabled={!openerDraft.trim()}
-                  className="mt-2 w-full bg-teal-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-teal-700 disabled:opacity-40 transition-colors"
+                  onClick={() => handleOpenerAnswer("other", openerDraft.trim())}
+                  className="mt-2 w-full bg-teal-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-teal-700 transition-colors"
                 >
                   המשך ←
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
