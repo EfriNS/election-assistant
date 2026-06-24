@@ -22,7 +22,7 @@
       },
       {
         "text": "נבלום את הסיפוח, נילחם בטרור היהודי ונקדם אלטרנטיבה פלסטינית מתונה",
-        "aspect": "two-state-path",
+        "aspect": "two-state-solution",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -37,7 +37,7 @@
       },
       {
         "text": "שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.",
-        "aspect": "peace-settlement",
+        "aspect": "political-settlement",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
@@ -53,7 +53,7 @@
     "economy": [
       {
         "text": "במקום כסף למקורבים ולמשתמטים, נגדיל משמעותית את ההשקעה בשירותים חברתיים",
-        "aspect": "social-spending",
+        "aspect": "welfare-state",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -68,7 +68,7 @@
       },
       {
         "text": "נדאג לצרכי המשפחות הצעירות, נשפר את תנאי העבודה, נשפר את איכות המסגרות",
-        "aspect": "working-conditions",
+        "aspect": "labor-rights",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
@@ -93,7 +93,7 @@
     "education": [
       {
         "text": "נבטל את האפליה התקציבית נגד החינוך הממלכתי, ונוביל לשוויון בין כל תלמידי ישראל",
-        "aspect": "budget-equality",
+        "aspect": "equal-education-budgets",
         "sourceUrl": "https://yes.democrats.org.il/topics/education",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -155,7 +155,7 @@
       },
       {
         "text": "נוביל שיוויון מוחלט בנטל",
-        "aspect": "military-equal-burden",
+        "aspect": "equal-service-burden",
         "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -224,7 +224,7 @@
       },
       {
         "text": "נאסור טיפולי המרה, נחזק את האכיפה נגד אפליה, נכיר בנפגעי פשעי שנאה ונפסיק את התמיכה הציבורית בארגונים להט\"בופוביים",
-        "aspect": "lgbtq-protection",
+        "aspect": "lgbtq-rights",
         "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",

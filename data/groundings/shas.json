@@ -24,7 +24,7 @@
     "economy": [
       {
         "text": "אידיאולוגיה כלכלית שמרנית המאמצת ומקדשת את ערכי הגלובליזציה, התחרות החופשית, הפרטת מוסדות רווחה ושירותים — מאיימת על צביון המדינה ופוגעת במסכת הערכים היהודים החשובים של שוויון, צדקה, חמלה וערבות הדדית.",
-        "aspect": "anti-neoliberal-welfare-state",
+        "aspect": "welfare-state",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -110,14 +110,14 @@
     "religion": [
       {
         "text": "שמירת הסטאטוס קוו במדינה, כדי לשמור על צביונה היהודי. תנועת ש\"ס מאמינה כי חוסנה הפנימי של המדינה מושתת על האמונה בבורא עולם ועל קיום מצוות התורה.",
-        "aspect": "status-quo-jewish-character",
+        "aspect": "religious-status-quo",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הצעת חוק יסוד: תורה — לימוד תורה הוא ערך יסוד במורשת העם היהודי; המוקדשים ללימוד תורה יוכרו כמבצעים שירות משמעותי למדינה ולעם ישראל, ולא ייגבה מהם מחיר כלכלי על אי-שירות. כל חברי הכנסת מש\"ס חתמו על ההצעה.",
-        "aspect": "basic-law-torah-study-haredi-draft",
+        "aspect": "haredi-draft-exemption",
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -125,7 +125,7 @@
       },
       {
         "text": "דרעי הגיש חוק המעגן סמכות בלעדית לגופי הרבנות הממלכתיים על הגיור; ביטול גיורים פרטיים מחוץ לרבנות. ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד).",
-        "aspect": "rabbinate-monopoly-conversion-kashrut",
+        "aspect": "rabbinate-monopoly",
         "sourceUrl": "https://hiddush.org/subchannel-80-0-Shas.aspx",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",

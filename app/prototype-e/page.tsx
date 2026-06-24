@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
-import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TopicQ } from "@/lib/questions";
+import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic } from "@/lib/groundings";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
@@ -389,6 +389,7 @@ function PrototypeEInner() {
         partyGroundings,
         currentScores,
         coveredAspects,
+        keyDimensions: TOPIC_KEY_DIMENSIONS[topicId] ?? [],
         forceFollowUp,
       }),
     });
