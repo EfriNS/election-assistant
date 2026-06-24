@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-06-25 — Numbered option badges + 'כתבו בעצמכם' visual elevation (feature/numbered-options)
+
+### What We Did
+
+Added sequential number badges (1–N) to all answer options in the quiz so users can cross-reference options in free-text answers ("1+3, אבל לא X"). Elevated the free-text "אחר — פרט" option to a full visual equal partner with solid border and sequential number. Updated the follow-up AI prompt to let prologues reference option numbers naturally.
+
+### Changes
+
+**`app/prototype-e/page.tsx`**
+- Opener fixed options: added `(opt, i)` index to map; each button gets a subtle circle badge on the left side; stored `openerAnswerText` now includes number prefix (`"2. פתרון מדיני..."`) so recap and AI both receive numbered context
+- Opener "אחר" → "כתבו בעצמכם": removed dashed border, replaced with same solid `border-gray-200` as other options; button shows sequential number badge (`q.options.length + 1`); textarea placeholder updated to `"כתבו בחופשיות — למשל: '1+3, אבל לא...' או עמדה אחרת לגמרי"`
+- Follow-up options: same number badge treatment; `handleFollowUpAnswer` receives `"${num}. ${opt}"` instead of raw text
+- Follow-up "אחר" option: same solid border elevation and number from its array index
+
+**`app/api/follow-up/route.ts`**
+- Added one instruction to prologue guidance: AI may reference option numbers naturally ("בחרת באפשרות 2") or acknowledge combinations ("1+3, אבל לא...") directly in the prologue
+
+### Design rationale
+
+- Arabic numerals (not Hebrew letters א–ה) because the user's stated syntax "1+3" requires Arabic numerals
+- Numbers embedded in stored answer text so the AI's full conversation context shows numbered options without any extra wiring
+- "ענית:" recap in follow-up screen auto-shows the number prefix since it displays `openerAnswerText` verbatim
+
+### Commits
+- `5294bf4` feat: number option badges + elevate 'כתבו בעצמכם' to equal partner
+- `5a13ed2` Merge feature/numbered-options → main
+
+---
+
 ## 2026-06-25 — Aspect slug standardization + keyDimensions follow-up prioritization (feature/aspect-slug-standardization)
 
 ### What We Did

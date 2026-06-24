@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Numbered option badges + 'כתבו בעצמכם' elevation** — Sequential number badges on all options; free-text option elevated to equal visual partner; AI prologue can reference option numbers. (2026-06-25)
 - **Aspect slug standardization + keyDimensions** — 28 slug remaps across all 10 grounding JSONs; `TOPIC_KEY_DIMENSIONS` export guides follow-up AI to highest-discriminating sub-dimensions first; Raam equality/law score corrected +2→+1. (2026-06-25)
 - **Automated party score refinement** — Scoring script (Claude Sonnet over grounding data) + 9 score corrections applied; 8 weak discriminators flagged; `docs/score-review.md` audit trail. (2026-06-24)
-- **Gemini quota hardening + monitoring** — Quota error handling added to all routes; token tracking in Langfuse; `/api/quota-check` cron with Slack alerts; 29 new tests. (2026-06-24)
 
 > See CHANGELOG.md for complete details.
 
