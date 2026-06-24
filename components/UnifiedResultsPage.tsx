@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Party } from "@/lib/parties";
+import { PartyGroundingResult } from "@/lib/grounding-types";
 import PartyResultCard from "@/components/PartyResultCard";
 import ShareButton from "@/components/ShareButton";
+
+// ─── Types ───────────────────────────────────────────────────────────────────
 
 type AiData = {
   profile: string;
@@ -14,6 +17,7 @@ type AiData = {
 type Props = {
   results: Array<Party & { score: number }>;
   userAnswersSummary?: string;
+  answeredTopicIds?: string[];
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
@@ -21,12 +25,10 @@ type Props = {
   externalAiLoading?: boolean;
 };
 
-const METHODOLOGY =
-  "הציון מבוסס על הערכה ידנית של עמדות ציבוריות ידועות — לא על ניתוח אוטומטי של תוכניות מפלגה עדכניות. עמדות המפלגות החדשות (ביחד, ישר!) הן הערכה בלבד.";
-
 export default function UnifiedResultsPage({
   results,
   userAnswersSummary,
+  answeredTopicIds,
   accentColor,
   onBack,
   externalAiData,
@@ -36,6 +38,8 @@ export default function UnifiedResultsPage({
   const [confirmHome, setConfirmHome] = useState(false);
   const [internalAiData, setInternalAiData] = useState<AiData | null>(null);
   const [internalAiLoading, setInternalAiLoading] = useState(true);
+  const [groundings, setGroundings] = useState<Record<string, PartyGroundingResult> | null>(null);
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
 
   // If either external prop is passed, D is managing AI data — skip internal fetch
   const isExternal = externalAiData !== undefined || externalAiLoading !== undefined;
@@ -50,11 +54,18 @@ export default function UnifiedResultsPage({
       body: JSON.stringify({
         answersSummary: userAnswersSummary ?? "",
         topParties: results.map((r) => ({ id: r.id, name: r.name, score: r.score })),
+        answeredTopicIds: answeredTopicIds ?? [],
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          setQuotaExceeded(true);
+        }
+        return res.json();
+      })
       .then((data) => {
         if (data.profile && data.partyBlurbs) setInternalAiData(data);
+        if (data.groundings) setGroundings(data.groundings);
       })
       .catch(() => {})
       .finally(() => setInternalAiLoading(false));
@@ -69,12 +80,14 @@ export default function UnifiedResultsPage({
         </button>
 
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-        <p className="text-gray-500 text-sm mb-4">על סמך תשובותיך, כך דורגו המפלגות:</p>
+        <p className="text-gray-500 text-sm mb-6">על סמך תשובותיך, כך דורגו המפלגות:</p>
 
-        {/* Prototype caveat */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-5 text-xs text-amber-800 leading-relaxed">
-          <strong>שימו לב — כלי ניסיוני:</strong> עמדות המפלגות מבוססות על הערכה ידנית חלקית, לא על ניתוח מלא של מצעים רשמיים. השתמשו בתוצאות כנקודת פתיחה בלבד.
-        </div>
+        {/* Quota degradation notice */}
+        {quotaExceeded && (
+          <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-5 text-xs text-gray-500 leading-relaxed">
+            בשל עומס גבוה, ניתוח ה-AI אינו זמין כרגע. ציוני ההתאמה מבוססים על המצעים ומוצגים במלואם.
+          </div>
+        )}
 
         {/* AI profile summary */}
         {(aiLoading || aiData?.profile) && (
@@ -98,13 +111,16 @@ export default function UnifiedResultsPage({
               accentColor={accentColor}
               aiBlurb={aiData?.partyBlurbs[r.id]}
               aiLoading={aiLoading && i < 3}
+              groundingData={groundings?.[r.id]}
             />
           ))}
         </div>
 
-        {/* Methodology disclaimer */}
+        {/* Methodology */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-6 text-xs text-gray-500 leading-relaxed">
-          <strong>שיטת החישוב:</strong> {METHODOLOGY}
+          <strong>שיטת החישוב:</strong>{" "}
+          ציוני ההתאמה מבוססים על ציטוטים מילוליים ממצעי המפלגות ומסמכי עמדה רשמיים.
+          המקורות מקושרים ישירות בכרטיסיות המפלגות למטה.
         </div>
 
         {/* Share */}
@@ -114,7 +130,6 @@ export default function UnifiedResultsPage({
 
         {/* Home navigation */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-gray-500 mb-4">המידע מבוסס על עמדות ציבוריות ידועות · עלול להיות לא מדויק</p>
           {!confirmHome ? (
             <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
               ← חזרה לדף הבית

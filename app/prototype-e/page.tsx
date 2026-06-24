@@ -553,6 +553,7 @@ function PrototypeEInner() {
       <UnifiedResultsPage
         results={calcResults(buckets, topicQA, questionSet, aiScores)}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
+        answeredTopicIds={topicsToAsk.filter((tid) => topicQA[tid])}
         accentColor="teal"
         onBack={() => setStep("close")}
       />

@@ -2,17 +2,7 @@
 
 // Shared priorities-ranking step used by prototypes B, D, and E.
 
-const TOPICS = [
-  { id: "security",  label: "ביטחון ומדיניות חוץ" },
-  { id: "economy",   label: "כלכלה ותעסוקה" },
-  { id: "housing",   label: "דיור ועלות מחיה" },
-  { id: "education", label: "חינוך" },
-  { id: "health",    label: "בריאות" },
-  { id: "religion",  label: "דת ומדינה" },
-  { id: "justice",   label: "שלטון החוק ומערכת המשפט" },
-  { id: "equality",  label: "זכויות אדם ומיעוטים" },
-  { id: "ecology",   label: "סביבה ואנרגיה" },
-];
+import { TOPICS } from "@/lib/topics";
 
 const BUCKETS = [
   { value: 4, label: "קריטי" },
