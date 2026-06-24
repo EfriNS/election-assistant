@@ -628,10 +628,10 @@ function PrototypeEInner() {
                           : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
                       }`}
                     >
-                      <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
-                      <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+                      <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
                         showFollowUpInput ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
                       }`}>{num}</span>
+                      <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
                     </button>
                     {showFollowUpInput && (
                       <div className="mt-2">
@@ -659,8 +659,8 @@ function PrototypeEInner() {
               return (
                 <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${opt}`)}
                   className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3">
+                  <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-300 text-gray-400 flex items-center justify-center text-sm font-semibold">{num}</span>
                   <span className="flex-1 text-right leading-snug">{opt}</span>
-                  <span className="shrink-0 w-6 h-6 rounded-full border border-gray-300 text-gray-400 flex items-center justify-center text-xs font-mono">{num}</span>
                 </button>
               );
             })}
@@ -710,10 +710,10 @@ function PrototypeEInner() {
                       : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
                   }`}
                 >
-                  <span className="flex-1 text-right leading-snug">{opt.text}</span>
-                  <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+                  <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
                     selected ? "border-teal-400 text-teal-600" : "border-gray-300 text-gray-400"
                   }`}>{num}</span>
+                  <span className="flex-1 text-right leading-snug">{opt.text}</span>
                 </button>
                 {opt.hint && (
                   <div className="mt-1.5 mr-3 border-r-2 border-teal-100 pr-2">
@@ -734,12 +734,12 @@ function PrototypeEInner() {
                   : "border-gray-200 hover:border-teal-400 hover:bg-teal-50 text-gray-500"
               }`}
             >
-              <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
-              <span className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs font-mono ${
+              <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
                 showOpenerInput || topicQA[topicId]?.openerAnswerId === "other"
                   ? "border-teal-400 text-teal-600"
                   : "border-gray-300 text-gray-400"
               }`}>{q.options.length + 1}</span>
+              <span className="flex-1 text-right font-medium leading-snug">כתבו בעצמכם</span>
             </button>
             {showOpenerInput && (
               <div className="mt-2">
