@@ -1,5 +1,114 @@
 # Changelog
 
+## 2026-06-24 — Gemini quota hardening + monitoring (feature/gemini-quota-hardening)
+
+### What We Did
+
+Hardened all Gemini API routes against quota exhaustion errors, added token-count tracking to Langfuse, fixed a pre-existing lint error, and built a proactive quota-monitoring endpoint with Slack alerting.
+
+### Quota Error Hardening
+
+`/api/follow-up` and `/api/results` previously returned a raw 500 on any Gemini error; a real quota hit would have silently broken the primary user flow.
+
+- **`app/api/follow-up/route.ts`** — catch block now detects `429` / `RESOURCE_EXHAUSTED` / `quota` in the error message and returns `{ errorCode: "QUOTA_EXCEEDED" }` with HTTP 429 instead of a 500; Langfuse generation is updated and ended before returning
+- **`app/api/results/route.ts`** — same quota-detection logic; previously always returned 500 for any error
+- **`app/api/chat/route.ts`** — already handled quota; no behavioral change, only added token tracking (see below)
+
+### Token Count Tracking in Langfuse
+
+All four instrumented routes now pass `response.usageMetadata` to `generation.update()`:
+
+```typescript
+generation?.update({
+  output: text,
+  usage: {
+    input:  response.usageMetadata?.promptTokenCount    ?? 0,
+    output: response.usageMetadata?.candidatesTokenCount ?? 0,
+    unit:   "TOKENS",
+  },
+});
+```
+
+Files updated: `app/api/chat/route.ts`, `app/api/follow-up/route.ts`, `app/api/results/route.ts`, `app/api/score-topics/route.ts`
+
+Langfuse dashboard now shows per-route token counts, enabling daily usage trends and the quota monitoring below.
+
+### Lint Fix (pre-existing)
+
+`app/prototype-e/page.tsx` had a `react-hooks/exhaustive-deps` / `set-state-in-effect` lint error: `setIsScoring(true)` was called synchronously at the top of a `useEffect` body. Fixed by wrapping the entire async fetch in a nested `async function runScoring()` with an `active` cleanup flag, which is the recommended React pattern.
+
+### Quota Monitoring Endpoint (`/api/quota-check`)
+
+New Vercel cron endpoint, invoked hourly by Vercel. Queries Langfuse for today's token and request totals, computes % of configured daily limits, and posts to Slack when a threshold is newly crossed.
+
+**Key design decisions:**
+- Stateless de-duplication: queries two time windows (`[00:00 → now]` and `[00:00 → now-1hr]`); a threshold fires only when `currentPct >= threshold AND prevPct < threshold`. Works correctly for hourly cron (prevents re-alerting on the next cron run if no new usage). Manual repeated calls within the same hour will each fire — acceptable since the cron is the primary path.
+- All limits and secrets stay in Vercel env vars (no hardcoded values, public repo safe).
+- Model-agnostic: changing models only requires updating `QUOTA_DAILY_TOKEN_LIMIT` in Vercel dashboard.
+
+**New env vars** (documented in `.env.example`):
+| Var | Default | Notes |
+|---|---|---|
+| `QUOTA_DAILY_TOKEN_LIMIT` | `250000` | Free tier: ~250K tokens/day |
+| `QUOTA_DAILY_REQUEST_LIMIT` | `1500` | Free tier: ~1500 req/day |
+| `QUOTA_ALERT_THRESHOLDS` | `50,80,90` | Optional; code default used if unset |
+| `QUOTA_SLACK_WEBHOOK_URL` | — | Slack incoming webhook |
+| `QUOTA_CRON_SECRET` | — | Bearer token for cron auth |
+
+**Slack message format:**
+```
+⚠️ Gemini quota alert — 82% of daily limit
+Tokens: 205,000 / 250,000 (82.0%)
+Requests: 1,100 / 1,500 (73.3%)
+Binding: tokens
+Model: gemini-3.1-flash-lite
+```
+
+Emoji escalates: 📊 at 50%, ⚠️ at 80%, 🚨 at 90%+.
+
+**`vercel.json`** — added hourly cron: `{ "path": "/api/quota-check", "schedule": "0 * * * *" }`
+
+### Tests Added (29 new tests across 3 files)
+
+- **`tests/apiQuota.test.ts`** (6 tests) — mocks a Gemini 429 error for `/api/chat`, `/api/follow-up`, `/api/results`; asserts `errorCode: "QUOTA_EXCEEDED"` with HTTP 429 on quota errors; asserts normal 500/200 for non-quota errors
+- **`tests/tokenTracking.test.ts`** (5 tests) — mocks Langfuse `generation.update()` and asserts it receives the correct `usage` object (`input`, `output`, `unit: "TOKENS"`) for all 4 routes
+- **`tests/quotaCheck.test.ts`** (18 tests) — unit tests for `computePcts`, `newlyCrossedThresholds`, `buildSlackBody`; integration tests for GET handler (401 auth, 503 no Langfuse, correct usage percentages, Slack fires on threshold crossing, de-duplication)
+
+**Vitest mocking notes:**
+- `@google/genai` `GoogleGenAI` must be mocked with a regular function (not arrow function) since it's called with `new`
+- `vi.hoisted()` required for mock refs used in both `vi.mock()` factory and test assertions
+
+### Live Verification
+
+Confirmed against dev server:
+1. `GET /api/quota-check` with wrong secret → 401 ✅
+2. No Langfuse data → `{ tokensToday: 0, alertSent: false }` ✅
+3. After a real `/api/results` call (534 tokens), with `QUOTA_DAILY_TOKEN_LIMIT=100` → `{ tokensToday: 534, tokenPct: 534, thresholdsCrossed: [50,80,90], alertSent: true }` + Slack message delivered ✅
+
+### Files Changed
+
+- `app/api/quota-check/route.ts` — new file (162 lines)
+- `app/api/chat/route.ts` — added `usage` to `generation.update()`
+- `app/api/follow-up/route.ts` — added quota detection + `usage` tracking
+- `app/api/results/route.ts` — added quota detection + `usage` tracking
+- `app/api/score-topics/route.ts` — added `usage` to `generation.update()`
+- `app/prototype-e/page.tsx` — lint fix (set-state-in-effect)
+- `vercel.json` — added hourly cron
+- `.env.example` — documented 5 quota monitoring env vars
+- `tests/apiQuota.test.ts` — new (6 tests)
+- `tests/tokenTracking.test.ts` — new (5 tests)
+- `tests/quotaCheck.test.ts` — new (18 tests)
+
+### Commits
+
+- `6e16e3e` feat: harden Gemini quota error handling across all flows
+- `f034f7e` fix(lint): move setIsScoring into nested async fn to satisfy set-state-in-effect rule
+- `5c5b088` feat(observability): send token counts to Langfuse on every generation
+- `1e7a9cf` feat(monitoring): add quota-check cron endpoint with Slack threshold alerts
+- `296d0df` docs(env): document quota monitoring env vars in .env.example
+
+---
+
 ## 2026-06-23/24 — Party platform grounding data + scoring tables expanded to 10 parties
 
 ### What We Did

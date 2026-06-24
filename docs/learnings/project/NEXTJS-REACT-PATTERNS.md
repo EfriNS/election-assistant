@@ -126,3 +126,106 @@ useEffect(() => {
 ```
 
 Note: the rule only flags the **first** setState call in each branch — subsequent calls in the same block do not need individual disables.
+
+---
+
+### setState-in-effect: async data fetch pattern (#first:2026-06-24)
+
+When a `useEffect` needs to kick off an async fetch and update state on completion, placing `setIsLoading(true)` synchronously at the top of the effect body still triggers `set-state-in-effect`. The fix is to move the **entire** fetch+setState sequence into a nested `async function` with a cleanup flag:
+
+**Wrong** (triggers lint even though await comes right after):
+```typescript
+useEffect(() => {
+  setIsScoring(true);              // ← flagged: synchronous setState in effect body
+  (async () => {
+    const r = await fetch("/api/score-topics", ...);
+    setAiScores(await r.json());
+    setIsScoring(false);
+  })();
+}, [dep]);
+```
+
+**Right:** wrap everything, including the initial setState, inside the nested async function:
+```typescript
+useEffect(() => {
+  let active = true;
+  async function run() {
+    setIsScoring(true);
+    try {
+      const r = await fetch("/api/score-topics", ...);
+      if (active) setAiScores(await r.json());
+    } finally {
+      if (active) setIsScoring(false);
+    }
+  }
+  run();
+  return () => { active = false; };
+}, [dep]);
+```
+
+The `active` flag prevents `setState` calls on unmounted components (prevents React "Can't perform state update on unmounted component" warning).
+
+---
+
+## Testing (Vitest)
+
+### Mocking constructable classes: use regular function, not arrow function (#first:2026-06-24)
+
+When mocking an ES class or constructor function with Vitest, the mock factory must return a **regular function** (not arrow function) because arrow functions cannot be used as constructors (called with `new`).
+
+**Wrong** (throws "not a constructor" at test runtime):
+```typescript
+vi.mock("@google/genai", () => ({
+  GoogleGenAI: vi.fn(() => ({          // ← arrow function, can't use `new`
+    chats: { create: () => ({...}) },
+  })),
+}));
+```
+
+**Right:** use a regular function expression:
+```typescript
+vi.mock("@google/genai", () => ({
+  GoogleGenAI: vi.fn(function() {      // ← regular function, constructable
+    return {
+      chats: { create: () => ({...}) },
+    };
+  }),
+}));
+```
+
+Also: hoist shared mock refs with `vi.hoisted()` so they're available both inside the `vi.mock()` factory and in test assertions:
+```typescript
+const { mockSendMessage } = vi.hoisted(() => ({
+  mockSendMessage: vi.fn(),
+}));
+vi.mock("@google/genai", () => ({
+  GoogleGenAI: vi.fn(function() {
+    return { chats: { create: () => ({ sendMessage: mockSendMessage }) } };
+  }),
+}));
+```
+
+---
+
+## Environment Variables
+
+### .env.local quoting: Next.js strips quotes; shell commands don't (#first:2026-06-24)
+
+Next.js App Router **strips surrounding double quotes** from `.env.local` values at startup. So `QUOTA_CRON_SECRET="abc123"` gives `process.env.QUOTA_CRON_SECRET === "abc123"` (no quotes) in the app.
+
+Shell commands (`grep`, `cut`) preserve the surrounding quotes. This causes a mismatch when testing env-based auth in shell:
+
+```bash
+# .env.local:  QUOTA_CRON_SECRET="abc123"
+SECRET=$(grep "^QUOTA_CRON_SECRET=" .env.local | cut -d= -f2-)
+# SECRET is: "abc123"  (with quotes!)
+# But Next.js sees: abc123  (without quotes)
+
+# Auth will fail:
+curl -H "Authorization: Bearer \"abc123\""   # vs app expecting: Bearer abc123
+```
+
+**Fix:** add `tr -d '"'` to strip quotes from the shell read:
+```bash
+SECRET=$(grep "^QUOTA_CRON_SECRET=" .env.local | cut -d= -f2- | tr -d '"')
+```
