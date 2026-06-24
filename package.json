@@ -8,11 +8,15 @@
     "start": "next start",
     "lint": "eslint .",
     "export:questions": "tsx scripts/export-questions-review.ts",
+    "score:auto": "tsx --env-file .env.local scripts/auto-score.ts",
+    "score:apply": "tsx scripts/apply-scores.ts",
+    "score:apply:write": "tsx scripts/apply-scores.ts --apply",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.105.0",
     "@google/genai": "^2.8.0",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.5.0",
