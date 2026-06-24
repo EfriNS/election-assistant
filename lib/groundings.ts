@@ -6,12 +6,15 @@
 // Add new party quotes there; this file picks them up automatically.
 
 import hadashData from "../data/groundings/hadash.json";
+import raamData from "../data/groundings/raam.json";
 import democratsData from "../data/groundings/democrats.json";
 import beyahadData from "../data/groundings/beyahad.json";
 import yasharData from "../data/groundings/yashar.json";
 import beitenuData from "../data/groundings/beitenu.json";
 import likudData from "../data/groundings/likud.json";
 import shasData from "../data/groundings/shas.json";
+import yahadutData from "../data/groundings/yahadut-hatorah.json";
+import otzmahData from "../data/groundings/otzmah-yehudit.json";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -38,13 +41,16 @@ export type GroundingsMap = Record<string, PartyGroundings>;
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 export const GROUNDINGS: GroundingsMap = {
-  hadash:    hadashData    as PartyGroundings,
-  democrats: democratsData as PartyGroundings,
-  beyahad:   beyahadData   as PartyGroundings,
-  yashar:    yasharData    as PartyGroundings,
-  beitenu:   beitenuData   as PartyGroundings,
-  likud:     likudData     as PartyGroundings,
-  shas:      shasData      as PartyGroundings,
+  hadash:           hadashData    as PartyGroundings,
+  raam:             raamData      as PartyGroundings,
+  democrats:        democratsData as PartyGroundings,
+  beyahad:          beyahadData   as PartyGroundings,
+  yashar:           yasharData    as PartyGroundings,
+  beitenu:          beitenuData   as PartyGroundings,
+  likud:            likudData     as PartyGroundings,
+  shas:             shasData      as PartyGroundings,
+  "yahadut-hatorah": yahadutData  as PartyGroundings,
+  "otzmah-yehudit":  otzmahData   as PartyGroundings,
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
