@@ -231,18 +231,25 @@ function PrototypeEInner() {
 
     if (topicsForScoring.length === 0) return;
 
-    setIsScoring(true);
-    fetch("/api/score-topics", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topics: topicsForScoring }),
-    })
-      .then((r) => r.json())
-      .then((data: { scores?: Record<string, Record<string, number | null>>; errorCode?: string }) => {
-        if (data.scores) setAiScores(data.scores);
-      })
-      .catch(() => { /* silently degrade: calcResults falls back to deterministic-only */ })
-      .finally(() => setIsScoring(false));
+    let active = true;
+    async function runScoring() {
+      setIsScoring(true);
+      try {
+        const r = await fetch("/api/score-topics", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ topics: topicsForScoring }),
+        });
+        const data = await r.json() as { scores?: Record<string, Record<string, number | null>>; errorCode?: string };
+        if (active && data.scores) setAiScores(data.scores);
+      } catch {
+        // silently degrade: calcResults falls back to deterministic-only
+      } finally {
+        if (active) setIsScoring(false);
+      }
+    }
+    runScoring();
+    return () => { active = false; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
