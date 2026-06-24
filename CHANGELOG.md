@@ -1,5 +1,60 @@
 # Changelog
 
+## 2026-06-25 — Aspect slug standardization + keyDimensions follow-up prioritization (feature/aspect-slug-standardization)
+
+### What We Did
+
+Fixed a silent deduplication bug in follow-up generation (Phase 5a), then added structured prioritization of discriminating sub-dimensions per topic (Phase 5b). Also corrected one party score that was analytically wrong.
+
+### Phase 5a — Canonical slug vocabulary (commit fc75e16)
+
+`coveredAspects` deduplication was silently failing because the same concept had different slug strings across parties — e.g., `"two-state-1967-borders"` (Hadash), `"two-state-1967-borders-settlement-removal"` (Raam), `"two-state-path"` (Democrats) all meant the same thing, but the follow-up prompt treated them as three different aspects and could ask about the same concept 2–3 times.
+
+**Root cause traced:** grounding JSON `aspect` field → AI echoes it back as `targetedAspect` → client appends to `coveredAspects[]` → next follow-up prompt says "don't ask about these again." Inconsistent slugs broke the dedup at the source.
+
+**Fix:** Python remapping script applied 28 slug changes across 9 parties and 7 topics. Canonical vocabulary defined:
+
+| Topic | Key remaps |
+|-------|-----------|
+| security | `two-state-1967-borders*` → `two-state-solution`; `military-buildup` → `military-deterrence`; `land-of-israel-sovereignty` + `exclusive-jewish-right-all-territories` → `territorial-sovereignty`; `zero-tolerance-doctrine` + `total-war-no-negotiations` → `hardline-no-negotiations` |
+| economy | `social-spending` + `anti-neoliberal-welfare-state` + `social-democratic-welfare` → `welfare-state`; `minimum-wage-labor-rights` + `working-conditions` + `anti-privatization-worker-rights` → `labor-rights` |
+| education | `mandatory-core-curriculum` → `core-curriculum`; `merit-based-teaching` + `teacher-empowerment` → `teacher-quality`; `budget-equality` → `equal-education-budgets` |
+| housing | `service-based-housing-benefits` + `service-priority-housing` → `service-based-housing` |
+| religion | `rabbinate-monopoly-*` (×2) → `rabbinate-monopoly`; `basic-law-torah-*` (×2) → `haredi-draft-exemption`; `military-equal-burden` → `equal-service-burden`; status-quo variants → `religious-status-quo` |
+| justice | `judicial-override-anti-democracy-rhetoric` → `judicial-override`; `democratic-freedoms-anti-fascism` → `democratic-freedoms` |
+| equality | `lgbtq-protection` → `lgbtq-rights`; `arab-citizens-equality` + `arab-citizens-full-equality-resource-allocation` → `arab-equality` |
+
+**Files changed:** `data/groundings/*.json` (all 10 files)
+
+### Phase 5b — TOPIC_KEY_DIMENSIONS + follow-up route wiring (commit fc75e16)
+
+**Analysis:** Ran a per-topic cluster analysis — which parties score the same on an opener option but have genuinely different sub-positions? Key findings:
+- Security "peace" cluster (Hadash/Raam vs Democrats): Palestinian right-of-return is the splitting dimension; Hadash/Raam explicitly include it, Democrats don't mention it
+- Economy "welfare" cluster: Hadash = universal labor rights; Raam = Arab-specific investment; Shas/Yahadut-Hatorah = religious-family allowances — very different even with identical opener scores
+- Equality: Raam scores positively for "anti-discrimination" but has `anti-lgbtq-rights-conversion-therapy` in grounding — the follow-up must surface this
+
+**Implementation:**
+- `lib/questions.ts`: Added `keyDimensions?: string[]` to `TopicQ` type; new `TOPIC_KEY_DIMENSIONS: Record<string, string[]>` export with 2–4 priority slugs per topic
+- `app/prototype-e/page.tsx`: Imports `TOPIC_KEY_DIMENSIONS`, passes `keyDimensions: TOPIC_KEY_DIMENSIONS[topicId]` to follow-up API
+- `app/api/follow-up/route.ts`: Accepts `keyDimensions?: string[]`; computes `uncoveredKeyDimensions = keyDimensions − coveredAspects`; prompt now says "Priority dimensions to probe (in order): …" before the follow-up task instruction
+
+**Notable keyDimensions choices:**
+- equality includes `anti-lgbtq-rights-conversion-therapy` explicitly — forces Raam's position to be surfaced
+- justice includes `arabic-official-language-full-status` — Raam's unique sub-dimension within the pro-judicial-independence bloc
+- religion includes both `equal-service-burden` and `haredi-draft-exemption` — the two sides of the Haredi draft issue
+
+### Score correction
+
+**Raam `equality/law` score: +2 → +1** (both formal and personal registers, `lib/questions.ts`).
+
+Raam supports Arab equality as a civil right but explicitly opposes LGBTQ rights (conversion therapy legislation). The +2 score on the general "legal protection against discrimination" option was misleading for users who mean anti-discrimination to include sexual orientation. Changed to +1; the follow-up's `anti-lgbtq-rights-conversion-therapy` key dimension will surface the nuance.
+
+### Commits
+- `fc75e16` feat: standardize aspect slugs + add keyDimensions for follow-up prioritization (Phase 5a+5b)
+- `1221b86` Merge feature/aspect-slug-standardization → main
+
+---
+
 ## 2026-06-24 — Automated party score refinement (feature/auto-score-refinement)
 
 ### What We Did

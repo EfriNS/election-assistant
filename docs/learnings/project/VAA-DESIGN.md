@@ -142,6 +142,10 @@
 
 60. **Aspect slug inconsistency silently breaks follow-up deduplication** — The `coveredAspects` array in `/api/follow-up` deduplicates already-asked sub-dimensions so the AI doesn't repeat itself. This only works if the same concept has the same slug across all parties. Inconsistent slugs (`"two-state-1967-borders"` vs `"two-state-solution"` vs `"political-settlement"`) mean deduplication silently fails — the AI asks about the same dimension multiple times, burning turns. Fix: define a canonical slug vocabulary per topic and standardize all 10 grounding JSON files. (#first:2026-06-24)
 
+61. **Same opener score ≠ same sub-position — explicit keyDimensions expose hidden contradictions** — Parties can score identically on an opener option while holding contradictory sub-positions. Example: Raam and Democrats both score +2 on the "legal anti-discrimination" option, but Raam has `anti-lgbtq-rights-conversion-therapy` in its grounding data — directly opposing LGBTQ inclusion. Without an explicit `keyDimensions` priority list that includes `anti-lgbtq-rights-conversion-therapy`, the AI would likely miss this contradiction and leave a user with pro-LGBTQ views falsely matched to Raam. Rule: when a party scores high on an abstract option but has grounding data that contradicts a specific interpretation of that option, add the specific aspect to `keyDimensions` so it must be surfaced. (#first:2026-06-25)
+
+62. **Cluster analysis is the right method for finding discriminating follow-up dimensions** — To decide which sub-dimensions belong in `keyDimensions`, the method that works: (1) for each opener option, list all parties that score ≥ +1; (2) look at their grounding `aspect` fields; (3) identify aspects that appear in some parties in the cluster but not others. Those aspects are the discriminating dimensions worth probing. This is faster and more reliable than intuiting follow-ups from political knowledge alone, because it's grounded in the actual platform data rather than assumptions. Rerun this analysis whenever grounding data is updated. (#first:2026-06-25)
+
 ---
 
 ## Competitive Landscape Quick Reference
