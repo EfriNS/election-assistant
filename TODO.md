@@ -16,11 +16,15 @@
 
 2. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-3. **Build MVP** — Pending advisor sign-off on scores + party coverage.
+3. **Build MVP** — Pending advisor sign-off on scores + party coverage. Full scope is in `docs/PHASED-ROADMAP.md` and the requirements; the items below are an **initial analysis only** of gaps noticed on the results page — not a replacement for proper MVP planning.
+
+   _Known results page gaps (initial analysis):_
+   - Remove stale "not based on platform data" disclaimers — grounding data now exists for all 10 parties
+   - Add party platform source links to results (verbatim quote citations with URLs)
+   - Surface grounding evidence per party per topic: show users *why* a party scored high ("Party X says: '...'")
+   - Party מצע links in results cards (overlaps with item #2 below)
 
 4. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
-
-5. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
    - Party platforms remain in Hebrew; answers/explanations translated
 
