@@ -31,8 +31,8 @@ export async function fetchWindowUsage(
 
   while (true) {
     const result = await client.fetchObservations({
-      fromStartTime: fromTime.toISOString(),
-      toStartTime:   toTime.toISOString(),
+      fromStartTime: fromTime,
+      toStartTime:   toTime,
       type:          "GENERATION",
       page,
       limit,
