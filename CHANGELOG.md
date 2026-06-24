@@ -1,5 +1,76 @@
 # Changelog
 
+## 2026-06-24 — Automated party score refinement (feature/auto-score-refinement)
+
+### What We Did
+
+Replaced manual rough-estimate party scores with grounding-data-derived scores. Added an offline scoring script (Claude Sonnet via `@anthropic-ai/sdk`) that reads verbatim platform quotes, reasons over them, and produces a review document + proposed patch. Applied 9 score corrections across 8 options. Also flagged 8 of 36 options as weak discriminators (range < 3) for future question redesign.
+
+### Phase 0: groundings.ts bug fix (commit e802e04)
+
+`lib/groundings.ts` was only importing 7 of 10 parties. `raam.json`, `yahadut-hatorah.json`, `otzmah-yehudit.json` existed in `data/groundings/` but were never added to the `GROUNDINGS` map. These three parties were silently returning `null` in every live call to `/api/score-topics` and `/api/follow-up`. Fixed by adding 3 import lines and 3 map entries.
+
+### Phase 1–3: Scoring scripts + apply + differentiation analysis
+
+**`scripts/auto-score.ts`** (new):
+- Reads grounding entries for all 10 parties × 9 topics
+- Calls Claude Sonnet (temperature 0, max_tokens 300) with a Hebrew prompt listing verbatim platform quotes
+- Tracks confidence per score: `"grounded"` (has entries) / `"fetched"` (web-fetched) / `"estimated"` (general knowledge)
+- Outputs `scripts/proposed-scores.json` + `docs/score-review.md`
+- Includes differentiation analysis: range = max−min per option; range < 3 → weak discriminator
+
+**`scripts/apply-scores.ts`** (new):
+- Dry-run by default (`npm run score:apply`), writes with `--apply` flag
+- Uses regex to locate `id: "optionId"` then adjacent `scores:` array and replaces it
+- Updates both FORMAL and PERSONAL registers in one pass (they share the same arrays)
+- npm scripts: `score:auto`, `score:apply`, `score:apply:write`
+
+**Applied score corrections** (9 individual party scores across 8 options):
+
+| נושא | אופציה | מפלגה | נוכחי → מוצע | סיבה |
+|------|--------|-------|-------------|------|
+| ביטחון | שליטה | ביחד | 0 → +1 | מצע מפורש: תפיסה ביטחונית חדשה, חיזוק צה"ל |
+| ביטחון | פתרון מדיני | ביחד | +1 → 0 | אין עמדת שלום מדינית; בנט היסטורית נגד מדינה פלסטינית |
+| ביטחון | ברית מערבית | רע"ם | +1 → 0 | מפלגה אסלאמית ערבית — לא תאמץ "ברית מערב חיונית לביטחון ישראל" |
+| ביטחון | עצמאות אסטרטגית | חד"ש | 0 → -1 | מצע: פירוק נשק השמדה המונית — סותר בניית עצמאות צבאית |
+| כלכלה | שכר מינימום | ביחד | +1 → 0 | מפורש: "רק מי שמשרת מקבל תקציבים; מי שלא, לא מקבל כלום" |
+| כלכלה | שכר מינימום | ש"ס | +1 → +2 | מפורש: נגד ניאו-ליברליזם, קצבאות ילדים, פנסיה חובה, מס שלילי |
+| כלכלה | מיסוי פרוגרסיבי | רע"ם | +2 → +1 | 33B = השקעה בסקטור ערבי ספציפי, לא מדיניות מס פרוגרסיבי אוניברסלי |
+| כלכלה | השקעה בצמיחה | ביחד | +2 → +1 | "כלכלה מבוססת שירות" + צמצום בזבוז ≠ השקעה בתשתיות/מחקר/טכנולוגיה |
+| דיור | בנייה ציבורית | ביחד | +1 → 0 | דיור ביחד = מיליון ₪ למשרתי מילואים בלבד — לא בנייה ציבורית אוניברסלית |
+
+**Differentiation analysis** — 8 of 36 options flagged as weak discriminators (range < 3, all parties score 0..+2):
+- `economy.growth` — growth investment is universally popular
+- `housing.middle`, `housing.periphery` — near-universal cross-partisan support
+- `education.quality` — high teacher salaries have broad appeal
+- `health.basket`, `health.workforce`, `health.geography` — health topic is the most consensus-prone (3/4 weak)
+- `justice.diversity` — court diversity broadly valued
+
+### Files Changed
+
+| File | Change |
+|------|--------|
+| `lib/groundings.ts` | Fix: add raam, yahadut-hatorah, otzmah-yehudit imports + GROUNDINGS entries |
+| `lib/questions.ts` | 9 score corrections (both FORMAL + PERSONAL registers) |
+| `scripts/auto-score.ts` | New — Claude Sonnet scoring script |
+| `scripts/apply-scores.ts` | New — applies proposed-scores.json to questions.ts |
+| `docs/score-review.md` | New — full review document with per-option tables + differentiation analysis |
+| `.gitignore` | Add `scripts/proposed-scores.json` |
+| `.env.example` | Add `ANTHROPIC_API_KEY` for offline script |
+| `package.json` | Add `score:auto`, `score:apply`, `score:apply:write` scripts |
+
+### Commits
+
+- `e802e04` — fix: add raam, yahadut-hatorah, otzmah-yehudit to GROUNDINGS map
+- `339e503` — feat: auto-score party positions from grounding data
+- `44bf299` — Merge feature/auto-score-refinement
+
+### Impact
+
+Party scores now backed by verbatim platform quotes rather than rough estimates. `docs/score-review.md` provides a full audit trail: every score has a confidence level (grounded/estimated) and a rationale. 44 tests all passing.
+
+---
+
 ## 2026-06-24 — Gemini quota hardening + monitoring (feature/gemini-quota-hardening)
 
 ### What We Did

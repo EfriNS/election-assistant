@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Automated party score refinement** — Scoring script (Claude Sonnet over grounding data) + 9 score corrections applied; 8 weak discriminators flagged; `docs/score-review.md` audit trail. (2026-06-24)
 - **Gemini quota hardening + monitoring** — Quota error handling added to all routes; token tracking in Langfuse; `/api/quota-check` cron with Slack alerts; 29 new tests. (2026-06-24)
 - **Party grounding data + scoring expansion** — All 10 parties grounded (verbatim platform quotes); score arrays expanded 7→10; `/api/score-topics` + follow-up redesign implemented. (2026-06-23/24)
-- **Free-text scoring design** — Decided: follow-up answers scored against party platform data (not proxies); follow-up questions redesigned to probe party-differentiating sub-dimensions; moved from v1 to MVP. See `docs/FREE-TEXT-SCORING-DESIGN.md`. (2026-06-22)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,20 +12,24 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Verify party position scores with domain expert** — All 10 parties' scoring arrays are manual estimates. Needs advisor review, especially ביחד (בנט/לפיד), ישר! (איזנקוט), רע"ם, יהדות התורה, and עוצמה יהודית. Aspect slugs in grounding JSONs are placeholders — finalize alongside score review.
+1. **Standardize `aspect` labels in grounding JSONs + add `keyDimensions` to questions.ts (Phase 5a+5b)** — Follow-up `coveredAspects` deduplication silently fails because aspect slugs are inconsistent across parties (e.g., `"two-state-1967-borders"` vs `"two-state-solution"` vs `"political-settlement"` all refer to the same concept). Fix in two parts:
+   - **5a**: Define canonical slug vocabulary per topic; update all 10 `data/groundings/*.json` files to use consistent slugs
+   - **5b**: Add `keyDimensions?: string[]` to `TopicQ` type in `lib/questions.ts`; populate per topic; wire into `app/api/follow-up/route.ts` so the prompt prioritizes known-differentiating aspects
 
 2. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-3. ⏸️ **Build MVP** — _blocked on: advisor score review (item #1)_
+3. **Build MVP** — Score review now complete (automated). Consider weak discriminators in health + economy/growth (see `docs/score-review.md`) before launch.
 
 4. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
+
+5. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
    - Party platforms remain in Hebrew; answers/explanations translated
 
-5. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
+6. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
    - Experience, notable actions/votes (official sources only, no social media)
 
-6. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+7. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 

@@ -132,6 +132,18 @@
 
 ---
 
+## Grounding-Based Score Derivation (2026-06-24)
+
+57. **Verbatim platform quotes enable confident, auditable automated scoring** — When you have the actual party platform text as grounding entries, Claude can derive party position scores (+2 to -2) with high confidence for ~75% of party+topic combinations. The remaining ~25% (parties with 0 entries for a topic) fall back to "estimated" confidence and can be flagged for human review in the output document. The key advantage over manual scoring: every score has a traceable rationale tied to a specific quote. (#first:2026-06-24)
+
+58. **Service-conditional benefits ≠ universal safety net — different scoring implications** — ביחד's platform is explicitly "only those who serve the state receive state budgets; those who don't, get nothing." This is a fundamentally different position from "the state provides a basic living standard for everyone" — the score must be 0, not +1. When reading party platforms, watch for this conditional framing: it looks like social support but is actually selective/meritocratic. (#first:2026-06-24)
+
+59. **8 of 36 options are weak discriminators (range < 3, all parties score 0..+2)** — Growth investment, first-time buyer grants, periphery development, quality teachers, public health basket, medical workforce, geographic health equality, and court diversity are all broadly popular — no party actively opposes them. These options don't differentiate between parties and produce near-identical scores for everyone. The health topic is worst (3/4 options weak). Consider replacing weak options with ones that cut more sharply across the political spectrum. See `docs/score-review.md` for full list. (#first:2026-06-24)
+
+60. **Aspect slug inconsistency silently breaks follow-up deduplication** — The `coveredAspects` array in `/api/follow-up` deduplicates already-asked sub-dimensions so the AI doesn't repeat itself. This only works if the same concept has the same slug across all parties. Inconsistent slugs (`"two-state-1967-borders"` vs `"two-state-solution"` vs `"political-settlement"`) mean deduplication silently fails — the AI asks about the same dimension multiple times, burning turns. Fix: define a canonical slug vocabulary per topic and standardize all 10 grounding JSON files. (#first:2026-06-24)
+
+---
+
 ## Competitive Landscape Quick Reference
 
 | Tool | Key insight for us |
