@@ -1,7 +1,62 @@
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type Option = { id: string; text: string; scores: number[]; hint?: string; term?: string };
-export type TopicQ = { question: string; options: Option[] };
+export type TopicQ = { question: string; options: Option[]; keyDimensions?: string[] };
+
+// Canonical aspect slugs that are most discriminating per topic.
+// Used by the follow-up API to prioritize which sub-dimension to probe next.
+// Slugs must match aspect fields in data/groundings/*.json.
+export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
+  security: [
+    "two-state-solution",             // splits left bloc (Hadash/Raam) from right
+    "palestinian-refugee-right-of-return", // splits Hadash/Raam from Democrats within left
+    "territorial-sovereignty",        // splits Likud from Otzmah on the right
+    "regional-normalization",         // Democrats' specific framing vs two-state
+  ],
+  economy: [
+    "labor-rights",                   // Hadash/Democrats vs Shas (different type of welfare)
+    "progressive-taxation",           // Democrats-specific; Shas/Yahadut-Hatorah oppose
+    "welfare-state",                  // universal (left) vs targeted/religious (Shas/YT)
+    "free-market-economy",            // right bloc differentiator
+  ],
+  education: [
+    "core-curriculum",                // secular right (Beitenu/Yashar) vs Haredi bloc
+    "equal-education-budgets",        // left/center support; Haredi bloc resists
+    "teacher-quality",                // broad appeal but worth surfacing
+  ],
+  health: [
+    "expanded-health-basket",         // universal coverage anchor
+    "periphery-health-investment",    // geographic equity (distinguishes left from center-right)
+    "hospital-expansion",             // concrete investment signal
+  ],
+  housing: [
+    "service-based-housing",          // service-linked benefits — right-leaning differentiator
+    "public-housing-rental",          // state-built housing — left/Shas position
+    "periphery-housing-incentive",    // broad support but degree varies
+  ],
+  religion: [
+    "equal-service-burden",           // Haredi draft — splits everyone
+    "rabbinate-monopoly",             // civil marriage/conversion — secular vs religious
+    "haredi-draft-exemption",         // Haredi bloc counter-position
+    "civil-marriage",                 // sharp differentiator for personal freedoms
+  ],
+  justice: [
+    "arabic-official-language-full-status", // Raam-unique; distinguishes within pro-democracy bloc
+    "anti-corruption",                // Yashar/Democrats emphasis; others softer
+    "separation-of-powers",           // left/center emphasis
+    "judicial-independence",          // Beitenu-specific angle (vs general rule-of-law)
+  ],
+  equality: [
+    "lgbtq-rights",                   // biggest split: left supports, Raam + religious right oppose
+    "anti-lgbtq-rights-conversion-therapy", // Raam's explicit position — must surface this
+    "arab-equality",                  // Hadash/Raam core; Raam's is Arab-specific not universal
+    "minority-representation",        // broad coalition but with very different scopes
+  ],
+  ecology: [
+    "environmental-protection",       // Hadash; strongest position
+    "state-environmental-responsibility", // Likud's softer framing (surprising)
+  ],
+};
 
 // Scores indexed by party order from lib/parties.ts:
 //   [hadash, raam, democrats, beyahad, yashar, beitenu, likud, shas, yahadut-hatorah, otzmah-yehudit]
@@ -183,7 +238,7 @@ export const QUESTIONS_FORMAL: Record<string, TopicQ> = {
   equality: {
     question: "בזכויות אדם ושוויון — מה הכי חשוב עבורך?",
     options: [
-      { id: "law",       text: "חוק ברור — הגנה משפטית מפורשת מפני אפליה",                   scores: [2, 2, 2, 2, 1, 1, 0, -1, -1, -2] },
+      { id: "law",       text: "חוק ברור — הגנה משפטית מפורשת מפני אפליה",                   scores: [2, 1, 2, 2, 1, 1, 0, -1, -1, -2] },
       { id: "represent", text: "ייצוג — מיעוטים חייבים להיות חלק ממוסדות המדינה",              scores: [2, 2, 2, 1, 1, 0, 0, 0, 1, -2] },
       { id: "character", text: "אופי יהודי — שמירת הרוב היהודי והאופי הלאומי",                 scores: [-2, -2, -1, 0, 1, 1, 2, 2, 2, 2] },
       { id: "lgbtq",     text: "LGBTQ+ — כולם ראויים לחיות בכבוד וללא אפליה",                  scores: [2, -2, 2, 2, 1, 1, -1, -2, -2, -2] },
@@ -424,7 +479,7 @@ export const QUESTIONS_PERSONAL: Record<string, TopicQ> = {
       {
         id: "law",
         text: "הגנה משפטית — חייב להיות חוק ברור שאוסר אפליה — בשוק העבודה, בדיור, בשירות הציבורי",
-        scores: [2, 2, 2, 2, 1, 1, 0, -1, -1, -2],
+        scores: [2, 1, 2, 2, 1, 1, 0, -1, -1, -2],
       },
       {
         id: "represent",

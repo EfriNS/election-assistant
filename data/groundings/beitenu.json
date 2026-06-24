@@ -8,14 +8,14 @@
     "security": [
       {
         "text": "הגדלת תקציב הביטחון מ-70 ל-95 מיליארד ₪ לשנה למשך 10 שנים; הרחבה מ-3 ל-6 אוגדות תמרון; 5 חטיבות טנקים נוספות.",
-        "aspect": "military-buildup",
+        "aspect": "military-deterrence",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "אפס הכלה — כל חדירת גבול מהווה פלישה. העברת הלחימה לשטח האויב. סיום עימותים עם הכרעה ברורה.",
-        "aspect": "zero-tolerance-doctrine",
+        "aspect": "hardline-no-negotiations",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -85,7 +85,7 @@
     "education": [
       {
         "text": "חוק לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך) — ביטול מימון למוסדות מסרבים ליישם.",
-        "aspect": "mandatory-core-curriculum",
+        "aspect": "core-curriculum",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -93,7 +93,7 @@
       },
       {
         "text": "מעבר ממודל שכר ותק למצוינות הוראה וחדשנות; העצמת סמכויות מנהלים ומורים בקצה המערכת.",
-        "aspect": "merit-based-teaching",
+        "aspect": "teacher-quality",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"

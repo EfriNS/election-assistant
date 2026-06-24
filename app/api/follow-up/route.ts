@@ -49,6 +49,7 @@ function buildPrompt(
   partyGroundings: PartyGroundingRef[],
   currentScores: Record<string, number>,
   coveredAspects: string[],
+  keyDimensions: string[],
   forceFollowUp: boolean
 ): string {
   const register =
@@ -92,6 +93,7 @@ function buildPrompt(
     .map(([id, score]) => `${id}: ${score}%`)
     .join(", ");
 
+  const uncoveredKeyDimensions = keyDimensions.filter((d) => !coveredAspects.includes(d));
   const groundingBlock = partyGroundings.length > 0
     ? `\n**Party platform positions on this topic (verbatim — use ONLY these texts, no other knowledge):**\n` +
       partyGroundings.map((pg) =>
@@ -103,7 +105,10 @@ function buildPrompt(
       (coveredAspects.length > 0
         ? `\n**Aspects already covered in this topic:** ${coveredAspects.join(", ")} — do NOT ask about these again.`
         : "") +
-      `\n\n**Follow-up task:** Identify the sub-dimension (aspect) of this topic where the close parties most clearly differ AND which the user's answer so far does not already reveal. Ask about that aspect. If no such discriminating dimension exists, transition to the next topic.`
+      (uncoveredKeyDimensions.length > 0
+        ? `\n**Priority dimensions to probe (in order):** ${uncoveredKeyDimensions.join(", ")} — prefer these over other aspects when choosing a follow-up sub-dimension.`
+        : "") +
+      `\n\n**Follow-up task:** Ask about the highest-priority uncovered dimension from the list above where the close parties clearly differ. If no such discriminating dimension remains uncovered, transition to the next topic.`
     : "";
 
   return `You are a neutral political advisor conducting a structured survey to help users identify which Israeli party best matches their views. Respond ONLY in Hebrew.
@@ -156,6 +161,7 @@ export async function POST(req: NextRequest) {
     partyGroundings = [],
     currentScores = {},
     coveredAspects = [],
+    keyDimensions = [],
     forceFollowUp = false,
   }: {
     conversationSoFar: ConversationEntry[];
@@ -167,6 +173,7 @@ export async function POST(req: NextRequest) {
     partyGroundings?: PartyGroundingRef[];
     currentScores?: Record<string, number>;
     coveredAspects?: string[];
+    keyDimensions?: string[];
     forceFollowUp?: boolean;
   } = await req.json();
 
@@ -176,7 +183,7 @@ export async function POST(req: NextRequest) {
   const model = "gemini-3.1-flash-lite";
   const prompt = buildPrompt(
     conversationSoFar, currentTopic, nextTopic, tone, depth, followUpsAskedThisTopic,
-    partyGroundings, currentScores, coveredAspects, forceFollowUp
+    partyGroundings, currentScores, coveredAspects, keyDimensions, forceFollowUp
   );
 
   const langfuse = makeLangfuse();

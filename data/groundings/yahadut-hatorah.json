@@ -18,7 +18,7 @@
     "economy": [
       {
         "text": "בנושאים כלכליים המפלגה תומכת בגישה סוציאל-דמוקרטית, בשל החולשה הסוציו-אקונומית של מצביעיה.",
-        "aspect": "social-democratic-welfare",
+        "aspect": "welfare-state",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -47,7 +47,7 @@
     "religion": [
       {
         "text": "חוק יסוד: תורה — לימוד תורה מוכר כשירות משמעותי למדינה ולעם ישראל; לא ייגבה מחיר כלכלי מלומדי תורה על אי-שירות; אין יעדי גיוס לחרדים. כל חברי הכנסת מיהדות התורה חתמו.",
-        "aspect": "basic-law-torah-haredi-draft-exemption",
+        "aspect": "haredi-draft-exemption",
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -55,7 +55,7 @@
       },
       {
         "text": "ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד). ביטול סמכות רבני הערים לגיור — הסמכות מוחזרת לרבנות הראשית; גיורים פרטיים לא יוכרו.",
-        "aspect": "rabbinate-monopoly-kashrut-conversion",
+        "aspect": "rabbinate-monopoly",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -63,7 +63,7 @@
       },
       {
         "text": "שמירת הסטאטוס קוו הדתי וניהול מחלוקות הדת על פי פסיקת הרבנות הראשית; התנגדות לביקורת שיפוטית בתחום הדת.",
-        "aspect": "religious-status-quo-rabbinate-authority",
+        "aspect": "religious-status-quo",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23"

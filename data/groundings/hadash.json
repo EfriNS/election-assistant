@@ -8,7 +8,7 @@
     "security": [
       {
         "text": "שלום ישראלי-פלסטיני וישראלי-ערבי צודק, כולל ויציב. סיום הכיבוש; הקמת שתי מדינות עצמאיות עם ירושלים כבירת שתיהן; נסיגה לגבולות 1967 כולל רמת הגולן.",
-        "aspect": "two-state-1967-borders",
+        "aspect": "two-state-solution",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -32,7 +32,7 @@
     "economy": [
       {
         "text": "העלאת שכר המינימום ל-70% מהשכר הממוצע במשק. ביטול העסקה קבלנית ודרך חברות כוח-אדם. תשלום תוספת יוקר לכלל העובדים במשק.",
-        "aspect": "minimum-wage-labor-rights",
+        "aspect": "labor-rights",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -47,7 +47,7 @@
       },
       {
         "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
-        "aspect": "anti-privatization-worker-rights",
+        "aspect": "labor-rights",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -87,7 +87,7 @@
     "justice": [
       {
         "text": "הגנת החירויות הדמוקרטיות. מאבק בפשיזם ובגזענות.",
-        "aspect": "democratic-freedoms-anti-fascism",
+        "aspect": "democratic-freedoms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
@@ -96,7 +96,7 @@
     "equality": [
       {
         "text": "שוויון האוכלוסייה הערבית בישראל — זכויות המיעוט הערבי כמיעוט לאומי.",
-        "aspect": "arab-citizens-equality",
+        "aspect": "arab-equality",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
