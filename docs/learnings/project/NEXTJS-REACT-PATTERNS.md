@@ -229,3 +229,47 @@ curl -H "Authorization: Bearer \"abc123\""   # vs app expecting: Bearer abc123
 ```bash
 SECRET=$(grep "^QUOTA_CRON_SECRET=" .env.local | cut -d= -f2- | tr -d '"')
 ```
+
+---
+
+## Vercel Deployment
+
+### Vercel Hobby plan: daily crons only (#first:2026-06-25)
+
+Vercel Hobby plan rejects any cron schedule that runs more than once per day. A sub-daily schedule (e.g. `"0 * * * *"` hourly) in `vercel.json` causes **every deployment to fail silently** — builds stop triggering entirely, not just the cron invocation.
+
+```json
+// ❌ Blocks all builds on Hobby plan:
+{ "path": "/api/quota-check", "schedule": "0 * * * *" }
+
+// ✅ Allowed on Hobby:
+{ "path": "/api/quota-check", "schedule": "0 0 * * *" }
+```
+
+Upgrade to Pro to re-enable sub-daily schedules.
+
+### TypeScript errors block Vercel builds (#first:2026-06-25)
+
+A `TS2322` error that appears in `tsc --noEmit` output will also block Vercel production builds, even if the local dev server runs fine. The error does NOT surface as an obvious build failure message — Vercel just stops creating new deployments for subsequent pushes.
+
+**Rule:** Treat any local `tsc --noEmit` error as a production blocker. Fix it before pushing.
+
+### RTL flex: first DOM child = screen-right (#first:2026-06-25)
+
+In a component rendered inside an RTL context (`dir="rtl"`), Flexbox reverses the visual order: **the first child in the DOM appears on the right side of the screen**. This is the opposite of LTR.
+
+```jsx
+// In RTL: badge appears on RIGHT (correct for Hebrew), text fills LEFT
+<button className="flex items-center gap-3">
+  <span className="badge">{num}</span>      {/* → screen-right */}
+  <span className="flex-1 text-right">{text}</span>  {/* → screen-left */}
+</button>
+
+// In RTL: badge appears on LEFT (wrong — looks like an LTR leftover)
+<button className="flex items-center gap-3">
+  <span className="flex-1 text-right">{text}</span>
+  <span className="badge">{num}</span>      {/* → screen-left */}
+</button>
+```
+
+Always put the badge/icon FIRST in the DOM when you want it on the right in Hebrew UI.

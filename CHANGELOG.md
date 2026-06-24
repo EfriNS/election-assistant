@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-06-25 — UI polish + Vercel deployment fixes
+
+### What We Did
+
+Fixed a production deployment outage (17 commits undeployed) and polished the numbered-option UI based on user review.
+
+### Deployment fix — cron + TypeScript (commits e3dd7dc, 8f31b14)
+
+**Root cause:** Two independent blockers stacked up:
+1. `vercel.json` had `"schedule": "0 * * * *"` (hourly cron). Vercel Hobby plan only allows daily crons — this silently blocked all builds since commit `1e7a9cf` (quota monitoring feature). Changed to `"0 0 * * *"` (daily at midnight UTC).
+2. `app/api/quota-check/route.ts` lines 34–35 had `.toISOString()` on the `fromStartTime`/`toStartTime` params. Langfuse's `fetchObservations` expects `Date` objects, not strings — TypeScript caught this as `TS2322` but it had been masked by an older build config. Fixed by passing `Date` objects directly.
+
+**Lesson:** `tsc --noEmit` showing an error locally means Vercel will also reject the build. Always fix TS errors before pushing, even if they seem "pre-existing."
+
+### UI polish — badge position + colour + always-open free text (commits 5f0ca4b, b5b91fc)
+
+**Badge moved to RHS:** In RTL flex, the first DOM child appears on screen-right. The badge span was last in DOM order → appeared on screen-left, which feels wrong in Hebrew. Swapping badge before text span puts it on the right (natural Hebrew reading start).
+
+**Badge colour:** `text-gray-400 border-gray-300` → `text-gray-700 border-gray-400`. Previous colour was too faint relative to the option text.
+
+**"כתבו בעצמכם" always-open:** Removed the click-to-reveal button pattern. The textarea and placeholder (`"כתבו בחופשיות — למשל: '1+3, אבל לא...'"`) are now always visible as the last option. Border highlights teal as user types; "המשך" button appears only once there is content. Eliminates the stuck-open / no-close ambiguity. The existing `useEffect` at `page.tsx:193` already handles pre-populating `openerDraft` on back-navigation — no additional state management needed.
+
+**Files changed:** `app/prototype-e/page.tsx`, `app/api/quota-check/route.ts`, `vercel.json`
+
+### Commits
+- `e3dd7dc` fix(cron): change quota-check to daily (Hobby plan limit)
+- `8f31b14` fix(quota-check): pass Date objects to fetchObservations, not ISO strings
+- `5f0ca4b` fix(ui): move number badge to RHS, increase visual weight
+- `b5b91fc` fix(ui): salient badge colour + always-open free-text option
+
+---
+
 ## 2026-06-25 — Numbered option badges + 'כתבו בעצמכם' visual elevation (feature/numbered-options)
 
 ### What We Did
