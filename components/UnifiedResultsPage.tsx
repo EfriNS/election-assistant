@@ -128,6 +128,20 @@ export default function UnifiedResultsPage({
           <ShareButton variant="prominent" />
         </div>
 
+        {/* Feedback */}
+        {process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL && (
+          <div className="mt-4 text-center">
+            <a
+              href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2"
+            >
+              שלחו לנו הערה ↗
+            </a>
+          </div>
+        )}
+
         {/* Home navigation */}
         <div className="mt-6 text-center">
           {!confirmHome ? (

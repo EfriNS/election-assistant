@@ -6,6 +6,7 @@ import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic } from "@/lib/groundings";
 import { calcResults, TopicQA } from "@/lib/scoring";
+import { track } from "@vercel/analytics/react";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
@@ -206,6 +207,7 @@ function PrototypeEInner() {
 
   // ── Navigation helpers ──────────────────────────────────────────────────────
   const advanceToNextTopic = (prologue: string | null) => {
+    track("topic_completed", { topicId: topicsToAsk[questionIndex] });
     setCurrentFollowUp(null);
     setCurrentPrologue(prologue);
     setFollowUpsAskedThisTopic(0);
@@ -437,8 +439,8 @@ function PrototypeEInner() {
         buckets={buckets}
         setBuckets={setBuckets}
         accentColor="teal"
-        onBack={() => { window.location.href = "/"; }}
-        onContinue={() => { setQuestionIndex(0); setStep("questions"); }}
+        onBack={() => { track("quiz_abandoned", { step: "rank" }); window.location.href = "/"; }}
+        onContinue={() => { track("quiz_started", { tone, depth }); setQuestionIndex(0); setStep("questions"); }}
       />
     );
   }
@@ -469,7 +471,7 @@ function PrototypeEInner() {
             placeholder="כאן תוכל לכתוב בחופשיות..."
             className="w-full border border-gray-300 rounded-xl p-4 text-sm leading-relaxed h-36 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 mb-4"
             dir="rtl" />
-          <button onClick={() => setStep("results")}
+          <button onClick={() => { track("quiz_completed", { topicCount: topicsToAsk.length }); setStep("results"); }}
             className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors">
             ← לתוצאות
           </button>
