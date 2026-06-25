@@ -273,3 +273,70 @@ In a component rendered inside an RTL context (`dir="rtl"`), Flexbox reverses th
 ```
 
 Always put the badge/icon FIRST in the DOM when you want it on the right in Hebrew UI.
+
+---
+
+## Security Patterns
+
+### Vercel Edge middleware: graceful no-op without credentials (#first:2026-06-25)
+
+Rate-limiting middleware that depends on an external service (Upstash Redis) must not fail or error when credentials are absent — it should simply pass through. Pattern: check for env vars at module load time, return `null` from a factory function, then check for `null` at the start of the middleware handler.
+
+```typescript
+function makeRatelimit(): Ratelimit | null {
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    return null;
+  }
+  return new Ratelimit({ redis: Redis.fromEnv(), limiter: Ratelimit.slidingWindow(10, "24 h") });
+}
+
+const ratelimit = makeRatelimit();  // evaluated once at cold start
+
+export async function middleware(req: NextRequest) {
+  if (!ratelimit) return NextResponse.next();  // ← no-op in local dev / CI
+  // ...rate limit logic...
+}
+```
+
+This pattern makes local dev work without a Redis instance and avoids runtime errors in CI.
+
+### Return structured data even on error responses (#first:2026-06-25)
+
+API routes that perform AI calls plus deterministic computation should return the deterministic data in the error response body — not just an error code. Clients then get useful output even on quota/auth failure.
+
+```typescript
+// ❌ Error response discards all useful data:
+return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
+
+// ✅ Error response still includes pre-computed grounding data:
+return NextResponse.json({ errorCode: "QUOTA_EXCEEDED", groundings }, { status: 429 });
+```
+
+Client must call `res.json()` regardless of status to access the structured data:
+```typescript
+.then((res) => {
+  if (res.status === 429) setQuotaExceeded(true);
+  return res.json();  // ← always parse, even on error
+})
+.then((data) => {
+  if (data.groundings) setGroundings(data.groundings);  // still available on 429
+})
+```
+
+### PII in AI observability traces (#first:2026-06-25)
+
+Langfuse (and similar tracing tools) `generation()` calls accept an `input` field. If this field contains user-submitted text (answers to quiz questions, free-text responses), it constitutes PII storage in a third-party system.
+
+**Fix:** Remove the `input` field entirely from `generation()`. Token counts (`usage`) and `output` can still be captured for cost monitoring without storing the user's content.
+
+```typescript
+// ❌ PII stored in Langfuse:
+const generation = trace?.generation({ name: "gemini-results", model, input: userMessage });
+
+// ✅ No PII — tokens + output still tracked:
+const generation = trace?.generation({ name: "gemini-results", model });
+// ...later:
+generation?.update({ output: text, usage: { input: promptTokens, output: candidateTokens } });
+```
+
+Apply this pattern to every route that includes user-submitted text in the AI prompt.

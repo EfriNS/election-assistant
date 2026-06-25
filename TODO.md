@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Phase 0.3/0.4/0.5: Security hardening + grounding quotes in results** — 460+ platform quotes surfaced in party accordion; rate limiting (Upstash Redis); input sanitisation; PII fix in Langfuse; quota degradation verified end-to-end. (2026-06-25)
 - **UI polish + Vercel deployment fix** — Badge on RHS with readable colour; 'כתבו בעצמכם' always-open textarea; fixed hourly cron + TS2322 error that blocked 17 Vercel builds. (2026-06-25)
 - **Numbered option badges + 'כתבו בעצמכם' elevation** — Sequential number badges on all options; free-text option elevated to equal visual partner; AI prologue can reference option numbers. (2026-06-25)
-- **Automated party score refinement** — Scoring script (Claude Sonnet over grounding data) + 9 score corrections applied; 8 weak discriminators flagged; `docs/score-review.md` audit trail. (2026-06-24)
 
 > See CHANGELOG.md for complete details.
 
@@ -16,13 +16,20 @@
 
 2. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
-3. **Build MVP** — Pending advisor sign-off on scores + party coverage. Full scope is in `docs/PHASED-ROADMAP.md` and the requirements; the items below are an **initial analysis only** of gaps noticed on the results page — not a replacement for proper MVP planning.
+3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
-   _Known results page gaps (initial analysis):_
-   - Remove stale "not based on platform data" disclaimers — grounding data now exists for all 10 parties
-   - Add party platform source links to results (verbatim quote citations with URLs)
-   - Surface grounding evidence per party per topic: show users *why* a party scored high ("Party X says: '...'")
-   - Party מצע links in results cards (overlaps with item #2 below)
+   _Next sessions:_
+   - **0.7**: Extract `calcResults` → `lib/scoring.ts` + Vitest unit tests (branch: `test/scoring-unit-tests`)
+   - **1.1**: Remove prototype artifacts from landing page; remove Prototype D link (keep route)
+   - **1.2/1.3**: Update `/api/results` prompt to explicitly cite platform quotes in blurbs
+   - **1.5**: Secrets audit + README + LICENSE (MIT) for repo publication
+   - **1.6/1.7**: Analytics events + user feedback form (Google Form link)
+   - **1.4**: UI polish — mobile/RTL/accessibility pass
+
+   _Human tasks (parallel):_
+   - **0.1** Advisor review of live app + `docs/score-review.md` (8 weak discriminators flagged)
+   - **0.6** Content neutrality audit (3rd-party review of question framing)
+   - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*)
 
 4. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
