@@ -43,7 +43,14 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
       </div>
 
       {/* Score bar */}
-      <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
+      <div
+        className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3"
+        role="progressbar"
+        aria-valuenow={party.score}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={`ציון התאמה ${party.score}%`}
+      >
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
 
@@ -57,7 +64,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             <p className="text-xs text-indigo-300 animate-pulse">✦ מנתח התאמה...</p>
           ) : (
             <p className="text-xs text-gray-500 leading-relaxed">
-              <span className="text-indigo-400 ml-1">✦</span>{aiBlurb}
+              <span className="text-indigo-400 mr-1">✦</span>{aiBlurb}
             </p>
           )}
         </div>
@@ -86,8 +93,9 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         <div className="mt-2 border-t border-gray-100 pt-2">
           <button
             onClick={() => setGroundingOpen((o) => !o)}
-            className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors w-full text-right"
+            className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors w-full text-right focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
             aria-expanded={groundingOpen}
+            aria-label={`${party.name} — מה כתוב במצע?`}
           >
             <span className="flex-1 text-right">מה כתוב במצע?</span>
             <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>

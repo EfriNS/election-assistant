@@ -125,7 +125,7 @@ export default function PrioritiesStep({
                     <button
                       key={b.value}
                       onClick={() => setBucket(t.id, b.value)}
-                      className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all ${
+                      className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
                         selected === b.value
                           ? bucketActiveClass[b.value]
                           : "border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600 bg-white"
@@ -154,7 +154,7 @@ export default function PrioritiesStep({
         <button
           onClick={onContinue}
           disabled={!canProceed}
-          className={`w-full py-4 rounded-xl font-semibold transition-colors disabled:opacity-40 ${c.button}`}
+          className={`w-full py-4 rounded-xl font-semibold transition-colors disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${c.button}`}
         >
           המשך
         </button>
