@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-26 — Mandate platform quote citations in AI blurbs (Phase 1.2/1.3)
+
+Each party blurb in the results page now includes a verbatim excerpt from the party's official platform, woven naturally into the Hebrew prose (e.g. "במצעה נכתב: '...'").
+
+**Prompt changes** (`app/api/results/route.ts`):
+- System prompt: "Reference specific platform quotes where relevant" → "Each blurb MUST include a short verbatim excerpt (5–12 words) from the platform quotes provided, introduced naturally"
+- Added example format: `"המפלגה תומכת ב... ובמצעה נכתב: '...'"`
+- Added rule: "Do not invent quotes or positions not in the provided data"
+- User message label changed: "Relevant platform quotes for context" → "Platform quotes to cite in each blurb (cite at least one per party)"
+
+**Live test**: All 3 blurbs for a sample query returned verbatim quotes integrated naturally (confirmed by presence of `'...'` citation patterns in Hebrew output).
+
+**Commits**: `3d336d0`, `f10683c`
+
+---
+
 ## 2026-06-25 — Remove prototype artifacts from landing page (Phase 1.1)
 
 Cleaned up `app/page.tsx` for MVP launch:
