@@ -1,186 +1,158 @@
 import { describe, it, expect } from "vitest";
-
-// ─── Inline the types and logic under test ───────────────────────────────────
-// We test the scoring logic directly by reproducing the relevant types and the
-// calcResults function here. This avoids importing client-component code into Node.
-
-type Party = { id: string; name: string; description: string; website: string };
-type Option = { id: string; text: string; scores: number[] };
-type TopicQ = { question: string; options: Option[] };
-type TopicQA = {
-  openerAnswerId: string;
-  openerAnswerText: string;
-  followUps: { question: string; options: string[]; answer: string }[];
-  coveredAspects?: string[];
-};
-
-const FOLLOW_UP_AI_WEIGHT = 0.5;
-
-// Minimal 2-party fixture
-const PARTIES: Party[] = [
-  { id: "left",  name: "Left",  description: "", website: "" },
-  { id: "right", name: "Right", description: "", website: "" },
-];
-
-function calcResults(
-  buckets: Record<string, number>,
-  topicQA: Record<string, TopicQA>,
-  questionSet: Record<string, TopicQ>,
-  aiScores?: Record<string, Record<string, number | null>>
-) {
-  const totals = new Array(PARTIES.length).fill(0);
-  const maxPossible = new Array(PARTIES.length).fill(0);
-
-  Object.entries(buckets).forEach(([topicId, weight]) => {
-    if (weight === 0) return;
-    const qa = topicQA[topicId];
-    const chosenId = qa?.openerAnswerId;
-    const option = questionSet[topicId]?.options.find((o) => o.id === chosenId);
-    const isOtherOpener = chosenId === "other";
-    const hasFollowUps = (qa?.followUps?.length ?? 0) > 0;
-
-    PARTIES.forEach((party, pi) => {
-      const aiScore = aiScores?.[topicId]?.[party.id];
-      const hasAiScore = typeof aiScore === "number";
-
-      let effectiveScore: number | null = null;
-
-      if (isOtherOpener) {
-        effectiveScore = hasAiScore ? aiScore : null;
-      } else if (hasFollowUps && hasAiScore) {
-        const deterministicScore = option?.scores[pi] ?? 0;
-        effectiveScore =
-          deterministicScore * (1 - FOLLOW_UP_AI_WEIGHT) + aiScore * FOLLOW_UP_AI_WEIGHT;
-      } else if (option) {
-        effectiveScore = option.scores[pi];
-      }
-
-      if (effectiveScore !== null) {
-        totals[pi] += weight * (effectiveScore + 2);
-        maxPossible[pi] += weight * 4;
-      }
-    });
-  });
-
-  return PARTIES.map((party, i) => ({
-    ...party,
-    score: maxPossible[i] > 0 ? Math.round((totals[i] / maxPossible[i]) * 100) : 50,
-  })).sort((a, b) => b.score - a.score);
-}
+import { calcResults, FOLLOW_UP_AI_WEIGHT } from "@/lib/scoring";
+import type { TopicQA } from "@/lib/scoring";
+import type { TopicQ } from "@/lib/questions";
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 
+// Two-option question: "peace" favours left, "control" favours right.
 const questionSet: Record<string, TopicQ> = {
   security: {
     question: "Security question",
     options: [
-      { id: "peace",   text: "Peace",   scores: [2, -2] },
-      { id: "control", text: "Control", scores: [-2, 2] },
+      { id: "peace",   text: "Peace",   scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "control", text: "Control", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+    ],
+  },
+  economy: {
+    question: "Economy question",
+    options: [
+      { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
     ],
   },
 };
+
+// Helper: minimal TopicQA with a fixed-option opener and no follow-ups
+function qa(openerAnswerId: string, openerAnswerText = openerAnswerId, followUps: TopicQA["followUps"] = []): TopicQA {
+  return { openerAnswerId, openerAnswerText, followUps };
+}
+
+// The actual PARTIES list has 10 entries (hadash … otzmah-yehudit).
+// We reference only index 0 (hadash) and 9 (otzmah-yehudit) for assertions.
+// "peace" option has scores[0]=2, scores[9]=-2; "control" is the reverse.
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe("calcResults — deterministic scoring", () => {
   it("scores purely from option when no AI scores provided", () => {
-    const results = calcResults(
-      { security: 3 },
-      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [] } },
-      questionSet
-    );
-    // "left" party (scores[0]=2) should score higher than "right" (scores[0]=-2)
-    expect(results[0].id).toBe("left");
-    expect(results[0].score).toBe(100);
-    expect(results[1].score).toBe(0);
+    const results = calcResults({ security: 3 }, { security: qa("peace") }, questionSet);
+    const hadash = results.find((p) => p.id === "hadash")!;
+    const otzmah = results.find((p) => p.id === "otzmah-yehudit")!;
+    expect(hadash.score).toBe(100);
+    expect(otzmah.score).toBe(0);
+    expect(results[0].id).toBe("hadash"); // highest score first
   });
 
-  it("returns 50% for all parties when no topics are answered", () => {
+  it("returns 50 for all parties when no topics are answered", () => {
     const results = calcResults({}, {}, questionSet);
     results.forEach((p) => expect(p.score).toBe(50));
   });
 
   it("skips topics with weight 0", () => {
+    const results = calcResults({ security: 0 }, { security: qa("peace") }, questionSet);
+    results.forEach((p) => expect(p.score).toBe(50));
+  });
+
+  it("accumulates correctly across multiple topics with different weights", () => {
+    // security (weight 4): peace → hadash +2 each
+    // economy (weight 2): left-econ → hadash +2 each
+    // hadash total = 4*(2+2) + 2*(2+2) = 24, max = 4*4 + 2*4 = 24 → 100%
+    // otzmah total = 4*(-2+2) + 2*(-2+2) = 0 → 0%
     const results = calcResults(
-      { security: 0 },
-      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [] } },
+      { security: 4, economy: 2 },
+      { security: qa("peace"), economy: qa("left-econ") },
       questionSet
     );
-    results.forEach((p) => expect(p.score).toBe(50));
+    const hadash = results.find((p) => p.id === "hadash")!;
+    const otzmah = results.find((p) => p.id === "otzmah-yehudit")!;
+    expect(hadash.score).toBe(100);
+    expect(otzmah.score).toBe(0);
+  });
+
+  it("produces stable output — same input always gives same ranking", () => {
+    const input = { security: 3 };
+    const r1 = calcResults(input, { security: qa("peace") }, questionSet);
+    const r2 = calcResults(input, { security: qa("peace") }, questionSet);
+    expect(r1.map((p) => p.id)).toEqual(r2.map((p) => p.id));
+    expect(r1.map((p) => p.score)).toEqual(r2.map((p) => p.score));
   });
 });
 
 describe("calcResults — AI score blending", () => {
-  it("uses AI score at 100% for 'other' opener", () => {
+  it("uses AI score at 100% weight for 'other' (free-text) opener", () => {
     const results = calcResults(
       { security: 4 },
-      { security: { openerAnswerId: "other", openerAnswerText: "My own view", followUps: [] } },
+      { security: qa("other", "My custom view") },
       questionSet,
-      { security: { left: 2, right: -2 } }
+      { security: { hadash: 2, "otzmah-yehudit": -2, ...Object.fromEntries(["raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0])) } }
     );
-    expect(results[0].id).toBe("left");
-    expect(results[0].score).toBe(100);
-    expect(results[1].score).toBe(0);
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(100);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
   });
 
-  it("blends at 50/50 for fixed opener with follow-ups and AI scores", () => {
-    // opener = "peace": left=2, right=-2 (deterministic)
-    // aiScore: left=0, right=0 (neutral)
-    // blend: left = 2*0.5 + 0*0.5 = 1.0; right = -2*0.5 + 0*0.5 = -1.0
-    // normalised: left=(1+2)/(4)*100=75; right=(-1+2)/(4)*100=25
+  it("blends at configured weight for fixed opener with follow-ups + AI scores", () => {
+    // opener = "peace": hadash=+2, otzmah=-2 (deterministic)
+    // AI: hadash=0, otzmah=0 (neutral)
+    // blend: hadash = 2*(1-0.5) + 0*0.5 = 1.0 → (1+2)/4*100 = 75%
+    //        otzmah = -2*(1-0.5) + 0*0.5 = -1.0 → (-1+2)/4*100 = 25%
+    const allPartyAiScores = Object.fromEntries(
+      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"].map(id => [id, 0])
+    );
     const results = calcResults(
       { security: 4 },
-      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [
-        { question: "Q", options: ["A"], answer: "A" }
-      ] } },
+      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,
-      { security: { left: 0, right: 0 } }
+      { security: allPartyAiScores }
     );
-    expect(results[0].id).toBe("left");
-    expect(results[0].score).toBe(75);
-    expect(results[1].score).toBe(25);
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(25);
   });
 
-  it("falls back to deterministic when AI score is null for a party", () => {
-    // aiScore null for "right" → falls back to deterministic for "right" (option "peace": -2)
+  it("falls back to deterministic when AI score is null for a specific party", () => {
+    const aiScores = Object.fromEntries(
+      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0])
+    );
+    aiScores["otzmah-yehudit"] = null as unknown as number;
     const results = calcResults(
       { security: 4 },
-      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [
-        { question: "Q", options: ["A"], answer: "A" }
-      ] } },
+      { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,
-      { security: { left: 2, right: null } }
+      { security: aiScores }
     );
-    // left: blended = 2*0.5 + 2*0.5 = 2 → 100%
-    // right: deterministic from "peace" = -2 → 0%
-    expect(results[0].id).toBe("left");
-    expect(results[0].score).toBe(100);
-    expect(results[1].score).toBe(0);
+    // hadash: blended = 2*0.5 + 0*0.5 = 1 → 75%
+    // otzmah: null AI → falls back to deterministic "peace" score = -2 → 0%
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
   });
 
-  it("skips topic entirely for a party when 'other' opener and AI score is null", () => {
-    // No data at all for "right" on this topic — it should get score=50 (default)
+  it("skips topic for a party when 'other' opener and AI score is null → score stays 50", () => {
+    const aiWithNull: Record<string, number | null> = Object.fromEntries(
+      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0 as number | null])
+    );
+    aiWithNull["otzmah-yehudit"] = null;
     const results = calcResults(
       { security: 4 },
-      { security: { openerAnswerId: "other", openerAnswerText: "Custom", followUps: [] } },
+      { security: qa("other", "Custom") },
       questionSet,
-      { security: { left: 2, right: null } }
+      { security: aiWithNull }
     );
-    expect(results.find((p) => p.id === "left")!.score).toBe(100);
-    expect(results.find((p) => p.id === "right")!.score).toBe(50); // skipped → default
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(50);
   });
 
-  it("uses deterministic scoring when aiScores is undefined (AI call failed)", () => {
+  it("falls back to pure deterministic when aiScores is undefined (AI call failed)", () => {
     const results = calcResults(
       { security: 3 },
-      { security: { openerAnswerId: "control", openerAnswerText: "Control", followUps: [
-        { question: "Q", options: ["A"], answer: "A" }
-      ] } },
+      { security: { openerAnswerId: "control", openerAnswerText: "Control", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,
-      undefined // AI unavailable
+      undefined
     );
-    // "control" option: left=-2, right=2
-    expect(results[0].id).toBe("right");
-    expect(results[0].score).toBe(100);
+    // "control": hadash=-2 → 0%, otzmah=+2 → 100%
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(100);
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(0);
+  });
+
+  it("FOLLOW_UP_AI_WEIGHT constant is 0.5", () => {
+    expect(FOLLOW_UP_AI_WEIGHT).toBe(0.5);
   });
 });
