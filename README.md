@@ -1,27 +1,86 @@
-# Election Assistant
+# עוזר הבחירות — Election Assistant
 
-A free, open-source tool that helps individuals find their best-matching political party based on their personal values and priorities.
+A free, transparent tool that helps you find which Israeli political party best matches your values — with exact quotes from official party platforms as evidence.
 
-## What It Does
+**Live**: [voteassist.me](https://voteassist.me)
 
-Answer a few questions about what matters to you — defense policy, education, economy, social issues — and get a ranked list of parties whose platforms best match your priorities, with exact quotes from their official platforms as evidence.
+---
 
-Built initially for Israeli elections, with multi-language and multi-country support in mind.
+## How It Works
+
+1. **Set priorities** — rank which policy topics matter most to you (security, economy, housing, education, health, religion, justice, equality, ecology)
+2. **Answer questions** — structured questions per topic, with optional AI follow-ups that dig deeper based on your answers
+3. **See results** — parties ranked by match score, with verbatim platform quotes explaining why each party scored the way it did
+
+Match scores blend two signals:
+- **Deterministic**: each answer option has per-party scores (-2 to +2) derived from official platform texts
+- **AI-scored**: free-text and follow-up answers are scored by Gemini Flash Lite against verbatim platform passages
+
+Final score = weighted average across your prioritised topics, normalised to 0–100%.
+
+## Parties Covered (June 2026)
+
+חד"ש-תע"ל · רע"מ · הדמוקרטים · ביחד (בנט/לפיד) · ישר! (איזנקוט) · ישראל ביתנו · ליכוד · ש"ס · יהדות התורה · עוצמה יהודית
+
+Parties without a published current platform are shown with an explicit outdatedness warning and the source used (e.g. coalition principles, older manifesto).
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, TypeScript)
+- **AI**: Google Gemini Flash Lite (`gemini-3.1-flash-lite`) — follow-up questions, scoring, results analysis
+- **Observability**: Langfuse (optional) — token tracking, no user content logged
+- **Rate limiting**: Upstash Redis (optional) — 10 sessions/IP/day in production
+- **Analytics**: Vercel Analytics + Hotjar + Microsoft Clarity
+- **Hosting**: Vercel
+
+## Running Locally
+
+```bash
+# 1. Clone and install
+git clone https://github.com/EfriNS/election-assistant.git
+cd election-assistant
+npm install
+
+# 2. Set up environment
+cp .env.example .env.local
+# Edit .env.local — at minimum set GEMINI_API_KEY
+
+# 3. Start dev server
+npm run dev
+# → http://localhost:3000
+```
+
+The app runs fully without Langfuse or Upstash credentials — those are production-only integrations.
+
+## Environment Variables
+
+See [`.env.example`](.env.example) for the full list with descriptions. The only required variable for local development is `GEMINI_API_KEY`.
+
+## Tests
+
+```bash
+npm test          # run all tests (Vitest)
+npm run lint      # ESLint
+npm run build     # Next.js production build
+```
+
+## Platform Data
+
+Party platform quotes are stored in `data/groundings/<partyId>.json`. Each entry includes:
+- verbatim text
+- topic and aspect
+- source URL
+- retrieval date
+- optional `contrary` flag (party explicitly opposes this position)
+
+To update or add entries, edit the relevant JSON file. The `scripts/auto-score.ts` script derives answer-option scores from this data using Claude.
 
 ## Principles
 
-- **Transparent**: Results cite exact quotes from official party platforms, with source URLs and dates
-- **Non-partisan**: All parties are treated equally; parties without a published platform are noted as such
-- **Open**: Source code is open for anyone to audit
-- **Free**: No cost to users, no monetization
-
-## Status
-
-Early planning stage. See [TODO.md](TODO.md) for current priorities.
-
-## Contributing
-
-Contributions welcome once the project is past the MVP stage. Details to follow.
+- **Transparent** — results cite exact quotes from official party platforms with source URLs
+- **Non-partisan** — all parties treated equally; missing platforms disclosed explicitly
+- **No tracking of opinions** — user answers are never logged or stored
+- **Open** — source code is auditable
 
 ## License
 
