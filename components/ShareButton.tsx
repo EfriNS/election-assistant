@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const SHARE_TITLE = "עוזר הבחירות";
 const SHARE_TEXT =
-  "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? (אב-טיפוס חינמי)";
+  "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? הכלי חינמי ומסביר למה";
 
 type Props = {
   variant?: "prominent" | "subtle";
@@ -39,7 +39,7 @@ export default function ShareButton({ variant = "prominent" }: Props) {
     return (
       <button
         onClick={handleShare}
-        className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+        className="text-xs text-gray-400 hover:text-gray-600 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
       >
         {copied ? "✓ הקישור הועתק" : "שתף עם חברים →"}
       </button>
@@ -49,7 +49,7 @@ export default function ShareButton({ variant = "prominent" }: Props) {
   return (
     <button
       onClick={handleShare}
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-600 hover:text-gray-800 transition-all shadow-sm"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-600 hover:text-gray-800 transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none"
     >
       {copied ? (
         <>

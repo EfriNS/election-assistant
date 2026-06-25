@@ -79,10 +79,17 @@ function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack }: Ques
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600">← חזרה</button>
+        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">← חזרה</button>
         <span className="text-sm text-gray-400" dir="ltr">{questionIndex + 1} / {totalSteps}</span>
       </div>
-      <div className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden">
+      <div
+        className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden"
+        role="progressbar"
+        aria-valuenow={progressPct}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="התקדמות בשאלון"
+      >
         <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
       </div>
     </>
@@ -579,7 +586,7 @@ function PrototypeEInner() {
                       {followUpDraft.trim() && (
                         <button
                           onClick={() => handleFollowUpAnswer(followUpDraft.trim())}
-                          className="mt-2 w-full bg-teal-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-teal-700 transition-colors"
+                          className="mt-2 w-full bg-teal-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none"
                         >
                           המשך ←
                         </button>
@@ -590,7 +597,7 @@ function PrototypeEInner() {
               }
               return (
                 <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${opt}`)}
-                  className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3">
+                  className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
                   <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-400 text-gray-700 flex items-center justify-center text-sm font-semibold">{num}</span>
                   <span className="flex-1 text-right leading-snug">{opt}</span>
                 </button>
@@ -599,7 +606,7 @@ function PrototypeEInner() {
           </div>
 
           <button onClick={() => advanceToNextTopic(null)}
-            className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center">
+            className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
             דלג על שאלה זו
           </button>
         </div>
@@ -636,7 +643,7 @@ function PrototypeEInner() {
               <div key={opt.id}>
                 <button
                   onClick={() => handleOpenerAnswer(opt.id, `${num}. ${opt.text}`)}
-                  className={`w-full border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 ${
+                  className={`w-full border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
                     selected
                       ? "border-teal-500 bg-teal-50 text-teal-900"
                       : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
@@ -690,7 +697,7 @@ function PrototypeEInner() {
         </div>
 
         <button onClick={() => advanceToNextTopic(null)}
-          className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center">
+          className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
           דלג על שאלה זו
         </button>
       </div>
