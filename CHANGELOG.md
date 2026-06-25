@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-26 — Repository publication prep (Phase 1.5)
+
+- **README.md**: rewritten from "early planning stage" placeholder to accurate MVP description — how it works, scoring algorithm (deterministic blend + AI), 10 parties in scope, tech stack, local setup instructions, test commands, platform data format, guiding principles
+- **LICENSE**: added copyright holder name (Efri Nattel-Shay)
+- **.env.example**: fixed `GEMINI_API_KEY` description (was "required for Prototype D"); added `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` with Vercel setup instructions
+- **Secrets audit**: no hardcoded API keys or credentials found in any `.ts`/`.tsx` files; all `console.error` calls are legitimate production error logging
+
+**Commits**: `32f215e`, `3e5f081`
+
+---
+
 ## 2026-06-26 — Mandate platform quote citations in AI blurbs (Phase 1.2/1.3)
 
 Each party blurb in the results page now includes a verbatim excerpt from the party's official platform, woven naturally into the Hebrew prose (e.g. "במצעה נכתב: '...'").

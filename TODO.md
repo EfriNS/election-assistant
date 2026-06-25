@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Phase 1.5: Repo publication prep** — README rewritten to MVP; LICENSE copyright; .env.example Upstash vars; secrets audit clean. (2026-06-26)
 - **Phase 1.2/1.3: Grounded AI blurbs** — Party blurbs now MUST include verbatim platform quote; prompt updated from optional to mandatory. Live-tested. (2026-06-26)
 - **Phase 1.1: Remove prototype artifacts** — "אב-טיפוס" label + Prototype D CTA + A/B/C footer removed from landing; single clean CTA. (2026-06-25)
-- **Phase 0.7: Scoring tests** — calcResults extracted to lib/scoring.ts; tests now import real function (44→47 tests). (2026-06-25)
 
 > See CHANGELOG.md for complete details.
 
@@ -19,8 +19,7 @@
 3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
-   - **1.5**: Secrets audit + README + LICENSE (MIT) for repo publication ← **NEXT**
-   - **1.6/1.7**: Analytics events + user feedback form (Google Form link)
+   - **1.6/1.7**: Analytics events + user feedback form (Google Form link) ← **NEXT**
    - **1.4**: UI polish — mobile/RTL/accessibility pass
 
    _Human tasks (parallel):_
