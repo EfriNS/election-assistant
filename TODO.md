@@ -2,6 +2,7 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Phase 1.6/1.7: Analytics + feedback** — 4 quiz lifecycle events via Vercel Analytics; feedback form link on results page driven by env var. (2026-06-26)
 - **Phase 1.5: Repo publication prep** — README rewritten to MVP; LICENSE copyright; .env.example Upstash vars; secrets audit clean. (2026-06-26)
 - **Phase 1.2/1.3: Grounded AI blurbs** — Party blurbs now MUST include verbatim platform quote; prompt updated from optional to mandatory. Live-tested. (2026-06-26)
 - **Phase 1.1: Remove prototype artifacts** — "אב-טיפוס" label + Prototype D CTA + A/B/C footer removed from landing; single clean CTA. (2026-06-25)
@@ -19,8 +20,7 @@
 3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
-   - **1.6/1.7**: Analytics events + user feedback form (Google Form link) ← **NEXT**
-   - **1.4**: UI polish — mobile/RTL/accessibility pass
+   - **1.4**: UI polish — mobile/RTL/accessibility pass ← **NEXT**
 
    _Human tasks (parallel):_
    - **0.1** Advisor review of live app + `docs/score-review.md` (8 weak discriminators flagged)

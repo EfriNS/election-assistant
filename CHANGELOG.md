@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-06-26 — Analytics event tracking + user feedback form (Phase 1.6/1.7)
+
+### Phase 1.6 — Quiz lifecycle events
+
+Added 4 `track()` calls via `@vercel/analytics/react` in `app/prototype-e/page.tsx`:
+
+| Event | Properties | When |
+|---|---|---|
+| `quiz_started` | `{tone, depth}` | User leaves rank step → enters questions |
+| `topic_completed` | `{topicId}` | Each topic advances (no answer content tracked) |
+| `quiz_completed` | `{topicCount}` | User clicks "לתוצאות" from close step |
+| `quiz_abandoned` | `{step: "rank"}` | User goes back to homepage from rank screen |
+
+### Phase 1.7 — Feedback form link
+
+Added "שלחו לנו הערה ↗" link to `components/UnifiedResultsPage.tsx`, between the Share button and home navigation. The link only renders when `NEXT_PUBLIC_FEEDBACK_FORM_URL` is set — hidden in local dev by default.
+
+`.env.example` documents the new var with setup instructions (create Google Form → copy publish URL → set var in Vercel dashboard).
+
+**Commits**: `5b92919`, `82c2131`
+
+---
+
 ## 2026-06-26 — Repository publication prep (Phase 1.5)
 
 - **README.md**: rewritten from "early planning stage" placeholder to accurate MVP description — how it works, scoring algorithm (deterministic blend + AI), 10 parties in scope, tech stack, local setup instructions, test commands, platform data format, guiding principles
