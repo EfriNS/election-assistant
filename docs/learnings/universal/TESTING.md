@@ -26,6 +26,8 @@
 
 5. **Test business logic, not library internals** - Don't test third-party validation - test YOUR processing logic. Focus on integration points, not library behavior. (#first:2025-10-15)
 
+5a. **Tests must import the real function, not an inlined copy** - A test that duplicates logic instead of importing it cannot catch bugs in production code. If the function lives in a `"use client"` component and can't be imported, that's the signal to extract it to a pure module first. (#first:2026-06-25)
+
 6. **Test components must match production error patterns** - Test components should mirror production async handlers with try-catch, not simplified inline handlers. (#first:2025-10-16)
 
 7. **Test gaps reveal architecture quality** - 0% coverage on services = hard to test = bad design. Use coverage as architecture quality metric. (#first:2025-10-21)

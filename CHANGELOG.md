@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-06-25 — Extract calcResults + real-import scoring tests (Phase 0.7)
+
+### What We Did
+
+Extracted the `calcResults` scoring function from the `"use client"` page component into a standalone `lib/scoring.ts` module, then updated the existing test file to import the real function instead of inlining a copy.
+
+### Why it matters
+
+The previous `tests/calcResults.test.ts` duplicated the function verbatim. Any bug introduced in the actual `page.tsx` copy would go undetected — the tests exercised a parallel copy, not production code. Now the tests cover the real path.
+
+### Changes
+
+- **`lib/scoring.ts`** (new) — exports `calcResults()`, `TopicQA` type, `FOLLOW_UP_AI_WEIGHT`. No React deps; importable from both server code and test files.
+- **`app/prototype-e/page.tsx`** — replaced ~60 lines of inline scoring logic with `import { calcResults, TopicQA } from "@/lib/scoring"`. Comment block replaces the removed type definition.
+- **`tests/calcResults.test.ts`** — now imports from `lib/scoring`; fixtures updated to use real 10-party `PARTIES` array (index 0 = hadash, index 9 = otzmah-yehudit); added 3 new test cases: multi-topic weight accumulation, deterministic stability, `FOLLOW_UP_AI_WEIGHT` constant value.
+
+### Test count: 44 → 47
+
+### Commits
+- `d9e8e51` refactor(scoring): extract calcResults to lib/scoring.ts + import real function in tests
+- `9ec4561` Merge test/scoring-unit-tests → main
+
+---
+
 ## 2026-06-25 — Security hardening + quota degradation (Phase 0.4 / 0.5)
 
 ### What We Did
