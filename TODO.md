@@ -2,10 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Phase 1.4: UI polish** — role="progressbar" on all bars; focus-visible rings on all buttons; RTL ✦ fix; stale share text removed. (2026-06-26)
 - **Phase 1.6/1.7: Analytics + feedback** — 4 quiz lifecycle events via Vercel Analytics; feedback form link on results page driven by env var. (2026-06-26)
 - **Phase 1.5: Repo publication prep** — README rewritten to MVP; LICENSE copyright; .env.example Upstash vars; secrets audit clean. (2026-06-26)
-- **Phase 1.2/1.3: Grounded AI blurbs** — Party blurbs now MUST include verbatim platform quote; prompt updated from optional to mandatory. Live-tested. (2026-06-26)
-- **Phase 1.1: Remove prototype artifacts** — "אב-טיפוס" label + Prototype D CTA + A/B/C footer removed from landing; single clean CTA. (2026-06-25)
 
 > See CHANGELOG.md for complete details.
 
@@ -20,7 +19,7 @@
 3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
-   - **1.4**: UI polish — mobile/RTL/accessibility pass ← **NEXT**
+   - **1.8**: Soft launch — share with 5-10 trusted users; monitor Langfuse, quota alerts, mobile layout
 
    _Open decisions (discuss before implementing):_
    - **💬 Feedback channel** — currently wired to Google Form via `NEXT_PUBLIC_FEEDBACK_FORM_URL`. Discuss: Google Form vs. Slack (e.g. incoming webhook) vs. email (mailto:) vs. Tally/Typeform. Trade-offs: friction, anonymity, aggregation ease, setup cost.

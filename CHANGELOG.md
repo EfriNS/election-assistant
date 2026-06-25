@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-06-26 — UI polish: accessibility, RTL, focus management (Phase 1.4)
+
+### Accessibility
+
+- `components/PartyResultCard.tsx`: Added `role="progressbar" aria-valuenow aria-valuemin aria-valuemax aria-label` to the score bar. Added `aria-label` with party name to the grounding accordion trigger button.
+- `app/prototype-e/page.tsx`: Added `role="progressbar"` + aria attributes to the QuestionHeader progress bar.
+
+### Focus rings (keyboard navigation)
+
+Added `focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none` to all interactive elements:
+- QuestionHeader back button (`app/prototype-e/page.tsx:82`)
+- Opener option buttons and "המשך ←" free-text submit button
+- Follow-up option buttons, follow-up "המשך ←" submit, and skip button
+- Opener skip button
+- Bucket priority buttons and CTA in `components/PrioritiesStep.tsx`
+- Share buttons (both variants) in `components/ShareButton.tsx`
+- Grounding accordion button in `components/PartyResultCard.tsx`
+
+### RTL fix
+
+- `components/PartyResultCard.tsx`: `ml-1` → `mr-1` on the ✦ AI icon (was pushing it to the wrong side in an RTL layout).
+
+### Share text
+
+- `components/ShareButton.tsx`: Removed stale "אב-טיפוס חינמי" from `SHARE_TEXT`. New text: "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? הכלי חינמי ומסביר למה"
+
+**Commits**: `23d3550`, `a1c10fe`
+
+---
+
 ## 2026-06-26 — Analytics event tracking + user feedback form (Phase 1.6/1.7)
 
 ### Phase 1.6 — Quiz lifecycle events
