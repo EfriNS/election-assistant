@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-06-25 — Remove prototype artifacts from landing page (Phase 1.1)
+
+Cleaned up `app/page.tsx` for MVP launch:
+- Removed `"אב-טיפוס"` label from the headline area
+- Removed Prototype D secondary CTA ("מעדיפים שיחה חופשית עם AI?") — `/prototype-d` route stays accessible by direct URL
+- Removed old-prototype footer (A/B/C links + "גרסאות קודמות לבדיקה" label)
+- Simplified `handleStart()` to a no-arg function navigating directly to `/prototype-e`
+
+Net: −26 lines. Landing page is now production-quality with a single clear CTA.
+
+**Commits**: `f6b857e`, `d37b646`
+
+---
+
 ## 2026-06-25 — Extract calcResults + real-import scoring tests (Phase 0.7)
 
 ### What We Did

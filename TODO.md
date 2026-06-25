@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Phase 1.1: Remove prototype artifacts** — "אב-טיפוס" label + Prototype D CTA + A/B/C footer removed from landing; single clean CTA. (2026-06-25)
 - **Phase 0.7: Scoring tests** — calcResults extracted to lib/scoring.ts; tests now import real function (44→47 tests). (2026-06-25)
 - **Phase 0.3/0.4/0.5: Security hardening + grounding quotes in results** — 460+ platform quotes surfaced in party accordion; rate limiting (Upstash Redis); input sanitisation; PII fix in Langfuse; quota degradation verified end-to-end. (2026-06-25)
-- **UI polish + Vercel deployment fix** — Badge on RHS with readable colour; 'כתבו בעצמכם' always-open textarea; fixed hourly cron + TS2322 error that blocked 17 Vercel builds. (2026-06-25)
 
 > See CHANGELOG.md for complete details.
 
@@ -19,8 +19,7 @@
 3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
-   - **1.1**: Remove prototype artifacts from landing page; remove Prototype D link (keep route) ← **NEXT**
-   - **1.2/1.3**: Update `/api/results` prompt to explicitly cite platform quotes in blurbs
+   - **1.2/1.3**: Update `/api/results` prompt to explicitly cite platform quotes in blurbs ← **NEXT**
    - **1.5**: Secrets audit + README + LICENSE (MIT) for repo publication
    - **1.6/1.7**: Analytics events + user feedback form (Google Form link)
    - **1.4**: UI polish — mobile/RTL/accessibility pass
