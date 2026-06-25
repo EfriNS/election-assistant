@@ -18,9 +18,9 @@ export default function Home() {
   const handleTone = (t: Tone) => { setTone(t); sessionStorage.setItem("landing_tone", t); };
   const handleDepth = (d: Depth) => { setDepth(d); sessionStorage.setItem("landing_depth", d); };
 
-  const handleStart = (path: "/prototype-e" | "/prototype-d") => {
+  const handleStart = () => {
     if (!ready) return;
-    router.push(`${path}?tone=${tone}&depth=${depth}`);
+    router.push(`/prototype-e?tone=${tone}&depth=${depth}`);
   };
 
   return (
@@ -29,7 +29,6 @@ export default function Home() {
 
         {/* Headline */}
         <div className="mb-12">
-          <p className="text-xs font-medium text-gray-400 tracking-widest uppercase mb-3">אב-טיפוס</p>
           <h1 className="text-3xl font-bold text-gray-900 mb-3">עוזר הבחירות</h1>
           <p className="text-gray-500 text-sm leading-relaxed">
             גלו איפה אתם עומדים מול המפלגות — בצורה שקופה ומנומקת
@@ -106,33 +105,12 @@ export default function Home() {
 
         {/* CTA */}
         <button
-          onClick={() => handleStart("/prototype-e")}
+          onClick={handleStart}
           disabled={!ready}
-          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors mb-4 disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           התחילו ←
         </button>
-
-        <p className="text-center text-sm text-gray-400 mb-10">
-          מעדיפים שיחה חופשית עם AI?{" "}
-          <button
-            onClick={() => handleStart("/prototype-d")}
-            disabled={!ready}
-            className="text-teal-600 hover:text-teal-800 underline disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            לחצו כאן
-          </button>
-        </p>
-
-        {/* Footer */}
-        <div className="border-t border-gray-100 pt-6 text-center">
-          <p className="text-xs text-gray-400 mb-2">גרסאות קודמות לבדיקה:</p>
-          <div className="flex justify-center gap-4 text-xs text-gray-400">
-            <a href="/prototype-a" className="hover:text-gray-600">א — הצהרות</a>
-            <a href="/prototype-b" className="hover:text-gray-600">ב — עדיפויות</a>
-            <a href="/prototype-c" className="hover:text-gray-600">ג — דילמות</a>
-          </div>
-        </div>
 
       </div>
     </main>
