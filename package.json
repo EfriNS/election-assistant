@@ -18,6 +18,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
     "@google/genai": "^2.8.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.5.0",
     "langfuse": "^3.38.20",

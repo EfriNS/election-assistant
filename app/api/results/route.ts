@@ -119,11 +119,8 @@ export async function POST(req: NextRequest) {
     name: "results-generation",
     metadata: { model, topParty: topParties[0]?.id ?? null },
   });
-  const generation = trace?.generation({
-    name: "gemini-results",
-    model,
-    input: userMessage,
-  });
+  // Do not pass userMessage as input — it contains user answers (PII).
+  const generation = trace?.generation({ name: "gemini-results", model });
 
   const ai = new GoogleGenAI({ apiKey });
 

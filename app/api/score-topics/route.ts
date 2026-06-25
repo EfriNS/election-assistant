@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
 import { PARTIES } from "@/lib/parties";
 import { GROUNDINGS, getTopicGroundings } from "@/lib/groundings";
+import { sanitizeUserInput } from "@/lib/sanitize";
 
 function makeLangfuse() {
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
@@ -113,17 +114,27 @@ function parseScores(
 
 export async function POST(req: NextRequest) {
   const body = await req.json() as { topics: TopicQAForScoring[] };
-  const { topics } = body;
+  const rawTopics = body.topics;
 
   // Input validation
-  if (!Array.isArray(topics) || topics.length === 0 || topics.length > 9) {
+  if (!Array.isArray(rawTopics) || rawTopics.length === 0 || rawTopics.length > 9) {
     return NextResponse.json({ errorCode: "INVALID_INPUT" }, { status: 400 });
   }
-  for (const t of topics) {
-    if (!t.topicId || !t.openerAnswer || t.openerAnswer.length > 500) {
+  for (const t of rawTopics) {
+    if (!t.topicId || !t.openerAnswer) {
       return NextResponse.json({ errorCode: "INVALID_INPUT" }, { status: 400 });
     }
   }
+
+  // Sanitize all user text before building the AI prompt
+  const topics: TopicQAForScoring[] = rawTopics.map((t) => ({
+    ...t,
+    openerAnswer: sanitizeUserInput(t.openerAnswer, 500),
+    followUpQA: t.followUpQA.map((fq) => ({
+      ...fq,
+      answer: sanitizeUserInput(fq.answer, 200),
+    })),
+  }));
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });
@@ -147,7 +158,8 @@ export async function POST(req: NextRequest) {
       partiesWithData,
     },
   });
-  const generation = trace?.generation({ name: "gemini-score-topics", model, input: prompt });
+  // Do not pass prompt as input — it contains user answers (PII).
+  const generation = trace?.generation({ name: "gemini-score-topics", model });
 
   try {
     const ai = new GoogleGenAI({ apiKey });
