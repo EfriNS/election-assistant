@@ -22,10 +22,14 @@
    _Next sessions:_
    - **1.4**: UI polish — mobile/RTL/accessibility pass ← **NEXT**
 
+   _Open decisions (discuss before implementing):_
+   - **💬 Feedback channel** — currently wired to Google Form via `NEXT_PUBLIC_FEEDBACK_FORM_URL`. Discuss: Google Form vs. Slack (e.g. incoming webhook) vs. email (mailto:) vs. Tally/Typeform. Trade-offs: friction, anonymity, aggregation ease, setup cost.
+   - **💬 Analytics depth** — currently 4 lifecycle events on Vercel Analytics. Discuss: (a) add richer events (tone/depth breakdown, answer-option distribution, free-text "other" adoption rate + content) vs. (b) migrate to Mixpanel free tier for cohorts, funnels, retention. Key events to consider: `option_selected {topicId, optionId}`, `free_text_submitted {topicId}`, `follow_up_asked {topicId, aspect}`.
+
    _Human tasks (parallel):_
    - **0.1** Advisor review of live app + `docs/score-review.md` (8 weak discriminators flagged)
    - **0.6** Content neutrality audit (3rd-party review of question framing)
-   - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*)
+   - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 
 4. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
