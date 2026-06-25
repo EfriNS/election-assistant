@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function RateLimitedPage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4" dir="rtl">
@@ -9,12 +11,12 @@ export default function RateLimitedPage() {
           <br />
           חזרו מחר ונשמח לעזור!
         </p>
-        <a
+        <Link
           href="/"
           className="inline-block text-sm text-teal-600 hover:text-teal-800 hover:underline"
         >
           ← חזרה לדף הבית
-        </a>
+        </Link>
       </div>
     </main>
   );
