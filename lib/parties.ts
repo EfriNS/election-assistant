@@ -49,6 +49,8 @@ export const PARTIES: Party[] = [
     subtitle: "בנט / לפיד",
     description: "מרכז — ממשל נקי, חינוך, הפרדת דת ומדינה.",
     website: "https://bennett2026.org.il/",
+    platformUrl: "https://bennett2026.org.il/plans/",
+    platformLabel: "תכניות ביחד",
   },
   {
     id: "yashar",
