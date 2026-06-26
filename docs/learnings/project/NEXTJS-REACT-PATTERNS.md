@@ -340,3 +340,38 @@ generation?.update({ output: text, usage: { input: promptTokens, output: candida
 ```
 
 Apply this pattern to every route that includes user-submitted text in the AI prompt.
+
+---
+
+## RTL Copy
+
+### Whitespace around `<strong>` is swallowed in RTL (#first:2026-06-26)
+
+In Hebrew RTL JSX, a space placed **between** a closing inline tag and the next text node can be silently dropped by the browser, merging the words:
+
+```jsx
+// ❌ Renders as "לפחות 3 נושאיםכ"חשוב"" — space eaten:
+יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים</strong> כ&quot;חשוב&quot;
+
+// ✅ Move the space inside the tag — always preserved:
+יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ&quot;חשוב&quot;
+```
+
+Rule: when a space must appear immediately after a closing inline tag in Hebrew text, put it inside the tag using `{" "}`.
+
+---
+
+### Don't interpolate dynamic values into the middle of Hebrew sentences (#first:2026-06-26)
+
+Interpolating a data-driven string into the middle of a natural-language sentence produces unreadable or grammatically broken Hebrew when the value is itself a phrase:
+
+```jsx
+// ❌ Breaks when platformLabel = "אין מצע בחירות רשמי":
+הציטוטים מבוססים על <span>{groundingData?.platformLabel}</span> ועלולים שלא לשקף...
+// → "הציטוטים מבוססים על אין מצע בחירות רשמי ועלולים..."
+
+// ✅ Keep the sentence self-contained; show the label separately or not at all:
+ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
+```
+
+Rule: sentences with interpolated values should be designed so any plausible value produces grammatical Hebrew. If you can't guarantee that, rewrite the sentence to not depend on the interpolated value.

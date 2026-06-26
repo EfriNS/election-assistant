@@ -1,5 +1,42 @@
 # Changelog
 
+## 2026-06-26 — Soft launch UX fixes + landing page copy
+
+### Soft launch feedback fixes (5 items, commits `4e8dadd`, `cba5296`)
+
+**1. Space bug in PrioritiesStep** (`components/PrioritiesStep.tsx:104`)
+- "לפחות 3 נושאיםכ"חשוב"" — RTL whitespace around `</strong>` was swallowed
+- Fix: moved `{" "}` inside the `<strong>` tag
+
+**2. Outdated-platform warning rewrite** (`components/PartyResultCard.tsx:100`)
+- Previous: interpolated `platformLabel` into "מבוססים על [label] ועלולים..." — grammatically broken when label was "אין מצע בחירות רשמי"
+- New: standalone sentence, no interpolation: "ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות"
+
+**3. Quote/answer matching** (`PartyResultCard`, `UnifiedResultsPage`, `page.tsx`)
+- Grounding accordion now shows "ענית: [opener answer]" above each topic's quotes
+- Threads `topicAnswerTexts: Record<string, string>` from `page.tsx` → `UnifiedResultsPage` → `PartyResultCard`
+- Only topics with an actual opener answer text are shown
+
+**4. Click-to-confirm on opener questions** (`app/prototype-e/page.tsx`)
+- Previously: clicking a structured option immediately called API + advanced screen
+- Now: click highlights selection; "המשך ←" button appears; API called only on confirm
+- New `selectOpenerOption()` (marks selection only) vs `handleOpenerAnswer()` (confirms + calls API)
+- Free-text "other" path unchanged (already two-step: type → click "המשך")
+
+**5. Landing page explanation** (`app/page.tsx`)
+- Added "how it works" info box: 3 bullets covering flow, data sources, privacy/neutrality
+- Added footer with GitHub link (repo still private — traffic visible in GitHub insights)
+
+### Landing page copy refinements (commits `98d02f1`, `1ec7ef5`, `94f2bdd`, `972fcc9`)
+
+- Tagline: "גלו איפה אתם עומדים מול המפלגות" → "גלו לאיזו מפלגה אתם הכי קרובים"
+- Removed emojis from info bullets (looked AI-generated)
+- "על בסיס מה?": now explicitly says parties without an official platform are flagged, and "במקורות האמינים ביותר שמצאנו" (not "מסמכים רשמיים") — honest about grounding quality
+- Footer: `text-gray-300` → `text-gray-400` (was nearly invisible)
+- GitHub link uncommented and active
+
+---
+
 ## 2026-06-26 — UI polish: accessibility, RTL, focus management (Phase 1.4)
 
 ### Accessibility
