@@ -31,6 +31,11 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
   const isOutdated = hasGrounding && groundingData?.platformAvailable === false;
   const sourceQuality = groundingData?.sourceQuality;
   const isLowQualitySource = sourceQuality === "thirdParty" || sourceQuality === "outdated";
+  const hasPlatformDoc =
+    groundingData?.platformAvailable === true &&
+    sourceQuality === "official" &&
+    !party.platformLabel?.includes("לא מצע");
+  const accordionLabel = hasPlatformDoc ? "מה כתוב במצע?" : "מה כתוב בפרסומי המפלגה?";
 
   return (
     <div className={`rounded-xl p-4 ${isTop ? `border-2 ${c.highlight}` : "bg-white border border-gray-200"}`}>
@@ -104,9 +109,9 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             onClick={() => setGroundingOpen((o) => !o)}
             className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors w-full text-right focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
             aria-expanded={groundingOpen}
-            aria-label={`${party.name} — מה כתוב במצע?`}
+            aria-label={`${party.name} — ${accordionLabel}`}
           >
-            <span className="flex-1 text-right">מה כתוב במצע?</span>
+            <span className="flex-1 text-right">{accordionLabel}</span>
             <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>
           </button>
 
@@ -142,9 +147,6 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                           &ldquo;{e.text}&rdquo;
                         </p>
                         <div className="flex items-center gap-2 mt-1 flex-wrap">
-                          {e.aspect && (
-                            <span className="text-xs text-gray-400 italic">{e.aspect}</span>
-                          )}
                           <a
                             href={e.sourceUrl}
                             target="_blank"
