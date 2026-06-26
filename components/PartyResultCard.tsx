@@ -84,6 +84,8 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
           <a href={party.platformUrl} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>
             {party.platformLabel ?? "מצע רשמי"} ↗
           </a>
+        ) : hasGrounding ? (
+          <span className="text-xs text-amber-500">ללא מצע רשמי</span>
         ) : (
           <span className="text-xs text-red-400 font-medium">אין מצע מפורסם</span>
         )}
@@ -123,6 +125,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                       ענית: {topicAnswerTexts[tg.topicId]}
                     </p>
                   )}
+                  <p className="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
                   <div className="space-y-2">
                     {tg.entries.map((e, i) => (
                       <div key={i} className="border-r-2 border-gray-200 pr-3">
@@ -142,7 +145,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                             rel="noopener noreferrer"
                             className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
                           >
-                            מקור ↗
+                            מקור — {party.platformLabel ?? "מצע רשמי"} ↗
                           </a>
                           <span className="text-xs text-gray-300">{e.dateRetrieved}</span>
                         </div>

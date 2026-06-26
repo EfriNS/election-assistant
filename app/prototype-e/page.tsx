@@ -556,7 +556,13 @@ function PrototypeEInner() {
         topicAnswerTexts={Object.fromEntries(
           topicsToAsk
             .filter((tid) => topicQA[tid]?.openerAnswerText)
-            .map((tid) => [tid, topicQA[tid].openerAnswerText])
+            .map((tid) => {
+              const qa = topicQA[tid];
+              const followUpAnswers = (qa.followUps ?? []).map((fq) => fq.answer);
+              return [tid, followUpAnswers.length > 0
+                ? `${qa.openerAnswerText} | ${followUpAnswers.join(" | ")}`
+                : qa.openerAnswerText];
+            })
         )}
         accentColor="teal"
         onBack={() => setStep("close")}
@@ -622,6 +628,8 @@ function PrototypeEInner() {
             {currentFollowUp.options.map((opt, i) => {
               const isOther = opt === OTHER_OPTION;
               const num = i + 1;
+              // Strip AI-added leading numbers ("1. ", "2) ", etc.) — our circles already number options.
+              const displayOpt = opt.replace(/^\d+[\.\)]\s*/, "");
               if (isOther) {
                 return (
                   <div key={i} className={`border-2 rounded-xl px-5 py-4 flex items-start gap-3 transition-all ${
@@ -653,10 +661,10 @@ function PrototypeEInner() {
                 );
               }
               return (
-                <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${opt}`)}
+                <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${displayOpt}`)}
                   className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
                   <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-400 text-gray-700 flex items-center justify-center text-sm font-semibold">{num}</span>
-                  <span className="flex-1 text-right leading-snug">{opt}</span>
+                  <span className="flex-1 text-right leading-snug">{displayOpt}</span>
                 </button>
               );
             })}
