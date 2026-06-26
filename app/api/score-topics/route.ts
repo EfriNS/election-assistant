@@ -166,7 +166,7 @@ export async function POST(req: NextRequest) {
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { temperature: 0.2, maxOutputTokens: 600 },
+      config: { temperature: 0.2, maxOutputTokens: 1500 },
     });
 
     const text = response.text ?? "";

@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     const chat = ai.chats.create({
       model,
       history: [],
-      config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.5, maxOutputTokens: 700 },
+      config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.5, maxOutputTokens: 1500 },
     });
 
     const response = await chat.sendMessage({ message: userMessage });

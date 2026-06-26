@@ -191,7 +191,7 @@ function PrototypeEInner() {
       } catch {
         // silently degrade: calcResults falls back to deterministic-only
       } finally {
-        if (active) setIsScoring(false);
+        setIsScoring(false);
       }
     }
     runScoring();
