@@ -60,6 +60,29 @@
 
 ### Planning & Phasing
 
+41. **Product/user perspective FIRST — before implementation options** — Planning proposals must open with the product and user perspective (user journey, satisfaction, what changes for the user) BEFORE presenting technical options. Engineering-first plans get approved or rejected on wrong criteria. This session: the first planning agent presented a fully deterministic architecture that would have removed all AI agency from the flow. The user spotted the direction error only after asking explicitly for a product-level explanation — significant time and tokens wasted. A product-first plan would have surfaced the constraint ("we are building an AI assistant, AI should drive the conversation") before any implementation was designed.
+
+   **Required structure for any non-trivial plan:**
+   1. Product impact: what changes for the user? (user journey, satisfaction, what's better/worse)
+   2. Design principle: what constraint governs the approach? (e.g., "AI agency must be preserved")
+   3. Implementation: how does the code change?
+
+   If the user can't evaluate the plan without reading the implementation section, the plan is structured wrong. (#first:2026-06-26)
+
+42. **Fresh-agent "from-scratch thinking" as a verification practice** — When deep in a technical implementation (especially after context accumulates), spawning a fresh agent with ONLY the product problem — no solution context, no current architecture — produces genuinely independent thinking that can catch fundamental direction errors.
+
+   **This session pattern:**
+   - First planning agent: inherited session context → anchored on wrong direction (deterministic > AI)
+   - Second planning agent: given only product constraint ("AI assistant — direction must be AI-driven") → arrived at the correct architecture independently
+
+   **When to use:**
+   - When a planning output feels off but it's hard to articulate why
+   - When you notice yourself defending a direction rather than evaluating it
+   - After any complex planning session before starting implementation
+   - When the user signals uncertainty ("I'm not sure about this direction")
+
+   **Key rule:** give the fresh agent ONLY the product problem and constraints — NOT the current solution. The value comes from independence from session bias. If the agent independently arrives at the same approach, confidence is higher. If it diverges, that's a signal to re-examine. (#first:2026-06-26)
+
 18. **Check version/dependency requirements early in setup** - When integrating external systems (APIs, protocols, frameworks), verify version requirements BEFORE troubleshooting. Saves time by catching root cause immediately. Example: MCP required Claude Desktop v0.14.10+, but v0.12.16 installed → spent time troubleshooting config/paths before version check revealed simple issue.
    [Cross-cutting: DEBUGGING]
    (#first:2025-11-11)

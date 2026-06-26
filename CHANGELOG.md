@@ -1,5 +1,45 @@
 # Changelog
 
+## 2026-06-26 — Results UX polish + sourceQuality data field (commits `8dbef25`, `64d5a84`)
+
+### Fix: double-numbered follow-up options (`app/prototype-e/page.tsx`, `app/api/follow-up/route.ts`)
+Root cause: AI was occasionally formatting options as "1. text", "2. text" internally,
+which appeared alongside the client-rendered numbered circles. Fixed at two levels:
+- Prompt: explicit instruction "do NOT number the options — numbers are added by the UI"
+- Client: regex strip `^\d+[\.\)]\s*` on option text before display and before storing the
+  answer — silent safety net in case AI deviates despite the instruction.
+
+### Fix: "ענית" section now includes follow-up answers (`app/prototype-e/page.tsx`)
+`topicAnswerTexts` previously contained only the opener answer text. Now concatenates
+follow-up answers with ` | ` separator so the full answer chain appears in the card
+(e.g., "2. תמיכה חלקית | 1. הסכם שלום בתנאים").
+
+### Fix: proof-point section now clearly labeled (`components/PartyResultCard.tsx`)
+Added "עמדת המפלגה במסמכיה:" header above the grounding quote list so it's clear
+these are evidence items, not continuation of the "ענית" text.
+
+### Fix: "מקור" link now shows source type (`components/PartyResultCard.tsx`)
+Changed from generic "מקור ↗" to "מקור — [platformLabel] ↗" (e.g.,
+"מקור — יעדים (לא מצע) ↗") so source type is visible without clicking.
+
+### Feat: `sourceQuality` field on all grounding JSON files
+New structured field `"sourceQuality": "official" | "thirdParty" | "outdated"` added
+to all 10 `data/groundings/*.json` files. Threaded through `PartyGroundings`,
+`PartyGroundingResult`, and `/api/results` route.
+
+Platform label display now uses `sourceQuality`:
+- `official` + no `platformUrl` → amber "ללא מצע רשמי" (party first-party sources, no official manifesto)
+- `thirdParty` → red "מקורות חיצוניים" (עוצמה, רע"ם, יהדות התורה)
+- `outdated` → red "מקורות מיושנים" (ליכוד 2016, ש"ס 2006)
+- no grounding at all → red "אין מצע מפורסם" (fallback)
+
+Classifications (to be reviewed by advisor in TODO item #1):
+- official: ביתנו, ביחד, הדמוקרטים, ישר!, חד"ש
+- thirdParty: עוצמה יהודית, רע"ם, יהדות התורה
+- outdated: ליכוד (2016 charter), ש"ס (2006 principles)
+
+---
+
 ## 2026-06-26 — AI-first follow-up quality fix (commit `55ef76c`)
 
 ### Root causes fixed (three compounding bugs → bad follow-up questions)

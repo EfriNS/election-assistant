@@ -167,6 +167,31 @@ The `active` flag prevents `setState` calls on unmounted components (prevents Re
 
 ---
 
+### React stale state in async callbacks: inject current value inline (#first:2026-06-26)
+
+When a callback closes over React state and calls a function that needs the *current* value of that state — but React hasn't flushed a `setState` call yet — the function sees the stale (pre-update) value.
+
+**Symptom in this project**: `callFollowUpAPI` called `calcResults(buckets, topicQA, ...)` to find close parties, but `topicQA` didn't include the current opener answer yet because `setTopicQA()` was called but not yet flushed. The current topic contributed zero to ranking, so all parties looked equally relevant.
+
+**Fix**: build the authoritative value inline from the values in scope, before passing to the function:
+```typescript
+// topicQA state doesn't have openerAnswerId yet (setState hasn't flushed)
+const syntheticTopicQA: Record<string, TopicQA> = {
+  ...topicQA,
+  [topicId]: {
+    openerAnswerId: openerAnswerId ?? "",  // from local variable — always current
+    openerAnswerText,
+    followUps: followUpQA,
+    coveredAspects: topicQA[topicId]?.coveredAspects,
+  },
+};
+const rankings = calcResults(buckets, syntheticTopicQA, questionSet);
+```
+
+Rule: any callback that reads React state and then passes it to a pure function should ask: "could state have been set but not flushed between the setter call and this function call?" If yes, build a synthetic object from local variables. (`app/prototype-e/page.tsx:callFollowUpAPI`) (#first:2026-06-26)
+
+---
+
 ## Testing (Vitest)
 
 ### Mocking constructable classes: use regular function, not arrow function (#first:2026-06-24)

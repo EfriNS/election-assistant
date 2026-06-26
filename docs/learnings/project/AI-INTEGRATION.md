@@ -20,6 +20,20 @@
 
 6. **Separate conversation from scoring — two API calls beats one doing both** — Having the chat AI score parties while also collecting preferences (conflating two jobs in one prompt) produces non-deterministic scoring and complicates future grounding. Better: conversation API collects preferences naturally; a second focused extraction API (`/api/results-d`) takes the full transcript and produces structured `{ scores, profile, partyBlurbs }`. The extraction prompt can be carefully crafted without risking the conversational tone. (#first:2026-06-17)
 
+### Prompt vs. Client Fix: Fix Root Cause First, Keep Defensive Strip (#first:2026-06-26)
+
+When the AI produces malformatted output (e.g., numbered option text "1. text" when options should be plain), fix the prompt FIRST — then keep a lightweight defensive transform in the client as a silent safety net.
+
+**Wrong order:** add a client-side regex strip → declare it fixed.
+**Right order:**
+1. Identify WHY the AI produces the format: the prompt format instruction says `"options": ["...", "...", "..."]` but never says "don't number items". The AI interprets the list structure as an invitation to number.
+2. Add an explicit negative instruction to the prompt: *"Write plain text only — do NOT number the options (no '1.', '2.', etc.) — numbers are added by the UI."*
+3. Keep the client strip (`opt.replace(/^\d+[\.\)]\s*/, "")`) as a fallback that fires silently if the model deviates.
+
+Rationale: the prompt fix addresses non-determinism at the source. The client strip catches rare regressions without cluttering logs or user experience. This pattern (fix upstream + silent defensive layer) applies to any AI output format issue. (#first:2026-06-26)
+
+---
+
 ### Error Handling (Never Expose Raw SDK Errors)
 
 4. **Translate API errors to structured codes at the boundary** — The Gemini SDK throws errors whose `.message` is a raw JSON blob (includes the full HTTP response). Passing this to the frontend shows incomprehensible text to users. Always inspect the error at `route.ts` and return `{ errorCode: "QUOTA_EXCEEDED" | "AUTH_ERROR" | "SERVER_ERROR" }`. Map in the UI to friendly Hebrew strings. (#first:2026-06-16)

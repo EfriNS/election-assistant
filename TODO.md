@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Results UX polish + sourceQuality** — strip AI-numbered options; follow-ups in "ענית"; sourceQuality field (official/thirdParty/outdated) drives red/amber/green labels. (2026-06-26)
 - **Follow-up quality fix (AI-first)** — stale-state fix, close-party grounding filter, suggestedNextDimension, freeTextInterpretation loop. (2026-06-26)
 - **Beta badge + scoring explainer** — "בטא" chip on landing; collapsible "כיצד מחושב הציון?" on results covering -2/+2, AI follow-ups, priority weights. (2026-06-26)
-- **Rate limiting fix** — raised page limit to 100/24h (CGNAT), added per-route limits for /api/follow-up (500) and /api/score-topics (100). (2026-06-26)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,7 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Advisor review before MVP** — All 10 parties grounded; scores auto-refined; follow-up AI now guided by keyDimensions. Have advisor review the live app and `docs/score-review.md` (8 weak discriminators flagged in health + economy/growth topics) before launch.
+1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
 2. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
 
@@ -22,6 +22,7 @@
    - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
 
    _Open decisions (discuss before implementing):_
+   - **💬 "ענית" for un-grounded topics** — results accordion only shows "ענית" for topics where the party has grounding entries. Should "ענית" appear even when there's no grounding data for that party+topic? Would require restructuring the accordion beyond grounding pairs.
    - **💬 Feedback channel** — currently wired to Google Form via `NEXT_PUBLIC_FEEDBACK_FORM_URL`. Discuss: Google Form vs. Slack (e.g. incoming webhook) vs. email (mailto:) vs. Tally/Typeform. Trade-offs: friction, anonymity, aggregation ease, setup cost.
    - **💬 Analytics depth** — currently 4 lifecycle events on Vercel Analytics. Discuss: (a) add richer events (tone/depth breakdown, answer-option distribution, free-text "other" adoption rate + content) vs. (b) migrate to Mixpanel free tier for cohorts, funnels, retention. Key events to consider: `option_selected {topicId, optionId}`, `free_text_submitted {topicId}`, `follow_up_asked {topicId, aspect}`.
 
