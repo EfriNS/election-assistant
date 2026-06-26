@@ -122,6 +122,7 @@ function PrototypeEInner() {
   const [openerDraft, setOpenerDraft] = useState("");
   const [showFollowUpInput, setShowFollowUpInput] = useState(false);
   const [followUpDraft, setFollowUpDraft] = useState("");
+  const [selectedFollowUpAnswer, setSelectedFollowUpAnswer] = useState<string | null>(null);
 
   const [closeText, setCloseText] = useState("");
 
@@ -154,6 +155,11 @@ function PrototypeEInner() {
 
   // Fire /api/score-topics when entering the close step. This runs in the background while
   // the user writes their close-step text, hiding latency before results render.
+  useEffect(() => {
+    setSelectedFollowUpAnswer(null);
+    setFollowUpDraft("");
+  }, [currentFollowUp]);
+
   useEffect(() => {
     if (step !== "close") return;
 
@@ -630,6 +636,8 @@ function PrototypeEInner() {
               const num = i + 1;
               // Strip AI-added leading numbers ("1. ", "2) ", etc.) — our circles already number options.
               const displayOpt = opt.replace(/^\d+[\.\)]\s*/, "");
+              const answerText = `${num}. ${displayOpt}`;
+              const selected = selectedFollowUpAnswer === answerText;
               if (isOther) {
                 return (
                   <div key={i} className={`border-2 rounded-xl px-5 py-4 flex items-start gap-3 transition-all ${
@@ -642,7 +650,7 @@ function PrototypeEInner() {
                       <textarea
                         data-hj-allow
                         value={followUpDraft}
-                        onChange={(e) => setFollowUpDraft(e.target.value)}
+                        onChange={(e) => { setFollowUpDraft(e.target.value); setSelectedFollowUpAnswer(null); }}
                         placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
                         className="w-full text-sm resize-none bg-transparent focus:outline-none placeholder-gray-400 leading-snug text-right"
                         rows={2}
@@ -661,14 +669,29 @@ function PrototypeEInner() {
                 );
               }
               return (
-                <button key={i} onClick={() => handleFollowUpAnswer(`${num}. ${displayOpt}`)}
-                  className="border-2 border-gray-200 hover:border-teal-400 hover:bg-teal-50 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
-                  <span className="shrink-0 w-7 h-7 rounded-full border-2 border-gray-400 text-gray-700 flex items-center justify-center text-sm font-semibold">{num}</span>
+                <button key={i} onClick={() => { setSelectedFollowUpAnswer(answerText); setFollowUpDraft(""); }}
+                  className={`border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
+                    selected
+                      ? "border-teal-500 bg-teal-50 text-teal-900"
+                      : "border-gray-200 hover:border-teal-400 hover:bg-teal-50"
+                  }`}>
+                  <span className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${
+                    selected ? "border-teal-400 text-teal-600" : "border-gray-400 text-gray-700"
+                  }`}>{num}</span>
                   <span className="flex-1 text-right leading-snug">{displayOpt}</span>
                 </button>
               );
             })}
           </div>
+
+          {selectedFollowUpAnswer && (
+            <button
+              onClick={() => handleFollowUpAnswer(selectedFollowUpAnswer)}
+              className="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none mb-3"
+            >
+              המשך ←
+            </button>
+          )}
 
           <button onClick={() => advanceToNextTopic(null)}
             className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
