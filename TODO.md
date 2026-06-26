@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **/second-opinion skill** — new Claude Code skill: spawn fresh Plan agent with product problem + constraint only, no solution context, to break session bias. (2026-06-26)
 - **Results UX polish + sourceQuality** — strip AI-numbered options; follow-ups in "ענית"; sourceQuality field (official/thirdParty/outdated) drives red/amber/green labels. (2026-06-26)
 - **Follow-up quality fix (AI-first)** — stale-state fix, close-party grounding filter, suggestedNextDimension, freeTextInterpretation loop. (2026-06-26)
-- **Beta badge + scoring explainer** — "בטא" chip on landing; collapsible "כיצד מחושב הציון?" on results covering -2/+2, AI follow-ups, priority weights. (2026-06-26)
 
 > See CHANGELOG.md for complete details.
 

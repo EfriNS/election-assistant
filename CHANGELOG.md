@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-06-26 — /second-opinion skill (commit `7fc5d56`)
+
+New Claude Code skill: `.claude/skills/second-opinion/SKILL.md`
+
+Spawns a fresh `Plan` subagent with only the product problem + governing constraint — no current-solution context — to get an independent architectural perspective and break session bias. Encodes the pattern discovered this session where a second planning agent (given only the AI-first constraint, not the current solution) independently arrived at the correct architecture.
+
+Key elements: product impact before implementation, explicit "no prior solution" instruction, `Plan` not `fork` (fork inherits session context), convergence/divergence as a signal for confidence or re-examination.
+
+Noted as universal — if used frequently across projects, promote to `~/.claude/skills/`.
+
+---
+
 ## 2026-06-26 — Results UX polish + sourceQuality data field (commits `8dbef25`, `64d5a84`)
 
 ### Fix: double-numbered follow-up options (`app/prototype-e/page.tsx`, `app/api/follow-up/route.ts`)
