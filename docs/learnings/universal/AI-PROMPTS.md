@@ -10,6 +10,8 @@
 
 1. **Token budget awareness for AI prompts** - Check prompt size and token limits BEFORE adding content. Prompt growing too large → AI hits limit → truncated output. (#first:2025-10-08)
 
+1b. **Non-English output needs ~2× more tokens** - Hebrew, Arabic, CJK, and other non-Latin scripts tokenize less efficiently than English (~1 token per 1.5 chars vs. ~1 per 4 chars for ASCII). A 1400-char Hebrew response needs 700–900 output tokens; the same length in English would need ~350. Set `maxOutputTokens` generously when the model's output language is not English — a limit that works for English will routinely truncate Hebrew/Arabic. Truncated AI response → JSON.parse failure, not a graceful error. (#first:2026-06-26)
+
 2. **Condensed examples maintain quality while saving tokens** - Reduce verbose examples to condensed format. Pattern-based examples > exhaustive repetition. (#first:2025-10-08)
 
 3. **Revert unnecessary AI prompt complexity** - Don't over-engineer solutions to problems caused by other changes. If "we used to get perfect output before," revert to original format that worked.

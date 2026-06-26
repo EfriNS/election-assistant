@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-06-26 — Bug fix: results-generation JSON truncation + stuck spinner (commits `dc4b1f4`, merge `fcfcb3e`)
+
+### Bug 1: `results-generation` ERROR — intermittent JSON parse failure in `/api/results`
+
+**Root cause**: `maxOutputTokens: 700` was too small for the Hebrew output (profile paragraph + 3 party blurbs with verbatim quotes). Hebrew tokenizes less efficiently than English (~1 token per 1.5 chars vs. ~1 per 4 chars for ASCII), so the ~1400-char output routinely needed 700–900 tokens — right at or over the cap. Truncated response → `JSON.parse` threw `"Unexpected end of JSON input"` / `"Expected ',' or '}' after property value"` → route returned 500.
+
+Confirmed via Langfuse: observation `level: "ERROR"`, output field contained the raw `JSON.parse` exception. Successful trace from 5 hours earlier (same model) showed the full 1400-char output — limit was borderline.
+
+**Fix**: `app/api/results/route.ts` — `maxOutputTokens: 700` → `1500`.
+
+Same issue preemptively fixed in `/api/score-topics`: `maxOutputTokens: 600` → `1500`. Score-topics outputs 10 parties × N topics as JSON integers; at 9 topics that's ~100 key-value pairs (~3000 chars), which could also truncate for users who answer many topics.
+
+### Bug 2: Stuck "מחשב תוצאות מדויקות..." spinner — race condition in prototype-e
+
+**Root cause**: `useEffect` for `/api/score-topics` used the `active` flag to guard both `setAiScores` and `setIsScoring(false)`. When the user clicked "show results" before the fetch completed:
+1. Step changed from `"close"` → `"results"` → effect cleanup ran → `active = false`
+2. Fetch eventually resolved → `finally { if (active) setIsScoring(false); }` → skipped
+3. `isScoring` stuck permanently `true` → spinner shown forever
+
+**Fix**: `app/prototype-e/page.tsx` — removed `if (active)` guard from `setIsScoring(false)`. The `active` guard is preserved only on `setAiScores` (where stale score updates are genuinely unwanted). `isScoring` lives in the parent page component (never unmounts), so it's always safe to clear.
+
+**Diagnosis method**: Langfuse trace timestamps showed score-topics completing in 1.5s and results-generation failing 5s later — confirming the spinner issue was a separate race condition from the JSON error.
+
+---
+
 ## 2026-06-26 — /second-opinion skill (commit `7fc5d56`)
 
 New Claude Code skill: `.claude/skills/second-opinion/SKILL.md`

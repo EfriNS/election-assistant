@@ -165,6 +165,8 @@ useEffect(() => {
 
 The `active` flag prevents `setState` calls on unmounted components (prevents React "Can't perform state update on unmounted component" warning).
 
+**⚠️ Exception — don't guard loading/spinner state in a parent component** (#first:2026-06-26): If a loading flag (e.g. `isScoring`) lives in the parent page component (which never unmounts), guarding it with `if (active)` causes a race condition: when the user navigates away from the step that started the fetch, `active` becomes `false` before the fetch completes, so `setIsLoading(false)` is never called and the spinner gets stuck permanently. Only use `if (active)` for state updates that would cause React warnings (i.e., state in a child component that actually unmounts). Loading state in a persistent parent should always be cleared unconditionally.
+
 ---
 
 ### React stale state in async callbacks: inject current value inline (#first:2026-06-26)
