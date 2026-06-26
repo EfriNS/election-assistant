@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-06-26 — Rate limiting fix + production verification
+
+### Redis env var mismatch fixed (`middleware.ts`, `.env.example` — commit `20bbfc9`)
+
+Rate limiting was silently disabled in production because the code checked for
+`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (Upstash SDK defaults),
+but Vercel's KV/Upstash integration auto-injects `KV_REST_API_URL` / `KV_REST_API_TOKEN`.
+The two sets of names are the same values — just different naming conventions.
+
+**Fix**: switched `Redis.fromEnv()` → `new Redis({ url, token })` reading `KV_REST_API_URL`
+and `KV_REST_API_TOKEN` directly. Updated `.env.example` to match.
+
+**Verified live**: 12 rapid requests to `voteassist.me/prototype-e` from same IP →
+requests 1–9 returned 200, request 10 returned 307 → `/rate-limited` (1 slot was already
+consumed by an earlier test request, bringing the total to 10 before the loop finished).
+Rate limiting is confirmed active in production.
+
+Other env vars Vercel injects (`KV_URL`, `REDIS_URL`, `KV_REST_API_READ_ONLY_TOKEN`) are
+not needed — we use the REST API with the read-write token for sliding window writes.
+
+### Version badge already present
+
+`BUILD_ID` (7-char git SHA) is already rendered as a fixed bottom-right badge on every
+page via `app/layout.tsx`. Live page confirmed showing `32214d5`. No changes needed.
+
+---
+
 ## 2026-06-26 — Soft launch UX fixes + landing page copy
 
 ### Soft launch feedback fixes (5 items, commits `4e8dadd`, `cba5296`)

@@ -254,6 +254,25 @@ A `TS2322` error that appears in `tsc --noEmit` output will also block Vercel pr
 
 **Rule:** Treat any local `tsc --noEmit` error as a production blocker. Fix it before pushing.
 
+### Vercel KV env var names differ from Upstash SDK defaults (#first:2026-06-26)
+
+`@upstash/redis`'s `Redis.fromEnv()` reads `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`.
+Vercel's KV/Upstash marketplace integration auto-injects `KV_REST_API_URL` and `KV_REST_API_TOKEN` — different names, same values.
+
+Using `Redis.fromEnv()` with a Vercel KV store means rate limiting silently does nothing (env vars not found → `makeRatelimit()` returns null → no-op middleware). No error is thrown.
+
+**Fix**: don't use `fromEnv()`. Explicitly read whichever names Vercel injects:
+```typescript
+const url = process.env.KV_REST_API_URL;
+const token = process.env.KV_REST_API_TOKEN;
+if (!url || !token) return null;
+return new Ratelimit({ redis: new Redis({ url, token }), ... });
+```
+
+Other Vercel-injected vars (`KV_URL`, `REDIS_URL`, `KV_REST_API_READ_ONLY_TOKEN`) are not needed for rate limiting — use the read-write token and REST URL only.
+
+---
+
 ### RTL flex: first DOM child = screen-right (#first:2026-06-25)
 
 In a component rendered inside an RTL context (`dir="rtl"`), Flexbox reverses the visual order: **the first child in the DOM appears on the right side of the screen**. This is the opposite of LTR.
