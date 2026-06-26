@@ -56,8 +56,8 @@ export const PARTIES: Party[] = [
     subtitle: "איזנקוט",
     description: "מרכז-ימין — ביטחון לאומי, שקיפות, ממשל אחראי.",
     website: "https://yasharwitheisenkot.com",
-    platformUrl: "https://yasharwitheisenkot.com/topic/missions/",
-    platformLabel: "יעדים (לא מצע)",
+    platformUrl: "https://yasharwitheisenkot.com/agenda_point/",
+    platformLabel: "10 הצעדים (יוני 2026)",
   },
   {
     id: "beitenu",
