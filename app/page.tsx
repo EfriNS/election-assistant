@@ -31,15 +31,15 @@ export default function Home() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-3">עוזר הבחירות</h1>
           <p className="text-gray-600 text-sm leading-relaxed">
-            גלו איפה אתם עומדים מול המפלגות — בצורה שקופה ומנומקת
+            גלו לאיזו מפלגה אתם הכי קרובים — בצורה שקופה ומנומקת
           </p>
         </div>
 
         {/* How it works */}
         <div className="bg-gray-50 rounded-xl p-4 mb-8 text-xs text-gray-500 leading-relaxed space-y-1.5">
-          <p>🗳️ <strong className="text-gray-700">איך זה עובד?</strong> קודם בוחרים אילו נושאים חשובים לכם, אחר כך עונים על שאלות קצרות בכל נושא. התוצאה: רשימת מפלגות לפי מידת ההתאמה לעמדותיכם, עם הסבר מנומק לכל מפלגה.</p>
-          <p>📋 <strong className="text-gray-700">על בסיס מה?</strong> ציוני ההתאמה מחושבים על פי מצעי המפלגות ומסמכי עמדה רשמיים בלבד, בסיוע בינה מלאכותית. לכל ציטוט מצורף קישור למקור.</p>
-          <p>🔒 <strong className="text-gray-700">פרטיות.</strong> התשובות אינן נשמרות ואינן מקושרות אליכם. הכלי ניטרלי — הוא אינו ממליץ על מפלגה ואינו מחזיק בעמדה פוליטית.</p>
+          <p><strong className="text-gray-700">איך זה עובד?</strong> קודם בוחרים אילו נושאים חשובים לכם, אחר כך עונים על שאלות קצרות בכל נושא. התוצאה: רשימת מפלגות לפי מידת ההתאמה לעמדותיכם, עם הסבר מנומק לכל מפלגה.</p>
+          <p><strong className="text-gray-700">על בסיס מה?</strong> ציוני ההתאמה מחושבים על פי מצעי המפלגות ומסמכי עמדה רשמיים, בסיוע בינה מלאכותית. מפלגות שטרם פרסמו מצע עדכני מסומנות בפירוש, ונעשה שימוש במסמכים ישנים יותר. לכל ציטוט מצורף קישור למקור.</p>
+          <p><strong className="text-gray-700">פרטיות.</strong> התשובות אינן נשמרות ואינן מקושרות אליכם. הכלי ניטרלי — הוא אינו ממליץ על מפלגה ואינו מחזיק בעמדה פוליטית.</p>
         </div>
 
         {/* Advisor style */}
@@ -120,11 +120,9 @@ export default function Home() {
         </button>
 
         {/* Footer */}
-        <div className="mt-8 text-center text-xs text-gray-300 space-y-1">
-          <p>הכלי חינמי ופתוח לכולם · הקוד{" "}
-            {/* Enable once repo is public: */}
-            {/* <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-500">פתוח לעיון ב-GitHub</a> */}
-            פתוח לעיון
+        <div className="mt-8 text-center text-xs text-gray-400 space-y-1">
+          <p>הכלי חינמי ופתוח לכולם ·{" "}
+            <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
           </p>
         </div>
 
