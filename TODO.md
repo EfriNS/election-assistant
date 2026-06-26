@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Beta badge + scoring explainer** — "בטא" chip on landing; collapsible "כיצד מחושב הציון?" on results covering -2/+2, AI follow-ups, priority weights. (2026-06-26)
 - **Rate limiting fix** — KV_REST_API_URL/TOKEN replacing UPSTASH_* vars; verified live (10-request sliding window confirmed). (2026-06-26)
 - **Soft launch UX fixes** — 5 fixes from round-1 feedback: space bug, platform warning, quote/answer match, click-to-confirm, landing page. (2026-06-26)
-- **Phase 1.4: UI polish** — role="progressbar" on all bars; focus-visible rings on all buttons; RTL ✦ fix; stale share text removed. (2026-06-26)
 
 > See CHANGELOG.md for complete details.
 

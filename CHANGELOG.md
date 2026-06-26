@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-26 — Beta badge + scoring explainer (commit `cc40042`)
+
+### Beta badge (`app/page.tsx`)
+- Added amber "בטא" chip inline with the h1 title on the landing page
+- Added footer line: "גרסת בטא — הכלי בפיתוח פעיל, ייתכנו שינויים" above the GitHub link
+
+### Collapsible scoring explainer (`components/UnifiedResultsPage.tsx`)
+Replaced the single-line methodology note with a collapsible `<details>` section
+("כיצד מחושב הציון?"). Collapsed state shows the existing brief quote-source sentence;
+expanded state adds four sub-sections:
+
+1. **ציון לנושא: 2− עד 2+** — the -2/+2 scale and its meaning (full alignment → opposing)
+2. **שאלות המשך שמייצר ה-AI** — follow-ups are generated post-answer to differentiate ideologically adjacent parties; 50/50 blend with opener score
+3. **משקל העדיפויות** — critical topics count 4× vs. less-important (4:3:2:1 ratio)
+4. **ציון סופי** — weighted average normalized to 0–100%
+
+Arrow indicator rotates via Tailwind `group-open:rotate-90` on the `<details>` element.
+
+---
+
 ## 2026-06-26 — Rate limiting fix + production verification
 
 ### Redis env var mismatch fixed (`middleware.ts`, `.env.example` — commit `20bbfc9`)
