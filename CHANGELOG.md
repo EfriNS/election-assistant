@@ -1,5 +1,43 @@
 # Changelog
 
+## 2026-06-26 — AI-first follow-up quality fix (commit `55ef76c`)
+
+### Root causes fixed (three compounding bugs → bad follow-up questions)
+
+**Bug 1 — Stale-state** (`app/prototype-e/page.tsx`): `calcResults()` was called before
+React flushed the current opener answer into `topicQA`, so the current topic contributed
+zero to close-party scores. All 10 parties looked equally relevant at the first follow-up.
+Fix: construct `syntheticTopicQA` inline with the current opener before calling `calcResults`.
+
+**Bug 2 — No close-party filter** (`app/prototype-e/page.tsx`): All 10 parties' platform
+grounding data was sent to the AI regardless of the user's profile. A left-leaning user
+would get follow-ups about right-wing-only dimensions (e.g., territorial sovereignty).
+Fix: after computing accurate rankings (fix 1), filter `partyGroundings` to top-5 parties
+± 20 points. The AI literally cannot see grounding data for irrelevant parties.
+
+**Bug 3 — Advisory ordering** (`app/api/follow-up/route.ts`): The prompt said "prefer
+this order" for `TOPIC_KEY_DIMENSIONS`, which the AI treated as advisory — it reordered
+based on its own judgment of what differed between parties.
+Fix: client pre-computes `suggestedNextDimension` (highest-priority uncovered dimension
+with close-party grounding data) and sends it as a named field. Prompt now says "probe
+this dimension; only deviate if the conversation clearly supports it."
+
+### Free-text improvement
+
+Replaced `forceFollowUp=true` (which caused generic "can you clarify?" responses) with
+`openerIsFreeText`. The AI still guarantees one follow-up for free-text openers, but now
+interprets the text politically and probes a relevant dimension — same quality as preset
+openers.
+
+Added `freeTextInterpretation` feedback loop: AI returns a brief Hebrew phrase describing
+its political interpretation ("תמיכה חזקה בפתרון שתי המדינות"), stored in `TopicQA`
+and fed back on subsequent calls so the AI builds on its own prior interpretation.
+
+### Type addition (`lib/scoring.ts`)
+- `TopicQA.freeTextInterpretation?: string` — optional field for AI-inferred free-text direction
+
+---
+
 ## 2026-06-26 — Beta badge + scoring explainer (commit `cc40042`)
 
 ### Beta badge (`app/page.tsx`)

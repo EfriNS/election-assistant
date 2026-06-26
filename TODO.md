@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Follow-up quality fix (AI-first)** — stale-state fix, close-party grounding filter, suggestedNextDimension, freeTextInterpretation loop. (2026-06-26)
 - **Beta badge + scoring explainer** — "בטא" chip on landing; collapsible "כיצד מחושב הציון?" on results covering -2/+2, AI follow-ups, priority weights. (2026-06-26)
-- **Rate limiting fix** — KV_REST_API_URL/TOKEN replacing UPSTASH_* vars; verified live (10-request sliding window confirmed). (2026-06-26)
-- **Soft launch UX fixes** — 5 fixes from round-1 feedback: space bug, platform warning, quote/answer match, click-to-confirm, landing page. (2026-06-26)
+- **Rate limiting fix** — raised page limit to 100/24h (CGNAT), added per-route limits for /api/follow-up (500) and /api/score-topics (100). (2026-06-26)
 
 > See CHANGELOG.md for complete details.
 
