@@ -13,7 +13,7 @@ import { TermHint } from "@/components/TermHint";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
-type FollowUpQ = { question: string; options: string[]; hint?: string };
+type FollowUpQ = { question: string; options: string[]; hint?: string; targetedAspect?: string };
 type Step = "rank" | "questions" | "close" | "results";
 
 // TopicQA is defined in lib/scoring.ts and re-exported via the import above
@@ -290,10 +290,38 @@ function PrototypeEInner() {
     const topic = TOPICS.find((t) => t.id === topicId)!;
     const nextTopicId = topicsToAsk[questionIndex + 1] ?? null;
 
-    // Build party grounding data for this topic (parties with actual quotes only)
     const groundingMap = getGroundingsForTopic(topicId);
+    const openerIsFreeText = openerAnswerId === "other";
+
+    // Fix stale-state: React hasn't flushed the current opener into topicQA yet.
+    // Inject it synthetically so calcResults sees the correct close-party scores.
+    const syntheticTopicQA: Record<string, TopicQA> = openerIsFreeText
+      ? topicQA
+      : {
+          ...topicQA,
+          [topicId]: {
+            openerAnswerId: openerAnswerId ?? "",
+            openerAnswerText,
+            followUps: followUpQA,
+            coveredAspects: topicQA[topicId]?.coveredAspects,
+          },
+        };
+
+    const currentRankings = calcResults(buckets, syntheticTopicQA, questionSet);
+    const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
+
+    // Filter grounding data to close parties only (top-5 + within 20 pts of 5th place).
+    // This prevents the AI from seeing groundings for irrelevant parties.
+    const scoreEntries = Object.entries(currentScores).sort((a, b) => b[1] - a[1]);
+    const top5MinScore = scoreEntries[4]?.[1] ?? 0;
+    const closePartyIds = new Set(
+      scoreEntries
+        .filter(([, s]) => s >= top5MinScore - 20)
+        .map(([id]) => id)
+    );
+
     const partyGroundings = PARTIES
-      .filter((p) => (groundingMap[p.id]?.length ?? 0) > 0)
+      .filter((p) => closePartyIds.has(p.id) && (groundingMap[p.id]?.length ?? 0) > 0)
       .map((p) => ({
         partyId: p.id,
         partyName: p.name,
@@ -304,14 +332,19 @@ function PrototypeEInner() {
         })),
       }));
 
-    // Current deterministic scores (used by the model to identify which parties are close)
-    const currentRankings = calcResults(buckets, topicQA, questionSet);
-    const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
-
+    // Compute the suggested next dimension: first uncovered key dimension where
+    // at least one close party has grounding data. This gives the AI a concrete
+    // starting point while still allowing intelligent deviation.
     const coveredAspects = topicQA[topicId]?.coveredAspects ?? [];
+    const uncoveredKeyDims = (TOPIC_KEY_DIMENSIONS[topicId] ?? [])
+      .filter((d) => !coveredAspects.includes(d));
 
-    // Force at least one follow-up for "other" (free-text) opener answers
-    const forceFollowUp = openerAnswerId === "other" && askedCount === 0;
+    const suggestedNextDimension: string | null =
+      uncoveredKeyDims.find((dim) =>
+        [...closePartyIds].some((pid) =>
+          (groundingMap[pid] ?? []).some((e) => e.aspect === dim && !e.absent)
+        )
+      ) ?? uncoveredKeyDims[0] ?? null;
 
     const res = await fetch("/api/follow-up", {
       method: "POST",
@@ -322,6 +355,7 @@ function PrototypeEInner() {
           label: topic.label,
           openerQuestion: questionSet[topicId]?.question ?? "",
           openerAnswer: openerAnswerText,
+          freeTextInterpretation: topicQA[topicId]?.freeTextInterpretation,
           followUpQA: followUpQA.map(({ question, answer }) => ({ question, answer })),
         },
         nextTopic: nextTopicId
@@ -335,15 +369,16 @@ function PrototypeEInner() {
         followUpsAskedThisTopic: askedCount,
         partyGroundings,
         currentScores,
-        coveredAspects,
-        keyDimensions: TOPIC_KEY_DIMENSIONS[topicId] ?? [],
-        forceFollowUp,
+        suggestedNextDimension,
+        uncoveredKeyDims,
+        openerIsFreeText,
       }),
     });
 
     return res.json() as Promise<{
       prologue: string | null;
-      followUp: (FollowUpQ & { targetedAspect?: string }) | null;
+      followUp: FollowUpQ | null;
+      freeTextInterpretation?: string;
     }>;
   };
 
@@ -377,12 +412,17 @@ function PrototypeEInner() {
         setCurrentPrologue(data.prologue ?? null);
         setCurrentFollowUp(data.followUp);
         setFollowUpsAskedThisTopic(1);
-        if (data.followUp.targetedAspect) {
+        if (data.followUp.targetedAspect || data.freeTextInterpretation) {
           setTopicQA((prev) => ({
             ...prev,
             [topicId]: {
               ...prev[topicId],
-              coveredAspects: [...(prev[topicId]?.coveredAspects ?? []), data.followUp!.targetedAspect!],
+              ...(data.followUp!.targetedAspect
+                ? { coveredAspects: [...(prev[topicId]?.coveredAspects ?? []), data.followUp!.targetedAspect] }
+                : {}),
+              ...(data.freeTextInterpretation
+                ? { freeTextInterpretation: data.freeTextInterpretation }
+                : {}),
             },
           }));
         }

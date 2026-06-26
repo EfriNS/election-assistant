@@ -5,6 +5,7 @@ export type TopicQA = {
   openerAnswerText: string;
   followUps: { question: string; options: string[]; hint?: string; answer: string }[];
   coveredAspects?: string[];
+  freeTextInterpretation?: string;
 };
 
 import type { TopicQ } from "@/lib/questions";

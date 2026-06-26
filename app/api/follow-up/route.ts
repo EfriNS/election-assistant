@@ -41,6 +41,7 @@ function buildPrompt(
     label: string;
     openerQuestion: string;
     openerAnswer: string;
+    freeTextInterpretation?: string;
     followUpQA: FollowUpQA[];
   },
   nextTopic: TopicRef | null,
@@ -49,22 +50,24 @@ function buildPrompt(
   followUpsAskedThisTopic: number,
   partyGroundings: PartyGroundingRef[],
   currentScores: Record<string, number>,
-  coveredAspects: string[],
-  keyDimensions: string[],
-  forceFollowUp: boolean
+  suggestedNextDimension: string | null,
+  uncoveredKeyDims: string[],
+  openerIsFreeText: boolean
 ): string {
   const register =
     tone === "personal"
       ? "Everyday language, warm and informal, use first person"
       : "Analytical and policy-focused, formal register";
 
-  // "Other" opener answers must always get at least one follow-up to produce a scorable signal.
-  // At depth=short the model would otherwise often skip follow-ups entirely.
-  const depthGuide = forceFollowUp
-    ? "The user gave a free-text answer (not a preset option). Ask EXACTLY ONE clarifying follow-up question to understand their position more precisely, then transition."
-    : depth === "deep"
-      ? "aim for 1–3 follow-ups per topic"
-      : "aim for 0–1 follow-ups per topic";
+  const depthGuide = depth === "deep"
+    ? "aim for 1–3 follow-ups per topic"
+    : "aim for 0–1 follow-ups per topic";
+
+  // For free-text openers with no follow-ups yet, the AI must ask at least one
+  // substantive dimension-probing question (not a generic "what did you mean?").
+  const freeTextNote = (openerIsFreeText && followUpsAskedThisTopic === 0)
+    ? "\n\n**Free-text opener — REQUIRED:** The user wrote their own answer. You MUST ask at least one follow-up before transitioning (free-text needs at least one probe to be scorable). Interpret the user's text politically and probe the most relevant uncovered dimension — exactly as you would for a preset answer. Do NOT ask a generic clarification unless the text is genuinely ambiguous."
+    : "";
 
   const historyBlock =
     conversationSoFar.length === 0
@@ -87,14 +90,13 @@ function buildPrompt(
     ? `Next topic: ${nextTopic.label}\nNext question: ${nextTopic.question}`
     : "This is the last topic in the conversation.";
 
-  // Build party-differentiating grounding block when platform data is available
   const topCloseParties = Object.entries(currentScores)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 4)
+    .slice(0, 5)
     .map(([id, score]) => `${id}: ${score}%`)
     .join(", ");
 
-  const uncoveredKeyDimensions = keyDimensions.filter((d) => !coveredAspects.includes(d));
+  // partyGroundings already filtered to close parties on the client — show all entries
   const groundingBlock = partyGroundings.length > 0
     ? `\n**Party platform positions on this topic (verbatim — use ONLY these texts, no other knowledge):**\n` +
       partyGroundings.map((pg) =>
@@ -103,13 +105,13 @@ function buildPrompt(
         ).join("\n")
       ).join("\n") +
       `\n\n**Current close parties (top scores):** ${topCloseParties}` +
-      (coveredAspects.length > 0
-        ? `\n**Aspects already covered in this topic:** ${coveredAspects.join(", ")} — do NOT ask about these again.`
+      (suggestedNextDimension
+        ? `\n\n**Suggested next dimension:** ${suggestedNextDimension}\nThis is the highest-priority uncovered dimension with platform evidence from the parties closest to this user. Probe this dimension.`
         : "") +
-      (uncoveredKeyDimensions.length > 0
-        ? `\n**Priority dimensions to probe (in order):** ${uncoveredKeyDimensions.join(", ")} — prefer these over other aspects when choosing a follow-up sub-dimension.`
+      (uncoveredKeyDims.length > 0
+        ? `\n**Remaining uncovered dimensions (priority order):** ${uncoveredKeyDims.join(", ")}\nFollow this order. Only choose a different dimension if the user's specific answers in this conversation clearly indicate stronger relevance on another listed dimension. If you deviate, set targetedAspect to your chosen dimension.`
         : "") +
-      `\n\n**Follow-up task:** Ask about the highest-priority uncovered dimension from the list above where the close parties clearly differ. If no such discriminating dimension remains uncovered, transition to the next topic.`
+      `\n\n**Follow-up task:** Ask a question about the suggested dimension using the platform texts above. If no close party has platform evidence for any remaining dimension, transition to the next topic.`
     : "";
 
   return `You are a neutral political advisor conducting a structured survey to help users identify which Israeli party best matches their views. Respond ONLY in Hebrew.
@@ -122,11 +124,11 @@ ${historyBlock}
 
 **Current topic:** ${currentTopic.label}
 Opener: ${currentTopic.openerQuestion}
-User's answer: ${currentTopic.openerAnswer}${followUpQABlock}
+User's answer: ${currentTopic.openerAnswer}${currentTopic.freeTextInterpretation ? `\n[Your prior interpretation of this answer: ${currentTopic.freeTextInterpretation}]` : ""}${followUpQABlock}
 ${groundingBlock}
 ${nextTopicBlock}
 
-**Depth guidance:** ${depthGuide}
+**Depth guidance:** ${depthGuide}${freeTextNote}
 You have asked ${followUpsAskedThisTopic} follow-up(s) on this topic so far.
 
 **Your task — return JSON only, no markdown:**
@@ -147,24 +149,25 @@ Decide whether to ask a follow-up question or transition to the next topic.
 prologue is ALWAYS non-null — never omit it or return null for it.
 
 Format:
-{"prologue":"...","followUp":{"question":"...","options":["...","...","...","אחר — פרט"],"hint":"...","targetedAspect":"..."},"targetedAspect":"..."}
+{"prologue":"...","followUp":{"question":"...","options":["...","...","...","אחר — פרט"],"hint":"...","targetedAspect":"..."},"targetedAspect":"...","freeTextInterpretation":"..."}
 
-(followUp is null when transitioning. Omit hint and targetedAspect fields when not needed.)`;
+(followUp is null when transitioning. Omit hint and targetedAspect fields when not needed.
+ freeTextInterpretation: include ONLY when the opener was a free-text answer and this is the first follow-up on this topic; provide a brief Hebrew phrase describing the political direction you inferred, e.g. "תמיכה חזקה בפתרון שתי המדינות". Omit in all other cases.)`;
 }
 
 export async function POST(req: NextRequest) {
   const raw: {
     conversationSoFar: ConversationEntry[];
-    currentTopic: { label: string; openerQuestion: string; openerAnswer: string; followUpQA: FollowUpQA[] };
+    currentTopic: { label: string; openerQuestion: string; openerAnswer: string; freeTextInterpretation?: string; followUpQA: FollowUpQA[] };
     nextTopic: TopicRef | null;
     tone: string;
     depth: string;
     followUpsAskedThisTopic: number;
     partyGroundings?: PartyGroundingRef[];
     currentScores?: Record<string, number>;
-    coveredAspects?: string[];
-    keyDimensions?: string[];
-    forceFollowUp?: boolean;
+    suggestedNextDimension?: string | null;
+    uncoveredKeyDims?: string[];
+    openerIsFreeText?: boolean;
   } = await req.json();
 
   // Sanitize all user-supplied text before it enters the prompt
@@ -189,9 +192,9 @@ export async function POST(req: NextRequest) {
     followUpsAskedThisTopic,
     partyGroundings = [],
     currentScores = {},
-    coveredAspects = [],
-    keyDimensions = [],
-    forceFollowUp = false,
+    suggestedNextDimension = null,
+    uncoveredKeyDims = [],
+    openerIsFreeText = false,
   } = raw;
   const conversationSoFar = sanitizedHistory;
   const currentTopic = sanitizedCurrentTopic;
@@ -202,7 +205,7 @@ export async function POST(req: NextRequest) {
   const model = "gemini-3.1-flash-lite";
   const prompt = buildPrompt(
     conversationSoFar, currentTopic, nextTopic, tone, depth, followUpsAskedThisTopic,
-    partyGroundings, currentScores, coveredAspects, keyDimensions, forceFollowUp
+    partyGroundings, currentScores, suggestedNextDimension, uncoveredKeyDims, openerIsFreeText
   );
 
   const langfuse = makeLangfuse();
@@ -214,12 +217,12 @@ export async function POST(req: NextRequest) {
       tone,
       depth,
       followUpsAskedThisTopic,
-      forceFollowUp,
+      openerIsFreeText,
+      suggestedNextDimension,
       hasGroundingData: partyGroundings.length > 0,
     },
   });
   // Do not pass prompt as input — it contains user answers (PII).
-  // Token counts and output are still captured for cost monitoring.
   const generation = trace?.generation({ name: "gemini-follow-up", model });
 
   try {
@@ -256,11 +259,17 @@ export async function POST(req: NextRequest) {
           question: parsed.followUp.question,
           options: parsed.followUp.options,
           hint: parsed.followUp.hint ?? undefined,
-          targetedAspect: parsed.followUp.targetedAspect ?? parsed.targetedAspect ?? undefined,
+          // Prefer the client-computed dimension over whatever the AI guessed
+          targetedAspect: suggestedNextDimension ?? parsed.followUp.targetedAspect ?? parsed.targetedAspect ?? undefined,
         }
       : null;
 
-    return NextResponse.json({ prologue: parsed.prologue || null, followUp });
+    // Return the AI's free-text interpretation only on the first follow-up for "other" openers
+    const freeTextInterpretation = (openerIsFreeText && followUpsAskedThisTopic === 0)
+      ? (parsed.freeTextInterpretation ?? undefined)
+      : undefined;
+
+    return NextResponse.json({ prologue: parsed.prologue || null, followUp, freeTextInterpretation });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
