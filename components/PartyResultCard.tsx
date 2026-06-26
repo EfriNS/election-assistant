@@ -11,6 +11,7 @@ type Props = {
   aiBlurb?: string;
   aiLoading?: boolean;
   groundingData?: PartyGroundingResult;
+  topicAnswerTexts?: Record<string, string>;
 };
 
 const COLORS = {
@@ -21,7 +22,7 @@ const COLORS = {
   teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-400",    score: "text-teal-700",    link: "text-teal-600"   },
 };
 
-export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading, groundingData }: Props) {
+export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading, groundingData, topicAnswerTexts }: Props) {
   const c = COLORS[accentColor];
   const isTop = rank === 0;
   const [groundingOpen, setGroundingOpen] = useState(false);
@@ -106,19 +107,22 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
               {/* Outdated platform warning */}
               {isOutdated && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 leading-relaxed">
-                  <span className="font-semibold">⚠️ המפלגה לא פרסמה מצע עדכני.</span>{" "}
-                  הציטוטים שלהלן מבוססים על{" "}
-                  <span className="font-medium">{groundingData?.platformLabel ?? "מסמך ישן"}</span>{" "}
-                  ועלולים שלא לשקף את עמדותיה הנוכחיות.
+                  <span className="font-semibold">⚠️ המפלגה לא פרסמה מצע בחירות עדכני.</span>{" "}
+                  ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
                 </div>
               )}
 
               {/* Topic-grouped quotes */}
               {groundingData!.topics.map((tg) => (
                 <div key={tg.topicId}>
-                  <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">
                     {tg.topicLabel}
                   </p>
+                  {topicAnswerTexts?.[tg.topicId] && (
+                    <p className="text-xs text-gray-400 italic mb-1.5 border-r-2 border-teal-200 pr-2">
+                      ענית: {topicAnswerTexts[tg.topicId]}
+                    </p>
+                  )}
                   <div className="space-y-2">
                     {tg.entries.map((e, i) => (
                       <div key={i} className="border-r-2 border-gray-200 pr-3">

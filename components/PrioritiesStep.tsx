@@ -102,7 +102,7 @@ export default function PrioritiesStep({
           ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
         </p>
         <p className="text-sm text-gray-600 mb-8">
-          יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים</strong> כ&quot;חשוב&quot; או יותר כדי להמשיך.
+          יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ&quot;חשוב&quot; או יותר כדי להמשיך.
         </p>
 
         <div className="flex flex-col gap-3 mb-8">
