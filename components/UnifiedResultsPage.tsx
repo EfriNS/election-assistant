@@ -120,11 +120,46 @@ export default function UnifiedResultsPage({
         </div>
 
         {/* Methodology */}
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-6 text-xs text-gray-500 leading-relaxed">
-          <strong>שיטת החישוב:</strong>{" "}
-          ציוני ההתאמה מבוססים על ציטוטים מילוליים ממצעי המפלגות ומסמכי עמדה רשמיים.
-          המקורות מקושרים ישירות בכרטיסיות המפלגות למטה.
-        </div>
+        <details className="bg-gray-50 border border-gray-200 rounded-xl mt-6 text-xs text-gray-500 leading-relaxed group">
+          <summary className="px-4 py-3 cursor-pointer select-none list-none flex items-center justify-between text-gray-500 hover:text-gray-700">
+            <span>
+              <strong className="text-gray-600">שיטת החישוב:</strong>{" "}
+              ציוני ההתאמה מבוססים על ציטוטים ממצעי המפלגות — המקורות מקושרים בכרטיסיות למטה.
+            </span>
+            <span className="mr-3 shrink-0 text-gray-400 group-open:rotate-90 transition-transform duration-150">◀</span>
+          </summary>
+          <div className="px-4 pb-4 pt-3 border-t border-gray-200 space-y-3">
+            <div>
+              <strong className="text-gray-600">ציון לנושא: 2− עד 2+</strong>
+              <p className="mt-1">
+                לכל תשובה לשאלת הפתיחה יש ציון מוגדר מראש לכל מפלגה: 2+ (התאמה מלאה),
+                1+ (התאמה חלקית), 0 (ניטרלי), 1− (חוסר התאמה חלקי), 2− (עמדה מנוגדת).
+                הציונים נגזרים מציטוטים ישירים מהמצעים הרשמיים.
+              </p>
+            </div>
+            <div>
+              <strong className="text-gray-600">שאלות המשך שמייצר ה-AI</strong>
+              <p className="mt-1">
+                לאחר כל תשובה, ה-AI מייצר שאלות המשך ממוקדות בהתבסס על תשובתך — במטרה להבחין
+                בין מפלגות ״שכנות״ אידיאולוגית שציון הפתיחה לא מפריד ביניהן.
+                תשובות אלה מנותחות על ידי ה-AI מול ציטוטים מהמצעים, ומשקלן שווה לשאלת הפתיחה (50/50).
+              </p>
+            </div>
+            <div>
+              <strong className="text-gray-600">משקל העדיפויות</strong>
+              <p className="mt-1">
+                נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1).
+                כך נושאים שחשובים לך באמת שולטים בתוצאה.
+              </p>
+            </div>
+            <div>
+              <strong className="text-gray-600">ציון סופי</strong>
+              <p className="mt-1">
+                ממוצע משוקלל של כל הנושאים שענית עליהם, מנורמל ל-0–100%.
+              </p>
+            </div>
+          </div>
+        </details>
 
         {/* Share */}
         <div className="mt-8 flex justify-center">
