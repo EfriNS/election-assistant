@@ -4,12 +4,13 @@ import { Redis } from "@upstash/redis";
 
 // Rate limiter is only active when Upstash credentials are configured.
 // Without them the middleware is a no-op — safe for local dev and CI.
+// Vercel's KV/Upstash integration injects KV_REST_API_URL + KV_REST_API_TOKEN.
 function makeRatelimit(): Ratelimit | null {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return null;
-  }
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
   return new Ratelimit({
-    redis: Redis.fromEnv(),
+    redis: new Redis({ url, token }),
     limiter: Ratelimit.slidingWindow(10, "24 h"),
     analytics: false,
     prefix: "voteassist",
