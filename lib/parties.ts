@@ -64,6 +64,7 @@ export const PARTIES: Party[] = [
     name: "ישראל ביתנו",
     description: "ימין חילוני — הפרדת דת ומדינה לצד עמדות ביטחוניות נוקשות.",
     website: "https://beytenu.org.il",
+    platformUrl: "https://beytenu.org.il/party-platform/",
   },
   {
     id: "likud",

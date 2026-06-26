@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import ShareButton from "@/components/ShareButton";
 
 type Tone = "formal" | "personal";
 type Depth = "short" | "deep";
@@ -122,8 +123,13 @@ export default function Home() {
           התחילו ←
         </button>
 
+        {/* Share */}
+        <div className="mt-6 flex justify-center">
+          <ShareButton variant="subtle" />
+        </div>
+
         {/* Footer */}
-        <div className="mt-8 text-center text-xs text-gray-400 space-y-1">
+        <div className="mt-4 text-center text-xs text-gray-400 space-y-1">
           <p>גרסת בטא — הכלי בפיתוח פעיל, ייתכנו שינויים</p>
           <p>הכלי חינמי ופתוח לכולם ·{" "}
             <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
