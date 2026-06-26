@@ -31,6 +31,15 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
   const isOutdated = hasGrounding && groundingData?.platformAvailable === false;
   const sourceQuality = groundingData?.sourceQuality;
   const isLowQualitySource = sourceQuality === "thirdParty" || sourceQuality === "outdated";
+  const sourceLinkLabel =
+    sourceQuality === "official"
+      ? (party.platformLabel ?? "מצע רשמי")
+      : sourceQuality === "outdated"
+      ? "מסמך ישן"
+      : sourceQuality === "thirdParty"
+      ? "מקור חיצוני"
+      : (party.platformLabel ?? "מקור");
+
   const accordionLabel =
     sourceQuality === "official" && groundingData?.platformAvailable === true
       ? "מה כתוב במצע?"
@@ -158,7 +167,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                             rel="noopener noreferrer"
                             className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
                           >
-                            מקור — {party.platformLabel ?? "מצע רשמי"} ↗
+                            מקור — {sourceLinkLabel} ↗
                           </a>
                           <span className="text-xs text-gray-300">{e.dateRetrieved}</span>
                         </div>

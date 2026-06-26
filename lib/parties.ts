@@ -40,8 +40,8 @@ export const PARTIES: Party[] = [
     name: "הדמוקרטים",
     description: "מרכז-שמאל — מדינת רווחה, שוויון חברתי, ושאיפה להסדר מדיני.",
     website: "https://democrats.org.il",
-    platformUrl: "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
-    platformLabel: "חוקה (לא מצע)",
+    platformUrl: "https://yes.democrats.org.il",
+    platformLabel: "התחייבויות 2026",
   },
   {
     id: "beyahad",
