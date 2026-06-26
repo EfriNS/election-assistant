@@ -7,7 +7,7 @@ const SHARE_TEXT =
   "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? הכלי חינמי ומסביר למה";
 
 type Props = {
-  variant?: "prominent" | "subtle";
+  variant?: "prominent" | "subtle" | "landing";
 };
 
 export default function ShareButton({ variant = "prominent" }: Props) {
@@ -41,7 +41,28 @@ export default function ShareButton({ variant = "prominent" }: Props) {
         onClick={handleShare}
         className="text-xs text-gray-400 hover:text-gray-600 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
       >
-        {copied ? "✓ הקישור הועתק" : "שתף עם חברים →"}
+        {copied ? "✓ הקישור הועתק" : "שתפו עם חברים ←"}
+      </button>
+    );
+  }
+
+  if (variant === "landing") {
+    return (
+      <button
+        onClick={handleShare}
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-200 text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none"
+      >
+        {copied ? (
+          <>
+            <span>✓</span>
+            <span>הקישור הועתק!</span>
+          </>
+        ) : (
+          <>
+            <span>🗳️</span>
+            <span>שתפו עם חבר ←</span>
+          </>
+        )}
       </button>
     );
   }
@@ -59,7 +80,7 @@ export default function ShareButton({ variant = "prominent" }: Props) {
       ) : (
         <>
           <span>🗳️</span>
-          <span>שתף עם חבר</span>
+          <span>שתפו עם חבר</span>
         </>
       )}
     </button>

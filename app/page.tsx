@@ -124,8 +124,8 @@ export default function Home() {
         </button>
 
         {/* Share */}
-        <div className="mt-6 flex justify-center">
-          <ShareButton variant="subtle" />
+        <div className="mt-3">
+          <ShareButton variant="landing" />
         </div>
 
         {/* Footer */}

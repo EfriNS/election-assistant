@@ -31,11 +31,16 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
   const isOutdated = hasGrounding && groundingData?.platformAvailable === false;
   const sourceQuality = groundingData?.sourceQuality;
   const isLowQualitySource = sourceQuality === "thirdParty" || sourceQuality === "outdated";
-  const hasPlatformDoc =
-    groundingData?.platformAvailable === true &&
-    sourceQuality === "official" &&
-    !party.platformLabel?.includes("לא מצע");
-  const accordionLabel = hasPlatformDoc ? "מה כתוב במצע?" : "מה כתוב בפרסומי המפלגה?";
+  const accordionLabel =
+    sourceQuality === "official" && groundingData?.platformAvailable === true
+      ? "מה כתוב במצע?"
+      : sourceQuality === "official"
+      ? "מה כתוב בפרסומי המפלגה? (למפלגה אין מצע רשמי)"
+      : sourceQuality === "thirdParty"
+      ? "מה ידוע על עמדות המפלגה? (למפלגה אין מצע רשמי)"
+      : sourceQuality === "outdated"
+      ? "מה ידוע על עמדות המפלגה? (למפלגה אין מצע מעודכן בשנים האחרונות)"
+      : "מה כתוב בפרסומי המפלגה?";
 
   return (
     <div className={`rounded-xl p-4 ${isTop ? `border-2 ${c.highlight}` : "bg-white border border-gray-200"}`}>
