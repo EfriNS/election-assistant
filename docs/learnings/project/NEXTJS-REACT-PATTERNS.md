@@ -407,6 +407,24 @@ Rule: when a space must appear immediately after a closing inline tag in Hebrew 
 
 ---
 
+### Hebrew RTL: avoid `")?"`  at end of string — move `"?"` before parenthetical (#first:2026-06-26)
+
+In RTL text, `")"` and `"?"` are both weak-direction characters. When they appear together at the end of a string (`")?"`) inside an RTL element, the Unicode BiDi algorithm can render them in the wrong order — visually the parenthesis appears to close on the wrong side.
+
+**Wrong** (renders with reversed parens in RTL):
+```
+"מה כתוב בפרסומי המפלגה (למפלגה אין מצע רשמי)?"
+```
+
+**Right** (move `"?"` before the parenthetical — ends cleanly):
+```
+"מה כתוב בפרסומי המפלגה? (למפלגה אין מצע רשמי)"
+```
+
+Rule: in Hebrew UI strings, never end with `")?"`. The `"?"` closes the main clause; any parenthetical note comes after it.
+
+---
+
 ### Don't interpolate dynamic values into the middle of Hebrew sentences (#first:2026-06-26)
 
 Interpolating a data-driven string into the middle of a natural-language sentence produces unreadable or grammatically broken Hebrew when the value is itself a phrase:

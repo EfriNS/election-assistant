@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Fix: results-generation JSON truncation + stuck spinner** — maxOutputTokens 700→1500 (Hebrew truncation); active-flag race condition causing permanent spinner. (2026-06-26)
 - **/second-opinion skill** — new Claude Code skill: spawn fresh Plan agent with product problem + constraint only, no solution context, to break session bias. (2026-06-26)
 - **Results UX polish + sourceQuality** — strip AI-numbered options; follow-ups in "ענית"; sourceQuality field (official/thirdParty/outdated) drives red/amber/green labels. (2026-06-26)
+- **Results UX 2: labels, share, follow-up UX, party data** — sourceQuality-driven accordion labels + BiDi fix; ShareButton landing variant; follow-up select-then-confirm; party platformUrl/Label consistency pass. (2026-06-26)
 
 > See CHANGELOG.md for complete details.
 
@@ -14,7 +14,7 @@
 
 1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
-2. **Add מצע links as parties publish them** — ישר! and הדמוקרטים have non-platform links. Monitor ביחד, ש"ס, etc. Update `lib/parties.ts` as links appear.
+2. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, and ביחד now have accurate links. Monitor ש"ס, ליכוד, חד"ש for new/updated official platforms. Update `lib/parties.ts` + grounding `sourceQuality`/`platformAvailable` when links appear.
 
 3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 

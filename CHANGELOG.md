@@ -1,5 +1,53 @@
 # Changelog
 
+## 2026-06-26 — Results UX polish: accordion labels, share button, follow-up UX, party data fixes (commits `491fdc2`–`7059039`)
+
+### Feat: four distinct accordion labels driven by `sourceQuality` (`components/PartyResultCard.tsx`)
+
+Replaced the previous `platformLabel` string-matching heuristic (`includes("לא מצע")`) with a structured four-case label derived from `sourceQuality` + `platformAvailable`:
+- `official` + `platformAvailable: true` → "מה כתוב במצע?"
+- `official` + `platformAvailable: false` → "מה כתוב בפרסומי המפלגה? (למפלגה אין מצע רשמי)"
+- `thirdParty` → "מה ידוע על עמדות המפלגה? (למפלגה אין מצע רשמי)"
+- `outdated` → "מה ידוע על עמדות המפלגה? (למפלגה אין מצע מעודכן בשנים האחרונות)"
+
+**BiDi fix**: original labels ended with `")?"` which the Unicode BiDi algorithm renders incorrectly in RTL context (both `")"` and `"?"` are weak-direction characters; the sequence garbles at string end). Fixed by moving `"?"` before the parenthetical: `"מה כתוב...? (הערה)"`.
+
+### Feat: `sourceLinkLabel` — accordion "מקור" link text derived from `sourceQuality`
+
+Previously all "מקור — X ↗" links inside the accordion defaulted to `party.platformLabel ?? "מצע רשמי"`, showing "מקור — מצע רשמי ↗" even for 20-year-old IDI documents (ש"ס). Now:
+- `official` → `party.platformLabel ?? "מצע רשמי"` (unchanged)
+- `outdated` → `"מסמך ישן"`
+- `thirdParty` → `"מקור חיצוני"`
+
+### Feat: ShareButton `"landing"` variant + copy fixes (`components/ShareButton.tsx`, `app/page.tsx`)
+
+- New `"landing"` variant: full-width, border-only button (visually secondary to the teal CTA), placed below the "התחילו" button on the landing page.
+- Fixed text across variants: `"שתף"` → `"שתפו"` (imperative plural in Hebrew).
+- Fixed arrow direction: `"→"` → `"←"` in RTL context.
+
+### Feat: follow-up questions use select-then-confirm UX (`app/prototype-e/page.tsx`)
+
+Previously clicking a follow-up option immediately advanced to the next question. Now:
+1. Click option → highlights teal (same visual treatment as opener options); no immediate advance.
+2. "המשך ←" confirm button appears below options.
+3. User can change selection before confirming.
+
+New state: `selectedFollowUpAnswer`. Reset via `useEffect` on `currentFollowUp` change.
+Free-text "other" option unchanged — it already had its own inline confirm button.
+
+### Fix: party platform data consistency pass (`lib/parties.ts`)
+
+Audited all 10 parties for mismatch between `lib/parties.ts` labels and `data/groundings/*.json` `sourceQuality`/`platformAvailable`. Changes:
+- **הדמוקרטים**: `platformUrl` → `https://yes.democrats.org.il` (grounding's actual source); `platformLabel` → `"התחייבויות 2026"` (removed `"(לא מצע)"` which contradicted accordion "מה כתוב במצע?").
+- **ישר!**: `platformUrl` → `https://yasharwitheisenkot.com/agenda_point/` (June 2026 10-steps doc); `platformLabel` → `"10 הצעדים (יוני 2026)"`.
+- **ביחד**: added `platformUrl: "https://bennett2026.org.il/plans/"` + `platformLabel: "תכניות ביחד"` — grounding had `official`+`platformAvailable: true` but no `platformUrl`, causing amber "ללא מצע רשמי" to appear incorrectly.
+- **ביתנו**: already had `platformUrl` set correctly; no change needed.
+- All others (ליכוד, ש"ס, חד"ש, רע"ם, יהדות התורה, עוצמה): no `platformUrl` needed; top-card labels already match their `sourceQuality`.
+
+**Commit list**: `491fdc2`, `7d71493`, `a74c206`, `0abbcf5`, `7059039`
+
+---
+
 ## 2026-06-26 — Bug fix: results-generation JSON truncation + stuck spinner (commits `dc4b1f4`, merge `fcfcb3e`)
 
 ### Bug 1: `results-generation` ERROR — intermittent JSON parse failure in `/api/results`
