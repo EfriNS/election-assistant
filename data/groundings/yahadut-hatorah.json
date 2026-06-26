@@ -1,6 +1,7 @@
 {
   "platformAvailable": false,
   "platformLabel": "עמדות מממשלה ה-37 (2022) + ניתוחי IDI ו-Hiddush — אין מצע רשמי",
+  "sourceQuality": "thirdParty",
   "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
   "archiveDir": "docs/sources/yahadut-hatorah/",
   "_note": "UTJ (Yahadut Hatorah) is an alliance of Agudat Yisrael and Degel Hatorah — non-Zionist Haredi Ashkenazi parties. No formal 2026 platform, no active party website found. Data sourced from IDI party profile, IDI analysis of 37th government coalition agreement (Dec 2022), IDI article on Basic Law: Torah Study, and Hiddush documentation. The party is narrowly sectoral: almost all activity concerns Haredi community interests. Economy/security/ecology topics are essentially absent. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review.",

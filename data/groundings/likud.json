@@ -1,6 +1,7 @@
 {
   "platformAvailable": false,
   "platformLabel": "חוקת הליכוד (2016), פרק ב': מטרות — אין מצע בחירות רשמי",
+  "sourceQuality": "outdated",
   "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
   "archiveDir": "docs/sources/likud/",
   "_note": "Likud has not published a formal election platform since ~2009. Source: web search finding — 'Since 2009, the Likud party has not published a detailed platform. Prior to elections for the 20th Knesset, Netanyahu opposed publishing a platform, arguing that the party is judged by its actions.' Best available source: party constitution (חוקת הליכוד) 2016, chapter 2 (מטרות), obtained from user-provided screenshot of local PDF (huka0716.pdf, page 3). IMPORTANT: The constitution states ideological goals that are not always reflected in actual government policy — e.g., the constitution calls for universal service for all citizens (item י) while Likud governments have consistently exempted Haredim; the constitution supports democratic rule of law (item ה) while recent Likud-led governments advanced judicial override legislation. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Housing topic has no entry (not addressed in constitution). Ecology entry is very thin.",

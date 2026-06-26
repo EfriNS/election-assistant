@@ -29,6 +29,8 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
 
   const hasGrounding = (groundingData?.topics?.length ?? 0) > 0;
   const isOutdated = hasGrounding && groundingData?.platformAvailable === false;
+  const sourceQuality = groundingData?.sourceQuality;
+  const isLowQualitySource = sourceQuality === "thirdParty" || sourceQuality === "outdated";
 
   return (
     <div className={`rounded-xl p-4 ${isTop ? `border-2 ${c.highlight}` : "bg-white border border-gray-200"}`}>
@@ -80,10 +82,14 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         ) : (
           <span className="text-xs text-gray-300">אתר לא ידוע</span>
         )}
-        {party.platformUrl ? (
+        {party.platformUrl && !isLowQualitySource ? (
           <a href={party.platformUrl} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>
             {party.platformLabel ?? "מצע רשמי"} ↗
           </a>
+        ) : isLowQualitySource ? (
+          <span className="text-xs text-red-400 font-medium">
+            {sourceQuality === "outdated" ? "מקורות מיושנים" : "מקורות חיצוניים"}
+          </span>
         ) : hasGrounding ? (
           <span className="text-xs text-amber-500">ללא מצע רשמי</span>
         ) : (

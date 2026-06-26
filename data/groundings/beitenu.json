@@ -1,6 +1,7 @@
 {
   "platformAvailable": true,
   "platformLabel": "מצע המפלגה (beytenu.org.il)",
+  "sourceQuality": "official",
   "sourceUrl": "https://beytenu.org.il/party-platform/",
   "archiveDir": "docs/sources/beitenu/",
   "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed.",

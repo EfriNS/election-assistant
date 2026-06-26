@@ -1,6 +1,7 @@
 {
   "platformAvailable": true,
   "platformLabel": "חוקה (לא מצע) + התחייבויות 2026",
+  "sourceQuality": "official",
   "sourceUrl": "https://yes.democrats.org.il",
   "archiveDir": "docs/sources/democrats/",
   "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Topics 'health' and 'ecology' are not yet available from this source; see archive doc for details. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",

@@ -1,6 +1,7 @@
 {
   "platformAvailable": false,
   "platformLabel": "הסכם קואליציוני ממשלה ה-36 (2021) + ניתוחי IDI, JVL, ECFR — אין מצע רשמי",
+  "sourceQuality": "thirdParty",
   "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/raam/",
   "archiveDir": "docs/sources/raam/",
   "_note": "Ra'am (United Arab List) — political wing of the Southern Branch of the Islamic Movement in Israel, led by Mansour Abbas. Adopted a 'civic partnership' approach: accepts Jewish-state legitimacy in exchange for full civil equality for Arab citizens. No formal 2026 platform, no active official website found. Primary source is the full coalition agreement with 36th government (Bennett-Lapid, June 2021), supplemented by IDI, JVL, and ECFR analyses. Party is sectoral in focus: almost all governing activity concerns economic-social gaps for Arab citizens. Conservative Islamist social values (anti-LGBTQ+). Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review.",

@@ -1,6 +1,7 @@
 {
   "platformAvailable": false,
   "platformLabel": "מסמך עקרונות התנועה (2006, IDI) + עמדות קואליציוניות 2022 — אין מצע רשמי",
+  "sourceQuality": "outdated",
   "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
   "archiveDir": "docs/sources/shas/",
   "_note": "Shas has no official 2026 election platform. Official website (shas.org.il) timed out during collection. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review.",

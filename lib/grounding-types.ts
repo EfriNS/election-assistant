@@ -18,5 +18,6 @@ export type TopicGroundingResult = {
 export type PartyGroundingResult = {
   platformAvailable: boolean;
   platformLabel?: string;
+  sourceQuality?: "official" | "thirdParty" | "outdated";
   topics: TopicGroundingResult[];
 };

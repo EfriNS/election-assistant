@@ -1,6 +1,7 @@
 {
   "platformAvailable": true,
   "platformLabel": "תכניות עבודה (חלקי) — רק 4 מתוך 11 קטגוריות פורסמו",
+  "sourceQuality": "official",
   "sourceUrl": "https://bennett2026.org.il/plans/",
   "archiveDir": "docs/sources/beyahad/",
   "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-06-23 only 4 of 11 announced plan categories have detailed pages: meshartim, negev, rehabilitation, kiryat-shmona. Education, health, ecology, justice, and 6 other categories have no published content yet.",

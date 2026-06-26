@@ -31,6 +31,7 @@ export type GroundingEntry = {
 export type PartyGroundings = {
   platformAvailable: boolean;
   platformLabel?: string;
+  sourceQuality?: "official" | "thirdParty" | "outdated";
   sourceUrl?: string;
   archiveDir?: string;
   topics: Record<string, GroundingEntry[]>;

@@ -45,6 +45,7 @@ function buildGroundingsForParties(
     result[partyId] = {
       platformAvailable: pg.platformAvailable,
       ...(pg.platformLabel ? { platformLabel: pg.platformLabel } : {}),
+      ...(pg.sourceQuality ? { sourceQuality: pg.sourceQuality } : {}),
       topics,
     };
   }
