@@ -347,7 +347,19 @@ function PrototypeEInner() {
     }>;
   };
 
-  // ── Opener answer handler ───────────────────────────────────────────────────
+  // ── Opener answer handlers ──────────────────────────────────────────────────
+  // Step 1: mark a structured option as selected (no API call — user can change mind)
+  const selectOpenerOption = (optionId: string, optionText: string) => {
+    const topicId = topicsToAsk[questionIndex];
+    setTopicQA((prev) => ({
+      ...prev,
+      [topicId]: { openerAnswerId: optionId, openerAnswerText: optionText, followUps: [] },
+    }));
+    setShowOpenerInput(false);
+    setOpenerDraft("");
+  };
+
+  // Step 2: confirm selection and call API (triggered by "המשך" button or free-text submit)
   const handleOpenerAnswer = async (optionId: string, optionText: string) => {
     const topicId = topicsToAsk[questionIndex];
 
@@ -501,6 +513,11 @@ function PrototypeEInner() {
         results={calcResults(buckets, topicQA, questionSet, aiScores)}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
         answeredTopicIds={topicsToAsk.filter((tid) => topicQA[tid])}
+        topicAnswerTexts={Object.fromEntries(
+          topicsToAsk
+            .filter((tid) => topicQA[tid]?.openerAnswerText)
+            .map((tid) => [tid, topicQA[tid].openerAnswerText])
+        )}
         accentColor="teal"
         onBack={() => setStep("close")}
       />
@@ -642,7 +659,7 @@ function PrototypeEInner() {
             return (
               <div key={opt.id}>
                 <button
-                  onClick={() => handleOpenerAnswer(opt.id, `${num}. ${opt.text}`)}
+                  onClick={() => selectOpenerOption(opt.id, `${num}. ${opt.text}`)}
                   className={`w-full border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
                     selected
                       ? "border-teal-500 bg-teal-50 text-teal-900"
@@ -695,6 +712,16 @@ function PrototypeEInner() {
             </div>
           </div>
         </div>
+
+        {/* Confirm selection button — appears after a structured option is chosen */}
+        {topicQA[topicId]?.openerAnswerId && topicQA[topicId]?.openerAnswerId !== "other" && (
+          <button
+            onClick={() => handleOpenerAnswer(topicQA[topicId].openerAnswerId, topicQA[topicId].openerAnswerText)}
+            className="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none mb-3"
+          >
+            המשך ←
+          </button>
+        )}
 
         <button onClick={() => advanceToNextTopic(null)}
           className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">

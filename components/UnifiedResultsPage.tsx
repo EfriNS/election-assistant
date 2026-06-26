@@ -18,6 +18,7 @@ type Props = {
   results: Array<Party & { score: number }>;
   userAnswersSummary?: string;
   answeredTopicIds?: string[];
+  topicAnswerTexts?: Record<string, string>;
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
@@ -29,6 +30,7 @@ export default function UnifiedResultsPage({
   results,
   userAnswersSummary,
   answeredTopicIds,
+  topicAnswerTexts,
   accentColor,
   onBack,
   externalAiData,
@@ -112,6 +114,7 @@ export default function UnifiedResultsPage({
               aiBlurb={aiData?.partyBlurbs[r.id]}
               aiLoading={aiLoading && i < 3}
               groundingData={groundings?.[r.id]}
+              topicAnswerTexts={topicAnswerTexts}
             />
           ))}
         </div>
