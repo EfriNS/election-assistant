@@ -1,5 +1,50 @@
 # Changelog
 
+## 2026-06-28 — PDF export of full results via Puppeteer (commits `a5eb249`–`35808a9`, merged `0609315`)
+
+Server-side PDF generation of the complete results page — "our ambassador for the tool" — designed to be faithful to the web UI with all party cards, grounding quotes expanded, AI profile, methodology, and attribution.
+
+### Feat: `/api/export-pdf` route (`app/api/export-pdf/route.ts`)
+
+POST endpoint accepting full results state as JSON. Uses `@sparticuz/chromium` (v147) + `puppeteer-core` (v24) for serverless-optimized headless Chromium. Vercel function config: `memory: 1024, maxDuration: 60`. Environment detection: `process.env.VERCEL` → chromium package; `process.env.CHROME_PATH` → local Chrome; else 501. Returns `application/pdf` with RFC 5987-encoded Hebrew filename.
+
+**Key implementation details**:
+- `page.setContent(html, { waitUntil: "load" })` + `page.waitForNetworkIdle({ idleTime: 500 })` — required for Tailwind CDN Play to scan classes and generate CSS
+- `Buffer.from(pdfBytes)` wrapping — required for `NextResponse` BodyInit compatibility
+- `serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"]` — prevents Next.js from bundling native deps
+- `outputFileTracingIncludes: { "/api/export-pdf": ["./node_modules/@sparticuz/chromium/bin/**/*"] }` — includes 66MB brotli-compressed Chromium binaries in the Vercel function bundle (default bundler excludes binary assets from node_modules)
+
+### Feat: `lib/pdf-template.ts` (new file)
+
+Plain TypeScript HTML string builder — no React, no JSX. Deliberate choice: Next.js 16 (Turbopack) blocks `react-dom/server` imports in App Router route handlers. The string-builder approach is actually cleaner: no hydration, no component lifecycle, pure data → HTML.
+
+Exports `PdfResultsData` type and `buildPdfHtml(data, generatedAt)`. Uses Tailwind CDN Play + Google Fonts (Heebo for Hebrew, Noto Sans for Unicode coverage) in `<head>`. Same `ACCENT_COLORS` mapping as web UI. Renders: branded header, AI profile box, close-score notice, quota notice, all party cards with grounding quotes expanded, separator, methodology section, attribution footer.
+
+### Fix: Emoji/icon rendering (`lib/pdf-template.ts`)
+
+`@sparticuz/chromium` ships a minimal Chromium with limited font support. Heebo covers Hebrew script but not emoji or Unicode symbols. Resolution: removed 🗳️ from h1 title, replaced ✦ sparkles with plain text, replaced ⚠️ with `<strong>` text, removed all ↗ arrows from link labels. User confirmed: "this looks great!"
+
+### Feat: PDF button in `UnifiedResultsPage.tsx`
+
+"שמור תוצאות כ-PDF" button shown only after `!aiLoading` (ensures AI blurbs and grounding are available for the PDF). Loading state with ⏳ spinner text; 4-second auto-dismissing error message on failure.
+
+### Learnings from this session
+
+- **Turbopack blocks `react-dom/server`** in App Router route handlers — plain string builders are the correct pattern for server-side HTML generation in Next.js 16+
+- **`outputFileTracingIncludes` is essential** for any non-JS binary assets (Chromium, fonts, etc.) — Vercel's bundler only traces JS imports, not arbitrary files in node_modules
+- **Cold starts are per function-instance lifecycle** (~5-10 min idle), not per deployment — most real user PDF calls will be cold starts (4-6s); warn users in UI if latency is a concern
+- **Minimal Chromium ≠ full Chrome** — emoji and obscure Unicode need Noto Sans or removal; don't assume emoji will render
+
+### Commits
+- `a5eb249` feat: add Mixpanel behavioral analytics (8 events)
+- `1d2fc8e` feat: PDF export of full results via Puppeteer
+- `f29ab04` fix: include chromium brotli binaries in export-pdf function bundle
+- `e8cc353` fix: route Mixpanel events to EU endpoint
+- `35808a9` fix: remove emoji and unsupported Unicode from PDF template
+- `0609315` Merge feature/pdf-export → main
+
+---
+
 ## 2026-06-28 — Mixpanel behavioral analytics (8 events, EU region) (commits `9312ec7`–`0328b82`)
 
 Replaced 4 coarse Vercel Analytics lifecycle events with 8 purpose-built Mixpanel events covering the full quiz funnel. Design driven by 7 product questions (see `docs/ANALYTICS-DESIGN.md`).

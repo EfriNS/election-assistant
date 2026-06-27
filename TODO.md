@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **PDF export** — Full A4 results via Puppeteer/@sparticuz/chromium; Hebrew font (Heebo+Noto); "שמור תוצאות כ-PDF" button post-AI-load; emoji removed for minimal Chromium compat. (2026-06-28)
 - **Mixpanel behavioral analytics** — 8 events covering full quiz funnel; EU endpoint fix; design doc in `docs/ANALYTICS-DESIGN.md`. (2026-06-28)
 - **Soft launch UX** — unknown-topic chips (gray dash); floating feedback widget → Slack #election-feedback; gender-neutral CTA; rate-limited (3/session). (2026-06-27)
-- **Scoring UX + dimension analysis** — n=1.5 power curve; per-topic chips on all cards; close-score notice + separator; TOPIC_KEY_DIMENSIONS refined; Langfuse sessionId. (2026-06-27)
 
 > See CHANGELOG.md for complete details.
 
@@ -14,9 +14,11 @@
 
 1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
-2. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, and ביחד now have accurate links. Monitor ש"ס, ליכוד, חד"ש for new/updated official platforms. Update `lib/parties.ts` + grounding `sourceQuality`/`platformAvailable` when links appear.
+2. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
 
-3. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
+3. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, and ביחד now have accurate links. Monitor ש"ס, ליכוד, חד"ש for new/updated official platforms. Update `lib/parties.ts` + grounding `sourceQuality`/`platformAvailable` when links appear.
+
+4. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
    - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
@@ -31,16 +33,16 @@
    - **0.6** Content neutrality audit (3rd-party review of question framing)
    - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 
-4. **Scoring tuning: squared weights + critical-topic cap** — two related levers to make high-priority mismatches hit harder: (a) use weight² (16:9:4:1) instead of linear (4:3:2:1) so "קריטי" means more in the weighted average; (b) limit קריטי selections to 1–2 so users can't mark everything critical (making each designation genuinely selective). Both are low-lift and complementary; revisit after next user-testing round with real data. _[decided 2026-06-27: deferred, score curve already handles primary case]_
+5. **Scoring tuning: squared weights + critical-topic cap** — two related levers to make high-priority mismatches hit harder: (a) use weight² (16:9:4:1) instead of linear (4:3:2:1) so "קריטי" means more in the weighted average; (b) limit קריטי selections to 1–2 so users can't mark everything critical (making each designation genuinely selective). Both are low-lift and complementary; revisit after next user-testing round with real data. _[decided 2026-06-27: deferred, score curve already handles primary case]_
 
-5. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
+6. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
    - Russian, Arabic, English UI layers
    - Party platforms remain in Hebrew; answers/explanations translated
 
-6. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
+7. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
    - Experience, notable actions/votes (official sources only, no social media)
 
-7. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+8. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 

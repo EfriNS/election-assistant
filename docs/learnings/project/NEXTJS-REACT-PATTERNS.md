@@ -454,6 +454,69 @@ Rule: in Hebrew UI strings, never end with `")?"`. The `"?"` closes the main cla
 
 ---
 
+## Server-side PDF generation (Puppeteer + @sparticuz/chromium)
+
+### Next.js 16 Turbopack blocks `react-dom/server` in App Router route handlers (#first:2026-06-28)
+
+Importing `react-dom/server` (for `renderToStaticMarkup`) inside an App Router route handler causes a Turbopack build error:
+```
+You're importing a component that imports react-dom/server
+```
+
+**Fix**: Use a plain TypeScript string builder (no React). This is actually the cleaner pattern for server-side HTML generation — no hydration, no component lifecycle, pure data → HTML:
+
+```typescript
+// ❌ Won't compile with Turbopack:
+import { renderToStaticMarkup } from "react-dom/server";
+export async function POST() {
+  const html = renderToStaticMarkup(<MyResultsPage data={...} />);
+}
+
+// ✅ Plain string builder in lib/pdf-template.ts:
+export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string {
+  function e(s: string) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;") ... }
+  return `<!DOCTYPE html><html>...${e(data.aiProfile ?? "")}...</html>`;
+}
+```
+
+### `outputFileTracingIncludes` required for Chromium binaries on Vercel (#first:2026-06-28)
+
+Vercel's function bundler traces JS imports but excludes binary assets from `node_modules` by default. `@sparticuz/chromium` stores brotli-compressed Chromium executables in `bin/` — without explicit inclusion, the Vercel function throws at runtime:
+```
+The input directory "/var/task/node_modules/@sparticuz/chromium/bin" does not exist.
+```
+
+**Fix** in `next.config.ts`:
+```typescript
+outputFileTracingIncludes: {
+  "/api/export-pdf": ["./node_modules/@sparticuz/chromium/bin/**/*"],
+}
+```
+
+The chromium bin is ~66MB — fits within Vercel's 250MB function bundle limit. Also required: `serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"]` to prevent Next.js from bundling native deps.
+
+### Puppeteer API changes in v24 (#first:2026-06-28)
+
+Two breaking changes from older Puppeteer docs:
+1. `networkidle0` / `networkidle2` removed from `setContent()` `waitUntil` — only `"load"` and `"domcontentloaded"` accepted. Use `page.waitForNetworkIdle({ idleTime: 500 })` as a separate call after `setContent`.
+2. `chromium.defaultViewport` removed from `@sparticuz/chromium` v147 — don't pass it to `puppeteer.launch()`.
+
+### Cold starts are per function-instance lifecycle, not per deployment (#first:2026-06-28)
+
+`@sparticuz/chromium` extracts ~300MB to `/tmp` on first invocation (~4-6s). This is a **per-function-instance** cold start, not a per-deployment event. Serverless function instances recycle after ~5-10 min idle — so most real user PDF calls will incur a cold start. On Vercel Hobby, PDF generation will commonly take 6-10s. Consider showing a loading message ("מכין את הקובץ...") in the UI — implemented in `UnifiedResultsPage.tsx`.
+
+### Minimal Chromium ≠ full Chrome: emoji and Unicode symbols fail silently (#first:2026-06-28)
+
+`@sparticuz/chromium` ships a stripped Chromium with limited font support. Emoji (🗳️, ⚠️) and Unicode symbols (✦, ↗) render as empty rectangles. Solution: **remove or replace** rather than trying to load emoji fonts (more reliable):
+- Remove decorative emoji from headings
+- Replace ⚠️ with `<strong>` text
+- Replace ✦ sparkles with plain text prefix
+- Remove ↗ arrows from link labels
+
+Adding Noto Sans to the Google Fonts load (`family=Noto+Sans`) improves Unicode coverage for basic symbols (✓, ✕, ~) — sufficient for topic chips. Noto Emoji is too heavy for Puppeteer-rendered PDFs.
+
+---
+
 ### Don't interpolate dynamic values into the middle of Hebrew sentences (#first:2026-06-26)
 
 Interpolating a data-driven string into the middle of a natural-language sentence produces unreadable or grammatically broken Hebrew when the value is itself a phrase:
