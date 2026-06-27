@@ -70,7 +70,7 @@ function renderGrounding(
   const outdatedWarning =
     groundingData.platformAvailable === false
       ? `<div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 leading-relaxed">
-          <span class="font-semibold">⚠️ המפלגה לא פרסמה מצע בחירות עדכני.</span>
+          <span class="font-semibold">המפלגה לא פרסמה מצע בחירות עדכני.</span>
           ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
         </div>`
       : "";
@@ -89,7 +89,7 @@ function renderGrounding(
             ${entry.contrary ? '<p class="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת לכך</p>' : ""}
             <p class="text-xs text-gray-700 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
             <div class="flex items-center gap-2 mt-1 flex-wrap">
-              <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)} ↗</a>
+              <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
               <span class="text-xs text-gray-300">${e(entry.dateRetrieved)}</span>
             </div>
           </div>`
@@ -149,14 +149,14 @@ function renderPartyCard(
   const aiBlurbHtml = aiBlurb
     ? `<div class="mt-1 mb-2 pt-2 border-t border-gray-100">
         <p class="text-xs text-gray-500 leading-relaxed">
-          <span class="text-indigo-400 mr-1">✦</span>${e(aiBlurb)}
+          ${e(aiBlurb)}
         </p>
       </div>`
     : "";
 
   let platformLinkHtml: string;
   if (party.platformUrl && !isLowQualitySource) {
-    platformLinkHtml = `<a href="${e(party.platformUrl)}" class="text-xs ${c.link}">${e(party.platformLabel ?? "מצע רשמי")} ↗</a>`;
+    platformLinkHtml = `<a href="${e(party.platformUrl)}" class="text-xs ${c.link}">${e(party.platformLabel ?? "מצע רשמי")}</a>`;
   } else if (isLowQualitySource) {
     platformLinkHtml = `<span class="text-xs text-red-400 font-medium">${sourceQuality === "outdated" ? "מקורות מיושנים" : "מקורות חיצוניים"}</span>`;
   } else if (hasGrounding) {
@@ -187,7 +187,7 @@ function renderPartyCard(
       ${aiBlurbHtml}
       <div class="flex gap-4 flex-wrap items-center mb-2">
         ${party.website
-          ? `<a href="${e(party.website)}" class="text-xs ${c.link}">אתר המפלגה ↗</a>`
+          ? `<a href="${e(party.website)}" class="text-xs ${c.link}">אתר המפלגה</a>`
           : `<span class="text-xs text-gray-300">אתר לא ידוע</span>`}
         ${platformLinkHtml}
       </div>
@@ -219,7 +219,6 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
 
   const profileBox = aiProfile
     ? `<div class="bg-indigo-50 border border-indigo-100 rounded-xl px-4 py-3 flex items-start gap-2">
-        <span class="text-indigo-300 mt-0.5 shrink-0 text-xs">✦</span>
         <p class="text-sm text-indigo-900 leading-relaxed">${e(aiProfile)}</p>
       </div>`
     : "";
@@ -284,7 +283,7 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
     <div class="max-w-2xl mx-auto space-y-4 text-gray-900">
       <div class="border-b border-gray-200 pb-4 mb-2 flex items-start justify-between">
         <div>
-          <h1 class="text-xl font-bold">🗳️ עוזר הבחירות</h1>
+          <h1 class="text-xl font-bold">עוזר הבחירות</h1>
           <p class="text-sm text-gray-500 mt-0.5">תוצאות ההתאמה האישית שלך</p>
         </div>
         <span class="text-xs text-gray-400">${e(generatedAt)}</span>
@@ -307,11 +306,11 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @page { size: A4; margin: 18mm 20mm; }
-    body { font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; }
+    body { font-family: 'Heebo', 'Noto Sans', Arial, sans-serif; }
   </style>
 </head>
 <body class="bg-white text-gray-900 py-6 px-4">
