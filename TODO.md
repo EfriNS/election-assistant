@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Results UX polish + sourceQuality** — strip AI-numbered options; follow-ups in "ענית"; sourceQuality field (official/thirdParty/outdated) drives red/amber/green labels. (2026-06-26)
-- **Results UX 2: labels, share, follow-up UX, party data** — sourceQuality-driven accordion labels + BiDi fix; ShareButton landing variant; follow-up select-then-confirm; party platformUrl/Label consistency pass. (2026-06-26)
 - **Scoring UX + dimension analysis** — n=1.5 power curve; per-topic chips on all cards; close-score notice + separator; TOPIC_KEY_DIMENSIONS refined; grounding entries for 3 new slugs; Langfuse sessionId. (2026-06-27)
+- **Soft launch UX** — unknown-topic chips (gray dash); floating feedback widget → Slack #election-feedback; gender-neutral CTA; rate-limited (3/session). (2026-06-27)
+- **User testing round 3** — 2 new users; results praised; free-text scoring validated; "מונופול לרבנות" phrasing flagged (tracking, not fixing). (2026-06-27)
 
 > See CHANGELOG.md for complete details.
 
@@ -22,8 +22,8 @@
    - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
 
    _Open decisions (discuss before implementing):_
-   - **💬 "ענית" for un-grounded topics** — results accordion only shows "ענית" for topics where the party has grounding entries. Should "ענית" appear even when there's no grounding data for that party+topic? Would require restructuring the accordion beyond grounding pairs.
-   - **💬 Feedback channel** — currently wired to Google Form via `NEXT_PUBLIC_FEEDBACK_FORM_URL`. Discuss: Google Form vs. Slack (e.g. incoming webhook) vs. email (mailto:) vs. Tally/Typeform. Trade-offs: friction, anonymity, aggregation ease, setup cost.
+   - ✅ **"ענית" for un-grounded topics** — resolved: show gray "—" chip for topics with no party data (chip row, not accordion). (2026-06-27)
+   - ✅ **Feedback channel** — resolved: floating in-app widget → Slack #election-feedback. (2026-06-27)
    - **💬 Analytics depth** — currently 4 lifecycle events on Vercel Analytics. Discuss: (a) add richer events (tone/depth breakdown, answer-option distribution, free-text "other" adoption rate + content) vs. (b) migrate to Mixpanel free tier for cohorts, funnels, retention. Key events to consider: `option_selected {topicId, optionId}`, `free_text_submitted {topicId}`, `follow_up_asked {topicId, aspect}`.
 
    _Human tasks (parallel):_

@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-06-27 — Soft launch UX: feedback widget + coverage chips + user testing round 3 (commits `4ddd5a6`–`b04acc1`)
+
+### Feat: unknown-topic chips on party result cards (`components/PartyResultCard.tsx`)
+
+Topics the user answered but for which a party has no scoring data were previously hidden from the per-topic chip row, making it impossible to distinguish "no match" from "no data". Now renders a pale gray `שם_נושא —` chip with tooltip "אין מידע זמין". Four chip states: ✓ green (≥60%), ~ gray (40–59%), ✕ red (<40%), — pale gray (no data).
+
+### Feat: in-app feedback widget → Slack #election-feedback (`components/FeedbackWidget.tsx`, `app/api/feedback/route.ts`, `app/layout.tsx`)
+
+Replaced the placeholder Google Form link with a floating in-app feedback widget mounted in `layout.tsx` (appears on all pages and all quiz steps). Features:
+- Collapsed state: `💬 משוב` pill button fixed bottom-right
+- Expanded state: card with heading "נשמח למשוב, כדי להשתפר" + textarea + "שלחו" (gender-neutral)
+- Rate limit: 3 submissions per page load (client-side); widget disappears after 3rd
+- POST to `/api/feedback` → Slack webhook (`FEEDBACK_SLACK_WEBHOOK_URL`) with text + page path
+- Error recovery: cancel button resets error state; graceful fallback if webhook not configured
+
+### Docs: user testing round 3 (`docs/user-testing/round-3-feedback.md`)
+
+Logged soft-launch feedback from 2 new users (2026-06-27):
+- User 1 (F): Results presentation praised ("מאד מוצלח!"). Flagged potential non-neutral phrasing ("מונופול לרבנות"). Long question flow may fatigue impatient users.
+- User 2 (M): Positive on speed/flexibility. Explicitly noticed and appreciated free-text input being scored in results — validates the /api/score-topics investment.
+- Decision: phrasing not changed now; tracking for recurrence.
+
+### Commits
+- `4ddd5a6` feat: show gray dash chip for topics with no party coverage
+- `152d481` feat: in-app feedback widget → Slack #election-feedback
+- `09ca6e7` feat: floating feedback widget on all screens
+- `b04acc1` docs: add round 3 user testing feedback (soft launch, 2026-06-27)
+
+---
+
 ## 2026-06-27 — Scoring UX + dimension analysis + Langfuse sessionId (commits `487c002`–`55ac7b9`)
 
 ### Feat: non-linear scoring — power curve n=1.5 (`lib/scoring.ts`)
