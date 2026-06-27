@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
   "crons": [
-    { "path": "/api/quota-check", "schedule": "0 0 * * *" }
+    { "path": "/api/quota-check", "schedule": "0 6 * * *" }
   ],
   "functions": {
     "app/api/export-pdf/route.ts": {

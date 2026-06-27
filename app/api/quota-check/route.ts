@@ -9,14 +9,6 @@ function getEnvInt(key: string, fallback: number): number {
   return isNaN(n) ? fallback : n;
 }
 
-function parseThresholds(): number[] {
-  return (process.env.QUOTA_ALERT_THRESHOLDS ?? "50,80,90")
-    .split(",")
-    .map(Number)
-    .filter((n) => !isNaN(n))
-    .sort((a, b) => a - b);
-}
-
 type UsageTotals = { tokens: number; requests: number };
 
 export async function fetchWindowUsage(
@@ -60,36 +52,27 @@ export function computePcts(
   return { tokenPct, requestPct, overallPct: Math.max(tokenPct, requestPct) };
 }
 
-export function newlyCrossedThresholds(
-  currentPct: number,
-  previousPct: number,
-  thresholds: number[]
-): number[] {
-  return thresholds.filter((t) => currentPct >= t && previousPct < t);
-}
-
 export function buildSlackBody(
   tokenPct: number,
   requestPct: number,
   tokenLimit: number,
   requestLimit: number,
   totals: UsageTotals,
-  crossed: number[]
+  overallPct: number
 ): object {
-  const level   = crossed[crossed.length - 1];
-  const emoji   = level >= 90 ? "🚨" : level >= 80 ? "⚠️" : "📊";
-  const overall = Math.max(tokenPct, requestPct).toFixed(0);
+  const emoji   = overallPct >= 90 ? "🚨" : overallPct >= 80 ? "⚠️" : overallPct >= 50 ? "📊" : "✅";
+  const overall = overallPct.toFixed(0);
   const binding = tokenPct >= requestPct ? "tokens" : "requests";
 
   return {
-    text: `${emoji} Gemini quota alert — ${overall}% of daily limit`,
+    text: `${emoji} Gemini daily usage — ${overall}% of limit`,
     blocks: [
       {
         type: "section",
         text: {
           type: "mrkdwn",
           text:
-            `*${emoji} Gemini quota alert — ${overall}% of daily limit*\n` +
+            `*${emoji} Gemini daily usage summary*\n` +
             `Tokens: ${totals.tokens.toLocaleString()} / ${tokenLimit.toLocaleString()} (${tokenPct.toFixed(1)}%)\n` +
             `Requests: ${totals.requests.toLocaleString()} / ${requestLimit.toLocaleString()} (${requestPct.toFixed(1)}%)\n` +
             `Binding: ${binding}\n` +
@@ -101,7 +84,6 @@ export function buildSlackBody(
 }
 
 export async function GET(req: NextRequest) {
-  // Auth: only required when QUOTA_CRON_SECRET is configured
   const cronSecret = process.env.QUOTA_CRON_SECRET;
   if (cronSecret) {
     const auth = req.headers.get("authorization") ?? "";
@@ -116,7 +98,6 @@ export async function GET(req: NextRequest) {
 
   const tokenLimit   = getEnvInt("QUOTA_DAILY_TOKEN_LIMIT",   250_000);
   const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 1_500);
-  const thresholds   = parseThresholds();
   const webhookUrl   = process.env.QUOTA_SLACK_WEBHOOK_URL;
 
   const client = new Langfuse({
@@ -126,37 +107,28 @@ export async function GET(req: NextRequest) {
   });
 
   const now        = new Date();
-  const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
   const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-  const [current, previous] = await Promise.all([
-    fetchWindowUsage(client, todayStart, now),
-    fetchWindowUsage(client, todayStart, oneHourAgo),
-  ]);
+  const totals = await fetchWindowUsage(client, todayStart, now);
+  const { tokenPct, requestPct, overallPct } = computePcts(totals, tokenLimit, requestLimit);
 
-  const { tokenPct, requestPct, overallPct } = computePcts(current, tokenLimit, requestLimit);
-  const { overallPct: prevOverallPct }        = computePcts(previous, tokenLimit, requestLimit);
-
-  const crossed   = newlyCrossedThresholds(overallPct, prevOverallPct, thresholds);
-  let   alertSent = false;
-
-  if (crossed.length > 0 && webhookUrl) {
-    const body = buildSlackBody(tokenPct, requestPct, tokenLimit, requestLimit, current, crossed);
+  let slackSent = false;
+  if (webhookUrl) {
+    const body = buildSlackBody(tokenPct, requestPct, tokenLimit, requestLimit, totals, overallPct);
     await fetch(webhookUrl, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify(body),
     });
-    alertSent = true;
+    slackSent = true;
   }
 
   return NextResponse.json({
-    tokensToday:       current.tokens,
-    requestsToday:     current.requests,
-    tokenPct:          Math.round(tokenPct   * 10) / 10,
-    requestPct:        Math.round(requestPct * 10) / 10,
-    overallPct:        Math.round(overallPct * 10) / 10,
-    thresholdsCrossed: crossed,
-    alertSent,
+    tokensToday:   totals.tokens,
+    requestsToday: totals.requests,
+    tokenPct:      Math.round(tokenPct   * 10) / 10,
+    requestPct:    Math.round(requestPct * 10) / 10,
+    overallPct:    Math.round(overallPct * 10) / 10,
+    slackSent,
   });
 }

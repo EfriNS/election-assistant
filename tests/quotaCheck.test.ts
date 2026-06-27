@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   computePcts,
-  newlyCrossedThresholds,
   buildSlackBody,
 } from "@/app/api/quota-check/route";
 import { NextRequest } from "next/server";
@@ -31,7 +30,6 @@ function makeReq(secret?: string): NextRequest {
   });
 }
 
-// Helper: configure fetchObservations to return `obs` for all calls
 function stubObservations(obs: ReturnType<typeof makeObs>[]) {
   mockFetchObservations.mockResolvedValue({ data: obs });
 }
@@ -61,45 +59,30 @@ describe("computePcts", () => {
   });
 });
 
-describe("newlyCrossedThresholds", () => {
-  const thresholds = [50, 80, 90];
-
-  it("returns thresholds crossed since the previous window", () => {
-    expect(newlyCrossedThresholds(85, 45, thresholds)).toEqual([50, 80]);
-  });
-
-  it("returns empty array when already above threshold (de-duplication)", () => {
-    expect(newlyCrossedThresholds(85, 82, thresholds)).toEqual([]);
-  });
-
-  it("returns 90% threshold when crossing from 89 to 91", () => {
-    expect(newlyCrossedThresholds(91, 89, thresholds)).toEqual([90]);
-  });
-
-  it("returns empty array when below all thresholds", () => {
-    expect(newlyCrossedThresholds(40, 30, thresholds)).toEqual([]);
-  });
-});
-
 describe("buildSlackBody", () => {
   it("uses 🚨 emoji at 90%+", () => {
-    const body = buildSlackBody(91, 91, 250_000, 1_500, { tokens: 227_500, requests: 1_365 }, [90]);
+    const body = buildSlackBody(91, 91, 250_000, 1_500, { tokens: 227_500, requests: 1_365 }, 91);
     expect(JSON.stringify(body)).toContain("🚨");
   });
 
   it("uses ⚠️ emoji at 80%", () => {
-    const body = buildSlackBody(80, 80, 250_000, 1_500, { tokens: 200_000, requests: 1_200 }, [80]);
+    const body = buildSlackBody(80, 80, 250_000, 1_500, { tokens: 200_000, requests: 1_200 }, 80);
     expect(JSON.stringify(body)).toContain("⚠️");
   });
 
   it("uses 📊 emoji at 50%", () => {
-    const body = buildSlackBody(50, 50, 250_000, 1_500, { tokens: 125_000, requests: 750 }, [50]);
+    const body = buildSlackBody(50, 50, 250_000, 1_500, { tokens: 125_000, requests: 750 }, 50);
     expect(JSON.stringify(body)).toContain("📊");
+  });
+
+  it("uses ✅ emoji below 50%", () => {
+    const body = buildSlackBody(20, 20, 250_000, 1_500, { tokens: 50_000, requests: 300 }, 20);
+    expect(JSON.stringify(body)).toContain("✅");
   });
 
   it("includes token and request counts in message", () => {
     const body = JSON.stringify(
-      buildSlackBody(50, 50, 250_000, 1_500, { tokens: 125_000, requests: 750 }, [50])
+      buildSlackBody(50, 50, 250_000, 1_500, { tokens: 125_000, requests: 750 }, 50)
     );
     expect(body).toContain("125,000");
     expect(body).toContain("250,000");
@@ -120,7 +103,6 @@ describe("GET /api/quota-check", () => {
       LANGFUSE_PUBLIC_KEY:  "test-public",
       QUOTA_DAILY_TOKEN_LIMIT:   "250000",
       QUOTA_DAILY_REQUEST_LIMIT: "1500",
-      QUOTA_ALERT_THRESHOLDS: "50,80,90",
       QUOTA_CRON_SECRET: undefined,
       QUOTA_SLACK_WEBHOOK_URL: undefined,
     };
@@ -164,10 +146,8 @@ describe("GET /api/quota-check", () => {
 
   it("returns correct usage percentages from observations", async () => {
     const { GET } = await import("@/app/api/quota-check/route");
-    // current window: 125K tokens (50%), 750 requests (50%)
-    // previous window (1hr ago): same, called second
     stubObservations(
-      Array.from({ length: 5 }, () => makeObs(12_500, 12_500))  // 5 * 25K = 125K tokens
+      Array.from({ length: 5 }, () => makeObs(12_500, 12_500)) // 5 * 25K = 125K tokens
     );
     const res = await GET(makeReq());
     const body = await res.json();
@@ -175,28 +155,22 @@ describe("GET /api/quota-check", () => {
     expect(body.tokensToday).toBe(125_000);
     expect(body.requestsToday).toBe(5);
     expect(body.tokenPct).toBeCloseTo(50, 0);
-    expect(body.alertSent).toBe(false); // no webhook configured
+    expect(body.slackSent).toBe(false); // no webhook configured
   });
 
-  it("fires Slack alert when threshold first crossed", async () => {
+  it("always sends Slack summary when webhook is configured", async () => {
     process.env.QUOTA_SLACK_WEBHOOK_URL = "https://hooks.slack.com/test";
 
     const mockFetch = vi.fn().mockResolvedValue(new Response("ok"));
     vi.stubGlobal("fetch", mockFetch);
 
     const { GET } = await import("@/app/api/quota-check/route");
-
-    // current: 85% (above 80% threshold); previous: 40% (below 80%)
-    mockFetchObservations
-      .mockResolvedValueOnce({ data: [makeObs(212_500, 0)] }) // current: 85% tokens
-      .mockResolvedValueOnce({ data: [makeObs(100_000, 0)] }); // prev: 40%
+    stubObservations([makeObs(50_000, 0)]); // 20% usage — below all thresholds
 
     const res = await GET(makeReq());
     const body = await res.json();
 
-    expect(body.thresholdsCrossed).toContain(80);
-    expect(body.alertSent).toBe(true);
-    // Slack webhook called with correct URL
+    expect(body.slackSent).toBe(true);
     expect(mockFetch).toHaveBeenCalledWith(
       "https://hooks.slack.com/test",
       expect.objectContaining({ method: "POST" })
@@ -205,29 +179,19 @@ describe("GET /api/quota-check", () => {
     vi.unstubAllGlobals();
   });
 
-  it("does NOT fire Slack alert when already above threshold (de-duplication)", async () => {
+  it("sends 🚨 emoji in Slack message when above 90%", async () => {
     process.env.QUOTA_SLACK_WEBHOOK_URL = "https://hooks.slack.com/test";
 
     const mockFetch = vi.fn().mockResolvedValue(new Response("ok"));
     vi.stubGlobal("fetch", mockFetch);
 
     const { GET } = await import("@/app/api/quota-check/route");
+    stubObservations([makeObs(230_000, 0)]); // 92% tokens
 
-    // both current and previous are above 80% → already alerted this hour
-    mockFetchObservations
-      .mockResolvedValueOnce({ data: [makeObs(220_000, 0)] }) // current: 88%
-      .mockResolvedValueOnce({ data: [makeObs(210_000, 0)] }); // prev: 84%
+    await GET(makeReq());
 
-    const res = await GET(makeReq());
-    const body = await res.json();
-
-    expect(body.thresholdsCrossed).toEqual([]);
-    expect(body.alertSent).toBe(false);
-    // Slack webhook NOT called
-    expect(mockFetch).not.toHaveBeenCalledWith(
-      "https://hooks.slack.com/test",
-      expect.anything()
-    );
+    const callBody = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(JSON.stringify(callBody)).toContain("🚨");
 
     vi.unstubAllGlobals();
   });

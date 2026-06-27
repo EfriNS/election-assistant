@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Gemini quota cron fix** — Daily Slack summary at 06:00 UTC (1h before Gemini reset); always-send redesign; removed broken threshold-crossing logic. (2026-06-28)
 - **PDF export** — Full A4 results via Puppeteer/@sparticuz/chromium; Hebrew font (Heebo+Noto); "שמור תוצאות כ-PDF" button post-AI-load; emoji removed for minimal Chromium compat. (2026-06-28)
 - **Mixpanel behavioral analytics** — 8 events covering full quiz funnel; EU endpoint fix; design doc in `docs/ANALYTICS-DESIGN.md`. (2026-06-28)
-- **Soft launch UX** — unknown-topic chips (gray dash); floating feedback widget → Slack #election-feedback; gender-neutral CTA; rate-limited (3/session). (2026-06-27)
 
 > See CHANGELOG.md for complete details.
 
