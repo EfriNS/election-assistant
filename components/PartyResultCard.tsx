@@ -85,8 +85,18 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         <div className="flex flex-wrap gap-1 mb-3" dir="rtl">
           {answeredTopicIds.map((topicId) => {
             const pct = partyTopicScores[topicId];
-            if (pct === undefined) return null;
             const shortLabel = TOPIC_LABELS[topicId]?.split(" ")[0] ?? topicId;
+            if (pct === undefined) {
+              return (
+                <span
+                  key={topicId}
+                  className="px-1.5 py-0.5 rounded border text-xs leading-none bg-gray-50 border-gray-200 text-gray-300"
+                  title={`${TOPIC_LABELS[topicId]}: אין מידע זמין`}
+                >
+                  {shortLabel} —
+                </span>
+              );
+            }
             const chip =
               pct >= 60
                 ? { cls: "bg-green-50 border-green-200 text-green-700", symbol: "✓" }
