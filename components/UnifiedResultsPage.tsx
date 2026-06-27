@@ -105,27 +105,61 @@ export default function UnifiedResultsPage({
           </div>
         )}
 
+        {/* Close-score notice */}
+        {(() => {
+          const top1 = results[0]?.score ?? 0;
+          const isClose = results.length >= 3 && top1 - results[2].score <= 12;
+          if (!isClose) return null;
+          return (
+            <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-3 text-xs text-gray-500 leading-relaxed" dir="rtl">
+              <span className="font-medium text-gray-600">שלוש המפלגות המובילות קרובות בציון</span>
+              {" "}({results[2].score}%–{top1}%).
+              {" "}הפרש קטן אינו מכריע — הסתכלו על הנושאים (✓ / ~ / ✕) בכל כרטיסייה כדי לראות היכן המפלגות נבדלות.
+            </div>
+          );
+        })()}
+
         {/* Party cards */}
-        <div className="flex flex-col gap-3">
-          {results.map((r, i) => (
-            <PartyResultCard
-              key={r.id}
-              party={r}
-              rank={i}
-              accentColor={accentColor}
-              aiBlurb={aiData?.partyBlurbs[r.id]}
-              aiLoading={aiLoading && i < 3}
-              groundingData={groundings?.[r.id]}
-              topicAnswerTexts={topicAnswerTexts}
-              partyTopicScores={topicScores?.[r.id]}
-              answeredTopicIds={answeredTopicIds}
-              showTopicBreakdown={
-                topicScores != null &&
-                (i < 3 || r.score >= (results[0]?.score ?? 0) - 10)
-              }
-            />
-          ))}
-        </div>
+        {(() => {
+          const top1 = results[0]?.score ?? 0;
+          // Last index of the "close group" — within 15 pts of #1, at least the top 3
+          const lastCloseIdx = results.reduce(
+            (last, r, i) => (i < 3 || r.score >= top1 - 15 ? i : last),
+            0
+          );
+          const showSeparator = lastCloseIdx < results.length - 1;
+
+          return (
+            <div className="flex flex-col gap-3">
+              {results.map((r, i) => (
+                <div key={r.id}>
+                  <PartyResultCard
+                    party={r}
+                    rank={i}
+                    accentColor={accentColor}
+                    aiBlurb={aiData?.partyBlurbs[r.id]}
+                    aiLoading={aiLoading && i < 3}
+                    groundingData={groundings?.[r.id]}
+                    topicAnswerTexts={topicAnswerTexts}
+                    partyTopicScores={topicScores?.[r.id]}
+                    answeredTopicIds={answeredTopicIds}
+                    showTopicBreakdown={
+                      topicScores != null &&
+                      (i < 3 || r.score >= top1 - 10)
+                    }
+                  />
+                  {showSeparator && i === lastCloseIdx && (
+                    <div className="flex items-center gap-3 mt-3 mb-1" dir="rtl">
+                      <div className="flex-1 h-px bg-gray-200" />
+                      <span className="text-xs text-gray-300 whitespace-nowrap">שאר המפלגות</span>
+                      <div className="flex-1 h-px bg-gray-200" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         {/* Methodology */}
         <details className="bg-gray-50 border border-gray-200 rounded-xl mt-6 text-xs text-gray-500 leading-relaxed group">
@@ -164,6 +198,9 @@ export default function UnifiedResultsPage({
               <strong className="text-gray-600">ציון סופי</strong>
               <p className="mt-1">
                 ממוצע משוקלל של כל הנושאים שענית עליהם, מנורמל ל-0–100%.
+                הציון אינו ליניארי — אי-התאמה בנושא אחד גורמת לירידה גדולה יותר
+                ממה שהסכמה על נושא אחר תפצה עליה. כך מפלגה שמסכימה על הכל חוץ
+                מנושא אחד לא תקבל ציון מלא.
               </p>
             </div>
           </div>
