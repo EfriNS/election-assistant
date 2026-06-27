@@ -105,6 +105,8 @@ function PrototypeEInner() {
   const depth = searchParams.get("depth") ?? "short";
   const questionSet = tone === "personal" ? QUESTIONS_PERSONAL : QUESTIONS_FORMAL;
 
+  const [sessionId] = useState(() => crypto.randomUUID());
+
   const [step, setStep] = useState<Step>("rank");
   const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -191,7 +193,7 @@ function PrototypeEInner() {
         const r = await fetch("/api/score-topics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ topics: topicsForScoring }),
+          body: JSON.stringify({ topics: topicsForScoring, sessionId }),
         });
         const data = await r.json() as { scores?: Record<string, Record<string, number | null>>; errorCode?: string };
         if (active && data.scores) setAiScores(data.scores);
@@ -379,6 +381,7 @@ function PrototypeEInner() {
         suggestedNextDimension,
         uncoveredKeyDims,
         openerIsFreeText,
+        sessionId,
       }),
     });
 
@@ -575,6 +578,7 @@ function PrototypeEInner() {
             })
         )}
         accentColor="teal"
+        sessionId={sessionId}
         onBack={() => setStep("close")}
       />
     );

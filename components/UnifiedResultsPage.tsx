@@ -21,6 +21,7 @@ type Props = {
   topicAnswerTexts?: Record<string, string>;
   topicScores?: Record<string, Record<string, number>>; // partyId → topicId → 0–100
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
+  sessionId?: string;
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
   externalAiData?: AiData | null;
@@ -34,6 +35,7 @@ export default function UnifiedResultsPage({
   topicAnswerTexts,
   topicScores,
   accentColor,
+  sessionId,
   onBack,
   externalAiData,
   externalAiLoading,
@@ -59,6 +61,7 @@ export default function UnifiedResultsPage({
         answersSummary: userAnswersSummary ?? "",
         topParties: results.map((r) => ({ id: r.id, name: r.name, score: r.score })),
         answeredTopicIds: answeredTopicIds ?? [],
+        sessionId,
       }),
     })
       .then((res) => {

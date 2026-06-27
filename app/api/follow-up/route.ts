@@ -168,6 +168,7 @@ export async function POST(req: NextRequest) {
     suggestedNextDimension?: string | null;
     uncoveredKeyDims?: string[];
     openerIsFreeText?: boolean;
+    sessionId?: string;
   } = await req.json();
 
   // Sanitize all user-supplied text before it enters the prompt
@@ -195,6 +196,7 @@ export async function POST(req: NextRequest) {
     suggestedNextDimension = null,
     uncoveredKeyDims = [],
     openerIsFreeText = false,
+    sessionId,
   } = raw;
   const conversationSoFar = sanitizedHistory;
   const currentTopic = sanitizedCurrentTopic;
@@ -211,6 +213,7 @@ export async function POST(req: NextRequest) {
   const langfuse = makeLangfuse();
   const trace = langfuse?.trace({
     name: "follow-up-generation",
+    sessionId,
     metadata: {
       prototype: "e",
       topic: currentTopic.label,
