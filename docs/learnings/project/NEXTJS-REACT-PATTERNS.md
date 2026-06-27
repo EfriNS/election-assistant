@@ -389,6 +389,35 @@ Apply this pattern to every route that includes user-submitted text in the AI pr
 
 ---
 
+## Third-party Analytics
+
+### Mixpanel EU projects: `api_host` is mandatory (#first:2026-06-28)
+
+Both Mixpanel projects (production 4038344, preview 4038347) are EU-hosted. The default JS SDK sends events to `api.mixpanel.com` (US). For EU projects, the US endpoint:
+- Returns HTTP 200 and response body `1` (looks like success)
+- **Silently discards all events** — they never appear in the Mixpanel UI
+
+**Fix**: always pass `api_host` to `mixpanel.init()`:
+```typescript
+mixpanel.init(token, {
+  api_host: "https://api-eu.mixpanel.com",  // REQUIRED for EU projects
+  // ...other options
+});
+```
+
+**Diagnostic**: fire a synthetic curl event to both endpoints to identify which one the project accepts:
+```bash
+# Both return `1` — check Mixpanel Events view to see which delivered
+curl -s -X POST "https://api.mixpanel.com/track" -H "Content-Type: application/json" \
+  --data-binary '[{"event":"test","properties":{"token":"YOUR_TOKEN","distinct_id":"test"}}]'
+curl -s -X POST "https://api-eu.mixpanel.com/track" -H "Content-Type: application/json" \
+  --data-binary '[{"event":"test","properties":{"token":"YOUR_TOKEN","distinct_id":"test"}}]'
+```
+
+Full setup: `lib/mixpanel.ts` + `docs/ANALYTICS-DESIGN.md`.
+
+---
+
 ## RTL Copy
 
 ### Whitespace around `<strong>` is swallowed in RTL (#first:2026-06-26)

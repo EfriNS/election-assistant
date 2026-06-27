@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **Scoring UX + dimension analysis** — n=1.5 power curve; per-topic chips on all cards; close-score notice + separator; TOPIC_KEY_DIMENSIONS refined; grounding entries for 3 new slugs; Langfuse sessionId. (2026-06-27)
+- **Mixpanel behavioral analytics** — 8 events covering full quiz funnel; EU endpoint fix; design doc in `docs/ANALYTICS-DESIGN.md`. (2026-06-28)
 - **Soft launch UX** — unknown-topic chips (gray dash); floating feedback widget → Slack #election-feedback; gender-neutral CTA; rate-limited (3/session). (2026-06-27)
-- **User testing round 3** — 2 new users; results praised; free-text scoring validated; "מונופול לרבנות" phrasing flagged (tracking, not fixing). (2026-06-27)
+- **Scoring UX + dimension analysis** — n=1.5 power curve; per-topic chips on all cards; close-score notice + separator; TOPIC_KEY_DIMENSIONS refined; Langfuse sessionId. (2026-06-27)
 
 > See CHANGELOG.md for complete details.
 
@@ -24,7 +24,7 @@
    _Open decisions (discuss before implementing):_
    - ✅ **"ענית" for un-grounded topics** — resolved: show gray "—" chip for topics with no party data (chip row, not accordion). (2026-06-27)
    - ✅ **Feedback channel** — resolved: floating in-app widget → Slack #election-feedback. (2026-06-27)
-   - **💬 Analytics depth** — currently 4 lifecycle events on Vercel Analytics. Discuss: (a) add richer events (tone/depth breakdown, answer-option distribution, free-text "other" adoption rate + content) vs. (b) migrate to Mixpanel free tier for cohorts, funnels, retention. Key events to consider: `option_selected {topicId, optionId}`, `free_text_submitted {topicId}`, `follow_up_asked {topicId, aspect}`.
+   - ✅ **Analytics depth** — resolved: migrated to Mixpanel (EU, free tier), 8 events, full funnel + priority distribution + topic engagement. Design in `docs/ANALYTICS-DESIGN.md`. (2026-06-28)
 
    _Human tasks (parallel):_
    - **0.1** Advisor review of live app + `docs/score-review.md` (8 weak discriminators flagged)

@@ -1,5 +1,42 @@
 # Changelog
 
+## 2026-06-28 — Mixpanel behavioral analytics (8 events, EU region) (commits `9312ec7`–`0328b82`)
+
+Replaced 4 coarse Vercel Analytics lifecycle events with 8 purpose-built Mixpanel events covering the full quiz funnel. Design driven by 7 product questions (see `docs/ANALYTICS-DESIGN.md`).
+
+### Feat: Mixpanel instrumentation (`lib/mixpanel.ts`, `app/prototype-e/page.tsx`, `components/UnifiedResultsPage.tsx`)
+
+**Core helper** (`lib/mixpanel.ts`): single-init pattern with lazy initialization. Key settings: `persistence: "localStorage"`, `ip: false` (privacy), `track_pageview: false`, `api_host: "https://api-eu.mixpanel.com"` (required — both projects are EU-hosted).
+
+**Session identity**: `sessionId` (UUID already generated on mount) used as `distinct_id`. `mpIdentify(sessionId, {tone, depth})` called once on mount; `mp.register()` attaches `tone`/`depth` as super properties on all subsequent events.
+
+**8 events instrumented**:
+- `quiz_session_init` — on mount; establishes session + super props
+- `priorities_submitted` — on priority confirm; includes per-topic bucket weights + counts (answers Q2, Q3)
+- `topic_completed` — on topic advance; includes `follow_up_count`, `opener_was_free_text`, `aspects_probed[]` (answers Q4)
+- `quiz_completed` — on submit; includes topics selected/completed, has_close_text (answers Q1, Q5)
+- `quiz_abandoned` — on exit; includes step + topics_completed_so_far (answers Q1 drop-off)
+- `results_viewed` — on results mount; includes full score distribution per party (answers Q6)
+- `api_error` — on API failures; covers `/api/results`, `/api/follow-up`, `/api/score-topics` (answers Q7)
+
+**Stale closure fix**: `advanceToNextTopic` received an explicit `completed?: TopicCompletedProps` parameter so topic analytics data (follow-up count, aspects probed) uses current local variables rather than potentially-stale state.
+
+### Fix: EU endpoint (`lib/mixpanel.ts:13`)
+
+Both Mixpanel projects (production 4038344, preview 4038347) are EU-hosted. The default JS SDK endpoint (`api.mixpanel.com`) returns HTTP 200 / `1` for EU projects but silently discards all events. Required adding `api_host: "https://api-eu.mixpanel.com"` to `mixpanel.init()`. Diagnosed by firing a synthetic event via curl to both endpoints.
+
+### Docs: analytics design (`docs/ANALYTICS-DESIGN.md`)
+
+Full design doc capturing: 7 product questions, tool evaluation (Vercel Analytics / PostHog / Mixpanel), event schema with property tables, infrastructure (two Mixpanel projects + Vercel env vars), and known gotchas (EU endpoint, NEXT_PUBLIC_ baked at build time, Hotjar removal deferred).
+
+### Commits
+- `9312ec7` feat: add Mixpanel behavioral analytics (8 events)
+- `03ab557` fix: route Mixpanel events to EU endpoint
+- `c796210` docs: analytics design — Mixpanel event schema, product questions, EU endpoint gotcha
+- `0328b82` fix: move eslint-disable comment to correct line in session-init effect
+
+---
+
 ## 2026-06-27 — Soft launch UX: feedback widget + coverage chips + user testing round 3 (commits `4ddd5a6`–`b04acc1`)
 
 ### Feat: unknown-topic chips on party result cards (`components/PartyResultCard.tsx`)
