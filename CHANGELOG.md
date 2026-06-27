@@ -1,5 +1,55 @@
 # Changelog
 
+## 2026-06-27 — Scoring UX + dimension analysis + Langfuse sessionId (commits `487c002`–`55ac7b9`)
+
+### Feat: non-linear scoring — power curve n=1.5 (`lib/scoring.ts`)
+
+Applied `Math.pow(normalized, 1.5)` to each topic's contribution before weighting. Exported as `SCORE_CURVE_POWER = 1.5`. Effect: a 35% topic score becomes ~21%, 88% → ~82% — mismatches penalize proportionally more than agreements reward. Does not affect extreme values (0^n=0, 1^n=1). `calcResults` now returns `{ ranked, topicScores }` where `topicScores: Record<partyId, Record<topicId, 0–100>>` holds raw (pre-curve) per-party per-topic percentages.
+
+Tests updated: all 11 `calcResults` tests pass; blend tests use `Math.pow(0.75, SCORE_CURVE_POWER)` formula expectations keyed to the exported constant.
+
+### Feat: per-topic alignment chips on all result cards (`components/PartyResultCard.tsx`, `components/UnifiedResultsPage.tsx`)
+
+Color-coded chips per answered topic: ✓ green (≥60%), ~ gray (40–59%), ✕ red (<40%). Previously only shown on top-3 + within-10pts cards; now shown on all 10 party cards (data already computed, zero extra cost). `showTopicBreakdown` simplified to `topicScores != null`.
+
+### Feat: close-score notice + group separator (`components/UnifiedResultsPage.tsx`)
+
+- When top-3 parties are within 12pts: shows a gray notice box directing users to read the chips.
+- "שאר המפלגות" divider appears after the last party within 15pts of #1, separating the close group from the rest.
+- Methodology section updated to explain non-linear scoring.
+
+### Analysis + refactor: TOPIC_KEY_DIMENSIONS (`lib/questions.ts`)
+
+Reviewed all key dimensions against `docs/score-review.md` (range/discriminator analysis). Changes:
+- **Education**: removed `teacher-quality` (range=2, weak), added `independent-school-funding` (Haredi/nationalist funding without core curriculum — strong left↔Haredi split).
+- **Health**: moved `private-healthcare-regulation` to first (only strong health discriminator, range=3); demoted `expanded-health-basket` to last (range=2, near-consensus).
+- **Religion**: removed `haredi-draft-exemption` (redundant — near-mirror of `equal-service-burden`).
+- **Justice**: replaced `anti-corruption` with `judicial-appointments-reform` (sharper: specifically about political control of Supreme Court appointments, not generic rule-of-law).
+
+### Data: grounding entries for 3 new dimension slugs (`data/groundings/*.json`)
+
+Added Hebrew-text grounding entries covering the 3 new dimensions, across 9 parties each (Raam skipped — no explicit platform positions):
+- `independent-school-funding` (9 parties) — secular/left oppose public funding without core curriculum; Haredi/Likud bloc support it.
+- `private-healthcare-regulation` (4 parties) — Hadash/Democrats oppose private expansion; Likud allows it; Shas equity concern. Others have no platform position.
+- `judicial-appointments-reform` (9 parties) — left/center oppose political control; Likud/Shas/YT/OY support it.
+
+### Feat: Langfuse sessionId (`app/prototype-e/page.tsx`, `components/UnifiedResultsPage.tsx`, 3 API routes)
+
+Generated one `crypto.randomUUID()` per prototype-e session mount. Threaded through all three API call bodies (`/api/follow-up`, `/api/score-topics`, `/api/results`) and passed to `langfuse.trace({ sessionId })` in each route. Enables session-level grouping in Langfuse to prevent concurrent-session interleaving.
+
+### Commits
+
+`487c002` data(hadash): add full values platform
+`0a6a12b` feat: per-topic alignment chips on result cards
+`6471fd4` feat: score curve (n=1.5) + methodology text update
+`e5e199f` feat: close-score notice + group separator in results
+`27cfada` feat: non-linear scoring + per-topic chips + close-score notice + dimension analysis (combined commit)
+`53a400a` data: grounding entries for 3 new dimension slugs
+`c6892f3` feat: show per-topic alignment chips on all party cards
+`55ac7b9` feat: add sessionId to Langfuse traces
+
+---
+
 ## 2026-06-26 — Results UX polish: accordion labels, share button, follow-up UX, party data fixes (commits `491fdc2`–`7059039`)
 
 ### Feat: four distinct accordion labels driven by `sourceQuality` (`components/PartyResultCard.tsx`)

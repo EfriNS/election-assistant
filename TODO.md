@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
-- **/second-opinion skill** — new Claude Code skill: spawn fresh Plan agent with product problem + constraint only, no solution context, to break session bias. (2026-06-26)
 - **Results UX polish + sourceQuality** — strip AI-numbered options; follow-ups in "ענית"; sourceQuality field (official/thirdParty/outdated) drives red/amber/green labels. (2026-06-26)
 - **Results UX 2: labels, share, follow-up UX, party data** — sourceQuality-driven accordion labels + BiDi fix; ShareButton landing variant; follow-up select-then-confirm; party platformUrl/Label consistency pass. (2026-06-26)
+- **Scoring UX + dimension analysis** — n=1.5 power curve; per-topic chips on all cards; close-score notice + separator; TOPIC_KEY_DIMENSIONS refined; grounding entries for 3 new slugs; Langfuse sessionId. (2026-06-27)
 
 > See CHANGELOG.md for complete details.
 
