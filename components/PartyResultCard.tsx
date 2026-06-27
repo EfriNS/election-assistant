@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
+import { TOPIC_LABELS } from "@/lib/topics";
 
 type Props = {
   party: Party & { score: number };
@@ -12,6 +13,9 @@ type Props = {
   aiLoading?: boolean;
   groundingData?: PartyGroundingResult;
   topicAnswerTexts?: Record<string, string>;
+  partyTopicScores?: Record<string, number>; // topicId → 0–100 for this party
+  answeredTopicIds?: string[];
+  showTopicBreakdown?: boolean;
 };
 
 const COLORS = {
@@ -22,7 +26,7 @@ const COLORS = {
   teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-400",    score: "text-teal-700",    link: "text-teal-600"   },
 };
 
-export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading, groundingData, topicAnswerTexts }: Props) {
+export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading, groundingData, topicAnswerTexts, partyTopicScores, answeredTopicIds, showTopicBreakdown }: Props) {
   const c = COLORS[accentColor];
   const isTop = rank === 0;
   const [groundingOpen, setGroundingOpen] = useState(false);
@@ -66,7 +70,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
 
       {/* Score bar */}
       <div
-        className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3"
+        className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2"
         role="progressbar"
         aria-valuenow={party.score}
         aria-valuemin={0}
@@ -75,6 +79,32 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
       >
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
+
+      {/* Per-topic breakdown chips */}
+      {showTopicBreakdown && answeredTopicIds && partyTopicScores && (
+        <div className="flex flex-wrap gap-1 mb-3" dir="rtl">
+          {answeredTopicIds.map((topicId) => {
+            const pct = partyTopicScores[topicId];
+            if (pct === undefined) return null;
+            const shortLabel = TOPIC_LABELS[topicId]?.split(" ")[0] ?? topicId;
+            const chip =
+              pct >= 60
+                ? { cls: "bg-green-50 border-green-200 text-green-700", symbol: "✓" }
+                : pct < 40
+                ? { cls: "bg-red-50 border-red-200 text-red-600", symbol: "✕" }
+                : { cls: "bg-gray-50 border-gray-200 text-gray-400", symbol: "~" };
+            return (
+              <span
+                key={topicId}
+                className={`px-1.5 py-0.5 rounded border text-xs leading-none ${chip.cls}`}
+                title={`${TOPIC_LABELS[topicId]}: ${pct}%`}
+              >
+                {shortLabel} {chip.symbol}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* Description */}
       <p className="text-xs text-gray-500 mb-2">{party.description}</p>

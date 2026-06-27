@@ -14,14 +14,20 @@ import type { TopicQ } from "@/lib/questions";
 // Topics with "other" free-text opener use AI at full weight (no option score exists).
 export const FOLLOW_UP_AI_WEIGHT = 0.5;
 
+export type CalcResultsReturn = {
+  ranked: Array<typeof PARTIES[number] & { score: number }>;
+  topicScores: Record<string, Record<string, number>>; // partyId → topicId → 0–100
+};
+
 export function calcResults(
   buckets: Record<string, number>,
   topicQA: Record<string, TopicQA>,
   questionSet: Record<string, TopicQ>,
   aiScores?: Record<string, Record<string, number | null>>
-) {
+): CalcResultsReturn {
   const totals = new Array(PARTIES.length).fill(0);
   const maxPossible = new Array(PARTIES.length).fill(0);
+  const topicScores: Record<string, Record<string, number>> = {};
 
   Object.entries(buckets).forEach(([topicId, weight]) => {
     if (weight === 0) return;
@@ -54,12 +60,16 @@ export function calcResults(
       if (effectiveScore !== null) {
         totals[pi] += weight * (effectiveScore + 2);
         maxPossible[pi] += weight * 4;
+        if (!topicScores[party.id]) topicScores[party.id] = {};
+        topicScores[party.id][topicId] = Math.round(((effectiveScore + 2) / 4) * 100);
       }
     });
   });
 
-  return PARTIES.map((party, i) => ({
+  const ranked = PARTIES.map((party, i) => ({
     ...party,
     score: maxPossible[i] > 0 ? Math.round((totals[i] / maxPossible[i]) * 100) : 50,
   })).sort((a, b) => b.score - a.score);
+
+  return { ranked, topicScores };
 }

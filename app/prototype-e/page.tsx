@@ -23,7 +23,8 @@ const BUCKET_LABELS: Record<number, string> = {
 };
 
 const OTHER_OPTION = "אחר — פרט";
-const FOLLOW_UP_HARD_CAP = 4;
+const FOLLOW_UP_HARD_CAP_SHORT = 1;
+const FOLLOW_UP_HARD_CAP_DEEP  = 3;
 
 const LOADING_VERBS_FORMAL = ["מנתח...", "שוקל...", "חושב...", "מגבש..."];
 const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...", "מתבשל...", "מתפלסף..."];
@@ -313,7 +314,7 @@ function PrototypeEInner() {
           },
         };
 
-    const currentRankings = calcResults(buckets, syntheticTopicQA, questionSet);
+    const { ranked: currentRankings } = calcResults(buckets, syntheticTopicQA, questionSet);
     const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
 
     // Filter grounding data to close parties only (top-5 + within 20 pts of 5th place).
@@ -460,7 +461,8 @@ function PrototypeEInner() {
     setFollowUpDraft("");
 
     // Hard cap — skip API call
-    if (followUpsAskedThisTopic >= FOLLOW_UP_HARD_CAP) {
+    const followUpHardCap = depth === "deep" ? FOLLOW_UP_HARD_CAP_DEEP : FOLLOW_UP_HARD_CAP_SHORT;
+    if (followUpsAskedThisTopic >= followUpHardCap) {
       advanceToNextTopic(null);
       return;
     }
@@ -554,9 +556,11 @@ function PrototypeEInner() {
         </main>
       );
     }
+    const { ranked: finalRanked, topicScores: finalTopicScores } = calcResults(buckets, topicQA, questionSet, aiScores);
     return (
       <UnifiedResultsPage
-        results={calcResults(buckets, topicQA, questionSet, aiScores)}
+        results={finalRanked}
+        topicScores={finalTopicScores}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
         answeredTopicIds={topicsToAsk.filter((tid) => topicQA[tid])}
         topicAnswerTexts={Object.fromEntries(
