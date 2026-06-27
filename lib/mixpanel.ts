@@ -12,6 +12,7 @@ function getMixpanel() {
       track_pageview: false,
       persistence: "localStorage",
       ip: false,
+      api_host: "https://api-eu.mixpanel.com",
     });
     initialized = true;
   }
