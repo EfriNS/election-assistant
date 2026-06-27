@@ -47,6 +47,8 @@ export default function UnifiedResultsPage({
   const [internalAiLoading, setInternalAiLoading] = useState(true);
   const [groundings, setGroundings] = useState<Record<string, PartyGroundingResult> | null>(null);
   const [quotaExceeded, setQuotaExceeded] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfError, setPdfError] = useState(false);
 
   // If either external prop is passed, D is managing AI data — skip internal fetch
   const isExternal = externalAiData !== undefined || externalAiLoading !== undefined;
@@ -96,6 +98,42 @@ export default function UnifiedResultsPage({
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSavePdf = async () => {
+    setPdfLoading(true);
+    setPdfError(false);
+    try {
+      const res = await fetch("/api/export-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          results,
+          aiProfile: aiData?.profile,
+          partyBlurbs: aiData?.partyBlurbs,
+          groundings,
+          topicScores,
+          answeredTopicIds,
+          topicAnswerTexts,
+          accentColor,
+          quotaExceeded,
+        }),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "תוצאות-עוזר-הבחירות.pdf";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error("[export-pdf]", e);
+      setPdfError(true);
+      setTimeout(() => setPdfError(false), 4000);
+    } finally {
+      setPdfLoading(false);
+    }
+  };
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
@@ -228,6 +266,32 @@ export default function UnifiedResultsPage({
         <div className="mt-8 flex justify-center">
           <ShareButton variant="prominent" />
         </div>
+
+        {/* Save results as PDF — shown only after AI + groundings finish loading */}
+        {!aiLoading && (
+          <div className="mt-3 flex flex-col items-center gap-1">
+            <button
+              onClick={handleSavePdf}
+              disabled={pdfLoading}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-600 hover:text-gray-800 transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {pdfLoading ? (
+                <>
+                  <span className="animate-spin">⏳</span>
+                  <span>מכין את הקובץ...</span>
+                </>
+              ) : (
+                <>
+                  <span>📄</span>
+                  <span>שמור תוצאות כ-PDF</span>
+                </>
+              )}
+            </button>
+            {pdfError && (
+              <p className="text-xs text-red-400">שגיאה ביצירת הקובץ — אנא נסו שוב</p>
+            )}
+          </div>
+        )}
 
 
         {/* Home navigation */}

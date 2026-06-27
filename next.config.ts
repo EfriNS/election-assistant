@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   env: {
     BUILD_ID: buildId,
   },
+  serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
 };
 
 export default nextConfig;
