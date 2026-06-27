@@ -22,12 +22,12 @@ export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
   education: [
     "core-curriculum",                // secular right (Beitenu/Yashar) vs Haredi bloc
     "equal-education-budgets",        // left/center support; Haredi bloc resists
-    "teacher-quality",                // broad appeal but worth surfacing
+    "independent-school-funding",     // fund Haredi/nationalist networks without core curriculum? left/secular vs Haredi bloc — strong discriminator
   ],
   health: [
-    "expanded-health-basket",         // universal coverage anchor
+    "private-healthcare-regulation",  // how much private medicine alongside public? left: restrict, right: allow — only strong health discriminator (range=3)
     "periphery-health-investment",    // geographic equity (distinguishes left from center-right)
-    "hospital-expansion",             // concrete investment signal
+    "expanded-health-basket",         // universal coverage anchor — broad consensus (range=2), probe last
   ],
   housing: [
     "service-based-housing",          // service-linked benefits — right-leaning differentiator
@@ -37,12 +37,11 @@ export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
   religion: [
     "equal-service-burden",           // Haredi draft — splits everyone
     "rabbinate-monopoly",             // civil marriage/conversion — secular vs religious
-    "haredi-draft-exemption",         // Haredi bloc counter-position
     "civil-marriage",                 // sharp differentiator for personal freedoms
   ],
   justice: [
     "arabic-official-language-full-status", // Raam-unique; distinguishes within pro-democracy bloc
-    "anti-corruption",                // Yashar/Democrats emphasis; others softer
+    "judicial-appointments-reform",   // should politicians control judicial appointments? sharper than generic "anti-corruption"
     "separation-of-powers",           // left/center emphasis
     "judicial-independence",          // Beitenu-specific angle (vs general rule-of-law)
   ],

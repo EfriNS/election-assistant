@@ -23,7 +23,8 @@ const BUCKET_LABELS: Record<number, string> = {
 };
 
 const OTHER_OPTION = "אחר — פרט";
-const FOLLOW_UP_HARD_CAP = 4;
+const FOLLOW_UP_HARD_CAP_SHORT = 1;
+const FOLLOW_UP_HARD_CAP_DEEP  = 3;
 
 const LOADING_VERBS_FORMAL = ["מנתח...", "שוקל...", "חושב...", "מגבש..."];
 const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...", "מתבשל...", "מתפלסף..."];
@@ -103,6 +104,8 @@ function PrototypeEInner() {
   const tone = searchParams.get("tone") ?? "formal";
   const depth = searchParams.get("depth") ?? "short";
   const questionSet = tone === "personal" ? QUESTIONS_PERSONAL : QUESTIONS_FORMAL;
+
+  const [sessionId] = useState(() => crypto.randomUUID());
 
   const [step, setStep] = useState<Step>("rank");
   const [buckets, setBuckets] = useState<Record<string, number>>({});
@@ -190,7 +193,7 @@ function PrototypeEInner() {
         const r = await fetch("/api/score-topics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ topics: topicsForScoring }),
+          body: JSON.stringify({ topics: topicsForScoring, sessionId }),
         });
         const data = await r.json() as { scores?: Record<string, Record<string, number | null>>; errorCode?: string };
         if (active && data.scores) setAiScores(data.scores);
@@ -313,7 +316,7 @@ function PrototypeEInner() {
           },
         };
 
-    const currentRankings = calcResults(buckets, syntheticTopicQA, questionSet);
+    const { ranked: currentRankings } = calcResults(buckets, syntheticTopicQA, questionSet);
     const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
 
     // Filter grounding data to close parties only (top-5 + within 20 pts of 5th place).
@@ -378,6 +381,7 @@ function PrototypeEInner() {
         suggestedNextDimension,
         uncoveredKeyDims,
         openerIsFreeText,
+        sessionId,
       }),
     });
 
@@ -460,7 +464,8 @@ function PrototypeEInner() {
     setFollowUpDraft("");
 
     // Hard cap — skip API call
-    if (followUpsAskedThisTopic >= FOLLOW_UP_HARD_CAP) {
+    const followUpHardCap = depth === "deep" ? FOLLOW_UP_HARD_CAP_DEEP : FOLLOW_UP_HARD_CAP_SHORT;
+    if (followUpsAskedThisTopic >= followUpHardCap) {
       advanceToNextTopic(null);
       return;
     }
@@ -554,9 +559,11 @@ function PrototypeEInner() {
         </main>
       );
     }
+    const { ranked: finalRanked, topicScores: finalTopicScores } = calcResults(buckets, topicQA, questionSet, aiScores);
     return (
       <UnifiedResultsPage
-        results={calcResults(buckets, topicQA, questionSet, aiScores)}
+        results={finalRanked}
+        topicScores={finalTopicScores}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
         answeredTopicIds={topicsToAsk.filter((tid) => topicQA[tid])}
         topicAnswerTexts={Object.fromEntries(
@@ -571,6 +578,7 @@ function PrototypeEInner() {
             })
         )}
         accentColor="teal"
+        sessionId={sessionId}
         onBack={() => setStep("close")}
       />
     );

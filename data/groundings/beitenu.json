@@ -105,6 +105,14 @@
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "ביטול מימון ממשלתי למוסדות חינוך המסרבים ליישם לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך). תנאי מחייב לתמיכה כלכלית של המדינה.",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "contrary": "תקצוב בלתי מותנה של חינוך חרדי"
       }
     ],
     "health": [
@@ -177,6 +185,14 @@
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "פסקת התגברות / חוק הצרפתי"
+      },
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "contrary": "מינוי שופטים על ידי הממשלה"
       }
     ],
     "equality": [

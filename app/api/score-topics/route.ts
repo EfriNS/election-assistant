@@ -113,8 +113,9 @@ function parseScores(
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json() as { topics: TopicQAForScoring[] };
+  const body = await req.json() as { topics: TopicQAForScoring[]; sessionId?: string };
   const rawTopics = body.topics;
+  const sessionId = body.sessionId;
 
   // Input validation
   if (!Array.isArray(rawTopics) || rawTopics.length === 0 || rawTopics.length > 9) {
@@ -152,6 +153,7 @@ export async function POST(req: NextRequest) {
   const langfuse = makeLangfuse();
   const trace = langfuse?.trace({
     name: "score-topics",
+    sessionId,
     metadata: {
       topicsRequested: topics.map((t) => t.topicId),
       topicsWithGroundings: topicsWithGroundings.map((t) => t.topicId),

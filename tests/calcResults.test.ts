@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calcResults, FOLLOW_UP_AI_WEIGHT } from "@/lib/scoring";
+import { calcResults, FOLLOW_UP_AI_WEIGHT, SCORE_CURVE_POWER } from "@/lib/scoring";
 import type { TopicQA } from "@/lib/scoring";
 import type { TopicQ } from "@/lib/questions";
 
@@ -36,7 +36,7 @@ function qa(openerAnswerId: string, openerAnswerText = openerAnswerId, followUps
 
 describe("calcResults — deterministic scoring", () => {
   it("scores purely from option when no AI scores provided", () => {
-    const results = calcResults({ security: 3 }, { security: qa("peace") }, questionSet);
+    const { ranked: results } = calcResults({ security: 3 }, { security: qa("peace") }, questionSet);
     const hadash = results.find((p) => p.id === "hadash")!;
     const otzmah = results.find((p) => p.id === "otzmah-yehudit")!;
     expect(hadash.score).toBe(100);
@@ -45,12 +45,12 @@ describe("calcResults — deterministic scoring", () => {
   });
 
   it("returns 50 for all parties when no topics are answered", () => {
-    const results = calcResults({}, {}, questionSet);
+    const { ranked: results } = calcResults({}, {}, questionSet);
     results.forEach((p) => expect(p.score).toBe(50));
   });
 
   it("skips topics with weight 0", () => {
-    const results = calcResults({ security: 0 }, { security: qa("peace") }, questionSet);
+    const { ranked: results } = calcResults({ security: 0 }, { security: qa("peace") }, questionSet);
     results.forEach((p) => expect(p.score).toBe(50));
   });
 
@@ -59,7 +59,7 @@ describe("calcResults — deterministic scoring", () => {
     // economy (weight 2): left-econ → hadash +2 each
     // hadash total = 4*(2+2) + 2*(2+2) = 24, max = 4*4 + 2*4 = 24 → 100%
     // otzmah total = 4*(-2+2) + 2*(-2+2) = 0 → 0%
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 4, economy: 2 },
       { security: qa("peace"), economy: qa("left-econ") },
       questionSet
@@ -72,8 +72,8 @@ describe("calcResults — deterministic scoring", () => {
 
   it("produces stable output — same input always gives same ranking", () => {
     const input = { security: 3 };
-    const r1 = calcResults(input, { security: qa("peace") }, questionSet);
-    const r2 = calcResults(input, { security: qa("peace") }, questionSet);
+    const { ranked: r1 } = calcResults(input, { security: qa("peace") }, questionSet);
+    const { ranked: r2 } = calcResults(input, { security: qa("peace") }, questionSet);
     expect(r1.map((p) => p.id)).toEqual(r2.map((p) => p.id));
     expect(r1.map((p) => p.score)).toEqual(r2.map((p) => p.score));
   });
@@ -81,7 +81,7 @@ describe("calcResults — deterministic scoring", () => {
 
 describe("calcResults — AI score blending", () => {
   it("uses AI score at 100% weight for 'other' (free-text) opener", () => {
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 4 },
       { security: qa("other", "My custom view") },
       questionSet,
@@ -94,19 +94,21 @@ describe("calcResults — AI score blending", () => {
   it("blends at configured weight for fixed opener with follow-ups + AI scores", () => {
     // opener = "peace": hadash=+2, otzmah=-2 (deterministic)
     // AI: hadash=0, otzmah=0 (neutral)
-    // blend: hadash = 2*(1-0.5) + 0*0.5 = 1.0 → (1+2)/4*100 = 75%
-    //        otzmah = -2*(1-0.5) + 0*0.5 = -1.0 → (-1+2)/4*100 = 25%
+    // blend: hadash effectiveScore = 2*0.5 + 0*0.5 = 1.0 → normalized 0.75 → curved 0.75^n
+    //        otzmah effectiveScore = -2*0.5 + 0*0.5 = -1.0 → normalized 0.25 → curved 0.25^n
     const allPartyAiScores = Object.fromEntries(
       ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"].map(id => [id, 0])
     );
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 4 },
       { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,
       { security: allPartyAiScores }
     );
-    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
-    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(25);
+    const expectedHadash = Math.round(Math.pow(0.75, SCORE_CURVE_POWER) * 100);
+    const expectedOtzmah = Math.round(Math.pow(0.25, SCORE_CURVE_POWER) * 100);
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(expectedHadash);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(expectedOtzmah);
   });
 
   it("falls back to deterministic when AI score is null for a specific party", () => {
@@ -114,15 +116,15 @@ describe("calcResults — AI score blending", () => {
       ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0])
     );
     aiScores["otzmah-yehudit"] = null as unknown as number;
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 4 },
       { security: { openerAnswerId: "peace", openerAnswerText: "Peace", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,
       { security: aiScores }
     );
-    // hadash: blended = 2*0.5 + 0*0.5 = 1 → 75%
-    // otzmah: null AI → falls back to deterministic "peace" score = -2 → 0%
-    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
+    // hadash: blended = 2*0.5 + 0*0.5 = 1.0 → normalized 0.75 → curved
+    // otzmah: null AI → falls back to deterministic "peace" score = -2 → normalized 0 → 0%
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(Math.round(Math.pow(0.75, SCORE_CURVE_POWER) * 100));
     expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
   });
 
@@ -131,7 +133,7 @@ describe("calcResults — AI score blending", () => {
       ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0 as number | null])
     );
     aiWithNull["otzmah-yehudit"] = null;
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 4 },
       { security: qa("other", "Custom") },
       questionSet,
@@ -141,7 +143,7 @@ describe("calcResults — AI score blending", () => {
   });
 
   it("falls back to pure deterministic when aiScores is undefined (AI call failed)", () => {
-    const results = calcResults(
+    const { ranked: results } = calcResults(
       { security: 3 },
       { security: { openerAnswerId: "control", openerAnswerText: "Control", followUps: [{ question: "Q", options: ["A"], answer: "A" }] } },
       questionSet,

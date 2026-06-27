@@ -61,7 +61,7 @@ function buildPrompt(
 
   const depthGuide = depth === "deep"
     ? "aim for 1–3 follow-ups per topic"
-    : "aim for 0–1 follow-ups per topic";
+    : "HARD LIMIT: maximum 1 follow-up per topic. If you have already asked 1, transition immediately.";
 
   // For free-text openers with no follow-ups yet, the AI must ask at least one
   // substantive dimension-probing question (not a generic "what did you mean?").
@@ -168,6 +168,7 @@ export async function POST(req: NextRequest) {
     suggestedNextDimension?: string | null;
     uncoveredKeyDims?: string[];
     openerIsFreeText?: boolean;
+    sessionId?: string;
   } = await req.json();
 
   // Sanitize all user-supplied text before it enters the prompt
@@ -195,6 +196,7 @@ export async function POST(req: NextRequest) {
     suggestedNextDimension = null,
     uncoveredKeyDims = [],
     openerIsFreeText = false,
+    sessionId,
   } = raw;
   const conversationSoFar = sanitizedHistory;
   const currentTopic = sanitizedCurrentTopic;
@@ -211,6 +213,7 @@ export async function POST(req: NextRequest) {
   const langfuse = makeLangfuse();
   const trace = langfuse?.trace({
     name: "follow-up-generation",
+    sessionId,
     metadata: {
       prototype: "e",
       topic: currentTopic.label,

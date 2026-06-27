@@ -82,9 +82,10 @@ export async function POST(req: NextRequest) {
     answersSummary: string;
     topParties: PartyRef[];
     answeredTopicIds?: string[];
+    sessionId?: string;
   };
 
-  const { topParties, answeredTopicIds = [] } = body;
+  const { topParties, answeredTopicIds = [], sessionId } = body;
   // Server-side length limit on answersSummary
   const answersSummary = (body.answersSummary ?? "").slice(0, 500);
 
@@ -118,6 +119,7 @@ export async function POST(req: NextRequest) {
   const langfuse = makeLangfuse();
   const trace = langfuse?.trace({
     name: "results-generation",
+    sessionId,
     metadata: { model, topParty: topParties[0]?.id ?? null },
   });
   // Do not pass userMessage as input — it contains user answers (PII).
