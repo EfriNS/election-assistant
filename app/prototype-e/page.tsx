@@ -6,7 +6,7 @@ import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic } from "@/lib/groundings";
 import { calcResults, TopicQA } from "@/lib/scoring";
-import { track } from "@vercel/analytics/react";
+import { mpIdentify, mpTrack } from "@/lib/mixpanel";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
@@ -106,6 +106,13 @@ function PrototypeEInner() {
   const questionSet = tone === "personal" ? QUESTIONS_PERSONAL : QUESTIONS_FORMAL;
 
   const [sessionId] = useState(() => crypto.randomUUID());
+
+  // Runs once on mount; tone/depth are URL params and don't change.
+  useEffect(() => {
+    mpIdentify(sessionId, { tone, depth });
+    mpTrack("quiz_session_init", { session_id: sessionId, tone, depth });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [step, setStep] = useState<Step>("rank");
   const [buckets, setBuckets] = useState<Record<string, number>>({});
@@ -222,8 +229,18 @@ function PrototypeEInner() {
     });
 
   // ── Navigation helpers ──────────────────────────────────────────────────────
-  const advanceToNextTopic = (prologue: string | null) => {
-    track("topic_completed", { topicId: topicsToAsk[questionIndex] });
+  type TopicCompletedProps = { followUpCount: number; openerWasFreeText: boolean; aspectsProbed: string[] };
+
+  const advanceToNextTopic = (prologue: string | null, completed?: TopicCompletedProps) => {
+    mpTrack("topic_completed", {
+      session_id: sessionId,
+      topic_id: topicsToAsk[questionIndex],
+      topic_index: questionIndex,
+      total_topics: topicsToAsk.length,
+      follow_up_count: completed?.followUpCount ?? 0,
+      opener_was_free_text: completed?.openerWasFreeText ?? false,
+      aspects_probed: completed?.aspectsProbed ?? [],
+    });
     setCurrentFollowUp(null);
     setCurrentPrologue(prologue);
     setFollowUpsAskedThisTopic(0);
@@ -437,10 +454,11 @@ function PrototypeEInner() {
           }));
         }
       } else {
-        advanceToNextTopic(data.prologue ?? null);
+        advanceToNextTopic(data.prologue ?? null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [] });
       }
     } catch {
-      advanceToNextTopic(null);
+      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
+      advanceToNextTopic(null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [] });
     } finally {
       setLoading(false);
     }
@@ -466,7 +484,7 @@ function PrototypeEInner() {
     // Hard cap — skip API call
     const followUpHardCap = depth === "deep" ? FOLLOW_UP_HARD_CAP_DEEP : FOLLOW_UP_HARD_CAP_SHORT;
     if (followUpsAskedThisTopic >= followUpHardCap) {
-      advanceToNextTopic(null);
+      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
       return;
     }
 
@@ -493,10 +511,11 @@ function PrototypeEInner() {
           }));
         }
       } else {
-        advanceToNextTopic(data.prologue ?? null);
+        advanceToNextTopic(data.prologue ?? null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
       }
     } catch {
-      advanceToNextTopic(null);
+      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
+      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
     } finally {
       setLoading(false);
     }
@@ -509,8 +528,22 @@ function PrototypeEInner() {
         buckets={buckets}
         setBuckets={setBuckets}
         accentColor="teal"
-        onBack={() => { track("quiz_abandoned", { step: "rank" }); window.location.href = "/"; }}
-        onContinue={() => { track("quiz_started", { tone, depth }); setQuestionIndex(0); setStep("questions"); }}
+        onBack={() => { mpTrack("quiz_abandoned", { session_id: sessionId, step: "rank", topics_completed_so_far: 0 }); window.location.href = "/"; }}
+        onContinue={() => {
+          mpTrack("priorities_submitted", {
+            session_id: sessionId,
+            tone,
+            depth,
+            topic_count: topicsToAsk.length,
+            critical_count: Object.values(buckets).filter((w) => w === 4).length,
+            very_important_count: Object.values(buckets).filter((w) => w === 3).length,
+            important_count: Object.values(buckets).filter((w) => w === 2).length,
+            low_count: Object.values(buckets).filter((w) => w === 1).length,
+            ...Object.fromEntries(TOPICS.map((t) => [`${t.id}_bucket`, buckets[t.id] ?? 0])),
+          });
+          setQuestionIndex(0);
+          setStep("questions");
+        }}
       />
     );
   }
@@ -541,7 +574,17 @@ function PrototypeEInner() {
             placeholder="כאן תוכל לכתוב בחופשיות..."
             className="w-full border border-gray-300 rounded-xl p-4 text-sm leading-relaxed h-36 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 mb-4"
             dir="rtl" />
-          <button onClick={() => { track("quiz_completed", { topicCount: topicsToAsk.length }); setStep("results"); }}
+          <button onClick={() => {
+            mpTrack("quiz_completed", {
+              session_id: sessionId,
+              tone,
+              depth,
+              topics_selected: topicsToAsk.length,
+              topics_completed: topicsToAsk.filter((tid) => topicQA[tid]).length,
+              has_close_text: closeText.trim().length > 0,
+            });
+            setStep("results");
+          }}
             className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors">
             ← לתוצאות
           </button>
