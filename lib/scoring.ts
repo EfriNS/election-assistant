@@ -14,6 +14,11 @@ import type { TopicQ } from "@/lib/questions";
 // Topics with "other" free-text opener use AI at full weight (no option score exists).
 export const FOLLOW_UP_AI_WEIGHT = 0.5;
 
+// Non-linear exponent applied to each topic's normalized contribution (0–1) before
+// weighting. n=1 → linear; n=1.5 → mismatches hurt proportionally more than
+// agreements help (e.g., a 35% topic score becomes ~21%, while 88% → ~82%).
+export const SCORE_CURVE_POWER = 1.5;
+
 export type CalcResultsReturn = {
   ranked: Array<typeof PARTIES[number] & { score: number }>;
   topicScores: Record<string, Record<string, number>>; // partyId → topicId → 0–100
@@ -58,10 +63,11 @@ export function calcResults(
       // null effectiveScore: no data for this party on this topic — skip entirely
 
       if (effectiveScore !== null) {
-        totals[pi] += weight * (effectiveScore + 2);
-        maxPossible[pi] += weight * 4;
+        const normalized = (effectiveScore + 2) / 4;  // 0–1
+        totals[pi] += weight * Math.pow(normalized, SCORE_CURVE_POWER);
+        maxPossible[pi] += weight;  // max curved contribution is weight × 1^n = weight
         if (!topicScores[party.id]) topicScores[party.id] = {};
-        topicScores[party.id][topicId] = Math.round(((effectiveScore + 2) / 4) * 100);
+        topicScores[party.id][topicId] = Math.round(normalized * 100);  // raw, pre-curve
       }
     });
   });

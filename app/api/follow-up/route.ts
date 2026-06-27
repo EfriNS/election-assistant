@@ -61,7 +61,7 @@ function buildPrompt(
 
   const depthGuide = depth === "deep"
     ? "aim for 1–3 follow-ups per topic"
-    : "aim for 0–1 follow-ups per topic";
+    : "HARD LIMIT: maximum 1 follow-up per topic. If you have already asked 1, transition immediately.";
 
   // For free-text openers with no follow-ups yet, the AI must ask at least one
   // substantive dimension-probing question (not a generic "what did you mean?").

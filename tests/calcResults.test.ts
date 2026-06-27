@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calcResults, FOLLOW_UP_AI_WEIGHT } from "@/lib/scoring";
+import { calcResults, FOLLOW_UP_AI_WEIGHT, SCORE_CURVE_POWER } from "@/lib/scoring";
 import type { TopicQA } from "@/lib/scoring";
 import type { TopicQ } from "@/lib/questions";
 
@@ -94,8 +94,8 @@ describe("calcResults — AI score blending", () => {
   it("blends at configured weight for fixed opener with follow-ups + AI scores", () => {
     // opener = "peace": hadash=+2, otzmah=-2 (deterministic)
     // AI: hadash=0, otzmah=0 (neutral)
-    // blend: hadash = 2*(1-0.5) + 0*0.5 = 1.0 → (1+2)/4*100 = 75%
-    //        otzmah = -2*(1-0.5) + 0*0.5 = -1.0 → (-1+2)/4*100 = 25%
+    // blend: hadash effectiveScore = 2*0.5 + 0*0.5 = 1.0 → normalized 0.75 → curved 0.75^n
+    //        otzmah effectiveScore = -2*0.5 + 0*0.5 = -1.0 → normalized 0.25 → curved 0.25^n
     const allPartyAiScores = Object.fromEntries(
       ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"].map(id => [id, 0])
     );
@@ -105,8 +105,10 @@ describe("calcResults — AI score blending", () => {
       questionSet,
       { security: allPartyAiScores }
     );
-    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
-    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(25);
+    const expectedHadash = Math.round(Math.pow(0.75, SCORE_CURVE_POWER) * 100);
+    const expectedOtzmah = Math.round(Math.pow(0.25, SCORE_CURVE_POWER) * 100);
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(expectedHadash);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(expectedOtzmah);
   });
 
   it("falls back to deterministic when AI score is null for a specific party", () => {
@@ -120,9 +122,9 @@ describe("calcResults — AI score blending", () => {
       questionSet,
       { security: aiScores }
     );
-    // hadash: blended = 2*0.5 + 0*0.5 = 1 → 75%
-    // otzmah: null AI → falls back to deterministic "peace" score = -2 → 0%
-    expect(results.find((p) => p.id === "hadash")!.score).toBe(75);
+    // hadash: blended = 2*0.5 + 0*0.5 = 1.0 → normalized 0.75 → curved
+    // otzmah: null AI → falls back to deterministic "peace" score = -2 → normalized 0 → 0%
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(Math.round(Math.pow(0.75, SCORE_CURVE_POWER) * 100));
     expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
   });
 
