@@ -90,6 +90,14 @@
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "מימון ממשלתי מלא לרשת מעיין החינוך התורני ולמוסדות החינוך הדתיים, בלי לחייבם בתוכנית לימודי ליבה ממלכתית. רשת מעיין פועלת לפי תוכנית לימודים עצמית.",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "contrary": "כפיית תוכנית לימודים ממלכתית על חינוך דתי-תורני"
       }
     ],
     "health": [
@@ -106,6 +114,14 @@
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "aspect": "private-healthcare-regulation",
+        "dateRetrieved": "2026-06-27",
+        "text": "דגש על נגישות שוויונית לשירותי רפואה לכלל האוכלוסייה; חשש ממערכת מדורגת שתשרת בעלי אמצעים על חשבון האוכלוסיות החלשות.",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "contrary": "מערכת בריאות דו-שכבתית"
       }
     ],
     "religion": [
@@ -141,6 +157,14 @@
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
         "_note": "The 2006 document has no specific judiciary positions. In the 2022-2023 coalition, Shas supported the judicial override legislation (פסקת התגברות) as a coalition partner."
+      },
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "תמיכה ברפורמה בוועדת המינויים לשפיטה; שינוי הרכבה לאיזון טוב יותר בין נציגים נבחרים לנציגים מקצועיים, כחלק מהסכמי הקואליציה.",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "contrary": "ועדת מינויים בשליטת 'האליטות המשפטיות'"
       }
     ],
     "equality": [

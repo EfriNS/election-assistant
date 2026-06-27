@@ -171,6 +171,14 @@
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "תמיכה במערכת חינוך ממלכתית אחידה עם תקצוב שוויוני. התנגדות למימון ציבורי של מוסדות שאינם מיישמים תוכנית לימודים ממלכתית — לרבות מתמטיקה, מדעים ואנגלית.",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "contrary": "תקצוב ממשלתי של חינוך חרדי ולאומי מחוץ לפיקוח ממלכתי"
       }
     ],
     "health": [
@@ -188,6 +196,14 @@
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
+      },
+      {
+        "aspect": "private-healthcare-regulation",
+        "dateRetrieved": "2026-06-27",
+        "text": "בריאות היא זכות, לא סחורה. התנגדות להרחבת הרפואה הפרטית על חשבון המערכת הציבורית; חיזוק קופות החולים כספק ציבורי עיקרי ושמירה על שוויון גישה.",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "contrary": "רפואה פרטית מקבילה המייצרת מדרגיות בגישה לטיפול"
       }
     ],
     "religion": [
@@ -259,6 +275,14 @@
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
+      },
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "עצמאות מערכת השפיטה מהמינויים הפוליטיים היא עמוד תווך של הדמוקרטיה; ועדת המינויים לשפיטה תהיה מקצועית, לא קואליציונית.",
+        "sourceUrl": "https://hadash.org.il",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "contrary": "מינוי שופטים על ידי הפוליטיקאים"
       }
     ],
     "equality": [

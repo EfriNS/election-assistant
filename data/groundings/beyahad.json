@@ -105,6 +105,14 @@
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "חינוך ממלכתי כבסיס — הפוגעים ביסוד החינוך האזרחי המשותף אינם ראויים למימון ציבורי מלא. עמדה לא פורשה בפרוט, אך מתיישבת עם העמדה האזרחית-ליברלית של המפלגה.",
+        "sourceUrl": "https://bennett2026.org.il/plans/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "contrary": "מימון עצמאי ללא תוכנית לימודים ממלכתית"
       }
     ],
     "health": [
@@ -134,7 +142,16 @@
         "contrary": "קצבאות ופטורים לאברכי כולל"
       }
     ],
-    "justice": [],
+    "justice": [
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "שמירה על עצמאות מערכת השפיטה; התנגדות לכל שינוי בוועדת המינויים שייתן שליטה לקואליציה על מינוי שופטי בית המשפט העליון.",
+        "sourceUrl": "https://bennett2026.org.il/plans/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "contrary": "מינוי שופטים פוליטי"
+      }
+    ],
     "equality": [
       {
         "text": "האיום הכי גדול על ישראל הוא הפילוג הפנימי שמחליש אותנו. הגיע הזמן לאחד מחדש את העם.",

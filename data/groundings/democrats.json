@@ -128,9 +128,26 @@
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "שילוב מוסדות החינוך החרדי במסגרות לימודי ליבה בתמורה לתקצוב ממשלתי; מימון מותנה ביישום תוכנית לימודים המאפשרת השתלבות בשוק העבודה.",
+        "sourceUrl": "https://yes.democrats.org.il",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים"
       }
     ],
-    "health": [],
+    "health": [
+      {
+        "aspect": "private-healthcare-regulation",
+        "dateRetrieved": "2026-06-27",
+        "text": "מניעת \"רפואה לעשירים\" — הגבלת הפרטת שירותי הרפואה כדי לשמור על נגישות שוויונית; חיזוק מערכת הבריאות הציבורית כך שלא תידחק על ידי הסקטור הפרטי.",
+        "sourceUrl": "https://yes.democrats.org.il",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "contrary": "הרחבה בלתי מוסדרת של הרפואה הפרטית"
+      }
+    ],
     "religion": [
       {
         "text": "נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואים וגירושים",
@@ -213,6 +230,14 @@
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
+      },
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "התנגדות לשינוי הרכב ועדת המינויים לרשות השופטת — בעיקר להגדלת מינויי שופטים על ידי הקואליציה על חשבון הנציגות המשפטית המקצועית.",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "contrary": "רפורמה בוועדת המינויים שתעניק לפוליטיקאים שליטה"
       }
     ],
     "equality": [

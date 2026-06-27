@@ -46,6 +46,14 @@
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "aspect": "independent-school-funding",
+        "dateRetrieved": "2026-06-27",
+        "text": "שמירה על ריבוי זרמי החינוך — ממלכתי, ממלכתי-דתי, עצמאי ומוכר שאינו רשמי — תוך תמיכה ממשלתית לכל הזרמים. ביצוע הסכמי הקואליציה הכוללים תקצוב חינוך חרדי ללא כפיית לימודי ליבה.",
+        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
+        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
+        "contrary": "כפיית תוכנית לימודים אחידה על כלל המוסדות"
       }
     ],
     "health": [
@@ -56,6 +64,14 @@
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Very general — covers health alongside personal security, employment, and environment in a single clause. No specific health policy in constitution."
+      },
+      {
+        "aspect": "private-healthcare-regulation",
+        "dateRetrieved": "2026-06-27",
+        "text": "עידוד פיתוח מקביל של שירותי בריאות פרטיים לצד המערכת הציבורית; תמיכה בביטוח משלים ושירותים פרטיים כמנוע צמיחה ופתרון לתורי המתנה.",
+        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
+        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
+        "contrary": "הגבלת הרפואה הפרטית"
       }
     ],
     "religion": [
@@ -83,6 +99,14 @@
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Constitution explicitly includes sexual orientation (נטייה מינית) as a protected class — noteworthy given Likud's coalition record on LGBTQ rights. Constitution supports rule of law but Likud-led government pursued 2023 judicial override legislation."
+      },
+      {
+        "aspect": "judicial-appointments-reform",
+        "dateRetrieved": "2026-06-27",
+        "text": "שינוי הרכב ועדת המינויים לשפיטה — מתן משקל גדול יותר לנציגים נבחרים בבחירת שופטי בית המשפט העליון, לאיזון עם הנציגות המשפטית הקיימת.",
+        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
+        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
+        "contrary": "ועדת מינויים בשליטת נציגי השפיטה"
       }
     ],
     "equality": [
