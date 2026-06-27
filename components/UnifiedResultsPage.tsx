@@ -6,6 +6,7 @@ import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import PartyResultCard from "@/components/PartyResultCard";
 import ShareButton from "@/components/ShareButton";
+import { mpTrack } from "@/lib/mixpanel";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -67,6 +68,7 @@ export default function UnifiedResultsPage({
       .then((res) => {
         if (res.status === 429) {
           setQuotaExceeded(true);
+          mpTrack("api_error", { session_id: sessionId, endpoint: "/api/results", error_code: "QUOTA_EXCEEDED" });
         }
         return res.json();
       })
@@ -74,8 +76,24 @@ export default function UnifiedResultsPage({
         if (data.profile && data.partyBlurbs) setInternalAiData(data);
         if (data.groundings) setGroundings(data.groundings);
       })
-      .catch(() => {})
+      .catch(() => {
+        mpTrack("api_error", { session_id: sessionId, endpoint: "/api/results", error_code: "SERVER_ERROR" });
+      })
       .finally(() => setInternalAiLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Fire results_viewed once on mount — captures score distribution for Q6.
+  useEffect(() => {
+    if (results.length === 0) return;
+    mpTrack("results_viewed", {
+      session_id: sessionId,
+      top_party: results[0].id,
+      top_score: results[0].score,
+      ...(results[1] ? { second_party: results[1].id, second_score: results[1].score } : {}),
+      ...(results[2] ? { third_party: results[2].id, third_score: results[2].score, score_spread_top3: results[0].score - results[2].score } : {}),
+      ...Object.fromEntries(results.map((r) => [`score_${r.id}`, r.score])),
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
