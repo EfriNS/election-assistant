@@ -1,11 +1,5 @@
 {
   "crons": [
     { "path": "/api/quota-check", "schedule": "0 6 * * *" }
-  ],
-  "functions": {
-    "app/api/export-pdf/route.ts": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  }
+  ]
 }
