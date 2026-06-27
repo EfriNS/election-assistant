@@ -143,10 +143,7 @@ export default function UnifiedResultsPage({
                     topicAnswerTexts={topicAnswerTexts}
                     partyTopicScores={topicScores?.[r.id]}
                     answeredTopicIds={answeredTopicIds}
-                    showTopicBreakdown={
-                      topicScores != null &&
-                      (i < 3 || r.score >= top1 - 10)
-                    }
+                    showTopicBreakdown={topicScores != null}
                   />
                   {showSeparator && i === lastCloseIdx && (
                     <div className="flex items-center gap-3 mt-3 mb-1" dir="rtl">
