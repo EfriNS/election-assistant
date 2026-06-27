@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
   env: {
     BUILD_ID: buildId,
   },
+  serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
+  // Include chromium brotli binaries in the export-pdf function bundle.
+  // Without this, Vercel's bundler excludes the binary files from node_modules.
+  outputFileTracingIncludes: {
+    "/api/export-pdf": ["./node_modules/@sparticuz/chromium/bin/**/*"],
+  },
 };
 
 export default nextConfig;

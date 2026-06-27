@@ -18,6 +18,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
     "@google/genai": "^2.8.0",
+    "@sparticuz/chromium": "^147.0.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
@@ -25,6 +26,7 @@
     "langfuse": "^3.38.20",
     "mixpanel-browser": "^2.80.0",
     "next": "^16.2.9",
+    "puppeteer-core": "^24.43.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -36,6 +38,7 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
     "postcss": "^8",
+    "puppeteer": "^24.43.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.22.4",
     "typescript": "^5",
