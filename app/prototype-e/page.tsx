@@ -107,12 +107,11 @@ function PrototypeEInner() {
 
   const [sessionId] = useState(() => crypto.randomUUID());
 
-  // Identify this quiz session in Mixpanel and fire session-init event.
   // Runs once on mount; tone/depth are URL params and don't change.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     mpIdentify(sessionId, { tone, depth });
     mpTrack("quiz_session_init", { session_id: sessionId, tone, depth });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [step, setStep] = useState<Step>("rank");
