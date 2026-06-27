@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import ContentSquareTracker from "@/components/ContentSquareTracker";
+import FeedbackWidget from "@/components/FeedbackWidget";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="fixed bottom-2 right-2 text-xs text-gray-500 select-none pointer-events-none">
           {buildId}
         </div>
+        <FeedbackWidget />
         <Analytics />
         <ContentSquareTracker />
       </body>

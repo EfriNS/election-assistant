@@ -13,8 +13,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Empty feedback" }, { status: 400 });
   }
 
-  const topParty: string = typeof body.topParty === "string" ? body.topParty : "—";
-  const sessionId: string = typeof body.sessionId === "string" ? body.sessionId : "—";
+  const context: string = typeof body.context === "string" ? body.context : "—";
 
   const webhookUrl = process.env.FEEDBACK_SLACK_WEBHOOK_URL;
   if (!webhookUrl) {
@@ -38,7 +37,7 @@ export async function POST(req: NextRequest) {
         elements: [
           {
             type: "mrkdwn",
-            text: `*מפלגה ראשונה:* ${topParty} | *Session:* ${sessionId}`,
+            text: `*עמוד:* ${context}`,
           },
         ],
       },

@@ -7,78 +7,6 @@ import { PartyGroundingResult } from "@/lib/grounding-types";
 import PartyResultCard from "@/components/PartyResultCard";
 import ShareButton from "@/components/ShareButton";
 
-// ─── FeedbackWidget ──────────────────────────────────────────────────────────
-
-function FeedbackWidget({ sessionId, topParty }: { sessionId?: string; topParty?: string }) {
-  const [open, setOpen] = useState(false);
-  const [text, setText] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-
-  async function submit() {
-    if (!text.trim()) return;
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, sessionId, topParty }),
-      });
-      setStatus(res.ok ? "sent" : "error");
-    } catch {
-      setStatus("error");
-    }
-  }
-
-  if (status === "sent") {
-    return (
-      <div className="mt-4 text-center text-xs text-gray-400">תודה על המשוב!</div>
-    );
-  }
-
-  return (
-    <div className="mt-4 text-center" dir="rtl">
-      {!open ? (
-        <button
-          onClick={() => setOpen(true)}
-          className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2"
-        >
-          שלחו לנו הערה
-        </button>
-      ) : (
-        <div className="mx-auto max-w-sm text-right space-y-2">
-          <textarea
-            autoFocus
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            maxLength={1000}
-            rows={3}
-            placeholder="מה תרצו לשתף? (כל הערה מועילה)"
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 resize-none focus:outline-none focus:ring-2 focus:ring-teal-300"
-          />
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={() => { setOpen(false); setText(""); }}
-              className="text-xs text-gray-400 hover:text-gray-600"
-            >
-              ביטול
-            </button>
-            <button
-              onClick={submit}
-              disabled={!text.trim() || status === "sending"}
-              className="text-xs px-3 py-1.5 rounded-lg bg-teal-500 text-white hover:bg-teal-600 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              {status === "sending" ? "שולח..." : "שלח"}
-            </button>
-          </div>
-          {status === "error" && (
-            <p className="text-xs text-red-400">שגיאה בשליחה — נסו שוב</p>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 type AiData = {
@@ -283,11 +211,6 @@ export default function UnifiedResultsPage({
           <ShareButton variant="prominent" />
         </div>
 
-        {/* Feedback */}
-        <FeedbackWidget
-          sessionId={sessionId}
-          topParty={results[0]?.name}
-        />
 
         {/* Home navigation */}
         <div className="mt-6 text-center">
