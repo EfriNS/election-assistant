@@ -47,6 +47,22 @@ Vercel warns at build time: "Provided `memory` setting in `vercel.json` is ignor
 
 ---
 
+## PDF Generation (@sparticuz/chromium)
+
+### break-inside-avoid on large elements forces page-per-element (#first:2026-06-28)
+
+`break-inside-avoid` on an element that's taller than one page (e.g., a party card with full grounding quotes) doesn't compress it — it forces a page break before the element, leaving a large blank gap. Each card then gets its own page.
+
+**Rule**: Apply `break-inside-avoid` only to the compact "header" portion of a card (name, score, chips, short description). Let tall content sections (grounding quotes, long text) flow naturally across pages. Use per-section `break-inside-avoid` within the long content to keep logical sub-units (e.g., topic label + its quotes) together.
+
+### @sparticuz/chromium doesn't reliably render CDN-loaded fonts (#first:2026-06-28)
+
+Minimal Chromium + Tailwind CDN Play + external font CDNs creates a race: PDF is captured before the font loads. Unicode symbols like ✓ (U+2713) and ✕ (U+2715) in Noto Sans may not be loaded in time and render as rectangles.
+
+**Rule**: For symbols in PDF templates, use ASCII equivalents (v/x, +/-) rather than Unicode or emoji. Emoji (🚨, ✅, etc.) should also be avoided; use text labels instead.
+
+---
+
 ## Slack Webhooks
 
 ### Always-send vs. threshold-gated design (#first:2026-06-28)

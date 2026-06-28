@@ -1,5 +1,66 @@
 # Changelog
 
+## 2026-06-28 — Fix PDF page breaks and rectangle characters (commit `6922956`)
+
+Fixed `lib/pdf-template.ts` so party cards flow naturally across pages instead of each card forcing its own page.
+
+### Root cause 1: `break-inside-avoid` on entire party card
+
+Each party card includes full grounding quotes (often 1–2 pages of text). `break-inside-avoid` on the outer card div forced each card onto its own new page (80% blank space before first card, page break after every card).
+
+**Fix**: Removed `break-inside-avoid` from outer card div. Wrapped only the compact header section (name, score bar, topic chips, description, AI blurb) in a new inner `break-inside-avoid` div. Grounding quotes now flow naturally across pages.
+
+### Root cause 2: Unicode symbols not supported by @sparticuz/chromium
+
+`✓` (U+2713) and `✕` (U+2715) rendered as rectangles in the minimal Chromium bundled with `@sparticuz/chromium`, even with Noto Sans CDN. Font load timing is not guaranteed for external CDN fonts before PDF capture.
+
+**Fix**: Replaced with ASCII `v` / `x` in `renderChips()`.
+
+### Root cause 3: Per-topic grounding not kept together
+
+Topic label and its associated grounding quotes could split across pages (label on one page, quotes on the next).
+
+**Fix**: Added `break-inside-avoid` to each topic div in `renderGrounding()`, keeping label + quotes together.
+
+### Files changed
+- `lib/pdf-template.ts`: `renderChips()` (line ~59), `renderGrounding()` (~100), `renderPartyCard()` (~174)
+
+### Commits
+- `6922956` fix: fix PDF page breaks and rectangle characters in party cards
+
+---
+
+## 2026-06-28 — Quota cron redesign: requests-first monitoring + per-route Slack breakdown (commit `035675d`)
+
+After diagnosing the cron bugs, discovered the monitoring metrics were tracking the wrong things. The Slack message showed "49,870 tokens / 250,000 (19.9%)" — but 250K is Gemini's **per-minute** TPM rate limit, not a daily cap. The actual binding daily limit is **RPD=500** (requests per day, free tier).
+
+### Changes to `/api/quota-check`
+
+- Primary metric changed from token% to **request%** (N / 500 daily limit)
+- Token total still shown as secondary info (absolute number, no denominator)
+- Added **per-route breakdown** to Slack Block Kit message (sorted by token usage): shows call count + tokens per observation name (e.g. `gemini-follow-up`, `gemini-score-topics`, `gemini-results`)
+- `QUOTA_DAILY_TOKEN_LIMIT` env var is no longer used for the percentage calculation
+- `QUOTA_DAILY_REQUEST_LIMIT` (default 500) drives the primary alert level
+
+### New exported types/functions
+
+- `UsageTotals` type — `{ tokens, requests, byRoute: Record<string, { count, tokens }> }`
+- `computeRequestPct(requests, limit)` — pure helper (testable, exported)
+- `buildSlackBody(requestPct, requestLimit, totals)` — now includes byRoute code block
+
+### Tests (`tests/quotaCheck.test.ts`)
+
+17 tests covering: `computeRequestPct` (3), `buildSlackBody` (6 including byRoute + empty byRoute), integration GET (7 including per-route breakdown, always-send, 🚨 emoji, 401, 503).
+
+### Files changed
+- `app/api/quota-check/route.ts`
+- `tests/quotaCheck.test.ts`
+
+### Commits
+- `035675d` feat: quota cron — requests-first monitoring + per-route breakdown in Slack
+
+---
+
 ## 2026-06-28 — Fix Gemini quota cron job (daily Slack summary) — full diagnosis
 
 Fixed `/api/quota-check` cron that was silently broken. Three independent bugs, all needed fixing:
