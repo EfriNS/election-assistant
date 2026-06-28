@@ -195,7 +195,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                     {tg.entries.map((e, i) => (
                       <div key={i} className="border-r-2 border-gray-200 pr-3">
                         {e.contrary && (
-                          <p className="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת לכך</p>
+                          <p className="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת ל: {e.contrary}</p>
                         )}
                         <p className="text-xs text-gray-700 leading-relaxed">
                           &ldquo;{e.text}&rdquo;
