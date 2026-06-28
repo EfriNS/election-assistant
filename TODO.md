@@ -12,7 +12,9 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
+1. **Verify quota cron fired** — Check Vercel Cron Jobs log on 2026-06-29 after 09:00 IDT (06:00 UTC) to confirm the scheduled run produced a Slack message and returned 200. This is the first clean run after fixing all 3 bugs (schedule, logic, CRON_SECRET).
+
+2. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
 2. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
 
