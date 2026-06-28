@@ -31,6 +31,20 @@ Real-time threshold alerts (e.g., "80% of quota used") should be sent **by the a
 
 **Constraint**: Async alerting requires a KV store for de-duplication (otherwise every call after crossing 80% sends a Slack message). On Vercel Hobby without a KV store, async alerts would spam Slack. Decision: implement async alerts only when a KV store is available.
 
+### Vercel CRON_SECRET — not QUOTA_CRON_SECRET (#first:2026-06-28)
+
+Vercel automatically injects a `CRON_SECRET` system env var and sends it as `Authorization: Bearer <CRON_SECRET>` on every cron invocation (both scheduled and the dashboard "Run" button). Do NOT create a custom secret var for cron auth — use `process.env.CRON_SECRET`.
+
+**Failure mode**: Custom secret mismatch → every invocation returns 401 → Vercel omits non-2xx runs from the cron log → appears as "0 log lines" with no indication the cron ever fired.
+
+### Vercel `framework` key in vercel.json (#first:2026-06-28)
+
+`framework: "nextjs"` in `vercel.json` IS required (despite not being documented as a standard key). Removing it causes Vercel to fall back to static-site mode → "No Output Directory named 'public'" build error.
+
+### `memory` and `maxDuration` ignored on Fluid Compute (#first:2026-06-28)
+
+Vercel warns at build time: "Provided `memory` setting in `vercel.json` is ignored on Active CPU billing." Both `memory` and `maxDuration` in the `functions` block are no-ops on Fluid Compute. The default `maxDuration` is 300s — don't set it lower thinking you're capping cost.
+
 ---
 
 ## Slack Webhooks

@@ -1,36 +1,31 @@
 # Changelog
 
-## 2026-06-28 — Fix Gemini quota cron job (daily Slack summary)
+## 2026-06-28 — Fix Gemini quota cron job (daily Slack summary) — full diagnosis
 
-Fixed `/api/quota-check` cron that was silently broken and never sending Slack messages.
+Fixed `/api/quota-check` cron that was silently broken. Three independent bugs, all needed fixing:
 
-### Root causes
+### Root cause 1: Schedule at midnight (empty query window)
 
-1. **Schedule was `0 0 * * *` (midnight UTC)**: At midnight, `todayStart === now`, making the Langfuse query window 0 seconds wide → 0 tokens → no threshold crossed → no alert.
-2. **Threshold-crossing logic wrong for daily cron**: The "newly crossed" de-dup (comparing current vs 1-hour-ago) only makes sense for hourly crons; for a daily-only cron (Vercel Hobby plan limit), it means nothing ever fires.
-3. **Design mismatch confirmed**: The original intent was also a daily Slack summary (not just threshold alerts), which was never implemented — Slack was only sent on threshold crossings.
+`0 0 * * *` fires at midnight UTC. At that moment `todayStart === now`, making the Langfuse query window 0 seconds wide → 0 tokens → nothing to report. Fixed to `0 6 * * *` (06:00 UTC, 1 hour before Gemini's daily quota reset at 07:00 UTC).
 
-### Changes
+### Root cause 2: Threshold-crossing logic wrong for a daily cron
 
-**`vercel.json`**: Schedule `0 0 * * *` → `0 6 * * *` (06:00 UTC, 1 hour before Gemini's quota reset at 07:00 UTC / midnight Pacific).
+The "newly crossed" de-dup pattern (comparing current vs 1-hour-ago windows) only makes sense for sub-hourly crons. For a once-daily cron, both windows return the same value and nothing ever crosses. Replaced with always-send design: every run sends a Slack summary; emoji reflects severity (✅/📊/⚠️/🚨).
 
-**`app/api/quota-check/route.ts`**:
-- Removed second Langfuse window fetch (previous hour) — only one fetch needed
-- Removed `newlyCrossedThresholds()` and `parseThresholds()` functions
-- `buildSlackBody` now takes `overallPct: number` instead of `crossed: number[]`
-- Slack is always sent when webhook is configured (daily summary)
-- Emoji reflects severity: ✅ (<50%), 📊 (50–79%), ⚠️ (80–89%), 🚨 (90%+)
-- Response uses `slackSent` instead of `alertSent`, no `thresholdsCrossed` field
-- Threshold alerts remain the app's responsibility (async, per-request) — not the cron's
+### Root cause 3: Wrong secret env var (every invocation returned 401)
 
-**`tests/quotaCheck.test.ts`**:
-- Removed `newlyCrossedThresholds` import and test suite
-- Added `✅` emoji test for <50% usage
-- Integration tests updated: single Langfuse stub per call, verify always-send behavior
+Route checked `QUOTA_CRON_SECRET` (our custom var). Vercel sends `Authorization: Bearer <CRON_SECRET>` (a system env var it injects automatically) when invoking crons — including the dashboard "Run" button. The mismatch caused every scheduled and manual invocation to return 401. Vercel doesn't display non-2xx cron invocations in the log, so this appeared as "0 log lines" rather than a visible error. Fixed by checking `process.env.CRON_SECRET`. Removed `QUOTA_CRON_SECRET` from Vercel env vars.
 
-### Key decision: async threshold alerts stay out of the cron
+### vercel.json cleanup
 
-Real-time threshold alerts (50/80/90%) should be sent asynchronously by the app during Gemini API calls — not by the daily cron. Doing it in the cron would require a KV store for de-duplication (to avoid Slack spam on every subsequent call after crossing a threshold), adding infrastructure complexity not warranted at current scale.
+Discovered `framework: "nextjs"` is required for Vercel to recognize the project as Next.js (removing it caused "No Output Directory" build failures). Also removed the `functions` block (`memory`/`maxDuration`) — both settings are ignored on Fluid Compute / Active CPU billing per Vercel's own build warning.
+
+### Commits
+- `d5b01c9` fix: quota cron — daily Slack summary at 06:00 UTC, always-send
+- `05980f4` fix: remove invalid framework key (later reverted — was needed)
+- `0ca92e1` fix: remove functions config from vercel.json (ignored on Fluid Compute)
+- `6da05f6` fix: restore framework key — required for Next.js build detection
+- `eb9298a` fix: use Vercel's CRON_SECRET instead of custom QUOTA_CRON_SECRET
 
 ## 2026-06-28 — PDF export of full results via Puppeteer (commits `a5eb249`–`35808a9`, merged `0609315`)
 
