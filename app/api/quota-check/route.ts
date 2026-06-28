@@ -84,7 +84,7 @@ export function buildSlackBody(
 }
 
 export async function GET(req: NextRequest) {
-  const cronSecret = process.env.QUOTA_CRON_SECRET;
+  const cronSecret = process.env.CRON_SECRET;
   if (cronSecret) {
     const auth = req.headers.get("authorization") ?? "";
     if (auth !== `Bearer ${cronSecret}`) {

@@ -103,7 +103,7 @@ describe("GET /api/quota-check", () => {
       LANGFUSE_PUBLIC_KEY:  "test-public",
       QUOTA_DAILY_TOKEN_LIMIT:   "250000",
       QUOTA_DAILY_REQUEST_LIMIT: "1500",
-      QUOTA_CRON_SECRET: undefined,
+      CRON_SECRET: undefined,
       QUOTA_SLACK_WEBHOOK_URL: undefined,
     };
     mockFetchObservations.mockReset();
@@ -114,7 +114,7 @@ describe("GET /api/quota-check", () => {
   });
 
   it("returns 401 when secret is set but auth header is missing", async () => {
-    process.env.QUOTA_CRON_SECRET = "my-secret";
+    process.env.CRON_SECRET = "my-secret";
     const { GET } = await import("@/app/api/quota-check/route");
     stubObservations([]);
     const res = await GET(makeReq()); // no header
@@ -122,7 +122,7 @@ describe("GET /api/quota-check", () => {
   });
 
   it("returns 401 when secret is set and auth header is wrong", async () => {
-    process.env.QUOTA_CRON_SECRET = "my-secret";
+    process.env.CRON_SECRET = "my-secret";
     const { GET } = await import("@/app/api/quota-check/route");
     stubObservations([]);
     const res = await GET(makeReq("wrong-secret"));
@@ -130,7 +130,7 @@ describe("GET /api/quota-check", () => {
   });
 
   it("returns 200 with correct secret", async () => {
-    process.env.QUOTA_CRON_SECRET = "my-secret";
+    process.env.CRON_SECRET = "my-secret";
     const { GET } = await import("@/app/api/quota-check/route");
     stubObservations([]);
     const res = await GET(makeReq("my-secret"));
