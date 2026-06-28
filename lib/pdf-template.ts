@@ -56,7 +56,7 @@ function renderChips(
           : pct < 40
           ? "bg-red-50 border-red-200 text-red-600"
           : "bg-gray-50 border-gray-200 text-gray-400";
-      const symbol = pct >= 60 ? "✓" : pct < 40 ? "✕" : "~";
+      const symbol = pct >= 60 ? "v" : pct < 40 ? "x" : "~";
       return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol}</span>`;
     })
     .join("\n");
@@ -97,7 +97,7 @@ function renderGrounding(
         .join("\n");
 
       return `
-        <div>
+        <div class="break-inside-avoid">
           <p class="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
           ${userAnswerHtml}
           <p class="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
@@ -171,20 +171,22 @@ function renderPartyCard(
       : "";
 
   return `
-    <div class="rounded-xl p-4 break-inside-avoid ${cardClass}">
-      <div class="flex justify-between items-center mb-2">
-        <div>
-          <span class="font-semibold">${rank + 1}. ${e(party.name)}</span>
-          ${party.subtitle ? `<span class="text-xs text-gray-400 mr-2">(${e(party.subtitle)})</span>` : ""}
+    <div class="rounded-xl p-4 ${cardClass}">
+      <div class="break-inside-avoid">
+        <div class="flex justify-between items-center mb-2">
+          <div>
+            <span class="font-semibold">${rank + 1}. ${e(party.name)}</span>
+            ${party.subtitle ? `<span class="text-xs text-gray-400 mr-2">(${e(party.subtitle)})</span>` : ""}
+          </div>
+          <span class="font-bold ${c.score}">${party.score}%</span>
         </div>
-        <span class="font-bold ${c.score}">${party.score}%</span>
+        <div class="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
+          <div class="h-full ${c.bar} rounded-full" style="width: ${party.score}%"></div>
+        </div>
+        ${chips}
+        <p class="text-xs text-gray-500 mb-2">${e(party.description)}</p>
+        ${aiBlurbHtml}
       </div>
-      <div class="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
-        <div class="h-full ${c.bar} rounded-full" style="width: ${party.score}%"></div>
-      </div>
-      ${chips}
-      <p class="text-xs text-gray-500 mb-2">${e(party.description)}</p>
-      ${aiBlurbHtml}
       <div class="flex gap-4 flex-wrap items-center mb-2">
         ${party.website
           ? `<a href="${e(party.website)}" class="text-xs ${c.link}">אתר המפלגה</a>`
