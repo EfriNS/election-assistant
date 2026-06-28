@@ -9,7 +9,8 @@ function getEnvInt(key: string, fallback: number): number {
   return isNaN(n) ? fallback : n;
 }
 
-type UsageTotals = { tokens: number; requests: number };
+type RouteStats = { count: number; tokens: number };
+export type UsageTotals = { tokens: number; requests: number; byRoute: Record<string, RouteStats> };
 
 export async function fetchWindowUsage(
   client: Langfuse,
@@ -18,6 +19,7 @@ export async function fetchWindowUsage(
 ): Promise<UsageTotals> {
   let tokens = 0;
   let requests = 0;
+  const byRoute: Record<string, RouteStats> = {};
   let page = 1;
   const limit = 100;
 
@@ -31,41 +33,41 @@ export async function fetchWindowUsage(
     });
 
     for (const obs of result.data) {
-      tokens += (obs.usage?.input ?? 0) + (obs.usage?.output ?? 0);
+      const t = (obs.usage?.input ?? 0) + (obs.usage?.output ?? 0);
+      tokens += t;
       requests++;
+      const name = (obs.name as string) ?? "unknown";
+      if (!byRoute[name]) byRoute[name] = { count: 0, tokens: 0 };
+      byRoute[name].count++;
+      byRoute[name].tokens += t;
     }
 
     if (result.data.length < limit) break;
     page++;
   }
 
-  return { tokens, requests };
+  return { tokens, requests, byRoute };
 }
 
-export function computePcts(
-  totals: UsageTotals,
-  tokenLimit: number,
-  requestLimit: number
-): { tokenPct: number; requestPct: number; overallPct: number } {
-  const tokenPct   = tokenLimit   > 0 ? (totals.tokens   / tokenLimit)   * 100 : 0;
-  const requestPct = requestLimit > 0 ? (totals.requests / requestLimit) * 100 : 0;
-  return { tokenPct, requestPct, overallPct: Math.max(tokenPct, requestPct) };
+export function computeRequestPct(requests: number, requestLimit: number): number {
+  return requestLimit > 0 ? (requests / requestLimit) * 100 : 0;
 }
 
 export function buildSlackBody(
-  tokenPct: number,
   requestPct: number,
-  tokenLimit: number,
   requestLimit: number,
-  totals: UsageTotals,
-  overallPct: number
+  totals: UsageTotals
 ): object {
-  const emoji   = overallPct >= 90 ? "🚨" : overallPct >= 80 ? "⚠️" : overallPct >= 50 ? "📊" : "✅";
-  const overall = overallPct.toFixed(0);
-  const binding = tokenPct >= requestPct ? "tokens" : "requests";
+  const emoji = requestPct >= 90 ? "🚨" : requestPct >= 80 ? "⚠️" : requestPct >= 50 ? "📊" : "✅";
+  const pct   = requestPct.toFixed(0);
+
+  const routeLines = Object.entries(totals.byRoute)
+    .sort((a, b) => b[1].tokens - a[1].tokens)
+    .map(([name, s]) => `  ${name}: ${s.count} call${s.count !== 1 ? "s" : ""}, ${s.tokens.toLocaleString()} tokens`)
+    .join("\n");
 
   return {
-    text: `${emoji} Gemini daily usage — ${overall}% of limit`,
+    text: `${emoji} Gemini daily usage — ${pct}% of request limit`,
     blocks: [
       {
         type: "section",
@@ -73,12 +75,18 @@ export function buildSlackBody(
           type: "mrkdwn",
           text:
             `*${emoji} Gemini daily usage summary*\n` +
-            `Tokens: ${totals.tokens.toLocaleString()} / ${tokenLimit.toLocaleString()} (${tokenPct.toFixed(1)}%)\n` +
             `Requests: ${totals.requests.toLocaleString()} / ${requestLimit.toLocaleString()} (${requestPct.toFixed(1)}%)\n` +
-            `Binding: ${binding}\n` +
+            `Tokens today: ${totals.tokens.toLocaleString()}\n` +
             `Model: ${GEMINI_MODEL}`,
         },
       },
+      ...(routeLines ? [{
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*By route:*\n\`\`\`${routeLines}\`\`\``,
+        },
+      }] : []),
     ],
   };
 }
@@ -96,8 +104,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Langfuse not configured" }, { status: 503 });
   }
 
-  const tokenLimit   = getEnvInt("QUOTA_DAILY_TOKEN_LIMIT",   250_000);
-  const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 1_500);
+  const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 500);
   const webhookUrl   = process.env.QUOTA_SLACK_WEBHOOK_URL;
 
   const client = new Langfuse({
@@ -109,12 +116,12 @@ export async function GET(req: NextRequest) {
   const now        = new Date();
   const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-  const totals = await fetchWindowUsage(client, todayStart, now);
-  const { tokenPct, requestPct, overallPct } = computePcts(totals, tokenLimit, requestLimit);
+  const totals     = await fetchWindowUsage(client, todayStart, now);
+  const requestPct = computeRequestPct(totals.requests, requestLimit);
 
   let slackSent = false;
   if (webhookUrl) {
-    const body = buildSlackBody(tokenPct, requestPct, tokenLimit, requestLimit, totals, overallPct);
+    const body = buildSlackBody(requestPct, requestLimit, totals);
     await fetch(webhookUrl, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,11 +131,10 @@ export async function GET(req: NextRequest) {
   }
 
   return NextResponse.json({
-    tokensToday:   totals.tokens,
     requestsToday: totals.requests,
-    tokenPct:      Math.round(tokenPct   * 10) / 10,
+    tokensToday:   totals.tokens,
     requestPct:    Math.round(requestPct * 10) / 10,
-    overallPct:    Math.round(overallPct * 10) / 10,
+    byRoute:       totals.byRoute,
     slackSent,
   });
 }
