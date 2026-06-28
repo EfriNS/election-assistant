@@ -68,8 +68,8 @@ export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
 - אם לא סופק טקסט עבור מפלגה מסוימת בנושא מסוים — הוצא null עבורה בנושא זה.
 - מפלגות ללא מצע: ${partiesWithoutPlatform.join(", ")} — null בכל הנושאים.
 
-**סולם הדירוג:**
-+2 = התאמה חזקה   +1 = התאמה מסוימת   0 = ניטרלי / לא ברור
+**סולם הדירוג (מספרים בלי סימן +):**
+2 = התאמה חזקה   1 = התאמה מסוימת   0 = ניטרלי / לא ברור
 -1 = סתירה מסוימת  -2 = סתירה חזקה
 
 ---
@@ -97,7 +97,9 @@ function parseScores(
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
   if (!jsonMatch) return {};
 
-  const flat: Record<string, number | null> = JSON.parse(jsonMatch[0]);
+  // Strip leading '+' from positive numbers (AI sometimes writes +2 instead of 2)
+  const cleaned = jsonMatch[0].replace(/:\s*\+(\d)/g, ': $1');
+  const flat: Record<string, number | null> = JSON.parse(cleaned);
   const result: ScoreTopicsResult = {};
 
   for (const t of topics) {
