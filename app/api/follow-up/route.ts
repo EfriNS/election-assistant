@@ -139,7 +139,7 @@ Decide whether to ask a follow-up question or transition to the next topic.
 - If following up:
   - prologue (REQUIRED, non-null): 1–2 sentences that acknowledge the user's specific answer and naturally lead into the follow-up question. This is the ONLY place for bridging/contextualizing language. If the user's answer starts with a number (e.g. "2. ..."), you may naturally reference it as "בחרת באפשרות 2" or "ציינת בחירה 2". If the user wrote a combination (e.g. "1+3, אבל לא..."), acknowledge the combination directly.
   - question: a direct, neutral question in interrogative form (e.g. "כיצד...?", "מה לדעתך...?"). Do NOT start the question with phrases like "כדי להעמיק..." or "בהמשך ל..." — those belong in the prologue.
-  - options: 3–4 concise answer options + "אחר — פרט" last. Write plain text only — do NOT number the options (no "1.", "2.", etc.) — numbers are added by the UI.
+  - options: 3–4 concise answer options + "אחר — פרט" last. Write plain text only — do NOT number the options (no "1.", "2.", etc.) — numbers are added by the UI. Options must be mutually exclusive — each option should represent a clearly distinct position; a user should feel they can only reasonably choose one.
   - hint (optional): 1–2 sentence Hebrew definition if the question uses unfamiliar jargon.
   - targetedAspect (optional): the aspect label this question probes (from the party platform data above). Omit if no grounding data was used.
 
