@@ -189,6 +189,7 @@ function PrototypeEInner() {
           openerQuestion: questionSet[tid]?.question ?? "",
           openerAnswer: qa.openerAnswerText,
           followUpQA: qa.followUps.map(({ question, answer }) => ({ question, answer })),
+          ...(qa.freeTextInterpretation ? { freeTextInterpretation: qa.freeTextInterpretation } : {}),
         };
       });
 
@@ -610,6 +611,11 @@ function PrototypeEInner() {
         topicScores={finalTopicScores}
         userAnswersSummary={buildAnswersSummary(buckets, topicQA, closeText, questionSet)}
         answeredTopicIds={topicsToAsk.filter((tid) => topicQA[tid])}
+        topicCoveredAspects={Object.fromEntries(
+          topicsToAsk
+            .filter((tid) => topicQA[tid]?.coveredAspects?.length)
+            .map((tid) => [tid, topicQA[tid].coveredAspects!])
+        )}
         topicAnswerTexts={Object.fromEntries(
           topicsToAsk
             .filter((tid) => topicQA[tid]?.openerAnswerText)

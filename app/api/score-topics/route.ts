@@ -22,6 +22,7 @@ type TopicQAForScoring = {
   openerQuestion: string;
   openerAnswer: string;
   followUpQA: FollowUpQA[];
+  freeTextInterpretation?: string;
 };
 
 // scores[topicId][partyId] = number (-2..+2) | null (no platform data)
@@ -31,6 +32,9 @@ export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const userBlock = topics
     .map((t) => {
       let block = `[${t.topicLabel}] ${t.openerQuestion}\nתשובה: ${t.openerAnswer}`;
+      if (t.freeTextInterpretation) {
+        block += `\n  פרשנות: ${t.freeTextInterpretation}`;
+      }
       t.followUpQA.forEach((fq) => {
         block += `\n  שאלת המשך: ${fq.question}\n  תשובה: ${fq.answer}`;
       });

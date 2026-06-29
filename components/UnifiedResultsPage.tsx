@@ -20,6 +20,7 @@ type Props = {
   userAnswersSummary?: string;
   answeredTopicIds?: string[];
   topicAnswerTexts?: Record<string, string>;
+  topicCoveredAspects?: Record<string, string[]>;
   topicScores?: Record<string, Record<string, number>>; // partyId → topicId → 0–100
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   sessionId?: string;
@@ -34,6 +35,7 @@ export default function UnifiedResultsPage({
   userAnswersSummary,
   answeredTopicIds,
   topicAnswerTexts,
+  topicCoveredAspects,
   topicScores,
   accentColor,
   sessionId,
@@ -64,6 +66,7 @@ export default function UnifiedResultsPage({
         answersSummary: userAnswersSummary ?? "",
         topParties: results.map((r) => ({ id: r.id, name: r.name, score: r.score })),
         answeredTopicIds: answeredTopicIds ?? [],
+        topicCoveredAspects: topicCoveredAspects ?? {},
         sessionId,
       }),
     })

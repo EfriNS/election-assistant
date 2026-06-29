@@ -20,7 +20,8 @@ type PartyRef = { id: string; name: string; score: number };
 
 function buildGroundingsForParties(
   partyIds: string[],
-  answeredTopicIds: string[]
+  answeredTopicIds: string[],
+  topicCoveredAspects: Record<string, string[]> = {}
 ): Record<string, PartyGroundingResult> {
   const result: Record<string, PartyGroundingResult> = {};
   for (const partyId of partyIds) {
@@ -29,8 +30,12 @@ function buildGroundingsForParties(
     const topics: TopicGroundingResult[] = [];
     for (const topicId of answeredTopicIds) {
       const raw = pg.topics[topicId] ?? [];
+      const coveredAspects = topicCoveredAspects[topicId] ?? [];
       const entries: GroundingEntryLite[] = raw
         .filter((e) => !e.absent && e.text.length > 0)
+        // When aspects were probed in follow-ups, show only those entries.
+        // Fall back to all entries when no aspects were covered (no follow-ups taken).
+        .filter((e) => coveredAspects.length === 0 || coveredAspects.includes(e.aspect))
         .map((e) => ({
           text: e.text,
           aspect: e.aspect,
@@ -82,10 +87,11 @@ export async function POST(req: NextRequest) {
     answersSummary: string;
     topParties: PartyRef[];
     answeredTopicIds?: string[];
+    topicCoveredAspects?: Record<string, string[]>;
     sessionId?: string;
   };
 
-  const { topParties, answeredTopicIds = [], sessionId } = body;
+  const { topParties, answeredTopicIds = [], topicCoveredAspects = {}, sessionId } = body;
   // Server-side length limit on answersSummary
   const answersSummary = (body.answersSummary ?? "").slice(0, 500);
 
@@ -129,7 +135,7 @@ export async function POST(req: NextRequest) {
 
   // Build groundings for ALL parties (for the UI quote display)
   const allPartyIds = topParties.map((p) => p.id);
-  const groundings = buildGroundingsForParties(allPartyIds, answeredTopicIds);
+  const groundings = buildGroundingsForParties(allPartyIds, answeredTopicIds, topicCoveredAspects);
 
   try {
     const chat = ai.chats.create({
