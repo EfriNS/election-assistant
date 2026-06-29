@@ -1,5 +1,47 @@
 # Changelog
 
+## 2026-06-30 — UX quick fixes from round-4 user testing (commits `17f0403`, `5d29643`)
+
+Four UX fixes identified from round-4 soft-launch feedback + round-4 feedback logged.
+
+### 1. Progress counter — renamed to topic-based label (commit `17f0403`)
+
+**Problem**: Counter showed `4 / 9` — users interpreted it as "question 4 of 9 questions", then were confused when follow-up questions appeared without advancing the count. The denominator was already topic-count (fixed), but the label didn't say so.
+
+**Fix**: `QuestionHeader` in `app/prototype-e/page.tsx` now renders `נושא 4 מתוך 9`. During follow-up questions, adds `• המשך` to make clear the user is mid-topic without a new topic slot consumed. Removed `dir="ltr"` (no longer needed for Hebrew text). Added `isFollowUp?: boolean` prop.
+
+### 2. Loading animation — per-character wave pulse (commit `17f0403`)
+
+**Problem**: `animate-pulse` on a static text container looked frozen. `CyclingVerb` changed text every 1400ms but gave no intra-cycle motion. Technical user described it as "animation not moving fast enough".
+
+**Fix**: Replaced `CyclingVerb` + `animate-pulse` wrapper with `LoadingIndicator` component that:
+- Splits the current verb into individual `<span>` characters
+- Each character gets `animate-pulse` with staggered `animationDelay` (80ms per character) and faster `animationDuration` (1.2s)
+- Creates a continuous left-to-right wave — visible motion at all times, not just at text boundaries
+- Verb cycle slowed to 1800ms (less jarring since animation itself is lively)
+- `key={${idx}-${i}}` ensures wave restarts cleanly when verb changes
+- Applied to both loading states: follow-up fetch + results scoring screen
+
+### 3. Homepage section headings — made visually prominent (commit `17f0403`)
+
+**Problem**: "מי אני כיועץ שלכם?" and "עד כמה להעמיק?" were styled as muted gray label chips (`text-xs text-gray-400 uppercase tracking-wider`). Technical user flagged headings should be bold/emphasized.
+
+**Fix**: Changed both to `text-sm font-semibold text-gray-700` in `app/page.tsx` — same weight, visibly darker and larger.
+
+### 4. Follow-up prompt — mutual exclusivity requirement (commit `17f0403`)
+
+**Problem**: Follow-up options instruction had no guidance on mutual exclusivity. User 3 flagged overlapping options in the equal-rights opener (one option subsumed another). The AI-generated follow-up prompt was equally susceptible.
+
+**Fix**: Added to options instruction in `app/api/follow-up/route.ts`: _"Options must be mutually exclusive — each option should represent a clearly distinct position; a user should feel they can only reasonably choose one."_
+
+Note: The static opener options in `lib/questions.ts` (equality topic) have a similar perceptual overlap ("law" vs. "lgbtq") but the options score differently across parties — a content decision deferred to advisor review.
+
+### 5. Round-4 feedback tracked (commit `5d29643`)
+
+Added `docs/user-testing/round-4-feedback.md` — 4 users, continued soft launch. Key findings: strong positive reception + civic/emotional resonance is a feature; loading animation felt frozen; progress counter misleading; strategic depth-vs-brevity tension now explicit across all rounds. Backlog updated with 3 new discussion items: UX/UI overhaul, depth vs. brevity positioning decision, and gamification option (watch).
+
+---
+
 ## 2026-06-29 — Scoring quality + monitoring (commits `3f1c017`, `a5c5f0d`, `0245423`, `d623463`, `d266ff7`)
 
 Four interconnected improvements to scoring accuracy, result display, and production monitoring.
