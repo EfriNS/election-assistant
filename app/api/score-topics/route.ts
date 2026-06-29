@@ -4,6 +4,7 @@ import { Langfuse } from "langfuse";
 import { PARTIES } from "@/lib/parties";
 import { GROUNDINGS, getTopicGroundings } from "@/lib/groundings";
 import { sanitizeUserInput } from "@/lib/sanitize";
+import { notifySlack } from "@/lib/slack";
 
 function makeLangfuse() {
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
@@ -180,6 +181,11 @@ export async function POST(req: NextRequest) {
     const text = response.text ?? "";
     const scores = parseScores(text, topics);
 
+    // Detect silent parse failure: AI responded but no valid JSON was extracted
+    if (Object.keys(scores).length === 0 && text.length > 0) {
+      void notifySlack(`⚠️ /api/score-topics — parse failure: AI returned no valid JSON\n${text.slice(0, 300)}`);
+    }
+
     generation?.update({
       output: text,
       usage: {
@@ -195,12 +201,11 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
+    const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    return NextResponse.json(
-      { errorCode: isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR" },
-      { status: isQuota ? 429 : 500 }
-    );
+    await notifySlack(`🚨 /api/score-topics — ${errorCode}\n${msg.slice(0, 300)}`);
+    return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
   }
 }

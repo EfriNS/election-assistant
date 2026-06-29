@@ -53,6 +53,18 @@ describe("buildScoringPrompt", () => {
     expect(prompt).toContain("אל תשתמש בידע כלשהו");
   });
 
+  it("includes freeTextInterpretation when provided", () => {
+    const topicWithInterp = { ...baseTopic, freeTextInterpretation: "תמיכה חזקה בפתרון שתי המדינות" };
+    const prompt = buildScoringPrompt([topicWithInterp]);
+    expect(prompt).toContain("פרשנות:");
+    expect(prompt).toContain("תמיכה חזקה בפתרון שתי המדינות");
+  });
+
+  it("omits freeTextInterpretation block when not provided", () => {
+    const prompt = buildScoringPrompt([baseTopic]);
+    expect(prompt).not.toContain("פרשנות:");
+  });
+
   it("handles multiple topics", () => {
     const prompt = buildScoringPrompt([
       baseTopic,

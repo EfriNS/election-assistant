@@ -4,6 +4,7 @@ import { Langfuse } from "langfuse";
 import { GROUNDINGS } from "@/lib/groundings";
 import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
+import { notifySlack } from "@/lib/slack";
 
 function makeLangfuse() {
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
@@ -18,7 +19,7 @@ type PartyRef = { id: string; name: string; score: number };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function buildGroundingsForParties(
+export function buildGroundingsForParties(
   partyIds: string[],
   answeredTopicIds: string[],
   topicCoveredAspects: Record<string, string[]> = {}
@@ -170,13 +171,12 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("Results AI error:", msg);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
+    const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
+    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}`);
     // Return groundings even on AI failure — deterministic results + quotes still useful
-    return NextResponse.json(
-      { errorCode: isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR", groundings },
-      { status: isQuota ? 429 : 500 }
-    );
+    return NextResponse.json({ errorCode, groundings }, { status: isQuota ? 429 : 500 });
   }
 }

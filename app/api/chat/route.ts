@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
+import { notifySlack } from "@/lib/slack";
 
 const TOPIC_LABELS: Record<string, string> = {
   security:  "ביטחון ומדיניות חוץ",
@@ -154,7 +155,7 @@ export async function POST(req: NextRequest) {
     generation?.update({ output: errorCode, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-
+    await notifySlack(`🚨 /api/chat — ${errorCode}\n${message.slice(0, 300)}`);
     return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
   }
 }

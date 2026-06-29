@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
+import { notifySlack } from "@/lib/slack";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -64,6 +65,9 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("Results-D AI error:", msg);
-    return NextResponse.json({ errorCode: "SERVER_ERROR" }, { status: 500 });
+    const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
+    const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
+    await notifySlack(`🚨 /api/results-d — ${errorCode}\n${msg.slice(0, 300)}`);
+    return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
   }
 }

@@ -2,6 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
 import { sanitizeUserInput } from "@/lib/sanitize";
+import { notifySlack } from "@/lib/slack";
 
 function makeLangfuse() {
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
@@ -242,6 +243,7 @@ export async function POST(req: NextRequest) {
       generation?.update({ output: "", level: "WARNING" });
       generation?.end();
       await langfuse?.flushAsync();
+      await notifySlack(`⚠️ /api/follow-up — parse failure: AI returned no valid JSON\n${text.slice(0, 300)}`);
       return NextResponse.json({ prologue: null, followUp: null });
     }
 
@@ -279,6 +281,7 @@ export async function POST(req: NextRequest) {
     generation?.update({ output: msg, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
+    await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}`);
     if (isQuota) return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
     return NextResponse.json({ prologue: null, followUp: null });
   }
