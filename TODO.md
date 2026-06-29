@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **UX quick fixes (round-4 feedback)** — Progress counter "נושא X מתוך N"; wave loading animation; bold homepage headings; follow-up mutual-exclusivity prompt. (2026-06-30)
 - **Scoring quality + monitoring** — Contrary label fix; +2 JSON parse bug; coveredAspects grounding filter; freeTextInterpretation forwarding; Slack alerts on all AI routes; ?notrack=1. (2026-06-29)
 - **PDF page break fix** — Removed break-inside-avoid from outer card; inner header-only wrapper; per-topic grounding grouping; ASCII v/x chips replacing unsupported Unicode. (2026-06-28)
-- **Quota cron redesign** — Requests-first monitoring (RPD=500); per-route Slack breakdown; fixed 3 root-cause bugs (schedule/logic/CRON_SECRET). (2026-06-28)
 
 > See CHANGELOG.md for complete details.
 
@@ -14,11 +14,13 @@
 
 1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
-2. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
+2. 💬 **DISCUSSION: UX/UI review + overhaul** — Multiple round-4 users (and prior rounds) flagged "too much text", "too many options", headings not prominent enough. Warrants a dedicated UX discussion and systematic review of text density, visual hierarchy, typography, and interaction patterns across the quiz flow — even if core functionality stays the same. The text comments from testing are symptoms of a broader UX conversation we haven't had yet.
 
-3. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, and ביחד now have accurate links. Monitor ש"ס, ליכוד, חד"ש for new/updated official platforms. Update `lib/parties.ts` + grounding `sourceQuality`/`platformAvailable` when links appear.
+3. 💬 **DISCUSSION: Depth vs. brevity strategic decision** — Recurring pattern across R1–R4: length/attention concern coexists with deep appreciation for depth and emotional resonance. Product positioning question before any UX changes: (a) accept depth + invest in targeting engaged voters, (b) progressive disclosure (short mode / full mode), (c) micro-UX only (make length feel shorter without removing content). Decision gates the UX/UI overhaul above.
 
-4. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
+4. 💬 **DISCUSSION: Gamification option (watch — revisit if pattern grows)** — Single user (R4, 20yo woman) requested Kahoot-style design: sliders, visual ranking, less text. Too early to act; the depth/emotional resonance is what drives the strongest positive reactions. Revisit if this request appears in ≥2 more sessions.
+
+5. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
 
    _Next sessions:_
    - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
@@ -33,18 +35,22 @@
    - **0.6** Content neutrality audit (3rd-party review of question framing)
    - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 
-5. **Topic chip / percentage divergence** — The v/~/x chip reflects only the opener pre-calibrated score (sign), while the final percentage blends in AI follow-up scoring (50/50). A party can show "x" yet score 65% if the follow-up probed an aspect where they partially aligned. Options: (a) derive chip from blended topic score instead of opener, (b) add tooltip explaining the divergence, (c) leave as-is and flag for advisor review. Revisit after next user-testing round.
+6. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
 
-6. **Scoring tuning: squared weights + critical-topic cap** — two related levers to make high-priority mismatches hit harder: (a) use weight² (16:9:4:1) instead of linear (4:3:2:1) so "קריטי" means more in the weighted average; (b) limit קריטי selections to 1–2 so users can't mark everything critical (making each designation genuinely selective). Both are low-lift and complementary; revisit after next user-testing round with real data. _[decided 2026-06-27: deferred, score curve already handles primary case]_
+7. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, and ביחד now have accurate links. Monitor ש"ס, ליכוד, חד"ש for new/updated official platforms. Update `lib/parties.ts` + grounding `sourceQuality`/`platformAvailable` when links appear.
 
-6. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
-   - Russian, Arabic, English UI layers
-   - Party platforms remain in Hebrew; answers/explanations translated
+8. **Topic chip / percentage divergence** — The v/~/x chip reflects only the opener pre-calibrated score (sign), while the final percentage blends in AI follow-up scoring (50/50). A party can show "x" yet score 65% if the follow-up probed an aspect where they partially aligned. Options: (a) derive chip from blended topic score instead of opener, (b) add tooltip explaining the divergence, (c) leave as-is and flag for advisor review. Revisit after next user-testing round.
 
-7. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
-   - Experience, notable actions/votes (official sources only, no social media)
+9. **Scoring tuning: squared weights + critical-topic cap** — two related levers to make high-priority mismatches hit harder: (a) use weight² (16:9:4:1) instead of linear (4:3:2:1) so "קריטי" means more in the weighted average; (b) limit קריטי selections to 1–2 so users can't mark everything critical (making each designation genuinely selective). Both are low-lift and complementary; revisit after next user-testing round with real data. _[decided 2026-06-27: deferred, score curve already handles primary case]_
 
-8. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+10. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
+    - Russian, Arabic, English UI layers
+    - Party platforms remain in Hebrew; answers/explanations translated
+
+11. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
+    - Experience, notable actions/votes (official sources only, no social media)
+
+12. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
