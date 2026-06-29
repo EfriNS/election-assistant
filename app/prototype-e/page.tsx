@@ -60,13 +60,26 @@ function buildAnswersSummary(
 
 // ─── Shared sub-components ────────────────────────────────────────────────────
 
-function CyclingVerb({ verbs }: { verbs: string[] }) {
+function LoadingIndicator({ verbs }: { verbs: string[] }) {
   const [idx, setIdx] = useState(() => Math.floor(Math.random() * verbs.length));
   useEffect(() => {
-    const id = setInterval(() => setIdx((v) => (v + 1) % verbs.length), 1400);
+    const id = setInterval(() => setIdx((v) => (v + 1) % verbs.length), 1800);
     return () => clearInterval(id);
   }, [verbs.length]);
-  return <>{verbs[idx]}</>;
+
+  return (
+    <p className="text-sm text-center mt-16">
+      {verbs[idx].split("").map((char, i) => (
+        <span
+          key={`${idx}-${i}`}
+          className="inline-block animate-pulse text-teal-500"
+          style={{ animationDelay: `${i * 80}ms`, animationDuration: "1.2s" }}
+        >
+          {char === " " ? " " : char}
+        </span>
+      ))}
+    </p>
+  );
 }
 
 interface QuestionHeaderProps {
@@ -74,14 +87,18 @@ interface QuestionHeaderProps {
   totalSteps: number;
   progressPct: number;
   onBack: () => void;
+  isFollowUp?: boolean;
 }
 
-function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack }: QuestionHeaderProps) {
+function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack, isFollowUp }: QuestionHeaderProps) {
+  const counterLabel = isFollowUp
+    ? `נושא ${questionIndex + 1} מתוך ${totalSteps} • המשך`
+    : `נושא ${questionIndex + 1} מתוך ${totalSteps}`;
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">← חזרה</button>
-        <span className="text-sm text-gray-400" dir="ltr">{questionIndex + 1} / {totalSteps}</span>
+        <span className="text-sm text-gray-400">{counterLabel}</span>
       </div>
       <div
         className="h-1.5 bg-gray-200 rounded-full mb-10 overflow-hidden"
@@ -598,9 +615,10 @@ function PrototypeEInner() {
   // ── Results step ─────────────────────────────────────────────────────────────
   if (step === "results") {
     if (isScoring) {
+      const scoringVerbs = ["מחשב...", "מנתח...", "משווה...", "מגבש..."];
       return (
         <main className="min-h-screen flex flex-col items-center justify-center px-4">
-          <p className="text-sm text-teal-500 animate-pulse">מחשב תוצאות מדויקות...</p>
+          <LoadingIndicator verbs={scoringVerbs} />
         </main>
       );
     }
@@ -649,7 +667,7 @@ function PrototypeEInner() {
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
           <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
-          <p className="text-sm text-teal-500 animate-pulse text-center mt-16"><CyclingVerb verbs={verbs} /></p>
+          <LoadingIndicator verbs={verbs} />
         </div>
       </main>
     );
@@ -661,7 +679,7 @@ function PrototypeEInner() {
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
-          <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
+          <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} isFollowUp />
 
           {/* Topic + follow-up label */}
           <div className="flex items-center gap-2 mb-4">

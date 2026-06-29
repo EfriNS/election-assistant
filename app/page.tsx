@@ -48,7 +48,7 @@ export default function Home() {
 
         {/* Advisor style */}
         <div className="mb-2">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+          <p className="text-sm font-semibold text-gray-700 mb-4">
             מי אני כיועץ שלכם?
           </p>
           <div className="flex flex-col gap-3">
@@ -82,7 +82,7 @@ export default function Home() {
 
         {/* Depth */}
         <div className="mb-10">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+          <p className="text-sm font-semibold text-gray-700 mb-4">
             עד כמה להעמיק?
           </p>
           <div className="flex flex-col gap-3">
