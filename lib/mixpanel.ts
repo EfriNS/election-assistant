@@ -4,6 +4,7 @@ let initialized = false;
 
 function getMixpanel() {
   if (typeof window === "undefined") return null;
+  if (new URLSearchParams(window.location.search).get("notrack") === "1") return null;
   const token = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
   if (!token) return null;
   if (!initialized) {
