@@ -74,3 +74,44 @@ Two valid webhook patterns:
 For a **daily cron on Hobby plan**: use always-send. The single daily run is the natural summary moment.
 
 For **real-time alerts**: threshold-gated with KV-backed de-dup (future work).
+
+### Shared notifySlack helper pattern (#first:2026-06-29)
+
+All AI-calling routes share a single `lib/slack.ts` helper (`notifySlack(text)`). It reads `QUOTA_SLACK_WEBHOOK_URL`, fires the POST, and swallows all errors — Slack failures must never cascade into the route's error response.
+
+**Rule**: Always `await notifySlack(...)` inside catch blocks (latency doesn't matter on the error path). Use `void notifySlack(...)` for non-blocking fire-and-forget within the success path (e.g., detecting a silent degradation after `parseScores` returns `{}`).
+
+### Silent AI failure detection (#first:2026-06-29)
+
+Some AI failures don't throw — they return a response where JSON extraction yields nothing (`parseScores` returns `{}`). These are invisible to Langfuse catch-block logging.
+
+**Detection pattern**: After calling the AI and parsing, check if the result is empty despite a non-empty response:
+```typescript
+if (Object.keys(scores).length === 0 && text.length > 0) {
+  void notifySlack(`⚠️ /api/score-topics — parse failure: AI returned no valid JSON\n${text.slice(0, 300)}`);
+}
+```
+
+**Rule**: Whenever an AI call has a silent degradation path (returns a default/empty value instead of throwing), add explicit detection + Slack notification so the failure isn't invisible.
+
+---
+
+## Testing
+
+### ?notrack=1 for analytics-clean testing (#first:2026-06-29)
+
+Add `?notrack=1` to the production URL to suppress Mixpanel initialization entirely (`getMixpanel()` returns null). Allows manual test runs through the full quiz flow on production without polluting analytics data.
+
+**Pattern**: Check `new URLSearchParams(window.location.search).get("notrack") === "1"` at the top of the analytics initializer. No cookie, no localStorage — purely URL-based so it's easy to share and revoke.
+
+**Alternative considered**: Preview branch with `NEXT_PUBLIC_MIXPANEL_TOKEN` cleared in Vercel env vars. Rejected: Vercel project wasn't configured to deploy non-main branches, and the URL param approach is simpler.
+
+---
+
+## Data Flow
+
+### PDF export inherits /api/results filtering automatically (#first:2026-06-29)
+
+The PDF export button passes the `groundings` state variable directly to `/api/export-pdf`. That state is populated from the `/api/results` response. Any filtering applied in `buildGroundingsForParties` (e.g., `coveredAspects` filtering) flows through to the PDF with zero extra code.
+
+**Rule**: When modifying what groundings are returned from `/api/results`, the PDF is automatically updated. Only if a future data path bypasses `/api/results` (e.g., a direct PDF-only fetch) would a separate PDF change be needed.

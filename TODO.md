@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Scoring quality + monitoring** — Contrary label fix; +2 JSON parse bug; coveredAspects grounding filter; freeTextInterpretation forwarding; Slack alerts on all AI routes; ?notrack=1. (2026-06-29)
 - **PDF page break fix** — Removed break-inside-avoid from outer card; inner header-only wrapper; per-topic grounding grouping; ASCII v/x chips replacing unsupported Unicode. (2026-06-28)
 - **Quota cron redesign** — Requests-first monitoring (RPD=500); per-route Slack breakdown; fixed 3 root-cause bugs (schedule/logic/CRON_SECRET). (2026-06-28)
-- **PDF export** — Full A4 results via Puppeteer/@sparticuz/chromium; Hebrew font (Heebo+Noto); "שמור תוצאות כ-PDF" button post-AI-load; emoji removed for minimal Chromium compat. (2026-06-28)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,9 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Verify quota cron fired** — Check Vercel Cron Jobs log on 2026-06-29 after 09:00 IDT (06:00 UTC) to confirm the scheduled run produced a Slack message and returned 200. This is the first clean run after fixing all 3 bugs (schedule, logic, CRON_SECRET).
-
-2. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
+1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
 2. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
 

@@ -1,5 +1,69 @@
 # Changelog
 
+## 2026-06-29 — Scoring quality + monitoring (commits `3f1c017`, `a5c5f0d`, `0245423`, `d623463`, `d266ff7`)
+
+Four interconnected improvements to scoring accuracy, result display, and production monitoring.
+
+### 1. Contrary label fix — show specific position instead of generic "לכך" (commit `3f1c017`)
+
+**Problem**: The grounding entry `contrary` field contained a specific opposing position (e.g. "נבטל את האפליה התקציבית") but the UI displayed it as "המפלגה מתנגדת לכך" — a generic label that conveyed nothing.
+
+**Fix**: Updated both `components/PartyResultCard.tsx` (line ~199) and `lib/pdf-template.ts` (contrary section) to display "המפלגה מתנגדת ל: [actual position]" — the data was always there, just not being rendered.
+
+### 2. +2 JSON parse failure in score-topics (commit `a5c5f0d`)
+
+**Root cause**: The scoring prompt defined the scale as `+2 = התאמה חזקה` / `+1 = התאמה מסוימת`. Gemini echoed the `+` prefix into its JSON output (`"security.hadash": +2`), making the JSON invalid. `JSON.parse` threw, `parseScores` returned `{}`, all parties scored null → 50%.
+
+**Fix**: 
+- Removed `+` from scale definition in prompt (`2 = התאמה חזקה`, `1 = התאמה מסוימת`)
+- Added defensive strip in parser: `cleaned = jsonMatch[0].replace(/:\s*\+(\d)/g, ': $1')` before `JSON.parse`
+
+**File**: `app/api/score-topics/route.ts` — `buildScoringPrompt()` and `parseScores()`
+
+### 3. Grounding display filtering by coveredAspects + freeTextInterpretation forwarding (commit `0245423`)
+
+**Problem A**: Results page showed all grounding entries for each topic regardless of which aspects were explored in follow-up questions. User who answered about `labor-rights` would see hadash's 7 economy entries (pension fund, military spending, union rights, etc.) instead of just the 2 `labor-rights` entries they actually discussed.
+
+**Fix A**: `buildGroundingsForParties()` in `/api/results/route.ts` now accepts `topicCoveredAspects: Record<string, string[]>` and filters entries to only those aspects. Falls back to all entries when `coveredAspects` is empty (no follow-ups taken — legitimate path). Wired through: `prototype-e/page.tsx` → `UnifiedResultsPage` props → `/api/results` request body → `buildGroundingsForParties`.
+
+**Problem B**: `freeTextInterpretation` returned by `/api/follow-up` (AI's structured interpretation of a free-text opener) was stored in state but never forwarded to `/api/score-topics`. Free-text answers were scored against raw user text only, losing the AI's political framing.
+
+**Fix B**: Added `freeTextInterpretation?: string` to `TopicQAForScoring` type; included it in `buildScoringPrompt()` as `פרשנות:` block; wired from `topicQA` state in `prototype-e/page.tsx`.
+
+**Files**: `app/api/results/route.ts`, `app/api/score-topics/route.ts`, `components/UnifiedResultsPage.tsx`, `app/prototype-e/page.tsx`
+
+**PDF**: PDF export gets filtered groundings automatically — it passes the `groundings` state variable (already filtered by `/api/results`) to `/api/export-pdf`. No separate PDF change needed.
+
+### 4. Slack alerts for all AI route failures (commit `d623463`)
+
+**Problem**: AI call failures (quota exceeded, server error, or silent JSON parse failures) were logged to Langfuse but produced no real-time notification. The only Slack signal was the daily 06:00 UTC cron summary.
+
+**Implementation**:
+- `lib/slack.ts`: shared `notifySlack(text)` helper using `QUOTA_SLACK_WEBHOOK_URL`
+- All 5 AI-calling routes now send Slack alerts:
+  - `🚨 /api/<route> — QUOTA_EXCEEDED|SERVER_ERROR` on any Gemini exception
+  - `⚠️ /api/score-topics — parse failure` when `parseScores` returns `{}` despite non-empty AI response (silent degradation detection)
+  - `⚠️ /api/follow-up — parse failure` when no JSON found in AI response
+- `results-d` got quota detection added (was missing; all errors returned generic 500)
+- `buildGroundingsForParties` exported for testability
+
+**Tests added**:
+- `tests/groundingsFilter.test.ts`: 7 tests for filtering (with aspects, without aspects, no-match, contrary field, multi-topic, multi-party)
+- `tests/scoreTopicsPrompt.test.ts`: 2 tests for `freeTextInterpretation` inclusion/omission
+
+### 5. ?notrack=1 Mixpanel suppression (commit `d266ff7`)
+
+Added `if (new URLSearchParams(window.location.search).get("notrack") === "1") return null` at the top of `getMixpanel()` in `lib/mixpanel.ts`. Allows manual testing on the production URL (`voteassist.me/prototype-e?notrack=1`) without polluting analytics.
+
+### Commits
+- `3f1c017` fix: show specific contrary position instead of generic label
+- `a5c5f0d` fix: prevent +2/+1 JSON parse failure in score-topics
+- `0245423` feat: filter grounding display by covered aspects + forward freeTextInterpretation
+- `d623463` feat: Slack alerts for all AI route failures + grounding filter tests
+- `d266ff7` feat: suppress Mixpanel tracking with ?notrack=1 query param
+
+---
+
 ## 2026-06-28 — Fix PDF page breaks and rectangle characters (commit `6922956`)
 
 Fixed `lib/pdf-template.ts` so party cards flow naturally across pages instead of each card forcing its own page.
