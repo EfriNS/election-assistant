@@ -17,6 +17,12 @@ export default function FeedbackWidget() {
     pageRef.current = window.location.pathname;
   }, []);
 
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("open-feedback-widget", handler);
+    return () => window.removeEventListener("open-feedback-widget", handler);
+  }, []);
+
   if (done) return null;
 
   async function submit() {
