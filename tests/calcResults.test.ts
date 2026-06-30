@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { calcResults, FOLLOW_UP_AI_WEIGHT, SCORE_CURVE_POWER } from "@/lib/scoring";
+import { PARTIES } from "@/lib/parties";
 import type { TopicQA } from "@/lib/scoring";
 import type { TopicQ } from "@/lib/questions";
 
@@ -19,6 +20,16 @@ const questionSet: Record<string, TopicQ> = {
     options: [
       { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
       { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+    ],
+  },
+};
+
+// Neutral question: all parties score 0 — useful for testing ties and the score curve.
+const questionSetNeutral: Record<string, TopicQ> = {
+  security: {
+    question: "Security question",
+    options: [
+      { id: "neutral", text: "Neutral", scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
     ],
   },
 };
@@ -156,5 +167,82 @@ describe("calcResults — AI score blending", () => {
 
   it("FOLLOW_UP_AI_WEIGHT constant is 0.5", () => {
     expect(FOLLOW_UP_AI_WEIGHT).toBe(0.5);
+  });
+});
+
+describe("calcResults — topicScores", () => {
+  it("returns per-party per-topic 0–100 values (pre-curve)", () => {
+    const { topicScores } = calcResults({ security: 3 }, { security: qa("peace") }, questionSet);
+    // "peace": hadash=+2 → normalized (2+2)/4=1.0 → 100
+    expect(topicScores["hadash"]["security"]).toBe(100);
+    // "peace": otzmah=-2 → normalized (-2+2)/4=0.0 → 0
+    expect(topicScores["otzmah-yehudit"]["security"]).toBe(0);
+  });
+
+  it("topicScore is raw normalized (pre-curve), not the curved final score", () => {
+    // neutral option: all parties score 0 → normalized=0.5 → topicScore=50
+    // but overall score is curved: 0.5^1.5 ≈ 0.354 → ~35, not 50
+    const { ranked, topicScores } = calcResults(
+      { security: 4 },
+      { security: qa("neutral") },
+      questionSetNeutral
+    );
+    const hadash = ranked.find((p) => p.id === "hadash")!;
+    expect(topicScores["hadash"]["security"]).toBe(50);
+    expect(hadash.score).toBe(Math.round(Math.pow(0.5, SCORE_CURVE_POWER) * 100));
+    expect(hadash.score).not.toBe(50); // confirms curve actually applies
+  });
+
+  it("omits a party from topicScores when effectiveScore is null", () => {
+    const aiWithNull: Record<string, number | null> = Object.fromEntries(
+      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 2 as number | null])
+    );
+    aiWithNull["otzmah-yehudit"] = null;
+    const { topicScores } = calcResults(
+      { security: 4 },
+      { security: qa("other", "Custom") },
+      questionSet,
+      { security: aiWithNull }
+    );
+    expect(topicScores["otzmah-yehudit"]?.["security"]).toBeUndefined();
+  });
+
+  it("covers all answered topics across multiple topics", () => {
+    const { topicScores } = calcResults(
+      { security: 3, economy: 2 },
+      { security: qa("peace"), economy: qa("left-econ") },
+      questionSet
+    );
+    expect(topicScores["hadash"]["security"]).toBe(100);
+    expect(topicScores["hadash"]["economy"]).toBe(100);
+  });
+});
+
+describe("calcResults — ties and extreme scores", () => {
+  it("handles a full tie: all parties return with same score, no crash", () => {
+    const { ranked } = calcResults(
+      { security: 4 },
+      { security: qa("neutral") },
+      questionSetNeutral
+    );
+    expect(ranked).toHaveLength(PARTIES.length);
+    const scores = ranked.map((p) => p.score);
+    expect(scores.every((s) => s === scores[0])).toBe(true);
+  });
+
+  it("maximum divergence: winner scores 100, loser scores 0", () => {
+    const { ranked } = calcResults({ security: 3 }, { security: qa("peace") }, questionSet);
+    expect(ranked[0].score).toBe(100);
+    expect(ranked[ranked.length - 1].score).toBe(0);
+  });
+
+  it("score curve makes a 50% topic score land below 50 overall", () => {
+    // Confirms SCORE_CURVE_POWER > 1 actually penalises mismatches
+    const { ranked } = calcResults(
+      { security: 4 },
+      { security: qa("neutral") },
+      questionSetNeutral
+    );
+    ranked.forEach((p) => expect(p.score).toBeLessThan(50));
   });
 });

@@ -20,7 +20,7 @@
 
 4. 💬 **DISCUSSION: "אודות" section** — Who built this, why, editorial principles, data sources, methodology transparency, contact/feedback info. Decide: scope (1-pager vs. lightweight), placement (nav link vs. footer), and content (political neutrality statement, advisor attribution, open-source link once public). Low effort to implement once the content is agreed.
 
-5. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation). Next: 0.7 scoring tests, then 1.1 remove prototype artifacts.
+5. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation), 0.7 (scoring tests). Next: 1.1 remove prototype artifacts.
 
    _Next sessions:_
    - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
