@@ -229,27 +229,29 @@ export async function POST(req: NextRequest) {
   // Do not pass prompt as input — it contains user answers (PII).
   const generation = trace?.generation({ name: "gemini-follow-up", model });
 
+  // Hoisted so the catch block can log the raw AI output to Langfuse on parse errors.
+  let rawText = "";
+
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { temperature: 0.7, maxOutputTokens: 500 },
+      config: { temperature: 0.7, maxOutputTokens: 500, responseMimeType: "application/json" },
     });
 
-    const text = response.text ?? "";
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    rawText = response.text ?? "";
+    if (!rawText) {
       generation?.update({ output: "", level: "WARNING" });
       generation?.end();
       await langfuse?.flushAsync();
-      await notifySlack(`⚠️ /api/follow-up — parse failure: AI returned no valid JSON\n${text.slice(0, 300)}`);
+      await notifySlack(`⚠️ /api/follow-up — parse failure: AI returned empty response`);
       return NextResponse.json({ prologue: null, followUp: null });
     }
 
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = JSON.parse(rawText);
     generation?.update({
-      output: text,
+      output: rawText,
       usage: {
         input:  response.usageMetadata?.promptTokenCount    ?? 0,
         output: response.usageMetadata?.candidatesTokenCount ?? 0,
@@ -278,7 +280,8 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
-    generation?.update({ output: msg, level: "ERROR" });
+    const langfuseOutput = rawText ? `${msg}\n\nRAW:\n${rawText.slice(0, 500)}` : msg;
+    generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
     await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}`);
