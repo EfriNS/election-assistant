@@ -18,7 +18,7 @@
 
 3. 💬 **DISCUSSION: UX/UI review + overhaul** — Multiple round-4 users (and prior rounds) flagged "too much text", "too many options", headings not prominent enough. Warrants a dedicated UX discussion and systematic review of text density, visual hierarchy, typography, and interaction patterns across the quiz flow — even if core functionality stays the same. The text comments from testing are symptoms of a broader UX conversation we haven't had yet.
 
-4. 💬 **DISCUSSION: "אודות" section** — Who built this, why, editorial principles, data sources, methodology transparency, contact/feedback info. Decide: scope (1-pager vs. lightweight), placement (nav link vs. footer), and content (political neutrality statement, advisor attribution, open-source link once public). Low effort to implement once the content is agreed.
+4. ✅ **"אודות" section** — Built: `/about` static page (lightweight scope, footer link). Content: builders (מאיה ואפרי נטל-שי), data sources, neutrality statement, privacy, feedback channels (widget + GitHub Issues). Advisor attribution placeholder pending review (TODO #1).
 
 5. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation), 0.7 (scoring tests), 1.1 (remove prototype artifacts). Next: 1.8 soft launch iteration.
 

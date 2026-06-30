@@ -131,6 +131,8 @@ export default function Home() {
         <div className="mt-4 text-center text-xs text-gray-400 space-y-1">
           <p>הכלי חינמי ופתוח לכולם ·{" "}
             <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
+            {" · "}
+            <a href="/about" className="underline hover:text-gray-600">אודות</a>
           </p>
         </div>
 
