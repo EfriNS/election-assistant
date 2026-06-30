@@ -1,5 +1,60 @@
 # Changelog
 
+## 2026-06-30 — MVP milestones: scoring tests (0.7), prototype cleanup (1.1), /about page (commits `cd94e4e`–`d76ef4e`)
+
+### API cost analysis (`cd94e4e`)
+
+Added `docs/API-COST-ANALYSIS.md` with a full cost breakdown based on observed baseline (52,515 tokens / 11 calls per session). Key figures: ~$0.03/session on Gemini Flash Lite; trigger point to switch from free tier is ~200–300 DAU (~$180–270/mo). Score-topics is the cost driver (40% of tokens). Batch pricing available at 1,000+ DAU. Corresponding TODO item added.
+
+### Backlog reorganisation
+
+Added and reordered backlog items: Gemini paid-tier trigger, "אודות" section (discussion), open-source repository prep, security re-assessment. Reordered depth/UX/gamification priority; Gamification moved to #11 (watch item).
+
+### 0.7 Scoring correctness tests (`55a2199`)
+
+7 new tests across 3 new describe blocks in `tests/calcResults.test.ts` (55 → 62 total):
+
+- **`topicScores`** — per-party per-topic 0–100 values (pre-curve) are correct; null-score parties are omitted from topicScores; multiple topics all covered
+- **Score curve non-linearity** — confirmed `SCORE_CURVE_POWER=1.5` pushes a neutral (score=0) option to ~35% overall, not 50%; `topicScores` stays pre-curve (raw normalised) for the UI chips
+- **Ties / extremes** — full tie returns all 10 parties without crash; max divergence produces 100/0; all parties score below 50 when all options are neutral
+
+Added `questionSetNeutral` fixture (all-zero scores) and imported `PARTIES` to enable length assertions.
+
+### 1.1 Remove prototype artifacts (`73c7bfb`)
+
+**Deleted** (851 lines removed):
+- `app/prototype-a/page.tsx`, `prototype-b/`, `prototype-c/`, `prototype-d/` — dead experiment routes
+- `app/api/results-d/route.ts` — chat-extraction API only called by prototype-d
+
+**Renamed**:
+- `app/prototype-e/` → `app/quiz/` (git mv, history preserved)
+- `PrototypeE` / `PrototypeEInner` → `Quiz` / `QuizInner`
+- Landing page redirect: `/prototype-e?...` → `/quiz?...`
+
+**Branding**:
+- Removed "בטא" amber badge from landing page h1
+- Removed "גרסת בטא — הכלי בפיתוח פעיל, ייתכנו שינויים" footer line
+
+Build verified clean (12 routes, `/quiz` present, no dead routes).
+
+### /about page (`88f82df`, `d76ef4e`)
+
+New static route `/about` (prerendered, zero JS overhead). Content:
+- **Builders**: מאיה ואפרי נטל-שי — ללא שיוך פוליטי וללא מימון מפלגתי
+- **Data sources**: official party platforms + position documents; parties without platforms marked explicitly; third-party sources noted
+- **Methodology**: topics selected manually; opener questions phrased manually; follow-ups AI-generated per user answers and requested depth; scoring AI-assisted
+- **Neutrality**: factual statement — no recommendation, no political position
+- **Privacy**: no storage, no login, no personal data
+- **Contact**: feedback widget (in-app) + GitHub Issues (data corrections / methodology questions)
+
+Advisor attribution deliberately omitted — to be added after advisor review (TODO #1) and only if advisor consents to being named.
+
+Footer link ("אודות") added to landing page alongside GitHub link.
+
+**Commits**: `cd94e4e` (cost analysis + backlog), `55a2199` (0.7 scoring tests), `73c7bfb` (1.1 prototype cleanup), `88f82df` (about page), `d76ef4e` (about text refinements)
+
+---
+
 ## 2026-06-30 — Fix /api/follow-up JSON parse errors via Gemini JSON mode (commits `5d4f1fd`, `661a23d`)
 
 Recurring production error: `gemini-3.1-flash-lite` was generating malformed JSON (missing commas in the `options` array), causing `JSON.parse` to throw on about 5 confirmed traces over recent days — all with `hasGroundingData: true`. Monitoring alerted via Slack; Langfuse confirmed the pattern.

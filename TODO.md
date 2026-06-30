@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **MVP milestones: 0.7, 1.1, /about** — Scoring tests (topicScores, curve, ties; 55→62); removed prototype routes + renamed /quiz; /about page (builders, methodology, neutrality, contact). (2026-06-30)
 - **Fix /api/follow-up JSON parse errors** — Gemini JSON mode (`responseMimeType: "application/json"`); hoisted rawText for Langfuse error visibility; removed regex workaround. Deployed to prod. (2026-06-30)
 - **UX quick fixes (round-4 feedback)** — Progress counter "נושא X מתוך N"; wave loading animation; bold homepage headings; follow-up mutual-exclusivity prompt. (2026-06-30)
-- **Scoring quality + monitoring** — Contrary label fix; +2 JSON parse bug; coveredAspects grounding filter; freeTextInterpretation forwarding; Slack alerts on all AI routes; ?notrack=1. (2026-06-29)
 
 > See CHANGELOG.md for complete details.
 
