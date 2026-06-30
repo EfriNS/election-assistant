@@ -116,7 +116,7 @@ function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack, isFoll
 
 // ─── Inner component ──────────────────────────────────────────────────────────
 
-function PrototypeEInner() {
+function QuizInner() {
   const searchParams = useSearchParams();
   const tone = searchParams.get("tone") ?? "formal";
   const depth = searchParams.get("depth") ?? "short";
@@ -881,10 +881,10 @@ function PrototypeEInner() {
 
 // ─── Page wrapper ─────────────────────────────────────────────────────────────
 
-export default function PrototypeE() {
+export default function Quiz() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">טוען...</div>}>
-      <PrototypeEInner />
+      <QuizInner />
     </Suspense>
   );
 }

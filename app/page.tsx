@@ -21,7 +21,7 @@ export default function Home() {
 
   const handleStart = () => {
     if (!ready) return;
-    router.push(`/prototype-e?tone=${tone}&depth=${depth}`);
+    router.push(`/quiz?tone=${tone}&depth=${depth}`);
   };
 
   return (
@@ -31,8 +31,7 @@ export default function Home() {
         {/* Headline */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-3">
-            עוזר הבחירות{" "}
-            <span className="text-sm font-medium bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full align-middle">בטא</span>
+            עוזר הבחירות
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed">
             גלו לאיזו מפלגה אתם הכי קרובים — בצורה שקופה ומנומקת
@@ -130,7 +129,6 @@ export default function Home() {
 
         {/* Footer */}
         <div className="mt-4 text-center text-xs text-gray-400 space-y-1">
-          <p>גרסת בטא — הכלי בפיתוח פעיל, ייתכנו שינויים</p>
           <p>הכלי חינמי ופתוח לכולם ·{" "}
             <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
           </p>
