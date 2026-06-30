@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Fix /api/follow-up JSON parse errors** — Gemini JSON mode (`responseMimeType: "application/json"`); hoisted rawText for Langfuse error visibility; removed regex workaround. Deployed to prod. (2026-06-30)
 - **UX quick fixes (round-4 feedback)** — Progress counter "נושא X מתוך N"; wave loading animation; bold homepage headings; follow-up mutual-exclusivity prompt. (2026-06-30)
 - **Scoring quality + monitoring** — Contrary label fix; +2 JSON parse bug; coveredAspects grounding filter; freeTextInterpretation forwarding; Slack alerts on all AI routes; ?notrack=1. (2026-06-29)
-- **PDF page break fix** — Removed break-inside-avoid from outer card; inner header-only wrapper; per-topic grounding grouping; ASCII v/x chips replacing unsupported Unicode. (2026-06-28)
 
 > See CHANGELOG.md for complete details.
 

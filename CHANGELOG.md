@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-06-30 — Fix /api/follow-up JSON parse errors via Gemini JSON mode (commits `5d4f1fd`, `661a23d`)
+
+Recurring production error: `gemini-3.1-flash-lite` was generating malformed JSON (missing commas in the `options` array), causing `JSON.parse` to throw on about 5 confirmed traces over recent days — all with `hasGroundingData: true`. Monitoring alerted via Slack; Langfuse confirmed the pattern.
+
+### Root cause fix — `responseMimeType: "application/json"` (`app/api/follow-up/route.ts`)
+
+Added `responseMimeType: "application/json"` to the `generateContent` config, which constrains Gemini to output valid JSON. Removed the `text.match(/\{[\s\S]*\}/)` regex extraction (was a workaround for markdown-wrapped responses, unnecessary in JSON mode). The `if (!jsonMatch)` guard is replaced with a simpler empty-response check.
+
+### Tracking improvement — hoist `rawText` before `try` block
+
+`const text` was declared inside the `try` block, so the `catch` could only log the exception message (`SyntaxError: Expected ',' or ']' ...`), not the actual AI output that caused the failure. Fix: hoist `let rawText = ""` before the try block. On success, Langfuse now receives the actual AI response; on error, it receives `${msg}\n\nRAW:\n${text.slice(0, 500)}` — making the bad output visible in traces.
+
+**Commits**: `5d4f1fd` (fix), `661a23d` (merge to main + prod deploy)
+
+---
+
 ## 2026-06-30 — UX quick fixes from round-4 user testing (commits `17f0403`, `5d29643`)
 
 Four UX fixes identified from round-4 soft-launch feedback + round-4 feedback logged.

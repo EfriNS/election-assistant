@@ -20,6 +20,40 @@
 
 6. **Separate conversation from scoring — two API calls beats one doing both** — Having the chat AI score parties while also collecting preferences (conflating two jobs in one prompt) produces non-deterministic scoring and complicates future grounding. Better: conversation API collects preferences naturally; a second focused extraction API (`/api/results-d`) takes the full transcript and produces structured `{ scores, profile, partyBlurbs }`. The extraction prompt can be carefully crafted without risking the conversational tone. (#first:2026-06-17)
 
+### Use `responseMimeType: "application/json"` to eliminate JSON parse errors (#first:2026-06-30)
+
+`gemini-3.1-flash-lite` (and likely other Gemini models) occasionally generates malformed JSON — missing commas in arrays, property value errors. 5 confirmed failures over 10 days in production, all with grounding data active (longer prompts → more likely to drift). The model would produce something like `["option1" "option2"]` (missing comma) which crashes `JSON.parse`.
+
+**Fix**: Add `responseMimeType: "application/json"` to the `generateContent` config:
+```typescript
+config: { temperature: 0.7, maxOutputTokens: 500, responseMimeType: "application/json" }
+```
+This constrains the model to output valid JSON — it's a model-level constraint, not prompt engineering. Once active:
+- Remove the `text.match(/\{[\s\S]*\}/)` regex extraction (it was a workaround for markdown-wrapped JSON, no longer needed)
+- Replace the `if (!jsonMatch)` guard with `if (!rawText)` (empty response check)
+
+**Observed in**: `app/api/follow-up/route.ts` (all 5 errors had `hasGroundingData: true` — grounding block makes the prompt ~50% longer, increasing drift probability). Apply this pattern to all Gemini routes that expect JSON output.
+
+### Hoist the AI response variable before the try block for catch-block logging (#first:2026-06-30)
+
+When a Langfuse generation or error logger needs to record the raw AI output on failure, `const text = response.text` declared inside the try block is not accessible in the catch. Pattern:
+
+```typescript
+let rawText = "";   // hoisted — accessible in catch
+try {
+  const response = await ai.models.generateContent(...);
+  rawText = response.text ?? "";
+  const parsed = JSON.parse(rawText);  // if this throws...
+  generation?.update({ output: rawText });
+} catch (err) {
+  const msg = err instanceof Error ? err.message : String(err);
+  // ...rawText is available here — include the bad output in the error log
+  generation?.update({ output: rawText ? `${msg}\n\nRAW:\n${rawText.slice(0, 500)}` : msg, level: "ERROR" });
+}
+```
+
+Without hoisting, error traces in Langfuse show only the exception message (e.g. `"Expected ',' or ']' after array element in JSON at position 403"`), with no way to see what the model actually returned. With hoisting, the malformed output is visible — essential for diagnosing prompt/model issues.
+
 ### Prompt vs. Client Fix: Fix Root Cause First, Keep Defensive Strip (#first:2026-06-26)
 
 When the AI produces malformatted output (e.g., numbered option text "1. text" when options should be plain), fix the prompt FIRST — then keep a lightweight defensive transform in the client as a silent safety net.
