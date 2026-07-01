@@ -7,6 +7,8 @@ export type GroundingEntryLite = {
   sourceUrl: string;
   dateRetrieved: string;
   contrary?: string;
+  // True when this entry's aspect was the one probed by a follow-up question.
+  matched?: boolean;
 };
 
 export type TopicGroundingResult = {

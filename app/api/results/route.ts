@@ -32,18 +32,21 @@ export function buildGroundingsForParties(
     for (const topicId of answeredTopicIds) {
       const raw = pg.topics[topicId] ?? [];
       const coveredAspects = topicCoveredAspects[topicId] ?? [];
+      // Always show a party's full topic content — aspect tags are ad-hoc
+      // per-party strings, so filtering to only the probed aspect silently
+      // hid quotes for parties whose tags didn't happen to match. Matched
+      // entries are surfaced first (stable sort keeps the rest in source order).
       const entries: GroundingEntryLite[] = raw
         .filter((e) => !e.absent && e.text.length > 0)
-        // When aspects were probed in follow-ups, show only those entries.
-        // Fall back to all entries when no aspects were covered (no follow-ups taken).
-        .filter((e) => coveredAspects.length === 0 || coveredAspects.includes(e.aspect))
         .map((e) => ({
           text: e.text,
           aspect: e.aspect,
           sourceUrl: e.sourceUrl,
           dateRetrieved: e.dateRetrieved,
           ...(e.contrary ? { contrary: e.contrary } : {}),
-        }));
+          ...(coveredAspects.includes(e.aspect) ? { matched: true } : {}),
+        }))
+        .sort((a, b) => Number(b.matched ?? false) - Number(a.matched ?? false));
       if (entries.length > 0) {
         topics.push({ topicId, topicLabel: TOPIC_LABELS[topicId] ?? topicId, entries });
       }
