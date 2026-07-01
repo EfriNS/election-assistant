@@ -19,7 +19,7 @@
     "economy": [
       {
         "text": "בנושאים כלכליים המפלגה תומכת בגישה סוציאל-דמוקרטית, בשל החולשה הסוציו-אקונומית של מצביעיה.",
-        "aspect": "welfare-state",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -30,21 +30,21 @@
     "education": [
       {
         "text": "השוואת שכר מורים בחינוך העצמאי (החרדי) לשכר מורים במכללות; עדכון תקציב שעות ההוראה בבסיס התקציב; מיליארדי שקלים לחינוך החרדי בהסכם הקואליציוני.",
-        "aspect": "haredi-education-budget",
+        "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות להכנסת לימודי ליבה (מתמטיקה, אנגלית, מדעים) לבתי ספר חרדיים.",
-        "aspect": "oppose-core-curriculum",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "חוק לימודי ליבה חובה בכלל המוסדות המתוקצבים"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "דרישה לתקצוב מלא של מוסדות החינוך החרדי (תלמודי תורה, ישיבות קטנות) ללא כל חיוב לימודי ליבה. הסכמי קואליציה כוללים הקפאה מחודשת של יישום לימודי הליבה.",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",

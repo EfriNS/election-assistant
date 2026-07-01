@@ -54,7 +54,7 @@
     "economy": [
       {
         "text": "במקום כסף למקורבים ולמשתמטים, נגדיל משמעותית את ההשקעה בשירותים חברתיים",
-        "aspect": "welfare-state",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -62,21 +62,21 @@
       },
       {
         "text": "מלחמת חורמה ביוקר המחיה באמצעות מלחמה במונופולים",
-        "aspect": "cost-of-living",
+        "aspect": "cost-of-living-and-affordability",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נדאג לצרכי המשפחות הצעירות, נשפר את תנאי העבודה, נשפר את איכות המסגרות",
-        "aspect": "labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "הכוונת השכר והמיסוי במגמה לקדם את השוויון הכלכלי והחברתי, להטיב את רמת שכרם של העובדים בייצור ולשמור על הערך הריאלי של השכר.",
-        "aspect": "progressive-taxation",
+        "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
@@ -94,7 +94,7 @@
     "education": [
       {
         "text": "נבטל את האפליה התקציבית נגד החינוך הממלכתי, ונוביל לשוויון בין כל תלמידי ישראל",
-        "aspect": "equal-education-budgets",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://yes.democrats.org.il/topics/education",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -102,21 +102,21 @@
       },
       {
         "text": "נחייב חינוך לאזרחות ודמוקרטיה לכולם",
-        "aspect": "civic-values",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yes.democrats.org.il/topics/education",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נחזק את מעמד עובדי ועובדות ההוראה והניהול ונשפר את תנאי ההעסקה",
-        "aspect": "teacher-quality",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yes.democrats.org.il/topics/education",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נפסיק את מימון הרשתות החרדיות המפלגתיות - חינוך ממלכתי-חרדי לכל ילד חרדי",
-        "aspect": "haredi-integration",
+        "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://yes.democrats.org.il/topics/education",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -124,13 +124,13 @@
       },
       {
         "text": "התקדמות לקראת חינוך על-יסודי חינם וחתירה לקראת שוויון אפשרויות למען מעוטי היכולת, הן בחינוך העל-יסודי והן בחינוך הגבוה.",
-        "aspect": "education-access",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "שילוב מוסדות החינוך החרדי במסגרות לימודי ליבה בתמורה לתקצוב ממשלתי; מימון מותנה ביישום תוכנית לימודים המאפשרת השתלבות בשוק העבודה.",
         "sourceUrl": "https://yes.democrats.org.il",
@@ -140,7 +140,7 @@
     ],
     "health": [
       {
-        "aspect": "private-healthcare-regulation",
+        "aspect": "private-sector-regulation-mechanics",
         "dateRetrieved": "2026-06-27",
         "text": "מניעת \"רפואה לעשירים\" — הגבלת הפרטת שירותי הרפואה כדי לשמור על נגישות שוויונית; חיזוק מערכת הבריאות הציבורית כך שלא תידחק על ידי הסקטור הפרטי.",
         "sourceUrl": "https://yes.democrats.org.il",

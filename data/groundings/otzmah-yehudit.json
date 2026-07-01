@@ -55,7 +55,7 @@
     "economy": [
       {
         "text": "\"אנחנו נפתח את הכלכלה לפי השיטה של 'קפיטליזם יהודי'.\"",
-        "aspect": "jewish-capitalism",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -63,7 +63,7 @@
       },
       {
         "text": "מימון תכנית העלייה הלאומית: מחצית מתמלוגי הגז מוקצית לתקציב עלייה וקליטה. השקעה ציבורית בבינוי, תשתיות ותעסוקה לעולים ולחיילים משוחררים.",
-        "aspect": "aliya-funded-development",
+        "aspect": "regional-and-sector-development",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
@@ -96,14 +96,14 @@
     "education": [
       {
         "text": "\"ילדי ישראל יחונכו לאהבת הארץ, ערבות הדדית בתוך העם היהודי, הכרת ההיסטוריה והמורשת של העם היהודי ואוצר היהדות.\"",
-        "aspect": "jewish-nationalist-education",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "עברית היא שפה רשמית יחידה של המדינה. \"מדינת ישראל היא מדינה יהודית... עברית היא שפתה הרשמית היחידה.\"",
-        "aspect": "hebrew-sole-official-language",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -111,14 +111,14 @@
       },
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל, על פני ותיקי יחידות לחמות — תיפסק מיידית.\" העדפה מתקנת לעולים חדשים בתעסוקה ובאקדמיה.",
-        "aspect": "affirmative-action-olim-vs-arabs",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "העדפה מתקנת לאוכלוסיות מיעוט"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה בחינוך ייחודי יהודי-לאומי; מימון לרשתות חינוך עצמאיות הפועלות לפי ערכים לאומיים, מבלי לחייבן בתוכנית לימודים ממלכתית אחידה.",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",

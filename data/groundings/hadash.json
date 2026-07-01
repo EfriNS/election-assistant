@@ -73,7 +73,7 @@
     "economy": [
       {
         "text": "העלאת שכר המינימום ל-70% מהשכר הממוצע במשק. ביטול העסקה קבלנית ודרך חברות כוח-אדם. תשלום תוספת יוקר לכלל העובדים במשק.",
-        "aspect": "labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -81,14 +81,14 @@
       },
       {
         "text": "הקמת קרן פנסיה ממשלתית ללא מטרות רווח. הגדלת כלל קצבאות הביטוח הלאומי.",
-        "aspect": "state-pension-fund-allowances",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
-        "aspect": "labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -96,7 +96,7 @@
       },
       {
         "text": "קביעת סדר עדיפויות חדש החותר לצדק חברתי, על יסוד חלוקה צודקת של ההכנסה הלאומית. הקטנה מהותית של ההוצאות הצבאיות וביטול כל ההוצאות להתנחלויות.",
-        "aspect": "social-justice-priority-reduce-military-spending",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -104,14 +104,14 @@
       },
       {
         "text": "הבטחת עבודה לכל דורש. מאבק נגד אבטלה ופיטורים ולמען תשלום דמי אבטלה מלאים לעובדים המובטלים.",
-        "aspect": "employment-guarantee-full-unemployment-benefits",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הבטחת הזכות הבסיסית לשירותים חברתיים, לרבות שירותי בריאות וחינוך חינם, להשכלה, לדיור ולאיכות חיים לכל.",
-        "aspect": "universal-social-services-right",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -119,7 +119,7 @@
       },
       {
         "text": "ביטול כל החוקים והתקנות הפוגעים בזכויות העובדים ובחופש התארגנות האיגוד מקצועי, בזכותם להכריז שביתה ולהיאבק להגנת שכרם וזכויותיהם הסוציאליות.",
-        "aspect": "union-freedom-strike-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -160,20 +160,20 @@
     "education": [
       {
         "text": "חינוך חינם מהגן ועד האוניברסיטה.",
-        "aspect": "free-education-all-levels",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום החינוך לתקציבי הרשויות היהודיות.",
-        "aspect": "equal-education-budgets-arab-authorities",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה במערכת חינוך ממלכתית אחידה עם תקצוב שוויוני. התנגדות למימון ציבורי של מוסדות שאינם מיישמים תוכנית לימודים ממלכתית — לרבות מתמטיקה, מדעים ואנגלית.",
         "sourceUrl": "https://hadash.org.il",
@@ -184,7 +184,7 @@
     "health": [
       {
         "text": "הבטחת הזכות הבסיסית לשירותי בריאות חינם לכל אזרח.",
-        "aspect": "free-healthcare-basic-right",
+        "aspect": "private-sector-regulation-mechanics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -192,13 +192,13 @@
       },
       {
         "text": "השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום הבריאות לתקציבי הרשויות היהודיות.",
-        "aspect": "equal-health-budgets-arab-authorities",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "private-healthcare-regulation",
+        "aspect": "private-sector-regulation-mechanics",
         "dateRetrieved": "2026-06-27",
         "text": "בריאות היא זכות, לא סחורה. התנגדות להרחבת הרפואה הפרטית על חשבון המערכת הציבורית; חיזוק קופות החולים כספק ציבורי עיקרי ושמירה על שוויון גישה.",
         "sourceUrl": "https://hadash.org.il",

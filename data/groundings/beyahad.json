@@ -40,21 +40,21 @@
     "economy": [
       {
         "text": "יוקר המחיה הגואה הוא לא גזירת גורל. הוא תוצאה של העדר ניהול. הורדת יוקר המחיה היא משימה לאומית דחופה.",
-        "aspect": "cost-of-living",
+        "aspect": "cost-of-living-and-affordability",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "רק מי שמשרת את המדינה, מקבל תקציבים ממנה. מי שלא משרת, לא מקבל כלום. תמריצי המדינה יתועדפו לטובת מי שנושא בנטל.",
-        "aspect": "service-based-economy",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ביטול כספים קואליציוניים ומשרדי ממשלה מיותרים.",
-        "aspect": "gov-waste-reduction",
+        "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
@@ -86,7 +86,7 @@
     "education": [
       {
         "text": "תואר ראשון חינם לכולם.",
-        "aspect": "free-degree",
+        "aspect": "higher-education-and-vocational-training",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
@@ -94,20 +94,20 @@
       },
       {
         "text": "מעונות יום חינם, צהרונים חינם, בית הספר של הקיץ — חינם.",
-        "aspect": "free-childcare",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נשיב את הריבונות למערכת החינוך בנגב — נלחם בחינוך המנוגד לערכי המדינה.",
-        "aspect": "civic-education-negev",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "חינוך ממלכתי כבסיס — הפוגעים ביסוד החינוך האזרחי המשותף אינם ראויים למימון ציבורי מלא. עמדה לא פורשה בפרוט, אך מתיישבת עם העמדה האזרחית-ליברלית של המפלגה.",
         "sourceUrl": "https://bennett2026.org.il/plans/",
@@ -118,7 +118,7 @@
     "health": [
       {
         "text": "הקמה והפעלה של חדר מיון חדש בצפון.",
-        "aspect": "northern-emergency-room",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",

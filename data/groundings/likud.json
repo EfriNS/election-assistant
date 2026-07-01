@@ -25,14 +25,14 @@
     "economy": [
       {
         "text": "ביצורה הכלכלי של המדינה וצמיחת תנאים נאותים לכלכלתה ולבניין משק חופשי-תחרותי הנושא את עצמו והמבוסס על יוזמה חפשית.",
-        "aspect": "free-market-economy",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "טיפוח וקידום ערי הפיתוח ושכונות המצוקה.",
-        "aspect": "development-towns",
+        "aspect": "regional-and-sector-development",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
@@ -42,13 +42,13 @@
     "education": [
       {
         "text": "השרשת ערכיה הנצחיים של מסורת ישראל בחינוך ובחיי המדינה, שמירת ערכי טוהר המידות, והקמת חברת איכות בארץ ישראל.",
-        "aspect": "jewish-tradition-in-education",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "שמירה על ריבוי זרמי החינוך — ממלכתי, ממלכתי-דתי, עצמאי ומוכר שאינו רשמי — תוך תמיכה ממשלתית לכל הזרמים. ביצוע הסכמי הקואליציה הכוללים תקצוב חינוך חרדי ללא כפיית לימודי ליבה.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
@@ -59,14 +59,14 @@
     "health": [
       {
         "text": "אחריות ממלכתית לרמה של בטחון הפרט, בריאות, תעסוקה וצרכות הסביבה.",
-        "aspect": "state-welfare-responsibility",
+        "aspect": "private-sector-regulation-mechanics",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Very general — covers health alongside personal security, employment, and environment in a single clause. No specific health policy in constitution."
       },
       {
-        "aspect": "private-healthcare-regulation",
+        "aspect": "private-sector-regulation-mechanics",
         "dateRetrieved": "2026-06-27",
         "text": "עידוד פיתוח מקביל של שירותי בריאות פרטיים לצד המערכת הציבורית; תמיכה בביטוח משלים ושירותים פרטיים כמנוע צמיחה ופתרון לתורי המתנה.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",

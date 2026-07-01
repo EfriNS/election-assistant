@@ -32,28 +32,28 @@
     "economy": [
       {
         "text": "נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות ונעמיד את המעמד המשרת והיצרני בלב המדיניות הכלכלית.",
-        "aspect": "productive-class-first",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.",
-        "aspect": "service-based-incentives",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "במסגרת תכנית לאומית למלחמה ביוקר המחיה: נפרק מוקדי ריכוזיות, נחזק תחרות ונטמיע אימוץ תקינה בינלאומית.",
-        "aspect": "cost-of-living",
+        "aspect": "cost-of-living-and-affordability",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.",
-        "aspect": "periphery-investment",
+        "aspect": "regional-and-sector-development",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
@@ -72,34 +72,34 @@
     "education": [
       {
         "text": "ניתן עדיפות ברורה ומובהקת לחינוך הממלכתי.",
-        "aspect": "state-education-priority",
+        "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ננהיג לימודי ליבה לכל ונחזק את הליבה הערכית המחנכת את ילדי ישראל ברוח מגילת העצמאות.",
-        "aspect": "core-curriculum",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נבזר סמכויות ונחזק את המורים והמנהלים בקצה – בסמכויות ובתקציבים.",
-        "aspect": "teacher-quality",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נחזק את הלימודים הטכנולוגיים לצד הטמעת תכנים בנושא מסורת ישראל.",
-        "aspect": "tech-and-tradition",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "עדיפות לחינוך הממלכתי; מימון ציבורי מותנה ביישום תוכנית לימודים ממלכתית כוללת — מתמטיקה, מדעים, אנגלית. אין הצדקה לתקצוב מוסדות הדוחים את לימודי הליבה.",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
@@ -110,7 +110,7 @@
     "health": [
       {
         "text": "נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.",
-        "aspect": "periphery-health-investment",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",

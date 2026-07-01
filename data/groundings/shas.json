@@ -25,7 +25,7 @@
     "economy": [
       {
         "text": "אידיאולוגיה כלכלית שמרנית המאמצת ומקדשת את ערכי הגלובליזציה, התחרות החופשית, הפרטת מוסדות רווחה ושירותים — מאיימת על צביון המדינה ופוגעת במסכת הערכים היהודים החשובים של שוויון, צדקה, חמלה וערבות הדדית.",
-        "aspect": "welfare-state",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -33,21 +33,21 @@
       },
       {
         "text": "החזרת קצבאות הילדים. הצבת יעד אבטחה ויעד עוני כמדיניות ממשלתית, כך שמדי שנה יפחתו לפחות ב-1% לשנה.",
-        "aspect": "child-allowances-poverty-targets",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "חקיקת חוק פנסיה חובה, שיבטיח חיים בכבוד לפורשים ממעגל העבודה. העלאת קצבאות הזקנה באופן הדרגתי לרמה של 1/3 מהשכר הממוצע במשק.",
-        "aspect": "mandatory-pension-elderly",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הגדלת התמריצים במיסוי למשתכרים משכורות נמוכות מהשכר הממוצע במשק (מס הכנסה שלילי). ביטול הסדרי העסקה זמניים של עובדים באמצעות חברות כח אדם.",
-        "aspect": "earned-income-tax-credit-labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
@@ -72,27 +72,27 @@
     "education": [
       {
         "text": "השוואת התקציבים לחינוך בין כל זרמי החינוך ובין הפריפריה והמרכז.",
-        "aspect": "equal-education-budgets",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "חינוך חינם מגיל הגן ועד לסיום הלימודים התיכוניים והישיבתיים וסבסוד הלימודים באקדמיה לסטודנטים משכבות חלשות (שכר לימוד פרוגרסיבי).",
-        "aspect": "free-education-kindergarten-yeshiva",
+        "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "תנועת ש\"ס תומכת בתכנית הליבה של דו\"ח ועדת דוברת, ואף מיישמת אותו בבתי הספר של 'מעין החינוך התורני', תוך התאמות לאופי הלימוד התורני הייחודי לה.",
-        "aspect": "core-curriculum-mayan",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "מימון ממשלתי מלא לרשת מעיין החינוך התורני ולמוסדות החינוך הדתיים, בלי לחייבם בתוכנית לימודי ליבה ממלכתית. רשת מעיין פועלת לפי תוכנית לימודים עצמית.",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
@@ -103,20 +103,20 @@
     "health": [
       {
         "text": "תנועת ש\"ס רואה כערך עליון הבטחת נגישות הוגנת ושוויונית לשירותי בריאות ציבוריים לכל אזרחי המדינה. המדינה צריכה לסבסד שירותי בריאות ייחודיים הנובעים מחידושי הרפואה.",
-        "aspect": "universal-equal-healthcare",
+        "aspect": "private-sector-regulation-mechanics",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "מתן סל תרופות מצילות חיים לכל אזרחי המדינה. הכללת הפסיכיאטריה והגריאטריה לסל שירותי הבריאות המסופק על ידי קופות החולים.",
-        "aspect": "expanded-health-basket",
+        "aspect": "preventive-care-and-specific-benefits",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "private-healthcare-regulation",
+        "aspect": "private-sector-regulation-mechanics",
         "dateRetrieved": "2026-06-27",
         "text": "דגש על נגישות שוויונית לשירותי רפואה לכלל האוכלוסייה; חשש ממערכת מדורגת שתשרת בעלי אמצעים על חשבון האוכלוסיות החלשות.",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",

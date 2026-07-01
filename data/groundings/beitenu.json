@@ -39,21 +39,21 @@
     "economy": [
       {
         "text": "פירוק מונופולים בשוק המזון בהתאם להמלצות ועדת בלניקוב; הסדרת יבוא מקביל לסיום מעמד היבואן הבלעדי.",
-        "aspect": "anti-monopoly",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הרחבת מענק עבודה ליחידים מעל גיל 26 עד הכנסה של 8,000 ₪ לחודש.",
-        "aspect": "work-grant-expansion",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ביטול קצבאות ילדים מהילד החמישי ואילך.",
-        "aspect": "child-allowance-cap",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -61,7 +61,7 @@
       },
       {
         "text": "השקעה של מיליארד ₪ בבינה מלאכותית לאורך 5 שנים; חיזוק מוסדות מחקר ותשתיות מעבדות לאומיות.",
-        "aspect": "tech-investment",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -86,7 +86,7 @@
     "education": [
       {
         "text": "חוק לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך) — ביטול מימון למוסדות מסרבים ליישם.",
-        "aspect": "core-curriculum",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -94,20 +94,20 @@
       },
       {
         "text": "מעבר ממודל שכר ותק למצוינות הוראה וחדשנות; העצמת סמכויות מנהלים ומורים בקצה המערכת.",
-        "aspect": "teacher-quality",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "חיזוק מוסדות ההשכלה הגבוהה והגדלה משמעותית של תקציבי המחקר.",
-        "aspect": "higher-education",
+        "aspect": "higher-education-and-vocational-training",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "ביטול מימון ממשלתי למוסדות חינוך המסרבים ליישם לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך). תנאי מחייב לתמיכה כלכלית של המדינה.",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
@@ -118,14 +118,14 @@
     "health": [
       {
         "text": "השלמת בניית שני בתי חולים (צפון ודרום); הגדלת מספר רופאים ואחיות בעדיפות לפריפריה; הרחבת מספר מקומות לסטודנטים לרפואה.",
-        "aspect": "hospital-expansion",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "עדכון סל התרופות באופן שוטף; השקת שירותים אמבולטוריים חדשניים ותוכניות רפואה מונעת.",
-        "aspect": "preventive-medicine",
+        "aspect": "preventive-care-and-specific-benefits",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
