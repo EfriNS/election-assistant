@@ -8,9 +8,13 @@ export type TopicQ = { question: string; options: Option[]; keyDimensions?: stri
 // Slugs must match aspect fields in data/groundings/*.json.
 export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
   security: [
+    "military-deterrence",            // cross-bloc defense-doctrine axis (Beitenu/Democrats/Yashar) — distinct from the peace-process cluster below
     "two-state-solution",             // splits left bloc (Hadash/Raam) from right
+    "oct7-accountability",             // Yashar's defining axis: accountability for Oct 7 institutional failures
     "palestinian-refugee-right-of-return", // splits Hadash/Raam from Democrats within left
+    "security-accountability",        // Democrats' institutional-accountability framing — distinct from peace-process axis
     "territorial-sovereignty",        // splits Likud from Otzmah on the right
+    "disarmament-wmd",                // Hadash's anti-nuclear/WMD regional framing
     "regional-normalization",         // Democrats' specific framing vs two-state
   ],
   economy: [
@@ -30,7 +34,11 @@ export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
     "expanded-health-basket",         // universal coverage anchor — broad consensus (range=2), probe last
   ],
   housing: [
+    "service-based-housing",           // ties housing benefits to national/military service — splits Beyahad/Yashar's approach from universal-benefit parties
+    "affordable-housing",              // Democrats' general affordability framing
     "equal-municipal-budgets-arab-authorities-housing", // Arab-sector housing equity (unrecognized villages, demolitions, municipal budget parity) — real, well-grounded axis not covered by any opener option
+    "low-rent-housing-young-families",  // Hadash's direct rent-subsidy approach for young families
+    "public-housing-rental",           // Shas' public/rental housing support framing
   ],
   religion: [
     "equal-service-burden",           // Haredi draft — splits everyone; not covered by any opener option
