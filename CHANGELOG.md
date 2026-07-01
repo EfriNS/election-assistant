@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-07-01 — Mixpanel dashboards + topics_missed tracking (commit `e0d1d8c`)
+
+### Dashboard
+
+Built "Election Assistant — Core Analytics" (Mixpanel dashboard id `11325742`, Production project `4038344`): 14 reports mapped 1:1 to the Q1–Q7 product questions in `docs/ANALYTICS-DESIGN.md`. Built entirely via Mixpanel's official MCP server (`https://mcp-eu.mixpanel.com/mcp`, EU region) rather than the web UI — connected it to Claude Code, authenticated via OAuth, and used its `Run-Query` / `Create-Dashboard` / `Update-Dashboard` tools to construct every funnel and insight report. Full spec (events, breakdowns, chart types) and operational gotchas are in `docs/MIXPANEL-DASHBOARDS.md`.
+
+### Key findings along the way
+
+- **Mixpanel free tier hard-caps saved reports at 5** (not a rate limit — confirmed by web search and by hitting the wall at exactly report #5, and waiting didn't help). Resolved by upgrading to the Growth plan (usage-based above the free 1M events/month; negligible cost at this project's ~50–200 sessions/month).
+- **`Update-Dashboard`'s error/success responses are unreliable** — many calls reporting `"Unexpected error"` had actually succeeded server-side, and a couple of "successes" needed correcting. The only trustworthy signal is re-fetching the dashboard via `Get-Dashboard` after every mutation.
+- Applied Lexicon display names to all 7 custom events and ~47 event properties (e.g. `quiz_session_init` → "Quiz Started", `security_bucket` → "Security Priority") so labels are readable everywhere in Mixpanel, not just this dashboard. The bulk-edit tools (`Bulk-Edit-Events`/`Bulk-Edit-Properties`) failed consistently; fell back to per-item `Edit-Event`/`Edit-Property` calls.
+- Iterated on report descriptions based on user questions: explained why "Critical marks by topic" shows generic `A`–`I` labels (9 metrics on the same event) with the fixed topic order spelled out; clarified that `opener_was_free_text`'s average *is* a percentage; confirmed `aspects_probed` is the same concept as `TOPIC_KEY_DIMENSIONS` (`lib/questions.ts`), populated from the AI's `targetedAspect` choice per follow-up, with `(empty list)` signaling "AI not engaging" on that topic; explained `score_spread_top3` as a differentiation/confidence signal.
+
+### Instrumentation gap found (not fixed)
+
+`ANALYTICS-DESIGN.md` claims `quiz_abandoned` "fires on beforeunload / back navigation," but the code (`app/quiz/page.tsx`) only fires it from the priorities-screen back button — there's no `beforeunload` listener anywhere, so real mid-quiz abandonment generates no event. Not blocking (a funnel on `topic_completed`'s `topic_index` answers the core drop-off question without it), but added to the backlog.
+
+### `topics_missed` tracking (`app/quiz/page.tsx`)
+
+The original "how many topics did people finish" reports (a funnel on absolute `topic_index`, and an average-selected-vs-average-completed bar chart) were misleading because `topic_count` varies per session — a user who selected 3 topics isn't "dropping off" at position 4, they simply had a shorter personalized quiz. Added `topics_missed = topics_selected − topics_completed` directly to the `quiz_completed` event so future sessions can be broken down by "0 missed / 1 missed / 2 missed..." instead. Only applies going forward — Mixpanel doesn't backfill properties onto historical events. The two misleading reports are still on the dashboard pending replacement once real `topics_missed` data exists.
+
+### Branch housekeeping
+
+This work landed on `feature/opener-answer-options-review` (a concurrent session's branch, shared working directory) — split it onto its own `feature/mixpanel-dashboards` branch, rebased onto current `main` after the opener-review work merged (one conflict in `TODO.md`'s backlog item #1, resolved by keeping both entries), then fast-forward merged to `main`.
+
 ## 2026-07-01 — Opener answer options review per advisor feedback (commits `40a9d01`, `99a5adc`)
 
 ### Context

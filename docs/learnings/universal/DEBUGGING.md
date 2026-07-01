@@ -8,9 +8,9 @@
 
 ### Verification Discipline
 
-1. **Script success ≠ actual success** - "456 users deleted" message ≠ database actually cleaned. Always verify actual state, not just output messages. "Completed successfully" ≠ "changes detected" - always clarify what success means.
+1. **Script success ≠ actual success** - "456 users deleted" message ≠ database actually cleaned. Always verify actual state, not just output messages. "Completed successfully" ≠ "changes detected" - always clarify what success means. Cuts both ways: a tool's *error* response can also be a false negative — an external API (e.g. an MCP server wrapping a third-party product) can throw on a call that actually succeeded server-side. When a tool's success/failure signal is inconsistent, treat every mutating call as unverified and re-fetch state after each one, regardless of what the call itself reported.
    [Cross-cutting: TESTING #1, CI-CD #5]
-   (#first:2025-10-21 #reinforced:2025-12-28)
+   (#first:2025-10-21 #reinforced:2025-12-28,2026-07-01)
 
 2. **User verification required for data operations** - NEVER mark operations complete without: (1) verifying actual state, (2) user confirmation problem solved, (3) testing expected side effects explicitly.
    [Cross-cutting: TESTING #1]

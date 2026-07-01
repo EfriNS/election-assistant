@@ -111,18 +111,21 @@ Architecture & design learnings covering simplicity, root cause fixes, and desig
 
 ---
 
-### [DEBUGGING](universal/DEBUGGING.md) - 19 Universal Principles
+### [DEBUGGING](universal/DEBUGGING.md) - 19 Universal Principles + [Project Patterns](project/ANALYTICS-PATTERNS.md)
 Debugging & troubleshooting learnings covering verification, systematic investigation, and persistence.
 
 **Key Areas:**
-- Script success ≠ actual success (verify actual state)
+- Script success ≠ actual success (verify actual state) — also applies in reverse: a tool's *error* response can be a false negative too
 - Verify volume state before destructive cleanup (Docker volumes persist)
 - Read error context before diagnosing root cause
 - Test timeouts before assuming issues
 - Check existing codebase patterns first
 - Persistence in systematic debugging
 
-**When to Read**: When tests fail, data operations complete, debugging complex issues, before Docker volume cleanup.
+**Project Patterns (Mixpanel/Analytics):**
+- See `project/ANALYTICS-PATTERNS.md` for Mixpanel MCP server quirks (unreliable success/error signals, free-tier report cap, bulk-edit tool failures) and event schema gotchas (`aspects_probed` ↔ `TOPIC_KEY_DIMENSIONS`, Lexicon registration timing)
+
+**When to Read**: When tests fail, data operations complete, debugging complex issues, before Docker volume cleanup, when working with the Mixpanel MCP server.
 
 ---
 
@@ -300,7 +303,9 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2026-06-22 (added project/NEXTJS-REACT-PATTERNS.md — Next.js 16 lint setup, lazy useState for storage reads, module-level components; updated project/VAA-DESIGN.md — domain/branding principles for civic tools)
+**Last Updated**: 2026-07-01 (added project/ANALYTICS-PATTERNS.md — Mixpanel MCP server reliability quirks, free-tier report cap, event schema gotchas; reinforced DEBUGGING #1 — tool error responses can be false negatives, not just success messages; added PROCESS #41 — verify branch before committing in shared/concurrent-session working directories)
+
+**Previously**: 2026-06-22 (added project/NEXTJS-REACT-PATTERNS.md — Next.js 16 lint setup, lazy useState for storage reads, module-level components; updated project/VAA-DESIGN.md — domain/branding principles for civic tools)
 **Archive**: Full retrospective history available in [RETROSPECTIVES-2025-10-archive.md](../../RETROSPECTIVES-2025-10-archive.md)
 
 **Structure Change (2025-01-07)**:

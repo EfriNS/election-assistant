@@ -157,6 +157,8 @@
 
 38. **Explicit risk acceptance documentation** - For moderate/low risks, document acceptance decision with mitigation timeline. Better than ignoring or over-fixing. (#first:2025-10-10)
 
+41. **Verify current branch before committing in a shared working directory** - If a user runs concurrent sessions against the same checkout (no worktree isolation), a commit can land on whatever branch the *other* session last checked out, not the one the current conversation started on. Check `git branch --show-current` immediately before commit if the session was restarted or ran long, and confirm before pushing if the branch name doesn't match the work just done. (#first:2026-07-01)
+
 ### Consistency
 
 39. **Proactive consistency checking improves UX** - When adding features, scan for consistency opportunities. Apply new pattern wherever similar pattern appears. (#first:2025-10-22)
