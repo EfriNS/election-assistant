@@ -3,62 +3,76 @@
 export type Option = { id: string; text: string; scores: number[]; hint?: string; term?: string };
 export type TopicQ = { question: string; options: Option[]; keyDimensions?: string[] };
 
-// Canonical aspect slugs that are most discriminating per topic.
-// Used by the follow-up API to prioritize which sub-dimension to probe next.
-// Slugs must match aspect fields in data/groundings/*.json.
+// Canonical per-topic aspect taxonomy — this list *is* the fixed enum every
+// grounding entry's `aspect` field must be a member of (see data/groundings/*.json
+// and the collect-party-data skill). Order = priority for the follow-up API's
+// "which sub-dimension to probe next" logic, driven by real party coverage
+// (richest first) — NOT by distance from the opener question. A bucket close
+// to the opener's core axis but richly grounded still ranks high; the
+// follow-up prompt (app/api/follow-up/route.ts) is separately instructed not
+// to repeat the opener, which is a live judgment call better made per-turn
+// than baked into static ordering. Buckets with 0 current coverage are
+// forward-looking (real policy axes with no grounding data yet) and naturally
+// sort last since suggestedNextDimension requires evidence to act on.
 export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
   security: [
-    "military-deterrence",            // cross-bloc defense-doctrine axis (Beitenu/Democrats/Yashar) — distinct from the peace-process cluster below
-    "two-state-solution",             // splits left bloc (Hadash/Raam) from right
-    "oct7-accountability",             // Yashar's defining axis: accountability for Oct 7 institutional failures
-    "palestinian-refugee-right-of-return", // splits Hadash/Raam from Democrats within left
-    "security-accountability",        // Democrats' institutional-accountability framing — distinct from peace-process axis
-    "territorial-sovereignty",        // splits Likud from Otzmah on the right
-    "disarmament-wmd",                // Hadash's anti-nuclear/WMD regional framing
-    "regional-normalization",         // Democrats' specific framing vs two-state
+    "territorial-endgame-specifics",         // 7 parties — Jerusalem/annexation/refugees/withdrawal; deeper than opener's abstract "diplomatic solution"
+    "military-doctrine",                     // 7 parties — conscription, doctrine, home-front/border enforcement; deeper than opener's abstract "self-reliance"
+    "foreign-policy-and-nonproliferation",    // 3 parties — regional normalization, WMD/nuclear
+    "hardline-enforcement",                   // 3 parties — internal/border enforcement, death penalty for terrorists
+    "accountability-oct7",                    // 2 parties — Oct 7 + general security accountability; opener doesn't touch this at all
   ],
   economy: [
-    "labor-rights",                   // Hadash/Democrats vs Shas (different type of welfare)
-    "progressive-taxation",           // Democrats-specific; Shas/Yahadut-Hatorah oppose
-    "welfare-state",                  // universal (left) vs targeted/religious (Shas/YT)
-    "free-market-economy",            // right bloc differentiator
+    "social-safety-net-and-labor-protections", // 7 parties — unemployment benefits, EITC, pensions, child allowances, union rights (concrete mechanisms beyond opener's abstract "welfare state")
+    "regional-and-sector-development",         // 4 parties — periphery, Arab-sector, olim-targeted development; opener doesn't touch this
+    "market-structure-and-competition",        // 3 parties — anti-monopoly, deregulation specifics
+    "cost-of-living-and-affordability",        // 3 parties — real, widely-shared axis distinct from the opener's ideological framing
+    "fiscal-discipline-and-efficiency",        // 2 parties — gov waste reduction, tax-policy mechanics
   ],
   education: [
-    "core-curriculum",                // secular right (Beitenu/Yashar) vs Haredi bloc
-    "equal-education-budgets",        // left/center support; Haredi bloc resists
-    "independent-school-funding",     // fund Haredi/nationalist networks without core curriculum? left/secular vs Haredi bloc — strong discriminator
+    "independent-school-funding-and-autonomy", // 9/10 parties — Haredi/nationalist network funding, core-curriculum compliance
+    "core-curriculum-and-teacher-standards",   // 7 parties — curriculum requirements + teacher accountability mechanisms
+    "sector-specific-equity",                  // 6 parties — Arab-sector/olim budget parity and access gaps
+    "higher-education-and-vocational-training", // 2 parties — tertiary/vocational tracks, distinct life-stage from opener's K-12 framing
   ],
   health: [
-    "private-healthcare-regulation",  // how much private medicine alongside public? left: restrict, right: allow — only strong health discriminator (range=3)
-    "periphery-health-investment",    // geographic equity (distinguishes left from center-right)
-    "expanded-health-basket",         // universal coverage anchor — broad consensus (range=2), probe last
+    "sector-and-geographic-equity",             // 5 parties — Arab-sector + periphery specifics
+    "private-sector-regulation-mechanics",      // 4 parties — concrete private-healthcare regulation mechanisms
+    "preventive-care-and-specific-benefits",     // 2 parties — preventive medicine, specific basket items
+    "healthcare-workforce-and-professional-licensing", // 0 parties — forward-looking: foreign-doctor recognition, staffing; a real, live Israeli health debate with no current grounding coverage
   ],
   housing: [
-    "service-based-housing",           // ties housing benefits to national/military service — splits Beyahad/Yashar's approach from universal-benefit parties
-    "affordable-housing",              // Democrats' general affordability framing
-    "equal-municipal-budgets-arab-authorities-housing", // Arab-sector housing equity (unrecognized villages, demolitions, municipal budget parity) — real, well-grounded axis not covered by any opener option
-    "low-rent-housing-young-families",  // Hadash's direct rent-subsidy approach for young families
-    "public-housing-rental",           // Shas' public/rental housing support framing
+    "rental-and-affordability-mechanics",       // 4 parties — rent-subsidy/young-families/public-rental programs
+    "sector-and-geographic-equity",              // 3 parties — Arab-sector housing units, Bedouin village recognition, demolitions, periphery incentives
+    "service-linked-benefit-mechanics",          // 2 parties — reservist/national-service housing grants
+    "settlement-and-territorial-specifics",      // 1 party — green-line, national-land protection specifics
   ],
   religion: [
-    "equal-service-burden",           // Haredi draft — splits everyone; not covered by any opener option
-    "islamic-waqf-muslim-religious-autonomy", // non-Jewish community religious autonomy — real axis, not covered by opener option text
+    "haredi-draft-and-service-burden",           // 7 parties — Haredi draft exemption, equal service burden; opener doesn't touch this at all
+    "civil-status-and-public-space-specifics",   // 5 parties — civil marriage recognition, Shabbat commerce specifics
+    "rabbinate-monopoly-and-conversion-mechanics", // 4 parties — institutional mechanism specifics
+    "national-religious-symbolism",              // 4 parties — Temple Mount, "Jewish state values" specifics
+    "minority-religious-autonomy",                // 2 parties — Muslim/Waqf autonomy
   ],
   justice: [
-    "arabic-official-language-full-status", // Raam-unique; distinguishes within pro-democracy bloc
-    "judicial-appointments-reform",   // should politicians control judicial appointments? sharper than generic "anti-corruption"
-    "separation-of-powers",           // left/center emphasis
-    "judicial-independence",          // Beitenu-specific angle (vs general rule-of-law)
+    "judicial-appointments-mechanism-specifics", // 9/10 parties — selection-committee composition, override, term limits; mechanism-level, not the opener's abstract independence-vs-checks framing
+    "separation-of-powers-and-democratic-norms", // 6 parties — constitutional structure, press/association freedoms
+    "anti-corruption-and-rule-of-law",           // 3 parties — accountability, civil-service integrity; opener doesn't touch this
+    "emergency-powers-and-security-law",         // 2 parties — emergency regulations, conscientious objection, citizenship revocation
+    "constitutional-and-minority-language-rights", // 1 party — Arabic official-language status, minority constitutional rights
+    "international-law-and-accountability",       // 0 parties — forward-looking: ICC/ICJ stance, highly salient post-Oct 7, no current grounding coverage
   ],
   equality: [
-    "lgbtq-rights",                   // biggest split: left supports, Raam + religious right oppose
-    "anti-lgbtq-rights-conversion-therapy", // Raam's explicit position — must surface this
-    "arab-equality",                  // Hadash/Raam core; Raam's is Arab-specific not universal
-    "minority-representation",        // broad coalition but with very different scopes
+    "demographic-and-citizenship-policy",        // 6 parties — national-identity/citizenship-conditionality axis; opener doesn't fully cover this
+    "arab-minority-specific-mechanisms",         // 6 parties — municipal budget parity, Druze conscription exemption, institutional quotas
+    "gender-equality",                            // 4 parties — opener doesn't touch this at all
+    "lgbtq-specific-policy-mechanisms",          // 2 parties — conversion-therapy ban, marriage-recognition specifics
+    "disability-and-elderly-inclusion",          // 1 party — opener doesn't touch this at all
   ],
   ecology: [
-    "environmental-protection",       // Hadash; strongest position
-    "state-environmental-responsibility", // Likud's softer framing (surprising)
+    "state-responsibility-framing",              // 2 parties — light catch-all; topic stays thin overall
+    "local-environmental-enforcement",           // 1 party — water/pollution/sewage infrastructure enforcement
+    "international-and-regional-climate-cooperation", // 0 parties — forward-looking: Paris Agreement/EU alignment, no current grounding coverage
   ],
 };
 
