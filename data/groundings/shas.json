@@ -56,14 +56,14 @@
     "housing": [
       {
         "text": "יצירת מלאי דיור ציבורי ודיור להשכרה מסובסדת ארוכת טווח, שיסייע בפתרונות דיור זמינים לאוכלוסיות החלשות בישראל.",
-        "aspect": "public-housing-rental",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "סיוע לזוגות צעירים ולמשפחות עם שלושה ילדים ומעלה לשם יצירת תנאי דיור הולמים. סיוע בשכר דירה מוגדל לנכים קשים, לקשישים, למשפחות חד-הוריות ולמשפחות ברוכות ילדים.",
-        "aspect": "housing-aid-families",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
@@ -127,14 +127,14 @@
     "religion": [
       {
         "text": "שמירת הסטאטוס קוו במדינה, כדי לשמור על צביונה היהודי. תנועת ש\"ס מאמינה כי חוסנה הפנימי של המדינה מושתת על האמונה בבורא עולם ועל קיום מצוות התורה.",
-        "aspect": "religious-status-quo",
+        "aspect": "national-religious-symbolism",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הצעת חוק יסוד: תורה — לימוד תורה הוא ערך יסוד במורשת העם היהודי; המוקדשים ללימוד תורה יוכרו כמבצעים שירות משמעותי למדינה ולעם ישראל, ולא ייגבה מהם מחיר כלכלי על אי-שירות. כל חברי הכנסת מש\"ס חתמו על ההצעה.",
-        "aspect": "haredi-draft-exemption",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -142,7 +142,7 @@
       },
       {
         "text": "דרעי הגיש חוק המעגן סמכות בלעדית לגופי הרבנות הממלכתיים על הגיור; ביטול גיורים פרטיים מחוץ לרבנות. ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד).",
-        "aspect": "rabbinate-monopoly",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://hiddush.org/subchannel-80-0-Shas.aspx",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",

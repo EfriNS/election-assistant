@@ -72,7 +72,7 @@
     "housing": [
       {
         "text": "\"ההתיישבות היהודית בכל חלקי הארץ, תשוב לעמוד כאחד מהערכים עליהם מושתתת מדינת ישראל.\" תכנית הבנייה: עיר חדשה בין אריאל לראש העין; פיתוח עירוני בגליל ובנגב.",
-        "aspect": "settlement-construction-judea-samaria-galilee-negev",
+        "aspect": "settlement-and-territorial-specifics",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -80,14 +80,14 @@
       },
       {
         "text": "\"מחיקת אשליית הקו הירוק\"; בנייה בכל שטחי יהודה ושומרון ללא הבחנה בין '48 ל-'67.",
-        "aspect": "erase-green-line",
+        "aspect": "settlement-and-territorial-specifics",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "\"שמירה נחושה על אדמות הלאום, בחקיקה מסודרת.\"",
-        "aspect": "protect-national-land",
+        "aspect": "settlement-and-territorial-specifics",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
@@ -130,7 +130,7 @@
     "religion": [
       {
         "text": "\"נפעל להטמעת המשפט העברי במערכת המשפטית של מדינת ישראל.\"",
-        "aspect": "hebrew-law-in-judiciary",
+        "aspect": "national-religious-symbolism",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -138,14 +138,14 @@
       },
       {
         "text": "\"ערכי המדינה היהודית יהיו על פי המוסר היהודי.\" \"מדינת ישראל היא מדינה יהודית, באופייה, בסמליה הלאומיים וערכיה המשפטיים.\"",
-        "aspect": "jewish-state-values-morality",
+        "aspect": "national-religious-symbolism",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\" — עמדה מרכזית בפלטפורמה; שינוי מהסטאטוס קוו הנוכחי.",
-        "aspect": "temple-mount-sovereignty-religion",
+        "aspect": "national-religious-symbolism",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",

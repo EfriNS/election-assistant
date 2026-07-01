@@ -63,21 +63,21 @@
     "housing": [
       {
         "text": "מיליון שקל לדירה ראשונה לכל משרת מילואים — ללא הגרלה.",
-        "aspect": "million-shekel-for-reservists",
+        "aspect": "service-linked-benefit-mechanics",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "קדימות לדירה במחיר למשתכן למשרתי צבא וביטחון.",
-        "aspect": "service-based-housing",
+        "aspect": "service-linked-benefit-mechanics",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הלוואת דיור של 400,000 ₪ לאקדמאים ואנשי מקצוע שיעברו לצפון — הופכת למתנה לאחר 7 שנות מגורים.",
-        "aspect": "periphery-housing-incentive",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
@@ -128,14 +128,14 @@
     "religion": [
       {
         "text": "כל ישראלי זכאי לחיות את חייו על פי אמונתו, מתוך כבוד הדדי, סובלנות ואפס כפייה דתית.",
-        "aspect": "no-religious-coercion",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "מבטלים את חוק ההשתמטות — כולם מתגייסים. ביטול קצבאות אברך, ביטול מעמד אברך=סטודנט, ביטול הנחות בביטוח לאומי ובארנונה.",
-        "aspect": "abolish-kollel-benefits",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",

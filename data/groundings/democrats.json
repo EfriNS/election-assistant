@@ -85,7 +85,7 @@
     "housing": [
       {
         "text": "נדאג לדיור בר השגה - התחדשות עירונית, שכירות ארוכת טווח ודיור ציבורי",
-        "aspect": "affordable-housing",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
@@ -151,7 +151,7 @@
     "religion": [
       {
         "text": "נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואים וגירושים",
-        "aspect": "civil-marriage",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -159,21 +159,21 @@
       },
       {
         "text": "נפרק את מונופול הרבנות בגיור ובכשרות",
-        "aspect": "rabbinate-monopoly",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נאבק על מרחב ציבורי חופשי ונקדם תחבורה ציבורית בשבת",
-        "aspect": "sabbath-public-space",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נוביל שיוויון מוחלט בנטל",
-        "aspect": "equal-service-burden",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -181,7 +181,7 @@
       },
       {
         "text": "שמירה על חופש המצפון והדת, בלא כפייה דתית או אנטי דתית, תוך סובלנות הדדית וסיפוק הצרכים הדתיים הציבוריים.",
-        "aspect": "conscience-freedom",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"

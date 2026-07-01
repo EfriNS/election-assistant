@@ -70,14 +70,14 @@
     "housing": [
       {
         "text": "היפוך פרדיגמת הרכש: קבלנים מתחרים על איכות ומחיר, לא על עלות קרקע; תמריצים לרשויות המקומיות להנפקת היתרי בנייה מהירים.",
-        "aspect": "procurement-reform",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "השקעה בשכירות ארוכת טווח למיתון מחירי השכירות; מעבר לשיטות בנייה תעשייתיות.",
-        "aspect": "long-term-rental",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -134,7 +134,7 @@
     "religion": [
       {
         "text": "נישואים אזרחיים וגירושים אזרחיים; ביטול מועצות הדת; תחבורה ציבורית בשבת לפי החלטת הרשות המקומית.",
-        "aspect": "civil-marriage-and-shabbat",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -142,7 +142,7 @@
       },
       {
         "text": "ביטול קצבאות לאברכי ישיבות; תוכנית ממשלתית לשילוב הציבור החרדי בשוק העבודה.",
-        "aspect": "haredi-employment",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -150,14 +150,14 @@
       },
       {
         "text": "אימוץ דוח ניסים; רפורמת גיור מלאה דרך רבני ערים; החזרת האחריות על בתי הדין הרבניים למשרד המשפטים.",
-        "aspect": "conversion-and-courts",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הכרה במהגרים לפי חוק השבות כחלק אינטגרלי מהחברה הישראלית ללא קשר למעמדם ההלכתי.",
-        "aspect": "law-of-return-recognition",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
