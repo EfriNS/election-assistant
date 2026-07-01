@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Opener answer options review (advisor feedback)** — Reviewed all 9 topics against advisor's "redundant 4th options, not opposed to each other" feedback. Cut security.autonomy, health.workforce, religion.rabbinate (merged into freedom's hint); replaced housing's periphery/middle with settlement/service-linked framings backed by real grounding data; reframed economy.growth as an explicit trickle-down claim. 3 reframed options scored directly against grounding data (ANTHROPIC_API_KEY unavailable). (2026-07-01)
 - **MVP milestones: 0.7, 1.1, /about** — Scoring tests (topicScores, curve, ties; 55→62); removed prototype routes + renamed /quiz; /about page (builders, methodology, neutrality, contact). (2026-06-30)
 - **Fix /api/follow-up JSON parse errors** — Gemini JSON mode (`responseMimeType: "application/json"`); hoisted rawText for Langfuse error visibility; removed regex workaround. Deployed to prod. (2026-06-30)
-- **UX quick fixes (round-4 feedback)** — Progress counter "נושא X מתוך N"; wave loading animation; bold homepage headings; follow-up mutual-exclusivity prompt. (2026-06-30)
 
 > See CHANGELOG.md for complete details.
 
@@ -12,7 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. Have advisor review: (a) live app UX, (b) `docs/score-review.md` (8 weak discriminators), (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
+1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. ✅ (b) Opener-answer redundancy addressed — all 9 topics reviewed against advisor feedback, `docs/score-review.md`'s 8 weak discriminators either sharpened into real claims (grounding-backed) or cut. Still open: (a) advisor review of live app UX, (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
 2. 💬 **DISCUSSION: Depth vs. brevity strategic decision** — Recurring pattern across R1–R4: length/attention concern coexists with deep appreciation for depth and emotional resonance. Product positioning question before any UX changes: (a) accept depth + invest in targeting engaged voters, (b) progressive disclosure (short mode / full mode), (c) micro-UX only (make length feel shorter without removing content). Decision gates the UX/UI overhaul below.
 
@@ -31,7 +31,7 @@
    - ✅ **Analytics depth** — resolved: migrated to Mixpanel (EU, free tier), 8 events, full funnel + priority distribution + topic engagement. Design in `docs/ANALYTICS-DESIGN.md`. (2026-06-28)
 
    _Human tasks (parallel):_
-   - **0.1** Advisor review of live app + `docs/score-review.md` (8 weak discriminators flagged)
+   - **0.1** Advisor review of live app UX (opener-answer content addressed 2026-07-01, see TODO #1)
    - **0.6** Content neutrality audit (3rd-party review of question framing)
    - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 

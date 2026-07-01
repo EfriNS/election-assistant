@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-07-01 — Opener answer options review per advisor feedback (commits `40a9d01`, `99a5adc`)
+
+### Context
+
+Advisor reviewed the opener questions and flagged that many topics' 4th answer option felt like a redundant restatement of an earlier one ("it almost seems like the system tried hard to come up with a 4th option"), with security's `control`/`autonomy` pair as the flagged example. Session opened with a general discussion of whether openers should sometimes have only 3 pre-defined answers, then went topic-by-topic through all 9 opener questions.
+
+### Methodology
+
+Established during discussion and applied per-topic: don't rely on `docs/score-review.md`'s "weak discriminator" (range<3) flag alone — check the raw grounding text (`data/groundings/*.json`) for a sharper, more contestable claim hiding under vague/consensus phrasing before deciding to cut. Also checked pairwise score correlation *between* options within a topic (not just each option's own range), compared formal vs. personal register richness, and watched for loaded/presupposing framing in option headlines. Full methodology saved to memory for reuse.
+
+### Per-topic changes (`lib/questions.ts`, both registers)
+
+- **Security** (4→3): cut `autonomy` (near-duplicate of `control`, 5/10 parties identical); reworded `control` to carry `autonomy`'s self-sufficiency meaning (reuses its already-validated scores), reframed away from the vague "maintain full control" framing.
+- **Economy** (4, all sharpened): `minwage`→explicit welfare-state framing + new hint; `market`→direct "state already does enough" challenge; `redistrib`+corporate tax (formal brought to parity with personal); `growth`→reframed as an explicit trickle-down claim ("growth helps everyone without redistribution") rather than a generic infrastructure-investment platitude.
+- **Housing** (4, 2 replaced): `periphery`→settlement/territorial framing (Judea & Samaria housing), `middle`→service-linked priority (military/national-service-conditioned housing benefits) — both grounded in real, previously-uncaptured party platform data (settlement construction, reservist housing grants).
+- **Education** (4, 2 enriched): `quality` enriched with recruitment/career-path reform (already in personal register, backfilled to formal); `skills` enriched with concrete modernization examples (critical thinking, digital skills, financial literacy) — resolves advisor's teacher-vs-pupil confusion between the two options.
+- **Health** (4→3): cut `workforce` (zero grounding support across all 10 parties, no rescue framing found); de-coded `geography` phrasing (dropped "ערים מעורבות" / mixed cities, a loaded post-2021 term).
+- **Religion** (4→3): merged `rabbinate` into `freedom`'s new hint (7/10 parties scored identically — the most correlated pair found); removed an imprecise kashrut-monopoly claim (private certification already exists in practice) and added Shabbat/public-transit (already present in the personal register, backfilled to formal).
+- **Justice, Equality**: reviewed, left unchanged. Equality confirmed as the strongest-performing topic. Justice's `diversity` option kept deliberately — considered and declined a sharper "who selects judges" reframe because it would have obscured a separation-of-powers question behind a softer "diversity" rationale.
+- **Ecology** (4, all reworded): gave all 4 options explicit tradeoff framing ("X, even if it costs Y"), directly addressing the advisor's separate "these don't seem opposed to each other" comment on this topic.
+
+### Scoring
+
+`economy.growth`, `housing.settlement`, and `housing.service` needed real re-derivation (meaning changed, not just phrasing). `scripts/auto-score.ts` requires `ANTHROPIC_API_KEY`, which isn't configured in this environment — did the grounding-based scoring pass directly instead, following the same rubric (grounded vs. estimated confidence per party, -2..+2 scale). All three options' score range improved from 2 (weak) to 4 (strongest possible) as a result. See `project_auto_score_pipeline` memory for the key-availability gotcha and process note.
+
+### Branch housekeeping
+
+A concurrent session's Mixpanel dashboard commit landed on this feature branch (shared working directory, no worktree isolation) — split it onto its own `feature/mixpanel-dashboards` branch (based cleanly off `main`) before merging, via `git branch` + `git rebase --onto`.
+
 ## 2026-06-30 — MVP milestones: scoring tests (0.7), prototype cleanup (1.1), /about page (commits `cd94e4e`–`d76ef4e`)
 
 ### API cost analysis (`cd94e4e`)
