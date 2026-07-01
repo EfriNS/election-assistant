@@ -600,6 +600,7 @@ function QuizInner() {
               depth,
               topics_selected: topicsToAsk.length,
               topics_completed: topicsToAsk.filter((tid) => topicQA[tid]).length,
+              topics_missed: topicsToAsk.length - topicsToAsk.filter((tid) => topicQA[tid]).length,
               has_close_text: closeText.trim().length > 0,
             });
             setStep("results");
