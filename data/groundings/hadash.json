@@ -9,7 +9,7 @@
     "security": [
       {
         "text": "שלום ישראלי-פלסטיני וישראלי-ערבי צודק, כולל ויציב. סיום הכיבוש; הקמת שתי מדינות עצמאיות עם ירושלים כבירת שתיהן; נסיגה לגבולות 1967 כולל רמת הגולן.",
-        "aspect": "two-state-solution",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -17,7 +17,7 @@
       },
       {
         "text": "נסיגת ישראל מכל השטחים שכבשה מאז 1967: הגדה המערבית, רצועת עזה וירושלים הערבית, שהם שטחיה של מדינת פלסטין, רמת הגולן הסורית ודרום לבנון. קווי ה-4 ביוני 1967 יהיו גבולות השלום המוכרים והבטוחים.",
-        "aspect": "territorial-withdrawal-1967",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -25,7 +25,7 @@
       },
       {
         "text": "ירושלים המערבית כבירתה של מדינת ישראל, וירושלים המזרחית כבירתה של המדינה הפלסטינית העצמאית. הסדרים מוסכמים יבטיחו גישה חופשית למקומות הקדושים ותנועה חופשית בין שני חלקי העיר.",
-        "aspect": "jerusalem-divided-capital",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -33,14 +33,14 @@
       },
       {
         "text": "פתרון צודק של בעיית הפליטים הפלסטינים בהתאם להחלטות האו\"ם.",
-        "aspect": "palestinian-refugee-right-of-return",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://maki.org.il/%d7%a2%d7%a7%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%99%d7%a1%d7%95%d7%93/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "פירוק ההתנחלויות בשטחים הכבושים.",
-        "aspect": "settlement-dismantlement",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -48,7 +48,7 @@
       },
       {
         "text": "ביטול הברית האסטרטגית בין ישראל וארצות הברית ונקיטת מדיניות חוץ ניטרלית בידי ישראל.",
-        "aspect": "neutral-foreign-policy-anti-us-alliance",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -56,7 +56,7 @@
       },
       {
         "text": "הצטרפות ממשלת ישראל לאמנה הבינלאומית לאיסור הפצתו של הנשק האטומי וביטול 'האופציה הגרעינית' של ישראל. פירוז המזרח-התיכון מכל נשק להשמדה המונית.",
-        "aspect": "npt-nuclear-disarmament-middle-east",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -64,7 +64,7 @@
       },
       {
         "text": "איסור הפיתוח, ההפצה, הניסוי, והשימוש בכל סוגי הנשק להשמדה המונית.",
-        "aspect": "disarmament-wmd",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"

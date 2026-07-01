@@ -9,21 +9,21 @@
     "security": [
       {
         "text": "נוביל יוזמה מדינית אזורית ונקדם נורמליזציה עם סעודיה",
-        "aspect": "regional-normalization",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נביא לסגירת כל זירות הלחימה - עזה, לבנון וסוריה",
-        "aspect": "end-armed-conflict",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נבלום את הסיפוח, נילחם בטרור היהודי ונקדם אלטרנטיבה פלסטינית מתונה",
-        "aspect": "two-state-solution",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -31,21 +31,21 @@
       },
       {
         "text": "נקים ועדת חקירה ממלכתית ונשקם את מערכת הביטחון, ננקה אותה מפוליטיקה",
-        "aspect": "security-accountability",
+        "aspect": "accountability-oct7",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.",
-        "aspect": "political-settlement",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "שקידה קפדנית על בטחון מדינת-ישראל, הרחקת כל סכנה לקיומה והבטחת ריבונותה, שלומה ושלמותה. מדיניות הביטחון תושתת על היערכות כוללת של הצבא והעם ועל התעצמותו המרתיעה של צה\"ל כדי כושר מלא להדוף כל אויב ולהביט כל תוקפן.",
-        "aspect": "military-deterrence",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"

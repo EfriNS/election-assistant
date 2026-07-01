@@ -9,7 +9,7 @@
     "security": [
       {
         "text": "תמיכה בהקמת מדינה פלסטינית עם ירושלים מזרחית כבירתה; נסיגה ישראלית לגבולות 1967; פירוק ההתנחלויות.",
-        "aspect": "two-state-solution",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://jewishvirtuallibrary.org/united-arab-list-ra-am-political-party",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",
@@ -17,14 +17,14 @@
       },
       {
         "text": "תמיכה בזכות השיבה לפליטים פלסטינים.",
-        "aspect": "palestinian-refugee-right-of-return",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://jewishvirtuallibrary.org/united-arab-list-ra-am-political-party",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות לשירות צבאי חובה לאזרחים ערבים.",
-        "aspect": "oppose-mandatory-military-service-arabs",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://jewishvirtuallibrary.org/united-arab-list-ra-am-political-party",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",

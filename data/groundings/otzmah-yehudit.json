@@ -9,7 +9,7 @@
     "security": [
       {
         "text": "ריבונות מהים עד הנהר היורדן: \"מדינת ישראל תוגדר כמדינה יהודית, מהים עד הנהר היורדן. הריבונות תחול גם על יהודה ושומרון.\"",
-        "aspect": "annexation-river-to-sea",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -17,7 +17,7 @@
       },
       {
         "text": "\"המלחמה באויבי ישראל, תהיה טוטאלית, ללא משא ומתן, ללא ויתורים וללא פשרות.\"",
-        "aspect": "hardline-no-negotiations",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -25,28 +25,28 @@
       },
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\"",
-        "aspect": "temple-mount-jewish-sovereignty",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "\"השבת הביטחון וההרתעה לחיילי צה\"ל.\" קואליציה 2022: הגדלת תקציב משרד ביטחון לאומי ב-45 מיליארד ₪ ל-7 שנים; הקמת \"משמר לאומי\"; בן גביר שר לביטחון לאומי.",
-        "aspect": "military-deterrence-national-guard",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "IDI: עמדה בעד עונש מוות למחבלים; הרחבת כללי פתיחה באש.",
-        "aspect": "death-penalty-terrorists-open-fire",
+        "aspect": "hardline-enforcement",
         "sourceUrl": "https://en.idi.org.il/israeli-elections-and-parties/parties/otzma-yehudit/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "\"לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל שטחי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.\" (הסכם קואליציוני 2022)",
-        "aspect": "territorial-sovereignty",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
