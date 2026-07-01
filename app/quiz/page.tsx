@@ -181,13 +181,16 @@ function QuizInner() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIndex, currentFollowUp, step]);
 
-  // Fire /api/score-topics when entering the close step. This runs in the background while
-  // the user writes their close-step text, hiding latency before results render.
+  // Reset per-question UI state whenever a new follow-up loads.
+  // setState in effect body is intentional: syncing local UI state to a changing question.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedFollowUpAnswer(null);
     setFollowUpDraft("");
   }, [currentFollowUp]);
 
+  // Fire /api/score-topics when entering the close step. This runs in the background while
+  // the user writes their close-step text, hiding latency before results render.
   useEffect(() => {
     if (step !== "close") return;
 
