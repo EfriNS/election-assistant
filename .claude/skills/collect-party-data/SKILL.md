@@ -91,7 +91,7 @@ Each entry:
 }
 ```
 
-**Aspect labels** are placeholder slugs for now — the advisor will refine them in Phase 0.1. Use descriptive kebab-case (e.g., `civil-marriage`, `idf-budget-increase`, `anti-judicial-overhaul`).
+**Aspect labels** must be one of the fixed canonical ids for that topic — see `TOPIC_KEY_DIMENSIONS[topicId]` in `lib/questions.ts`. This is a closed enum (not placeholder slugs): every party's grounding entries share the same small bucket set per topic so the results page and follow-up dimension-selection can match across parties. Read the bucket list and pick the closest fit by content, not by superficial wording similarity. If a source item genuinely doesn't fit any existing bucket for its topic, do NOT invent a new free-text slug — note it in the archive markdown and the JSON `_note` field as "uncovered by current taxonomy" and flag it to the user for a taxonomy update instead.
 
 **Text quality**: prefer direct quotes. If the source refused verbatim, use a close Hebrew paraphrase that preserves the meaning and key terms. Avoid English.
 
