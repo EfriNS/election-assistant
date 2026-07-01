@@ -58,9 +58,6 @@ export const TOPIC_KEY_DIMENSIONS: Record<string, string[]> = {
 //   [hadash, raam, democrats, beyahad, yashar, beitenu, likud, shas, yahadut-hatorah, otzmah-yehudit]
 // NOTE: all scores are rough estimates — not verified against current party platforms.
 // Expert review required before production use (see TODO #3).
-// Options marked "DRAFT — needs score:auto" reflect a meaning change made during the
-// opener-answer review (2026-07) and have not yet been through the grounding-based
-// scoring pipeline (npm run score:auto / score:apply).
 
 // ─── Formal register (ענייני) ─────────────────────────────────────────────────
 // Policy-vocabulary framing: "מה הגישה הנכונה לך?"
@@ -118,8 +115,7 @@ export const QUESTIONS_FORMAL: Record<string, TopicQ> = {
       {
         id: "growth",
         text: "צמיחה לפני חלוקה מחדש — השקעה בתשתיות, מחקר וטכנולוגיה תגדיל את העוגה לטובת כולם, במקום להתמקד בחלוקה מחדש של הקיים",
-        // DRAFT — needs score:auto (meaning changed from generic growth-investment to an explicit trickle-down claim)
-        scores: [-2, -1, -2, 1, 1, 1, 2, -1, -1, 2],
+        scores: [-2, -1, -2, 1, 2, 2, 2, -2, -2, 2],
       },
     ],
   },
@@ -139,7 +135,6 @@ export const QUESTIONS_FORMAL: Record<string, TopicQ> = {
       {
         id: "settlement",
         text: "התיישבות מעבר לקו הירוק — הרחבת הבנייה ביהודה ושומרון היא חלק מרכזי מפתרון משבר הדיור, לצד פיתוח הנגב והגליל",
-        // DRAFT — needs score:auto (new option, replaces "periphery")
         scores: [-2, -2, -2, 1, 1, 1, 2, 1, 1, 2],
         term: "קו הירוק",
         hint: "קו הירוק — הגבול שהיה בין ישראל לירדן לפני מלחמת ששת הימים (1967). יהודה ושומרון (הגדה המערבית) נמצאים מעבר לקו זה; ישראל מחזיקה בהם ומאפשרת בהם בנייה יהודית, אך הם אינם מסופחים רשמית.",
@@ -147,8 +142,7 @@ export const QUESTIONS_FORMAL: Record<string, TopicQ> = {
       {
         id: "service",
         text: "עדיפות למשרתים בדיור — מי שתורם באמצעות שירות צבאי או שירות לאומי צריך לקבל עדיפות ומענקים משמעותיים ברכישת דירה",
-        // DRAFT — needs score:auto (new option, replaces "middle")
-        scores: [-2, -2, -1, 2, 1, 2, 1, -2, -2, 1],
+        scores: [-2, -2, -1, 2, 2, 2, 1, -2, -2, 1],
         term: "שירות לאומי",
         hint: "שירות לאומי — מסלול שירות אזרחי (בדרך כלל שנה–שנתיים), בעיקר עבור מי שפטור משירות צבאי. מאפשר גם למי שלא משרת בצה\"ל לקבל הטבות מבוססות-שירות.",
       },
@@ -325,8 +319,7 @@ export const QUESTIONS_PERSONAL: Record<string, TopicQ> = {
       {
         id: "growth",
         text: "השקעה לטווח ארוך — תשתיות, מחקר וטכנולוגיה. עדיף לגדל את העוגה מאשר להתעסק בחלוקה מחדש שלה",
-        // DRAFT — needs score:auto (meaning changed from generic growth-investment to an explicit trickle-down claim)
-        scores: [-2, -1, -2, 1, 1, 1, 2, -1, -1, 2],
+        scores: [-2, -1, -2, 1, 2, 2, 2, -2, -2, 2],
       },
     ],
   },
@@ -346,7 +339,6 @@ export const QUESTIONS_PERSONAL: Record<string, TopicQ> = {
       {
         id: "settlement",
         text: "לבנות גם מעבר לקו הירוק — יהודה ושומרון הם חלק מהפתרון למצוקת הדיור, לא רק הנגב והגליל",
-        // DRAFT — needs score:auto (new option, replaces "periphery")
         scores: [-2, -2, -2, 1, 1, 1, 2, 1, 1, 2],
         term: "קו הירוק",
         hint: "קו הירוק — הגבול שהיה בין ישראל לירדן לפני מלחמת ששת הימים (1967). יהודה ושומרון (הגדה המערבית) נמצאים מעבר לקו זה; ישראל מחזיקה בהם ומאפשרת בהם בנייה יהודית, אך הם אינם מסופחים רשמית.",
@@ -354,8 +346,7 @@ export const QUESTIONS_PERSONAL: Record<string, TopicQ> = {
       {
         id: "service",
         text: "מי שמשרת, מקבל קודם — מי שנותן לצבא או לשירות הלאומי צריך לקבל עדיפות במענקי דיור",
-        // DRAFT — needs score:auto (new option, replaces "middle")
-        scores: [-2, -2, -1, 2, 1, 2, 1, -2, -2, 1],
+        scores: [-2, -2, -1, 2, 2, 2, 1, -2, -2, 1],
         term: "שירות לאומי",
         hint: "שירות לאומי — מסלול שירות אזרחי (בדרך כלל שנה–שנתיים), בעיקר עבור מי שפטור משירות צבאי. מאפשר גם למי שלא משרת בצה\"ל לקבל הטבות מבוססות-שירות.",
       },
