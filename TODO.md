@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Follow-up neutrality fixes (advisor feedback)** — Broadened AI follow-up options from a hard 3–4 floor to 2–4 (no padding with a redundant option to hit 4). Diversified `TOPIC_KEY_DIMENSIONS` for security (was 4/4 Israeli-Arab/Palestinian-conflict aspects) and housing (was 1/1) using already-collected, previously-unused grounding data. Also found + logged (not yet fixed) a results-page grounding-quote display bug — see backlog #2. (2026-07-01)
 - **Mixpanel dashboards + topics_missed tracking** — "Election Assistant — Core Analytics" board live in Production, 14 reports across Q1–Q7, built via the official Mixpanel MCP server. Lexicon display names applied project-wide. Added `topics_missed` to `quiz_completed` for a cleaner completion metric. (2026-07-01)
 - **Opener answer options review (advisor feedback)** — Reviewed all 9 topics against advisor's "redundant 4th options, not opposed to each other" feedback. Cut security.autonomy, health.workforce, religion.rabbinate (merged into freedom's hint); replaced housing's periphery/middle with settlement/service-linked framings backed by real grounding data; reframed economy.growth as an explicit trickle-down claim. 3 reframed options scored directly against grounding data (ANTHROPIC_API_KEY unavailable). (2026-07-01)
-- **MVP milestones: 0.7, 1.1, /about** — Scoring tests (topicScores, curve, ties; 55→62); removed prototype routes + renamed /quiz; /about page (builders, methodology, neutrality, contact). (2026-06-30)
 
 > See CHANGELOG.md for complete details.
 

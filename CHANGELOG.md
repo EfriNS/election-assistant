@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-07-01 — Follow-up neutrality fixes + grounding-display bug investigation (commits `a8c968e`, `a27af03`, `2f848c4`, merge `b77f910`)
+
+### Context
+
+Advisor feedback on the recently-reworked opener answers was lukewarm; hypothesis was that the problem was actually coming from the AI-generated follow-up questions, not the openers. Two specific concerns to check: (1) whether follow-up answer options get the same non-overlap rigor as the manually-reviewed openers, and whether there's room for fewer than 4 options; (2) whether follow-up questions disproportionately land on Arab/Arabic topics.
+
+### Follow-up option padding (`app/api/follow-up/route.ts`)
+
+Confirmed: the entire non-overlap enforcement for AI-generated follow-up options was one soft LLM instruction ("options must be mutually exclusive"), with a hardcoded floor of 3 options — no room for the AI to say "there are only 2 real distinct positions here," and no programmatic check at all (unlike the rigor just applied to openers). Changed the floor from 3–4 to 2–4, with an explicit instruction not to pad with a redundant option.
+
+### Arab/Arabic topic disproportion (`lib/questions.ts` — `TOPIC_KEY_DIMENSIONS`)
+
+Confirmed via data, not just impression. `suggestedNextDimension` (`app/quiz/page.tsx`) always picks the *first* uncovered key dimension in list order, and default quiz depth caps at 1 follow-up per topic — so whatever's first in the list is essentially what gets asked. Found:
+- **`security`**: all 4 listed dimensions were Israeli-Arab/Palestinian-conflict axes (two-state-solution, palestinian-refugee-right-of-return, territorial-sovereignty, regional-normalization), even though ~24 other already-grounded, non-Arab security aspects exist unused (military-deterrence, internal-security, idf-rehabilitation, disarmament-wmd, oct7-accountability, security-accountability, etc.). Since some Arab/Palestinian-axis grounding exists across the whole political spectrum, essentially every user got an Arab/Palestinian-conflict security follow-up regardless of political lean.
+- **`housing`**: the *only* listed dimension was Arab-sector housing equity, despite 9+ other grounded housing aspects sitting unused (rent control, periphery incentives, service-linked housing, public housing, etc.). Because it's the only entry, the code's fallback picked it 100% of the time a housing follow-up fired.
+
+Root cause: `TOPIC_KEY_DIMENSIONS` was curated purely for "sharpest party-line discriminator" without a topic-proportionality check. Fix required no new research — broadened `security` (added military-deterrence, oct7-accountability, security-accountability, disarmament-wmd, interleaved with the existing 4) and `housing` (added service-based-housing, affordable-housing, low-rent-housing-young-families, public-housing-rental) using aspects already present in `data/groundings/*.json`. Verified every added slug against the exact `aspect` strings in the grounding JSON to avoid silent no-ops.
+
+### Grounding-quote display bug found (not fixed — logged to TODO #2)
+
+While reviewing a live results screenshot, found ביחד (78%, #1 rank) showing no "מה כתוב במצע" quotes despite a full platform. Root-caused to `buildGroundingsForParties` (`app/api/results/route.ts`): it filters every party's topic quotes down to whichever single `aspect` tag was probed by the follow-up during that user's quiz — but aspect tags are ad-hoc per-party strings assigned during ingestion; only ~2-3/10 parties ever happen to share an identical tag (the rest are effectively unique per party, confirmed against `data/groundings/*.json`). So on any topic where the probed aspect wasn't one of the few deliberately-standardized shared tags, ~70-90% of parties got silently zeroed out, even with substantial real content. Notably, this doesn't affect `score-topics.ts`'s actual scoring, which already reads a party's *entire* topic content — only the display layer was broken, meaning the shown "why" could differ from what actually produced the score.
+
+Rejected an "if empty, show all" fallback as a symptom patch that doesn't address why the primary match mechanism fails for most parties. Used the `second-opinion` skill (independent `Plan` agent, no prior context) to pressure-test candidate architectures; it converged with the session's own analysis. Logged as TODO #2 with two candidates to prototype next session, in priority order: (a) have the existing `score-topics` AI call also return, per party, which of *that party's own* aspect tags it used to justify the score (exact-match within one party's tag set, no cross-party standardization or manual retagging needed); (b) a small canonical per-topic sub-aspect taxonomy, AI-assisted tagging + human spot-check (bigger lift, also improves follow-up dimension selection).
+
+### Lint fix (`app/quiz/page.tsx`)
+
+Found during pre-merge verification: a pre-existing `react-hooks/set-state-in-effect` error on the effect that resets follow-up UI state when a new question loads. Added the same `eslint-disable` pattern already used elsewhere in the file for intentional resets, and fixed a misplaced comment that described the *next* effect (score-topics firing) but sat above this one.
+
 ## 2026-07-01 — Mixpanel dashboards + topics_missed tracking (commit `e0d1d8c`)
 
 ### Dashboard
