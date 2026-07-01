@@ -155,7 +155,7 @@
     "justice": [
       {
         "text": "IDI: ברירת שופטי בית המשפט העליון על ידי נבחרי ציבור (ולא ועדת המינויים הנוכחית).",
-        "aspect": "politicians-select-supreme-court-justices",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://en.idi.org.il/israeli-elections-and-parties/parties/otzma-yehudit/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -163,7 +163,7 @@
       },
       {
         "text": "תמיכה בהחלשת הביקורת השיפוטית על חקיקה (פסקת התגברות); \"לא נאפשר להרוס את המדינה שלנו בשם הדמוקרטיה.\"",
-        "aspect": "judicial-override",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -171,7 +171,7 @@
       },
       {
         "text": "שלילת אזרחות וגירוש מיידי עבור כל פעולת טרור או תמיכה בטרור. כל מי שיתמוך ב\"ישות זרה\" — ייחשב כמי שתוקף ביטחון המדינה.",
-        "aspect": "citizenship-revocation-terror-support",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -179,13 +179,13 @@
       },
       {
         "text": "הקמת \"משמר לאומי\" — כוח מיליציה ייחודי בפיקוד שר הביטחון הלאומי (הסכם קואליציוני 2022).",
-        "aspect": "national-guard-militia-force",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "הפוליטיקאים הנבחרים הם שצריכים לבחור את שופטי בית המשפט העליון; ועדת המינויים הנוכחית היא אנטי-דמוקרטית ומשרתת אליטה לא-נבחרת.",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
@@ -196,7 +196,7 @@
     "equality": [
       {
         "text": "\"עוצמה יהודית תפעל להוצאת אויבי ישראל מארצנו.\" מסמך JVL: עידוד הגירה, העברת אויבים, חילופי אוכלוסין — \"לצורך הבטחת רוב יהודי ואוכלוסייה אזרחית נאמנה.\" כלי מדינה: מוסד, שב\"כ, קרן קיימת.",
-        "aspect": "population-transfer-enemy-emigration",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -204,7 +204,7 @@
       },
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל... תיפסק מיידית.\" סיוע עירוני מותנה בנאמנות: \"אום אל-פחם לא תקבל יותר סיוע מדימונה.\"",
-        "aspect": "end-arab-affirmative-action-loyalty-test",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -212,7 +212,7 @@
       },
       {
         "text": "\"פעולת חרום נמרצת לעליית יהודי התפוצות וקליטתם.\" \"מדינת ישראל היא... מדינה יהודית.\" — גישה אתנו-לאומנית מפורשת למדיניות הציבורית.",
-        "aspect": "ethnonationalist-immigration-and-demographics",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://ozma-yeudit.com/program/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"

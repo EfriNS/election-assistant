@@ -144,7 +144,7 @@
     ],
     "justice": [
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "שמירה על עצמאות מערכת השפיטה; התנגדות לכל שינוי בוועדת המינויים שייתן שליטה לקואליציה על מינוי שופטי בית המשפט העליון.",
         "sourceUrl": "https://bennett2026.org.il/plans/",
@@ -155,14 +155,14 @@
     "equality": [
       {
         "text": "האיום הכי גדול על ישראל הוא הפילוג הפנימי שמחליש אותנו. הגיע הזמן לאחד מחדש את העם.",
-        "aspect": "national-unity",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "מי שמשתלב — מרוויח. נושיט יד לחברה הבדואית ונציע אופק של שילוב, השכלה ותעסוקה.",
-        "aspect": "bedouin-integration",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23"

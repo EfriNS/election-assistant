@@ -125,7 +125,7 @@
     "justice": [
       {
         "text": "דרישה להכרה בערבים אזרחי ישראל כמיעוט לאומי ולעיגון זכויותיהם בחוקה.",
-        "aspect": "arab-national-minority-constitutional-rights",
+        "aspect": "constitutional-and-minority-language-rights",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/raam/",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",
@@ -133,7 +133,7 @@
       },
       {
         "text": "ערבית כשפה רשמית מלאה; ביטול הורדת מעמדה לשפה בעלת \"מעמד מיוחד\" בחוק הלאום.",
-        "aspect": "arabic-official-language-full-status",
+        "aspect": "constitutional-and-minority-language-rights",
         "sourceUrl": "https://jewishvirtuallibrary.org/united-arab-list-ra-am-political-party",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",
@@ -143,7 +143,7 @@
     "equality": [
       {
         "text": "שוויון מלא לאזרחים ערבים — בהקצאת משאבים ציבוריים, שירות המדינה, חברות ממשלתיות; סגירת פערים כלכליים-חברתיים שנצברו עשורים.",
-        "aspect": "arab-equality",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/raam/",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",
@@ -151,7 +151,7 @@
       },
       {
         "text": "עמדה שמרנית על זכויות LGBTQ+: עבאס ב-2021 הביע תמיכה ב\"טיפולי המרה\"; מתנגד לחקיקה מרחיבה לזכויות LGBTQ. עמדה זו היא הסיבה העיקרית לפרישת רע״מ מהרשימה המשותפת.",
-        "aspect": "anti-lgbtq-rights-conversion-therapy",
+        "aspect": "lgbtq-specific-policy-mechanisms",
         "sourceUrl": "https://en.wikipedia.org/wiki/United_Arab_List",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",
@@ -159,7 +159,7 @@
       },
       {
         "text": "הסכם 2021: הגדלת ייצוג ערבי בשירות המדינה; ועדת שרים לענייני החברה הערבית בראשות ראש הממשלה.",
-        "aspect": "arab-representation-state-institutions",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://z.calcalist.co.il/assets/pickerul/fc8b8382-eb52-4b9d-8fff-7f1d9da8cc37.pdf",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23"

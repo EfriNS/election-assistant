@@ -242,14 +242,14 @@
     "justice": [
       {
         "text": "הגנת החירויות הדמוקרטיות. מאבק בפשיזם ובגזענות.",
-        "aspect": "democratic-freedoms",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות.",
-        "aspect": "democratic-constitution-human-rights",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -257,27 +257,27 @@
       },
       {
         "text": "הגנת חופש הדעה והביטוי, חופש העיתונות, חופש ההתארגנות וחופש הפעילות הפוליטית.",
-        "aspect": "freedoms-press-opinion-association",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "ביטול תקנות ההגנה לשעת חירום.",
-        "aspect": "abolish-emergency-regulations",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הכרה בזכות הדמוקרטית לסרב לשרת בשטחים הכבושים מטעמי מצפון.",
-        "aspect": "conscientious-objection-occupied-territories",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "עצמאות מערכת השפיטה מהמינויים הפוליטיים היא עמוד תווך של הדמוקרטיה; ועדת המינויים לשפיטה תהיה מקצועית, לא קואליציונית.",
         "sourceUrl": "https://hadash.org.il",
@@ -288,7 +288,7 @@
     "equality": [
       {
         "text": "שוויון האוכלוסייה הערבית-הפלסטינית בישראל — זכויות המיעוט הערבי כמיעוט לאומי.",
-        "aspect": "arab-equality",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -296,7 +296,7 @@
       },
       {
         "text": "הכרה באוכלוסייה הערבית-הפלסטינית בישראל כמיעוט לאומי. שוויון מלא לאזרחים הערבים, הפסקת הפקעת הקרקעות והריסת הבתים, הכרה בכל היישובים הערביים הקיימים.",
-        "aspect": "arab-national-minority-recognition-full-equality",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -304,7 +304,7 @@
       },
       {
         "text": "כיבוד השפה הערבית כשפה רשמית בפועל בצד השפה העברית.",
-        "aspect": "arabic-official-language-full-status",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -312,7 +312,7 @@
       },
       {
         "text": "ביטול גיוס החובה של הצעירים הערבים הדרוזים.",
-        "aspect": "abolish-druze-conscription",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -320,28 +320,28 @@
       },
       {
         "text": "ביטול האפליה העדתית בכל התחומים.",
-        "aspect": "anti-ethnic-discrimination",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "שוויון זכויות האישה בכל התחומים.",
-        "aspect": "womens-equality",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ביטול כל החוקים המפלים את האישה. חקיקת חוק שוויון זכויות האישה המבוסס על האמנה הבינלאומית (CEDAW). יישום החוק נגד אלימות במשפחה והגדלת המשאבים לסיוע לנשים קורבנות אלימות.",
-        "aspect": "womens-equality-cedaw-domestic-violence",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הגדלת ייצוג הנשים וחיזוק מעמדן בכל הרשויות הממלכתיות והמוסדות הציבוריים. שוויון הזדמנויות לנשים בפעילות פוליטית וחברתית.",
-        "aspect": "womens-representation-in-institutions",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
@@ -350,35 +350,35 @@
     "ecology": [
       {
         "text": "שמירת איכות הסביבה.",
-        "aspect": "environmental-protection",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הקצאת תקציבים הולמים למניעת זיהום האוויר והסביבה ולטיפול במפגעים אקולוגיים.",
-        "aspect": "environmental-pollution-prevention-budget",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הגנה על מקורות המים, הימים והנהרות מפני זיהום.",
-        "aspect": "water-sources-protection",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "אכיפת חוקים למניעת זיהום ופגיעה בסביבה והחמרת הענישה לגבי מזהמים.",
-        "aspect": "pollution-law-enforcement",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "השלמת התקנתם של מערכות ביוב ומתקני טיהור שפכים בכל הישובים.",
-        "aspect": "sewage-infrastructure-all-communities",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"

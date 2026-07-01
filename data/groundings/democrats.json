@@ -190,28 +190,28 @@
     "justice": [
       {
         "text": "נבצר את הזכויות האזרחיות והחברתיות בחוקי יסוד וניתן להם מעמד עליון",
-        "aspect": "basic-laws-civil-rights",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נחזק את הכנסת ואת עקרון הפרדת הרשויות",
-        "aspect": "separation-of-powers",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נבטיח כי בכירים בצמרת הביטחון ובשירות המדינה ועובדי ציבור ישרתו את החוק",
-        "aspect": "public-servant-accountability",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נבטל את כל חוקי ההפיכה המשטרית, ונחוקק את חוק יסוד החקיקה",
-        "aspect": "anti-judicial-overhaul",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -219,20 +219,20 @@
       },
       {
         "text": "נחוקק את חוקי הגבלת הכהונה ונלחם בשחיתות",
-        "aspect": "anti-corruption",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "עמידה על משמר הדמוקרטיה הישראלית, כיבוד מוסדותיה ושמירה על העיקרון של הפרדת הרשויות; הבטחת חירות הביטוי וקיום השפעתם של האזרחים על מעשיו של הממשל באמצעות נבחריהם.",
-        "aspect": "separation-of-powers",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "התנגדות לשינוי הרכב ועדת המינויים לרשות השופטת — בעיקר להגדלת מינויי שופטים על ידי הקואליציה על חשבון הנציגות המשפטית המקצועית.",
         "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
@@ -243,14 +243,14 @@
     "equality": [
       {
         "text": "נקדם שוויון זכויות מלא בחוק לקהילה הגאה, כולל שוויון בזכות להורות, למשפחה ולנישואים",
-        "aspect": "lgbtq-rights",
+        "aspect": "lgbtq-specific-policy-mechanisms",
         "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "נאסור טיפולי המרה, נחזק את האכיפה נגד אפליה, נכיר בנפגעי פשעי שנאה ונפסיק את התמיכה הציבורית בארגונים להט\"בופוביים",
-        "aspect": "lgbtq-rights",
+        "aspect": "lgbtq-specific-policy-mechanisms",
         "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "dateRetrieved": "2026-06-22",
@@ -258,14 +258,14 @@
       },
       {
         "text": "שקידה על עקרונות השוויון וזכויות האדם ללא הבדל מוצא, דת, עדה ומין; חלוקה צודקת של ההכנסה הלאומית, צמצום הפער הכלכלי, המקצועי, ההשכלתי והחברתי בין השכבות השונות.",
-        "aspect": "civil-equality",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"
       },
       {
         "text": "שילובם של האזרחים מבני המיעוטים בחייה של מדינת-ישראל; כיבוד ייחודם התרבותי ועצמאותם הדתית; העלאת רמת חייהם ושיתופם המלא במנהל הציבורי.",
-        "aspect": "minority-integration",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22"

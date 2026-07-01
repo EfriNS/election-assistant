@@ -152,14 +152,14 @@
     "justice": [
       {
         "text": "תנועת ש\"ס מאמינה בקיומה של מדינת ישראל כמדינת העם היהודי, מדינה מושתתת על ערכי הדמוקרטיה על פי תורת ישראל.",
-        "aspect": "democracy-according-to-torah",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
         "_note": "The 2006 document has no specific judiciary positions. In the 2022-2023 coalition, Shas supported the judicial override legislation (פסקת התגברות) as a coalition partner."
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה ברפורמה בוועדת המינויים לשפיטה; שינוי הרכבה לאיזון טוב יותר בין נציגים נבחרים לנציגים מקצועיים, כחלק מהסכמי הקואליציה.",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
@@ -170,14 +170,14 @@
     "equality": [
       {
         "text": "תנועת ש\"ס תפעל לחקיקת חוק זכויות חברתיות שיאגד את הזכויות הבסיסיות: הזכות לחינוך, הזכות לעבודה, הזכות לבריאות, הזכות לדיור, הזכות לשירותי רווחה, הזכות לביטחון סוציאלי.",
-        "aspect": "social-rights-legislation",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "העדפה מתקנת כלפי נשים במקומות עבודה ממשלתיים וציבוריים. עידוד והכוונת נשים לרכוש השכלה מקצועית ואקדמית.",
-        "aspect": "womens-affirmative-action",
+        "aspect": "gender-equality",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"
@@ -186,7 +186,7 @@
     "ecology": [
       {
         "text": "תנועת ש\"ס מאמינה בשימור הטבע והנוף כחלק חשוב בחיינו על אדמת ארץ הקודש. לטיפוח איכות הסביבה משמעות יהודית עמוקה, כחלק משמירה על היצירה האלוהית. חקיקת חוקים שמטרתם הגנה על הטבע, על מקורות המים ועל חופי הים.",
-        "aspect": "nature-preservation-jewish-value",
+        "aspect": "state-responsibility-framing",
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23"

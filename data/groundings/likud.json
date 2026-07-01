@@ -94,14 +94,14 @@
     "justice": [
       {
         "text": "קיום משטר ריבוני-דמוקרטי במדינה: הבטחת עליונות החוק, זכויות האדם והאזרח, חופש המצפון, חרות הפרט, שוויון זכויות והזדמנות לכל אזרח המדינה ומניעת אפליה על כל רקע מין, נטייה מינית, גזע, עדה, דת, מעמד או השקפה.",
-        "aspect": "democratic-rule-and-civil-rights",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Constitution explicitly includes sexual orientation (נטייה מינית) as a protected class — noteworthy given Likud's coalition record on LGBTQ rights. Constitution supports rule of law but Likud-led government pursued 2023 judicial override legislation."
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "שינוי הרכב ועדת המינויים לשפיטה — מתן משקל גדול יותר לנציגים נבחרים בבחירת שופטי בית המשפט העליון, לאיזון עם הנציגות המשפטית הקיימת.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
@@ -112,14 +112,14 @@
     "equality": [
       {
         "text": "מניעת אפליה על כל רקע מין, נטייה מינית, גזע, עדה, דת, מעמד או השקפה.",
-        "aspect": "anti-discrimination-all-citizens",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "שילוב אוכלוסיית המיעוטים במערכות המדינה והתנועה.",
-        "aspect": "minority-integration",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23"
@@ -128,7 +128,7 @@
     "ecology": [
       {
         "text": "אחריות ממלכתית לרמה של... צרכות הסביבה.",
-        "aspect": "state-environmental-responsibility",
+        "aspect": "state-responsibility-framing",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",

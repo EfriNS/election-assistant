@@ -144,41 +144,41 @@
     "justice": [
       {
         "text": "נכבד את הכרעת הרוב, זכויות המיעוט, זכויות האדם, שלטון החוק והמנהל התקין, ונשמור על תקשורת חופשית ומערכת משפט עצמאית.",
-        "aspect": "rule-of-law",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נחוקק את חוק יסוד החקיקה שיחזק את עצמאות וסמכות הכנסת.",
-        "aspect": "separation-of-powers",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "כהונתו של ראש הממשלה תוגבל לשתי קדנציות ויצומצמו משרדי ממשלה מיותרים.",
-        "aspect": "term-limits",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נצא למהלך נרחב לשיקום השירות הציבורי, שיסיים את עידן המינויים הלא מקצועיים, הג'ובים וסידורי העבודה ברשויות הממשלתיות.",
-        "aspect": "professional-civil-service",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נצא למלחמת חורמה נגד שחיתות, פשע מאורגן ופרוטקשן.",
-        "aspect": "anti-corruption",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "הפרדת רשויות מחייבת עצמאות מערכת השפיטה; ועדת המינויים לשפיטה תישאר מקצועית ולא פוליטית, כדי שהרשות השופטת תוכל לבקר את הרשות המבצעת.",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
@@ -189,21 +189,21 @@
     "equality": [
       {
         "text": "נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות.",
-        "aspect": "full-societal-integration",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נחזק את הספר, נקרב את הפריפריה ונצמצם פערים חברתיים וגאוגרפיים באמצעות תיקצוב דיפרנציאלי.",
-        "aspect": "geographic-equality",
+        "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "נממש תוכנית לאומית למיגור האלימות בחברה הערבית והכללית.",
-        "aspect": "arab-society-security",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23"

@@ -81,14 +81,14 @@
     "justice": [
       {
         "text": "תמיכה בפסקת ההתגברות ובהחלשת הביקורת השיפוטית כחלק מהקואליציה. ח\"כ פינדרוס (יו\"ר): \"חלומי להביא ד-9 ולפוצץ את הבניין של בית המשפט העליון.\"",
-        "aspect": "weaken-supreme-court",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "עצמאות מערכת המשפט; ביקורת שיפוטית על חקיקה דתית"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה במינוי שופטים על ידי נציגים פוליטיים נבחרים, כחלק מהחלשת בית המשפט העליון. ח\"כ פינדרוס: \"חלומי להביא ד-9 ולפוצץ את בניין בית המשפט.\"",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
@@ -99,7 +99,7 @@
     "equality": [
       {
         "text": "הסכם הקואליציוני 2022: 4% בלבד מהסעיפים מתייחסים לצרכי נשים חרדיות; אין התייחסות לבריאות נשים, אלימות במשפחה, עגינות.",
-        "aspect": "minimal-womens-rights-in-coalition",
+        "aspect": "gender-equality",
         "sourceUrl": "https://www.idi.org.il/articles/46926",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",

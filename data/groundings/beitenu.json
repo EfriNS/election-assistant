@@ -166,28 +166,28 @@
     "justice": [
       {
         "text": "כינון חוקה והקמת בית משפט לחוקה; הגבלת כהונת ראש ממשלה לשתי קדנציות.",
-        "aspect": "constitution-and-term-limits",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "איסור בחוק על אדם שהוגש נגדו כתב אישום להתמודד לנשיאות או להרכיב את הממשלה.",
-        "aspect": "indictment-bar",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות; שמירה על עצמאות מערכת המשפט.",
-        "aspect": "judicial-independence",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "פסקת התגברות / חוק הצרפתי"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
@@ -198,21 +198,21 @@
     "equality": [
       {
         "text": "ייצוג הולם חובה לנשים ברשימות לכנסת.",
-        "aspect": "women-representation",
+        "aspect": "gender-equality",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "רפורמת פנסיה: העלאת כלל הפנסיונרים לשכר מינימום; תחבורה ציבורית חינם לכל הפנסיונרים; הגדלת קצבת ניצולי שואה.",
-        "aspect": "pension-and-elderly",
+        "aspect": "disability-and-elderly-inclusion",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "שילוב תעסוקתי לאנשים עם מוגבלויות.",
-        "aspect": "disability-employment",
+        "aspect": "disability-and-elderly-inclusion",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
