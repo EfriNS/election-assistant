@@ -13,6 +13,31 @@ function makeLangfuse() {
   });
 }
 
+// Gemini's structured-output mode (responseJsonSchema) uses constrained
+// decoding, which guarantees syntactically valid JSON — unlike plain
+// responseMimeType: "application/json" alone, which only asks the model to
+// produce JSON-shaped text and can still emit unescaped quote characters
+// (e.g. Hebrew gershayim in acronyms like צה"ל, מו"מ) that break JSON.parse.
+const FOLLOW_UP_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    prologue: { type: ["string", "null"] },
+    followUp: {
+      type: ["object", "null"],
+      properties: {
+        question: { type: "string" },
+        options: { type: "array", items: { type: "string" } },
+        hint: { type: "string" },
+        targetedAspect: { type: "string" },
+      },
+      required: ["question", "options"],
+    },
+    targetedAspect: { type: "string" },
+    freeTextInterpretation: { type: "string" },
+  },
+  required: ["prologue", "followUp"],
+};
+
 type FollowUpQA = { question: string; answer: string };
 
 type ConversationEntry = {
@@ -238,7 +263,12 @@ export async function POST(req: NextRequest) {
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { temperature: 0.7, maxOutputTokens: 500, responseMimeType: "application/json" },
+      config: {
+        temperature: 0.7,
+        maxOutputTokens: 500,
+        responseMimeType: "application/json",
+        responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
+      },
     });
 
     rawText = response.text ?? "";
