@@ -1,7 +1,6 @@
 {
   "platformAvailable": true,
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
-  "sourceQuality": "official",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
   "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated health or ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf",
@@ -12,21 +11,27 @@
         "aspect": "military-doctrine",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נחתור להרחבת מעגל השלום, להבטחת רוב יהודי מוצק לדורות ולביסוס מעמדה של ישראל בעולם.",
         "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נקים ועדת חקירה ממלכתית לחקר טבח ה-7 באוקטובר, העשור שלפניו וניהול המלחמה.",
         "aspect": "accountability-oct7",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "economy": [
@@ -35,28 +40,36 @@
         "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.",
         "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "במסגרת תכנית לאומית למלחמה ביוקר המחיה: נפרק מוקדי ריכוזיות, נחזק תחרות ונטמיע אימוץ תקינה בינלאומית.",
         "aspect": "cost-of-living-and-affordability",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.",
         "aspect": "regional-and-sector-development",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "housing": [
@@ -66,7 +79,9 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "No standalone housing policy; housing mentioned only as benefit tied to national service"
+        "_note": "No standalone housing policy; housing mentioned only as benefit tied to national service",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "education": [
@@ -75,28 +90,36 @@
         "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "ננהיג לימודי ליבה לכל ונחזק את הליבה הערכית המחנכת את ילדי ישראל ברוח מגילת העצמאות.",
         "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "נבזר סמכויות ונחזק את המורים והמנהלים בקצה – בסמכויות ובתקציבים.",
         "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נחזק את הלימודים הטכנולוגיים לצד הטמעת תכנים בנושא מסורת ישראל.",
         "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "aspect": "independent-school-funding-and-autonomy",
@@ -104,7 +127,9 @@
         "text": "עדיפות לחינוך הממלכתי; מימון ציבורי מותנה ביישום תוכנית לימודים ממלכתית כוללת — מתמטיקה, מדעים, אנגלית. אין הצדקה לתקצוב מוסדות הדוחים את לימודי הליבה.",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים"
+        "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "health": [
@@ -114,7 +139,9 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "No dedicated health policy; health mentioned only as part of general periphery investment"
+        "_note": "No dedicated health policy; health mentioned only as part of general periphery investment",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "religion": [
@@ -124,21 +151,27 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
-        "contrary": "פטור מגיוס לחרדים"
+        "contrary": "פטור מגיוס לחרדים",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       },
       {
         "text": "הממשלה תקדם יהדות מכילה ומכבדת, תוך הרחבת העצמאות של רשויות מקומיות וקהילות לעצב פתרונות בהתאם לאופיין וערכיהן.",
         "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "להבטיח שכל אזרח יוכל לשמור על אורח חייו ואמונתו, תוך שמירה על זכויות האחר.",
         "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "justice": [
@@ -147,35 +180,45 @@
         "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נחוקק את חוק יסוד החקיקה שיחזק את עצמאות וסמכות הכנסת.",
         "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       },
       {
         "text": "כהונתו של ראש הממשלה תוגבל לשתי קדנציות ויצומצמו משרדי ממשלה מיותרים.",
         "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       },
       {
         "text": "נצא למהלך נרחב לשיקום השירות הציבורי, שיסיים את עידן המינויים הלא מקצועיים, הג'ובים וסידורי העבודה ברשויות הממשלתיות.",
         "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נצא למלחמת חורמה נגד שחיתות, פשע מאורגן ופרוטקשן.",
         "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "aspect": "judicial-appointments-mechanism-specifics",
@@ -183,7 +226,9 @@
         "text": "הפרדת רשויות מחייבת עצמאות מערכת השפיטה; ועדת המינויים לשפיטה תישאר מקצועית ולא פוליטית, כדי שהרשות השופטת תוכל לבקר את הרשות המבצעת.",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "contrary": "מינוי שופטים על ידי הרשות המבצעת"
+        "contrary": "מינוי שופטים על ידי הרשות המבצעת",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -192,21 +237,27 @@
         "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "נחזק את הספר, נקרב את הפריפריה ונצמצם פערים חברתיים וגאוגרפיים באמצעות תיקצוב דיפרנציאלי.",
         "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       },
       {
         "text": "נממש תוכנית לאומית למיגור האלימות בחברה הערבית והכללית.",
         "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "ecology": []

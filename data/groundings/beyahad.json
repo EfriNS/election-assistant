@@ -1,7 +1,6 @@
 {
   "platformAvailable": true,
   "platformLabel": "תכניות עבודה (חלקי) — רק 4 מתוך 11 קטגוריות פורסמו",
-  "sourceQuality": "official",
   "sourceUrl": "https://bennett2026.org.il/plans/",
   "archiveDir": "docs/sources/beyahad/",
   "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-06-23 only 4 of 11 announced plan categories have detailed pages: meshartim, negev, rehabilitation, kiryat-shmona. Education, health, ecology, justice, and 6 other categories have no published content yet.",
@@ -13,28 +12,36 @@
         "sourceUrl": "https://bennett2026.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Category label only — no detailed security plan page published yet"
+        "_note": "Category label only — no detailed security plan page published yet",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "התוכנית תפסיק את המלחמה של הפצועים בבירוקרטיה, ותעניק להם מעטפת שיקום מלאה של זכויות, בית, תמיכה בחזרה לתעסוקה וחוסן נפשי. המדינה תדאג לשיקום כל פצועי צה\"ל בגוף או בנפש.",
         "aspect": "military-doctrine",
         "sourceUrl": "https://bennett2026.org.il/plans/rehabilitation/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "הגיע הזמן להחזיר את החוק, הסדר והריבונות לנגב. נלחם בפשיעה, בהפרות החוק, בחינוך המנוגד לערכי המדינה ובפוליגמיה.",
         "aspect": "hardline-enforcement",
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "יישובים עירוניים צמודי גדר בצפון המהווים חומת מגן לישראל, ננטשים ונמצאים בסכנה קיומית. יעד: הכפלת מספר התושבים תוך 10 שנים.",
         "aspect": "military-doctrine",
         "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "economy": [
@@ -43,21 +50,27 @@
         "aspect": "cost-of-living-and-affordability",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "רק מי שמשרת את המדינה, מקבל תקציבים ממנה. מי שלא משרת, לא מקבל כלום. תמריצי המדינה יתועדפו לטובת מי שנושא בנטל.",
         "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "ביטול כספים קואליציוניים ומשרדי ממשלה מיותרים.",
         "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "housing": [
@@ -66,21 +79,27 @@
         "aspect": "service-linked-benefit-mechanics",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       },
       {
         "text": "קדימות לדירה במחיר למשתכן למשרתי צבא וביטחון.",
         "aspect": "service-linked-benefit-mechanics",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       },
       {
         "text": "הלוואת דיור של 400,000 ₪ לאקדמאים ואנשי מקצוע שיעברו לצפון — הופכת למתנה לאחר 7 שנות מגורים.",
         "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "education": [
@@ -90,21 +109,27 @@
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Detailed education plan category exists in menu but has no published page yet (2026-06-23)"
+        "_note": "Detailed education plan category exists in menu but has no published page yet (2026-06-23)",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "מעונות יום חינם, צהרונים חינם, בית הספר של הקיץ — חינם.",
         "aspect": "sector-specific-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       },
       {
         "text": "נשיב את הריבונות למערכת החינוך בנגב — נלחם בחינוך המנוגד לערכי המדינה.",
         "aspect": "sector-specific-equity",
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "aspect": "independent-school-funding-and-autonomy",
@@ -112,7 +137,9 @@
         "text": "חינוך ממלכתי כבסיס — הפוגעים ביסוד החינוך האזרחי המשותף אינם ראויים למימון ציבורי מלא. עמדה לא פורשה בפרוט, אך מתיישבת עם העמדה האזרחית-ליברלית של המפלגה.",
         "sourceUrl": "https://bennett2026.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "contrary": "מימון עצמאי ללא תוכנית לימודים ממלכתית"
+        "contrary": "מימון עצמאי ללא תוכנית לימודים ממלכתית",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "health": [
@@ -122,7 +149,9 @@
         "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "בריאות וחוסן category exists in menu but no dedicated plan page published yet (2026-06-23)"
+        "_note": "בריאות וחוסן category exists in menu but no dedicated plan page published yet (2026-06-23)",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "religion": [
@@ -131,7 +160,9 @@
         "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "מבטלים את חוק ההשתמטות — כולם מתגייסים. ביטול קצבאות אברך, ביטול מעמד אברך=סטודנט, ביטול הנחות בביטוח לאומי ובארנונה.",
@@ -139,7 +170,9 @@
         "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
-        "contrary": "קצבאות ופטורים לאברכי כולל"
+        "contrary": "קצבאות ופטורים לאברכי כולל",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
@@ -149,7 +182,9 @@
         "text": "שמירה על עצמאות מערכת השפיטה; התנגדות לכל שינוי בוועדת המינויים שייתן שליטה לקואליציה על מינוי שופטי בית המשפט העליון.",
         "sourceUrl": "https://bennett2026.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "contrary": "מינוי שופטים פוליטי"
+        "contrary": "מינוי שופטים פוליטי",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -158,14 +193,18 @@
         "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://bennett2026.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       },
       {
         "text": "מי שמשתלב — מרוויח. נושיט יד לחברה הבדואית ונציע אופק של שילוב, השכלה ותעסוקה.",
         "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://bennett2026.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
     "ecology": []

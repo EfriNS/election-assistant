@@ -1,7 +1,6 @@
 {
   "platformAvailable": false,
   "platformLabel": "חוקת הליכוד (2016), פרק ב': מטרות — אין מצע בחירות רשמי",
-  "sourceQuality": "outdated",
   "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
   "archiveDir": "docs/sources/likud/",
   "_note": "Likud has not published a formal election platform since ~2009. Source: web search finding — 'Since 2009, the Likud party has not published a detailed platform. Prior to elections for the 20th Knesset, Netanyahu opposed publishing a platform, arguing that the party is judged by its actions.' Best available source: party constitution (חוקת הליכוד) 2016, chapter 2 (מטרות), obtained from user-provided screenshot of local PDF (huka0716.pdf, page 3). IMPORTANT: The constitution states ideological goals that are not always reflected in actual government policy — e.g., the constitution calls for universal service for all citizens (item י) while Likud governments have consistently exempted Haredim; the constitution supports democratic rule of law (item ה) while recent Likud-led governments advanced judicial override legislation. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Housing topic has no entry (not addressed in constitution). Ecology entry is very thin.",
@@ -12,14 +11,18 @@
         "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "text": "קיום ריבונות המדינה ובטחונה ושלום אמת עם עמי שכנינו.",
         "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       }
     ],
     "economy": [
@@ -28,14 +31,18 @@
         "aspect": "market-structure-and-competition",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "text": "טיפוח וקידום ערי הפיתוח ושכונות המצוקה.",
         "aspect": "regional-and-sector-development",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       }
     ],
     "housing": [],
@@ -45,7 +52,9 @@
         "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "aspect": "independent-school-funding-and-autonomy",
@@ -53,7 +62,9 @@
         "text": "שמירה על ריבוי זרמי החינוך — ממלכתי, ממלכתי-דתי, עצמאי ומוכר שאינו רשמי — תוך תמיכה ממשלתית לכל הזרמים. ביצוע הסכמי הקואליציה הכוללים תקצוב חינוך חרדי ללא כפיית לימודי ליבה.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "כפיית תוכנית לימודים אחידה על כלל המוסדות"
+        "contrary": "כפיית תוכנית לימודים אחידה על כלל המוסדות",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ],
     "health": [
@@ -63,7 +74,9 @@
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Very general — covers health alongside personal security, employment, and environment in a single clause. No specific health policy in constitution."
+        "_note": "Very general — covers health alongside personal security, employment, and environment in a single clause. No specific health policy in constitution.",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "aspect": "private-sector-regulation-mechanics",
@@ -71,7 +84,9 @@
         "text": "עידוד פיתוח מקביל של שירותי בריאות פרטיים לצד המערכת הציבורית; תמיכה בביטוח משלים ושירותים פרטיים כמנוע צמיחה ופתרון לתורי המתנה.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "הגבלת הרפואה הפרטית"
+        "contrary": "הגבלת הרפואה הפרטית",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
       }
     ],
     "religion": [
@@ -80,7 +95,9 @@
         "aspect": "national-religious-symbolism",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "text": "שירות סדיר של כל אזרח המדינה ותושביה הקבועים, או 'שירות מוכר' כמשמעותו בחוק שירות בטחון (נוסח משולב), תשמ\"ו-1986.",
@@ -88,7 +105,9 @@
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Constitution states universal service but Likud governments have consistently exempted Haredim in practice — direct contradiction between stated ideology and governing policy."
+        "_note": "Constitution states universal service but Likud governments have consistently exempted Haredim in practice — direct contradiction between stated ideology and governing policy.",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
@@ -98,7 +117,9 @@
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Constitution explicitly includes sexual orientation (נטייה מינית) as a protected class — noteworthy given Likud's coalition record on LGBTQ rights. Constitution supports rule of law but Likud-led government pursued 2023 judicial override legislation."
+        "_note": "Constitution explicitly includes sexual orientation (נטייה מינית) as a protected class — noteworthy given Likud's coalition record on LGBTQ rights. Constitution supports rule of law but Likud-led government pursued 2023 judicial override legislation.",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "aspect": "judicial-appointments-mechanism-specifics",
@@ -106,7 +127,9 @@
         "text": "שינוי הרכב ועדת המינויים לשפיטה — מתן משקל גדול יותר לנציגים נבחרים בבחירת שופטי בית המשפט העליון, לאיזון עם הנציגות המשפטית הקיימת.",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "ועדת מינויים בשליטת נציגי השפיטה"
+        "contrary": "ועדת מינויים בשליטת נציגי השפיטה",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -115,14 +138,18 @@
         "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       },
       {
         "text": "שילוב אוכלוסיית המיעוטים במערכות המדינה והתנועה.",
         "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "dateRetrieved": "2026-06-23"
+        "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       }
     ],
     "ecology": [
@@ -132,7 +159,9 @@
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "Environmental responsibility mentioned only as one clause within a general welfare statement (item ט). No specific ecology/climate policy in constitution."
+        "_note": "Environmental responsibility mentioned only as one clause within a general welfare statement (item ט). No specific ecology/climate policy in constitution.",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
       }
     ]
   }

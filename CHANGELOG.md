@@ -1,5 +1,41 @@
 # Changelog
 
+## 2026-07-03 — Source-provenance tiering: two-field model wired into scoring, quoting, and follow-up selection
+
+### Context
+
+TODO #1(c) had been open since the advisor-review pass: `sourceQuality` was a single hand-maintained field per party (`official`/`thirdParty`/`outdated`), and the advisor flagged two concrete cases where a single per-party value couldn't represent reality — חד"ש mixes its own Maki principles page with a third-party economic-analysis journal (zoha.org.il) under one party, and עוצמה יהודית's platform sourcing was murkier than assumed. Before implementing, built a full draft 5-tier classification of all 249 existing grounding entries and reviewed it with the user (published as an HTML artifact); their review surfaced four corrections that reshaped the design.
+
+### Findings from the review
+
+1. **עוצמה יהודית's two "official" sources were both illegitimate.** `ozma-yeudit.com` (the 13-principles page previously treated as the party's main platform) turned out to be an unofficial supporter site — its own footer states "זהו אתר תמיכה לא רשמי" and points to the real site, `ozma-yeudit.co.il`. The JVL PDF previously treated as neutral third-party analysis is a recruitment pamphlet with a personal Gmail contact and English-language "join us" framing, not a formal platform. Re-collected 8 new entries directly from the real official site (`docs/sources/otzmah-yehudit/2026-06-23-party-program.md`, updated section 2026-07-03); the old 26 entries were reclassified as `third-party` rather than deleted, since they still likely reflect the party's actual direction.
+2. **zoha.org.il (3 חד"ש entries) was misclassified as a joint-list-partner's own material.** It's Zo Haderech, Maki's newspaper — a publication doing "comparative economic analysis" (per its own archived label), not a primary party document. Corrected to `third-party`. The 2 genuine maki.org.il entries (Maki's own "עקרונות יסוד" page) remain `joint-list`.
+3. **Per-document vs. per-item tiering.** The original design tiered each *document* as a whole. Discussion surfaced that document-level and claim-level quality are different questions — a stale-but-official document and a fresh-but-vague one shouldn't collapse to the same score. Resolved as a two-field model instead of a single tier.
+
+### The two-field model (`lib/groundings.ts`)
+
+- **`provenance`** (per-document — who wrote it): `official-current` > `official-outdated` > `joint-list` > `third-party`.
+- **`concreteness`** (per-item — how checkable the claim is): `quantified` > `named-mechanism` > `specific-stance` > `generic`. Kept graded rather than collapsed to a binary concrete/generic distinction — the finer breakdown is usable for scoring/quoting quality, not just descriptive.
+- `compareEntryQuality(a, b)`: sorts provenance first, concreteness as tiebreaker — provenance dominates (a generic official claim outranks a quantified third-party one).
+- `derivePartySourceQuality(pg)`: replaces the old hand-maintained per-party field entirely — now derived from whether any entry is `official-current`/`official-outdated`/neither.
+- `getBestEvidenceForTopic(partyId, topicId)`: the actual selection rule requested — official material (current or outdated) only; falls back to joint-list/third-party *only* when a party has zero official material for that topic, never blended alongside it.
+
+Populated `provenance`+`concreteness` on all 257 non-absent entries across all 10 parties (249 original + 8 new עוצמה entries), reading each entry's actual sourceUrl/text rather than assuming by party.
+
+### Wired into all 3 real call sites (not just stored as metadata)
+
+- `app/api/score-topics/route.ts` — `buildScoringPrompt`'s per-party grounding block now calls `getBestEvidenceForTopic` instead of showing every entry unfiltered.
+- `app/api/results/route.ts` — `buildGroundingsForParties`'s entry sort now tiebreaks matched-first ties via `compareEntryQuality`; `top3GroundingContext`'s AI-blurb quote selection uses `getBestEvidenceForTopic`; `sourceQuality` in the API response is now `derivePartySourceQuality(pg)` instead of a pass-through of the deleted field (`PartyResultCard.tsx` / `lib/pdf-template.ts` needed no changes — they already branched on the same three string values).
+- `app/quiz/page.tsx` — `partyGroundings` sent to the follow-up-generation prompt now uses `getBestEvidenceForTopic` per party (as a side effect, this also fixes a latent bug where `absent`/empty-text entries could leak into the AI prompt); `suggestedNextDimension` now prefers an uncovered dimension backed by official evidence, falling back to any evidence only if no uncovered dimension has official backing.
+
+### Tests
+
+`tests/groundingProvenance.test.ts` (new): schema-conformance guard mirroring `aspectTaxonomy.test.ts` (every non-absent entry across all parties has valid `provenance`+`concreteness`, so a future ingestion silently omitting them fails loudly instead of crashing `compareEntryQuality`'s sort at runtime), plus behavioral tests for `derivePartySourceQuality`, `compareEntryQuality`, and `getBestEvidenceForTopic` against both synthetic data and real party data (עוצמה's official/third-party split, ראם's all-third-party fallback case). `tests/groundingsFilter.test.ts` mock updated to keep the real `compareEntryQuality`/`derivePartySourceQuality` implementations via `importOriginal` rather than re-mocking them. Full suite: 261 passed.
+
+### Deferred
+
+Exposing the tiering (or an "export-grade" version of it) to end users in the results UI — e.g., a per-quote provenance badge — was explicitly tabled by the user as a future consideration, not part of this pass. Logged as a new backlog item.
+
 ## 2026-07-02 — Follow-up JSON parse errors: structured-output schema fix (commits `b490834`, `41e92c2`, `81063bb`)
 
 ### Bug
