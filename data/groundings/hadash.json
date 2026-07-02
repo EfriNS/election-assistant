@@ -9,7 +9,7 @@
     "security": [
       {
         "text": "שלום ישראלי-פלסטיני וישראלי-ערבי צודק, כולל ויציב. סיום הכיבוש; הקמת שתי מדינות עצמאיות עם ירושלים כבירת שתיהן; נסיגה לגבולות 1967 כולל רמת הגולן.",
-        "aspect": "two-state-solution",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -17,7 +17,7 @@
       },
       {
         "text": "נסיגת ישראל מכל השטחים שכבשה מאז 1967: הגדה המערבית, רצועת עזה וירושלים הערבית, שהם שטחיה של מדינת פלסטין, רמת הגולן הסורית ודרום לבנון. קווי ה-4 ביוני 1967 יהיו גבולות השלום המוכרים והבטוחים.",
-        "aspect": "territorial-withdrawal-1967",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -25,7 +25,7 @@
       },
       {
         "text": "ירושלים המערבית כבירתה של מדינת ישראל, וירושלים המזרחית כבירתה של המדינה הפלסטינית העצמאית. הסדרים מוסכמים יבטיחו גישה חופשית למקומות הקדושים ותנועה חופשית בין שני חלקי העיר.",
-        "aspect": "jerusalem-divided-capital",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -33,14 +33,14 @@
       },
       {
         "text": "פתרון צודק של בעיית הפליטים הפלסטינים בהתאם להחלטות האו\"ם.",
-        "aspect": "palestinian-refugee-right-of-return",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://maki.org.il/%d7%a2%d7%a7%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%99%d7%a1%d7%95%d7%93/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "פירוק ההתנחלויות בשטחים הכבושים.",
-        "aspect": "settlement-dismantlement",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -48,7 +48,7 @@
       },
       {
         "text": "ביטול הברית האסטרטגית בין ישראל וארצות הברית ונקיטת מדיניות חוץ ניטרלית בידי ישראל.",
-        "aspect": "neutral-foreign-policy-anti-us-alliance",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -56,7 +56,7 @@
       },
       {
         "text": "הצטרפות ממשלת ישראל לאמנה הבינלאומית לאיסור הפצתו של הנשק האטומי וביטול 'האופציה הגרעינית' של ישראל. פירוז המזרח-התיכון מכל נשק להשמדה המונית.",
-        "aspect": "npt-nuclear-disarmament-middle-east",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -64,7 +64,7 @@
       },
       {
         "text": "איסור הפיתוח, ההפצה, הניסוי, והשימוש בכל סוגי הנשק להשמדה המונית.",
-        "aspect": "disarmament-wmd",
+        "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
@@ -73,7 +73,7 @@
     "economy": [
       {
         "text": "העלאת שכר המינימום ל-70% מהשכר הממוצע במשק. ביטול העסקה קבלנית ודרך חברות כוח-אדם. תשלום תוספת יוקר לכלל העובדים במשק.",
-        "aspect": "labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -81,14 +81,14 @@
       },
       {
         "text": "הקמת קרן פנסיה ממשלתית ללא מטרות רווח. הגדלת כלל קצבאות הביטוח הלאומי.",
-        "aspect": "state-pension-fund-allowances",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
-        "aspect": "labor-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -96,7 +96,7 @@
       },
       {
         "text": "קביעת סדר עדיפויות חדש החותר לצדק חברתי, על יסוד חלוקה צודקת של ההכנסה הלאומית. הקטנה מהותית של ההוצאות הצבאיות וביטול כל ההוצאות להתנחלויות.",
-        "aspect": "social-justice-priority-reduce-military-spending",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -104,14 +104,14 @@
       },
       {
         "text": "הבטחת עבודה לכל דורש. מאבק נגד אבטלה ופיטורים ולמען תשלום דמי אבטלה מלאים לעובדים המובטלים.",
-        "aspect": "employment-guarantee-full-unemployment-benefits",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הבטחת הזכות הבסיסית לשירותים חברתיים, לרבות שירותי בריאות וחינוך חינם, להשכלה, לדיור ולאיכות חיים לכל.",
-        "aspect": "universal-social-services-right",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -119,7 +119,7 @@
       },
       {
         "text": "ביטול כל החוקים והתקנות הפוגעים בזכויות העובדים ובחופש התארגנות האיגוד מקצועי, בזכותם להכריז שביתה ולהיאבק להגנת שכרם וזכויותיהם הסוציאליות.",
-        "aspect": "union-freedom-strike-rights",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -129,7 +129,7 @@
     "housing": [
       {
         "text": "חיסול שכונות העוני, הקמת מבני דיור על חשבון המדינה והעברתם לתושבי השכונות לפי עיקרון של דירה תמורת דירה.",
-        "aspect": "state-public-housing-slum-elimination",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -137,21 +137,21 @@
       },
       {
         "text": "הבטחת דיור בשכר חודשי נמוך לזוגות צעירים ולמשפחות מרובות ילדים.",
-        "aspect": "low-rent-housing-young-families",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הזרמת תקציבים מיוחדים להעלאת רמת הפיתוח, הדיור, הבריאות וההשכלה באזורי המצוקה, עידוד הקמת מפעלים בעיירות הפיתוח.",
-        "aspect": "special-budgets-distress-areas",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחומי הפיתוח, החינוך, הבריאות, התיעוש, התרבות, הספורט והדיור לתקציבי הרשויות היהודיות.",
-        "aspect": "equal-municipal-budgets-arab-authorities-housing",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
@@ -160,20 +160,20 @@
     "education": [
       {
         "text": "חינוך חינם מהגן ועד האוניברסיטה.",
-        "aspect": "free-education-all-levels",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום החינוך לתקציבי הרשויות היהודיות.",
-        "aspect": "equal-education-budgets-arab-authorities",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה במערכת חינוך ממלכתית אחידה עם תקצוב שוויוני. התנגדות למימון ציבורי של מוסדות שאינם מיישמים תוכנית לימודים ממלכתית — לרבות מתמטיקה, מדעים ואנגלית.",
         "sourceUrl": "https://hadash.org.il",
@@ -184,7 +184,7 @@
     "health": [
       {
         "text": "הבטחת הזכות הבסיסית לשירותי בריאות חינם לכל אזרח.",
-        "aspect": "free-healthcare-basic-right",
+        "aspect": "private-sector-regulation-mechanics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -192,13 +192,13 @@
       },
       {
         "text": "השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום הבריאות לתקציבי הרשויות היהודיות.",
-        "aspect": "equal-health-budgets-arab-authorities",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "private-healthcare-regulation",
+        "aspect": "private-sector-regulation-mechanics",
         "dateRetrieved": "2026-06-27",
         "text": "בריאות היא זכות, לא סחורה. התנגדות להרחבת הרפואה הפרטית על חשבון המערכת הציבורית; חיזוק קופות החולים כספק ציבורי עיקרי ושמירה על שוויון גישה.",
         "sourceUrl": "https://hadash.org.il",
@@ -209,7 +209,7 @@
     "religion": [
       {
         "text": "הפרדת הדת מהמדינה.",
-        "aspect": "separation-religion-state",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://maki.org.il/%d7%a2%d7%a7%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%99%d7%a1%d7%95%d7%93/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -217,7 +217,7 @@
       },
       {
         "text": "אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות ותערוב לאופייה החילוני של המדינה ולשוויון כל אזרחיה.",
-        "aspect": "secular-democratic-constitution",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -225,7 +225,7 @@
       },
       {
         "text": "ביטול חוקי הכפייה הדתית. הדיפת כל הגישות העדתיות.",
-        "aspect": "abolish-religious-coercion-laws",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -233,7 +233,7 @@
       },
       {
         "text": "שחרור נכסי הוואקף המוסלמי וכיבוד זכותם של האזרחים המוסלמים להקמת מסגרותיהם הדתיות הנבחרות.",
-        "aspect": "islamic-waqf-muslim-religious-autonomy",
+        "aspect": "minority-religious-autonomy",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
@@ -242,14 +242,14 @@
     "justice": [
       {
         "text": "הגנת החירויות הדמוקרטיות. מאבק בפשיזם ובגזענות.",
-        "aspect": "democratic-freedoms",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות.",
-        "aspect": "democratic-constitution-human-rights",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -257,27 +257,27 @@
       },
       {
         "text": "הגנת חופש הדעה והביטוי, חופש העיתונות, חופש ההתארגנות וחופש הפעילות הפוליטית.",
-        "aspect": "freedoms-press-opinion-association",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "ביטול תקנות ההגנה לשעת חירום.",
-        "aspect": "abolish-emergency-regulations",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הכרה בזכות הדמוקרטית לסרב לשרת בשטחים הכבושים מטעמי מצפון.",
-        "aspect": "conscientious-objection-occupied-territories",
+        "aspect": "emergency-powers-and-security-law",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "עצמאות מערכת השפיטה מהמינויים הפוליטיים היא עמוד תווך של הדמוקרטיה; ועדת המינויים לשפיטה תהיה מקצועית, לא קואליציונית.",
         "sourceUrl": "https://hadash.org.il",
@@ -288,7 +288,7 @@
     "equality": [
       {
         "text": "שוויון האוכלוסייה הערבית-הפלסטינית בישראל — זכויות המיעוט הערבי כמיעוט לאומי.",
-        "aspect": "arab-equality",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -296,7 +296,7 @@
       },
       {
         "text": "הכרה באוכלוסייה הערבית-הפלסטינית בישראל כמיעוט לאומי. שוויון מלא לאזרחים הערבים, הפסקת הפקעת הקרקעות והריסת הבתים, הכרה בכל היישובים הערביים הקיימים.",
-        "aspect": "arab-national-minority-recognition-full-equality",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -304,7 +304,7 @@
       },
       {
         "text": "כיבוד השפה הערבית כשפה רשמית בפועל בצד השפה העברית.",
-        "aspect": "arabic-official-language-full-status",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -312,7 +312,7 @@
       },
       {
         "text": "ביטול גיוס החובה של הצעירים הערבים הדרוזים.",
-        "aspect": "abolish-druze-conscription",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27",
@@ -320,28 +320,28 @@
       },
       {
         "text": "ביטול האפליה העדתית בכל התחומים.",
-        "aspect": "anti-ethnic-discrimination",
+        "aspect": "arab-minority-specific-mechanisms",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "שוויון זכויות האישה בכל התחומים.",
-        "aspect": "womens-equality",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ביטול כל החוקים המפלים את האישה. חקיקת חוק שוויון זכויות האישה המבוסס על האמנה הבינלאומית (CEDAW). יישום החוק נגד אלימות במשפחה והגדלת המשאבים לסיוע לנשים קורבנות אלימות.",
-        "aspect": "womens-equality-cedaw-domestic-violence",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הגדלת ייצוג הנשים וחיזוק מעמדן בכל הרשויות הממלכתיות והמוסדות הציבוריים. שוויון הזדמנויות לנשים בפעילות פוליטית וחברתית.",
-        "aspect": "womens-representation-in-institutions",
+        "aspect": "gender-equality",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
@@ -350,35 +350,35 @@
     "ecology": [
       {
         "text": "שמירת איכות הסביבה.",
-        "aspect": "environmental-protection",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הקצאת תקציבים הולמים למניעת זיהום האוויר והסביבה ולטיפול במפגעים אקולוגיים.",
-        "aspect": "environmental-pollution-prevention-budget",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "הגנה על מקורות המים, הימים והנהרות מפני זיהום.",
-        "aspect": "water-sources-protection",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "אכיפת חוקים למניעת זיהום ופגיעה בסביבה והחמרת הענישה לגבי מזהמים.",
-        "aspect": "pollution-law-enforcement",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"
       },
       {
         "text": "השלמת התקנתם של מערכות ביוב ומתקני טיהור שפכים בכל הישובים.",
-        "aspect": "sewage-infrastructure-all-communities",
+        "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-27-hadash-values-full.md",
         "dateRetrieved": "2026-06-27"

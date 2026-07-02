@@ -9,28 +9,28 @@
     "security": [
       {
         "text": "הגדלת תקציב הביטחון מ-70 ל-95 מיליארד ₪ לשנה למשך 10 שנים; הרחבה מ-3 ל-6 אוגדות תמרון; 5 חטיבות טנקים נוספות.",
-        "aspect": "military-deterrence",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "אפס הכלה — כל חדירת גבול מהווה פלישה. העברת הלחימה לשטח האויב. סיום עימותים עם הכרעה ברורה.",
-        "aspect": "hardline-no-negotiations",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "תוכנית לאומית של 3 מיליארד ₪ לחיזוק המשטרה; 3,000 שוטרים חדשים; 3 בתי משפט ייעודיים לעבירות חמורות.",
-        "aspect": "internal-security",
+        "aspect": "hardline-enforcement",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הסכסוך עם שכנינו אינו סכסוך טריטוריאלי. נדרשת עסקת חבילה כוללת, לא משא ומתן עם הפלסטינים בלבד.",
-        "aspect": "conflict-framework",
+        "aspect": "territorial-endgame-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -39,21 +39,21 @@
     "economy": [
       {
         "text": "פירוק מונופולים בשוק המזון בהתאם להמלצות ועדת בלניקוב; הסדרת יבוא מקביל לסיום מעמד היבואן הבלעדי.",
-        "aspect": "anti-monopoly",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הרחבת מענק עבודה ליחידים מעל גיל 26 עד הכנסה של 8,000 ₪ לחודש.",
-        "aspect": "work-grant-expansion",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "ביטול קצבאות ילדים מהילד החמישי ואילך.",
-        "aspect": "child-allowance-cap",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -61,7 +61,7 @@
       },
       {
         "text": "השקעה של מיליארד ₪ בבינה מלאכותית לאורך 5 שנים; חיזוק מוסדות מחקר ותשתיות מעבדות לאומיות.",
-        "aspect": "tech-investment",
+        "aspect": "market-structure-and-competition",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -70,14 +70,14 @@
     "housing": [
       {
         "text": "היפוך פרדיגמת הרכש: קבלנים מתחרים על איכות ומחיר, לא על עלות קרקע; תמריצים לרשויות המקומיות להנפקת היתרי בנייה מהירים.",
-        "aspect": "procurement-reform",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "השקעה בשכירות ארוכת טווח למיתון מחירי השכירות; מעבר לשיטות בנייה תעשייתיות.",
-        "aspect": "long-term-rental",
+        "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -86,7 +86,7 @@
     "education": [
       {
         "text": "חוק לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך) — ביטול מימון למוסדות מסרבים ליישם.",
-        "aspect": "core-curriculum",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -94,20 +94,20 @@
       },
       {
         "text": "מעבר ממודל שכר ותק למצוינות הוראה וחדשנות; העצמת סמכויות מנהלים ומורים בקצה המערכת.",
-        "aspect": "teacher-quality",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "חיזוק מוסדות ההשכלה הגבוהה והגדלה משמעותית של תקציבי המחקר.",
-        "aspect": "higher-education",
+        "aspect": "higher-education-and-vocational-training",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "ביטול מימון ממשלתי למוסדות חינוך המסרבים ליישם לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך). תנאי מחייב לתמיכה כלכלית של המדינה.",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
@@ -118,14 +118,14 @@
     "health": [
       {
         "text": "השלמת בניית שני בתי חולים (צפון ודרום); הגדלת מספר רופאים ואחיות בעדיפות לפריפריה; הרחבת מספר מקומות לסטודנטים לרפואה.",
-        "aspect": "hospital-expansion",
+        "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "עדכון סל התרופות באופן שוטף; השקת שירותים אמבולטוריים חדשניים ותוכניות רפואה מונעת.",
-        "aspect": "preventive-medicine",
+        "aspect": "preventive-care-and-specific-benefits",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -134,7 +134,7 @@
     "religion": [
       {
         "text": "נישואים אזרחיים וגירושים אזרחיים; ביטול מועצות הדת; תחבורה ציבורית בשבת לפי החלטת הרשות המקומית.",
-        "aspect": "civil-marriage-and-shabbat",
+        "aspect": "civil-status-and-public-space-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -142,7 +142,7 @@
       },
       {
         "text": "ביטול קצבאות לאברכי ישיבות; תוכנית ממשלתית לשילוב הציבור החרדי בשוק העבודה.",
-        "aspect": "haredi-employment",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
@@ -150,14 +150,14 @@
       },
       {
         "text": "אימוץ דוח ניסים; רפורמת גיור מלאה דרך רבני ערים; החזרת האחריות על בתי הדין הרבניים למשרד המשפטים.",
-        "aspect": "conversion-and-courts",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "הכרה במהגרים לפי חוק השבות כחלק אינטגרלי מהחברה הישראלית ללא קשר למעמדם ההלכתי.",
-        "aspect": "law-of-return-recognition",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
@@ -166,28 +166,28 @@
     "justice": [
       {
         "text": "כינון חוקה והקמת בית משפט לחוקה; הגבלת כהונת ראש ממשלה לשתי קדנציות.",
-        "aspect": "constitution-and-term-limits",
+        "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "איסור בחוק על אדם שהוגש נגדו כתב אישום להתמודד לנשיאות או להרכיב את הממשלה.",
-        "aspect": "indictment-bar",
+        "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות; שמירה על עצמאות מערכת המשפט.",
-        "aspect": "judicial-independence",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "פסקת התגברות / חוק הצרפתי"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
@@ -198,21 +198,21 @@
     "equality": [
       {
         "text": "ייצוג הולם חובה לנשים ברשימות לכנסת.",
-        "aspect": "women-representation",
+        "aspect": "gender-equality",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "רפורמת פנסיה: העלאת כלל הפנסיונרים לשכר מינימום; תחבורה ציבורית חינם לכל הפנסיונרים; הגדלת קצבת ניצולי שואה.",
-        "aspect": "pension-and-elderly",
+        "aspect": "disability-and-elderly-inclusion",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "שילוב תעסוקתי לאנשים עם מוגבלויות.",
-        "aspect": "disability-employment",
+        "aspect": "disability-and-elderly-inclusion",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23"

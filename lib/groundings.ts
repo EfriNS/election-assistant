@@ -20,7 +20,7 @@ import otzmahData from "../data/groundings/otzmah-yehudit.json";
 
 export type GroundingEntry = {
   text: string;           // verbatim Hebrew quote from the party's source document
-  aspect: string;         // sub-dimension label (defined by advisor in Phase 0.1 review)
+  aspect: string;         // canonical sub-dimension id — must be a member of TOPIC_KEY_DIMENSIONS[topicId] (lib/questions.ts)
   sourceUrl: string;      // URL of the original document
   archivePath: string;    // relative path: docs/sources/<partyId>/YYYY-MM-DD-<description>.md
   dateRetrieved: string;  // ISO date (YYYY-MM-DD)

@@ -9,7 +9,7 @@
     "security": [
       {
         "text": "עמדות המפלגה בתחום המדיניות והביטחון נקבעות על פי שיקולים תורניים ולא ביטחוניים-מדיניים.",
-        "aspect": "torah-determines-security-policy",
+        "aspect": "military-doctrine",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -19,7 +19,7 @@
     "economy": [
       {
         "text": "בנושאים כלכליים המפלגה תומכת בגישה סוציאל-דמוקרטית, בשל החולשה הסוציו-אקונומית של מצביעיה.",
-        "aspect": "welfare-state",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -30,21 +30,21 @@
     "education": [
       {
         "text": "השוואת שכר מורים בחינוך העצמאי (החרדי) לשכר מורים במכללות; עדכון תקציב שעות ההוראה בבסיס התקציב; מיליארדי שקלים לחינוך החרדי בהסכם הקואליציוני.",
-        "aspect": "haredi-education-budget",
+        "aspect": "independent-school-funding-and-autonomy",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23"
       },
       {
         "text": "התנגדות להכנסת לימודי ליבה (מתמטיקה, אנגלית, מדעים) לבתי ספר חרדיים.",
-        "aspect": "oppose-core-curriculum",
+        "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "חוק לימודי ליבה חובה בכלל המוסדות המתוקצבים"
       },
       {
-        "aspect": "independent-school-funding",
+        "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "דרישה לתקצוב מלא של מוסדות החינוך החרדי (תלמודי תורה, ישיבות קטנות) ללא כל חיוב לימודי ליבה. הסכמי קואליציה כוללים הקפאה מחודשת של יישום לימודי הליבה.",
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
@@ -56,7 +56,7 @@
     "religion": [
       {
         "text": "חוק יסוד: תורה — לימוד תורה מוכר כשירות משמעותי למדינה ולעם ישראל; לא ייגבה מחיר כלכלי מלומדי תורה על אי-שירות; אין יעדי גיוס לחרדים. כל חברי הכנסת מיהדות התורה חתמו.",
-        "aspect": "haredi-draft-exemption",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -64,7 +64,7 @@
       },
       {
         "text": "ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד). ביטול סמכות רבני הערים לגיור — הסמכות מוחזרת לרבנות הראשית; גיורים פרטיים לא יוכרו.",
-        "aspect": "rabbinate-monopoly",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -72,7 +72,7 @@
       },
       {
         "text": "שמירת הסטאטוס קוו הדתי וניהול מחלוקות הדת על פי פסיקת הרבנות הראשית; התנגדות לביקורת שיפוטית בתחום הדת.",
-        "aspect": "religious-status-quo",
+        "aspect": "national-religious-symbolism",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23"
@@ -81,14 +81,14 @@
     "justice": [
       {
         "text": "תמיכה בפסקת ההתגברות ובהחלשת הביקורת השיפוטית כחלק מהקואליציה. ח\"כ פינדרוס (יו\"ר): \"חלומי להביא ד-9 ולפוצץ את הבניין של בית המשפט העליון.\"",
-        "aspect": "weaken-supreme-court",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "עצמאות מערכת המשפט; ביקורת שיפוטית על חקיקה דתית"
       },
       {
-        "aspect": "judicial-appointments-reform",
+        "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "תמיכה במינוי שופטים על ידי נציגים פוליטיים נבחרים, כחלק מהחלשת בית המשפט העליון. ח\"כ פינדרוס: \"חלומי להביא ד-9 ולפוצץ את בניין בית המשפט.\"",
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
@@ -99,7 +99,7 @@
     "equality": [
       {
         "text": "הסכם הקואליציוני 2022: 4% בלבד מהסעיפים מתייחסים לצרכי נשים חרדיות; אין התייחסות לבריאות נשים, אלימות במשפחה, עגינות.",
-        "aspect": "minimal-womens-rights-in-coalition",
+        "aspect": "gender-equality",
         "sourceUrl": "https://www.idi.org.il/articles/46926",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",

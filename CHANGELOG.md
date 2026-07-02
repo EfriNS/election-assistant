@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-07-02 — Grounding-quote display bug: canonical aspect taxonomy (commits `087deea`, `e3ecdac`, `25205b4`, `0889b12`, `8de0957`, `82ea785`, `e2b6b50`, `4309ed1`)
+
+### Zero-cost stop-gap (`fix/grounding-quote-display-bug`)
+
+Shipped first, independent of the taxonomy work: `buildGroundingsForParties` (`app/api/results/route.ts`) no longer filters out a party's grounding entries when the follow-up's probed aspect doesn't match that party's own tag — it always shows a party's full topic content, with entries whose aspect was actually probed flagged `matched: true` and sorted first. `PartyResultCard.tsx` and `pdf-template.ts` render a teal highlight + "קשור לשאלת ההמשך שענית עליה" label on matched entries.
+
+### Canonical per-topic aspect taxonomy (option (a), TODO #2)
+
+Root cause of the display bug (and, independently, of weak follow-up dimension selection): `aspect` values in `data/groundings/*.json` were free-text per-party slugs from ingestion — `economy` alone had 28 distinct strings across 34 entries, only 3 shared by more than one party. `TOPIC_KEY_DIMENSIONS` (`lib/questions.ts`) suffered the same problem one level up: it's used by `app/quiz/page.tsx`'s `suggestedNextDimension` to decide "does any close party have grounding evidence for dimension X," via exact string match — so most parties were invisible to that check even when holding relevant, differently-worded positions.
+
+Replaced the free-text field with a fixed ~43-id canonical taxonomy (4-6 buckets/topic), built by clustering the real aspect strings already in the data, then reclassified all 249 grounding entries across all 10 parties by reading each entry's actual Hebrew text (not the old slug name). Coverage per bucket went from 1-3 parties (ad-hoc tags) to 1-9 parties (canonical buckets), averaging 2.5-6.0/topic depending on topic. `TOPIC_KEY_DIMENSIONS` now *is* the taxonomy, ordered by real party coverage (richest first) — not by distance from the topic's opener question, a design point revised after review (see below).
+
+Design validation caught two issues before implementation:
+- **Opener redundancy**: first-draft buckets were checked against every topic's opener question (`lib/questions.ts`) and several turned out to be near-restatements of an opener option (e.g. one `economy` bucket had literally merged two of the opener's four options). Reworked bucket framing so each is either untouched by the opener or a concrete mechanism one level more specific (progression, not restatement) — and added an explicit anti-repetition instruction to `app/api/follow-up/route.ts`'s prompt, since that's a live per-turn judgment call better made by the model than baked into static bucket ordering.
+- **Missing real-world axes**: pure data-driven clustering can't surface policy dimensions with zero current grounding coverage. Added 3 forward-looking buckets for real, currently-salient Israeli debates with no grounding data yet: `justice/international-law-and-accountability` (ICC/ICJ), `health/healthcare-workforce-and-professional-licensing` (foreign-doctor recognition), `ecology/international-and-regional-climate-cooperation` (Paris Agreement/EU alignment).
+
+Also updated `.claude/skills/collect-party-data/SKILL.md` to assign aspects from `TOPIC_KEY_DIMENSIONS[topicId]` instead of "placeholder slugs... advisor will refine later" (that Phase 0.1 refinement never happened — this closes that gap), and added `tests/aspectTaxonomy.test.ts` (90 assertions) asserting every real grounding entry's aspect is a canonical id, guarding against future ingestion drifting back to free-text slugs.
+
+**Verified live**: ran the actual quiz + results flow (dev server + Playwright) for security/economy/education. The follow-up question after a "military self-reliance" opener answer correctly deepened into territorial-sovereignty specifics rather than re-asking the opener. Results page showed 50 matched-quote highlights across parties (previously would have been near-zero for most parties) — including on the #1-ranked party's card, the exact scenario from the original bug report.
+
 ## 2026-07-01 — Follow-up neutrality fixes + grounding-display bug investigation (commits `a8c968e`, `a27af03`, `2f848c4`, merge `b77f910`)
 
 ### Context
