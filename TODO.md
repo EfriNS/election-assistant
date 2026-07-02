@@ -12,7 +12,7 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. ✅ (b) Opener-answer redundancy addressed — all 9 topics reviewed against advisor feedback, `docs/score-review.md`'s 8 weak discriminators either sharpened into real claims (grounding-backed) or cut. Still open: (a) advisor review of live app UX, (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
+1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. ✅ (a) Advisor reviewed the live app — feedback on the follow-up-question flow (disproportionate Arab/Arabic-topic follow-ups; redundant options) drove the 2026-07-01 neutrality fixes and the 2026-07-02 canonical aspect taxonomy. ✅ (b) Opener-answer redundancy addressed — all 9 topics reviewed against advisor feedback, `docs/score-review.md`'s 8 weak discriminators either sharpened into real claims (grounding-backed) or cut. Still open: (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
 
 2. 💬 **DISCUSSION: Depth vs. brevity strategic decision** — Recurring pattern across R1–R4: length/attention concern coexists with deep appreciation for depth and emotional resonance. Product positioning question before any UX changes: (a) accept depth + invest in targeting engaged voters, (b) progressive disclosure (short mode / full mode), (c) micro-UX only (make length feel shorter without removing content). Decision gates the UX/UI overhaul below.
 
@@ -31,7 +31,7 @@
    - ✅ **Analytics depth** — resolved: migrated to Mixpanel (EU, free tier), full funnel + priority distribution + topic engagement, dashboard live. Design in `docs/ANALYTICS-DESIGN.md`, board spec in `docs/MIXPANEL-DASHBOARDS.md`. (2026-06-28, dashboard built 2026-07-01)
 
    _Human tasks (parallel):_
-   - **0.1** Advisor review of live app UX (opener-answer content addressed 2026-07-01, see TODO #1)
+   - ✅ **0.1** Advisor review of live app UX — done, see TODO #1
    - **0.6** Content neutrality audit (3rd-party review of question framing)
    - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 
