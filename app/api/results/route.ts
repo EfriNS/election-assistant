@@ -17,6 +17,23 @@ function makeLangfuse() {
 
 type PartyRef = { id: string; name: string; score: number };
 
+// Structured-output schema (constrained decoding guarantees valid JSON,
+// including correctly escaped Hebrew gershayim/acronym characters like צה"ל
+// that appear in verbatim party-platform quotes the model is instructed to
+// cite — see app/api/follow-up/route.ts for the same fix applied first,
+// after two production JSON.parse failures caused by exactly this).
+export const RESULTS_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    profile: { type: "string" },
+    partyBlurbs: {
+      type: "object",
+      additionalProperties: { type: "string" },
+    },
+  },
+  required: ["profile", "partyBlurbs"],
+};
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 export function buildGroundingsForParties(
@@ -145,7 +162,13 @@ export async function POST(req: NextRequest) {
     const chat = ai.chats.create({
       model,
       history: [],
-      config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.5, maxOutputTokens: 1500 },
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+        temperature: 0.5,
+        maxOutputTokens: 1500,
+        responseMimeType: "application/json",
+        responseJsonSchema: RESULTS_RESPONSE_SCHEMA,
+      },
     });
 
     const response = await chat.sendMessage({ message: userMessage });
