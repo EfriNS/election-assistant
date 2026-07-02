@@ -1,10 +1,10 @@
 {
   "platformAvailable": true,
-  "platformLabel": "13 עקרונות רשמיים (ozma-yeudit.com) + מסמך JVL + עמדות קואליציוניות 2022",
+  "platformLabel": "אתר רשמי (ozma-yeudit.co.il) — פעולות ממשלתיות מתועדות; משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק",
   "sourceQuality": "thirdParty",
-  "sourceUrl": "https://ozma-yeudit.com/program/",
+  "sourceUrl": "https://ozma-yeudit.co.il",
   "archiveDir": "docs/sources/otzmah-yehudit/",
-  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism (Kach movement). Sources: 13 official principles from ozma-yeudit.com, English-language platform PDF from JVL (historical, pre-Ben Gvir era, but consistent with current positions), coalition agreement 37th government (2022), IDI party profile. Health and ecology not addressed. Economy is 'Jewish capitalism' (no elaboration). Security and equality are the most developed — with explicit annexation, no-Palestinian-state, and Arab emigration/expulsion positions. Aspects are placeholder labels — to be refined in Phase 0.1 advisor review.",
+  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed of actual legislative/ministerial actions (dated June-July 2026). That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail.",
   "topics": {
     "security": [
       {
@@ -50,6 +50,41 @@
         "sourceUrl": "https://www.idi.org.il/articles/46842",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23"
+      },
+      {
+        "text": "המפלגה קידמה את רעיון ארץ ישראל השלמה והחלת הריבונות הישראלית בשטחי יהודה, שומרון ובנימין.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://ozma-yeudit.co.il/מי-אנחנו/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
+      },
+      {
+        "text": "הרחבת רשימת היישובים הזכאים לרישוי נשק אזרחי (יבנה, ראשון לציון, עפרה, מועצה אזורית דרומית) כחלק מרפורמת הנשק של השר בן גביר; קודם לכן הורחב הרישוי ליישוב ה-100.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
+      },
+      {
+        "text": "השר בן גביר: ישראל צריכה לדחות כל הסכם הפסקת אש בין ארה\"ב לאיראן, בדגש על סדרי עדיפויות ביטחוניים אזרחיים וצבאיים.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
+      },
+      {
+        "text": "ביקור השר בן גביר במתקן מעצר בנושא תמיכה בעונש מוות למחבלים — פעולה ממשלתית בפועל, מאששת עמדה שדווחה קודם על ידי ניתוח IDI.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
+      },
+      {
+        "text": "העברת מפקדת המשטרה הצפונית ומרכז הפיקוד מנצרת לנוף הגליל, בעלות של עשרות מיליוני ₪, באישור השר בן גביר.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
       }
     ],
     "economy": [
@@ -150,6 +185,14 @@
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הסדר הסטאטוס קוו של הר הבית; ניהול וואקף"
+      },
+      {
+        "text": "קידום חקיקה להחמרת האכיפה נגד רעש קריאות המואזין — איסור כברירת מחדל, היתרים פרטניים ואכיפה מחמירה; בראשות ח\"כ צבי פוגל, יו\"ר ועדת הביטחון הלאומי.",
+        "aspect": "minority-religious-autonomy",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03",
+        "contrary": "כיבוד חופש הפולחן הדתי למיעוט המוסלמי"
       }
     ],
     "justice": [
@@ -191,6 +234,20 @@
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "contrary": "ועדת מינויים מקצועית בלתי-תלויה"
+      },
+      {
+        "text": "ועדת הביטחון הלאומי אישרה קריאה טרומית לחוק המונע ביקורי הצלב האדום לאסירים מחבלים (יזמה: ח\"כ גלית דיסטל אטבריאן).",
+        "aspect": "emergency-powers-and-security-law",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
+      },
+      {
+        "text": "הצעה להורדת גיל האחריות הפלילית ל-10 שנים.",
+        "aspect": "emergency-powers-and-security-law",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-03"
       }
     ],
     "equality": [
