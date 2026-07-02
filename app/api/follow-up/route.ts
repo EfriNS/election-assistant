@@ -18,7 +18,7 @@ function makeLangfuse() {
 // responseMimeType: "application/json" alone, which only asks the model to
 // produce JSON-shaped text and can still emit unescaped quote characters
 // (e.g. Hebrew gershayim in acronyms like צה"ל, מו"מ) that break JSON.parse.
-const FOLLOW_UP_RESPONSE_SCHEMA = {
+export const FOLLOW_UP_RESPONSE_SCHEMA = {
   type: "object",
   properties: {
     prologue: { type: ["string", "null"] },
