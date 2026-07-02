@@ -52,6 +52,8 @@
    [Cross-cutting: PROCESS #strategic-planning]
    (#first:2025-11-30)
 
+17. **Don't statically hardcode a constraint a dynamic mechanism already enforces** - When a system has both a static structure (config, priority list, schema) and an adaptive component with full context (an LLM prompt, a runtime check), resist encoding the same constraint in both. First-draft design hardcoded a low priority for a data bucket because it was "too close to" another static rule — but an explicit dynamic instruction handling that exact concern per-turn, with full runtime context, was being added anyway. User correction: the static demotion was redundant AND worse, since it discarded a genuinely high-value item based on a category the dynamic mechanism already judges case-by-case. Rule: order/prioritize static structures by their own objective merit; let the context-aware mechanism own constraints that require situational judgment. Don't pre-empt it with a static workaround for the same concern - pick one owner. (#first:2026-07-02)
+
 ---
 
 ## Anti-Patterns to Avoid

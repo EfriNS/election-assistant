@@ -20,19 +20,29 @@
 
 6. **Separate conversation from scoring — two API calls beats one doing both** — Having the chat AI score parties while also collecting preferences (conflating two jobs in one prompt) produces non-deterministic scoring and complicates future grounding. Better: conversation API collects preferences naturally; a second focused extraction API (`/api/results-d`) takes the full transcript and produces structured `{ scores, profile, partyBlurbs }`. The extraction prompt can be carefully crafted without risking the conversational tone. (#first:2026-06-17)
 
-### Use `responseMimeType: "application/json"` to eliminate JSON parse errors (#first:2026-06-30)
+### `responseMimeType: "application/json"` alone does NOT eliminate JSON parse errors — use `responseJsonSchema` (#first:2026-06-30 #corrected:2026-07-02)
 
-`gemini-3.1-flash-lite` (and likely other Gemini models) occasionally generates malformed JSON — missing commas in arrays, property value errors. 5 confirmed failures over 10 days in production, all with grounding data active (longer prompts → more likely to drift). The model would produce something like `["option1" "option2"]` (missing comma) which crashes `JSON.parse`.
+**Original (incomplete) fix, 2026-06-30**: `gemini-3.1-flash-lite` occasionally generates malformed JSON — missing commas in arrays, property value errors. 5 confirmed failures over 10 days in production, all with grounding data active (longer prompts → more likely to drift). Added `responseMimeType: "application/json"` to the `generateContent` config on the theory that it "constrains the model to output valid JSON."
 
-**Fix**: Add `responseMimeType: "application/json"` to the `generateContent` config:
+**Correction, 2026-07-02**: that theory was wrong. Two more production failures happened *after* the mimeType fix shipped. Root cause, found via Langfuse raw-output inspection: `responseMimeType` alone only asks the model to produce JSON-*shaped* text — it does not guarantee correct string escaping. Both failures were Hebrew gershayim/acronym characters (צה"ל, מו"מ) emitted unescaped inside a JSON string value, breaking `JSON.parse` mid-string. This is a real, recurring risk for **any Gemini call generating Hebrew prose that might reference Israeli institutions/acronyms** (military, legal, religious — all acronym-heavy in Hebrew).
+
+**Actual fix**: add an explicit `responseJsonSchema` (or `responseSchema`) alongside `responseMimeType`. This switches on Gemini's structured-output *constrained decoding*, which guarantees syntactically valid JSON at the token level regardless of content — the model literally cannot emit a token sequence that breaks the schema, including unescaped quotes inside strings.
+
 ```typescript
-config: { temperature: 0.7, maxOutputTokens: 500, responseMimeType: "application/json" }
+const MY_RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    prologue: { type: ["string", "null"] },      // nullable via type array
+    followUp: { type: ["object", "null"], properties: { /* ... */ }, required: ["question", "options"] },
+  },
+  required: ["prologue", "followUp"],
+};
+config: { temperature: 0.7, maxOutputTokens: 500, responseMimeType: "application/json", responseJsonSchema: MY_RESPONSE_SCHEMA }
 ```
-This constrains the model to output valid JSON — it's a model-level constraint, not prompt engineering. Once active:
-- Remove the `text.match(/\{[\s\S]*\}/)` regex extraction (it was a workaround for markdown-wrapped JSON, no longer needed)
-- Replace the `if (!jsonMatch)` guard with `if (!rawText)` (empty response check)
 
-**Observed in**: `app/api/follow-up/route.ts` (all 5 errors had `hasGroundingData: true` — grounding block makes the prompt ~50% longer, increasing drift probability). Apply this pattern to all Gemini routes that expect JSON output.
+**Verification is honestly hard**: the failure is intermittent (a handful of instances over weeks of traffic), so a live smoke test with acronym-heavy prompts came back correctly escaped both with and without the schema in a small sample — couldn't force a clean before/after reproduction. Treat post-deploy Slack alert volume over the following days/weeks as the real signal, not a single test run.
+
+**Observed in**: `app/api/follow-up/route.ts` (fixed 2026-07-02, commit `b490834`). **Same latent vulnerability exists** in `app/api/score-topics/route.ts` and `app/api/results/route.ts` — neither sets `responseMimeType` *or* `responseSchema` at all, relying purely on prompt instructions + manual markdown-fence stripping. Apply the same `responseJsonSchema` pattern to any Gemini route that expects JSON output and generates Hebrew text, not just the ones that have already broken in production — the absence of a reported error isn't evidence of absence of the bug, given how rare/intermittent it is.
 
 ### Hoist the AI response variable before the try block for catch-block logging (#first:2026-06-30)
 

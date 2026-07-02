@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Follow-up JSON parse errors fixed — structured-output schema** — Two production `SERVER_ERROR` Slack alerts traced (via Langfuse) to Gemini emitting unescaped Hebrew gershayim/acronym characters (צה"ל, מו"מ) inside JSON string values, breaking `JSON.parse`. Fixed by adding `responseJsonSchema` to the follow-up route's Gemini call (constrained decoding guarantees valid JSON regardless of content) + a regression test. Same latent vulnerability found (not yet fixed) in `score-topics` and `results` routes — see backlog #2. (2026-07-02)
 - **Grounding-quote display bug fixed — canonical aspect taxonomy** — Zero-cost stop-gap (always show a party's full topic content, matched entries sorted first) + full architectural fix: replaced ~185 free-text per-party aspect slugs with a fixed ~43-id canonical taxonomy across all 9 topics, reclassifying all 249 grounding entries. Also fixed a same-root-cause weak spot in follow-up dimension selection, added an anti-repetition rule to the follow-up prompt, and a regression test (90 assertions). Verified live via dev server + Playwright — follow-up read as progression not repetition; results page showed 50 matched-quote highlights across parties, including the #1-ranked party. (2026-07-02)
 - **Follow-up neutrality fixes (advisor feedback)** — Broadened AI follow-up options from a hard 3–4 floor to 2–4 (no padding with a redundant option to hit 4). Diversified `TOPIC_KEY_DIMENSIONS` for security (was 4/4 Israeli-Arab/Palestinian-conflict aspects) and housing (was 1/1) using already-collected, previously-unused grounding data. (2026-07-01)
-- **Mixpanel dashboards + topics_missed tracking** — "Election Assistant — Core Analytics" board live in Production, 14 reports across Q1–Q7, built via the official Mixpanel MCP server. Lexicon display names applied project-wide. Added `topics_missed` to `quiz_completed` for a cleaner completion metric. (2026-07-01)
 
 > See CHANGELOG.md for complete details.
 
@@ -13,6 +13,8 @@
 ## 📋 BACKLOG (Prioritized)
 
 1. **Advisor review before MVP** — All 10 parties grounded + sourceQuality classified. ✅ (b) Opener-answer redundancy addressed — all 9 topics reviewed against advisor feedback, `docs/score-review.md`'s 8 weak discriminators either sharpened into real claims (grounding-backed) or cut. Still open: (a) advisor review of live app UX, (c) `sourceQuality` calls for חד"ש (official vs. thirdParty) and עוצמה (thirdParty vs. official — own 13 principles but supplemented with IDI/JVL).
+
+2. **Audit other Gemini JSON-mode calls for the same escaping vulnerability** — `app/api/follow-up/route.ts` was just fixed (`responseJsonSchema`, 2026-07-02) after two production JSON.parse failures caused by unescaped Hebrew gershayim/acronym characters (צה"ל, מו"מ). `app/api/score-topics/route.ts` and `app/api/results/route.ts` both call Gemini and `JSON.parse` the raw response, but neither sets `responseMimeType` *or* `responseSchema` at all — `results/route.ts` (writes the user-facing AI profile + party blurbs, Hebrew prose likely to reference party/institution acronyms) is arguably more exposed than `follow-up` was before the fix. Same fix pattern applies: add `responseJsonSchema` matching each route's expected output shape.
 
 4. 💬 **DISCUSSION: Depth vs. brevity strategic decision** — Recurring pattern across R1–R4: length/attention concern coexists with deep appreciation for depth and emotional resonance. Product positioning question before any UX changes: (a) accept depth + invest in targeting engaged voters, (b) progressive disclosure (short mode / full mode), (c) micro-UX only (make length feel shorter without removing content). Decision gates the UX/UI overhaul below.
 

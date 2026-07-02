@@ -96,6 +96,38 @@ if (Object.keys(scores).length === 0 && text.length > 0) {
 
 ---
 
+## Vercel Environment Variables & Langfuse Debugging
+
+### `vercel env pull`/`ls` cannot verify "Sensitive" env var values (#first:2026-07-02)
+
+Vercel env vars marked "Sensitive" (shown as "Encrypted" in `vercel env ls`, same as regular secrets) are **write-only from the CLI** — `vercel env pull` writes an empty placeholder (`VAR=""`) for them instead of the real value, even though the actual deployed function receives the real value at runtime. This is a deliberate security feature, not a bug.
+
+**Failure mode**: comparing `LANGFUSE_SECRET_KEY` between local `.env.local` and a `vercel env pull` output to check whether local/prod point to the same account will always show local as non-empty and prod as empty — this looks like a real credential mismatch but proves nothing, since prod's pulled value is unconditionally empty regardless of what's actually configured.
+
+**Rule**: don't use `env pull`/`ls` to verify sensitive-credential parity across environments. If you need to confirm two environments hit the same backend, compare *observable behavior* (e.g., query the same third-party service and see if the same data shows up) rather than the credential values themselves.
+
+### Don't compare .env values via `grep | cut` — quoting produces false mismatches (#first:2026-07-02)
+
+`.env` files may quote values (`LANGFUSE_BASE_URL="https://cloud.langfuse.com"`). Extracting the value with `grep "^VAR=" file | cut -d= -f2-` returns the value **including the literal quote characters**. Comparing that against an unquoted literal (`[ "$val" = "https://cloud.langfuse.com" ]`) will report a false mismatch, because `"https://cloud.langfuse.com"` (10 extra chars) ≠ `https://cloud.langfuse.com`.
+
+**What actually happened**: this exact mistake led to incorrectly telling the user that local dev and Vercel Preview/Production pointed to different Langfuse hosts. They didn't — both resolved to the same default (`https://cloud.langfuse.com`). Correction required admitting the error and re-verifying properly.
+
+**Rule**: to check an `.env` value programmatically, either (a) `source`/`.` the file in bash (which correctly strips quotes during variable assignment) and compare the resulting shell variable, or (b) parse it properly (e.g., Python's simple `line.split('=', 1)[1]` still needs quote-stripping — safest is a real dotenv parser). Never trust raw `grep`/`cut` output for equality comparisons against literals.
+
+### Langfuse Cloud has a short ingestion-to-queryable indexing lag (#first:2026-07-02)
+
+A `langfuse-cli api observations list` query run within roughly 1-2 minutes of an event occurring can return zero results even though the write is durable — the SDK's `await langfuse.flushAsync()` (called before the app's Slack notification fires) guarantees the event was *received*, but there's a separate delay before it becomes visible to the list/filter query endpoint.
+
+**Symptom**: querying a narrow time window immediately after being told "an error just happened" comes up empty; re-querying the same window a couple of minutes later finds the exact same events. This looks like "wrong project/host" but is actually just timing.
+
+**Rule**: if a Langfuse query for a very recent event (within the last 1-2 minutes) comes up empty, don't conclude the wrong host/project — wait a short interval and retry with the same query before investigating credentials/config.
+
+### Manual `vercel deploy` is blocked by auto-mode when contradicting a stored preference (#first:2026-07-02)
+
+When the user has a stored memory/feedback note like "never run `vercel deploy` manually — GitHub push triggers auto-deploy," the harness's auto-mode safety classifier will actively block a `vercel deploy` Bash call that contradicts it, even mid-session, even when the current request seems to justify an exception (e.g., "deploy a preview environment"). This is the memory system working as intended — surface the conflict to the user via `AskUserQuestion` rather than either silently complying or silently refusing; let them explicitly override if they want to.
+
+---
+
 ## Testing
 
 ### ?notrack=1 for analytics-clean testing (#first:2026-06-29)

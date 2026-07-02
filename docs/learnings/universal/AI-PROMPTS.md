@@ -32,6 +32,8 @@
    [Cross-cutting: DEBUGGING #6, TESTING #32]
    (#first:2025-10-08)
 
+7. **A "JSON mode" flag alone doesn't guarantee valid JSON — use schema-constrained structured output for that.** `responseMimeType: "application/json"` (or equivalent "JSON mode" flags on other providers) only asks the model to produce JSON-*shaped* text; it can still emit content that breaks parsing (e.g. an unescaped quote character inside a string value drawn from the source language/domain). The reliable fix is passing an explicit response schema (Gemini: `responseSchema`/`responseJsonSchema`; OpenAI: `response_format` with a JSON schema; etc.) — this activates token-level constrained decoding, which structurally guarantees valid output regardless of content. Verification is inherently hard for this class of fix: the failure is often a low-frequency intermittent slip, so a handful of manual test calls may not reproduce it either with or without the fix. Don't treat "couldn't reproduce it in a quick test" as proof the underlying mode difference doesn't matter — trust the documented mechanism (constrained decoding vs. best-effort formatting) over a small sample. (#first:2026-07-02)
+
 ---
 
 ## Anti-Patterns to Avoid

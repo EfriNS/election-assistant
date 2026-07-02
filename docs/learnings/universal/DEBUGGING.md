@@ -86,9 +86,13 @@
 
 20. **User clarifying questions often expose root cause** - When user asks "can you explain?" about suspicious behavior, don't just explain symptoms - investigate actual data to find root cause. User question signals something doesn't make sense.
    [Cross-cutting: PROCESS #1,4, ARCHITECTURE #2]
-   (#first:2025-12-30)
+   (#first:2025-12-30 #reinforced:2026-07-02)
 
    **Session 2025-12-30**: User tested get_launch_details and observed all 3 snapshots classified as "new". I initially explained "no prior snapshot to compare" without investigating. User asked: "You said there are 3 snapshots... so why aren't the 2nd and 3rd ones 'changes'?" This forced me to inspect actual ChromaDB data, revealing all items had `similarity_score=None`. Root cause: backfill bypassed change detection entirely. User's question led directly to the fix.
+
+   **Session 2026-07-02**: Claimed local `.env.local` and Vercel's Langfuse config used different hosts, based on a shell string comparison. User pushed back with specifics ("I can see LANGFUSE_BASE_URL is X, and there's no override in Vercel — so what's wrong?"), which prompted re-verification rather than defending the original claim. Found the actual bug: the comparison extracted the value via `grep | cut` without stripping the `.env` file's surrounding quotes, so `"https://cloud.langfuse.com"` (10 extra chars) was compared against the bare literal and reported as a false mismatch. There was no real config problem. Lesson within the lesson: when a user's pushback includes their own specific observation that contradicts your claim, that's a stronger signal to re-verify than a generic "are you sure?" — they're often already holding the piece of evidence that falsifies the claim.
+
+21. **Don't string-compare raw `grep`/`cut` output against literals — quoting produces false mismatches** - Extracting a value from a config file with `grep "^VAR=" file | cut -d= -f2-` preserves any literal quote characters around the value (`VAR="x"` → extracted value is `"x"`, not `x`). Comparing that against an unquoted literal reports a false mismatch. To compare config values correctly: either `source`/`.` the file (shells strip quotes correctly during assignment) and compare the resulting variable, or use a real parser. This applies to any script comparing `.env`-style files, not just secrets. (#first:2026-07-02)
 
 ---
 

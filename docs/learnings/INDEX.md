@@ -303,9 +303,9 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2026-07-01 (added project/ANALYTICS-PATTERNS.md — Mixpanel MCP server reliability quirks, free-tier report cap, event schema gotchas; reinforced DEBUGGING #1 — tool error responses can be false negatives, not just success messages; added PROCESS #41 — verify branch before committing in shared/concurrent-session working directories)
+**Last Updated**: 2026-07-02 (closed the aspect-taxonomy loop in project/VAA-DESIGN.md — item 60's "not yet implemented" fix now shipped, items 68-70 on taxonomy-design validation and static-vs-dynamic constraint ownership; updated project/AI-INTEGRATION.md — corrected the 2026-06-30 `responseMimeType`-only JSON fix, now documents `responseJsonSchema` as the actual fix for Hebrew-acronym escaping failures; added project/INFRA-PATTERNS.md section on Vercel Sensitive env vars, Langfuse indexing lag, and env-value comparison pitfalls; added universal ARCHITECTURE #17 and AI-PROMPTS #7; reinforced universal DEBUGGING #20)
 
-**Previously**: 2026-06-22 (added project/NEXTJS-REACT-PATTERNS.md — Next.js 16 lint setup, lazy useState for storage reads, module-level components; updated project/VAA-DESIGN.md — domain/branding principles for civic tools)
+**Previously**: 2026-07-01 (added project/ANALYTICS-PATTERNS.md — Mixpanel MCP server reliability quirks, free-tier report cap, event schema gotchas; reinforced DEBUGGING #1 — tool error responses can be false negatives, not just success messages; added PROCESS #41 — verify branch before committing in shared/concurrent-session working directories)
 **Archive**: Full retrospective history available in [RETROSPECTIVES-2025-10-archive.md](../../RETROSPECTIVES-2025-10-archive.md)
 
 **Structure Change (2025-01-07)**:

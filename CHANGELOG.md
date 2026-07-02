@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-07-02 — Follow-up JSON parse errors: structured-output schema fix (commits `b490834`, `41e92c2`, `81063bb`)
+
+### Bug
+
+Two `/api/follow-up` `SERVER_ERROR` Slack alerts within a minute of each other, right after the canonical-taxonomy deploy above went live. Traced via Langfuse to the raw AI output (see below for how — took two attempts): both failures were `JSON.parse` breaking mid-string on an **unescaped Hebrew gershayim/acronym character** — `צה"ל` (IDF) and `מו"מ` (negotiations) both use a `"`-like mark that Gemini emitted unescaped inside a JSON string value. `app/api/follow-up/route.ts` only set `responseMimeType: "application/json"`, which asks the model to produce JSON-*shaped* text but doesn't guarantee valid escaping.
+
+Root cause is pre-existing (older Langfuse traces going back to 2026-06-19 show the same `Expected ',' or ...` pattern) and unrelated to the taxonomy work — but that work increased exposure to it, since `suggestedNextDimension` now actually finds grounding evidence for security/military topics (where these acronyms are common) far more often than before.
+
+### Fix
+
+Added an explicit `responseJsonSchema` to the Gemini call (`FOLLOW_UP_RESPONSE_SCHEMA`, now exported and guarded by `tests/followUpResponseSchema.test.ts`). This switches on Gemini's constrained-decoding structured output, which structurally guarantees syntactically valid JSON regardless of content — Google's documented fix for this exact failure class. Verification is honestly partial: couldn't force a live reproduction of the original failure to do a clean before/after (it's an intermittent formatting slip; several live test calls with deliberately acronym-heavy prompts came back correctly escaped both with and without the schema). Treating the following days' Slack alert volume as the real verification.
+
+**Not yet fixed — same latent vulnerability elsewhere**: `app/api/score-topics/route.ts` and `app/api/results/route.ts` both call Gemini and `JSON.parse` the response, but neither sets `responseMimeType` *or* `responseSchema` at all — `results/route.ts` is arguably more exposed than `follow-up` was. Logged as a new backlog item (see TODO.md).
+
+### Tooling detour: finding the trace
+
+`.env.local`'s `LANGFUSE_BASE_URL` and Vercel's (unset, defaults to `https://cloud.langfuse.com`) turned out to already match — my first attempt to compare them via `grep | cut` gave a false mismatch because the local value is quoted (`"https://cloud.langfuse.com"`) and I compared the raw cut output (quotes included) against the bare string. Corrected after the user pushed back; see `docs/learnings/project/` for the reusable lesson (parse env values properly, don't string-compare raw grep/cut output). The *actual* reason the first Langfuse query came up empty was a short ingestion-to-queryable indexing lag on Langfuse Cloud's side — queried again a couple minutes later and the traces were there.
+
 ## 2026-07-02 — Grounding-quote display bug: canonical aspect taxonomy (commits `087deea`, `e3ecdac`, `25205b4`, `0889b12`, `8de0957`, `82ea785`, `e2b6b50`, `4309ed1`)
 
 ### Zero-cost stop-gap (`fix/grounding-quote-display-bug`)
