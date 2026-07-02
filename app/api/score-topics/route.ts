@@ -29,6 +29,29 @@ type TopicQAForScoring = {
 // scores[topicId][partyId] = number (-2..+2) | null (no platform data)
 export type ScoreTopicsResult = Record<string, Record<string, number | null>>;
 
+// Structured-output schema, built per-request from the exact topic×party
+// keys the prompt asks for. `enum` constrains each value to the 5 valid
+// score integers or null — this is what guarantees the model can't emit
+// `+2` (invalid JSON number syntax) the way it occasionally did under plain
+// responseMimeType, and `required` guarantees every key is present so a
+// party/topic can't be silently dropped from the response.
+export function buildScoreResponseSchema(topics: TopicQAForScoring[]) {
+  const properties: Record<string, { type: string[]; enum: (number | null)[] }> = {};
+  for (const t of topics) {
+    for (const party of PARTIES) {
+      properties[`${t.topicId}.${party.id}`] = {
+        type: ["integer", "null"],
+        enum: [-2, -1, 0, 1, 2, null],
+      };
+    }
+  }
+  return {
+    type: "object",
+    properties,
+    required: Object.keys(properties),
+  };
+}
+
 export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const userBlock = topics
     .map((t) => {
@@ -99,12 +122,7 @@ function parseScores(
   raw: string,
   topics: TopicQAForScoring[]
 ): ScoreTopicsResult {
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) return {};
-
-  // Strip leading '+' from positive numbers (AI sometimes writes +2 instead of 2)
-  const cleaned = jsonMatch[0].replace(/:\s*\+(\d)/g, ': $1');
-  const flat: Record<string, number | null> = JSON.parse(cleaned);
+  const flat: Record<string, number | null> = JSON.parse(raw);
   const result: ScoreTopicsResult = {};
 
   for (const t of topics) {
@@ -170,24 +188,27 @@ export async function POST(req: NextRequest) {
   // Do not pass prompt as input — it contains user answers (PII).
   const generation = trace?.generation({ name: "gemini-score-topics", model });
 
+  // Hoisted so the catch block can log the raw AI output on parse failure.
+  let rawText = "";
+
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { temperature: 0.2, maxOutputTokens: 1500 },
+      config: {
+        temperature: 0.2,
+        maxOutputTokens: 1500,
+        responseMimeType: "application/json",
+        responseJsonSchema: buildScoreResponseSchema(topics),
+      },
     });
 
-    const text = response.text ?? "";
-    const scores = parseScores(text, topics);
-
-    // Detect silent parse failure: AI responded but no valid JSON was extracted
-    if (Object.keys(scores).length === 0 && text.length > 0) {
-      void notifySlack(`⚠️ /api/score-topics — parse failure: AI returned no valid JSON\n${text.slice(0, 300)}`);
-    }
+    rawText = response.text ?? "";
+    const scores = parseScores(rawText, topics);
 
     generation?.update({
-      output: text,
+      output: rawText,
       usage: {
         input:  response.usageMetadata?.promptTokenCount    ?? 0,
         output: response.usageMetadata?.candidatesTokenCount ?? 0,
@@ -202,7 +223,8 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
     const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    generation?.update({ output: msg, level: "ERROR" });
+    const langfuseOutput = rawText ? `${msg}\n\nRAW:\n${rawText.slice(0, 500)}` : msg;
+    generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
     await notifySlack(`🚨 /api/score-topics — ${errorCode}\n${msg.slice(0, 300)}`);
