@@ -41,28 +41,37 @@ describe("buildGroundingsForParties", () => {
     expect(entries.map((e) => e.aspect)).toEqual(["diplomacy", "military", "budget"]);
   });
 
-  it("filters to only covered aspects when coveredAspects is provided", () => {
+  it("still shows all entries when coveredAspects is provided, matched ones sorted first", () => {
     const result = buildGroundingsForParties(["partyA"], ["security"], {
       security: ["diplomacy", "budget"],
     });
     const entries = result["partyA"].topics[0].entries;
-    expect(entries).toHaveLength(2);
-    expect(entries.map((e) => e.aspect)).toEqual(["diplomacy", "budget"]);
+    // All 3 non-absent entries remain — nothing is hidden on tag-mismatch
+    expect(entries).toHaveLength(3);
+    // Matched entries (diplomacy, budget) come first, in original relative order;
+    // unmatched (military) follows.
+    expect(entries.map((e) => e.aspect)).toEqual(["diplomacy", "budget", "military"]);
+    expect(entries.map((e) => e.matched)).toEqual([true, true, undefined]);
   });
 
-  it("returns empty topics for a topic where no aspects match coveredAspects", () => {
+  it("shows all entries (none flagged matched) when no aspect tag matches coveredAspects", () => {
     const result = buildGroundingsForParties(["partyA"], ["security"], {
       security: ["nonexistent-aspect"],
     });
-    // No matching entries → topic is omitted from results
-    expect(result["partyA"].topics).toHaveLength(0);
+    // Regression: this used to zero out the topic entirely on tag-mismatch.
+    const entries = result["partyA"].topics[0].entries;
+    expect(entries).toHaveLength(3);
+    expect(entries.map((e) => e.aspect)).toEqual(["diplomacy", "military", "budget"]);
+    expect(entries.every((e) => e.matched === undefined)).toBe(true);
   });
 
   it("preserves the contrary field on entries that have it", () => {
     const result = buildGroundingsForParties(["partyA"], ["security"], {
       security: ["budget"],
     });
-    expect(result["partyA"].topics[0].entries[0].contrary).toBe("מתנגד לתקציב הביטחון");
+    const budgetEntry = result["partyA"].topics[0].entries.find((e) => e.aspect === "budget")!;
+    expect(budgetEntry.contrary).toBe("מתנגד לתקציב הביטחון");
+    expect(budgetEntry.matched).toBe(true);
   });
 
   it("handles a party with no platform (absent from GROUNDINGS topics)", () => {
@@ -76,11 +85,11 @@ describe("buildGroundingsForParties", () => {
     const result = buildGroundingsForParties(["partyA"], ["security", "economy"], {
       security: ["military"],
     });
-    // security: filtered to military only; economy: no coveredAspects → all shown
+    // security: military sorted first (matched), rest follow in source order; economy: no coveredAspects → all shown
     const secEntries = result["partyA"].topics.find((t) => t.topicId === "security")!.entries;
     const ecoEntries = result["partyA"].topics.find((t) => t.topicId === "economy")!.entries;
-    expect(secEntries).toHaveLength(1);
-    expect(secEntries[0].aspect).toBe("military");
+    expect(secEntries.map((e) => e.aspect)).toEqual(["military", "diplomacy", "budget"]);
+    expect(secEntries[0].matched).toBe(true);
     expect(ecoEntries).toHaveLength(1);
     expect(ecoEntries[0].aspect).toBe("growth");
   });
