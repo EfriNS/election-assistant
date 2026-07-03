@@ -162,7 +162,7 @@ git checkout -b [branch-name]
 Read these files to refresh context:
 1. `CLAUDE.md` - Project guidelines and architecture
 2. `docs/learnings/INDEX.md` - Quick learning reference hub
-3. `product/REQUIREMENTS.md` - the whole product requirements
+3. `REQUIREMENTS.md` - the whole product requirements
 
 **Purpose**: These learnings exist for YOU (Claude Code) to consume and apply.
 They change your behavior during task execution.
@@ -172,15 +172,15 @@ After reading, briefly acknowledge key principles you'll apply.
 ## Step 2: Identify Target TODO Item & Load Relevant Learning
 
 **If argument provided:**
-Look for the specified item in `TODO.md` or check if the argument is a file path (e.g., "backlog/E2E-FIX-ALL-TESTS.md"). If it's a file path, read that file instead.
+Look for the specified item in `TODO.md` or check if the argument is a file path (e.g., "docs/PHASED-ROADMAP.md"). If it's a file path, read that file instead.
 
 **If no argument provided:**
 Read `TODO.md` and identify the highest priority uncompleted item.
 
 Look for:
-- Items marked `[ ]` (uncompleted)
-- Items in the "🎯 HIGH PRIORITY" section first
-- The topmost uncompleted item in priority order
+- The top (first-numbered) item in the "📋 BACKLOG (Prioritized)" section — top = highest priority
+- Skip items marked ⏸️ (blocked) unless their blocking condition is now resolved
+- Items already marked ✅ within the backlog are resolved sub-points, not the item to work on — read the item's remaining unresolved part
 
 Based on the TODO item type, optionally read the relevant learning topic:
 - Testing/QA tasks? → Read `docs/learnings/universal/TESTING.md`, then check `project/TESTING-PATTERNS.md` if exists
@@ -197,11 +197,11 @@ If TODO item doesn't clearly map to a topic, just use INDEX.md.
 ## Step 3: Analyze Planning Needs
 Determine if the target item requires planning:
 
-**Requires Planning (use planner agent)**:
+**Requires Planning (use plan mode)**:
 - Implementing new features
 - Architectural changes
 - Multi-step tasks with dependencies
-- Tasks marked with "Details:" sections requiring comprehensive analysis
+- Tasks with a "Details:" note in TODO.md pointing to a doc requiring comprehensive analysis
 - Tasks involving "design", "implement", "add", "create", "build"
 
 **Direct Execution (no planning needed)**:
@@ -210,30 +210,28 @@ Determine if the target item requires planning:
 - Testing existing functionality
 - Configuration changes
 - Single-file modifications
-- Backlog item execution (items in backlog/ directory)
 
 ## Step 4: Execute or Plan
 Based on Step 3 analysis:
 
 ### If Planning Required:
-Invoke the **planner agent** with:
+Enter plan mode (`EnterPlanMode`) — or use the `Plan` agent for research-heavy planning that shouldn't consume the main conversation's context — with:
 ```
-Task: Plan implementation for [item name]
+Plan implementation for [item name]
 
 Context:
-- Item: [full description from TODO.md or backlog file]
-- Details Section: [include relevant DETAILS section if exists]
-- Priority: [HIGH/MEDIUM/FUTURE]
+- Item: [full description from TODO.md]
+- Referenced doc: [any doc TODO.md points to for this item, e.g. docs/PHASED-ROADMAP.md]
+- Priority: [backlog position / why it's next]
 
 Requirements:
-- Create comprehensive implementation plan
-- Break down into phases with time estimates
+- Create a concrete implementation plan
 - Identify files to modify
 - Note any architectural considerations from CLAUDE.md
 - Consider security, testing, and documentation needs
 
 Return:
-Detailed implementation plan ready for user approval
+A plan ready to present to the user via ExitPlanMode for approval
 ```
 
 ### If Direct Execution:
@@ -258,7 +256,7 @@ Provide clear summary:
 [Item name and description - from TODO.md top priority OR from specified argument]
 
 📋 Action Plan:
-[Either "Invoking planner agent for comprehensive planning" OR "Starting direct implementation"]
+[Either "Entering plan mode for comprehensive planning" OR "Starting direct implementation"]
 
 💡 Tip: Use /checkpoint to save progress and sync with main
 ```
@@ -267,13 +265,13 @@ Provide clear summary:
 
 **Usage Examples**:
 - `/start` - Works on highest priority uncompleted item in TODO.md
-- `/start Execute the E2E fix plan in backlog/E2E-FIX-ALL-TESTS.md` - Works on specified backlog file
+- `/start Execute the plan in docs/PHASED-ROADMAP.md` - Works on the specified doc
 - `/start some-todo-item-name` - Works on TODO.md item matching that name
 
 **Important Guidelines**:
 - ALWAYS read CLAUDE.md and docs/learnings/INDEX.md first
 - Read relevant topic file from docs/learnings/ if item maps to specific area
 - If argument provided and it's a file path, read that file; otherwise search TODO.md for matching item
-- Use planner agent for complex tasks - don't guess at implementation
+- Use plan mode for complex tasks - don't guess at implementation
 - Ask user for clarification if item is ambiguous
 - Follow all architectural guidelines from CLAUDE.md

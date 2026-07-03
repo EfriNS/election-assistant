@@ -14,7 +14,7 @@ Read these files **in order** to refresh context:
 
 1. **`CLAUDE.md`** - Project guidelines, architecture, workflow, testing requirements
 2. **`docs/learnings/INDEX.md`** - Quick learning reference hub (Top 10 principles)
-3. **`product/REQUIREMENTS.md`** - Complete product requirements and vision
+3. **`REQUIREMENTS.md`** - Complete product requirements and vision
 
 **Purpose**: These files exist for YOU (Claude Code) to consume and apply. They change your behavior during task execution.
 
@@ -24,7 +24,7 @@ Look at the recent conversation history to understand:
 - What task were we working on before context compacted?
 - What files were we modifying?
 - What phase are we in (planning, implementing, testing)?
-- Is there a backlog/*.md file referenced?
+- Is there a `docs/*.md` design doc referenced (e.g. `docs/PHASED-ROADMAP.md`, `docs/ANALYTICS-DESIGN.md`)?
 
 **If conversation history is unclear**, check these in order:
 1. `git status` - What files are currently modified?
@@ -48,9 +48,9 @@ Based on the type of work identified in Step 2, read the relevant learning topic
 
 If current work doesn't clearly map to a topic, skip this step (INDEX.md is sufficient).
 
-## Step 4: Read Active Backlog File (If Applicable)
+## Step 4: Read Active Design Doc (If Applicable)
 
-If the conversation or git branch indicates we're working on a backlog item (e.g., branch name `docs/docker-versioning-strategy` → `backlog/DOCKER_VERSIONING.md`), read that file to understand:
+If the conversation or git branch indicates we're working on an item with a dedicated design doc (e.g., branch name `feature/analytics-dashboards` → `docs/MIXPANEL-DASHBOARDS.md`), read that file to understand:
 - Detailed requirements
 - Implementation plan
 - Context and rationale
