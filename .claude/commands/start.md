@@ -34,7 +34,7 @@ git branch --show-current
 
 **Example Extractions**:
 - "Add Slack integration" → `feature/slack-integration`
-- "Fix ChromaDB similarity bug" → `fix/chromadb-similarity-bug`
+- "Fix grounding-quote display bug" → `fix/grounding-quote-display-bug`
 - "Update API documentation" → `docs/api-documentation`
 - "Fix timeout bug + Add tests" → Prompt user (multiple tasks)
 
@@ -43,13 +43,13 @@ git branch --show-current
 *Too long:*
 ```
 Suggested branch name is too long (>40 chars):
-  fix/chromadb-similarity-calculation-bug-and-regression-tests
+  fix/grounding-quote-display-bug-when-followup-aspect-tags-mismatch
 
 Please provide shorter name:
   Suggestions:
-  - fix/chromadb-similarity
-  - fix/chromadb-bug
-  - fix/similarity-calculation
+  - fix/grounding-quote-display
+  - fix/grounding-quote-bug
+  - fix/aspect-tag-mismatch
 
 Enter name (without prefix): _______
 ```

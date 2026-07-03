@@ -7,6 +7,6 @@ Build the project and verify it compiles successfully:
    - Asset size warnings
 3. Report build status:
    - Build time
-   - Output size (dist/ directory)
+   - Output size (`.next/` directory)
    - Any warnings or issues
 4. Confirm: "✅ Build successful" or provide error details

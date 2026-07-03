@@ -1,52 +1,29 @@
 ---
-description: "Run E2E tests to verify user workflows"
+description: "Manually verify the quiz/results user flow in a browser (no automated E2E suite exists in this repo)"
 ---
 
-Run Playwright E2E tests for the CV Refinery application:
+There is no automated E2E test suite in this repo (no Playwright, no `test:e2e` script) — verify user-facing flows manually.
 
-## Quick Test (Recommended)
-Run the main complete workflow test only (fastest, covers critical paths):
-```bash
-npm run test:e2e -- e2e/cv-complete-workflow.spec.ts
-```
+## Quick Check (Recommended)
 
-Report results:
-- Number of tests passed/failed
-- Time taken
-- If failed: Mention "Check test-results/ for screenshots and error context"
+1. Start the dev server: `npm run dev`
+2. Drive the quiz flow with browser tooling (Playwright MCP or equivalent), covering:
+   - An opener answer for at least one topic, through to its AI-generated follow-up question
+   - Completing enough topics to reach the results page
+   - The results page's grounding accordion — check that matched quotes are highlighted for multiple parties, not just 1-2
+3. Watch the browser console and network tab for errors during the flow (Gemini call failures, JSON parse errors, rate-limit responses)
 
-## Full E2E Suite
-Run all E2E tests (complete workflow, error scenarios, progressive disclosure):
-```bash
-npm run test:e2e
-```
+## What to look for
 
-Report results:
-- Tests passed/failed by file
-- Total time
-- If failed: Mention specific failures and where to find reports
+- **Follow-up questions read as progression, not repetition** of the opener question (a recurring regression class — see `docs/learnings/project/VAA-DESIGN.md` items 66-70)
+- **Results grounding quotes**: multiple parties should show highlighted "matched" quotes, not just the top 1-2 — if only 1-2 show up, that's usually a taxonomy/aspect-matching regression, not a data gap
+- **No visible JSON parse / quota errors** in the console during a normal run
 
-## Available E2E Test Files
-1. **cv-complete-workflow.spec.ts** (critical path)
-   - Complete user journey: Register → Upload → Analyze → Match → Refine
-   - Multi-CV management and comparison
+## If something breaks
 
-2. **error-scenarios.spec.ts** (error handling)
-   - Invalid file uploads
-   - Network errors
-   - API failures
-
-3. **user-states-progressive-disclosure.spec.ts** (UI states)
-   - Progressive feature unlocking
-   - Empty states
-   - Onboarding flow
-
-## Debugging Failed Tests
-If tests fail, suggest:
-1. Check screenshots in `test-results/`
-2. Check error context markdown files
-3. Run with UI mode for investigation: `npm run test:e2e:ui`
-4. Run with debug mode: `npm run test:e2e:debug`
+- Check the relevant API route's Langfuse trace for the exact Gemini output that failed
+- Common root causes: unescaped Hebrew gershayim in a Gemini JSON string (fixed via `responseJsonSchema` — see CHANGELOG 2026-07-02), a grounding entry missing a required field (`provenance`/`concreteness`/`aspect`), or an expired/rate-limited Gemini key
 
 ## Note
-E2E tests require valid Supabase credentials in `.env` for authentication testing.
+
+If a real Playwright suite is ever added, replace this command with the real E2E workflow — this describes the manual substitute until then.

@@ -132,13 +132,10 @@ Wait for user response:
 **CRITICAL**: Tests must pass before merging to main.
 
 ```bash
-source .venv/bin/activate
-
 echo "Running full test suite..."
-pytest --tb=short && \
-black --check src/ tests/ && \
-ruff check src/ tests/ && \
-mypy src/
+npx vitest run && \
+npx tsc --noEmit && \
+npx eslint .
 ```
 
 **If any tests fail**:
@@ -170,10 +167,9 @@ What would you like to do?
 **If tests pass**:
 ```
 ✅ All tests passing
-  - pytest: ✅
-  - black: ✅
-  - ruff: ✅
-  - mypy: ✅
+  - vitest: ✅
+  - tsc: ✅
+  - eslint: ✅
 
 Ready to merge to main.
 ```
@@ -252,11 +248,11 @@ If code changes were made this session, verify test coverage:
 - **Identify changed components**: Review what files were modified
 - **Run relevant tests**:
   ```bash
-  # For component changes
-  npm run test:run -- ComponentName
+  # A specific test file
+  npx vitest run tests/<file>.test.ts
 
-  # For all unit tests
-  npm run test:ci
+  # Full suite
+  npm test
   ```
 - **Check results**:
   - ✅ All passing → Good to proceed
@@ -268,11 +264,12 @@ If this session included bug fixes:
 - **If NO**: Should we have? (Use decision tree from TESTING.md line 413-446)
 - **If YES**: Verify test is meaningful (covers actual bug scenario, not just "makes coverage green")
 
-### 0.3: E2E Check (For User-Facing Changes)
-- **Quick E2E Check**: `npm run test:e2e -- e2e/cv-complete-workflow.spec.ts`
-  - Run if: code changes affect user-facing features
-  - Skip if: only docs/config changes, backend-only
-- If E2E tests fail: Fix issues before proceeding with wrap-up
+### 0.3: Manual Browser Check (For User-Facing Changes)
+There is no automated E2E suite in this repo — verify manually:
+- Start the dev server (`npm run dev`) and click through the affected flow (quiz → follow-up → results) in a browser
+- Run if: code changes affect user-facing features (quiz flow, results page, PDF export)
+- Skip if: only docs/config changes, backend-only (e.g. a Slack webhook payload)
+- If something breaks: fix before proceeding with wrap-up
 
 ### 0.4: Test Coverage Note
 If tests weren't run or are failing:
@@ -339,9 +336,9 @@ Ask for EACH learning: "Would this apply to other projects?"
 - ✅ Check existing patterns before implementing (applies to all codebases)
 
 **Project-specific learnings** (add to `docs/learnings/project/`):
-- ❌ "CVs.tsx has unstable useToast dependency" (React/this codebase only)
-- ❌ "Supabase cleanup needs CASCADE DELETE" (Supabase/this schema only)
-- ❌ "Gemini edge functions have 75s cold start" (this infrastructure only)
+- ❌ "PartyResultCard's accordion needs a stable key or it collapses on re-render" (React/this codebase only)
+- ❌ "Gemini structured-output schemas must list every party+topic key as `required`" (this app's AI routes only)
+- ❌ "`lib/parties.ts` and `data/groundings/*.json` must be kept in sync when either changes" (this codebase's data model only)
 - ❌ Component-specific workarounds or configuration quirks
 
 **When in doubt**: Start with project-specific. Promote to universal later if pattern recurs across sessions.
@@ -371,8 +368,8 @@ Update `docs/learnings/project/` without hesitation:
 - Create new files as needed (e.g., `project/TESTING-PATTERNS.md` for React/Vitest specifics)
 - Add concrete examples with file:line references
 - Document workarounds and their reasons
-- Capture infrastructure quirks (cold start times, timeout requirements, etc.)
-- Reference specific technologies (Supabase, React hooks, edge functions, etc.)
+- Capture infrastructure quirks (Gemini quota/rate limits, Langfuse indexing lag, etc.)
+- Reference specific technologies (Gemini structured output, Langfuse, Upstash rate limiting, React hooks, etc.)
 
 **Project files structure** (create as needed):
 - `project/TESTING-PATTERNS.md` - Test framework specifics, mock patterns

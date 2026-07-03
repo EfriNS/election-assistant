@@ -5,31 +5,27 @@ You are assisting with a deployment. Follow this checklist systematically.
 ## Context Review
 
 First, review the current session:
-- What components/functions were changed?
+- What components/routes were changed?
 - What files were modified?
 - Was this a bug fix or new feature?
 
 ## Step 1: Test Verification
 
-**Identify what to test:**
-- Frontend component changes → `npm run test:run -- ComponentName`
-- Edge function changes → `npm run test:edge` (if Deno available)
-- Multiple changes → run all relevant test commands
-
-**Execute tests and report results:**
+**Run the full suite (this app doesn't have separate per-component test commands):**
 ```bash
-# Example for frontend component
-npm run test:run -- JobMatchingModal
+npm test           # vitest
+npx tsc --noEmit   # type check
+npm run lint       # eslint
 ```
 
 **Interpret results:**
-- ✅ All tests pass → Proceed to Step 2
-- ❌ Any tests fail → STOP, report failures to user, ask if they want to:
+- ✅ All pass → Proceed to Step 2
+- ❌ Any fail → STOP, report failures to user, ask if they want to:
   - Fix the code
   - Fix the test (if test is wrong)
   - Investigate why it failed
 
-**DO NOT PROCEED if tests are failing without user approval.**
+**DO NOT PROCEED if checks are failing without user approval.**
 
 ## Step 2: Regression Test Check
 
@@ -50,7 +46,7 @@ Ask yourself these questions:
 **If proposing a regression test:**
 - Describe what the test would verify
 - Estimate effort (e.g., "~10 minutes to add")
-- Explain value (e.g., "prevents JSON parsing errors with 2000+ char inputs")
+- Explain value (e.g., "prevents malformed JSON from an unconstrained Gemini call")
 - Ask: "Should I add this regression test?"
 
 ## Step 3: Deployment Readiness Report
@@ -60,36 +56,34 @@ Provide a clear status report:
 ```
 ✅ Pre-Deployment Checklist Complete
 
-Tests Run:
-- npm run test:run -- JobMatchingModal: ✅ 27 passing
+Checks Run:
+- vitest: ✅ N passing
+- tsc --noEmit: ✅
+- eslint: ✅
 
 Regression Test:
 - Added: [YES/NO]
 - Reason: [why added or why skipped]
 
 Changes Ready to Deploy:
-- [List files/components changed]
-
-Recommended Deployment Commands:
-- npx supabase functions deploy ai-job-analysis
-- (Frontend already built)
+- [List files/routes changed]
 
 Manual Testing Recommendation:
-- [Suggest what user should test manually after deploy]
+- [Suggest what user should click through manually after deploy — e.g. the quiz flow for the changed topic]
 ```
 
 ## Step 4: Deployment Guidance
 
-**If user approves deployment:**
+This app deploys on Vercel via **git push** — there is no manual deploy command to run.
 
-1. **Edge functions**: Guide through `npx supabase functions deploy [name]`
-2. **Frontend**: Remind that build is already complete (if applicable)
-3. **Database migrations**: Check if any migrations need to run
-4. **Manual testing**: Recommend critical user flows to verify
+**If user approves deployment:**
+1. Confirm the branch: pushing a feature branch creates a **preview** deployment; pushing/merging to `main` deploys to **production**.
+2. Never run `vercel deploy` manually — GitHub push is the only trigger (see `feedback_vercel_deploy` in memory / the `vercel:deploy` skill if a manual deploy is genuinely needed).
+3. If new environment variables were introduced, confirm they're set in the Vercel project settings (not just `.env.local`) before pushing to main.
 
 **Post-deployment:**
-- Suggest what to test manually
-- Remind about monitoring (error logs, user feedback)
+- Suggest what to test manually on the live preview/production URL
+- Remind about monitoring: Langfuse traces for AI routes, `QUOTA_SLACK_WEBHOOK_URL`/`FEEDBACK_SLACK_WEBHOOK_URL` alerts, Mixpanel funnel
 
 ---
 
@@ -104,5 +98,5 @@ Manual Testing Recommendation:
 
 Consult these before making recommendations:
 - `CLAUDE.md` - Testing & Deployment Workflow section
-- `docs/learnings/TESTING.md` - 47 principles from 25+ sessions
-- Specifically: "When to Add Regression Tests" (CLAUDE.md line 78-95)
+- `docs/learnings/universal/TESTING.md` - testing principles
+- `docs/learnings/project/VAA-DESIGN.md` - project-specific patterns (grounding data, scoring, AI routes)

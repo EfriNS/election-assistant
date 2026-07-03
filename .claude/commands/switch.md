@@ -87,7 +87,7 @@ Available branches:
 
 Local Branches:
   1. feature/slack-integration (2 hours ago) - "Add Slack notification system"
-  2. fix/chromadb-bug (1 day ago) - "Fix similarity calculation bug"
+  2. fix/grounding-quote-display-bug (1 day ago) - "Fix aspect-tag mismatch hiding quotes"
   3. feature/redis-caching (3 days ago) - "Add Redis caching layer"
 
 Remote Branches (not checked out):

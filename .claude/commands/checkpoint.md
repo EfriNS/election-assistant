@@ -156,21 +156,15 @@ Wait for user, then continue.
 Run comprehensive test suite:
 
 ```bash
-# Activate venv if not already active
-source .venv/bin/activate
-
 # Run all quality checks
-echo "Running pytest..."
-pytest --tb=short
+echo "Running vitest..."
+npx vitest run
 
-echo "Running black..."
-black --check src/ tests/
+echo "Running tsc..."
+npx tsc --noEmit
 
-echo "Running ruff..."
-ruff check src/ tests/
-
-echo "Running mypy..."
-mypy src/
+echo "Running eslint..."
+npx eslint .
 ```
 
 **Collect results**:
@@ -202,7 +196,7 @@ mypy src/
 - Exit command
 
 **If all tests pass**:
-- "✅ All tests passing (pytest + black + ruff + mypy)"
+- "✅ All tests passing (vitest + tsc + eslint)"
 - Proceed to Step 6
 
 ## Step 6: Commit Changes

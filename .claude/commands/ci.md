@@ -1,21 +1,16 @@
-Run the full CI pipeline locally (simulates GitHub Actions):
+Run the full local verification pipeline (there is no GitHub Actions workflow in this repo — this simulates the mandatory pre-push checklist from CLAUDE.md):
 
 1. **Lint**: `npm run lint`
    - Report any linting errors
-2. **Unit Tests**: `npm run test:ci`
-   - Report test results (unit tests only)
-3. **I18n Check**: `npm run i18n:check`
-   - Verify translation completeness
+2. **Type check**: `npx tsc --noEmit`
+   - Report any TypeScript errors
+3. **Unit Tests**: `npm test`
+   - Report test results (pass/fail counts, duration)
 4. **Build**: `npm run build`
    - Verify successful compilation
-5. **E2E Tests**: `npm run test:e2e`
-   - Run Playwright end-to-end tests
-   - Report test results (pass/fail counts)
-   - If tests fail, mention: "Check playwright-report/ for details"
-6. **Summary**:
+5. **Summary**:
    - List all passed/failed steps
-   - Overall CI status: ✅ PASS or ❌ FAIL
+   - Overall status: ✅ PASS or ❌ FAIL
    - Time taken for full pipeline
-   - Total test count (unit + E2E)
 
-Note: This matches the GitHub Actions CI workflow exactly.
+Note: there is no automated E2E suite in this repo — for user-facing changes, verify manually with `npm run dev` and a browser (see `/test-e2e`).
