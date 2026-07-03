@@ -1,30 +1,38 @@
 import { describe, it, expect, vi } from "vitest";
 
-// Must mock before importing the module under test
-vi.mock("@/lib/groundings", () => ({
-  GROUNDINGS: {
-    partyA: {
-      platformAvailable: true,
-      topics: {
-        security: [
-          { text: "Text diplomacy", aspect: "diplomacy", absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01" },
-          { text: "Text military",  aspect: "military",  absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01" },
-          { text: "Text budget",    aspect: "budget",    absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", contrary: "מתנגד לתקציב הביטחון" },
-          { text: "",               aspect: "empty",     absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01" },
-          { text: "Text absent",    aspect: "absent",    absent: true,  sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01" },
-        ],
-        economy: [
-          { text: "Text growth", aspect: "growth", absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01" },
-        ],
+// Must mock before importing the module under test.
+// Keep the real compareEntryQuality/derivePartySourceQuality/getBestEvidenceForTopic
+// implementations (via importOriginal) — only the data and getTopicGroundings are
+// stubbed. All mock entries share the same provenance/concreteness so the original-
+// order-preserving assertions below still hold (stable sort ties break to source order).
+vi.mock("@/lib/groundings", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/groundings")>();
+  return {
+    ...actual,
+    GROUNDINGS: {
+      partyA: {
+        platformAvailable: true,
+        topics: {
+          security: [
+            { text: "Text diplomacy", aspect: "diplomacy", absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+            { text: "Text military",  aspect: "military",  absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+            { text: "Text budget",    aspect: "budget",    absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", contrary: "מתנגד לתקציב הביטחון", provenance: "official-current", concreteness: "generic" },
+            { text: "",               aspect: "empty",     absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+            { text: "Text absent",    aspect: "absent",    absent: true,  sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+          ],
+          economy: [
+            { text: "Text growth", aspect: "growth", absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+          ],
+        },
+      },
+      partyB: {
+        platformAvailable: false,
+        topics: {},
       },
     },
-    partyB: {
-      platformAvailable: false,
-      topics: {},
-    },
-  },
-  getTopicGroundings: vi.fn(),
-}));
+    getTopicGroundings: vi.fn(),
+  };
+});
 
 vi.mock("@/lib/topics", () => ({
   TOPIC_LABELS: { security: "ביטחון", economy: "כלכלה" },

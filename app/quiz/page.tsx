@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
-import { getGroundingsForTopic } from "@/lib/groundings";
+import { getGroundingsForTopic, getBestEvidenceForTopic } from "@/lib/groundings";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
@@ -368,12 +368,14 @@ function QuizInner() {
         .map(([id]) => id)
     );
 
+    // Best evidence only per party: official material when it exists, third-party/
+    // joint-list sources only as a fallback — same rule as scoring and quoting.
     const partyGroundings = PARTIES
       .filter((p) => closePartyIds.has(p.id) && (groundingMap[p.id]?.length ?? 0) > 0)
       .map((p) => ({
         partyId: p.id,
         partyName: p.name,
-        entries: groundingMap[p.id].map((e) => ({
+        entries: getBestEvidenceForTopic(p.id, topicId).map((e) => ({
           text: e.text,
           aspect: e.aspect,
           contrary: e.contrary,
@@ -387,12 +389,26 @@ function QuizInner() {
     const uncoveredKeyDims = (TOPIC_KEY_DIMENSIONS[topicId] ?? [])
       .filter((d) => !coveredAspects.includes(d));
 
+    // Prefer a dimension backed by official party material; fall back to any
+    // evidence (joint-list/third-party) only if no uncovered dimension has official backing.
     const suggestedNextDimension: string | null =
+      uncoveredKeyDims.find((dim) =>
+        [...closePartyIds].some((pid) =>
+          (groundingMap[pid] ?? []).some(
+            (e) =>
+              e.aspect === dim &&
+              !e.absent &&
+              (e.provenance === "official-current" || e.provenance === "official-outdated")
+          )
+        )
+      ) ??
       uncoveredKeyDims.find((dim) =>
         [...closePartyIds].some((pid) =>
           (groundingMap[pid] ?? []).some((e) => e.aspect === dim && !e.absent)
         )
-      ) ?? uncoveredKeyDims[0] ?? null;
+      ) ??
+      uncoveredKeyDims[0] ??
+      null;
 
     const res = await fetch("/api/follow-up", {
       method: "POST",

@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
-import { GROUNDINGS } from "@/lib/groundings";
+import { GROUNDINGS, derivePartySourceQuality, compareEntryQuality, getBestEvidenceForTopic } from "@/lib/groundings";
 import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
@@ -55,15 +55,19 @@ export function buildGroundingsForParties(
       // entries are surfaced first (stable sort keeps the rest in source order).
       const entries: GroundingEntryLite[] = raw
         .filter((e) => !e.absent && e.text.length > 0)
+        .map((e) => ({ ...e, matched: coveredAspects.includes(e.aspect) }))
+        // Matched-first, then best-evidence-first (official > joint-list > third-party,
+        // quantified > named-mechanism > specific-stance > generic) within each group.
+        .sort((a, b) => Number(b.matched) - Number(a.matched) || compareEntryQuality(a, b))
         .map((e) => ({
           text: e.text,
           aspect: e.aspect,
           sourceUrl: e.sourceUrl,
           dateRetrieved: e.dateRetrieved,
+          provenance: e.provenance,
           ...(e.contrary ? { contrary: e.contrary } : {}),
-          ...(coveredAspects.includes(e.aspect) ? { matched: true } : {}),
-        }))
-        .sort((a, b) => Number(b.matched ?? false) - Number(a.matched ?? false));
+          ...(e.matched ? { matched: true } : {}),
+        }));
       if (entries.length > 0) {
         topics.push({ topicId, topicLabel: TOPIC_LABELS[topicId] ?? topicId, entries });
       }
@@ -71,7 +75,7 @@ export function buildGroundingsForParties(
     result[partyId] = {
       platformAvailable: pg.platformAvailable,
       ...(pg.platformLabel ? { platformLabel: pg.platformLabel } : {}),
-      ...(pg.sourceQuality ? { sourceQuality: pg.sourceQuality } : {}),
+      sourceQuality: derivePartySourceQuality(pg),
       topics,
     };
   }
@@ -128,10 +132,11 @@ export async function POST(req: NextRequest) {
 
   // Build grounding context for the AI prompt (top 3 only, to limit token usage)
   const top3GroundingContext = top3.map((p) => {
-    const pg = GROUNDINGS[p.id];
-    if (!pg || answeredTopicIds.length === 0) return "";
+    if (!GROUNDINGS[p.id] || answeredTopicIds.length === 0) return "";
     const snippets = answeredTopicIds.flatMap((tid) => {
-      const entries = (pg.topics[tid] ?? []).filter((e) => !e.absent && e.text.length > 0).slice(0, 2);
+      // Best evidence only: official material when it exists, third-party/joint-list
+      // only as a fallback — never mixed in alongside official quotes.
+      const entries = getBestEvidenceForTopic(p.id, tid).slice(0, 2);
       return entries.map((e) => `[${p.name} / ${TOPIC_LABELS[tid] ?? tid}]: "${e.text}"`);
     });
     return snippets.slice(0, 6).join("\n"); // cap per party

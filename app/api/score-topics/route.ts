@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, getTopicGroundings } from "@/lib/groundings";
+import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/groundings";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
 
@@ -69,9 +69,9 @@ export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const groundingBlock = topics
     .map((t) => {
       const partyLines = PARTIES.map((party) => {
-        const entries = getTopicGroundings(party.id, t.topicId).filter(
-          (e) => !e.absent && e.text.length > 0
-        );
+        // Official material only when it exists; third-party/joint-list sources
+        // are used only as a fallback for parties with no official platform text.
+        const entries = getBestEvidenceForTopic(party.id, t.topicId);
         if (entries.length === 0) return null;
         return entries
           .map((e) => `  ${party.name} (היבט: ${e.aspect}): "${e.text}"`)

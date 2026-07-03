@@ -1,11 +1,14 @@
 // Shared types for the grounding evidence returned from /api/results.
 // Used by both UnifiedResultsPage and PartyResultCard.
 
+import type { Provenance } from "./groundings";
+
 export type GroundingEntryLite = {
   text: string;
   aspect: string;
   sourceUrl: string;
   dateRetrieved: string;
+  provenance: Provenance;
   contrary?: string;
   // True when this entry's aspect was the one probed by a follow-up question.
   matched?: boolean;

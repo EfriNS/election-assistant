@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "export:questions": "tsx scripts/export-questions-review.ts",
+    "export:grounding-review": "tsx scripts/render-grounding-review.ts",
     "score:auto": "tsx --env-file .env.local scripts/auto-score.ts",
     "score:apply": "tsx scripts/apply-scores.ts",
     "score:apply:write": "tsx scripts/apply-scores.ts --apply",
