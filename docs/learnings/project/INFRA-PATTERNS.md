@@ -25,6 +25,14 @@ Cron schedule for end-of-day quota summary: `0 6 * * *` (06:00 UTC — 1 hour be
 
 **Watch out**: A schedule of `0 0 * * *` (midnight UTC) fires when `todayStart === now`, making the Langfuse query window 0 seconds wide → 0 tokens → nothing to report. Always schedule quota checks well within the quota day.
 
+### "Since UTC midnight" windows silently exclude non-UTC daytime usage (#first:2026-07-03)
+
+The `0 0 * * *` fix above (moving the cron to `0 6 * * *`) only fixed the *0-second* window case. It left a subtler version of the same bug: the query window was `[UTC midnight, now]`, so on a cron firing at 06:00 UTC that window is *always* exactly `00:00–06:00 UTC` — 6 fixed hours, not a rolling day. For a team in Israel (UTC+2/+3), that's 2–9 AM local: the one stretch when the app has no traffic. Verified against real Langfuse data across 4 consecutive days: full-day generation counts were 8/100/17/14, but the `00:00–06:00 UTC` slice was **0 every single day** — the report wasn't broken, it was accurately summarizing an always-empty window.
+
+**Rule**: A once-daily cron reporting "usage since X" should query a **rolling window** (`now - 24h` to `now`), not "since the start of the UTC calendar day." The UTC-midnight boundary has no relationship to either the app's usage timezone or (usually) the upstream quota's own reset time — anchoring the query to it is almost always wrong for a non-UTC audience.
+
+**How this was caught**: user reported the Slack message showed "0 requests" despite knowing Gemini had been called recently. Before touching code, queried Langfuse directly (via `langfuse-cli`) for the same time window the route computes, across several past days, to confirm the window itself — not a delivery/auth/credentials issue — was empty every time. Cheap way to distinguish "this specific run had no traffic" from "this window can structurally never have traffic."
+
 ### Async threshold alerts vs. cron (#first:2026-06-28)
 
 Real-time threshold alerts (e.g., "80% of quota used") should be sent **by the app asynchronously** during actual API calls — not by a daily cron. Doing it in a daily cron means you only find out at 06:00 UTC regardless of when the threshold was crossed.

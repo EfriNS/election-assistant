@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-07-03 — Fix: quota-check Slack report always showed ~0 requests (commit `e5aee84`)
+
+### Context
+
+User received the daily Gemini quota Slack summary showing "Requests: 0 / 500 (0.0%)" despite knowing the app had been used recently. `app/api/quota-check/route.ts` queries Langfuse for `GENERATION` observations and posts the count/tokens to Slack via a daily Vercel cron (`0 6 * * *` = 06:00 UTC = 9 AM Israel time).
+
+### Root cause
+
+The query window was `[UTC midnight, now]`. Since the cron always fires at 06:00 UTC, that window was in practice always exactly `00:00–06:00 UTC` — 2–9 AM Israel time, the one stretch when the app has essentially no traffic. This wasn't a one-off fluke: verified against real Langfuse data (via `langfuse-cli`) across 4 consecutive days — full-day generation counts were 8, 100, 17, and 14, but the `00:00–06:00 UTC` slice was **0 every single day**. The Slack delivery, auth, and Langfuse credentials were all working correctly; the report was accurately summarizing a window that could structurally never contain usage.
+
+This is a more subtle recurrence of a bug already fixed once before (commit `d5b01c9`, 2026-06-28): that fix addressed a midnight-UTC cron producing a literal 0-second window, but left the underlying "since UTC midnight" framing in place, which degrades to "6 fixed hours of dead time" rather than 0 seconds — still effectively empty for a non-UTC user base.
+
+### Fix
+
+`app/api/quota-check/route.ts` — replaced the UTC-midnight window (`todayStart` = `Date.UTC(year, month, date)`) with a rolling 24-hour window (`now - 24h` to `now`), which is what a once-daily cron actually needs to cover a full day of usage regardless of timezone.
+
+`tests/quotaCheck.test.ts` — added a regression test that pins system time to shortly after UTC midnight and asserts the query window passed to `fetchObservations` still spans a full 24 hours (the exact scenario the old code got wrong).
+
+`docs/learnings/project/INFRA-PATTERNS.md` — documented the "since UTC midnight" anti-pattern under Cron Jobs, alongside the original 0-second-window entry it's a variant of.
+
+### Verification
+
+262/262 tests passing, `tsc --noEmit` and `eslint .` both clean. Confirmed via direct Langfuse queries (not just code reading) that the old window was empty on every one of the last 4 days before applying the fix.
+
 ## 2026-07-03 — Repo housekeeping: removed stale Contendre/CV-Refinery boilerplate (commits `8da4d46`, `896e347`, `feaf948`, `ef4df3c`)
 
 ### Context
