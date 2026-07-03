@@ -264,14 +264,7 @@ If this session included bug fixes:
 - **If NO**: Should we have? (Use decision tree from TESTING.md line 413-446)
 - **If YES**: Verify test is meaningful (covers actual bug scenario, not just "makes coverage green")
 
-### 0.3: Manual Browser Check (For User-Facing Changes)
-There is no automated E2E suite in this repo — verify manually:
-- Start the dev server (`npm run dev`) and click through the affected flow (quiz → follow-up → results) in a browser
-- Run if: code changes affect user-facing features (quiz flow, results page, PDF export)
-- Skip if: only docs/config changes, backend-only (e.g. a Slack webhook payload)
-- If something breaks: fix before proceeding with wrap-up
-
-### 0.4: Test Coverage Note
+### 0.3: Test Coverage Note
 If tests weren't run or are failing:
 - Note this in retrospective (Step 1) under "What could be improved"
 - Consider if testing workflow needs adjustment
@@ -420,25 +413,6 @@ Provide concise summary:
 
 📦 Commits: [commit hashes if any]
 ```
-
-## Step 7: Clean Up Session State
-
-If `ops/SAVED.md` exists, delete it:
-
-```bash
-# Check if file exists
-if [ -f ops/SAVED.md ]; then
-  rm ops/SAVED.md
-  echo "🧹 Cleaned up ops/SAVED.md (session complete, file no longer needed)"
-fi
-```
-
-**Rationale**:
-- Session is complete and wrapped up
-- Saved state is now obsolete
-- Prevents confusion in future git operations
-- Prevents stale state from being accidentally used in future `/continue` commands
-- If user runs `/save` again, it will create a fresh snapshot
 
 ---
 

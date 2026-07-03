@@ -543,15 +543,16 @@ describe("aspect taxonomy conformance", () => {
 /checkpoint → pushes to GitHub
 
 # Afternoon - Claude Code Web
-/continue → pulls feature/slack-integration
+git checkout feature/slack-integration  # or `git pull` if already checked out
 ... work 1 hour ...
 /checkpoint → pushes updates
 
 # Evening - Local WSL
-git pull origin feature/slack-integration (or just /start and continue)
+git pull origin feature/slack-integration
 ... finish work ...
 /wrapup → merges to main
 ```
+(Within the same interface, Claude Code's native session resume restores full conversation context directly — no repo-level step needed.)
 
 **Parallel Branch Workflow**:
 ```bash
@@ -594,7 +595,7 @@ git pull origin feature/slack-integration (or just /start and continue)
   6. Commit and push documentation changes
   7. Report completion summary
 - **Session start**: Use `/start` command (reads TODO, loads relevant learnings, **creates feature branch**, executes or plans)
-- **Crash recovery**: Use `/continue` command (restores from ops/SAVED.md if it exists)
+- **Crash recovery**: Use Claude Code's native session resume (`claude --resume` / `--continue`) — it restores the full conversation transcript, which is more complete than a hand-written summary
 - **Learning system**:
   - Universal learnings in `docs/learnings/universal/` (from template, rarely changes)
   - Project learnings in `docs/learnings/project/` (evolves with this project)

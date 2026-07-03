@@ -103,6 +103,6 @@ After reading all files, provide a concise summary:
 
 - This command is **read-only** - it doesn't modify files or create branches
 - Use `/start` if you need to begin work on a new TODO item (includes branching)
-- Use `/continue` if recovering from a crash (restores from ops/SAVED.md)
+- If recovering from a crash, use Claude Code's native session resume (`claude --resume`/`--continue`) — it restores the full conversation transcript
 - This command is lightweight - safe to run multiple times per session
 - **Continue current work** - don't look for "next task" in TODO.md

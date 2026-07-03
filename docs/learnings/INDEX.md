@@ -271,11 +271,6 @@ These patterns appear across multiple topic areas:
 3. Date tag format: `(#first:YYYY-MM-DD #reinforced:YYYY-MM-DD,YYYY-MM-DD)`
 4. Update this INDEX.md only if new cross-cutting theme emerges
 
-### For `/continue` Command (Crash Recovery)
-1. Read this INDEX.md for quick context
-2. Optionally scan topic relevant to saved work context
-3. Use principles to inform continuation strategy
-
 ---
 
 ## Ongoing Maintenance
