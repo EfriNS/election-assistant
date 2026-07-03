@@ -211,6 +211,20 @@ grep -r "related-function" src/
 
 ---
 
+### Example 6: Same Root-Cause Bug Recurring in a Second Instance Before It Was Generalized (#2026-07-03)
+
+**Initial Diagnosis**: A toggle control (tone: ענייני/זורם) in an interactive HTML mockup showed no content by default — nothing appeared until the user clicked a button.
+
+**Root Cause**: The default-visible element's CSS relied on `[data-tone-text].shown` (a real CSS *class* `shown`), but the markup only ever set `data-tone-text="formal shown"` — a plain *attribute value* containing the word "shown" as a substring. The two look similar but are unrelated selectors: the class was never actually applied by anything except the click handler, so before any click, nothing matched.
+
+**Fix Applied**: Removed that specific toggle from the mockup (its own issue — not worth the friction).
+
+**Recurrence**: A *second*, structurally identical toggle (depth: ממוקד/מעמיק) elsewhere in the same file had the exact same bug — same wrong selector pattern, same symptom (blank until clicked) — caught only when the user found it independently in a later review pass.
+
+**Lesson**: Fixing one instance of a bug by removing/patching it locally doesn't generalize the fix. When a bug's root cause is a *pattern* (here: relying on a CSS selector to match a raw attribute-value substring as a stand-in for a JS-managed class), audit the whole file for other instances of the same pattern immediately — don't wait for the user to find the next one. The durable fix was making initialization run through the *same* function used for click updates (one `applyDepth()` call at load, driven by whichever control is marked active), rather than depending on the markup to encode the correct default state at all.
+
+---
+
 ## When to Apply These Principles
 
 ### Before Starting Debugging
@@ -248,6 +262,6 @@ grep -r "related-function" src/
 
 ---
 
-**Last Updated**: 2025-12-07 (added principle #5: verify volume state before destructive cleanup)
-**Sessions Covered**: 20 retrospectives (2025-10-07 to 2025-12-07)
+**Last Updated**: 2026-07-03 (added Example 6: same root-cause bug recurring before the fix was generalized)
+**Sessions Covered**: 21 retrospectives (2025-10-07 to 2026-07-03)
 **Principles Count**: 19

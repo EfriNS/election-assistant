@@ -192,6 +192,7 @@ These patterns appear across multiple topic areas:
 - CI-CD: Check CI logs match intended strategy (timing anomalies)
 - Debugging: Verify database state after cleanup, not script messages
 - Process: Verify implementation before documenting
+- Design: A redesign proposal must be verified against a real baseline, not just ranked against other candidate redesigns — otherwise the comparison can't conclude "no change needed" (see `project/VAA-DESIGN.md` item 73)
 
 ### 2. No Workarounds Philosophy
 **Appears in**: ARCHITECTURE, DEBUGGING, TESTING
@@ -289,9 +290,9 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2026-07-02 (closed the aspect-taxonomy loop in project/VAA-DESIGN.md — item 60's "not yet implemented" fix now shipped, items 68-70 on taxonomy-design validation and static-vs-dynamic constraint ownership; updated project/AI-INTEGRATION.md — corrected the 2026-06-30 `responseMimeType`-only JSON fix, now documents `responseJsonSchema` as the actual fix for Hebrew-acronym escaping failures; added project/INFRA-PATTERNS.md section on Vercel Sensitive env vars, Langfuse indexing lag, and env-value comparison pitfalls; added universal ARCHITECTURE #17 and AI-PROMPTS #7; reinforced universal DEBUGGING #20)
+**Last Updated**: 2026-07-03 (UX/UI review exploration — added project/VAA-DESIGN.md items 73-75: always include a real baseline when comparing design alternatives, a validated interaction mechanic sharply limits how much "journey" redesign is actually available, and concluding "no redesign needed" after a good-faith exploration is a valid outcome; added universal DEBUGGING.md Example 6 — a toggle-visibility bug recurred in a second instance before its root cause was generalized; added a Design manifestation to Cross-Cutting Theme 1 (Verification Discipline))
 
-**Previously**: 2026-07-01 (added project/ANALYTICS-PATTERNS.md — Mixpanel MCP server reliability quirks, free-tier report cap, event schema gotchas; reinforced DEBUGGING #1 — tool error responses can be false negatives, not just success messages; added PROCESS #41 — verify branch before committing in shared/concurrent-session working directories)
+**Previously**: 2026-07-02 (closed the aspect-taxonomy loop in project/VAA-DESIGN.md — item 60's "not yet implemented" fix now shipped, items 68-70 on taxonomy-design validation and static-vs-dynamic constraint ownership; updated project/AI-INTEGRATION.md — corrected the 2026-06-30 `responseMimeType`-only JSON fix, now documents `responseJsonSchema` as the actual fix for Hebrew-acronym escaping failures; added project/INFRA-PATTERNS.md section on Vercel Sensitive env vars, Langfuse indexing lag, and env-value comparison pitfalls; added universal ARCHITECTURE #17 and AI-PROMPTS #7; reinforced universal DEBUGGING #20)
 **Structure Change (2026-07-03)**: `project/` had been inherited from an unrelated Python/MCP-server project template ("Contendre") and never fully genericized — files with nothing salvageable for this Next.js app were deleted (`CONFIG-PATTERNS.md`, `DOCKER-PATTERNS.md`, `MCP-TESTING-PATTERNS.md`, `SCRAPING-PATTERNS.md`, `DOCUMENTATION-WORKFLOW.md`); `AI-INTEGRATION.md` had its real election-assistant section kept and its stale Python section removed. Remaining `project/` files (`VAA-DESIGN.md`, `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`) are genuinely about this project. `universal/` was left untouched — it's explicitly meant to hold generic, template-level principles regardless of which project's examples illustrate them.
 
 **Structure Change (2025-01-07)**:
