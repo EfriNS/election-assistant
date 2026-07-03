@@ -44,7 +44,8 @@ export default function AboutPage() {
         <section className="space-y-2">
           <h2 className="text-base font-semibold text-gray-800">פרטיות</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
-            התשובות אינן נשמרות ואינן מקושרות אליך. אין צורך בהתחברות ואין איסוף נתונים אישיים.
+            אין צורך בהתחברות, ותשובותיכם בשאלון אינן נשמרות ואינן מקושרות לזהותכם. האתר כן משתמש בכלי אנליטיקס אנונימיים לשיפור הכלי —{" "}
+            <Link href="/terms" className="underline hover:text-gray-800">הפירוט המלא כאן</Link>.
           </p>
         </section>
 
@@ -69,7 +70,10 @@ export default function AboutPage() {
           </ul>
         </section>
 
-        <div className="pt-4 border-t border-gray-100">
+        <div className="pt-4 border-t border-gray-100 space-x-3 space-x-reverse">
+          <Link href="/terms" className="text-xs text-gray-400 underline hover:text-gray-600">
+            תנאי שימוש ופרטיות
+          </Link>
           <a
             href="https://github.com/EfriNS/election-assistant"
             target="_blank"

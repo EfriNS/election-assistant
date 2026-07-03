@@ -316,6 +316,12 @@ export default function UnifiedResultsPage({
             </div>
           )}
         </div>
+
+        <div className="mt-2 text-center">
+          <a href="/terms" className="text-xs text-gray-400 hover:text-gray-600">
+            תנאי שימוש ופרטיות
+          </a>
+        </div>
       </div>
     </main>
   );
