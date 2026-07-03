@@ -1,0 +1,2089 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>סקירת מקורות עגינה — provenance × concreteness</title>
+<style>
+:root {
+  --paper: #F1F2ED; --surface: #FFFFFF; --ink: #202523; --ink-soft: #55605A; --line: #DBDED4;
+  --accent: #2F4A40; --accent-soft: #E4E9E4;
+  --p1: #2F4A40; --p2: #5C7A6E; --p3: #8FA69B; --p4: #B79A72;
+  --c1: #2F4A40; --c2: #5C7A6E; --c3: #8FA69B; --c4: #B0B6AE;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 0.4rem; }
+.subtitle { color: var(--ink-soft); font-size: 0.95rem; max-width: 70ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin-top: 1.1rem; font-size: 0.8rem; color: var(--ink-soft); }
+.legend .dot { display:inline-block; width:0.6rem; height:0.6rem; border-radius:2px; margin-left:0.4rem; vertical-align:-1px; }
+.stats { display: flex; gap: 1.2rem; margin: 1.5rem 0 2rem; font-variant-numeric: tabular-nums; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.85rem 1.1rem; }
+.stat .num { font-size: 1.5rem; font-weight: 700; color: var(--accent); display:block; }
+.stat .label { font-size: 0.74rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+.summarybox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.4rem; margin-bottom: 2.2rem; }
+.sumrow { display: grid; grid-template-columns: 10rem 1fr 6rem 5rem; align-items: center; gap: 1rem; padding: 0.65rem 0.9rem; text-decoration: none; color: var(--ink); border-radius: 8px; }
+.sumrow:hover { background: var(--accent-soft); }
+.sumname { font-weight: 600; font-size: 0.9rem; }
+.bar { display: flex; height: 0.5rem; border-radius: 4px; overflow: hidden; background: var(--line); }
+.bar .seg { display: inline-block; height: 100%; }
+.seg.p1 { background: var(--p1); } .seg.p2 { background: var(--p2); } .seg.p3 { background: var(--p3); } .seg.p4 { background: var(--p4); }
+.sumcounts, .sumquality { font-size: 0.75rem; color: var(--ink-soft); white-space: nowrap; }
+details.party { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+summary { cursor: pointer; padding: 0.95rem 1.3rem; display: flex; align-items: center; gap: 0.8rem; font-weight: 600; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▸"; color: var(--ink-soft); transition: transform 0.15s ease; font-size: 0.78rem; }
+details[open] summary::before { transform: rotate(90deg); }
+.partylabel { font-weight: 400; color: var(--ink-soft); font-size: 0.8rem; }
+.partyquality { font-size: 0.76rem; color: var(--ink-soft); background: var(--accent-soft); padding: 0.15rem 0.55rem; border-radius: 999px; }
+.partycount { margin-inline-start: auto; font-size: 0.76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 0.83rem; }
+thead th { text-align: right; padding: 0.55rem 0.85rem; background: var(--accent-soft); color: var(--ink-soft); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
+tbody tr { border-top: 1px solid var(--line); }
+tbody tr:hover { background: #FAFAF7; }
+td { padding: 0.6rem 0.85rem; vertical-align: top; }
+.colTopic { white-space: nowrap; color: var(--ink-soft); font-size: 0.78rem; }
+.colText { max-width: 34rem; }
+.colTier, .colConc { white-space: nowrap; }
+.colDomain { white-space: nowrap; }
+.domain { font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 0.7rem; color: var(--ink-soft); }
+.chip { display: inline-block; padding: 0.16rem 0.5rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; color: white; white-space: nowrap; }
+.chip.p1 { background: var(--p1); } .chip.p2 { background: var(--p2); } .chip.p3 { background: var(--p3); } .chip.p4 { background: var(--p4); }
+.subchip { display: inline-block; padding: 0.14rem 0.5rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; border: 1.5px solid; white-space: nowrap; }
+.subchip.c1 { color: var(--c1); border-color: var(--c1); } .subchip.c2 { color: var(--c2); border-color: var(--c2); }
+.subchip.c3 { color: var(--c3); border-color: var(--c3); } .subchip.c4 { color: var(--c4); border-color: var(--c4); }
+footer { margin-top: 2.5rem; font-size: 0.76rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>סקירת מקורות עגינה — provenance × concreteness</h1>
+    <p class="subtitle">
+      כל ציטוט מדורג בשני צירים בלתי-תלויים: <strong>provenance</strong> — מי כתב את המסמך
+      (מפלגה עצמה עדכני/מיושן, שותפה ברשימה, או צד שלישי) — ו<strong>concreteness</strong> — עד כמה
+      הטענה הספציפית ניתנת לבדיקה (כמותית ← מנגנון בשם ← עמדה ברורה ← כללי). נבנה ישירות מ־
+      <code>data/groundings/*.json</code> דרך <code>lib/groundings.ts</code> — אין כאן נתון ידני,
+      כך שהעמוד אף פעם לא יכול לצאת מסונכרן מהנתונים בפועל.
+    </p>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--p1)"></span>רשמי · עדכני</span>
+      <span><span class="dot" style="background:var(--p2)"></span>רשמי · מיושן</span>
+      <span><span class="dot" style="background:var(--p3)"></span>שותפה ברשימה</span>
+      <span><span class="dot" style="background:var(--p4)"></span>צד שלישי</span>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><span class="num">257</span><span class="label">סה"כ ציטוטים</span></div>
+    <div class="stat"><span class="num">10</span><span class="label">מפלגות</span></div>
+  </div>
+
+  <div class="summarybox">
+    <a class="sumrow" href="#p-hadash">
+      <span class="sumname">חד&quot;ש-תע&quot;ל</span>
+      <div class="bar"><span class="seg p1" style="width:89.6%" title="רשמי · עדכני: 43"></span><span class="seg p3" style="width:4.2%" title="שותפה ברשימה: 2"></span><span class="seg p4" style="width:6.3%" title="צד שלישי: 3"></span></div>
+      <span class="sumcounts">48 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a>
+    <a class="sumrow" href="#p-raam">
+      <span class="sumname">רע&quot;ם (עבאס)</span>
+      <div class="bar"><span class="seg p4" style="width:100.0%" title="צד שלישי: 19"></span></div>
+      <span class="sumcounts">19 ציטוטים</span>
+      <span class="sumquality">צד שלישי</span>
+    </a>
+    <a class="sumrow" href="#p-democrats">
+      <span class="sumname">הדמוקרטים</span>
+      <div class="bar"><span class="seg p1" style="width:100.0%" title="רשמי · עדכני: 34"></span></div>
+      <span class="sumcounts">34 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a>
+    <a class="sumrow" href="#p-beyahad">
+      <span class="sumname">ביחד (בנט / לפיד)</span>
+      <div class="bar"><span class="seg p1" style="width:100.0%" title="רשמי · עדכני: 20"></span></div>
+      <span class="sumcounts">20 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a>
+    <a class="sumrow" href="#p-yashar">
+      <span class="sumname">ישר! (איזנקוט)</span>
+      <div class="bar"><span class="seg p1" style="width:100.0%" title="רשמי · עדכני: 26"></span></div>
+      <span class="sumcounts">26 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a>
+    <a class="sumrow" href="#p-beitenu">
+      <span class="sumname">ישראל ביתנו</span>
+      <div class="bar"><span class="seg p1" style="width:100.0%" title="רשמי · עדכני: 27"></span></div>
+      <span class="sumcounts">27 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a>
+    <a class="sumrow" href="#p-likud">
+      <span class="sumname">ליכוד</span>
+      <div class="bar"><span class="seg p2" style="width:100.0%" title="רשמי · מיושן: 15"></span></div>
+      <span class="sumcounts">15 ציטוטים</span>
+      <span class="sumquality">מיושן</span>
+    </a>
+    <a class="sumrow" href="#p-shas">
+      <span class="sumname">ש&quot;ס</span>
+      <div class="bar"><span class="seg p2" style="width:91.3%" title="רשמי · מיושן: 21"></span><span class="seg p4" style="width:8.7%" title="צד שלישי: 2"></span></div>
+      <span class="sumcounts">23 ציטוטים</span>
+      <span class="sumquality">מיושן</span>
+    </a>
+    <a class="sumrow" href="#p-yahadut-hatorah">
+      <span class="sumname">יהדות התורה</span>
+      <div class="bar"><span class="seg p4" style="width:100.0%" title="צד שלישי: 11"></span></div>
+      <span class="sumcounts">11 ציטוטים</span>
+      <span class="sumquality">צד שלישי</span>
+    </a>
+    <a class="sumrow" href="#p-otzmah-yehudit">
+      <span class="sumname">עוצמה יהודית (בן גביר)</span>
+      <div class="bar"><span class="seg p1" style="width:23.5%" title="רשמי · עדכני: 8"></span><span class="seg p4" style="width:76.5%" title="צד שלישי: 26"></span></div>
+      <span class="sumcounts">34 ציטוטים</span>
+      <span class="sumquality">רשמי</span>
+    </a></div>
+
+  
+    <details class="party" id="p-hadash">
+      <summary>
+        <span class="partyname">חד&quot;ש-תע&quot;ל</span>
+        <span class="partylabel">עקרונות חד&quot;ש — hadash.org.il</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">48 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">שלום ישראלי-פלסטיני וישראלי-ערבי צודק, כולל ויציב. סיום הכיבוש; הקמת שתי מדינות עצמאיות עם ירושלים כבירת שתיהן; נסיגה לגבולות 1967 כולל רמת הגולן.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נסיגת ישראל מכל השטחים שכבשה מאז 1967: הגדה המערבית, רצועת עזה וירושלים הערבית, שהם שטחיה של מדינת פלסטין, רמת הגולן הסורית ודרום לבנון. קווי ה-4 ביוני 1967 יהיו גבולות השלום המוכרים והבטוחים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">ירושלים המערבית כבירתה של מדינת ישראל, וירושלים המזרחית כבירתה של המדינה הפלסטינית העצמאית. הסדרים מוסכמים יבטיחו גישה חופשית למקומות הקדושים ותנועה חופשית בין שני חלקי העיר.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">פתרון צודק של בעיית הפליטים הפלסטינים בהתאם להחלטות האו&quot;ם.</td>
+              <td class="colTier"><span class="chip p3">שותפה ברשימה</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">maki.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">פירוק ההתנחלויות בשטחים הכבושים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">ביטול הברית האסטרטגית בין ישראל וארצות הברית ונקיטת מדיניות חוץ ניטרלית בידי ישראל.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">הצטרפות ממשלת ישראל לאמנה הבינלאומית לאיסור הפצתו של הנשק האטומי וביטול 'האופציה הגרעינית' של ישראל. פירוז המזרח-התיכון מכל נשק להשמדה המונית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">איסור הפיתוח, ההפצה, הניסוי, והשימוש בכל סוגי הנשק להשמדה המונית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">העלאת שכר המינימום ל-70% מהשכר הממוצע במשק. ביטול העסקה קבלנית ודרך חברות כוח-אדם. תשלום תוספת יוקר לכלל העובדים במשק.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">zoha.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הקמת קרן פנסיה ממשלתית ללא מטרות רווח. הגדלת כלל קצבאות הביטוח הלאומי.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">zoha.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">קביעת סדר עדיפויות חדש החותר לצדק חברתי, על יסוד חלוקה צודקת של ההכנסה הלאומית. הקטנה מהותית של ההוצאות הצבאיות וביטול כל ההוצאות להתנחלויות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הבטחת עבודה לכל דורש. מאבק נגד אבטלה ופיטורים ולמען תשלום דמי אבטלה מלאים לעובדים המובטלים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הבטחת הזכות הבסיסית לשירותים חברתיים, לרבות שירותי בריאות וחינוך חינם, להשכלה, לדיור ולאיכות חיים לכל.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">ביטול כל החוקים והתקנות הפוגעים בזכויות העובדים ובחופש התארגנות האיגוד מקצועי, בזכותם להכריז שביתה ולהיאבק להגנת שכרם וזכויותיהם הסוציאליות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">חיסול שכונות העוני, הקמת מבני דיור על חשבון המדינה והעברתם לתושבי השכונות לפי עיקרון של דירה תמורת דירה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הבטחת דיור בשכר חודשי נמוך לזוגות צעירים ולמשפחות מרובות ילדים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הזרמת תקציבים מיוחדים להעלאת רמת הפיתוח, הדיור, הבריאות וההשכלה באזורי המצוקה, עידוד הקמת מפעלים בעיירות הפיתוח.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחומי הפיתוח, החינוך, הבריאות, התיעוש, התרבות, הספורט והדיור לתקציבי הרשויות היהודיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">חינוך חינם מהגן ועד האוניברסיטה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">zoha.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום החינוך לתקציבי הרשויות היהודיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">תמיכה במערכת חינוך ממלכתית אחידה עם תקצוב שוויוני. התנגדות למימון ציבורי של מוסדות שאינם מיישמים תוכנית לימודים ממלכתית — לרבות מתמטיקה, מדעים ואנגלית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">הבטחת הזכות הבסיסית לשירותי בריאות חינם לכל אזרח.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">השוואת התקציבים המועברים לרשויות המקומיות הערביות בתחום הבריאות לתקציבי הרשויות היהודיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">בריאות היא זכות, לא סחורה. התנגדות להרחבת הרפואה הפרטית על חשבון המערכת הציבורית; חיזוק קופות החולים כספק ציבורי עיקרי ושמירה על שוויון גישה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">הפרדת הדת מהמדינה.</td>
+              <td class="colTier"><span class="chip p3">שותפה ברשימה</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">maki.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות ותערוב לאופייה החילוני של המדינה ולשוויון כל אזרחיה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">ביטול חוקי הכפייה הדתית. הדיפת כל הגישות העדתיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">שחרור נכסי הוואקף המוסלמי וכיבוד זכותם של האזרחים המוסלמים להקמת מסגרותיהם הדתיות הנבחרות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הגנת החירויות הדמוקרטיות. מאבק בפשיזם ובגזענות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הגנת חופש הדעה והביטוי, חופש העיתונות, חופש ההתארגנות וחופש הפעילות הפוליטית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">ביטול תקנות ההגנה לשעת חירום.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הכרה בזכות הדמוקרטית לסרב לשרת בשטחים הכבושים מטעמי מצפון.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">עצמאות מערכת השפיטה מהמינויים הפוליטיים היא עמוד תווך של הדמוקרטיה; ועדת המינויים לשפיטה תהיה מקצועית, לא קואליציונית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שוויון האוכלוסייה הערבית-הפלסטינית בישראל — זכויות המיעוט הערבי כמיעוט לאומי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">הכרה באוכלוסייה הערבית-הפלסטינית בישראל כמיעוט לאומי. שוויון מלא לאזרחים הערבים, הפסקת הפקעת הקרקעות והריסת הבתים, הכרה בכל היישובים הערביים הקיימים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">כיבוד השפה הערבית כשפה רשמית בפועל בצד השפה העברית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">ביטול גיוס החובה של הצעירים הערבים הדרוזים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">ביטול האפליה העדתית בכל התחומים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שוויון זכויות האישה בכל התחומים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">ביטול כל החוקים המפלים את האישה. חקיקת חוק שוויון זכויות האישה המבוסס על האמנה הבינלאומית (CEDAW). יישום החוק נגד אלימות במשפחה והגדלת המשאבים לסיוע לנשים קורבנות אלימות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">הגדלת ייצוג הנשים וחיזוק מעמדן בכל הרשויות הממלכתיות והמוסדות הציבוריים. שוויון הזדמנויות לנשים בפעילות פוליטית וחברתית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">שמירת איכות הסביבה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">הקצאת תקציבים הולמים למניעת זיהום האוויר והסביבה ולטיפול במפגעים אקולוגיים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">הגנה על מקורות המים, הימים והנהרות מפני זיהום.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">אכיפת חוקים למניעת זיהום ופגיעה בסביבה והחמרת הענישה לגבי מזהמים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">השלמת התקנתם של מערכות ביוב ומתקני טיהור שפכים בכל הישובים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hadash.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-raam">
+      <summary>
+        <span class="partyname">רע&quot;ם (עבאס)</span>
+        <span class="partylabel">הסכם קואליציוני ממשלה ה-36 (2021) + ניתוחי IDI, JVL, ECFR — אין מצע רשמי</span>
+        <span class="partyquality">צד שלישי</span>
+        <span class="partycount">19 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">תמיכה בהקמת מדינה פלסטינית עם ירושלים מזרחית כבירתה; נסיגה ישראלית לגבולות 1967; פירוק ההתנחלויות.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">תמיכה בזכות השיבה לפליטים פלסטינים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">התנגדות לשירות צבאי חובה לאזרחים ערבים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 8): תכנית חומש לצמצום פערים — 33 מיליארד ₪ עד תום 2026 לחברה הערבית, הדרוזית, הצ'רקסית והבדואית. תחומים: בריאות, רווחה, תעסוקה, חינוך והשכלה גבוהה, תכנון ושיכון, חיזוק שלטון מקומי, הייטק, עידוד עסקים, תיירות, חקלאות, תשתיות מים וביוב.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 12): ייצוג הולם של החברה הערבית במשרות ציבוריות, בחברות ממשלתיות ובתאגידים ציבוריים — עדכון יעד הייצוג לפי שיעור ערבים באוכלוסייה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 10): תכנית נתיבי איילון לתחבורה עירונית במגזר הערבי — 20 מיליארד ₪ עד 2030; 1 מיליארד ₪/שנה לשנתיים הראשונות.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 14): הגדלת יעד שיווק יחידות דיור במגזר הערבי ל-10,000 יחידות בשנה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 18): הקפאת אכיפת הריסה על בנייה בלתי מורשית של בתי מגורים ערביים שאוכלסו ובנייתם הסתיימה עד ינואר 2021 — עד סוף 2024. ביטול קנסות ועיצומים שניתנו על בנייה לא מוסדרת.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 19): הכרה ב-3 ישובים בדואיים לא מוכרים בנגב (עבדה, ח'שם-זנה, רח'מה) תוך 45 ימים; תכנית הסדרת התיישבות בדואית בנגב תוך 9 חודשים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">ביטול חוקים המקלים על הריסת בתים ערביים שנבנו ללא היתר.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 8): תקציב חינוך והשכלה גבוהה נכלל בתכנית החומש — 33 מיליארד ₪ לכלל המגזר הערבי. IDI: קריאה לצמצום פערים במערכת החינוך הערבית ולהקמת אוניברסיטה ערבית.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">הסכם 2021 (סעיף 8): בריאות נכללת בתכנית החומש — 33 מיליארד ₪. הסכם 2021 (סעיף 9): תכנית למיגור אלימות — 2.5 מיליארד ₪ ל-5 שנים (כולל תשתיות חברתיות ובריאות ברשויות בדואיות).</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">גישה אסלאמית שמרנית: עמדות שמרניות על משפחה, מוסר ומגדר — בהתאם לאידיאולוגיית ההסתדרות האסלאמית הדרומית. עבאס ב-2021 הביע תמיכה ב&quot;טיפולי המרה&quot; לבני נוער LGBTQ+ וגרם לסערה ציבורית.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jns.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">הסכם 2021: הגדלת תקציב לאתרים קדושים מוסלמיים, נוצריים ודרוזים. IDI: ניהול ענייני מסגדים ווואקף כענייני הקהילה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">דרישה להכרה בערבים אזרחי ישראל כמיעוט לאומי ולעיגון זכויותיהם בחוקה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">ערבית כשפה רשמית מלאה; ביטול הורדת מעמדה לשפה בעלת &quot;מעמד מיוחד&quot; בחוק הלאום.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שוויון מלא לאזרחים ערבים — בהקצאת משאבים ציבוריים, שירות המדינה, חברות ממשלתיות; סגירת פערים כלכליים-חברתיים שנצברו עשורים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">עמדה שמרנית על זכויות LGBTQ+: עבאס ב-2021 הביע תמיכה ב&quot;טיפולי המרה&quot;; מתנגד לחקיקה מרחיבה לזכויות LGBTQ. עמדה זו היא הסיבה העיקרית לפרישת רע״מ מהרשימה המשותפת.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">en.wikipedia.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">הסכם 2021: הגדלת ייצוג ערבי בשירות המדינה; ועדת שרים לענייני החברה הערבית בראשות ראש הממשלה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">z.calcalist.co.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-democrats">
+      <summary>
+        <span class="partyname">הדמוקרטים</span>
+        <span class="partylabel">חוקה (לא מצע) + התחייבויות 2026</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">34 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נוביל יוזמה מדינית אזורית ונקדם נורמליזציה עם סעודיה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נביא לסגירת כל זירות הלחימה - עזה, לבנון וסוריה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נבלום את הסיפוח, נילחם בטרור היהודי ונקדם אלטרנטיבה פלסטינית מתונה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נקים ועדת חקירה ממלכתית ונשקם את מערכת הביטחון, ננקה אותה מפוליטיקה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">שקידה קפדנית על בטחון מדינת-ישראל, הרחקת כל סכנה לקיומה והבטחת ריבונותה, שלומה ושלמותה. מדיניות הביטחון תושתת על היערכות כוללת של הצבא והעם ועל התעצמותו המרתיעה של צה&quot;ל כדי כושר מלא להדוף כל אויב ולהביט כל תוקפן.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">במקום כסף למקורבים ולמשתמטים, נגדיל משמעותית את ההשקעה בשירותים חברתיים</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">מלחמת חורמה ביוקר המחיה באמצעות מלחמה במונופולים</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">נדאג לצרכי המשפחות הצעירות, נשפר את תנאי העבודה, נשפר את איכות המסגרות</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הכוונת השכר והמיסוי במגמה לקדם את השוויון הכלכלי והחברתי, להטיב את רמת שכרם של העובדים בייצור ולשמור על הערך הריאלי של השכר.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">נדאג לדיור בר השגה - התחדשות עירונית, שכירות ארוכת טווח ודיור ציבורי</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נבטל את האפליה התקציבית נגד החינוך הממלכתי, ונוביל לשוויון בין כל תלמידי ישראל</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נחייב חינוך לאזרחות ודמוקרטיה לכולם</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נחזק את מעמד עובדי ועובדות ההוראה והניהול ונשפר את תנאי ההעסקה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נפסיק את מימון הרשתות החרדיות המפלגתיות - חינוך ממלכתי-חרדי לכל ילד חרדי</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">התקדמות לקראת חינוך על-יסודי חינם וחתירה לקראת שוויון אפשרויות למען מעוטי היכולת, הן בחינוך העל-יסודי והן בחינוך הגבוה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">שילוב מוסדות החינוך החרדי במסגרות לימודי ליבה בתמורה לתקצוב ממשלתי; מימון מותנה ביישום תוכנית לימודים המאפשרת השתלבות בשוק העבודה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">מניעת &quot;רפואה לעשירים&quot; — הגבלת הפרטת שירותי הרפואה כדי לשמור על נגישות שוויונית; חיזוק מערכת הבריאות הציבורית כך שלא תידחק על ידי הסקטור הפרטי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואים וגירושים</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נפרק את מונופול הרבנות בגיור ובכשרות</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נאבק על מרחב ציבורי חופשי ונקדם תחבורה ציבורית בשבת</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נוביל שיוויון מוחלט בנטל</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">שמירה על חופש המצפון והדת, בלא כפייה דתית או אנטי דתית, תוך סובלנות הדדית וסיפוק הצרכים הדתיים הציבוריים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נבצר את הזכויות האזרחיות והחברתיות בחוקי יסוד וניתן להם מעמד עליון</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נחזק את הכנסת ואת עקרון הפרדת הרשויות</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נבטיח כי בכירים בצמרת הביטחון ובשירות המדינה ועובדי ציבור ישרתו את החוק</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נבטל את כל חוקי ההפיכה המשטרית, ונחוקק את חוק יסוד החקיקה</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נחוקק את חוקי הגבלת הכהונה ונלחם בשחיתות</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">עמידה על משמר הדמוקרטיה הישראלית, כיבוד מוסדותיה ושמירה על העיקרון של הפרדת הרשויות; הבטחת חירות הביטוי וקיום השפעתם של האזרחים על מעשיו של הממשל באמצעות נבחריהם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">התנגדות לשינוי הרכב ועדת המינויים לרשות השופטת — בעיקר להגדלת מינויי שופטים על ידי הקואליציה על חשבון הנציגות המשפטית המקצועית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">נקדם שוויון זכויות מלא בחוק לקהילה הגאה, כולל שוויון בזכות להורות, למשפחה ולנישואים</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">נאסור טיפולי המרה, נחזק את האכיפה נגד אפליה, נכיר בנפגעי פשעי שנאה ונפסיק את התמיכה הציבורית בארגונים להט&quot;בופוביים</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yes.democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שקידה על עקרונות השוויון וזכויות האדם ללא הבדל מוצא, דת, עדה ומין; חלוקה צודקת של ההכנסה הלאומית, צמצום הפער הכלכלי, המקצועי, ההשכלתי והחברתי בין השכבות השונות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שילובם של האזרחים מבני המיעוטים בחייה של מדינת-ישראל; כיבוד ייחודם התרבותי ועצמאותם הדתית; העלאת רמת חייהם ושיתופם המלא במנהל הציבורי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">democrats.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-beyahad">
+      <summary>
+        <span class="partyname">ביחד (בנט / לפיד)</span>
+        <span class="partylabel">תכניות עבודה (חלקי) — רק 4 מתוך 11 קטגוריות פורסמו</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">20 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נגבש תפיסת ביטחון חדשה. נחזק את צה&quot;ל, נבצר את הביטחון בגבולות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">התוכנית תפסיק את המלחמה של הפצועים בבירוקרטיה, ותעניק להם מעטפת שיקום מלאה של זכויות, בית, תמיכה בחזרה לתעסוקה וחוסן נפשי. המדינה תדאג לשיקום כל פצועי צה&quot;ל בגוף או בנפש.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">הגיע הזמן להחזיר את החוק, הסדר והריבונות לנגב. נלחם בפשיעה, בהפרות החוק, בחינוך המנוגד לערכי המדינה ובפוליגמיה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">יישובים עירוניים צמודי גדר בצפון המהווים חומת מגן לישראל, ננטשים ונמצאים בסכנה קיומית. יעד: הכפלת מספר התושבים תוך 10 שנים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">יוקר המחיה הגואה הוא לא גזירת גורל. הוא תוצאה של העדר ניהול. הורדת יוקר המחיה היא משימה לאומית דחופה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">רק מי שמשרת את המדינה, מקבל תקציבים ממנה. מי שלא משרת, לא מקבל כלום. תמריצי המדינה יתועדפו לטובת מי שנושא בנטל.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">ביטול כספים קואליציוניים ומשרדי ממשלה מיותרים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">מיליון שקל לדירה ראשונה לכל משרת מילואים — ללא הגרלה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">קדימות לדירה במחיר למשתכן למשרתי צבא וביטחון.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">הלוואת דיור של 400,000 ₪ לאקדמאים ואנשי מקצוע שיעברו לצפון — הופכת למתנה לאחר 7 שנות מגורים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">תואר ראשון חינם לכולם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">מעונות יום חינם, צהרונים חינם, בית הספר של הקיץ — חינם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נשיב את הריבונות למערכת החינוך בנגב — נלחם בחינוך המנוגד לערכי המדינה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">חינוך ממלכתי כבסיס — הפוגעים ביסוד החינוך האזרחי המשותף אינם ראויים למימון ציבורי מלא. עמדה לא פורשה בפרוט, אך מתיישבת עם העמדה האזרחית-ליברלית של המפלגה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">הקמה והפעלה של חדר מיון חדש בצפון.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">כל ישראלי זכאי לחיות את חייו על פי אמונתו, מתוך כבוד הדדי, סובלנות ואפס כפייה דתית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">מבטלים את חוק ההשתמטות — כולם מתגייסים. ביטול קצבאות אברך, ביטול מעמד אברך=סטודנט, ביטול הנחות בביטוח לאומי ובארנונה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">שמירה על עצמאות מערכת השפיטה; התנגדות לכל שינוי בוועדת המינויים שייתן שליטה לקואליציה על מינוי שופטי בית המשפט העליון.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">האיום הכי גדול על ישראל הוא הפילוג הפנימי שמחליש אותנו. הגיע הזמן לאחד מחדש את העם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">מי שמשתלב — מרוויח. נושיט יד לחברה הבדואית ונציע אופק של שילוב, השכלה ותעסוקה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">bennett2026.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-yashar">
+      <summary>
+        <span class="partyname">ישר! (איזנקוט)</span>
+        <span class="partylabel">10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">26 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נגבש ונפעל לפי תפיסת ביטחון חדשה. נחזק את צה&quot;ל, נבצר את הביטחון בגבולות ונהפוך את ישראל למעצמה איזורית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נחתור להרחבת מעגל השלום, להבטחת רוב יהודי מוצק לדורות ולביסוס מעמדה של ישראל בעולם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">נקים ועדת חקירה ממלכתית לחקר טבח ה-7 באוקטובר, העשור שלפניו וניהול המלחמה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות ונעמיד את המעמד המשרת והיצרני בלב המדיניות הכלכלית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">במסגרת תכנית לאומית למלחמה ביוקר המחיה: נפרק מוקדי ריכוזיות, נחזק תחרות ונטמיע אימוץ תקינה בינלאומית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">תמריצי המדינה – הטבות דיור, נקודות זיכוי ממס, סל הסיוע הממשלתי – יתועדפו לטובת מי שנושא בנטל הביטחוני והכלכלי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">ניתן עדיפות ברורה ומובהקת לחינוך הממלכתי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">ננהיג לימודי ליבה לכל ונחזק את הליבה הערכית המחנכת את ילדי ישראל ברוח מגילת העצמאות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נבזר סמכויות ונחזק את המורים והמנהלים בקצה – בסמכויות ובתקציבים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">נחזק את הלימודים הטכנולוגיים לצד הטמעת תכנים בנושא מסורת ישראל.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">עדיפות לחינוך הממלכתי; מימון ציבורי מותנה ביישום תוכנית לימודים ממלכתית כוללת — מתמטיקה, מדעים, אנגלית. אין הצדקה לתקצוב מוסדות הדוחים את לימודי הליבה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">נקדם השקעה אדירה בתשתיות, תחבורה, חינוך ובריאות בפריפריה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נעביר את חוק 'שירות ממלכתי לכל' שיביא לשילוב הציבור החרדי והערבי במסגרות המתאימות, בראש ובראשונה לצה&quot;ל. השוויון בנטל אינו רק צורך ביטחוני דחוף, אלא תנאי ללכידות החברה הישראלית והערבות ההדדית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">הממשלה תקדם יהדות מכילה ומכבדת, תוך הרחבת העצמאות של רשויות מקומיות וקהילות לעצב פתרונות בהתאם לאופיין וערכיהן.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">להבטיח שכל אזרח יוכל לשמור על אורח חייו ואמונתו, תוך שמירה על זכויות האחר.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נכבד את הכרעת הרוב, זכויות המיעוט, זכויות האדם, שלטון החוק והמנהל התקין, ונשמור על תקשורת חופשית ומערכת משפט עצמאית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נחוקק את חוק יסוד החקיקה שיחזק את עצמאות וסמכות הכנסת.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">כהונתו של ראש הממשלה תוגבל לשתי קדנציות ויצומצמו משרדי ממשלה מיותרים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נצא למהלך נרחב לשיקום השירות הציבורי, שיסיים את עידן המינויים הלא מקצועיים, הג'ובים וסידורי העבודה ברשויות הממשלתיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">נצא למלחמת חורמה נגד שחיתות, פשע מאורגן ופרוטקשן.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הפרדת רשויות מחייבת עצמאות מערכת השפיטה; ועדת המינויים לשפיטה תישאר מקצועית ולא פוליטית, כדי שהרשות השופטת תוכל לבקר את הרשות המבצעת.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">נצא למהלך היסטורי לשילוב כלל חלקי החברה הישראלית בשוק העבודה והשירות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">נחזק את הספר, נקרב את הפריפריה ונצמצם פערים חברתיים וגאוגרפיים באמצעות תיקצוב דיפרנציאלי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">נממש תוכנית לאומית למיגור האלימות בחברה הערבית והכללית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">yasharwitheisenkot.com</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-beitenu">
+      <summary>
+        <span class="partyname">ישראל ביתנו</span>
+        <span class="partylabel">מצע המפלגה (beytenu.org.il)</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">27 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">הגדלת תקציב הביטחון מ-70 ל-95 מיליארד ₪ לשנה למשך 10 שנים; הרחבה מ-3 ל-6 אוגדות תמרון; 5 חטיבות טנקים נוספות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">אפס הכלה — כל חדירת גבול מהווה פלישה. העברת הלחימה לשטח האויב. סיום עימותים עם הכרעה ברורה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">תוכנית לאומית של 3 מיליארד ₪ לחיזוק המשטרה; 3,000 שוטרים חדשים; 3 בתי משפט ייעודיים לעבירות חמורות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">הסכסוך עם שכנינו אינו סכסוך טריטוריאלי. נדרשת עסקת חבילה כוללת, לא משא ומתן עם הפלסטינים בלבד.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">פירוק מונופולים בשוק המזון בהתאם להמלצות ועדת בלניקוב; הסדרת יבוא מקביל לסיום מעמד היבואן הבלעדי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הרחבת מענק עבודה ליחידים מעל גיל 26 עד הכנסה של 8,000 ₪ לחודש.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">ביטול קצבאות ילדים מהילד החמישי ואילך.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">השקעה של מיליארד ₪ בבינה מלאכותית לאורך 5 שנים; חיזוק מוסדות מחקר ותשתיות מעבדות לאומיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">היפוך פרדיגמת הרכש: קבלנים מתחרים על איכות ומחיר, לא על עלות קרקע; תמריצים לרשויות המקומיות להנפקת היתרי בנייה מהירים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">השקעה בשכירות ארוכת טווח למיתון מחירי השכירות; מעבר לשיטות בנייה תעשייתיות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">חוק לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ&quot;ך) — ביטול מימון למוסדות מסרבים ליישם.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">מעבר ממודל שכר ותק למצוינות הוראה וחדשנות; העצמת סמכויות מנהלים ומורים בקצה המערכת.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">חיזוק מוסדות ההשכלה הגבוהה והגדלה משמעותית של תקציבי המחקר.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">ביטול מימון ממשלתי למוסדות חינוך המסרבים ליישם לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ&quot;ך). תנאי מחייב לתמיכה כלכלית של המדינה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">השלמת בניית שני בתי חולים (צפון ודרום); הגדלת מספר רופאים ואחיות בעדיפות לפריפריה; הרחבת מספר מקומות לסטודנטים לרפואה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">עדכון סל התרופות באופן שוטף; השקת שירותים אמבולטוריים חדשניים ותוכניות רפואה מונעת.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">נישואים אזרחיים וגירושים אזרחיים; ביטול מועצות הדת; תחבורה ציבורית בשבת לפי החלטת הרשות המקומית.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">ביטול קצבאות לאברכי ישיבות; תוכנית ממשלתית לשילוב הציבור החרדי בשוק העבודה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">אימוץ דוח ניסים; רפורמת גיור מלאה דרך רבני ערים; החזרת האחריות על בתי הדין הרבניים למשרד המשפטים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">הכרה במהגרים לפי חוק השבות כחלק אינטגרלי מהחברה הישראלית ללא קשר למעמדם ההלכתי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">כינון חוקה והקמת בית משפט לחוקה; הגבלת כהונת ראש ממשלה לשתי קדנציות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">איסור בחוק על אדם שהוגש נגדו כתב אישום להתמודד לנשיאות או להרכיב את הממשלה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">התנגדות לחוק הצרפתי ולפסקת ההתגברות; שמירה על עצמאות מערכת המשפט.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">ייצוג הולם חובה לנשים ברשימות לכנסת.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">רפורמת פנסיה: העלאת כלל הפנסיונרים לשכר מינימום; תחבורה ציבורית חינם לכל הפנסיונרים; הגדלת קצבת ניצולי שואה.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שילוב תעסוקתי לאנשים עם מוגבלויות.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">beytenu.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-likud">
+      <summary>
+        <span class="partyname">ליכוד</span>
+        <span class="partylabel">חוקת הליכוד (2016), פרק ב': מטרות — אין מצע בחירות רשמי</span>
+        <span class="partyquality">מיושן</span>
+        <span class="partycount">15 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">שמירת זכותו של העם היהודי על ארץ ישראל, כזכות נצחית שאינה ניתנת לערעור, התמדה ביישובם ובפיתוחם של כל חלקי ארץ-ישראל והחלת ריבונות המדינה עליהם.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">קיום ריבונות המדינה ובטחונה ושלום אמת עם עמי שכנינו.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">ביצורה הכלכלי של המדינה וצמיחת תנאים נאותים לכלכלתה ולבניין משק חופשי-תחרותי הנושא את עצמו והמבוסס על יוזמה חפשית.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">טיפוח וקידום ערי הפיתוח ושכונות המצוקה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">השרשת ערכיה הנצחיים של מסורת ישראל בחינוך ובחיי המדינה, שמירת ערכי טוהר המידות, והקמת חברת איכות בארץ ישראל.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">שמירה על ריבוי זרמי החינוך — ממלכתי, ממלכתי-דתי, עצמאי ומוכר שאינו רשמי — תוך תמיכה ממשלתית לכל הזרמים. ביצוע הסכמי הקואליציה הכוללים תקצוב חינוך חרדי ללא כפיית לימודי ליבה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">אחריות ממלכתית לרמה של בטחון הפרט, בריאות, תעסוקה וצרכות הסביבה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">עידוד פיתוח מקביל של שירותי בריאות פרטיים לצד המערכת הציבורית; תמיכה בביטוח משלים ושירותים פרטיים כמנוע צמיחה ופתרון לתורי המתנה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">השרשת ערכיה הנצחיים של מסורת ישראל בחינוך ובחיי המדינה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">שירות סדיר של כל אזרח המדינה ותושביה הקבועים, או 'שירות מוכר' כמשמעותו בחוק שירות בטחון (נוסח משולב), תשמ&quot;ו-1986.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">קיום משטר ריבוני-דמוקרטי במדינה: הבטחת עליונות החוק, זכויות האדם והאזרח, חופש המצפון, חרות הפרט, שוויון זכויות והזדמנות לכל אזרח המדינה ומניעת אפליה על כל רקע מין, נטייה מינית, גזע, עדה, דת, מעמד או השקפה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">שינוי הרכב ועדת המינויים לשפיטה — מתן משקל גדול יותר לנציגים נבחרים בבחירת שופטי בית המשפט העליון, לאיזון עם הנציגות המשפטית הקיימת.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">מניעת אפליה על כל רקע מין, נטייה מינית, גזע, עדה, דת, מעמד או השקפה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">שילוב אוכלוסיית המיעוטים במערכות המדינה והתנועה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">אחריות ממלכתית לרמה של... צרכות הסביבה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">likud.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-shas">
+      <summary>
+        <span class="partyname">ש&quot;ס</span>
+        <span class="partylabel">מסמך עקרונות התנועה (2006, IDI) + עמדות קואליציוניות 2022 — אין מצע רשמי</span>
+        <span class="partyquality">מיושן</span>
+        <span class="partycount">23 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס מבקשת ושואפת לחיות בשלום ובטחון עם שכנותינו מדינות ערב, על פי סידורי בטחון שמטרתם להגן על כל נפש מישראל.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס תומכת בפיתוח כל חבלי ארץ ישראל: יהודה ושומרון, פיתוח הנגב והגליל. המשך פיתוח ההתיישבות ביהודה ושומרון על פי החלטות הכנסת והממשלה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">אידיאולוגיה כלכלית שמרנית המאמצת ומקדשת את ערכי הגלובליזציה, התחרות החופשית, הפרטת מוסדות רווחה ושירותים — מאיימת על צביון המדינה ופוגעת במסכת הערכים היהודים החשובים של שוויון, צדקה, חמלה וערבות הדדית.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">החזרת קצבאות הילדים. הצבת יעד אבטחה ויעד עוני כמדיניות ממשלתית, כך שמדי שנה יפחתו לפחות ב-1% לשנה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">חקיקת חוק פנסיה חובה, שיבטיח חיים בכבוד לפורשים ממעגל העבודה. העלאת קצבאות הזקנה באופן הדרגתי לרמה של 1/3 מהשכר הממוצע במשק.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">הגדלת התמריצים במיסוי למשתכרים משכורות נמוכות מהשכר הממוצע במשק (מס הכנסה שלילי). ביטול הסדרי העסקה זמניים של עובדים באמצעות חברות כח אדם.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">יצירת מלאי דיור ציבורי ודיור להשכרה מסובסדת ארוכת טווח, שיסייע בפתרונות דיור זמינים לאוכלוסיות החלשות בישראל.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">סיוע לזוגות צעירים ולמשפחות עם שלושה ילדים ומעלה לשם יצירת תנאי דיור הולמים. סיוע בשכר דירה מוגדל לנכים קשים, לקשישים, למשפחות חד-הוריות ולמשפחות ברוכות ילדים.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">השוואת התקציבים לחינוך בין כל זרמי החינוך ובין הפריפריה והמרכז.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">חינוך חינם מגיל הגן ועד לסיום הלימודים התיכוניים והישיבתיים וסבסוד הלימודים באקדמיה לסטודנטים משכבות חלשות (שכר לימוד פרוגרסיבי).</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס תומכת בתכנית הליבה של דו&quot;ח ועדת דוברת, ואף מיישמת אותו בבתי הספר של 'מעין החינוך התורני', תוך התאמות לאופי הלימוד התורני הייחודי לה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">מימון ממשלתי מלא לרשת מעיין החינוך התורני ולמוסדות החינוך הדתיים, בלי לחייבם בתוכנית לימודי ליבה ממלכתית. רשת מעיין פועלת לפי תוכנית לימודים עצמית.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס רואה כערך עליון הבטחת נגישות הוגנת ושוויונית לשירותי בריאות ציבוריים לכל אזרחי המדינה. המדינה צריכה לסבסד שירותי בריאות ייחודיים הנובעים מחידושי הרפואה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">מתן סל תרופות מצילות חיים לכל אזרחי המדינה. הכללת הפסיכיאטריה והגריאטריה לסל שירותי הבריאות המסופק על ידי קופות החולים.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">בריאות</td>
+              <td class="colText" dir="rtl">דגש על נגישות שוויונית לשירותי רפואה לכלל האוכלוסייה; חשש ממערכת מדורגת שתשרת בעלי אמצעים על חשבון האוכלוסיות החלשות.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">שמירת הסטאטוס קוו במדינה, כדי לשמור על צביונה היהודי. תנועת ש&quot;ס מאמינה כי חוסנה הפנימי של המדינה מושתת על האמונה בבורא עולם ועל קיום מצוות התורה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">הצעת חוק יסוד: תורה — לימוד תורה הוא ערך יסוד במורשת העם היהודי; המוקדשים ללימוד תורה יוכרו כמבצעים שירות משמעותי למדינה ולעם ישראל, ולא ייגבה מהם מחיר כלכלי על אי-שירות. כל חברי הכנסת מש&quot;ס חתמו על ההצעה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">en.idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">דרעי הגיש חוק המעגן סמכות בלעדית לגופי הרבנות הממלכתיים על הגיור; ביטול גיורים פרטיים מחוץ לרבנות. ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד).</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hiddush.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס מאמינה בקיומה של מדינת ישראל כמדינת העם היהודי, מדינה מושתתת על ערכי הדמוקרטיה על פי תורת ישראל.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">תמיכה ברפורמה בוועדת המינויים לשפיטה; שינוי הרכבה לאיזון טוב יותר בין נציגים נבחרים לנציגים מקצועיים, כחלק מהסכמי הקואליציה.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס תפעל לחקיקת חוק זכויות חברתיות שיאגד את הזכויות הבסיסיות: הזכות לחינוך, הזכות לעבודה, הזכות לבריאות, הזכות לדיור, הזכות לשירותי רווחה, הזכות לביטחון סוציאלי.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">העדפה מתקנת כלפי נשים במקומות עבודה ממשלתיים וציבוריים. עידוד והכוונת נשים לרכוש השכלה מקצועית ואקדמית.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">סביבה ואנרגיה</td>
+              <td class="colText" dir="rtl">תנועת ש&quot;ס מאמינה בשימור הטבע והנוף כחלק חשוב בחיינו על אדמת ארץ הקודש. לטיפוח איכות הסביבה משמעות יהודית עמוקה, כחלק משמירה על היצירה האלוהית. חקיקת חוקים שמטרתם הגנה על הטבע, על מקורות המים ועל חופי הים.</td>
+              <td class="colTier"><span class="chip p2">רשמי · מיושן</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-yahadut-hatorah">
+      <summary>
+        <span class="partyname">יהדות התורה</span>
+        <span class="partylabel">עמדות מממשלה ה-37 (2022) + ניתוחי IDI ו-Hiddush — אין מצע רשמי</span>
+        <span class="partyquality">צד שלישי</span>
+        <span class="partycount">11 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">עמדות המפלגה בתחום המדיניות והביטחון נקבעות על פי שיקולים תורניים ולא ביטחוניים-מדיניים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">בנושאים כלכליים המפלגה תומכת בגישה סוציאל-דמוקרטית, בשל החולשה הסוציו-אקונומית של מצביעיה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">השוואת שכר מורים בחינוך העצמאי (החרדי) לשכר מורים במכללות; עדכון תקציב שעות ההוראה בבסיס התקציב; מיליארדי שקלים לחינוך החרדי בהסכם הקואליציוני.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">התנגדות להכנסת לימודי ליבה (מתמטיקה, אנגלית, מדעים) לבתי ספר חרדיים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">דרישה לתקצוב מלא של מוסדות החינוך החרדי (תלמודי תורה, ישיבות קטנות) ללא כל חיוב לימודי ליבה. הסכמי קואליציה כוללים הקפאה מחודשת של יישום לימודי הליבה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">חוק יסוד: תורה — לימוד תורה מוכר כשירות משמעותי למדינה ולעם ישראל; לא ייגבה מחיר כלכלי מלומדי תורה על אי-שירות; אין יעדי גיוס לחרדים. כל חברי הכנסת מיהדות התורה חתמו.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">en.idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד). ביטול סמכות רבני הערים לגיור — הסמכות מוחזרת לרבנות הראשית; גיורים פרטיים לא יוכרו.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">שמירת הסטאטוס קוו הדתי וניהול מחלוקות הדת על פי פסיקת הרבנות הראשית; התנגדות לביקורת שיפוטית בתחום הדת.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hiddush.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">תמיכה בפסקת ההתגברות ובהחלשת הביקורת השיפוטית כחלק מהקואליציה. ח&quot;כ פינדרוס (יו&quot;ר): &quot;חלומי להביא ד-9 ולפוצץ את הבניין של בית המשפט העליון.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hiddush.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">תמיכה במינוי שופטים על ידי נציגים פוליטיים נבחרים, כחלק מהחלשת בית המשפט העליון. ח&quot;כ פינדרוס: &quot;חלומי להביא ד-9 ולפוצץ את בניין בית המשפט.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">hiddush.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">הסכם הקואליציוני 2022: 4% בלבד מהסעיפים מתייחסים לצרכי נשים חרדיות; אין התייחסות לבריאות נשים, אלימות במשפחה, עגינות.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+    <details class="party" id="p-otzmah-yehudit">
+      <summary>
+        <span class="partyname">עוצמה יהודית (בן גביר)</span>
+        <span class="partylabel">אתר רשמי (ozma-yeudit.co.il) — פעולות ממשלתיות מתועדות; משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק</span>
+        <span class="partyquality">רשמי</span>
+        <span class="partycount">34 ציטוטים</span>
+      </summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">ריבונות מהים עד הנהר היורדן: &quot;מדינת ישראל תוגדר כמדינה יהודית, מהים עד הנהר היורדן. הריבונות תחול גם על יהודה ושומרון.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">&quot;המלחמה באויבי ישראל, תהיה טוטאלית, ללא משא ומתן, ללא ויתורים וללא פשרות.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">&quot;נשיב את הריבונות והבעלות היהודית אל הר הבית.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">&quot;השבת הביטחון וההרתעה לחיילי צה&quot;ל.&quot; קואליציה 2022: הגדלת תקציב משרד ביטחון לאומי ב-45 מיליארד ₪ ל-7 שנים; הקמת &quot;משמר לאומי&quot;; בן גביר שר לביטחון לאומי.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">IDI: עמדה בעד עונש מוות למחבלים; הרחבת כללי פתיחה באש.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">en.idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">&quot;לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל שטחי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.&quot; (הסכם קואליציוני 2022)</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">המפלגה קידמה את רעיון ארץ ישראל השלמה והחלת הריבונות הישראלית בשטחי יהודה, שומרון ובנימין.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">הרחבת רשימת היישובים הזכאים לרישוי נשק אזרחי (יבנה, ראשון לציון, עפרה, מועצה אזורית דרומית) כחלק מרפורמת הנשק של השר בן גביר; קודם לכן הורחב הרישוי ליישוב ה-100.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">השר בן גביר: ישראל צריכה לדחות כל הסכם הפסקת אש בין ארה&quot;ב לאיראן, בדגש על סדרי עדיפויות ביטחוניים אזרחיים וצבאיים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">ביקור השר בן גביר במתקן מעצר בנושא תמיכה בעונש מוות למחבלים — פעולה ממשלתית בפועל, מאששת עמדה שדווחה קודם על ידי ניתוח IDI.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">ביטחון ומדיניות חוץ</td>
+              <td class="colText" dir="rtl">העברת מפקדת המשטרה הצפונית ומרכז הפיקוד מנצרת לנוף הגליל, בעלות של עשרות מיליוני ₪, באישור השר בן גביר.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">&quot;אנחנו נפתח את הכלכלה לפי השיטה של 'קפיטליזם יהודי'.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">כלכלה ותעסוקה</td>
+              <td class="colText" dir="rtl">מימון תכנית העלייה הלאומית: מחצית מתמלוגי הגז מוקצית לתקציב עלייה וקליטה. השקעה ציבורית בבינוי, תשתיות ותעסוקה לעולים ולחיילים משוחררים.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">&quot;ההתיישבות היהודית בכל חלקי הארץ, תשוב לעמוד כאחד מהערכים עליהם מושתתת מדינת ישראל.&quot; תכנית הבנייה: עיר חדשה בין אריאל לראש העין; פיתוח עירוני בגליל ובנגב.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">&quot;מחיקת אשליית הקו הירוק&quot;; בנייה בכל שטחי יהודה ושומרון ללא הבחנה בין '48 ל-'67.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דיור ועלות מחיה</td>
+              <td class="colText" dir="rtl">&quot;שמירה נחושה על אדמות הלאום, בחקיקה מסודרת.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">&quot;ילדי ישראל יחונכו לאהבת הארץ, ערבות הדדית בתוך העם היהודי, הכרת ההיסטוריה והמורשת של העם היהודי ואוצר היהדות.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">עברית היא שפה רשמית יחידה של המדינה. &quot;מדינת ישראל היא מדינה יהודית... עברית היא שפתה הרשמית היחידה.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">&quot;עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה&quot;ל, על פני ותיקי יחידות לחמות — תיפסק מיידית.&quot; העדפה מתקנת לעולים חדשים בתעסוקה ובאקדמיה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">חינוך</td>
+              <td class="colText" dir="rtl">תמיכה בחינוך ייחודי יהודי-לאומי; מימון לרשתות חינוך עצמאיות הפועלות לפי ערכים לאומיים, מבלי לחייבן בתוכנית לימודים ממלכתית אחידה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">&quot;נפעל להטמעת המשפט העברי במערכת המשפטית של מדינת ישראל.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">&quot;ערכי המדינה היהודית יהיו על פי המוסר היהודי.&quot; &quot;מדינת ישראל היא מדינה יהודית, באופייה, בסמליה הלאומיים וערכיה המשפטיים.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">&quot;נשיב את הריבונות והבעלות היהודית אל הר הבית.&quot; — עמדה מרכזית בפלטפורמה; שינוי מהסטאטוס קוו הנוכחי.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">דת ומדינה</td>
+              <td class="colText" dir="rtl">קידום חקיקה להחמרת האכיפה נגד רעש קריאות המואזין — איסור כברירת מחדל, היתרים פרטניים ואכיפה מחמירה; בראשות ח&quot;כ צבי פוגל, יו&quot;ר ועדת הביטחון הלאומי.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">IDI: ברירת שופטי בית המשפט העליון על ידי נבחרי ציבור (ולא ועדת המינויים הנוכחית).</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">en.idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">תמיכה בהחלשת הביקורת השיפוטית על חקיקה (פסקת התגברות); &quot;לא נאפשר להרוס את המדינה שלנו בשם הדמוקרטיה.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">שלילת אזרחות וגירוש מיידי עבור כל פעולת טרור או תמיכה בטרור. כל מי שיתמוך ב&quot;ישות זרה&quot; — ייחשב כמי שתוקף ביטחון המדינה.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הקמת &quot;משמר לאומי&quot; — כוח מיליציה ייחודי בפיקוד שר הביטחון הלאומי (הסכם קואליציוני 2022).</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">idi.org.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הפוליטיקאים הנבחרים הם שצריכים לבחור את שופטי בית המשפט העליון; ועדת המינויים הנוכחית היא אנטי-דמוקרטית ומשרתת אליטה לא-נבחרת.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">ועדת הביטחון הלאומי אישרה קריאה טרומית לחוק המונע ביקורי הצלב האדום לאסירים מחבלים (יזמה: ח&quot;כ גלית דיסטל אטבריאן).</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">שלטון החוק ומערכת המשפט</td>
+              <td class="colText" dir="rtl">הצעה להורדת גיל האחריות הפלילית ל-10 שנים.</td>
+              <td class="colTier"><span class="chip p1">רשמי · עדכני</span></td>
+              <td class="colConc"><span class="subchip c1">כמותי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.co.il</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">&quot;עוצמה יהודית תפעל להוצאת אויבי ישראל מארצנו.&quot; מסמך JVL: עידוד הגירה, העברת אויבים, חילופי אוכלוסין — &quot;לצורך הבטחת רוב יהודי ואוכלוסייה אזרחית נאמנה.&quot; כלי מדינה: מוסד, שב&quot;כ, קרן קיימת.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c2">מנגנון בשם</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">&quot;עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה&quot;ל... תיפסק מיידית.&quot; סיוע עירוני מותנה בנאמנות: &quot;אום אל-פחם לא תקבל יותר סיוע מדימונה.&quot;</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c3">עמדה ברורה</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">jewishvirtuallibrary.org</span></td>
+            </tr>
+            <tr>
+              <td class="colTopic">זכויות אדם ומיעוטים</td>
+              <td class="colText" dir="rtl">&quot;פעולת חרום נמרצת לעליית יהודי התפוצות וקליטתם.&quot; &quot;מדינת ישראל היא... מדינה יהודית.&quot; — גישה אתנו-לאומנית מפורשת למדיניות הציבורית.</td>
+              <td class="colTier"><span class="chip p4">צד שלישי</span></td>
+              <td class="colConc"><span class="subchip c4">כללי</span></td>
+              <td class="colDomain"><span class="domain" dir="ltr">ozma-yeudit.com</span></td>
+            </tr></tbody>
+        </table>
+      </div>
+    </details>
+
+  <footer>נוצר אוטומטית מ־<code>data/groundings/*.json</code> על ידי <code>scripts/render-grounding-review.ts</code> (npm run export:grounding-review). הרץ מחדש אחרי כל שינוי בנתוני העגינה.</footer>
+</div>
+</body>
+</html>
