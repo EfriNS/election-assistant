@@ -1,5 +1,83 @@
 # Changelog
 
+## 2026-07-04 — Fix: `lib/parties.ts` drifted from grounding data (party website/platform links), low-contrast text
+
+### Context
+
+User spotted several issues browsing the live results page: Ra'am's "אתר לא ידוע" (unknown site) rendered in near-invisible light grey; Hadash showed "ללא מצע רשמי" (no official platform) despite the app having collected a real official platform for it; Otzmah Yehudit showed the same; and Shas's party-website link pointed to `shasnet.org.il`, which turned out to be an unrelated senior-housing directory.
+
+### Root cause
+
+`lib/parties.ts` holds hand-maintained `website`/`platformUrl`/`platformLabel` fields per party — a second, separate source of truth from `data/groundings/*.json` (whose `platformAvailable`/`sourceUrl`/`sourceQuality` are live-derived via `derivePartySourceQuality`, not hand-maintained). These two files had drifted: Hadash and Otzmah Yehudit both had `platformAvailable: true` with a real `official-current` grounding entry, but `lib/parties.ts` never had a `platformUrl` set for either — so `components/PartyResultCard.tsx` and `lib/pdf-template.ts` (which duplicate the same rendering logic) fell through to the "no official platform" branch regardless of what grounding actually had. This is a recurrence of `docs/learnings/project/VAA-DESIGN.md` item 63, first logged 2026-06-26.
+
+Shas's `website` field pointing to `shasnet.org.il` was investigated live: WebSearch confirmed it's a senior-housing (דיור מוגן) directory with zero connection to the party. The "correct" domain, `shas.org.il`, was checked next — but turned out to be dead too (live fetch: `ECONNREFUSED`; Wayback Machine's last snapshot: November 2022) — matching the grounding file's own note that collection from `shas.org.il` had previously timed out. Decided (with user) to treat a verified-dead domain the same as no domain, rather than link to a URL that doesn't resolve.
+
+### Fix
+
+- `lib/parties.ts`: added `platformUrl`/`platformLabel` for Hadash (`hadash.org.il/#values`) and Otzmah Yehudit (`ozma-yeudit.co.il/מי-אנחנו/` — the actual page backing its official-current grounding entries, not just the bare homepage). Set Shas's `website` to `""` with a comment documenting both the wrong-domain and dead-domain findings.
+- `components/PartyResultCard.tsx` + `lib/pdf-template.ts`: `text-gray-300` → `text-gray-500` for "אתר לא ידוע", legible on a light background.
+- Audited the remaining 6 parties against their grounding data — Democrats/Beyahad/Yashar/Beitenu already consistent; Likud's "מקורות מיושנים" (outdated sources) label is correct as-is (only grounding is the 2016 party constitution).
+
+Not done yet, flagged as a backlog item: a regression test enforcing the invariant (`platformAvailable`/`sourceQuality: "official"` in grounding ⇒ `platformUrl` set in `parties.ts`) so this class of drift is caught structurally instead of by a user spotting it live.
+
+Commit: `f4a9d97`
+
+## 2026-07-04 — Feature: distinguish Preview deployments from Production
+
+### Context
+
+User wanted production kept clean for the soft launch (accurate analytics, no visible in-progress work) while still being able to share new work with testers on Vercel preview URLs — but preview and production served identical UI/copy, with no way to tell them apart at a glance.
+
+### Implementation
+
+- `next.config.ts`: injects `DEPLOY_ENV` (from Vercel's own `VERCEL_ENV` — `"production"`/`"preview"`/`"development"`, set automatically, no config needed) at build time, same pattern as the existing `BUILD_ID`.
+- `app/layout.tsx`: a slim amber "גרסת Preview" bar at the top of every screen when `DEPLOY_ENV !== "production"`.
+- `components/ShareButton.tsx`: native-share/clipboard title and text both get a Preview-aware variant, so anything shared from a preview deployment says so explicitly.
+
+Verified zero production impact empirically, not just by code inspection: ran `VERCEL_ENV=production npm run build` and grepped the actual `.next/` output (excluding sourcemaps) for the banner string — not present anywhere; the same build without `VERCEL_ENV=production` set renders it on every prerendered page.
+
+Along the way: pushing `main` directly would have triggered a **production** deploy (per this repo's Vercel config — production on `main`, preview on branches), the opposite of what was needed to test the feature itself. Created a feature branch, pushed that (triggers a Preview deployment automatically, per CLAUDE.md's "never run `vercel deploy` manually — GitHub push is the trigger"), verified the Preview build via the Vercel API, then fast-forward-merged `main` once confirmed and verified the resulting Production build the same way.
+
+Also corrected a false claim made mid-session: initially reported that Preview and Production shared the same `NEXT_PUBLIC_MIXPANEL_TOKEN` (checked via `vercel env pull`), which would have meant preview traffic was polluting production analytics. Re-verification showed `vercel env pull` was silently returning **every** encrypted secret as an empty string in this sandbox (not just that one variable) — comparing two empty strings as "equal" was not real evidence. Retracted the claim; user confirmed the tokens do point to two separate Mixpanel projects.
+
+Commits: `b566db6`, deploy verification via Vercel MCP tools (no additional commits)
+
+## 2026-07-04 — Content: security/health/ecology opener sharpening, new Lebanon follow-up dimension, justice topic reorder
+
+### Context
+
+Working session reviewing and sharpening existing quiz opener options against grounding data, prompted by user questions about specific options that read as vague, redundant with each other, or narrower than current events warranted.
+
+### Changes
+
+- **`justice` topic moved to 2nd position** (`lib/topics.ts`, right after `security`) in the priorities-selection screen order, per user request — order only affects `PrioritiesStep.tsx` display, verified no other consumer depends on array order.
+- **Security `control` option**: named the actual cost tradeoff ("even if it entails high budgetary cost") instead of leaving it implicit; rescored Hadash/Ra'am/Democrats more negative and Likud more positive against grounding, per user-directed calibration discussion (Beyahad/Yashar left at neutral — no grounding found either way).
+- **Health `private` option**: reframed from vague "regulated privatization" to the actual mechanism debated in grounding data (supplemental insurance/private care alongside the public system, at the cost of doctor time diverted to paying patients) with a sourced hint; rescored Democrats/Shas/Likud/Otzmah Yehudit per grounding quotes, including using Otzmah Yehudit's own grounding file note (a confirmed platform gap, not a missing source) to correct a stale +2 score.
+- **Ecology `economy` → renamed `deregulation`**: dropped the vague "כלכלה לפני סביבה" framing and the tail clause duplicating the `gradual` option's ending; names the real mechanisms (carbon tax — phased in 2025–2030 per Knesset Finance Committee approval; emission standards; Israel's Paris Agreement targets, 27% reduction by 2030 / 85% by 2050 vs. 2015) in the hint, verified via live web search rather than assumed from training knowledge.
+- **New `TOPIC_KEY_DIMENSIONS.security` entry**: `lebanon-framework-and-hezbollah-disarmament`. Prompted by a "should Lebanon be folded into the `peace` option?" question — web research surfaced the June 2026 US-brokered Israel-Lebanon framework (signed days before this session) and, critically, that its political alignment is *orthogonal* to the existing Palestinian-conflict axis: Likud (currently -2 on `peace`) is promoting the Lebanon deal, while Otzmah Yehudit, Eisenkot, and Bennett/Lapid (spanning -2 to 0 on `peace`) all oppose it, for different reasons. Merging it into `peace`'s scoring would have produced an incoherent single axis; added as its own (currently 0-party, forward-looking) follow-up dimension instead.
+- **`scripts/export-questions-review.ts`**: topic order in the generated advisor-review doc now derives from `lib/topics.ts`'s `TOPICS` (previously a separately-hardcoded, already-stale order) so it can't drift from the priorities screen again. Sub-dimension tables are now pre-filled with the live `TOPIC_KEY_DIMENSIONS` entries and a live-computed grounding-coverage count per dimension (via `GROUNDINGS`, not the dimension list's own inline `//` comments — which were themselves caught 1 count stale by this exact change, `foreign-policy-and-nonproliferation`: 3 → 4), so the advisor reviews a real current list instead of blank cells.
+- Small copy fixes: security question titles now read "ביטחון ומדיניות החוץ" to match the topic label; a `בתנאי שהשירות הציבורי` typo; ecology's `deregulation`... `אקלים` phrasing fix ("להתקדם" → "להתקדם ... בפתרון").
+
+Commit: `118a612`
+
+## 2026-07-04 — Docs: advisor-review regeneration habit, drop stale README.txt
+
+### Context
+
+Discussion of when `npm run export:questions`/`export:grounding-review` (the two scripts generating `docs/advisor-review/*` for human review) should be regenerated — on every build/deploy, in CI, or only when their source data actually changes. Neither script is referenced anywhere in `app/`, and Vercel builds can't commit a regenerated file back to git anyway, so tying either to `next build`/CI was ruled out.
+
+### Decision
+
+- `questions-review.{html,md}`: regenerate as a habit whenever `lib/questions.ts` changes in a session — cheap, no AI calls involved.
+- `grounding-review.html`: baked into the `collect-party-data` skill's own workflow (`.claude/skills/collect-party-data/SKILL.md`, new Step 8, right before the commit step) so it only regenerates when grounding data actually changes, and ships in the same commit — not tied to a general build/wrapup step.
+
+### Also this session
+
+- Removed `README.txt`, an empty placeholder superseded by `README.md`.
+- Stopped tracking `tsconfig.tsbuildinfo` (TypeScript's incremental-build cache — regenerates on every `tsc` run, was pure diff noise on nearly every session). Added `*.tsbuildinfo` to `.gitignore`.
+
+Commits: `01dadda`, `96a118d`
+
 ## 2026-07-03 — UX/UI review: explored via mockups, no redesign adopted
 
 ### Context

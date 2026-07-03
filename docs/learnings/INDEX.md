@@ -193,6 +193,7 @@ These patterns appear across multiple topic areas:
 - Debugging: Verify database state after cleanup, not script messages
 - Process: Verify implementation before documenting
 - Design: A redesign proposal must be verified against a real baseline, not just ranked against other candidate redesigns — otherwise the comparison can't conclude "no change needed" (see `project/VAA-DESIGN.md` item 73)
+- Debugging: A comparison tool's "same/equal" result is itself unverified until you confirm the extraction it's built on actually worked — two silently-empty values compared equal reads identical to two real values matching (see `universal/DEBUGGING.md` item 21's 2026-07-04 reinforcement)
 
 ### 2. No Workarounds Philosophy
 **Appears in**: ARCHITECTURE, DEBUGGING, TESTING
@@ -228,7 +229,7 @@ These patterns appear across multiple topic areas:
 
 - **Total Universal Principles**: 121 across all topics (CODING-PRINCIPLES: 12, TESTING: 35, PROCESS: 33, DEBUGGING: 19, ARCHITECTURE: 15, CI-CD: 8, AI-PROMPTS: 6) — inherited from the template, largely unaudited for this project
 - **Comprehensive Methodologies**: 1 (COMPETITIVE-RESEARCH: multi-source validation framework — see the election-assistant example under that section above)
-- **Project-Specific Patterns**: `project/VAA-DESIGN.md` (75+ items — the primary, most actively maintained file), plus `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`
+- **Project-Specific Patterns**: `project/VAA-DESIGN.md` (76+ items — the primary, most actively maintained file), plus `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`
 - **Cross-Cutting Themes**: 6 major patterns
 - **Most Reinforced**: "Avoid workarounds at all costs" (added checklist to CLAUDE.md)
 - **Most Impactful**: "Root cause investigation over symptom fixing" (prevented hours of technical debt)
@@ -290,7 +291,9 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2026-07-03 (UX/UI review exploration — added project/VAA-DESIGN.md items 73-75: always include a real baseline when comparing design alternatives, a validated interaction mechanic sharply limits how much "journey" redesign is actually available, and concluding "no redesign needed" after a good-faith exploration is a valid outcome; added universal DEBUGGING.md Example 6 — a toggle-visibility bug recurred in a second instance before its root cause was generalized; added a Design manifestation to Cross-Cutting Theme 1 (Verification Discipline))
+**Last Updated**: 2026-07-04 (content-sharpening + infra session — added project/VAA-DESIGN.md item 76: verify real-world political alignment before merging two conflict axes into one scored option, don't assume topical similarity means correlated scoring; reinforced item 63 (`lib/parties.ts`/grounding drift recurred in production-visible form — Hadash and Otzmah Yehudit both missing `platformUrl` despite `platformAvailable: true`) and flagged a regression test as the next step rather than relying on the existing manual checklist; reinforced universal DEBUGGING.md item 21 with the opposite-direction failure mode — a "same value" comparison built on a silently-failed extraction (`vercel env pull` returning every secret as an empty string) is not evidence, caught only via user pushback; added a Debugging manifestation to Cross-Cutting Theme 1 (Verification Discipline))
+
+**Previously**: 2026-07-03 (UX/UI review exploration — added project/VAA-DESIGN.md items 73-75: always include a real baseline when comparing design alternatives, a validated interaction mechanic sharply limits how much "journey" redesign is actually available, and concluding "no redesign needed" after a good-faith exploration is a valid outcome; added universal DEBUGGING.md Example 6 — a toggle-visibility bug recurred in a second instance before its root cause was generalized; added a Design manifestation to Cross-Cutting Theme 1 (Verification Discipline))
 
 **Previously**: 2026-07-02 (closed the aspect-taxonomy loop in project/VAA-DESIGN.md — item 60's "not yet implemented" fix now shipped, items 68-70 on taxonomy-design validation and static-vs-dynamic constraint ownership; updated project/AI-INTEGRATION.md — corrected the 2026-06-30 `responseMimeType`-only JSON fix, now documents `responseJsonSchema` as the actual fix for Hebrew-acronym escaping failures; added project/INFRA-PATTERNS.md section on Vercel Sensitive env vars, Langfuse indexing lag, and env-value comparison pitfalls; added universal ARCHITECTURE #17 and AI-PROMPTS #7; reinforced universal DEBUGGING #20)
 **Structure Change (2026-07-03)**: `project/` had been inherited from an unrelated Python/MCP-server project template ("Contendre") and never fully genericized — files with nothing salvageable for this Next.js app were deleted (`CONFIG-PATTERNS.md`, `DOCKER-PATTERNS.md`, `MCP-TESTING-PATTERNS.md`, `SCRAPING-PATTERNS.md`, `DOCUMENTATION-WORKFLOW.md`); `AI-INTEGRATION.md` had its real election-assistant section kept and its stale Python section removed. Remaining `project/` files (`VAA-DESIGN.md`, `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`) are genuinely about this project. `universal/` was left untouched — it's explicitly meant to hold generic, template-level principles regardless of which project's examples illustrate them.
