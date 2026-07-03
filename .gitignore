@@ -12,6 +12,7 @@ out/
 dist/
 build/
 .vercel/
+*.tsbuildinfo
 
 # Claude Code local state (settings.json and commands/ are tracked)
 .claude/settings.local.json
