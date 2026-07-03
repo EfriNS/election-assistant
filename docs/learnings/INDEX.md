@@ -4,7 +4,7 @@
 
 **Structure**:
 - `universal/` - Transferable principles (copied from template, rarely changes)
-- `project/` - Contendre specific patterns (Python scrapers, MCP integration, competitive intelligence)
+- `project/` - election-assistant specific patterns (Gemini structured-output routes, grounding data model, Next.js/Vitest specifics)
 
 ---
 
@@ -12,7 +12,7 @@
 
 These principles appear across multiple sessions and have prevented hours of wasted effort:
 
-1. **MANDATORY: Run tests + lint before EVERY push** - No exceptions. `pytest --tb=short && black --check src/ tests/ && ruff check src/ tests/ && mypy src/` before pushing. 5 min verification vs 15+ min CI debugging. [→ CI-CD](universal/CI-CD.md#local-verification-first) [→ CLAUDE.md](../CLAUDE.md#mandatory-pre-push-checklist)
+1. **MANDATORY: Run tests + lint before EVERY push** - No exceptions. `npx vitest run && npx tsc --noEmit && npx eslint .` before pushing. 5 min verification vs 15+ min CI debugging. [→ CI-CD](universal/CI-CD.md#local-verification-first) [→ CLAUDE.md](../CLAUDE.md#mandatory-pre-push-checklist)
 
 2. **Never declare success without verification** - Build passing ≠ functional success. Verify actual behavior, database state, user confirmation before marking complete. [→ DEBUGGING](universal/DEBUGGING.md#verification-discipline) [→ TESTING](universal/TESTING.md#verification--validation)
 
@@ -61,7 +61,7 @@ These principles appear across multiple sessions and have prevented hours of was
 
 ---
 
-### [TESTING](universal/TESTING.md) - 35 Universal Principles + [Project Patterns](project/TESTING-PATTERNS.md)
+### [TESTING](universal/TESTING.md) - 35 Universal Principles + [Project Patterns](project/NEXTJS-REACT-PATTERNS.md)
 Testing & QA learnings covering test development, selectors, infrastructure, and execution.
 
 **Universal Principles:**
@@ -72,13 +72,10 @@ Testing & QA learnings covering test development, selectors, infrastructure, and
 - Coverage as architecture quality metric
 - Phasing large test initiatives by business impact
 
-**Project Patterns (Python/MCP/Web Scraping/Docker):**
-- See `project/SCRAPING-PATTERNS.md` for web scraping specifics
-- See `project/MCP-TESTING-PATTERNS.md` for MCP integration testing
-- See `project/DOCKER-PATTERNS.md` for Docker build optimization and E2E testing
-- robots.txt compliance patterns
-- requests-cache integration for daily scraping
-- Competitor-specific scraping strategies (Airbyte allowed, Fivetran blocked)
+**Project Patterns (Vitest/Next.js)**:
+- See `project/NEXTJS-REACT-PATTERNS.md`'s Testing section for `vi.mock` + `importOriginal` (mocking a module whose own helpers the code-under-test calls internally)
+- See `project/VAA-DESIGN.md` for grounding-data schema-conformance test patterns (`tests/aspectTaxonomy.test.ts`, `tests/groundingProvenance.test.ts`)
+- Gemini structured-output routes are guarded by schema-conformance tests (`tests/*ResponseSchema.test.ts`) — see `project/AI-INTEGRATION.md`
 
 **When to Read**: Before writing tests, when tests fail unexpectedly, planning test coverage initiatives.
 
@@ -116,7 +113,7 @@ Debugging & troubleshooting learnings covering verification, systematic investig
 
 **Key Areas:**
 - Script success ≠ actual success (verify actual state) — also applies in reverse: a tool's *error* response can be a false negative too
-- Verify volume state before destructive cleanup (Docker volumes persist)
+- Verify actual state before destructive operations, not just command success (e.g. `git status` before checkout/reset/clean)
 - Read error context before diagnosing root cause
 - Test timeouts before assuming issues
 - Check existing codebase patterns first
@@ -125,7 +122,7 @@ Debugging & troubleshooting learnings covering verification, systematic investig
 **Project Patterns (Mixpanel/Analytics):**
 - See `project/ANALYTICS-PATTERNS.md` for Mixpanel MCP server quirks (unreliable success/error signals, free-tier report cap, bulk-edit tool failures) and event schema gotchas (`aspects_probed` ↔ `TOPIC_KEY_DIMENSIONS`, Lexicon registration timing)
 
-**When to Read**: When tests fail, data operations complete, debugging complex issues, before Docker volume cleanup, when working with the Mixpanel MCP server.
+**When to Read**: When tests fail, data operations complete, debugging complex issues, before any destructive cleanup, when working with the Mixpanel MCP server.
 
 ---
 
@@ -157,20 +154,16 @@ Development workflow learnings covering user collaboration, session management, 
 - Anti-patterns to avoid (vendor-only sources, unvalidated claims)
 
 **When to Read**:
-- ✅ **Before any competitive research** (analyzing competitors, market validation)
-- ✅ **When research feels shallow** (only checked website, no user voice)
-- ✅ **Before validation journal entries** (Entry 008, Entry 009 quality standard)
+- ✅ **Before any competitive/market research** (rare in this project, but the same discipline applies)
+- ✅ **When research feels shallow** (only checked one source, no independent verification)
+- ✅ **Before trusting a source's legitimacy for scoring/quoting** (see the election-assistant example below)
 - ✅ **Strategic decisions** (build/don't build, pivot, positioning)
 
 **Critical for**: Avoiding shallow research that leads to wrong strategic decisions. Shallow research is worse than no research.
 
-**Reference Examples**:
-- ✅ GOOD: Entry 008 (Crayon MCP - 17+ sources, user quotes, validated traction)
-- ✅ GOOD: Entry 009 (CompetitorIQ - 10+ sources, $35K ARR validated, founder deep-dive)
-- ❌ BAD: Initial Crayon research (2 blog posts only - user called it "sloppy")
-- ❌ BAD: Initial ForesightIQ research (website only - missed entire company)
-
-**Application to Contendre Product**: Multi-source validation + direct attribution + confidence scoring = what makes research credible (our differentiation vs shallow tools).
+**Reference Example (election-assistant)**:
+- ❌ BAD: Assumed `ozma-yeudit.com` and a JVL-hosted PDF were עוצמה יהודית's official platform sources based on domain name and file title alone.
+- ✅ GOOD: Fetched and read each source's actual self-description (footer, contact info) — revealed one was an unofficial supporter site and the other a third-party recruitment pamphlet. Re-collected from the real official site instead. See `project/VAA-DESIGN.md` item 72.
 
 ---
 
@@ -232,18 +225,16 @@ These patterns appear across multiple topic areas:
 
 ## Statistics
 
-- **Total Universal Principles**: 121 across all topics (CODING-PRINCIPLES: 12, TESTING: 35, PROCESS: 33, DEBUGGING: 19, ARCHITECTURE: 15, CI-CD: 8, AI-PROMPTS: 6)
-- **Comprehensive Methodologies**: 1 (COMPETITIVE-RESEARCH: multi-source validation framework)
-- **Project-Specific Patterns**: 35 (TESTING-PATTERNS.md: 31, MCP-TESTING-PATTERNS.md: 4)
-- **Sessions Analyzed**: 28+ (2025-10-07 to 2025-12-26)
+- **Total Universal Principles**: 121 across all topics (CODING-PRINCIPLES: 12, TESTING: 35, PROCESS: 33, DEBUGGING: 19, ARCHITECTURE: 15, CI-CD: 8, AI-PROMPTS: 6) — inherited from the template, largely unaudited for this project
+- **Comprehensive Methodologies**: 1 (COMPETITIVE-RESEARCH: multi-source validation framework — see the election-assistant example under that section above)
+- **Project-Specific Patterns**: `project/VAA-DESIGN.md` (75+ items — the primary, most actively maintained file), plus `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`
 - **Cross-Cutting Themes**: 6 major patterns
-- **Most Reinforced**: "Avoid workarounds at all costs" (6+ sessions, added checklist to CLAUDE.md)
+- **Most Reinforced**: "Avoid workarounds at all costs" (added checklist to CLAUDE.md)
 - **Most Impactful**: "Root cause investigation over symptom fixing" (prevented hours of technical debt)
-- **Newest Addition**: COMPETITIVE-RESEARCH.md (2025-12-26) - prevents shallow research that leads to wrong strategic decisions
 
 **Organization**:
 - `universal/` - Principles that apply to all projects (copy to new projects)
-- `project/` - Contendre specific patterns (web scraping, MCP server, competitive intelligence)
+- `project/` - election-assistant specific patterns (Gemini structured-output routes, grounding data model, Next.js/Vitest specifics)
 
 ---
 
@@ -306,9 +297,9 @@ These patterns appear across multiple topic areas:
 **Last Updated**: 2026-07-02 (closed the aspect-taxonomy loop in project/VAA-DESIGN.md — item 60's "not yet implemented" fix now shipped, items 68-70 on taxonomy-design validation and static-vs-dynamic constraint ownership; updated project/AI-INTEGRATION.md — corrected the 2026-06-30 `responseMimeType`-only JSON fix, now documents `responseJsonSchema` as the actual fix for Hebrew-acronym escaping failures; added project/INFRA-PATTERNS.md section on Vercel Sensitive env vars, Langfuse indexing lag, and env-value comparison pitfalls; added universal ARCHITECTURE #17 and AI-PROMPTS #7; reinforced universal DEBUGGING #20)
 
 **Previously**: 2026-07-01 (added project/ANALYTICS-PATTERNS.md — Mixpanel MCP server reliability quirks, free-tier report cap, event schema gotchas; reinforced DEBUGGING #1 — tool error responses can be false negatives, not just success messages; added PROCESS #41 — verify branch before committing in shared/concurrent-session working directories)
-**Archive**: Full retrospective history available in [RETROSPECTIVES-2025-10-archive.md](../../RETROSPECTIVES-2025-10-archive.md)
+**Structure Change (2026-07-03)**: `project/` had been inherited from an unrelated Python/MCP-server project template ("Contendre") and never fully genericized — files with nothing salvageable for this Next.js app were deleted (`CONFIG-PATTERNS.md`, `DOCKER-PATTERNS.md`, `MCP-TESTING-PATTERNS.md`, `SCRAPING-PATTERNS.md`, `DOCUMENTATION-WORKFLOW.md`); `AI-INTEGRATION.md` had its real election-assistant section kept and its stale Python section removed. Remaining `project/` files (`VAA-DESIGN.md`, `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`) are genuinely about this project. `universal/` was left untouched — it's explicitly meant to hold generic, template-level principles regardless of which project's examples illustrate them.
 
 **Structure Change (2025-01-07)**:
-- Split learnings into `universal/` (transferable) and `project/` (Contendre specific)
+- Split learnings into `universal/` (transferable) and `project/` (project-specific)
 - Updated date tag format to `#first:` and `#reinforced:` for better tracking
 - Universal files rarely change, project files evolve freely
