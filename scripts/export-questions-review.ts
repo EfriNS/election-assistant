@@ -7,11 +7,26 @@
  * After review, the developer applies score/phrasing corrections manually to lib/questions.ts.
  */
 
-import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, type TopicQ } from "../lib/questions";
+import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, type TopicQ } from "../lib/questions";
 import { PARTIES } from "../lib/parties";
+import { GROUNDINGS } from "../lib/groundings";
+import { TOPICS } from "../lib/topics";
 import { writeFileSync, mkdirSync } from "fs";
 
-const TOPIC_LABELS: Record<string, string> = {
+// How many parties currently have grounding coverage for a given follow-up
+// dimension — computed live so it can never drift from data/groundings/*.json,
+// unlike the "N parties" figures in TOPIC_KEY_DIMENSIONS' inline comments.
+function countPartiesForAspect(topicId: string, aspectId: string): number {
+  return Object.values(GROUNDINGS).filter((pg) =>
+    (pg.topics[topicId] ?? []).some((e) => !e.absent && e.aspect === aspectId)
+  ).length;
+}
+
+// Short display labels for this document only (lib/topics.ts's TOPIC_LABELS are
+// the longer canonical ones used in the app itself). Order is NOT taken from this
+// dict — it's derived from TOPICS (lib/topics.ts) so this doc always matches
+// PrioritiesStep's display order, including any future reordering.
+const SHORT_TOPIC_LABELS: Record<string, string> = {
   security:  "ביטחון",
   economy:   "כלכלה",
   housing:   "דיור",
@@ -49,24 +64,25 @@ function renderTopicTableMD(q: TopicQ): string {
   return out;
 }
 
-function renderSubdimensionsMD(topicLabel: string): string {
+function renderSubdimensionsMD(topicId: string, topicLabel: string): string {
+  const dims = TOPIC_KEY_DIMENSIONS[topicId] ?? [];
+  const rows = dims.length > 0
+    ? dims
+        .map((id) => `| \`${id}\` (${countPartiesForAspect(topicId, id)} מפלגות) | | |`)
+        .join("\n")
+    : "| | | |\n| | | |\n| | | |\n| | | |";
+
   return `### תת-ממדים לשאלות המשך
 
 המערכת תציג למשתמשים שאלות המשך (follow-up) שנועדו לחשוף ניואנסים שהשאלה הפתיחה לא הספיקה לתפוס.
 כדי שהשאלות האלה יהיו שימושיות — הן צריכות לגעת בממדים שבהם המפלגות **באמת** נבדלות.
 
-**שאלה לסוקר:** מהם 2–4 תת-ממדים של נושא **${topicLabel}** שבהם:
-1. קיימת מחלוקת עמדות ברורה בין חלק מהמפלגות, ו-
-2. הם רלוונטיים לבחירה בבחירות 2026?
-
-לכל תת-ממד, ציין שם קצר, מה המחלוקת בפועל, ואילו מפלגות נבדלות עליו.
+הרשימה שלמטה היא תת-הממדים שכבר מוגדרים במערכת עבור **${topicLabel}** (\`TOPIC_KEY_DIMENSIONS\` ב-\`lib/questions.ts\`), עם מספר המפלגות שיש להן כרגע ביסוס בפועל לכל תת-ממד.
+**שאלה לסוקר:** האם הרשימה הזו נכונה? יש תת-ממד שחסר, לא רלוונטי, או מנוסח לא מדויק? מה המחלוקת בפועל בכל תת-ממד, ואילו מפלגות נבדלות עליו?
 
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
-| | | |
-| | | |
-| | | |
-| | | |
+${rows}
 
 `;
 }
@@ -118,8 +134,8 @@ function generateMarkdown(today: string): string {
 
   doc += `---\n\n`;
 
-  for (const topic of Object.keys(TOPIC_LABELS)) {
-    const label = TOPIC_LABELS[topic];
+  for (const { id: topic } of TOPICS) {
+    const label = SHORT_TOPIC_LABELS[topic] ?? topic;
     const formal   = QUESTIONS_FORMAL[topic];
     const personal = QUESTIONS_PERSONAL[topic];
 
@@ -130,7 +146,7 @@ function generateMarkdown(today: string): string {
     doc += `### ניסוח אישי (זורם)\n\n`;
     doc += renderTopicTableMD(personal);
     doc += "\n\n";
-    doc += renderSubdimensionsMD(label);
+    doc += renderSubdimensionsMD(topic, label);
     doc += "---\n\n";
   }
 
@@ -175,15 +191,19 @@ function renderTopicTableHTML(q: TopicQ): string {
 </table>`;
 }
 
-function renderSubdimensionsHTML(topicLabel: string): string {
-  const rows = Array(4).fill(0).map(() =>
-    `<tr><td></td><td></td><td></td></tr>`
-  ).join("");
+function renderSubdimensionsHTML(topicId: string, topicLabel: string): string {
+  const dims = TOPIC_KEY_DIMENSIONS[topicId] ?? [];
+  const rows = dims.length > 0
+    ? dims
+        .map((id) => `<tr><td><code>${id}</code><br><span class="dimcount">(${countPartiesForAspect(topicId, id)} מפלגות)</span></td><td></td><td></td></tr>`)
+        .join("")
+    : Array(4).fill(0).map(() => `<tr><td></td><td></td><td></td></tr>`).join("");
   return `<div class="subdim-box">
   <h4>תת-ממדים לשאלות המשך — ${topicLabel}</h4>
   <p>המערכת תציג למשתמשים שאלות המשך שנועדו לחשוף ניואנסים שהשאלה הפתיחה לא הספיקה לתפוס.
   כדי שהשאלות האלה יהיו שימושיות — הן צריכות לגעת בממדים שבהם המפלגות <strong>באמת</strong> נבדלות.</p>
-  <p><strong>שאלה לסוקר:</strong> מהם 2–4 תת-ממדים של נושא <strong>${topicLabel}</strong> שבהם קיימת מחלוקת עמדות ברורה בין חלק מהמפלגות, והיא רלוונטית לבחירות 2026?</p>
+  <p>הרשימה שלמטה היא תת-הממדים שכבר מוגדרים במערכת עבור <strong>${topicLabel}</strong> (<code>TOPIC_KEY_DIMENSIONS</code>), עם מספר המפלגות שיש להן כרגע ביסוס בפועל.
+  <strong>שאלה לסוקר:</strong> האם הרשימה נכונה? חסר תת-ממד? לא רלוונטי? מה המחלוקת בפועל, ואילו מפלגות נבדלות עליו?</p>
   <table class="subdim-table">
     <thead>
       <tr><th>שם תת-ממד</th><th>מה המחלוקת בפועל?</th><th>מה מבדיל את המפלגות?</th></tr>
@@ -233,6 +253,7 @@ function generateHTML(today: string): string {
     .subdim-box table { font-size: 0.88em; }
     .subdim-box td { min-height: 44px; height: 44px; }
     .subdim-box th { background: #fef9c3; }
+    .subdim-box .dimcount { color: #888; font-size: 0.85em; }
 
     .question-label { font-size: 0.95em; margin-bottom: 6px; }
     .instructions { background: #f7f7f7; border: 1px solid #ddd;
@@ -293,8 +314,8 @@ function generateHTML(today: string): string {
   </div>
   `;
 
-  for (const topic of Object.keys(TOPIC_LABELS)) {
-    const label = TOPIC_LABELS[topic];
+  for (const { id: topic } of TOPICS) {
+    const label = SHORT_TOPIC_LABELS[topic] ?? topic;
     const formal   = QUESTIONS_FORMAL[topic];
     const personal = QUESTIONS_PERSONAL[topic];
 
@@ -303,7 +324,7 @@ function generateHTML(today: string): string {
     body += renderTopicTableHTML(formal);
     body += `<h3>ניסוח אישי (זורם)</h3>`;
     body += renderTopicTableHTML(personal);
-    body += renderSubdimensionsHTML(label);
+    body += renderSubdimensionsHTML(topic, label);
     body += `<hr>`;
   }
 
