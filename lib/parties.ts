@@ -27,6 +27,8 @@ export const PARTIES: Party[] = [
     name: 'חד"ש-תע"ל',
     description: "שמאל יהודי-ערבי — שלום, שוויון אזרחי, זכויות עובדים ורפואה ציבורית.",
     website: "https://hadash.org.il",
+    platformUrl: "https://hadash.org.il/#values",
+    platformLabel: 'עקרונות חד"ש',
   },
   {
     id: "raam",
@@ -78,7 +80,8 @@ export const PARTIES: Party[] = [
     id: "shas",
     name: 'ש"ס',
     description: "ימין דתי-ספרדי — ערכים מסורתיים, דאגה לשכבות חלשות.",
-    website: "https://shasnet.org.il",
+    website: "", // shas.org.il: ECONNREFUSED live + Wayback last snapshot Nov 2022 — dead, not transient.
+                 // shasnet.org.il (previous value here) is an unrelated senior-housing directory — not the party at all.
   },
   {
     id: "yahadut-hatorah",
@@ -92,5 +95,7 @@ export const PARTIES: Party[] = [
     subtitle: "בן גביר",
     description: "ימין קיצוני לאומי-דתי — ריבונות מהנהר לים, 'קפיטליזם יהודי', הוצאת אויבים.",
     website: "https://ozma-yeudit.co.il",
+    platformUrl: "https://ozma-yeudit.co.il/מי-אנחנו/",
+    platformLabel: "מי אנחנו",
   },
 ];

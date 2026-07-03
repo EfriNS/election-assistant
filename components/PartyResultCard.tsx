@@ -139,7 +139,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             אתר המפלגה ↗
           </a>
         ) : (
-          <span className="text-xs text-gray-300">אתר לא ידוע</span>
+          <span className="text-xs text-gray-500">אתר לא ידוע</span>
         )}
         {party.platformUrl && !isLowQualitySource ? (
           <a href={party.platformUrl} target="_blank" rel="noopener noreferrer" className={`text-xs ${c.link} hover:underline`}>

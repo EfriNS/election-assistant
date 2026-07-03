@@ -191,7 +191,7 @@ function renderPartyCard(
       <div class="flex gap-4 flex-wrap items-center mb-2">
         ${party.website
           ? `<a href="${e(party.website)}" class="text-xs ${c.link}">אתר המפלגה</a>`
-          : `<span class="text-xs text-gray-300">אתר לא ידוע</span>`}
+          : `<span class="text-xs text-gray-500">אתר לא ידוע</span>`}
         ${platformLinkHtml}
       </div>
       ${groundingHtml}
