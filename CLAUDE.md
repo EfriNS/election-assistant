@@ -90,14 +90,14 @@ Before fixing ANY test failure, error, or unexpected behavior, complete this che
 
 4. **Red flags that indicate workaround thinking**:
    - "Just increase the tolerance to..."
-   - "Add a try/except around..."
+   - "Add a try/catch around..."
    - "Parse the output with regex..."
    - "Add a fallback for when..."
    - **STOP**: Investigate root cause instead
 
-**Example (this session)**:
-- ❌ Bad: "ChromaDB returns >1.0, change test to `<= 1.001`"
-- ✅ Good: "Trace back → embedding_manager.py:224 formula → ChromaDB returns tiny negative distances → Add clamping in application code"
+**Example (real incident, 2026-07-02)**:
+- ❌ Bad: "`JSON.parse` occasionally fails on Gemini's output — catch the error and retry, or regex-extract the JSON blob"
+- ✅ Good: "Traced back → Gemini emits unescaped Hebrew gershayim (`צה"ל`) inside JSON string values when `responseMimeType: 'application/json'` is set without a schema → switched to `responseJsonSchema` (constrained decoding), which makes invalid escaping structurally impossible instead of parsing around it"
 
 ---
 
@@ -108,7 +108,7 @@ Before fixing ANY test failure, error, or unexpected behavior, complete this che
 **Critical checkpoints during implementation:**
 
 **🛑 STOP - Before Adding Error Handling**
-- If you're about to write `try/except`, `catch`, or error handling → Read CODING-PRINCIPLES.md #1-2
+- If you're about to write `try/catch` or error handling → Read CODING-PRINCIPLES.md #1-2
 - Ask: WHERE does this error originate? Can I fix the root cause?
 - Use: Root Cause Investigation Checklist (above)
 
@@ -139,65 +139,59 @@ Before fixing ANY test failure, error, or unexpected behavior, complete this che
 - Ask me clarifying questions if something (e.g., the requirements, role or directions) are unclear
 
 ## *AGENT USAGE GUIDELINES*
-- **CAPABILITY-PLANNER USAGE**: Automatically trigger for requests containing "plan", "design", "architect", "implement", "add", "create", "build" or comprehensive analysis requests. Essential for plan mode and complex feature planning.
+- For requests that are clearly "plan", "design", or "architect" a non-trivial feature — use plan mode (`EnterPlanMode`) or the `Plan` agent before writing implementation code, rather than jumping straight to code.
 
 ## *TESTING & DEPLOYMENT WORKFLOW*
 
 ### When to Run Tests (Realistic Balance)
 
 **ALWAYS Test Before:**
-- ✅ **Deployment** (MCP server, production changes) - NON-NEGOTIABLE
+- ✅ **Deployment** (Vercel preview/production) - NON-NEGOTIABLE
 - ✅ **Pushing to main/shared branches** - Prevents sharing broken code
 - ✅ **Completing a bug fix** - Add regression test, verify all tests pass
 
 **Sometimes Test:**
 - ⚠️ During iteration (5-10 commits while building) - use judgment
-- ⚠️ For trivial changes (docstrings, type hints) - low risk
+- ⚠️ For trivial changes (copy tweaks, comments) - low risk
 
 **Testing Commands:**
 ```bash
 # Run all tests
-pytest
+npm test
 
-# Run specific test file
-pytest tests/test_contendre_server.py
+# Run a specific test file
+npx vitest run tests/groundingProvenance.test.ts
 
 # Run with coverage
-pytest --cov=src/contendre --cov-report=html
+npm run test:coverage
 
-# Run integration tests (if they exist)
-pytest tests/integration/
+# Watch mode during development
+npm run test:watch
 ```
 
-### Mandatory Pre-Push Checklist (AUTOMATED via `/checkpoint` and `/wrapup`)
+### Mandatory Pre-Push Checklist
 
-**⚠️ CRITICAL: Tests are AUTOMATICALLY enforced by our branching workflow.**
+**⚠️ Run these three checks before pushing (`/checkpoint` and `/wrapup` should run them for you — verify they actually did if in doubt):**
 
-**The `/checkpoint` and `/wrapup` commands automatically run:**
 ```bash
 # 1. Run all tests (NO EXCEPTIONS)
-pytest --tb=short
+npx vitest run
 
-# 2. Check code formatting (NO EXCEPTIONS)
-black --check src/ tests/
+# 2. Type check (NO EXCEPTIONS)
+npx tsc --noEmit
 
-# 3. Run linter (NO EXCEPTIONS)
-ruff check src/ tests/
-
-# 4. Run type checker (NO EXCEPTIONS)
-mypy src/
+# 3. Lint (NO EXCEPTIONS)
+npx eslint .
 ```
-
-**Both commands BLOCK if any check fails** - you cannot push broken code.
 
 **Why this is enforced:**
 - `/checkpoint` - Ensures WIP branches are always in working state
 - `/wrapup` - HARD REQUIREMENT before merging to main
 - No manual checklist needed - automation prevents mistakes
-- If tests fail: Fix before proceeding (no exceptions)
+- If checks fail: Fix before proceeding (no exceptions)
 
 **Manual Push** (if not using `/checkpoint`/`/wrapup`):
-If you need to push manually (rare), run all 4 commands above first.
+If you need to push manually (rare), run all 3 commands above first.
 
 ---
 
@@ -205,14 +199,14 @@ If you need to push manually (rare), run all 4 commands above first.
 
 **Before deploying significant features:**
 
-1. **Identify what changed** this session (modules, tools, data sources)
+1. **Identify what changed** this session (routes, components, data files)
 
 2. **Run comprehensive tests**:
    - Run full test suite (not just changed modules)
    - Test integration points
    - Verify coverage hasn't dropped
 
-3. **Verify all tests + linting pass** - Use checklist above
+3. **Verify tests + typecheck + lint all pass** - Use checklist above
 
 4. **Regression test check** - If you fixed a bug:
    - Ask: "Could this bug happen again?"
@@ -220,22 +214,21 @@ If you need to push manually (rare), run all 4 commands above first.
    - Document what it prevents
 
 5. **Report readiness**:
-   - "✅ Tests passing: [all 260 tests]"
-   - "✅ Linting clean: black + ruff + mypy passing"
-   - "✅ Coverage: [X]%"
+   - "✅ Tests passing: [all N tests]"
+   - "✅ tsc + eslint clean"
    - "Ready to deploy"
 
 ### When to Add Regression Tests
 
 **High Value (Always Propose)**:
-- Bug that caused MCP tool failure
-- Bug that could silently corrupt ChromaDB data
-- Bug that only appears with specific queries (edge cases)
+- Bug that caused an API route to fail in production
+- Bug that could silently corrupt grounding or scoring data
+- Bug that only appears with specific queries/inputs (edge cases)
 - Bug that took >30 minutes to debug
 
 **Medium Value (Use Judgment)**:
-- Bug in well-tested module (gap in coverage)
-- Bug that could affect multiple MCP tools
+- Bug in a well-tested module (gap in coverage)
+- Bug that could affect multiple API routes (e.g. a shared schema-building helper)
 
 **Low Value (Skip)**:
 - One-off environment issue
@@ -268,261 +261,195 @@ If you need to push manually (rare), run all 4 commands above first.
 
 ## *PROJECT-SPECIFIC CONFIGURATION*
 
-### Virtual Environment Setup
-
-**IMPORTANT**: This project uses a Python virtual environment (`.venv/`) to manage dependencies.
-
-**On WSL/Linux (and likely other platforms):**
-- All `pip` and `python` commands MUST be run within the virtual environment
-- Use `source .venv/bin/activate` before any Python operations
-- The virtual environment is located at `./.venv/`
-
-**Session Start Checklist:**
-1. Activate virtual environment: `source .venv/bin/activate`
-2. Verify activation: `which python` should show `.venv/bin/python`
-3. Install dependencies if needed: `pip install -e ".[dev]"`
-
-**Why This Matters:**
-- System Python is externally managed (can't install packages without `--break-system-packages`)
-- Virtual environment keeps project dependencies isolated
-- All development tools (pytest, black, ruff, mypy) installed in `.venv/`
-
 ### Development Commands
 
-**⚠️ ALWAYS activate virtual environment first: `source .venv/bin/activate`**
+Standard Next.js/TypeScript project — no virtual environment or system-level setup beyond `npm install`.
 
 ```bash
-# Virtual Environment
-source .venv/bin/activate               # Activate virtual environment (REQUIRED)
-which python                            # Verify you're in venv (should show .venv/bin/python)
+# Setup
+npm install                          # Install dependencies
 
-# MCP Server Development
-python -m src.contendre.server          # Run MCP server (connects to Claude Desktop)
+# Development
+npm run dev                          # Start dev server (localhost:3000)
+npm run build                        # Production build
+npm start                            # Run production build locally
 
 # Testing
-pytest                                  # Run all tests
-pytest tests/test_contendre_server.py   # Run specific test file
-pytest --cov=src/contendre              # Run with coverage report
-pytest -v                               # Verbose output
+npm test                             # Run all tests (vitest)
+npm run test:watch                   # Watch mode
+npm run test:coverage                # Coverage report
+npx vitest run tests/<file>.test.ts  # Single test file
 
-# Linting & Formatting
-black src/ tests/                       # Format code with Black
-ruff src/ tests/                        # Lint with Ruff
-mypy src/                               # Type checking
+# Linting & type checking
+npm run lint                         # ESLint (eslint-config-next)
+npx tsc --noEmit                     # Type check only, no build output
 
-# Dependencies
-pip install -e .                        # Install in editable mode (runtime only)
-pip install -e ".[dev]"                 # Install with dev dependencies
+# Content/data tooling (Hebrew grounding data + questions)
+npm run export:questions             # Generates docs/advisor-review/questions-review.{md,html}
+npm run export:grounding-review      # Generates docs/advisor-review/grounding-review.html from data/groundings/*.json
+npm run score:auto                   # AI-assisted scoring proposal (needs .env.local + ANTHROPIC_API_KEY)
+npm run score:apply                  # Preview applying proposed scores to lib/questions.ts
+npm run score:apply:write            # Apply proposed scores for real
 
-# Docker Build (with automatic versioning)
-./scripts/build-docker.sh                       # Build CPU image with git-based version
-PYTORCH_VARIANT=cuda ./scripts/build-docker.sh  # Build GPU image (opt-in)
-docker inspect contendre:latest | jq '.[0].Config.Labels'  # Check version metadata
-
-# Claude Desktop Integration
-# (MCP servers are registered in Claude Desktop config)
-# Test connection: Ask Claude "Can you list available MCP tools?"
-
-# MCP Bundle (.mcpb) Package Build
-# ⚠️ CRITICAL: Must be run from mcp-package/ directory, NOT project root
-cd mcp-package/                     # Change to mcp-package directory (REQUIRED!)
-./build-mcpb.sh                     # Build .mcpb package (creates contendre-<version>.mcpb)
-cd ..                               # Return to project root
+# Deployment
+# Vercel auto-deploys on push (preview on branches, production on main).
+# Never run `vercel deploy` manually — GitHub push is the trigger.
 ```
-
-**Docker Versioning**: Images built with `./scripts/build-docker.sh` include automatic version metadata from git (see `backlog/DOCKER_VERSIONING.md` for details).
-
-**MCP Bundle (.mcpb) Build Process**:
-- **⚠️ CRITICAL**: The `build-mcpb.sh` script MUST be run from within the `mcp-package/` directory
-- Running from project root will fail (manifest.json not found)
-- The script:
-  - Validates `manifest.json` (MCPB 0.3 spec)
-  - Reads version from `manifest.json`
-  - Creates ZIP archive named `contendre-<version>.mcpb`
-  - Requires `jq` and `zip` utilities installed
-- After building: Test by installing in Claude Desktop → Settings → Developer → Install from file
 
 ### Project Architecture
 
 **Tech Stack**:
-- **Language**: Python 3.11+
-- **MCP Integration**: Official MCP Python SDK
-- **Vector Database**: ChromaDB (embedded mode)
-- **LLM**: Hybrid approach
-  - Gemini Flash API (free tier) for complex reasoning
-  - Local phi3:3.8b for simple tasks (future)
-- **Web Scraping**: BeautifulSoup4 + requests
-- **Reddit API**: PRAW (Python Reddit API Wrapper)
-- **Testing**: pytest, pytest-cov
-- **Linting**: Black (formatter), Ruff (linter), mypy (type checking)
+- **Framework**: Next.js (App Router), TypeScript (strict mode), React 19
+- **Styling**: Tailwind CSS
+- **AI**: Gemini API (`@google/genai`) — structured JSON output (`responseMimeType: "application/json"` + `responseJsonSchema`) for follow-up questions, topic scoring, and results synthesis
+- **Observability**: Langfuse (a trace + generation per Gemini call; routes degrade gracefully if unset)
+- **Rate limiting**: Upstash Redis + `@upstash/ratelimit` (see `middleware.ts`)
+- **Analytics**: Mixpanel (`mixpanel-browser`), Vercel Analytics
+- **PDF export**: `puppeteer-core` + `@sparticuz/chromium` (serverless-compatible Chromium)
+- **Testing**: Vitest
+- **Deployment**: Vercel (preview + production, auto-deploy on push)
 
 **Directory Structure**:
 ```
-contendre/
-├── src/contendre/                 # Main package
-│   ├── __init__.py
-│   ├── server.py               # MCP server entry point
-│   ├── tools/                  # MCP tool implementations
-│   │   ├── compare_products.py
-│   │   ├── analyze_sentiment.py
-│   │   └── fetch_company_data.py
-│   ├── orchestrator/           # Query orchestration
-│   │   ├── query_planner.py
-│   │   └── source_router.py
-│   ├── sources/                # Data source integrations
-│   │   ├── web_scraper.py
-│   │   ├── pdf_ingestion.py
-│   │   └── reddit_client.py
-│   ├── synthesis/              # LLM synthesis
-│   │   ├── gemini_client.py
-│   │   └── prompt_templates.py
-│   └── storage/                # ChromaDB interface
-│       └── vector_store.py
-├── tests/                      # Test files mirror src/ structure
-│   ├── test_server.py
-│   ├── tools/
-│   ├── sources/
-│   └── fixtures/
-├── config/                     # Configuration files
-│   └── context.yaml            # "Our company" context
-├── backlog/                    # Planning documents
-│   ├── REQUIREMENTS.md
-│   ├── PROJECT_PLAN.md
-│   └── ROADMAP.md
-└── pyproject.toml              # Project metadata & dependencies
+election-assistant/
+├── app/                          # Next.js App Router
+│   ├── quiz/                    # Main quiz flow (opener + AI follow-up questions)
+│   ├── about/                   # Static /about page (methodology, neutrality statement)
+│   ├── rate-limited/             # Shown when the Upstash rate limit is hit
+│   └── api/                      # API routes (Gemini-backed unless noted)
+│       ├── follow-up/            # Generates the next follow-up question for a topic
+│       ├── score-topics/         # Scores user answers against party grounding data
+│       ├── results/              # Generates the AI results blurb + assembles groundings
+│       ├── export-pdf/           # Puppeteer-rendered PDF of results
+│       ├── feedback/             # Feedback widget submissions → Slack
+│       ├── quota-check/          # Cron-triggered Gemini quota monitor → Slack alerts
+│       └── chat/
+├── components/                   # React components (PartyResultCard, UnifiedResultsPage, etc.)
+├── lib/                          # Core domain logic — see below
+├── data/groundings/               # Per-party grounding data (one JSON file per party)
+├── docs/
+│   ├── sources/                    # Archived source material per party (dated markdown)
+│   ├── advisor-review/             # Generated review artifacts — regenerate via npm scripts, don't hand-edit
+│   ├── learnings/                  # Claude Code learning system (see top of this file)
+│   └── user-testing/               # User testing round summaries
+├── scripts/                       # One-off/maintenance scripts (tsx), not part of the app build
+├── tests/                         # Vitest tests (flat, not mirrored to app/lib structure)
+├── middleware.ts                  # Upstash rate limiting
+└── vitest.config.ts / vercel.json / tailwind.config.ts
 ```
 
+**Key domain files in `lib/`**:
+- `groundings.ts` — grounding data types + accessors; the `Provenance` × `Concreteness` quality model and `getBestEvidenceForTopic()` (the official-material-first selection rule used everywhere quotes are chosen)
+- `questions.ts` — opener questions per topic + `TOPIC_KEY_DIMENSIONS` (canonical follow-up dimension taxonomy)
+- `topics.ts` — canonical topic list (`security`, `economy`, `housing`, `education`, `health`, `religion`, `justice`, `equality`, `ecology`)
+- `parties.ts` — party metadata; must stay in sync with `data/groundings/*.json` (see `docs/learnings/project/VAA-DESIGN.md` item 63)
+- `scoring.ts` — topic scoring math (power-curve weighting)
+- `grounding-types.ts` — API-facing "lite" types returned by `/api/results`
+
 **Key Architectural Patterns**:
-- **MCP Server Pattern**: Server exposes tools, Claude Desktop calls them via JSON-RPC
-- **Query Orchestration**: Router decides RAG vs web scraping based on query type
-- **Source Abstraction**: Each data source (web, PDF, Reddit) has standardized interface
-- **Synthesis Pipeline**: Raw data → extraction → validation → LLM synthesis → structured output
+- **Quiz flow**: fixed opener question per topic (manually written) → AI-generated follow-up question (Gemini, structured output) → both feed topic scoring
+- **Scoring pipeline**: opener answer (pre-calibrated) + follow-up answer (AI-scored against grounding quotes) → per-topic score → power-curve-weighted overall ranking (`lib/scoring.ts`)
+- **Grounding quality model**: every quote has `provenance` (official-current/official-outdated/joint-list/third-party) × `concreteness` (quantified/named-mechanism/specific-stance/generic); `getBestEvidenceForTopic()` is the single selection rule for scoring, quoting, and follow-up dimension selection — official material only when it exists, third-party/joint-list strictly as a fallback
+- **Gemini structured output is mandatory, not optional**: all 3 AI routes (`follow-up`, `score-topics`, `results`) use `responseJsonSchema`/`responseSchema` — prompt instructions alone do not reliably produce valid JSON for Hebrew text with acronyms (two production incidents, see CHANGELOG 2026-07-02)
 
 **Data Flow**:
 ```
-User Query (via Claude Desktop)
+User answers quiz (app/quiz/page.tsx)
     ↓
-MCP Server (server.py)
+/api/follow-up (Gemini, structured output) — generates next follow-up question per topic
     ↓
-Query Orchestrator
-    ├─→ RAG Engine (ChromaDB) - for cached/static knowledge
-    ├─→ Web Scraper - for real-time product pages
-    └─→ Reddit Analyzer - for sentiment
+/api/score-topics (Gemini, structured output) — scores answers vs. party grounding quotes
     ↓
-Synthesis Engine (Gemini)
+lib/scoring.ts — combines opener + follow-up scores, power-curve weighting
     ↓
-Structured Response
+/api/results (Gemini, structured output) — generates results blurb + assembles grounding quotes
     ↓
-User (via Claude Desktop)
+UnifiedResultsPage / PartyResultCard (+ /api/export-pdf for PDF export)
 ```
 
 **Environment Configuration**:
 ```bash
-# Required environment variables
-GEMINI_API_KEY=your_api_key_here     # For Gemini Flash API
-REDDIT_CLIENT_ID=your_client_id      # For PRAW (Reddit)
-REDDIT_CLIENT_SECRET=your_secret     # For PRAW
+# Required
+GEMINI_API_KEY=...                       # Gemini API (all 3 AI routes)
 
-# Optional
-CONTENDRE_DEBUG=true                    # Enable debug logging
-CHROMA_PERSIST_DIR=./data/chroma     # ChromaDB storage location
+# Observability (optional — routes degrade gracefully if unset)
+LANGFUSE_SECRET_KEY=...
+LANGFUSE_PUBLIC_KEY=...
+LANGFUSE_BASE_URL=...                    # defaults to https://cloud.langfuse.com
+
+# Rate limiting (middleware.ts)
+KV_REST_API_URL=...                      # Upstash Redis
+KV_REST_API_TOKEN=...
+
+# Alerting
+QUOTA_SLACK_WEBHOOK_URL=...               # /api/quota-check alerts
+FEEDBACK_SLACK_WEBHOOK_URL=...            # /api/feedback submissions
+CRON_SECRET=...                           # authenticates Vercel cron → /api/quota-check
+
+# Analytics
+NEXT_PUBLIC_MIXPANEL_TOKEN=...
+
+# Local-only
+CHROME_PATH=...                           # local PDF-export dev only; @sparticuz/chromium used on Vercel
+ANTHROPIC_API_KEY=...                     # only needed for scripts/auto-score.ts (npm run score:auto)
 ```
 
 ### Code Style Guidelines
 
-**Python Style**:
-- **PEP 8** compliance (enforced by Black + Ruff)
-- **Type hints**: Use for all function signatures (checked by mypy)
-- **Docstrings**: Google style for all public functions and classes
-- **Line length**: 100 characters (Black default)
-- **Imports**: Grouped (stdlib, third-party, local) and sorted
+**TypeScript/Next.js Style**:
+- **Strict mode** (`tsconfig.json`) — no implicit `any`; run `npx tsc --noEmit` before considering a change done
+- **ESLint**: `eslint-config-next` flat config (`eslint.config.mjs`) — run `npm run lint`
+- **No separate formatter configured** — match the existing file's formatting rather than reformatting wholesale
+- **Path alias**: `@/*` maps to the repo root (e.g. `@/lib/groundings`)
 
 **Naming Conventions**:
-- `snake_case` for functions, variables, modules
-- `PascalCase` for classes
-- `UPPER_CASE` for constants
-- Private methods: `_leading_underscore`
+- `camelCase` for functions and variables
+- `PascalCase` for components and types
+- `kebab-case.ts` for files in `lib/` (e.g. `grounding-types.ts`); `PascalCase.tsx` for components
+- `UPPER_CASE` for module-level constants (e.g. `TOPIC_KEY_DIMENSIONS`)
 
-**Module Organization**:
-```python
-"""Module docstring explaining purpose."""
-
-# Standard library imports
-import os
-from typing import Optional
-
-# Third-party imports
-from chromadb import Client
-import requests
-
-# Local imports
-from contendre.storage import VectorStore
-
-# Constants
-MAX_RETRIES = 3
-
-# Classes/Functions
-class ToolName:
-    """Class implementing MCP tool."""
-    ...
-```
+**Hebrew/RTL content** (this app is Hebrew-first):
+- All user-facing strings are Hebrew; set `dir="rtl"` at the appropriate container level, not per-element
+- Never interpolate a dynamic value into the middle of a Hebrew sentence unless every possible value produces grammatical Hebrew — see `docs/learnings/project/NEXTJS-REACT-PATTERNS.md`
+- Hebrew abbreviations containing a quotation mark (e.g. `רע"מ`) must use the Hebrew gershayim character `״` (U+05F4), not a plain `"`, inside any JSON string value — a recurring source of `JSON.parse` failures, both hand-authored (grounding files) and AI-generated (Gemini routes)
 
 **Comment Style**:
-- Prefer docstrings over inline comments
-- Inline comments for non-obvious logic only
-- TODO comments: `# TODO(username): Description of what needs to be done`
+- Prefer clear naming over comments; comment only non-obvious *why*, not *what*
 
 ### Testing Guidelines
 
-**Test Framework**: pytest with standard plugins
+**Test Framework**: Vitest
 
 **Test File Organization**:
-- Mirror `src/` structure in `tests/`
-- Test file naming: `test_<module_name>.py`
-- Test function naming: `test_<function>_<scenario>_<expected_outcome>`
+- Flat `tests/` directory (not mirrored to `app/`/`lib/` structure) — one file per concern, e.g. `groundingProvenance.test.ts`, `aspectTaxonomy.test.ts`, `resultsResponseSchema.test.ts`
+- Test file naming: `<concern>.test.ts` — name it after what's being verified, not necessarily the source module name
+- Use `describe`/`it` with prose descriptions of the scenario and expected outcome
 
-**Example**:
-```python
-def test_compare_products_with_valid_inputs_returns_structured_comparison():
-    """Test that compare_products returns expected structure with valid product names."""
-    result = compare_products("GitLab", "GitHub")
-    assert "features" in result
-    assert "sources" in result
-    assert len(result["sources"]) > 0
+**Example** (real pattern, `tests/aspectTaxonomy.test.ts`):
+```ts
+import { describe, it, expect } from "vitest";
+import { GROUNDINGS } from "@/lib/groundings";
+import { TOPIC_KEY_DIMENSIONS } from "@/lib/questions";
+
+describe("aspect taxonomy conformance", () => {
+  for (const [partyId, party] of Object.entries(GROUNDINGS)) {
+    for (const [topicId, entries] of Object.entries(party.topics)) {
+      it(`${partyId}/${topicId}: every aspect is a canonical id`, () => {
+        const canonical = TOPIC_KEY_DIMENSIONS[topicId];
+        for (const entry of entries) {
+          expect(canonical.includes(entry.aspect)).toBe(true);
+        }
+      });
+    }
+  }
+});
 ```
 
 **Mock Patterns**:
-- Mock external APIs (Gemini, Reddit, web requests)
-- Use `pytest.fixture` for reusable test data
-- ChromaDB: Use in-memory client for tests
-- Prefer `unittest.mock` or `pytest-mock`
+- Mock external calls (Gemini, Langfuse, Slack webhooks) — never hit real network calls in tests
+- When mocking a module whose own helper functions are called internally by the code under test (e.g. `lib/groundings.ts`'s `compareEntryQuality`), use `vi.mock(path, async (importOriginal) => ({ ...(await importOriginal()), <overrides> }))` — a plain object-literal mock breaks as soon as the code under test calls a real export you didn't stub. See `docs/learnings/project/NEXTJS-REACT-PATTERNS.md`.
 
-**Test Data**:
-```python
-@pytest.fixture
-def sample_product_data():
-    """Fixture providing sample product comparison data."""
-    return {
-        "product_a": "GitLab",
-        "product_b": "GitHub",
-        "aspects": ["features", "pricing", "integrations"]
-    }
-```
-
-**Coverage Requirements**:
-- Target: 80% coverage for core modules (tools/, orchestrator/, synthesis/)
-- 60% acceptable for data source integrations (external dependencies)
-- Run: `pytest --cov=src/contendre --cov-report=html`
-
-**Integration Test Patterns**:
-- Test MCP tool end-to-end (mock only external APIs, not internal modules)
-- Use `tests/integration/` for tests that touch multiple modules
-- Mark slow tests: `@pytest.mark.slow`
-
-**Cleanup Requirements**:
-- ChromaDB: Clean up test collections after each test
-- Temporary files: Use `pytest.fixture` with teardown
-- API mocks: Reset between tests
+**Coverage**: No hard threshold enforced — use judgment. Prioritize regression tests for AI-route schema conformance (a recurring real bug class here, see CHANGELOG 2026-07-02) and grounding-data invariants (schema conformance, taxonomy conformance) over coverage percentage for its own sake.
 
 ---
 
@@ -548,26 +475,26 @@ def sample_product_data():
 ┌─────────────────────────────────────────────────────────┐
 │ 1. START: Create feature branch from TODO               │
 │    /start → feature/slack-integration                    │
-│    - Auto-extracts branch name from TODO item            │
-│    - Prompts if name is ambiguous/too long               │
-│    - Creates and checks out branch                       │
+│    - Auto-extracts branch name from TODO item             │
+│    - Prompts if name is ambiguous/too long                │
+│    - Creates and checks out branch                        │
 └─────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────┐
-│ 2. WORK: Develop on feature branch                      │
-│    - Make changes, commit as needed                      │
-│    - Run tests locally during development (optional)     │
-│    - Use /checkpoint periodically (see below)            │
+│ 2. WORK: Develop on feature branch                       │
+│    - Make changes, commit as needed                        │
+│    - Run tests locally during development (optional)       │
+│    - Use /checkpoint periodically (see below)               │
 └─────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────┐
-│ 3. CHECKPOINT: Save work-in-progress (optional)         │
-│    /checkpoint                                           │
-│    - Stashes uncommitted changes                         │
-│    - Syncs with main (offers to merge if diverged)       │
-│    - Runs full test suite (pytest + black + ruff + mypy) │
-│    - Commits and pushes branch to GitHub                 │
-│    - Safe to switch sessions or take breaks              │
+│ 3. CHECKPOINT: Save work-in-progress (optional)           │
+│    /checkpoint                                             │
+│    - Stashes uncommitted changes                            │
+│    - Syncs with main (offers to merge if diverged)           │
+│    - Runs full test suite (vitest + tsc + eslint)             │
+│    - Commits and pushes branch to GitHub                       │
+│    - Safe to switch sessions or take breaks                     │
 │                                                          │
 │    When to checkpoint:                                   │
 │    - Before switching sessions (local ↔ web)             │
@@ -580,7 +507,7 @@ def sample_product_data():
 │ 4. SWITCH: Work on different branch (optional)          │
 │    /switch                                               │
 │    - Lists all local and remote feature branches         │
-│    - Auto-stashes uncommitted changes                    │
+│    - Auto-stashes uncommitted changes                     │
 │    - Switches to selected branch                         │
 │    - Restores stashed changes if returning to branch     │
 │    - Enables parallel work on multiple features          │
@@ -697,65 +624,18 @@ git pull origin feature/slack-integration (or just /start and continue)
 
 ---
 
-## *MCP-SPECIFIC GUIDELINES*
+## *API ROUTE GUIDELINES*
 
-### MCP Tool Development
+### API Route Development (`app/api/<name>/route.ts`)
 
-**Tool Registration Pattern**:
-```python
-from mcp import Tool, types
+- Validate request body shape before use (see `app/api/score-topics/route.ts`'s `INVALID_INPUT` check)
+- Sanitize any user-supplied free text before it reaches an AI prompt (`lib/sanitize.ts`'s `sanitizeUserInput`)
+- Return a structured `{ errorCode, ... }` on failure, not a bare error string — the frontend switches on `errorCode` (`QUOTA_EXCEEDED`, `SERVER_ERROR`, `AUTH_ERROR`, `INVALID_INPUT`)
+- Every Gemini-backed route: use `responseMimeType: "application/json"` + `responseJsonSchema`/`responseSchema` — never rely on prompt instructions alone to produce valid JSON (see CHANGELOG 2026-07-02 for the production incident this fixed)
+- Wrap the Gemini call in a Langfuse trace/generation; never pass raw user answers as trace `input` (PII) — pass only metadata
+- On error: log to Langfuse (`generation?.update({ output: msg, level: "ERROR" })`) and notify Slack via `lib/slack.ts`'s `notifySlack()` for anything user-facing
 
-@server.list_tools()
-async def handle_list_tools() -> list[types.Tool]:
-    """Register all available MCP tools."""
-    return [
-        types.Tool(
-            name="compare_products",
-            description="Compare two products across multiple dimensions",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "product_a": {"type": "string"},
-                    "product_b": {"type": "string"},
-                    "aspects": {"type": "array", "items": {"type": "string"}}
-                },
-                "required": ["product_a", "product_b"]
-            }
-        )
-    ]
-```
-
-**Tool Implementation Best Practices**:
-- Always validate inputs (use Pydantic models if complex)
-- Return structured data with source attribution
-- Handle errors gracefully (don't crash server)
-- Log tool invocations for debugging
-- Use async/await for I/O operations
-
-**Error Handling**:
-```python
-try:
-    result = await scrape_product_page(url)
-except requests.RequestException as e:
-    logger.error(f"Failed to scrape {url}: {e}")
-    return {"error": f"Could not fetch data for {product_name}", "sources": []}
-```
-
-### Testing MCP Integration
-
-**Test with Claude Desktop**:
-1. Register MCP server in Claude Desktop config
-2. Ask Claude "Can you list available MCP tools?"
-3. Test each tool with real queries
-4. Verify responses are well-formatted and accurate
-
-**Mock MCP Calls in Tests**:
-```python
-@pytest.mark.asyncio
-async def test_compare_products_tool():
-    """Test compare_products MCP tool."""
-    params = {"product_a": "GitLab", "product_b": "GitHub"}
-    result = await compare_products(**params)
-    assert result["product_a"] == "GitLab"
-    assert "features" in result
-```
+**Testing API Routes**:
+- Test exported pure functions directly (`buildScoringPrompt`, `buildGroundingsForParties`, schema builders) rather than spinning up the route handler
+- Mock `@google/genai`, `langfuse`, and `lib/slack.ts` — never call the real Gemini API or post to real Slack in tests
+- Schema-conformance tests (`tests/*ResponseSchema.test.ts`) guard the exact shape sent to Gemini's `responseJsonSchema` — these exist because a subtly wrong schema silently produces malformed output in production, not because of a coverage target
