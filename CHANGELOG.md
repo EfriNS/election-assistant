@@ -36,6 +36,16 @@ Populated `provenance`+`concreteness` on all 257 non-absent entries across all 1
 
 Exposing the tiering (or an "export-grade" version of it) to end users in the results UI — e.g., a per-quote provenance badge — was explicitly tabled by the user as a future consideration, not part of this pass. Logged as a new backlog item.
 
+### Follow-up cleanup and discussion (same session)
+
+Removed the now-dead `sourceQuality` field from all 10 `data/groundings/*.json` files — it had been superseded by `derivePartySourceQuality()` but never cleaned up from the committed data, leaving a contradictory stale value sitting alongside the real per-entry `provenance`/`concreteness` fields.
+
+Built `scripts/render-grounding-review.ts` (`npm run export:grounding-review`), generating `docs/advisor-review/grounding-review.html` directly from `data/groundings/*.json` via `lib/groundings.ts` — same pattern as the existing `export:questions` script. Replaces the one-off scratchpad artifact used for the design review with one that reads only committed data, so it can never drift out of sync. Answered a follow-up question on why `concreteness` is a fixed 4-value enum rather than free text: `compareEntryQuality`, `getBestEvidenceForTopic`, and the schema-conformance test all need a well-defined total order and a closed value set to operate on — the free-text rationale from the original review is preserved instead in this regenerable artifact, decoupled from the runtime data.
+
+Resolved the parked **"Depth vs. brevity" strategic discussion** (TODO backlog): decision is to keep the current full-depth flow and invest in targeted UX/UI improvements instead of a shorter/alternate mode, noting the two adjacent wins already banked this week (2–4 follow-up option count, canonical-taxonomy anti-repetition) as a down payment on that direction. This unblocks the previously-gated "UX/UI review + overhaul" backlog item.
+
+Considered (and declined for now) exposing a lighter, non-badge signal of the provenance ordering directly in the results flow; instead added one line to `/about`'s methodology section explaining that quotes are shown official-source-first, third-party only as a fallback — cheaper than in-flow UI, doesn't add density to the flow currently under a hold-the-line brevity decision, and fits the app's "trusted civic assistant" positioning.
+
 ## 2026-07-02 — Follow-up JSON parse errors: structured-output schema fix (commits `b490834`, `41e92c2`, `81063bb`)
 
 ### Bug

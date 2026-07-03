@@ -531,3 +531,33 @@ Interpolating a data-driven string into the middle of a natural-language sentenc
 ```
 
 Rule: sentences with interpolated values should be designed so any plausible value produces grammatical Hebrew. If you can't guarantee that, rewrite the sentence to not depend on the interpolated value.
+
+---
+
+## Testing
+
+### `vi.mock` a module with `importOriginal` when the code under test calls the module's own helper functions (#first:2026-07-03)
+
+Adding new exported helpers to a module (e.g. `compareEntryQuality`, `derivePartySourceQuality`, `getBestEvidenceForTopic` in `lib/groundings.ts`) that the function under test calls *internally* breaks any existing test that mocks the whole module with a plain object literal:
+
+```ts
+// ❌ Breaks with "No 'compareEntryQuality' export is defined on the mock" as soon as
+// buildGroundingsForParties (the code under test) starts calling that helper internally:
+vi.mock("@/lib/groundings", () => ({
+  GROUNDINGS: { /* fixture data */ },
+  getTopicGroundings: vi.fn(),
+}));
+
+// ✅ Keep every real export via importOriginal, override only the data + functions
+// the test actually needs to control:
+vi.mock("@/lib/groundings", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/groundings")>();
+  return {
+    ...actual,
+    GROUNDINGS: { /* fixture data */ },
+    getTopicGroundings: vi.fn(),
+  };
+});
+```
+
+Fixture data also needs every field the real helpers read (e.g. `provenance`/`concreteness` on each mock grounding entry) — a mock object missing a field a real helper's sort/lookup depends on fails differently (`NaN` comparisons, `undefined` lookups) than a missing export does. Default to `importOriginal` for any module mock in this codebase unless the test deliberately wants every export stubbed.
