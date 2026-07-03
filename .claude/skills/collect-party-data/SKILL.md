@@ -132,10 +132,20 @@ Update `data/groundings/<partyId>.json`:
 
 ---
 
-## Step 8: Commit
+## Step 8: Regenerate Advisor Review
 
 ```bash
-git add data/groundings/<partyId>.json docs/sources/<partyId>/
+npm run export:grounding-review
+```
+
+Grounding data changed, so the advisor review doc (`docs/advisor-review/grounding-review.html`) is now stale — this is a pure local render (no AI calls) of `data/groundings/*.json`, so it's cheap to regenerate every time this skill touches grounding data.
+
+---
+
+## Step 9: Commit
+
+```bash
+git add data/groundings/<partyId>.json docs/sources/<partyId>/ docs/advisor-review/grounding-review.html
 git commit -m "data(<partyId>): <summary of what was added/updated>"
 ```
 
