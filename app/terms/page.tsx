@@ -18,29 +18,6 @@ export default function TermsPage() {
         </div>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-semibold text-gray-800">מדיניות פרטיות</h2>
-
-          <p className="text-sm text-gray-600 leading-relaxed">
-            אין צורך בהרשמה או התחברות. תשובותיכם בשאלון — כולל כל מה שכתבתם בתיבות הטקסט החופשי — אינן נשמרות ואינן מקושרות לזהותכם.
-          </p>
-
-          <p className="text-sm text-gray-600 leading-relaxed">
-            עם זאת, האתר משתמש בכלי אנליטיקס אנונימיים כדי להבין איך הכלי משמש בפועל ולשפר אותו. הפירוט:
-          </p>
-
-          <ul className="text-sm text-gray-600 leading-relaxed space-y-2 list-disc list-inside">
-            <li><strong className="text-gray-700">Mixpanel</strong> — אילו נושאים דורגו כחשובים, כמה שאלות נענו, ולאיזו מפלגה הייתה ההתאמה הגבוהה ביותר (ברמת האחוזים בלבד). מקושר למזהה אנונימי חד-פעמי שנוצר לכל ביקור, לא לשמכם או לפרטים מזהים.</li>
-            <li><strong className="text-gray-700">Langfuse</strong> — ניטור טכני של מערכת הבינה המלאכותית: זמני תגובה, שגיאות, ואיזו מפלגה הייתה ההתאמה המובילה. לעולם לא תוכן התשובות החופשיות שלכם.</li>
-            <li><strong className="text-gray-700">Hotjar, Microsoft Clarity, ContentSquare</strong> — כלים שמראים לנו איך אנשים מנווטים באתר (קליקים, גלילה, מסכים שבהם משתמשים מתעכבים). תיבות הטקסט החופשי בשאלון אינן מוקלטות על ידם.</li>
-            <li><strong className="text-gray-700">Vercel Analytics</strong> — נתוני צפיות וביצועים בסיסיים של האתר.</li>
-          </ul>
-
-          <p className="text-sm text-gray-600 leading-relaxed">
-            המידע הזה משמש אך ורק לשיפור הכלי — לאתר תקלות ולהבין איפה משתמשים מתקשים. הוא אינו נמכר, אינו משותף עם אף מפלגה או גורם מסחרי, ואין באתר פרסומות, פיקסלים שיווקיים, או מעקב לצורכי תעמולה.
-          </p>
-        </section>
-
-        <section className="space-y-3">
           <h2 className="text-lg font-semibold text-gray-800">תנאי שימוש</h2>
 
           <p className="text-sm text-gray-600 leading-relaxed">
@@ -75,6 +52,29 @@ export default function TermsPage() {
               </a>
             </li>
           </ul>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-lg font-semibold text-gray-800">מדיניות פרטיות</h2>
+
+          <p className="text-sm text-gray-600 leading-relaxed">
+            אין צורך בהרשמה או התחברות. תשובותיכם בשאלון — כולל כל מה שכתבתם בתיבות הטקסט החופשי — אינן נשמרות ואינן מקושרות לזהותכם.
+          </p>
+
+          <p className="text-sm text-gray-600 leading-relaxed">
+            עם זאת, האתר משתמש בכלי אנליטיקס אנונימיים כדי להבין איך הכלי משמש בפועל ולשפר אותו. הפירוט:
+          </p>
+
+          <ul className="text-sm text-gray-600 leading-relaxed space-y-2 list-disc list-inside">
+            <li><strong className="text-gray-700">Mixpanel</strong> — אילו נושאים דורגו כחשובים, כמה שאלות נענו, ולאיזו מפלגה הייתה ההתאמה הגבוהה ביותר (ברמת האחוזים בלבד). מקושר למזהה אנונימי חד-פעמי שנוצר לכל ביקור, לא לשמכם או לפרטים מזהים.</li>
+            <li><strong className="text-gray-700">Langfuse</strong> — ניטור טכני של מערכת הבינה המלאכותית: זמני תגובה, שגיאות, ואיזו מפלגה הייתה ההתאמה המובילה. לעולם לא תוכן התשובות החופשיות שלכם.</li>
+            <li><strong className="text-gray-700">Hotjar, Microsoft Clarity, ContentSquare</strong> — כלים שמראים לנו איך אנשים מנווטים באתר (קליקים, גלילה, מסכים שבהם משתמשים מתעכבים). תיבות הטקסט החופשי בשאלון אינן מוקלטות על ידם.</li>
+            <li><strong className="text-gray-700">Vercel Analytics</strong> — נתוני צפיות וביצועים בסיסיים של האתר.</li>
+          </ul>
+
+          <p className="text-sm text-gray-600 leading-relaxed">
+            המידע הזה משמש אך ורק לשיפור הכלי — לאתר תקלות ולהבין איפה משתמשים מתקשים. הוא אינו נמכר, אינו משותף עם אף מפלגה או גורם מסחרי, ואין באתר פרסומות, פיקסלים שיווקיים, או מעקב לצורכי תעמולה.
+          </p>
         </section>
 
         <div className="pt-4 border-t border-gray-100">
