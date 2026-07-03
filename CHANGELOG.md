@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-07-03 — UX/UI review: explored via mockups, no redesign adopted
+
+### Context
+
+TODO backlog #1 (now resolved) tracked a recurring complaint across four rounds of user testing: "too much text," "too many options," headings not prominent enough. The 2026-07-03 depth-vs-brevity decision (keep full depth, pursue targeted UX/UI improvements instead of a shorter mode) unblocked this as the active next step.
+
+### What was explored
+
+Rather than jump to implementation, built a Claude Artifact mocking up three distinct, falsifiable presentation-layer hypotheses about *why* the app reads as long/flat, each grounded in a specific fact from `REQUIREMENTS.md` or the user-testing docs rather than a generic style mood:
+
+- **Contrast** — one dominant element per screen (the matched platform quote, not the score), everything else recedes.
+- **Pre-organization** — visual grouping of content that's already there (option list as one bundled unit, term-hint glossary consolidated rather than scattered), with no new categorization content required.
+- **Momentum** — accurate, legible progress and pacing (including a time estimate that reacts to the ממוקד/מעמיק depth choice), explicitly *not* a chat-bubble aesthetic (round 2 already tested and rejected a freeform-chat flow).
+
+A journey-level reframing (progressive disclosure, a visible audit trail, reframing results as a reflective self-portrait) was attempted first and abandoned — all three turned out to be disguised attempts to change the validated quiz mechanic itself, which was out of scope.
+
+Iterated over several rounds of direct scrutiny against the real codebase: fixed real bugs (tab switching relied on a CSS selector that never matched; the tone/depth toggles were hidden by default due to the same class-vs-attribute-value mistake), restored real content that had been oversimplified away (numbered option circles matching `app/quiz/page.tsx`, per-topic score tooltips, the overall AI-analysis block and full scoring-methodology explainer from `UnifiedResultsPage.tsx`, share/PDF/home-nav), and added a genuine "today" baseline tab (real copy, real Tailwind colors via a scoped CSS-variable override, the app's actual embedded font) so the three directions could be judged against reality rather than against each other in isolation. Also made a deliberate typography/color call rather than reflexively copying the live app's values: embedded the Heebo webfont (designed natively for Hebrew) and kept teal as the accent for a real reason — one of the few colors with no Israeli-party association — re-tuned to a custom shade rather than reused verbatim.
+
+### Outcome
+
+After a fair, fully-fleshed-out side-by-side comparison including the real baseline, none of the three directions showed a meaningful improvement over what's already live. **Decision: abandon the broader visual-hierarchy redesign.** The density/length complaint will be addressed through targeted micro-copy and surgical fixes instead, scoped separately as specific issues are identified — not a systemic presentation-layer overhaul.
+
+See `docs/learnings/project/VAA-DESIGN.md` (items 73–75) for the reusable process/design learnings from this exploration.
+
 ## 2026-07-03 — Fix: quota-check Slack report always showed ~0 requests (commit `e5aee84`)
 
 ### Context
