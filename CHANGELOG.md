@@ -22,6 +22,16 @@ Kept every generic, still-applicable principle verbatim (root-cause investigatio
 
 Grepped both `.claude/commands/*.md` and `docs/learnings/project/*.md` + `INDEX.md` for the full set of stale terms (`pytest`, `black --check`, `ruff check`, `mypy`, `supabase`, `deno`, `i18n`, `playwright`, `jobmatching`, `contendre`, `chromadb`, `reddit`, `praw`, `.venv`, `docker`) after each pass — remaining hits were either deliberate (e.g. `INDEX.md`'s own note explaining the cleanup) or false positives (`deno` matching inside "denominator"). Full test suite unaffected (docs-only changes): 261/261 passing.
 
+### Follow-up round: real ESLint fix + two more command-file corrections (commits `6db29c7`, `cc67841`, `6179ba5`)
+
+**ESLint actually fixed, not just re-routed**: `app/quiz/page.tsx`'s `react-hooks/exhaustive-deps` `eslint-disable` comment was attached to the `useEffect(` call line, but the rule reports at the dependency-array line 3 lines later — so the directive silenced nothing (triggering a separate "unused directive" warning) while the real missing-deps warning fired anyway. Moved the disable comment to the line it actually needs to suppress. ESLint went from 2 warnings to 0.
+
+**`wrapup.md`'s "Manual Browser Check" step removed** (added earlier this session, then reconsidered): on reflection it was a straight translation of the previous project's scriptable Playwright E2E step, but "open a browser and click through" doesn't have that same reliably-executed character as a checklist gate — and it duplicated the standing practice of verifying UI changes in-browser during implementation, not re-litigating it at wrapup time.
+
+**`/save` and `/continue` removed** (`continue.md`, `save.md`, plus every reference in `wrapup.md`, `relearn.md`, `CLAUDE.md`, `docs/learnings/INDEX.md`): Claude Code's native session resume (`claude --resume`/`--continue`) restores the full conversation transcript, which is strictly more complete than these commands' hand-written `ops/SAVED.md` summary, for the crash-recovery case they targeted. `wrapup.md`'s Step 7 (`ops/SAVED.md` cleanup) was dead code once nothing creates that file, so it went too.
+
+**Two more genuine leftovers found in `start.md`/`relearn.md`** while double-checking whether `checkpoint.md`/`start.md` needed the same treatment as `wrapup.md` (`checkpoint.md` was already fully clean): `product/REQUIREMENTS.md` → the real path is `REQUIREMENTS.md` (repo root, no `product/` dir); `start.md`'s TODO-item-selection logic looked for a `"🎯 HIGH PRIORITY"` section and `[ ]`/`[x]` checkboxes that don't exist in this repo's real TODO.md format (`📋 BACKLOG (Prioritized)`, plain numbered list); "invoke the planner agent" (twice in `start.md`) referenced a subagent never defined in this repo (`.claude/agents/` is empty) — the same stale reference already fixed in `CLAUDE.md`'s Agent Usage Guidelines but never propagated here, now consistently `EnterPlanMode`/`Plan` agent in both; and `backlog/*.md` references in both files (one literally about "docker versioning strategy") pointed at a directory that doesn't exist, replaced with the real `docs/*.md` design-doc pattern this repo actually uses.
+
 ## 2026-07-03 — Source-provenance tiering: two-field model wired into scoring, quoting, and follow-up selection
 
 ### Context
