@@ -11,9 +11,14 @@ try {
   // not a git repo or git not available
 }
 
+// "production" | "preview" | "development" — set automatically by Vercel (VERCEL_ENV);
+// undefined locally, where "development" is the correct fallback.
+const deployEnv = process.env.VERCEL_ENV ?? "development";
+
 const nextConfig: NextConfig = {
   env: {
     BUILD_ID: buildId,
+    DEPLOY_ENV: deployEnv,
   },
   serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
   // Include chromium brotli binaries in the export-pdf function bundle.

@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 
-const SHARE_TITLE = "עוזר הבחירות";
-const SHARE_TEXT =
-  "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? הכלי חינמי ומסביר למה";
+const isPreview = process.env.DEPLOY_ENV !== "production";
+
+const SHARE_TITLE = isPreview ? "עוזר הבחירות (גרסת Preview)" : "עוזר הבחירות";
+const SHARE_TEXT = isPreview
+  ? "גרסת Preview לבדיקה — עוד לא הגרסה הסופית. עוזר הבחירות: כלי חינמי שעוזר לגלות לאיזו מפלגה אתם הכי קרובים"
+  : "גיליתי לאיזו מפלגה אני הכי קרוב 🗳️ רוצה לנסות גם? הכלי חינמי ומסביר למה";
 
 type Props = {
   variant?: "prominent" | "subtle" | "landing";

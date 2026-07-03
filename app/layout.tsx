@@ -15,8 +15,9 @@ export const metadata: Metadata = {
   description: "גלה לאיזו מפלגה אתה הכי קרוב",
 };
 
-// BUILD_ID is injected by next.config.ts at build time (works both locally and on Vercel)
+// BUILD_ID/DEPLOY_ENV are injected by next.config.ts at build time (works both locally and on Vercel)
 const buildId = process.env.BUILD_ID ?? "dev";
+const isPreview = process.env.DEPLOY_ENV !== "production";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -27,6 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};h._hjSettings={hjid:6732665,hjsv:6};a=o.getElementsByTagName('head')[0];r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;a.appendChild(r);})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');` }} />
       </head>
       <body className="bg-gray-50 text-gray-900 font-sans antialiased">
+        {isPreview && (
+          <div className="text-center text-xs font-medium text-amber-800 bg-amber-100 border-b border-amber-200 py-1.5 px-3">
+            גרסת Preview — לצורכי בדיקה בלבד, לא הגרסה הסופית
+          </div>
+        )}
         {children}
         <div className="fixed bottom-2 right-2 text-xs text-gray-500 select-none pointer-events-none">
           {buildId}
