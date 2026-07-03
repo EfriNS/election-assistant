@@ -113,10 +113,10 @@ export async function GET(req: NextRequest) {
     baseUrl:   process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
   });
 
-  const now        = new Date();
-  const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const now         = new Date();
+  const windowStart = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
-  const totals     = await fetchWindowUsage(client, todayStart, now);
+  const totals     = await fetchWindowUsage(client, windowStart, now);
   const requestPct = computeRequestPct(totals.requests, requestLimit);
 
   let slackSent = false;

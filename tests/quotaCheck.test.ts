@@ -155,6 +155,25 @@ describe("GET /api/quota-check", () => {
     expect(res.status).toBe(503);
   });
 
+  it("queries a rolling 24h window ending now, not since UTC midnight", async () => {
+    // Regression test: the window used to be [UTC midnight, now], which on a
+    // daily cron fired shortly after UTC midnight collapses to a near-empty
+    // few-hour slice that misses almost all real usage (see CHANGELOG).
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-07-03T02:00:00.000Z")); // 2h after UTC midnight
+
+    const { GET } = await import("@/app/api/quota-check/route");
+    stubObservations([]);
+    await GET(makeReq());
+
+    expect(mockFetchObservations).toHaveBeenCalled();
+    const { fromStartTime, toStartTime } = mockFetchObservations.mock.calls[0][0];
+    const spanMs = (toStartTime as Date).getTime() - (fromStartTime as Date).getTime();
+    expect(spanMs).toBeCloseTo(24 * 60 * 60 * 1000, -3);
+
+    vi.useRealTimers();
+  });
+
   it("returns correct usage counts and per-route breakdown", async () => {
     const { GET } = await import("@/app/api/quota-check/route");
     stubObservations([
