@@ -56,7 +56,7 @@ export default function TermsPage() {
           </p>
 
           <p className="text-sm text-gray-600 leading-relaxed">
-            הכלי מסופק כפי שהוא (&ldquo;AS IS&rdquo;), ללא אחריות לדיוק מוחלט או לשלמות המידע. השימוש בו הוא באחריות המשתמש/ת, ואינו תחליף לשיקול דעת עצמאי.
+            <strong className="text-gray-800">הכלי מסופק כפי שהוא (&ldquo;AS IS&rdquo;), ללא אחריות לדיוק מוחלט או לשלמות המידע. השימוש בו הוא באחריות המשתמש/ת, ואינו תחליף לשיקול דעת עצמאי.</strong>
           </p>
 
           <p className="text-sm text-gray-600 leading-relaxed">
