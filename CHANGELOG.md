@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-07-03 — Repo housekeeping: removed stale Contendre/CV-Refinery boilerplate (commits `8da4d46`, `896e347`, `feaf948`, `ef4df3c`)
+
+### Context
+
+While wrapping up the source-provenance work (below), noticed `CLAUDE.md` described a completely different project — a Python/MCP server called "Contendre" (ChromaDB, Reddit/PRAW scraping, pytest/black/ruff/mypy, Docker/MCPB builds) — none of which applies to this Next.js/TypeScript app. Following the thread turned up the same problem spread across `.claude/commands/*.md` and `docs/learnings/`, plus a *second* unrelated leftover project ("CV Refinery" — Supabase edge functions, Playwright E2E, i18n) in a few command files. None of this was blocking work this session (real commands were substituted live, e.g. `tsc`/`eslint`/`vitest` in place of `mypy`/`ruff`/`pytest`), but it risked confusing a future session that followed the stale instructions literally without checking the real repo first.
+
+### `CLAUDE.md` (`8da4d46`)
+
+Kept every generic, still-applicable principle verbatim (root-cause investigation, no-workarounds philosophy, branching workflow, TODO maintenance rules, learning system). Replaced Contendre-specific commands/examples/architecture with real equivalents: testing commands (`pytest`+`black`+`ruff`+`mypy` → `vitest`+`tsc`+`eslint`), the Root Cause Investigation worked example (ChromaDB distance clamping → the real Gemini JSON-gershayim-escaping incident), Project Architecture/Directory Structure/Data Flow/Environment Configuration (rewritten to match the actual app, verified against `package.json` and real `process.env.*` usage rather than guessed), and Code Style/Testing Guidelines (Python conventions → this repo's real TypeScript/Vitest conventions, plus Hebrew/RTL-specific notes pulled from existing project learnings). Removed the **MCP-SPECIFIC GUIDELINES** section entirely (no MCP server here) and replaced it with a parallel **API ROUTE GUIDELINES** section covering the real equivalent concerns (input validation, sanitization, the mandatory structured-output rule, error codes).
+
+### `.claude/commands/*.md` (`896e347`)
+
+`checkpoint.md` and `wrapup.md` had the same Python toolchain baked into their test-verification steps — replaced with `vitest`/`tsc`/`eslint`. A separate discovery: `ci.md`, `test.md`, `build.md`, `pre-deploy.md`, and `test-e2e.md` referenced commands and tech from a *third*, unrelated project entirely — `npm run test:run`/`test:ci`, `npm run i18n:check`, Playwright (`test-e2e.md` literally opened with "Run Playwright E2E tests for the CV Refinery application"), and Supabase edge-function deploys (`pre-deploy.md` guided through `npx supabase functions deploy ai-job-analysis` for a component called `JobMatchingModal`). Rewrote `pre-deploy.md` around this app's real Vercel git-push-to-deploy flow, rewrote `test-e2e.md` to describe the actual manual dev-server+browser verification workflow used for the quiz/results flow (no automated E2E suite exists here), and rewrote `ci.md` to describe the real local verification pipeline (lint + tsc + vitest + build, since no GitHub Actions workflow exists to "simulate"). Also swapped the illustrative "ChromaDB similarity bug" branch-naming examples in `start.md`/`switch.md` for a real one from this repo's own history (`fix/grounding-quote-display-bug`).
+
+### `docs/learnings/` (`feaf948`, `ef4df3c`)
+
+`docs/learnings/project/` is supposed to hold election-assistant-specific patterns, but several files were pure Contendre leftovers with nothing salvageable: `CONFIG-PATTERNS.md` (YAML config for Python scrapers), `DOCKER-PATTERNS.md` (PyTorch/Docker build issues — no Dockerfile exists in this repo), `MCP-TESTING-PATTERNS.md` (testing MCP tool handlers), `SCRAPING-PATTERNS.md` (web-scraping/robots.txt patterns), and `DOCUMENTATION-WORKFLOW.md` (TODO/pricing narratives for a different product, fully superseded by this repo's own TODO.md rules) — all five deleted. `AI-INTEGRATION.md` was a mix: kept its real election-assistant section (Gemini limits, the `responseJsonSchema` fix, Langfuse patterns) verbatim, deleted a stale "Contendre — Python" section referencing a nonexistent `src/contendre/` path. `INDEX.md` had its "project/ = Contendre specific patterns" description fixed (it appeared multiple times), its pytest/black/ruff/mypy Quick Win swapped for the real `vitest`/`tsc`/`eslint` command, dead links to the deleted files removed, and fabricated example content replaced with a real incident from this project (the עוצמה יהודית source-verification case). `docs/learnings/universal/` was deliberately left untouched — it's explicitly meant to hold generic, template-level principles regardless of which project's examples illustrate them, so incidental non-Next.js examples there aren't errors.
+
+### Verification
+
+Grepped both `.claude/commands/*.md` and `docs/learnings/project/*.md` + `INDEX.md` for the full set of stale terms (`pytest`, `black --check`, `ruff check`, `mypy`, `supabase`, `deno`, `i18n`, `playwright`, `jobmatching`, `contendre`, `chromadb`, `reddit`, `praw`, `.venv`, `docker`) after each pass — remaining hits were either deliberate (e.g. `INDEX.md`'s own note explaining the cleanup) or false positives (`deno` matching inside "denominator"). Full test suite unaffected (docs-only changes): 261/261 passing.
+
 ## 2026-07-03 — Source-provenance tiering: two-field model wired into scoring, quoting, and follow-up selection
 
 ### Context
