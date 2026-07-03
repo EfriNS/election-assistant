@@ -608,7 +608,6 @@ function QuizInner() {
             <p className="text-sm text-gray-600 leading-relaxed mb-6 italic">{currentPrologue}</p>
           )}
           <textarea value={closeText} onChange={(e) => setCloseText(e.target.value)}
-            data-hj-allow
             placeholder="כאן תוכל לכתוב בחופשיות..."
             className="w-full border border-gray-300 rounded-xl p-4 text-sm leading-relaxed h-36 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 mb-4"
             dir="rtl" />
@@ -744,7 +743,6 @@ function QuizInner() {
                     }`}>{num}</span>
                     <div className="flex-1">
                       <textarea
-                        data-hj-allow
                         value={followUpDraft}
                         onChange={(e) => { setFollowUpDraft(e.target.value); setSelectedFollowUpAnswer(null); }}
                         placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
@@ -860,7 +858,6 @@ function QuizInner() {
             }`}>{q.options.length + 1}</span>
             <div className="flex-1">
               <textarea
-                data-hj-allow
                 value={openerDraft}
                 onChange={(e) => setOpenerDraft(e.target.value)}
                 placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
