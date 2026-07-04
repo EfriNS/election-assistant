@@ -29,11 +29,12 @@
    - **0.6** Content neutrality audit (3rd-party review of question framing)
    - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
 
-3. **Open-source the repository** — Repo is currently private; planned to go public in ~1-2 days (2026-07-06ish). Before flipping: (a) audit git history for secrets (`gitleaks` / `trufflehog`), (b) review all comments and TODOs for anything not safe to publish, (c) ~~add LICENSE~~ already done (MIT, root `LICENSE`), (d) clean up README for external audience, (e) run security re-assessment (see #4).
-   **Immediately after flipping to public** (risk-review findings 2.1/2.2, 2026-07-04 — both were built gated/soft specifically because the repo was still private at the time):
+3. **Open-source the repository** — Repo is currently private; planned to go public in ~1-2 days (2026-07-06ish). Before flipping: (a) ~~audit git history for secrets~~ done — `gitleaks detect --log-opts="--all"` scanned all 279 commits across all refs 2026-07-04, zero findings, (b) review all comments and TODOs for anything not safe to publish, (c) ~~add LICENSE~~ already done (MIT, root `LICENSE`), (d) clean up README for external audience, (e) run security re-assessment (see #4).
+   **Immediately after flipping to public** (risk-review findings 2.1/2.2/3.2, 2026-07-04 — built gated/soft specifically because the repo was still private at the time):
    - Flip `GROUNDING_ARCHIVE_PUBLIC` to `true` in `lib/groundings.ts` — every quote's archive link (`docs/sources/*.md`) goes live immediately, no other code change needed.
    - Update `/terms`'s "בכוונתנו לפרסם את קוד הכלי בפומבי..." line (`app/terms/page.tsx`) — it's future-tense on purpose right now; reword once true.
    - Spot-check that the existing GitHub links in `/about` and the landing-page footer (already pointed at the repo before this was noticed) actually resolve now.
+   - Enable "Private vulnerability reporting" in repo Settings → Security (`SECURITY.md` already points there; the enable API 404'd while the repo was private — likely a public-repo-only feature, confirm once public).
 
 4. **Security re-assessment** — Initial security review done (MVP phase 0.4). Re-validate before going public: API key exposure, input sanitization, rate limiting, dependency vulnerabilities (`npm audit`). May be run as part of open-source prep (#3) or independently beforehand.
 
