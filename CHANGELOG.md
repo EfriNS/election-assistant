@@ -1,5 +1,46 @@
 # Changelog
 
+## 2026-07-04 — Pre-launch legal/privacy risk review, fully implemented
+
+### Context
+
+User asked for a "lawyer's hat" pass before publishing and open-sourcing: what could realistically go wrong (misquotation claims, "you're trying to influence someone," and anything else), and where in the app/repo it needed to be addressed. Produced a structured risk-review Artifact (not legal advice — an engineering-literate risk map, explicitly framed as input to a real consultation) organized into three sections, then implemented all of it across the session, item by item, largely confirmed/steered live by the user rather than delivered as one batch.
+
+### Method
+
+Read the actual code and data flows rather than reasoning abstractly — checked what `data-hj-allow`, Mixpanel, and Langfuse actually capture; checked current Israeli law (Amendment 13 to the Privacy Protection Law, in force since Aug 2025, which explicitly names political opinions as specially-sensitive data) rather than assuming; found and verified a real, on-point Israeli precedent (mako's "מצפן הבחירות" cease-and-desist, over undisclosed party data-sharing — not about the tool's neutrality, about disclosure); live-tested a URL (shas.org.il) rather than trusting search-index text before recommending it.
+
+### Section 1 — Fix before anyone outside your household sees this
+
+- **`data-hj-allow` removed** from all three free-text answer boxes in `app/quiz/page.tsx` — Hotjar masks form inputs by default; this had explicitly opted each one back in, so session replay could capture the literal sentences someone typed about their own political views. Directly contradicted README's stated principle.
+- **`app/terms/page.tsx` (new)**: real Privacy Policy (names every analytics processor — Mixpanel, Langfuse, Hotjar, Clarity, ContentSquare, Vercel Analytics — and what each sees, states data is anonymized/used only to improve the tool) and Terms of Use (non-affiliation, AI-assisted scoring framed as this tool's own interpretation not the party's, an AS-IS/no-warranty clause). Linked from the landing page, `/about`, and the results page footers. README and `/about`'s previous blanket "no tracking of opinions" claim replaced with an accurate one.
+- **Non-affiliation surfaced on the landing page itself** (`app/page.tsx`), not just `/about` — the "how it works" box now states independence/no party funding, not just output neutrality (the mako precedent's actual complaint was about undisclosed funding/data-sharing, not biased output).
+
+### Section 2 — Strongly recommended
+
+- **Quote-dispute fast path**: the in-app feedback widget (already publicly reachable) made the clear primary path in `/terms`, with guidance on what to include. Added `.github/ISSUE_TEMPLATE/quote-dispute.yml` (structured form), inert until the repo is public.
+- **Archive links, gated**: threaded `archivePath` through `lib/grounding-types.ts` → `app/api/results/route.ts`'s `buildGroundingsForParties` → `PartyResultCard.tsx`/`pdf-template.ts`, added an "ארכיון" link next to each quote's source link — gated behind a new `GROUNDING_ARCHIVE_PUBLIC` flag (`lib/groundings.ts`, defaults `false`) since the repo is currently private and a live link would just 404. One boolean flip once public, no other changes needed.
+- **Source freshness**: `dateRetrieved` was already tracked per quote but shown at `text-gray-300` (same low-contrast bug fixed elsewhere this session) with no party-level summary. Added a "מקורות עודכנו לאחרונה: &lt;date&gt;" line (most recent date across a party's entries) next to the grounding accordion trigger, in both the results page and the PDF export; fixed the per-quote contrast in both.
+- **Score-interpretation framing**: a one-line caption above the results list states match percentages are this tool's own AI-assisted analysis, not a party's claim about itself.
+
+Mid-session correction: initially added a response-time commitment ("within 5 business days") to the quote-dispute path and the issue template. User correctly pushed back — as a solo maintainer, committing to a review SLA doesn't make sense even though it reads fine for a team. Removed the timeline, kept the substance ("we review every report").
+
+### Section 3 — Before flipping the repo to public
+
+- **Secrets audit**: ran `gitleaks detect --log-opts="--all"` against the full git history — 279 commits, all refs, not just `HEAD`. Zero findings.
+- **`SECURITY.md` added**: private vulnerability reporting via GitHub's Security tab, no fixed response-time commitment (same reasoning as the quote-dispute SLA removal). Tried enabling GitHub's private-vulnerability-reporting via `gh api` now — 404'd while the repo is private (likely a public-repo-only feature) — queued for the post-open-source checklist instead of assuming it'll just work.
+- **MIT-vs-hosted-content distinction**: needed no separate action — already covered by `LICENSE` (disclaims the code) + `/terms`' AS-IS clause (disclaims the live site/content), a distinction worth being deliberate about rather than assuming one disclaimer covers both surfaces.
+
+### Open-sourcing timeline
+
+Repo is planned to go public in ~1-2 days. Rather than assume it's already public (risking exactly the dead-link state this session was built to avoid, if the timeline slips), added a concrete "immediately after flipping to public" checklist to TODO #3: flip `GROUNDING_ARCHIVE_PUBLIC`, reword `/terms`' future-tense line, spot-check the pre-existing `/about`/landing-page GitHub links, enable private vulnerability reporting.
+
+### Also this session
+
+- Added `tests/partiesGroundingConsistency.test.ts` — regression guard for `VAA-DESIGN.md` item 63 (`lib/parties.ts`/grounding-data drift), which recurred in production-visible form (Hadash/Otzmah Yehudit both missing `platformUrl` despite `platformAvailable: true`) even with a documented manual checklist. Verified the test actually catches the regression — temporarily reverted `parties.ts` to its pre-fix state, confirmed both parties fail with a clear message, restored the fix.
+
+Commits: `c227c4d`, `75f7645`, `9561607`, `956a77c`, `5ffeb7f`, `e27219b`, `1f6d7d5`, `a4f722c`, `18fd162`, `73b2cb1`, `4df3783`
+
 ## 2026-07-04 — Fix: `lib/parties.ts` drifted from grounding data (party website/platform links), low-contrast text
 
 ### Context

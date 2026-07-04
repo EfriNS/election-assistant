@@ -165,6 +165,8 @@
 
 40. **Separate gated vs non-gated work** - Create clear boundaries for work that requires external approval. Enables independent execution of some tasks. (#first:2025-10-11)
 
+42. **Don't default to team-scale commitments (SLAs, response times) in user-facing copy without checking who's actually operating the service** — Added "we review every report within 5 business days" to a quote-dispute/security-disclosure flow, following the generic convention for this kind of copy (most real-world examples come from teams with on-call rotations). The user — a solo maintainer — correctly pushed back: a fixed response-time commitment doesn't make sense for one person running an independent project, even though the same sentence reads as perfectly normal boilerplate. Removed the timeline, kept the substance ("we review every report"). Check who's actually on the hook before writing a numeric commitment into copy; the same disclosure/correction process usually reads fine without one. (#first:2026-07-04)
+
 ---
 
 ## Anti-Patterns to Avoid

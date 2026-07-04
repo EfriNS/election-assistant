@@ -194,6 +194,7 @@ These patterns appear across multiple topic areas:
 - Process: Verify implementation before documenting
 - Design: A redesign proposal must be verified against a real baseline, not just ranked against other candidate redesigns — otherwise the comparison can't conclude "no change needed" (see `project/VAA-DESIGN.md` item 73)
 - Debugging: A comparison tool's "same/equal" result is itself unverified until you confirm the extraction it's built on actually worked — two silently-empty values compared equal reads identical to two real values matching (see `universal/DEBUGGING.md` item 21's 2026-07-04 reinforcement)
+- Debugging: A search engine's indexed description of a site is a claim about what it *was*, not what it *is* — a live fetch (and, for "is this abandoned," a Wayback Machine check) is what actually verifies a domain before recommending it (see `project/VAA-DESIGN.md` item 72's 2026-07-04 reinforcement)
 
 ### 2. No Workarounds Philosophy
 **Appears in**: ARCHITECTURE, DEBUGGING, TESTING
@@ -229,7 +230,7 @@ These patterns appear across multiple topic areas:
 
 - **Total Universal Principles**: 121 across all topics (CODING-PRINCIPLES: 12, TESTING: 35, PROCESS: 33, DEBUGGING: 19, ARCHITECTURE: 15, CI-CD: 8, AI-PROMPTS: 6) — inherited from the template, largely unaudited for this project
 - **Comprehensive Methodologies**: 1 (COMPETITIVE-RESEARCH: multi-source validation framework — see the election-assistant example under that section above)
-- **Project-Specific Patterns**: `project/VAA-DESIGN.md` (76+ items — the primary, most actively maintained file), plus `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`
+- **Project-Specific Patterns**: `project/VAA-DESIGN.md` (78+ items — the primary, most actively maintained file), plus `NEXTJS-REACT-PATTERNS.md`, `INFRA-PATTERNS.md`, `ANALYTICS-PATTERNS.md`, `AI-INTEGRATION.md`
 - **Cross-Cutting Themes**: 6 major patterns
 - **Most Reinforced**: "Avoid workarounds at all costs" (added checklist to CLAUDE.md)
 - **Most Impactful**: "Root cause investigation over symptom fixing" (prevented hours of technical debt)
@@ -291,7 +292,9 @@ These patterns appear across multiple topic areas:
 
 ---
 
-**Last Updated**: 2026-07-04 (content-sharpening + infra session — added project/VAA-DESIGN.md item 76: verify real-world political alignment before merging two conflict axes into one scored option, don't assume topical similarity means correlated scoring; reinforced item 63 (`lib/parties.ts`/grounding drift recurred in production-visible form — Hadash and Otzmah Yehudit both missing `platformUrl` despite `platformAvailable: true`) and flagged a regression test as the next step rather than relying on the existing manual checklist; reinforced universal DEBUGGING.md item 21 with the opposite-direction failure mode — a "same value" comparison built on a silently-failed extraction (`vercel env pull` returning every secret as an empty string) is not evidence, caught only via user pushback; added a Debugging manifestation to Cross-Cutting Theme 1 (Verification Discipline))
+**Last Updated**: 2026-07-04 (pre-launch legal/privacy risk review session — added project/VAA-DESIGN.md items 77-78: for an Israeli VAA, undisclosed data practices are the real legal exposure (Amendment 13 names political opinions as specially-sensitive data; the mako "מצפן הבחירות" precedent was about disclosure, not perceived bias), and gate a feature on a not-yet-true external dependency behind one flag rather than shipping a temporarily-dead link; reinforced item 72 with a second live-fetch-plus-Wayback-check verification (shas.org.il: search results said "the party site," live fetch said `ECONNREFUSED`, Wayback said abandoned since 2022); added universal PROCESS.md item 42 — don't default to team-scale SLA commitments in user-facing copy without checking who's actually the operator (removed a "5 business days" response commitment after the user, a solo maintainer, pointed out it didn't fit); added a Debugging manifestation to Cross-Cutting Theme 1 (Verification Discipline))
+
+**Previously**: 2026-07-04 (content-sharpening + infra session — added project/VAA-DESIGN.md item 76: verify real-world political alignment before merging two conflict axes into one scored option, don't assume topical similarity means correlated scoring; reinforced item 63 (`lib/parties.ts`/grounding drift recurred in production-visible form — Hadash and Otzmah Yehudit both missing `platformUrl` despite `platformAvailable: true`) and flagged a regression test as the next step rather than relying on the existing manual checklist; reinforced universal DEBUGGING.md item 21 with the opposite-direction failure mode — a "same value" comparison built on a silently-failed extraction (`vercel env pull` returning every secret as an empty string) is not evidence, caught only via user pushback; added a Debugging manifestation to Cross-Cutting Theme 1 (Verification Discipline))
 
 **Previously**: 2026-07-03 (UX/UI review exploration — added project/VAA-DESIGN.md items 73-75: always include a real baseline when comparing design alternatives, a validated interaction mechanic sharply limits how much "journey" redesign is actually available, and concluding "no redesign needed" after a good-faith exploration is a valid outcome; added universal DEBUGGING.md Example 6 — a toggle-visibility bug recurred in a second instance before its root cause was generalized; added a Design manifestation to Cross-Cutting Theme 1 (Verification Discipline))
 
