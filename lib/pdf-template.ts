@@ -4,6 +4,9 @@
 import type { Party } from "@/lib/parties";
 import type { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
+import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+
+const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 export type PdfResultsData = {
   results: Array<Party & { score: number }>;
@@ -99,6 +102,7 @@ function renderGrounding(
             <p class="text-xs text-gray-700 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
             <div class="flex items-center gap-2 mt-1 flex-wrap">
               <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
+              ${GROUNDING_ARCHIVE_PUBLIC ? `<a href="${e(ARCHIVE_BASE_URL + entry.archivePath)}" class="text-xs text-gray-400">ארכיון</a>` : ""}
               <span class="text-xs text-gray-400">${e(entry.dateRetrieved)}</span>
             </div>
           </div>`

@@ -83,6 +83,10 @@ export function compareEntryQuality(a: GroundingEntry, b: GroundingEntry): numbe
 
 export type GroundingsMap = Record<string, PartyGroundings>;
 
+// Flip to true once this repo is public — docs/sources/*.md archive links are
+// dead (404, private repo) until then. See risk-review finding 2.2.
+export const GROUNDING_ARCHIVE_PUBLIC = false;
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 export const GROUNDINGS: GroundingsMap = {

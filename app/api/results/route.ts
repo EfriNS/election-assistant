@@ -63,6 +63,7 @@ export function buildGroundingsForParties(
           text: e.text,
           aspect: e.aspect,
           sourceUrl: e.sourceUrl,
+          archivePath: e.archivePath,
           dateRetrieved: e.dateRetrieved,
           provenance: e.provenance,
           ...(e.contrary ? { contrary: e.contrary } : {}),

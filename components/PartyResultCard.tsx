@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
+import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+
+const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 type Props = {
   party: Party & { score: number };
@@ -225,6 +228,16 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                           >
                             מקור — {sourceLinkLabel} ↗
                           </a>
+                          {GROUNDING_ARCHIVE_PUBLIC && (
+                            <a
+                              href={`${ARCHIVE_BASE_URL}${e.archivePath}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
+                            >
+                              ארכיון ↗
+                            </a>
+                          )}
                           <span className="text-xs text-gray-400">{e.dateRetrieved}</span>
                         </div>
                       </div>

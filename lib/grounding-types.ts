@@ -7,6 +7,7 @@ export type GroundingEntryLite = {
   text: string;
   aspect: string;
   sourceUrl: string;
+  archivePath: string;
   dateRetrieved: string;
   provenance: Provenance;
   contrary?: string;

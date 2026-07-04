@@ -1,0 +1,35 @@
+name: "דיווח על ציטוט לא מדויק"
+description: "מפלגה או כל אדם אחר שמוצא ציטוט שגוי, לא מעודכן, או מוצא מהקשרו."
+title: "[ציטוט]: "
+labels: ["quote-dispute"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        תודה שלקחת את הזמן לדווח. אנחנו בודקים כל דיווח על אי-דיוק בציטוט תוך עד 5 ימי עסקים, ומעדכנים כאן את סטטוס הבדיקה.
+  - type: input
+    id: party
+    attributes:
+      label: מפלגה
+      placeholder: "לדוגמה: חד\"ש-תע\"ל"
+    validations:
+      required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: הציטוט השנוי במחלוקת
+      description: העתיקו את הציטוט המדויק כפי שהוא מופיע באתר.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: קישור למקור (אם קיים)
+      placeholder: "https://..."
+  - type: textarea
+    id: issue
+    attributes:
+      label: מה לא מדויק?
+      description: "למשל: הציטוט שונה מהמקור, המקור כבר לא קיים/עודכן, הציטוט מוצא מהקשרו, וכו'."
+    validations:
+      required: true

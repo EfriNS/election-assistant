@@ -37,21 +37,11 @@ export default function TermsPage() {
           </p>
 
           <p className="text-sm text-gray-600 leading-relaxed">
-            מצאתם ציטוט שנראה לא מדויק? נשמח לבדוק ולתקן —
+            מצאתם ציטוט שנראה לא מדויק, לא מעודכן, או מוצא מהקשרו? כתבו לנו דרך <OpenFeedbackButton /> — ציינו את שם המפלגה והציטוט המדויק, ואנחנו בודקים כל דיווח כזה תוך עד 5 ימי עסקים.
           </p>
-          <ul className="text-sm text-gray-600 leading-relaxed space-y-1 list-disc list-inside">
-            <li><OpenFeedbackButton /></li>
-            <li>
-              <a
-                href="https://github.com/EfriNS/election-assistant/issues"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-gray-800"
-              >
-                GitHub Issues
-              </a>
-            </li>
-          </ul>
+          <p className="text-xs text-gray-400 leading-relaxed">
+            בכוונתנו לפרסם את קוד הכלי בפומבי ב-GitHub — משם ואילך יתאפשר גם לדווח על ציטוט ישירות דרך Issues.
+          </p>
         </section>
 
         <section className="space-y-3">
