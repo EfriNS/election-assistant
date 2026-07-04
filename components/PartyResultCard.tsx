@@ -44,6 +44,13 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
       ? "מקור חיצוני"
       : (party.platformLabel ?? "מקור");
 
+  const lastVerified = hasGrounding
+    ? groundingData!.topics
+        .flatMap((tg) => tg.entries.map((e) => e.dateRetrieved))
+        .sort()
+        .at(-1)
+    : undefined;
+
   const accordionLabel =
     sourceQuality === "official" && groundingData?.platformAvailable === true
       ? "מה כתוב במצע?"
@@ -168,6 +175,9 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             <span className="flex-1 text-right">{accordionLabel}</span>
             <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>
           </button>
+          {lastVerified && (
+            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {lastVerified}</p>
+          )}
 
           {groundingOpen && (
             <div className="mt-3 space-y-4">
@@ -215,7 +225,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                           >
                             מקור — {sourceLinkLabel} ↗
                           </a>
-                          <span className="text-xs text-gray-300">{e.dateRetrieved}</span>
+                          <span className="text-xs text-gray-400">{e.dateRetrieved}</span>
                         </div>
                       </div>
                     ))}

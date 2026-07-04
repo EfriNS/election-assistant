@@ -146,7 +146,8 @@ export default function UnifiedResultsPage({
         </button>
 
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
-        <p className="text-gray-500 text-sm mb-6">על סמך תשובותיך, כך דורגו המפלגות:</p>
+        <p className="text-gray-500 text-sm mb-1">על סמך תשובותיך, כך דורגו המפלגות:</p>
+        <p className="text-gray-400 text-xs mb-6">האחוזים הם ניתוח של הכלי (בסיוע בינה מלאכותית) להתאמה בין תשובותיך לעמדות כל מפלגה — לא הצהרה של המפלגה על עצמה.</p>
 
         {/* Quota degradation notice */}
         {quotaExceeded && (

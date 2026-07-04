@@ -67,6 +67,14 @@ function renderGrounding(
   sourceLinkLabel: string,
   topicAnswerTexts: Record<string, string> | undefined
 ): string {
+  const lastVerified = groundingData.topics
+    .flatMap((tg) => tg.entries.map((entry) => entry.dateRetrieved))
+    .sort()
+    .at(-1);
+  const lastVerifiedHtml = lastVerified
+    ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(lastVerified)}</p>`
+    : "";
+
   const outdatedWarning =
     groundingData.platformAvailable === false
       ? `<div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 leading-relaxed">
@@ -91,7 +99,7 @@ function renderGrounding(
             <p class="text-xs text-gray-700 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
             <div class="flex items-center gap-2 mt-1 flex-wrap">
               <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
-              <span class="text-xs text-gray-300">${e(entry.dateRetrieved)}</span>
+              <span class="text-xs text-gray-400">${e(entry.dateRetrieved)}</span>
             </div>
           </div>`
         )
@@ -109,6 +117,7 @@ function renderGrounding(
 
   return `
     <div class="mt-2 border-t border-gray-100 pt-2 space-y-4">
+      ${lastVerifiedHtml}
       ${outdatedWarning}
       ${topics}
     </div>`;
