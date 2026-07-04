@@ -12,56 +12,43 @@
 
 ## 📋 BACKLOG (Prioritized)
 
-1. ✅ **"אודות" section** — Built: `/about` static page (lightweight scope, footer link). Content: builders (מאיה ואפרי נטל-שי), data sources, neutrality statement, privacy, feedback channels (widget + GitHub Issues). Advisor attribution placeholder still pending final wording review.
+_Ordered by RICE thinking (reach × impact × confidence ÷ effort) — each item's rank note explains why, not a scored table. Full scope in `docs/PHASED-ROADMAP.md` where relevant._
 
-2. **Build MVP** — Active. Full scope in `docs/PHASED-ROADMAP.md`. Completed: 0.3 (grounding UI), 0.4 (security), 0.5 (quota degradation), 0.7 (scoring tests), 1.1 (remove prototype artifacts). Next: 1.8 soft launch iteration.
+1. **Soft launch iteration** — _Top priority: real users are on it right now, every other item waits on this._ Monitoring Langfuse, quota, and mobile behavior; iterating on live feedback. Active, ongoing (MVP phase 1.8).
 
-   _Next sessions:_
-   - **1.8 (in progress)**: Soft launch underway — monitoring Langfuse, quota, mobile; iterating on feedback
-
-   _Open decisions (discuss before implementing):_
-   - ✅ **"ענית" for un-grounded topics** — resolved: show gray "—" chip for topics with no party data (chip row, not accordion). (2026-06-27)
-   - ✅ **Feedback channel** — resolved: floating in-app widget → Slack #election-feedback. (2026-06-27)
-   - ✅ **Analytics depth** — resolved: migrated to Mixpanel (EU, free tier), full funnel + priority distribution + topic engagement, dashboard live. Design in `docs/ANALYTICS-DESIGN.md`, board spec in `docs/MIXPANEL-DASHBOARDS.md`. (2026-06-28, dashboard built 2026-07-01)
-
-   _Human tasks (parallel):_
-   - ✅ **0.1** Advisor review of live app UX — done (drove the 2026-07-01 neutrality fixes, 2026-07-02 canonical aspect taxonomy, and 2026-07-03 source-provenance tiering)
-   - **0.6** Content neutrality audit (3rd-party review of question framing)
-   - **0.8** Infrastructure: connect voteassist.me domain; set Vercel env vars (UPSTASH_*, GEMINI_API_KEY, LANGFUSE_*, NEXT_PUBLIC_FEEDBACK_FORM_URL)
-
-3. **Open-source the repository** — Repo is currently private; planned to go public in ~1-2 days (2026-07-06ish). Before flipping: (a) ~~audit git history for secrets~~ done — `gitleaks detect --log-opts="--all"` scanned all 279 commits across all refs 2026-07-04, zero findings, (b) review all comments and TODOs for anything not safe to publish, (c) ~~add LICENSE~~ already done (MIT, root `LICENSE`), (d) clean up README for external audience, (e) run security re-assessment (see #4).
+2. **Open-source the repository** — _High impact (public credibility commitment), low remaining effort, self-imposed ~1-2 day deadline (2026-07-06ish)._ Repo is currently private. Remaining before flipping: (a) review all comments/TODOs for anything not safe to publish, (b) clean up README for external audience, (c) security re-assessment — API key exposure, input sanitization, rate limiting, `npm audit` (initial review done at MVP phase 0.4, re-validate before going public). Already done: secrets audit (`gitleaks detect --log-opts="--all"`, 279 commits/all refs, zero findings, 2026-07-04), LICENSE (MIT).
    **Immediately after flipping to public** (risk-review findings 2.1/2.2/3.2, 2026-07-04 — built gated/soft specifically because the repo was still private at the time):
    - Flip `GROUNDING_ARCHIVE_PUBLIC` to `true` in `lib/groundings.ts` — every quote's archive link (`docs/sources/*.md`) goes live immediately, no other code change needed.
    - Update `/terms`'s "בכוונתנו לפרסם את קוד הכלי בפומבי..." line (`app/terms/page.tsx`) — it's future-tense on purpose right now; reword once true.
-   - Spot-check that the existing GitHub links in `/about` and the landing-page footer (already pointed at the repo before this was noticed) actually resolve now.
-   - Enable "Private vulnerability reporting" in repo Settings → Security (`SECURITY.md` already points there; the enable API 404'd while the repo was private — likely a public-repo-only feature, confirm once public).
+   - Spot-check that the existing GitHub links in `/about` and the landing-page footer actually resolve now.
+   - Enable "Private vulnerability reporting" in repo Settings → Security (`SECURITY.md` already points there; the enable API 404'd while the repo was private — confirm once public).
 
-4. **Security re-assessment** — Initial security review done (MVP phase 0.4). Re-validate before going public: API key exposure, input sanitization, rate limiting, dependency vulnerabilities (`npm audit`). May be run as part of open-source prep (#3) or independently beforehand.
+3. **Content neutrality audit** (human task, not code) — _High impact — neutrality is the core value proposition, and this is the one open item that would directly validate it — but needs a 3rd party, not just dev time._ 3rd-party review of question framing.
 
-5. **Graphical shareable card** — Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export (different use case: "share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure. Deferred from PDF export planning session.
+4. **Graphical shareable card** — _Good reach (every share action), medium effort, well-scoped, two clear implementation paths already identified._ Single-screen image (≈600×400px) optimized for social/WhatsApp sharing: top match + score, 2-3 topic chips, branding. Complements the PDF export ("share a teaser" vs. "save full results"). Options: server-side canvas (Satori/`@vercel/og`), or screenshot crop from Puppeteer reusing export-pdf infrastructure.
 
-6. **Add מצע links as parties publish them** — ישר!, הדמוקרטים, ביחד, חד"ש, and עוצמה יהודית now have accurate links (2026-07-04 fixed the latter two — both had `platformAvailable: true` in grounding with no `platformUrl` in `lib/parties.ts` at all). ש"ס has no official platform found at all — `shas.org.il` is confirmed dead (live `ECONNREFUSED`, Wayback last snapshot Nov 2022), `website` left empty. Monitor ליכוד for a new/updated official platform (currently only the 2016 party constitution). ✅ Consistency regression test added `tests/partiesGroundingConsistency.test.ts` (2026-07-04) — asserts the invariant directly, verified it catches the exact regression that happened.
+5. **Fix `quiz_abandoned` instrumentation gap** — _Low effort (one `beforeunload` handler), clear value, not urgent since a funnel workaround already exists._ Design doc claims it "fires on beforeunload / back navigation" but the code (`app/quiz/page.tsx:550`) only fires it from the priorities-screen back button — real mid-quiz abandonment (tab close, navigating away mid-topic) generates no event today. A funnel on `topic_completed`'s `topic_index` answers the core drop-off question without it, but a real `beforeunload` handler + per-step tracking would give direct attribution. Found while building Mixpanel dashboards (2026-07-01).
 
-7. **Gemini paid tier: decide when to switch** — Currently on free tier (rate-limited). Baseline: ~$0.03/session (52K tokens, 11 calls). Trigger: ~200–300 daily users (~$180–270/mo). Primary cost driver is score-topics (40% of tokens); reducing party-platform excerpt size there cuts costs proportionally. Full analysis in `docs/API-COST-ANALYSIS.md`.
+6. **Topic chip / percentage divergence** — _Affects trust on every result view (a party can show "✕" yet score 65%), but needs a design decision (a/b/c below) before the fix itself is small._ The chip reflects only the opener pre-calibrated score (sign); the percentage blends in AI follow-up scoring (50/50). Options: (a) derive chip from blended topic score instead of opener, (b) add tooltip explaining the divergence, (c) leave as-is and flag for advisor review. Revisit after next user-testing round.
 
-8. 💬 **DISCUSSION: Gamification option (watch — revisit if pattern grows)** — Single user (R4, 20yo woman) requested Kahoot-style design: sliders, visual ranking, less text. Too early to act; the depth/emotional resonance is what drives the strongest positive reactions. Revisit if this request appears in ≥2 more sessions.
+7. **Finalize "אודות" advisor-attribution wording** — _Tiny effort, just been sitting open._ `/about` is built and live; only the advisor-attribution placeholder still needs final wording review.
 
-9. **Topic chip / percentage divergence** — The v/~/x chip reflects only the opener pre-calibrated score (sign), while the final percentage blends in AI follow-up scoring (50/50). A party can show "x" yet score 65% if the follow-up probed an aspect where they partially aligned. Options: (a) derive chip from blended topic score instead of opener, (b) add tooltip explaining the divergence, (c) leave as-is and flag for advisor review. Revisit after next user-testing round.
+8. **Expose source-provenance/concreteness tiering to end users** — _Real reach (every grounding quote) but low confidence right now — needs a design decision and user-testing validation before it's even scoped, and risks adding density rather than reducing it._ Each grounding entry carries `provenance`/`concreteness` internally (`lib/groundings.ts`) but nothing surfaces it in the UI. Would need: an "export-grade" simplified label for end users, a decision on where it'd surface (per-quote badge? party-level note?), and validation that it helps rather than clutters. Revisit now that the broader UX/UI review concluded (2026-07-03, no redesign adopted) and micro-copy/surgical fixes are the active mode.
 
-10. **Scoring tuning: squared weights + critical-topic cap** — two related levers to make high-priority mismatches hit harder: (a) use weight² (16:9:4:1) instead of linear (4:3:2:1) so "קריטי" means more in the weighted average; (b) limit קריטי selections to 1–2 so users can't mark everything critical (making each designation genuinely selective). Both are low-lift and complementary; revisit after next user-testing round with real data. _[decided 2026-06-27: deferred, score curve already handles primary case]_
+9. **Replace misleading quiz-completion reports on Mixpanel dashboard** — _Blocked on data: needs real post-deploy sessions with the `topics_missed` property before this is actionable, regardless of priority._ "Topic-by-topic progression" and "Selected vs. completed" both conflate "selected fewer topics" with "dropped off," since `topic_count` varies per session. `topics_missed` property already added to `quiz_completed` (deployed 2026-07-01) — once enough post-deploy sessions exist, replace both reports with one breakdown of `quiz_completed` count by `topics_missed` on dashboard `11325742`.
 
-11. **Fix `quiz_abandoned` instrumentation gap** — Design doc claims it "fires on beforeunload / back navigation" but the code (`app/quiz/page.tsx:550`) only fires it from the priorities-screen back button; no `beforeunload` listener exists anywhere. Real mid-quiz abandonment (tab close, navigating away from a topic question) generates no event today. Not blocking — a funnel on `topic_completed`'s `topic_index` answers the core drop-off question without it — but should add a `beforeunload` handler + per-step abandon tracking for direct attribution. Found while building Mixpanel dashboards (2026-07-01).
+10. **Monitor ליכוד and ש"ס for a newly-published official platform** — _Trivial recurring check, no dev effort, no urgency._ ליכוד currently has only the 2016 party constitution; ש"ס has no official platform found at all (`shas.org.il` confirmed dead — see `VAA-DESIGN.md` item 72). Update `lib/parties.ts` + grounding entries if either publishes something new; `tests/partiesGroundingConsistency.test.ts` will catch a missed `platformUrl` if grounding is updated but the link isn't.
 
-12. **Replace misleading quiz-completion reports on Mixpanel dashboard** — "Topic-by-topic progression" (funnel on absolute `topic_index`) and "Selected vs. completed" (two averages) both conflate "selected fewer topics" with "dropped off," since `topic_count` varies per session. `topics_missed` property added to `quiz_completed` (`app/quiz/page.tsx`, deployed 2026-07-01) to fix this — once real sessions with the new property exist, replace both reports with one clean breakdown of `quiz_completed` count by `topics_missed` (0 = all completed, 1 = all but one, etc.) on dashboard `11325742`. Blocked on data: only applies to sessions after deploy.
+11. **Gemini paid tier: decide when to switch** — _Not yet at the usage trigger — revisit when it's actually relevant, not before._ Currently on free tier (rate-limited). Baseline: ~$0.03/session (52K tokens, 11 calls). Trigger: ~200–300 daily users (~$180–270/mo). Full analysis in `docs/API-COST-ANALYSIS.md`.
 
-13. **Expose source-provenance/concreteness tiering to end users** — Each grounding entry now carries `provenance` (official-current/official-outdated/joint-list/third-party) and `concreteness` (quantified/named-mechanism/specific-stance/generic) internally (`lib/groundings.ts`, 2026-07-03). Not shown in the UI yet — deliberately tabled by the user as a future consideration, not scoped or designed. Would need: deciding what an "export-grade" simplified label looks like for end users (the full enum is an internal detail), where it'd surface (per-quote badge in the grounding accordion? a party-level note only?), and whether it changes user trust/perception in testing. Revisit once concrete micro-copy/surgical UX fixes are underway (the broader UX/UI review this was blocked on concluded 2026-07-03 with no redesign adopted) — this adds density, not less.
+12. 💬 **DISCUSSION: Gamification option (watch — revisit if pattern grows)** — _Single data point so far — explicitly not enough signal to act on yet._ One user (R4, 20yo woman) requested Kahoot-style design: sliders, visual ranking, less text. The depth/emotional resonance is what drives the strongest positive reactions elsewhere, so this isn't a quick win. Revisit if the request appears in ≥2 more sessions.
 
-14. ⏸️ **Multi-language support** — _blocked on: MVP working in Hebrew_
-    - Russian, Arabic, English UI layers
-    - Party platforms remain in Hebrew; answers/explanations translated
+13. **Scoring tuning: squared weights + critical-topic cap** — _Already decided deferred (2026-06-27) — score curve already handles the primary case. Kept visible only in case real user-testing data changes that._ Two levers to make high-priority mismatches hit harder: (a) weight² (16:9:4:1) instead of linear, (b) cap קריטי selections to 1–2 so the designation stays selective.
 
-15. ⏸️ **Candidate records extension** — _blocked on: v1 stable_
-    - Experience, notable actions/votes (official sources only, no social media)
+14. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
+    - Russian, Arabic, English UI layers; party platforms stay in Hebrew, answers/explanations translated
+
+15. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
 
 16. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
@@ -83,11 +70,7 @@
 - **Cost model**: API-based → builder pays; must rate-limit and cap costs
 
 ### Open Questions
-- What is the recommended technical approach? (hybrid confirmed; exact implementation TBD in solution design)
-- What tone/style should the tool use? (formal, informal, user-selectable?) → TBD in UX design
-- Should the project be open-sourced from the start, or later? → public after MVP
-- How many questions? → research says 30–35 is optimal; exact set TBD
-- Ingestion pipeline design, admin UI → TBD in technical design phase
+All resolved by what shipped: technical approach (hybrid), tone/style (formal/personal, user-selectable, live), question depth (short/deep across 9 topics), ingestion pipeline (manual `collect-party-data` skill, no admin UI needed). Open-sourcing timing is in progress — see Backlog #2.
 
 ### Future Ideas
 - Candidate profile pages (experience, voting record)
@@ -98,4 +81,4 @@
 
 ### Reference Material
 - Screenshots/ — Der Spiegel Hamburg election quiz (UX reference)
-- README.txt — Full project brief and context
+- README.md — Project overview, setup, tech stack
