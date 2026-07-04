@@ -37,7 +37,7 @@ export default function TermsPage() {
           </p>
 
           <p className="text-sm text-gray-600 leading-relaxed">
-            מצאתם ציטוט שנראה לא מדויק, לא מעודכן, או מוצא מהקשרו? כתבו לנו דרך <OpenFeedbackButton /> — ציינו את שם המפלגה והציטוט המדויק, ואנחנו בודקים כל דיווח כזה תוך עד 5 ימי עסקים.
+            מצאתם ציטוט שנראה לא מדויק, לא מעודכן, או מוצא מהקשרו? כתבו לנו דרך <OpenFeedbackButton /> — ציינו את שם המפלגה והציטוט המדויק, ואנחנו בודקים כל דיווח כזה.
           </p>
           <p className="text-xs text-gray-400 leading-relaxed">
             בכוונתנו לפרסם את קוד הכלי בפומבי ב-GitHub — משם ואילך יתאפשר גם לדווח על ציטוט ישירות דרך Issues.
