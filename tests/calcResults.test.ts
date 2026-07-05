@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { calcResults, FOLLOW_UP_AI_WEIGHT, SCORE_CURVE_POWER } from "@/lib/scoring";
+import { calcResults, FOLLOW_UP_AI_WEIGHT, SCORE_CURVE_POWER, GATE_SCORE_CAP } from "@/lib/scoring";
 import { PARTIES } from "@/lib/parties";
+import { CRITICAL_WEIGHT } from "@/lib/topics";
 import type { TopicQA } from "@/lib/scoring";
 import type { TopicQ } from "@/lib/questions";
 
@@ -37,6 +38,19 @@ const questionSetNeutral: Record<string, TopicQ> = {
 // Helper: minimal TopicQA with a fixed-option opener and no follow-ups
 function qa(openerAnswerId: string, openerAnswerText = openerAnswerId, followUps: TopicQA["followUps"] = []): TopicQA {
   return { openerAnswerId, openerAnswerText, followUps };
+}
+
+// Helper: same AI score for every party, with per-party overrides (used by the
+// critical-topic gate tests below, which need full aiScores maps to keep
+// hasAiScore true for every party).
+const ALL_PARTY_IDS = ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"];
+function allAi(value: number, overrides: Record<string, number> = {}): Record<string, number> {
+  return Object.fromEntries(ALL_PARTY_IDS.map((id) => [id, overrides[id] ?? value]));
+}
+
+// A topic with one always-followed-up option, all-followUps for the gate tests
+function qaWithFollowUp(openerAnswerId: string): TopicQA {
+  return { openerAnswerId, openerAnswerText: openerAnswerId, followUps: [{ question: "Q", options: ["A"], answer: "A" }] };
 }
 
 // The actual PARTIES list has 10 entries (hadash … otzmah-yehudit).
@@ -244,5 +258,110 @@ describe("calcResults — ties and extreme scores", () => {
       questionSetNeutral
     );
     ranked.forEach((p) => expect(p.score).toBeLessThan(50));
+  });
+});
+
+describe("calcResults — critical-topic gate", () => {
+  it("caps a party's score when a weight-4 topic's AI score is clearly negative", () => {
+    // security: otzmah deterministic=-2, AI=-2 → curved contribution 0
+    // economy:  otzmah deterministic=+2, AI=+2 → curved contribution 100
+    // unweighted average would be 50%, which is above GATE_SCORE_CAP — the cap
+    // must visibly pull it down, not just coincide with an already-low score.
+    const { ranked } = calcResults(
+      { security: CRITICAL_WEIGHT, economy: CRITICAL_WEIGHT },
+      { security: qaWithFollowUp("peace"), economy: qaWithFollowUp("right-econ") },
+      questionSet,
+      { security: allAi(0, { "otzmah-yehudit": -2 }), economy: allAi(0, { "otzmah-yehudit": 2 }) }
+    );
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(otzmah.rawScore).toBe(50);
+    expect(otzmah.criticalConflicts).toEqual(["security"]);
+    expect(otzmah.score).toBe(GATE_SCORE_CAP);
+    expect(otzmah.score).toBeLessThan(otzmah.rawScore);
+  });
+
+  it("does not gate the same negative signal on a weight-3 topic", () => {
+    const { ranked } = calcResults(
+      { security: 3, economy: CRITICAL_WEIGHT },
+      { security: qaWithFollowUp("peace"), economy: qaWithFollowUp("right-econ") },
+      questionSet,
+      { security: allAi(0, { "otzmah-yehudit": -2 }), economy: allAi(0, { "otzmah-yehudit": 2 }) }
+    );
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(otzmah.criticalConflicts).toEqual([]);
+    expect(otzmah.score).toBe(otzmah.rawScore); // ungated — no cap applied
+  });
+
+  it("does not gate a mildly negative signal above the -0.4 cutoff", () => {
+    const { ranked } = calcResults(
+      { security: CRITICAL_WEIGHT },
+      { security: qaWithFollowUp("peace") },
+      questionSet,
+      { security: allAi(0, { "otzmah-yehudit": -0.3 }) }
+    );
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(otzmah.criticalConflicts).toEqual([]);
+    expect(otzmah.score).toBe(otzmah.rawScore);
+  });
+
+  it("prefers the AI score over the opener for the gate (AI neutral overrides a negative opener)", () => {
+    // opener "peace": otzmah deterministic = -2 (would gate on its own),
+    // but AI score is neutral (0) — gate must use the AI signal, not the opener.
+    const { ranked } = calcResults(
+      { security: CRITICAL_WEIGHT },
+      { security: qaWithFollowUp("peace") },
+      questionSet,
+      { security: allAi(0) }
+    );
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(otzmah.criticalConflicts).toEqual([]);
+  });
+
+  it("falls back to the opener score for the gate when no AI score exists", () => {
+    // aiScores entirely absent → gate must fall back to the deterministic opener.
+    // hadash is opposed on "control" (security) but aligned on "left-econ" (economy);
+    // otzmah is the mirror image — both should end up gated and flat-capped.
+    const { ranked } = calcResults(
+      { security: CRITICAL_WEIGHT, economy: CRITICAL_WEIGHT },
+      { security: qa("control"), economy: qa("left-econ") },
+      questionSet,
+      undefined
+    );
+    const hadash = ranked.find((p) => p.id === "hadash")!;
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(hadash.rawScore).toBe(50);
+    expect(hadash.criticalConflicts).toEqual(["security"]);
+    expect(hadash.score).toBe(GATE_SCORE_CAP);
+    expect(otzmah.rawScore).toBe(50);
+    expect(otzmah.criticalConflicts).toEqual(["economy"]);
+    expect(otzmah.score).toBe(GATE_SCORE_CAP);
+  });
+
+  it("flat-caps a party gated on two simultaneous critical topics (no stacking)", () => {
+    const questionSetThreeTopics: Record<string, TopicQ> = {
+      ...questionSet,
+      housing: {
+        question: "Housing question",
+        options: [{ id: "pro", text: "Pro", scores: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }],
+      },
+    };
+    // otzmah: gated on both security and economy (AI very negative on both,
+    // deterministic maxed at +2 so each still contributes ~35% on its own),
+    // plus an ungated housing topic everyone scores full marks on, pushing the
+    // unweighted average above GATE_SCORE_CAP so the flat cap is actually visible.
+    const { ranked } = calcResults(
+      { security: CRITICAL_WEIGHT, economy: CRITICAL_WEIGHT, housing: CRITICAL_WEIGHT },
+      {
+        security: qaWithFollowUp("control"),
+        economy: qaWithFollowUp("right-econ"),
+        housing: qa("pro"),
+      },
+      questionSetThreeTopics,
+      { security: allAi(0, { "otzmah-yehudit": -2 }), economy: allAi(0, { "otzmah-yehudit": -2 }) }
+    );
+    const otzmah = ranked.find((p) => p.id === "otzmah-yehudit")!;
+    expect(otzmah.rawScore).toBeGreaterThan(GATE_SCORE_CAP);
+    expect(otzmah.criticalConflicts.sort()).toEqual(["economy", "security"]);
+    expect(otzmah.score).toBe(GATE_SCORE_CAP);
   });
 });

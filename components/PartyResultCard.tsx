@@ -9,7 +9,7 @@ import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 type Props = {
-  party: Party & { score: number };
+  party: Party & { score: number; rawScore?: number; criticalConflicts?: string[] };
   rank: number;
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   aiBlurb?: string;
@@ -89,6 +89,17 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
       >
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
+
+      {/* Critical-topic conflict banner */}
+      {party.criticalConflicts && party.criticalConflicts.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2">
+          <span className="font-semibold">⚠ מתנגשת עם עדיפות שסימנת כקריטית: </span>
+          {party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", ")}.
+          {party.rawScore !== undefined && party.rawScore !== party.score && (
+            <span className="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: {party.rawScore}%).</span>
+          )}
+        </div>
+      )}
 
       {/* Per-topic breakdown chips */}
       {showTopicBreakdown && answeredTopicIds && partyTopicScores && (

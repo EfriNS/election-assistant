@@ -72,7 +72,8 @@ function buildPrompt(
   },
   nextTopic: TopicRef | null,
   tone: string,
-  depth: string,
+  followUpCapForTopic: number,
+  topicWeightLabel: string,
   followUpsAskedThisTopic: number,
   partyGroundings: PartyGroundingRef[],
   currentScores: Record<string, number>,
@@ -85,9 +86,11 @@ function buildPrompt(
       ? "Everyday language, warm and informal, use first person"
       : "Analytical and policy-focused, formal register";
 
-  const depthGuide = depth === "deep"
-    ? "aim for 1–3 follow-ups per topic"
-    : "HARD LIMIT: maximum 1 follow-up per topic. If you have already asked 1, transition immediately.";
+  // Depth scales with how important the user marked this topic (see
+  // FOLLOW_UP_CAPS in app/quiz/page.tsx, the single source of truth for the cap).
+  const depthGuide = followUpCapForTopic <= 1
+    ? "HARD LIMIT: maximum 1 follow-up per topic. If you have already asked 1, transition immediately."
+    : `The user marked this topic "${topicWeightLabel}" — you may ask up to ${followUpCapForTopic} follow-ups if there's substantive ground left to cover, but transition early rather than padding to hit the cap.`;
 
   // For free-text openers with no follow-ups yet, the AI must ask at least one
   // substantive dimension-probing question (not a generic "what did you mean?").
@@ -189,6 +192,8 @@ export async function POST(req: NextRequest) {
     nextTopic: TopicRef | null;
     tone: string;
     depth: string;
+    followUpCapForTopic?: number;
+    topicWeightLabel?: string;
     followUpsAskedThisTopic: number;
     partyGroundings?: PartyGroundingRef[];
     currentScores?: Record<string, number>;
@@ -217,6 +222,8 @@ export async function POST(req: NextRequest) {
     nextTopic,
     tone,
     depth,
+    followUpCapForTopic = 1,
+    topicWeightLabel = "חשוב",
     followUpsAskedThisTopic,
     partyGroundings = [],
     currentScores = {},
@@ -233,7 +240,7 @@ export async function POST(req: NextRequest) {
 
   const model = "gemini-3.1-flash-lite";
   const prompt = buildPrompt(
-    conversationSoFar, currentTopic, nextTopic, tone, depth, followUpsAskedThisTopic,
+    conversationSoFar, currentTopic, nextTopic, tone, followUpCapForTopic, topicWeightLabel, followUpsAskedThisTopic,
     partyGroundings, currentScores, suggestedNextDimension, uncoveredKeyDims, openerIsFreeText
   );
 

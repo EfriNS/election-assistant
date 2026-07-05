@@ -3,13 +3,14 @@
 
 import type { Party } from "@/lib/parties";
 import type { PartyGroundingResult } from "@/lib/grounding-types";
-import { TOPIC_LABELS } from "@/lib/topics";
+import { TOPIC_LABELS, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+import { GATE_SCORE_CAP } from "@/lib/scoring";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 export type PdfResultsData = {
-  results: Array<Party & { score: number }>;
+  results: Array<Party & { score: number; rawScore?: number; criticalConflicts?: string[] }>;
   aiProfile?: string;
   partyBlurbs?: Record<string, string>;
   groundings?: Record<string, PartyGroundingResult>;
@@ -128,7 +129,7 @@ function renderGrounding(
 }
 
 function renderPartyCard(
-  party: Party & { score: number },
+  party: Party & { score: number; rawScore?: number; criticalConflicts?: string[] },
   rank: number,
   accentColor: keyof typeof ACCENT_COLORS,
   aiBlurb: string | undefined,
@@ -158,6 +159,17 @@ function renderPartyCard(
   const chips =
     answeredTopicIds && partyTopicScores
       ? `<div class="flex flex-wrap gap-1 mb-3">${renderChips(answeredTopicIds, partyTopicScores)}</div>`
+      : "";
+
+  const conflictBanner =
+    party.criticalConflicts && party.criticalConflicts.length > 0
+      ? `<div class="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2">
+          <span class="font-semibold">מתנגשת עם עדיפות שסימנת כקריטית: </span>
+          ${e(party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", "))}.
+          ${party.rawScore !== undefined && party.rawScore !== party.score
+            ? `<span class="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: ${party.rawScore}%).</span>`
+            : ""}
+        </div>`
       : "";
 
   const aiBlurbHtml = aiBlurb
@@ -197,6 +209,7 @@ function renderPartyCard(
         <div class="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
           <div class="h-full ${c.bar} rounded-full" style="width: ${party.score}%"></div>
         </div>
+        ${conflictBanner}
         ${chips}
         <p class="text-xs text-gray-500 mb-2">${e(party.description)}</p>
         ${aiBlurbHtml}
@@ -286,7 +299,11 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
         </div>
         <div>
           <strong class="text-gray-600">משקל העדיפויות</strong>
-          <p class="mt-1">נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1). כך נושאים שחשובים לך באמת שולטים בתוצאה.</p>
+          <p class="mt-1">נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1). כך נושאים שחשובים לך באמת שולטים בתוצאה. ניתן לסמן עד ${MAX_CRITICAL_TOPICS} נושאים כ״קריטי״ — כדי לשמור על המשמעות שלו.</p>
+        </div>
+        <div>
+          <strong class="text-gray-600">התנגשות עם עדיפות קריטית</strong>
+          <p class="mt-1">אם מפלגה מתנגדת לעמדתך בנושא שסימנת כ״קריטי״, ציון ההתאמה הכולל שלה מוגבל לכל היותר ל-${GATE_SCORE_CAP}%, גם אם היא מסכימה איתך ברוב שאר הנושאים. כרטיסיית המפלגה מציינת מפורשות כשזה קורה.</p>
         </div>
         <div>
           <strong class="text-gray-600">ציון סופי</strong>

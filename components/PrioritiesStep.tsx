@@ -2,7 +2,7 @@
 
 // Shared priorities-ranking step used by prototypes B, D, and E.
 
-import { TOPICS } from "@/lib/topics";
+import { TOPICS, CRITICAL_WEIGHT, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 
 const BUCKETS = [
   { value: 4, label: "קריטי" },
@@ -73,7 +73,11 @@ export default function PrioritiesStep({
 }: Props) {
   const c = ACCENT[accentColor];
 
+  const criticalCount = Object.values(buckets).filter((w) => w === CRITICAL_WEIGHT).length;
+
   const setBucket = (topicId: string, value: number) => {
+    const isTurningCritical = value === CRITICAL_WEIGHT && buckets[topicId] !== CRITICAL_WEIGHT;
+    if (isTurningCritical && criticalCount >= MAX_CRITICAL_TOPICS) return;
     setBuckets({ ...buckets, [topicId]: buckets[topicId] === value ? 0 : value });
   };
 
@@ -101,8 +105,13 @@ export default function PrioritiesStep({
           לכל נושא — בחר את רמת החשיבות שלו עבורך.
           ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
         </p>
-        <p className="text-sm text-gray-600 mb-8">
+        <p className="text-sm text-gray-600 mb-2">
           יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ&quot;חשוב&quot; או יותר כדי להמשיך.
+        </p>
+        <p className="text-sm text-gray-600 mb-8">
+          עד {MAX_CRITICAL_TOPICS} נושאים ניתן לסמן כ&quot;קריטי&quot; — כדי לשמור על המשמעות שלו:
+          מפלגה שמתנגדת לתשובה שלך בנושא קריטי לא תוכל להיות ההתאמה המובילה שלך,
+          לא משנה כמה טובה ההתאמה בשאר הנושאים.
         </p>
 
         <div className="flex flex-col gap-3 mb-8">
@@ -121,19 +130,29 @@ export default function PrioritiesStep({
               >
                 <p className="text-sm font-medium mb-3 text-right">{t.label}</p>
                 <div className="flex gap-2 flex-row-reverse">
-                  {BUCKETS.map((b) => (
-                    <button
-                      key={b.value}
-                      onClick={() => setBucket(t.id, b.value)}
-                      className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
-                        selected === b.value
-                          ? bucketActiveClass[b.value]
-                          : "border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600 bg-white"
-                      }`}
-                    >
-                      {b.label}
-                    </button>
-                  ))}
+                  {BUCKETS.map((b) => {
+                    const criticalCapped =
+                      b.value === CRITICAL_WEIGHT &&
+                      selected !== CRITICAL_WEIGHT &&
+                      criticalCount >= MAX_CRITICAL_TOPICS;
+                    return (
+                      <button
+                        key={b.value}
+                        onClick={() => setBucket(t.id, b.value)}
+                        disabled={criticalCapped}
+                        title={criticalCapped ? `ניתן לסמן עד ${MAX_CRITICAL_TOPICS} נושאים כ"קריטי"` : undefined}
+                        className={`flex-1 text-xs py-1.5 px-1 rounded-lg border-2 font-medium transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
+                          criticalCapped
+                            ? "border-gray-100 text-gray-300 bg-gray-50 cursor-not-allowed opacity-60"
+                            : selected === b.value
+                            ? bucketActiveClass[b.value]
+                            : "border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600 bg-white"
+                        }`}
+                      >
+                        {b.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -149,6 +168,9 @@ export default function PrioritiesStep({
               {importantCount < TOPICS.length && " — ניתן לסמן עוד"}
             </span>
           )}
+          <div className="text-xs text-gray-400 mt-1">
+            {criticalCount}/{MAX_CRITICAL_TOPICS} סומנו כקריטי
+          </div>
         </div>
 
         <button
