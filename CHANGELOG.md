@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-07-05 (later) — Follow-up option diversity: stop hiding grounded positions behind a premature closeness filter
+
+### Context
+
+The same tester who drove the critical-topic gate work (below) reviewed the deployed fix and reported one more issue: after choosing "עצמאות" (security self-reliance) on the security opener, the territorial-policy follow-up offered three options that all leaned right — no 1967-borders/withdrawal option at all, even though such a position clearly exists among real Israeli parties.
+
+### Diagnosis
+
+Checked the actual grounding files for the exact dimension that got probed (`territorial-endgame-specifics`): hadash has 5 entries, raam 2, democrats 3 — including explicit "נסיגה לגבולות 1967... הקמת שתי מדינות עצמאיות" language. The content existed; it never reached the model.
+
+Root cause: `callFollowUpAPI` (`app/quiz/page.tsx`) computed "close parties" (top-5-ish by current running score, from whatever's been answered so far) and used that same set to gate **both** which dimension gets probed next **and** which parties' grounding quotes even reach the prompt. Right after one right-leaning answer, every left-leaning party is mathematically excluded before the second question is even built. Sanity-checked whether the *centrist* members of that filtered set (beyahad, yashar, yahadut-hatorah) would have surfaced more moderate content anyway — no, they had **zero** grounding entries for that specific dimension, so the bias was total within the filtered set, not partially self-correcting.
+
+A second, related issue: even among the hawkish material that *was* shown, the model's synthesis flattened genuinely distinct positions (Beitenu's "this isn't a territorial conflict, we need a regional deal" vs. Likud's "eternal right to the land") into more uniformly hawkish-sounding options.
+
+### Fix
+
+1. Extracted dimension-selection into `lib/groundings.ts`'s `selectSuggestedDimension()` — takes the full grounding map, not a pre-filtered subset. `app/quiz/page.tsx`'s `partyGroundings` construction similarly no longer filters by closeness; `currentScores` is still passed as informational "current standings" context, just no longer gates which content the model can see.
+2. Reworded the "deepen within their direction" prompt instruction (`app/api/follow-up/route.ts`), which could plausibly be read as "stay ideologically aligned with their answer" rather than its intended meaning ("go deeper on the same topic").
+3. Added explicit prologue-framing guidance for when a follow-up moves to a genuinely separate axis (e.g. territorial policy vs. security self-reliance), and an instruction to preserve distinct quoted positions rather than flattening them into similar-sounding options.
+
+Confirmed via live reproduction against the real Gemini API (3 runs, exact failing scenario) rather than just logical inspection — all 3 now include a genuine withdrawal option, keep Beitenu's distinct framing separate from the settlement-development option, and explicitly signal the axis shift in the prologue.
+
+### Tests
+
+`tests/selectSuggestedDimension.test.ts` (7 cases) — direct regression guard against re-scoping dimension-selection to a closeness-filtered subset, including the exact bug scenario (a dimension with grounding from only one currently-"not close" party must still be selected).
+
+Commit: `fe14712`
+
 ## 2026-07-05 — Critical-topic priority gate (real user feedback → resolved TODO #13), production JSON-error hardening
 
 ### Context
