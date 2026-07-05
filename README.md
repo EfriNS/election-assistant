@@ -29,7 +29,7 @@ Parties without a published current platform are shown with an explicit outdated
 - **Framework**: Next.js 16 (App Router, TypeScript)
 - **AI**: Google Gemini Flash Lite (`gemini-3.1-flash-lite`) — follow-up questions, scoring, results analysis
 - **Observability**: Langfuse (optional) — token tracking, no user content logged
-- **Rate limiting**: Upstash Redis (optional) — 10 sessions/IP/day in production
+- **Rate limiting**: Upstash Redis (optional) — 100 sessions/IP/day in production
 - **Analytics**: Vercel Analytics + Mixpanel (product/funnel analytics) + Hotjar + Microsoft Clarity + ContentSquare (all anonymized — see [`/terms`](https://voteassist.me/terms))
 - **Hosting**: Vercel
 
@@ -81,6 +81,10 @@ To update or add entries, edit the relevant JSON file. The `scripts/auto-score.t
 - **Non-partisan** — all parties treated equally; missing platforms disclosed explicitly
 - **No identity, no raw answers stored** — quiz responses, including free-text answers, are never logged or linked to your identity. Anonymized analytics (topic priorities, completion funnel, matched party) are collected to improve the tool — see [`/terms`](https://voteassist.me/terms) for the full breakdown
 - **Open** — source code is auditable
+
+## Security
+
+Found a vulnerability? See [SECURITY.md](SECURITY.md) for how to report it.
 
 ## License
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { buildPdfHtml, PdfResultsData } from "@/lib/pdf-template";
+import { buildPdfHtml, validatePdfResultsData } from "@/lib/pdf-template";
 
 export const maxDuration = 60;
 
@@ -8,7 +8,11 @@ export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
-    const data: PdfResultsData = await req.json();
+    const raw = await req.json().catch(() => null);
+    const data = validatePdfResultsData(raw);
+    if (!data) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
 
     const generatedAt = new Date().toLocaleDateString("he-IL", {
       year: "numeric",

@@ -6,6 +6,7 @@ type Limiters = {
   page: Ratelimit;
   followUp: Ratelimit;
   score: Ratelimit;
+  pdf: Ratelimit;
 };
 
 // Limiters are only active when Upstash credentials are configured.
@@ -38,6 +39,14 @@ function makeLimiters(): Limiters | null {
       analytics: false,
       prefix: "voteassist:score",
     }),
+    // Export-pdf: spins up a headless browser (expensive) — called at most a
+    // handful of times per session, so keep this tight.
+    pdf: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(20, "24 h"),
+      analytics: false,
+      prefix: "voteassist:pdf",
+    }),
   };
 }
 
@@ -59,12 +68,15 @@ export async function middleware(req: NextRequest) {
   } else if (path === "/api/score-topics") {
     const { success } = await limiters.score.limit(ip);
     if (!success) return NextResponse.json({ errorCode: "RATE_LIMITED" }, { status: 429 });
+  } else if (path === "/api/export-pdf") {
+    const { success } = await limiters.pdf.limit(ip);
+    if (!success) return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
   return NextResponse.next();
 }
 
-// Rate-limit the quiz page and the two AI-calling API routes.
+// Rate-limit the quiz page, the two AI-calling API routes, and PDF export.
 export const config = {
-  matcher: ["/prototype-e", "/api/follow-up", "/api/score-topics"],
+  matcher: ["/prototype-e", "/api/follow-up", "/api/score-topics", "/api/export-pdf"],
 };
