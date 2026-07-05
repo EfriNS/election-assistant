@@ -106,10 +106,10 @@ export default function PrioritiesStep({
           ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
         </p>
         <p className="text-sm text-gray-600 mb-2">
-          יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ&quot;חשוב&quot; או יותר כדי להמשיך.
+          יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ-&quot;חשוב&quot; או יותר כדי להמשיך.
         </p>
         <p className="text-sm text-gray-600 mb-8">
-          ניתן לסמן כ&quot;קריטי&quot; עד {MAX_CRITICAL_TOPICS} נושאים — כדי לשמור על המשמעות שלו:
+          ניתן לסמן כ-&quot;קריטי&quot; <strong>עד {MAX_CRITICAL_TOPICS} נושאים</strong>.
           מפלגה שמתנגדת לתשובה שלך בנושא קריטי לא תוכל להיות ההתאמה המובילה שלך,
           לא משנה כמה טובה ההתאמה בשאר הנושאים.
         </p>
