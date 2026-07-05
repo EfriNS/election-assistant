@@ -94,7 +94,7 @@ export function calcResults(
     const conflicts = criticalConflicts[party.id] ?? [];
     const score = conflicts.length > 0 ? Math.min(rawScore, GATE_SCORE_CAP) : rawScore;
     return { ...party, score, rawScore, criticalConflicts: conflicts };
-  }).sort((a, b) => b.score - a.score);
+  }).sort((a, b) => b.score - a.score || b.rawScore - a.rawScore);
 
   return { ranked, topicScores };
 }
