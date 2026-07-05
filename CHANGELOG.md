@@ -1,5 +1,52 @@
 # Changelog
 
+## 2026-07-06 — Pre-open-source cleanup: repo structure, security re-assessment, content audit
+
+### Context
+
+Working through TODO.md backlog #2 ("Open-source the repository") — the three items it listed as required before flipping the repo from private to public: (a) review comments/TODOs for anything unsafe to publish, (b) clean up README for an external audience, (c) re-validate security (API key exposure, input sanitization, rate limiting, `npm audit`). Also did a first pass on repo file/directory structure and naming, unprompted by that backlog item but in the same spirit.
+
+### Repo structure cleanup (`cad57ce`)
+
+- `lib/formatDate.ts` → `lib/format-date.ts` — the one camelCase outlier in `lib/`, which CLAUDE.md itself documents as kebab-case.
+- Deleted `docs/score-review.md`, a one-time generated artifact (2026-06-24) from `scripts/auto-score.ts` that sat inconsistently outside `docs/advisor-review/` where its sibling generated artifacts live.
+- Added `license`/`repository`/`author` fields to `package.json` (matches the existing MIT `LICENSE`).
+- Scrubbed `docs/learnings/universal/*.md` of narrative details tied to an unrelated prior project ("Contendre" — a Python/MCP-server tool): Docker/ChromaDB/Pydantic/MCP-marketplace specifics, a named external founder, named competitor companies, and an entire Contendre-specific section in `COMPETITIVE-RESEARCH.md`. Kept every underlying principle intact — only the other-project narrative color was removed or genericized. `docs/learnings/project/*`, `.claude/commands/*`, `.agents/skills/*`, and `.claude/skills/*` were deliberately left as-is (a conscious decision to publish the AI-assisted workflow tooling transparently rather than strip it).
+
+### Security re-assessment (`161a242`)
+
+Found and fixed 4 real issues, most significant first:
+
+1. **`/api/export-pdf` trusted raw client JSON with no runtime validation**, and `lib/pdf-template.ts` interpolated `party.score`/`party.rawScore` directly into HTML/CSS without the `e()` escape helper used everywhere else in that file — a real injection vector into a page rendered by an actual headless Chromium instance (which also loads `cdn.tailwindcss.com` + Google Fonts, i.e. executes injected `<script>` and makes outbound network calls). Added `validatePdfResultsData()` (exported, tested) requiring `results` to be a non-empty array with finite-number `score`/`rawScore` and a known-literal `accentColor`; the route now rejects anything else with 400. Also added the route to `middleware.ts`'s rate limiter (20/24h — it spins up a full headless browser, previously uncapped).
+2. **Deleted `app/api/chat/route.ts`** — dead code from the abandoned Prototype D (freeform chat) experiment, unreferenced by any page. It was unauthenticated, unrated-limited, and called the Gemini API directly — a free quota-burning target once the source became publicly readable. Removed its describe blocks from `tests/apiQuota.test.ts` and `tests/tokenTracking.test.ts`.
+3. **`/api/results`'s `answersSummary`** was length-capped but skipped `sanitizeUserInput()`, unlike `follow-up`/`score-topics` — now consistent.
+4. **`/api/feedback`** didn't escape Slack mrkdwn special characters in user-submitted text, so feedback could inject an `@channel` mention or a disguised link into the internal Slack notification. Added `escapeSlackMrkdwn()` to `lib/slack.ts`.
+
+`npm audit`'s 3 moderate CVEs are all from Next.js's own internally bundled `postcss@8.4.31` (not the project's resolved `postcss@8.5.15` used for Tailwind) — not independently fixable without an upstream Next.js release, and low real risk (build-time-only CSS stringification, not driven by user input in this app). Reviewed and accepted, no action taken.
+
+### Content audit (`161a242`)
+
+A forked agent audited `TODO.md`, `CHANGELOG.md`, all 4 `docs/user-testing/*.md` rounds, `REQUIREMENTS.md`, `SECURITY.md`, all `docs/*.md`, and inline code comments for anything inappropriate to publish (PII, party editorializing, internal infra details, leftover secret-shaped strings). Result: clean overall — no PII beyond generic tester labels, no party editorializing, no real secrets. Fixed the 4 things it did find:
+
+- Redacted real Mixpanel project/dashboard IDs from `docs/MIXPANEL-DASHBOARDS.md` (non-exploitable — team-auth gated — but no reason to be public).
+- Generalized a `CHANGELOG.md` entry (2026-07-03 repo-housekeeping) that named a separate, unrelated project's internals (real component/function names) by name — kept the lesson, dropped the specifics.
+- Removed an internal Slack channel name from `.env.example`.
+- While reviewing `.env.example` for the README pass: found it documented the quota-check cron secret as `QUOTA_CRON_SECRET`, but the actual code (`app/api/quota-check/route.ts`) and Vercel's own Cron Jobs convention both use `CRON_SECRET` — anyone following the example file literally would set a variable the code never reads, silently leaving `/api/quota-check` unauthenticated. Fixed the name.
+
+### README cleanup (`161a242`)
+
+Already close to public-ready. Fixed two accuracy bugs: README and `.env.example` both still said "10 sessions/IP/day" for the page rate limit, but `middleware.ts` raised that to 100 months ago (carrier-grade NAT fix) and neither doc was updated at the time. Added a "Security" section linking `SECURITY.md`.
+
+### Also discussed (no action taken)
+
+Whether to rewrite git history or split into a private "historical" + fresh public repo before flipping visibility, given the above audit found content in old commits that's no longer in current HEAD (real Mixpanel IDs, the other-project mention, the old vulnerable `/api/export-pdf` code, etc.). Decision: flip directly, keep full history intact. Rationale: the existing full-history gitleaks audit (279 commits, zero findings) already covers actual secrets; what's left in history is lower-severity (non-exploitable IDs, project names with no sensitive internals, a channel name); and preserving real commit history has its own credibility value for a personal-brand-building goal. Scoping notes for future reference if this is ever revisited: the earliest affected commit (`b93ab45`, 2026-06-14) is commit #9 of 338 — a rewrite from that point would touch 97% of history; ~25 stale branches on `origin` are all fully merged into `main` (zero unique commits) and would need deleting, not rewriting, if this is revisited later.
+
+### Tests
+
+Added `tests/pdfResultsValidation.test.ts` (9 cases) and `tests/slackMrkdwnEscape.test.ts` (5 cases). Full suite: 321/321 passing, `tsc --noEmit` and `eslint .` clean.
+
+Commits: `cad57ce`, `161a242`, merged to `main` via `1c5fb1a`.
+
 ## 2026-07-05 (later) — Follow-up option diversity: stop hiding grounded positions behind a premature closeness filter
 
 ### Context

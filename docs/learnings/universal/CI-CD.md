@@ -52,6 +52,8 @@
 
 8. **Standard platform configurations should be default** - Research platform-specific best practices (routing configs, build settings) proactively during deployment setup. (#first:2025-10-22)
 
+9. **Flipping a git host repo from private to public exposes every commit on every branch/tag, not just the current default branch — and a history rewrite only helps if it reaches every branch, not just the one you rewrote** - Visibility is a permissions setting; it does not rewrite or filter history. Checked before a real flip: any stale-but-merged branches left over from a feature-branch workflow still point at the pre-rewrite commit graph even after the default branch is rewritten, so they'd silently re-expose whatever the rewrite removed unless separately deleted (they're usually safe to just delete outright if they carry zero commits not already in the default branch — check with `git rev-list --count <default>..<branch>` first). The only fully clean way to get a "fresh, history-free" public repo without touching the private one is to rename the original repo away and create a brand-new repo under the original name/URL — verify first whether anything (READMEs, hardcoded archive-link base URLs, canonical links) depends on that exact URL staying the same. (#first:2026-07-06)
+
 ---
 
 ## Anti-Patterns to Avoid
@@ -163,6 +165,6 @@ on:
 
 ---
 
-**Last Updated**: 2025-01-07 (universal principles extracted)
-**Sessions Covered**: 18 retrospectives (2025-10-07 to 2025-10-23)
-**Principles Count**: 8
+**Last Updated**: 2026-07-06 (added #9 — visibility flips expose all branches/tags, not just the default branch)
+**Sessions Covered**: 18+ retrospectives (2025-10-07 to 2026-07-06)
+**Principles Count**: 9

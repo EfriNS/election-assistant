@@ -56,6 +56,8 @@
 
 18. **A retry is not automatically a "workaround" — it's legitimate resilience if the failure is confirmed external and non-deterministic, and the retry gets a fresh honest attempt rather than salvaging the bad one** - After a production JSON-parse failure, the instinct-avoiding-workarounds reflex would flag "just retry" as the same class of bad idea as "regex-extract the JSON blob" (a real, previously-rejected pattern in this exact codebase). The distinguishing test: (a) is the failure confirmed to originate outside your own code (verified via direct reproduction: 8 real calls with the exact failing context, 0 failures, ruling out a config/logic bug on our side) and (b) does the fix re-request a clean result rather than parse/patch the broken one (a fresh API call with the same request, vs. a regex fixing the malformed JSON string in place)? A retry satisfying both is resilience against confirmed upstream flakiness; "parse around it" is masking a bug whose actual source was never verified. Root-cause discipline means verifying *whose* fault it is before choosing symptom-fix vs. resilience-pattern, not reflexively banning anything that looks defensive. (#first:2026-07-05)
 
+19. **A type annotation on parsed request JSON is a claim, not a runtime guarantee — an escaping/sanitization helper that only covers string fields leaves any other-typed field as an unchecked hole once that assumption breaks** - A field declared `number` in a request-body type still arrives as whatever the client actually sent; nothing at runtime stops a string from being interpolated wherever code trusted the type annotation. Concretely: an HTML-escape helper was applied consistently to every string field in a template builder, but a `number`-typed score field was interpolated raw on the assumption a number "can't contain markup" — except the payload was untrusted client JSON with no runtime shape check, so a client could send a string there instead. When auditing an escaping helper's coverage, check what it does *not* wrap, not just that it exists — fields whose type "shouldn't" need escaping are exactly the ones an untrusted-JSON boundary can violate. Reinforces "validate at system boundaries," but this specific failure mode (type-based exemption from escaping) is easy to miss because the review question is usually "does this field get escaped," not "does every field of every type get escaped or validated." (#first:2026-07-06)
+
 ---
 
 ## Anti-Patterns to Avoid
@@ -187,6 +189,6 @@
 
 ---
 
-**Last Updated**: 2025-01-07 (universal principles extracted)
-**Sessions Covered**: 18 retrospectives (2025-10-07 to 2025-10-23)
-**Principles Count**: 11
+**Last Updated**: 2026-07-06 (added #19 — type annotations on parsed request JSON aren't a runtime guarantee, found via a pre-open-source security audit)
+**Sessions Covered**: 18+ retrospectives (2025-10-07 to 2026-07-06)
+**Principles Count**: 19
