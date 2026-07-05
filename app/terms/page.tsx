@@ -40,7 +40,25 @@ export default function TermsPage() {
             מצאתם ציטוט שנראה לא מדויק, לא מעודכן, או מוצא מהקשרו? כתבו לנו דרך <OpenFeedbackButton /> — ציינו את שם המפלגה והציטוט המדויק, ואנחנו בודקים כל דיווח כזה.
           </p>
           <p className="text-xs text-gray-400 leading-relaxed">
-            בכוונתנו לפרסם את קוד הכלי בפומבי ב-GitHub — משם ואילך יתאפשר גם לדווח על ציטוט ישירות דרך Issues.
+            קוד הכלי פתוח לעיון{" "}
+            <a
+              href="https://github.com/EfriNS/election-assistant"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-600"
+            >
+              ב-GitHub
+            </a>{" "}
+            — ניתן גם לדווח על ציטוט ישירות דרך{" "}
+            <a
+              href="https://github.com/EfriNS/election-assistant/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-600"
+            >
+              Issues
+            </a>
+            .
           </p>
         </section>
 
