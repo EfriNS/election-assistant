@@ -48,7 +48,7 @@
 
 15. **Frequency-agnostic naming prevents future breaking changes** - "Daily" hardcodes frequency; "Run" works for hourly/daily/weekly. Avoid temporal assumptions in naming. (#first:2025-11-13)
 
-16. **Backend cost structure fundamentally affects business model decisions** - Cost distribution (user-initiated vs background processing) determines viable pricing models. User correction: "We also use gemini to send batches of CI changes... this is not really 'just 10 queries'" revealed BYOK subsidy won't work when backend processing costs $5-20/mo per user (100-200 daily Gemini calls). Lesson: Map complete cost structure BEFORE proposing business models. User-query subsidies ≠ background-processing subsidies.
+16. **Backend cost structure fundamentally affects business model decisions** - Cost distribution (user-initiated vs background processing) determines viable pricing models. A background-processing feature can silently dominate cost even when user-facing usage looks light — "just 10 queries" ignores scheduled/automated calls happening behind the scenes. Lesson: Map complete cost structure BEFORE proposing business models. User-query subsidies ≠ background-processing subsidies.
    [Cross-cutting: PROCESS #strategic-planning]
    (#first:2025-11-30)
 
@@ -130,12 +130,12 @@
 
 **Initial Fix**: Changed test assertion to `<= 1.001` (added tolerance)
 
-**User Question**: "Isn't it a workaround? Can ChromaDB return values >1.0, or is it a bug?"
+**User Question**: "Isn't it a workaround? Can the library return values >1.0, or is it a bug?"
 
 **Investigation**:
-- Traced value back to `embedding_manager.py:224`: `similarity = 1.0 / (1.0 + distance)`
+- Traced value back to the similarity formula in source: `similarity = 1.0 / (1.0 + distance)`
 - Formula cannot produce >1.0... unless `distance < 0`
-- ChromaDB returns tiny negative distances (e.g., `-1e-7`) due to floating-point precision
+- The underlying library returns tiny negative distances (e.g., `-1e-7`) due to floating-point precision
 - Formula then produces `1.000000119...`
 
 **Proper Fix**:

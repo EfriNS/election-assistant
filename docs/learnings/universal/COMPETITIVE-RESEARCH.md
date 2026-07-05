@@ -75,7 +75,7 @@
 - **Investors** (if funded) - tier of VCs, strategic angels?
 
 **What to extract**:
-- Direct quotes with attribution (e.g., "— Nate Andorsky, LinkedIn post May 15, 2025")
+- Direct quotes with attribution (e.g., "— [Founder Name], LinkedIn post [date]")
 - Engagement metrics (85 likes, 36 comments)
 - Product learnings (SAY-DO gaps, pivots, feature decisions)
 - Validation milestones ($35K ARR, first 100 customers)
@@ -118,7 +118,7 @@
   - Verify: Does source link to evidence? (e.g., LinkedIn post with engagement)
   - Red flag: Vague claims ("thousands of customers" with no proof)
 - **Customer count**: Public testimonials, case studies, logos
-- **Usage data**: "850 questions in 30 days" (Crayon MCP case study)
+- **Usage data**: a concrete usage metric from a published case study
 - **Public case studies**: Customer names, use cases, results
 - **Press coverage**: TechCrunch, industry publications (not just their blog)
 
@@ -152,7 +152,7 @@
 
 **What to extract**:
 - **Direct user quotes** (with usernames, links, dates)
-- **Pain points**: "Requires highly manual daily curation" (Crayon MCP user)
+- **Pain points**: a specific, concrete complaint from a real review (not a paraphrase)
 - **Feature gaps**: What users wish existed
 - **Competitor comparisons**: "We tried X, switched to Y because..."
 - **Sentiment**: Positive, negative, neutral (with evidence, not guesses)
@@ -166,7 +166,7 @@
 **Sources**:
 - **Competitor comparison pages**: Their website (who do THEY think they compete with?)
 - **Third-party comparisons**: G2, Capterra, industry blogs
-  - "Crayon vs Klue vs Kompyte" articles
+  - "[Competitor A] vs [Competitor B] vs [Competitor C]" articles
   - Software directory listings
 - **Analyst reports**: Gartner Magic Quadrant, Forrester Wave (if applicable)
 - **Market maps**: VC-created market maps, industry landscape diagrams
@@ -286,7 +286,7 @@
 ### 4. Traction Validation
 - **Revenue**: Founder LinkedIn posts, interviews, press
 - **Customers**: Logos, case studies, testimonials
-- **Usage**: Public metrics ("850 questions in 30 days")
+- **Usage**: Public metrics (e.g., a case study citing concrete usage numbers)
 - **Growth**: MoM/YoY growth claims (validate with evidence)
 - **Press**: TechCrunch, The Verge, industry pubs
 
@@ -322,72 +322,6 @@
 
 ---
 
-## Reference Examples from This Project
-
-### ✅ GOOD: Entry 008 - Crayon MCP Research
-
-**What made it thorough**:
-- **17+ independent sources** (not just Crayon's blog)
-- **User reviews**: G2, Capterra, Research.com (with quotes)
-- **Community**: HN discussion, PMA Slack mentions
-- **Direct quotes**: "Requires highly manual daily curation" (Capterra user)
-- **Competitive context**: Crayon vs Klue vs Kompyte comparisons
-- **Traction validated**: 850 questions in 30 days (case study)
-- **Multiple perspectives**: Users, reviewers, HN commenters, workflow guides
-- **Confidence score**: HIGH (8.5/10) with justification
-
-**Result**: Validated proactive monitoring demand, identified Crayon's gaps (manual curation, complex UI), positioned Contendre's differentiation
-
----
-
-### ✅ GOOD: Entry 009 - CompetitorIQ Research
-
-**What made it thorough**:
-- **10+ sources** with direct attribution
-- **Founder deep-dive**: Nate Andorsky's 6 LinkedIn posts analyzed
-  - Direct quotes with engagement metrics (85 likes, 36 comments)
-  - Commenter names and their advice captured
-  - Product learnings extracted (SAY-DO gap, weekly > daily)
-- **Revenue validated**: $35K ARR LinkedIn post with link
-- **Product tested**: ForesightIQ website, Competitor Snapshot tool
-- **Community validated**: PMA Slack mention, HN launch post
-- **Traction evidence**: Real revenue, real users, real feedback
-- **Confidence score**: MEDIUM-HIGH (6.5/10) with threat assessment
-
-**Result**: Discovered critical insight (weekly > daily preference), validated market exists ($35K ARR), identified positioning struggles (6+ months unsolved)
-
----
-
-### ❌ BAD: Initial Crayon Research (Before User Feedback)
-
-**What made it shallow**:
-- **2 sources only**: Crayon blog posts (vendor-created content)
-- **No user voice**: Zero reviews, zero community mentions
-- **No validation**: Took Crayon's claims at face value
-- **Surface-level**: "They launched MCP, seems interesting"
-- **No confidence score**: Didn't assess how certain we were
-
-**User feedback**: *"If I were a CI analyst, relying only on two vendor-specific blogs would be considered sloppy. ultrathink."*
-
-**Lesson**: Vendor content alone is insufficient. Multi-source validation is mandatory.
-
----
-
-### ❌ BAD: Initial ForesightIQ Research (Before Correction)
-
-**What made it shallow**:
-- **Website only**: Checked foresightiq.co, found minimal info
-- **Stopped there**: Concluded "ghost competitor, VERY LOW threat (1/10)"
-- **Missed connections**: Didn't realize ForesightIQ = CompetitorIQ redirect
-- **No founder research**: Nate Andorsky was already in our validation journal (Entry 001)
-- **No LinkedIn check**: Missed 6 posts with product learnings and $35K ARR
-
-**User feedback**: *"Did you look at related resources, such as the founder (Nate Andorsky)?"*
-
-**Lesson**: Always research founder + key people. Surface-level website checks miss the real story.
-
----
-
 ## When to Apply This Methodology
 
 ### ALWAYS Use This for:
@@ -405,30 +339,6 @@
 - 🛑 **Any research you'll share with users** (customers, stakeholders, team)
 - 🛑 **Strategic decisions** (build/don't build, pivot, pricing, positioning)
 - 🛑 **Validation entries** (VALIDATION_JOURNAL.md, competitive analysis docs)
-
----
-
-## Application to This Project (Contendre)
-
-### How This Informs Contendre's Product
-
-**Key insight**: **Users trust research with multi-source validation and direct attribution**
-
-**What Contendre should do** (based on what makes research credible):
-1. ✅ **Multi-source synthesis**: Don't just scrape one website
-2. ✅ **Direct quotes with attribution**: "GitLab CEO said X on earnings call (Q3 2024)"
-3. ✅ **Traction validation**: "Fivetran job postings up 35% (LinkedIn, Dec 2024)"
-4. ✅ **Community signals**: "5 mentions in r/dataengineering this week"
-5. ✅ **Confidence scoring**: "HIGH confidence (8/10) - validated across G2, Reddit, blog"
-
-**What NOT to do**:
-- ❌ Single-source summaries ("Here's their homepage")
-- ❌ Unattributed claims ("They're growing fast")
-- ❌ Vendor-only content (just their blog posts)
-
-**Differentiation opportunity**:
-- **Shallow tools**: Web scraping + LLM summary (no validation)
-- **Contendre**: Multi-source validation + direct attribution + confidence scoring
 
 ---
 
@@ -459,4 +369,3 @@
 ---
 
 **Last updated**: 2024-12-26
-**Reference validation entries**: Entry 008 (Crayon MCP), Entry 009 (CompetitorIQ)

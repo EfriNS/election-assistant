@@ -24,11 +24,9 @@
    [Cross-cutting: CI-CD #7]
    (#first:2025-12-01)
 
-5. **Verify volume state before destructive cleanup** - Docker volumes persist container shutdowns. Never assume volume is empty/gone because container stopped. Always check volume size/contents (`docker run --rm -v <volume>:/data alpine du -sh /data`) BEFORE running `down -v` or volume deletion.
+5. **Verify state before destructive cleanup** - A stopped process doesn't mean its persisted data is gone. Never assume storage (volumes, caches, databases) is empty just because the process that wrote it isn't running. Always check actual size/contents BEFORE running a delete/reset command.
    [Cross-cutting: TESTING #35]
    (#first:2025-12-07)
-
-   **Session 2025-12-07**: Daily E2E test - Assumed test volume was gone because container wasn't running. Ran `docker-compose -p contendre-test down -v` without checking volume contents. Lost baseline data (1,551 items collected 2025-12-06). Should have verified volume size (20K empty vs 20M-100M with data) before cleanup.
 
 ### Systematic Investigation
 
@@ -36,7 +34,7 @@
    [Cross-cutting: PROCESS #1,4,8, TESTING #35]
    (#first:2025-10-19 #reinforced:2025-12-05)
 
-   **Session 2025-12-05**: Initially concluded Docker image was old based on git log, but user immediately corrected with container timestamp evidence. Quickly verified with docker inspect and pivoted. Prevented wasted time defending wrong theory.
+   **Session 2025-12-05**: Initially concluded a deployed artifact was stale based on git log alone, but user immediately corrected with direct timestamp evidence from the running system. Quickly re-verified against the actual deployed state and pivoted. Prevented wasted time defending wrong theory.
 
 7. **"Works manually" + "fails in test" = timeout/environment issue** - When user says "works manually in X seconds" but test fails, immediately check timeout settings and completion conditions. (#first:2025-10-19)
 
@@ -76,19 +74,17 @@
    [Cross-cutting: TESTING #35]
    (#first:2025-11-16 #reinforced:2025-11-28)
 
-   **Session 2025-11-28**: Gemini reliability investigation - Only real backfill runs revealed 8% failure rate (Pydantic validation errors). Mock tests passed perfectly but production showed intermittent failures requiring 10-iteration test.
-
 19. **Design discussion before implementing non-trivial bug fixes** - For bugs beyond simple fixes, STOP and present design options (A/B/C) with pros/cons before implementing. User demanding "take a BIG STEP BACK" signals you're moving too fast. Present options, get user input, THEN implement.
    [Cross-cutting: PROCESS #21, ARCHITECTURE #1]
    (#first:2025-12-05)
 
-   **Session 2025-12-05**: CUSTOM_COMPETITORS bug - Almost implemented fix immediately. User stopped me: "I need you to take A BIG STEP BACK and come with a proper design... PLEASE, LET'S PLAN BEFORE ACTING!!!" Presented 3 options (track removed, one-time only, merge new), user chose Option A. Prevented hasty implementation.
+   **Session 2025-12-05**: A tracked-list merge bug - Almost implemented fix immediately. User stopped me: "I need you to take A BIG STEP BACK and come with a proper design... PLEASE, LET'S PLAN BEFORE ACTING!!!" Presented 3 options (track removed, one-time only, merge new), user chose Option A. Prevented hasty implementation.
 
 20. **User clarifying questions often expose root cause** - When user asks "can you explain?" about suspicious behavior, don't just explain symptoms - investigate actual data to find root cause. User question signals something doesn't make sense.
    [Cross-cutting: PROCESS #1,4, ARCHITECTURE #2]
    (#first:2025-12-30 #reinforced:2026-07-02)
 
-   **Session 2025-12-30**: User tested get_launch_details and observed all 3 snapshots classified as "new". I initially explained "no prior snapshot to compare" without investigating. User asked: "You said there are 3 snapshots... so why aren't the 2nd and 3rd ones 'changes'?" This forced me to inspect actual ChromaDB data, revealing all items had `similarity_score=None`. Root cause: backfill bypassed change detection entirely. User's question led directly to the fix.
+   **Session 2025-12-30**: User tested a change-detection feature and observed all 3 snapshots classified as "new". I initially explained "no prior snapshot to compare" without investigating. User asked: "You said there are 3 snapshots... so why aren't the 2nd and 3rd ones 'changes'?" This forced me to inspect the actual stored data, revealing all items had a null similarity score. Root cause: a backfill process had bypassed change detection entirely. User's question led directly to the fix.
 
    **Session 2026-07-02**: Claimed local `.env.local` and Vercel's Langfuse config used different hosts, based on a shell string comparison. User pushed back with specifics ("I can see LANGFUSE_BASE_URL is X, and there's no override in Vercel — so what's wrong?"), which prompted re-verification rather than defending the original claim. Found the actual bug: the comparison extracted the value via `grep | cut` without stripping the `.env` file's surrounding quotes, so `"https://cloud.langfuse.com"` (10 extra chars) was compared against the bare literal and reported as a false mismatch. There was no real config problem. Lesson within the lesson: when a user's pushback includes their own specific observation that contradicts your claim, that's a stronger signal to re-verify than a generic "are you sure?" — they're often already holding the piece of evidence that falsifies the claim.
 
@@ -110,7 +106,7 @@
 - ❌ Giving up after 3-4 failed attempts on complex issues
 - ❌ Skipping error context files (screenshots, logs, snapshots)
 - ❌ Sequential debugging when tools can parallelize analysis
-- ❌ Assuming Docker volumes are gone when containers stop (volumes persist - verify before cleanup)
+- ❌ Assuming persisted data is gone just because the process that wrote it stopped (verify actual state before cleanup)
 
 ---
 

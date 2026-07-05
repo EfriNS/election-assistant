@@ -40,11 +40,11 @@
    [Cross-cutting: ARCHITECTURE #1, PLANNING]
    (#first:2025-11-28)
 
-12. **Product manager thinking catches engineering blind spots** - User's "think as PM/architect" question revealed distribution architecture gap we missed. Engineers optimize for current use case (GitHub repo), PMs see future distribution tiers (Docker Hub, MCP marketplace). When user shifts perspective, follow the analysis.
+12. **Product manager thinking catches engineering blind spots** - User's "think as PM/architect" question revealed distribution architecture gap we missed. Engineers optimize for current use case (e.g. a single deployment target), PMs see future distribution tiers (multiple registries, marketplaces, platforms). When user shifts perspective, follow the analysis.
    [Cross-cutting: ARCHITECTURE #1]
    (#first:2025-11-28)
 
-13. **Multi-agent product reviews enable comprehensive strategic analysis** - For complex strategic decisions (distribution plans, pricing, GTM), use multi-agent reviews (5+ specialized agents analyzing different dimensions). Composite scoring (Market Differentiation, User Value, Technical Feasibility, Business Viability, Adoption/GTM) reveals blind spots single-perspective analysis misses. User decisiveness increases when presented with clear paths (A/B/C) with tradeoffs vs open-ended "what should we do?" Example: Distribution plan review (7.0/10 composite) identified critical blocker (Docker MCP Toolkit multi-container test) and GTM gap that single-agent analysis missed.
+13. **Multi-agent product reviews enable comprehensive strategic analysis** - For complex strategic decisions (distribution plans, pricing, GTM), use multi-agent reviews (5+ specialized agents analyzing different dimensions). Composite scoring (Market Differentiation, User Value, Technical Feasibility, Business Viability, Adoption/GTM) reveals blind spots single-perspective analysis misses. User decisiveness increases when presented with clear paths (A/B/C) with tradeoffs vs open-ended "what should we do?" Example: a distribution plan review (7.0/10 composite) identified a critical untested deployment path and a GTM gap that single-agent analysis missed.
    [Cross-cutting: PLANNING]
    (#first:2025-12-16)
 
@@ -83,7 +83,7 @@
 
    **Key rule:** give the fresh agent ONLY the product problem and constraints — NOT the current solution. The value comes from independence from session bias. If the agent independently arrives at the same approach, confidence is higher. If it diverges, that's a signal to re-examine. (#first:2026-06-26)
 
-18. **Check version/dependency requirements early in setup** - When integrating external systems (APIs, protocols, frameworks), verify version requirements BEFORE troubleshooting. Saves time by catching root cause immediately. Example: MCP required Claude Desktop v0.14.10+, but v0.12.16 installed → spent time troubleshooting config/paths before version check revealed simple issue.
+18. **Check version/dependency requirements early in setup** - When integrating external systems (APIs, protocols, frameworks), verify version requirements BEFORE troubleshooting. Saves time by catching root cause immediately. Example: an integration required a newer client version than what was installed → spent time troubleshooting config/paths before a version check revealed the simple issue.
    [Cross-cutting: DEBUGGING]
    (#first:2025-11-11)
 
@@ -125,7 +125,7 @@
 
 31. **Verify implementation before documenting** - Read actual code files to confirm what was built. Document reality, not assumptions or original plans. (#first:2025-10-10)
 
-32. **User catches documentation gaps before commit** - User proactively identifies missing documentation updates (README, CLAUDE.md) that Claude missed. Ask "should these instructions be added to other places?" catches omissions. User caught missing Docker versioning instructions in README/CLAUDE.md after implementation complete. (#first:2025-11-XX #reinforced:2025-12-03)
+32. **User catches documentation gaps before commit** - User proactively identifies missing documentation updates (README, CLAUDE.md) that Claude missed. Ask "should these instructions be added to other places?" catches omissions. User caught missing deployment/versioning instructions in README/CLAUDE.md after implementation complete. (#first:2025-11-XX #reinforced:2025-12-03)
    [Cross-cutting: Version Control]
    (#first:2025-11-11)
 
@@ -143,7 +143,7 @@
    [Cross-cutting: TESTING #1]
    (#first:2025-11-13)
 
-34. **Measure before documenting technical specifications** - Don't document estimates or assumptions as facts. Verify actual measurements (image sizes, performance benchmarks, resource usage). Docker GPU image was 4.49GB, not estimated 12GB. Measured data builds user trust.
+34. **Measure before documenting technical specifications** - Don't document estimates or assumptions as facts. Verify actual measurements (image sizes, performance benchmarks, resource usage). A deployment artifact measured 4.49GB against an estimated 12GB. Measured data builds user trust.
    [Cross-cutting: ARCHITECTURE #1]
    (#first:2025-11-28)
 
