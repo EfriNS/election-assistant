@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-07-06 (later) — Repo is public: post-flip checklist complete
+
+The user flipped `election-assistant` from private to public on GitHub. Completed the checklist TODO.md backlog #2 had queued for this exact moment:
+
+- `GROUNDING_ARCHIVE_PUBLIC` → `true` (`lib/groundings.ts`) — every grounding quote's `docs/sources/*.md` archive link is now live instead of gated.
+- Reworded `/terms`'s future-tense "we intend to open-source the code" line to present tense, with real links to the repo and Issues (matching `/about`'s existing pattern) rather than a bare mention.
+- Spot-checked all previously-referenced GitHub URLs now resolve publicly: repo root, Issues, a sample `docs/sources/` archive link, and `/security/advisories/new` — all HTTP 200.
+- Enabled private vulnerability reporting via `gh api --method PUT repos/EfriNS/election-assistant/private-vulnerability-reporting` (the same call 404'd while the repo was private, per the original risk review; confirmed `{"enabled":true}` after).
+
+This closes backlog #2 entirely — both the pre-flip requirements (2026-07-06 earlier entry, below) and this post-flip checklist.
+
+Commits: `09ba612`, merged via `8ef6b4f`.
+
 ## 2026-07-06 — Pre-open-source cleanup: repo structure, security re-assessment, content audit
 
 ### Context
