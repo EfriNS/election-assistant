@@ -14,10 +14,14 @@ function makeLangfuse() {
 }
 
 // Gemini's structured-output mode (responseJsonSchema) uses constrained
-// decoding, which guarantees syntactically valid JSON — unlike plain
-// responseMimeType: "application/json" alone, which only asks the model to
-// produce JSON-shaped text and can still emit unescaped quote characters
-// (e.g. Hebrew gershayim in acronyms like צה"ל, מו"מ) that break JSON.parse.
+// decoding, which is far more reliable than plain responseMimeType:
+// "application/json" alone (which only asks the model to produce
+// JSON-shaped text and can readily emit unescaped quote characters — e.g.
+// Hebrew gershayim in acronyms like צה"ל, מו"מ — that break JSON.parse) but
+// is NOT a strict guarantee: a rare production failure on 2026-07-05 hit
+// this exact failure mode even with the schema in place. See
+// docs/learnings/project/AI-INTEGRATION.md for the incident, research, and
+// the retry-once + explicit gershayim-instruction hardening added for it.
 export const FOLLOW_UP_RESPONSE_SCHEMA = {
   type: "object",
   properties: {
@@ -37,6 +41,12 @@ export const FOLLOW_UP_RESPONSE_SCHEMA = {
   },
   required: ["prologue", "followUp"],
 };
+
+// Bumped from 500 (2026-07-05) as a defensive margin — real usage in this
+// route runs 220-350 tokens, but the higher critical-topic depth guidance
+// added the same day nudges toward more substantive questions/options.
+// Gemini bills actual tokens used, not the cap, so this costs nothing.
+const MAX_OUTPUT_TOKENS = 700;
 
 type FollowUpQA = { question: string; answer: string };
 
@@ -285,7 +295,7 @@ export async function POST(req: NextRequest) {
         contents: prompt,
         config: {
           temperature: 0.7,
-          maxOutputTokens: 500,
+          maxOutputTokens: MAX_OUTPUT_TOKENS,
           responseMimeType: "application/json",
           responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
         },
@@ -341,7 +351,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
-    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/500, retried=${retried}`;
+    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/${MAX_OUTPUT_TOKENS}, retried=${retried}`;
     const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
     generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
