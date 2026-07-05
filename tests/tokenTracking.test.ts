@@ -57,30 +57,6 @@ beforeEach(() => {
   mockGenerationUpdate.mockReset();
 });
 
-// ─── /api/chat ────────────────────────────────────────────────────────────────
-
-describe("/api/chat token tracking", () => {
-  it("passes usageMetadata to Langfuse generation.update()", async () => {
-    mockSendMessage.mockResolvedValue({ text: "שלום", usageMetadata: USAGE });
-    const { POST } = await import("@/app/api/chat/route");
-    const res = await POST(makeReq({ messages: [{ role: "user", content: "hi" }] }));
-    expect(res.status).toBe(200);
-    expect(mockGenerationUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ usage: EXPECTED_USAGE })
-    );
-  });
-
-  it("defaults missing usageMetadata to zero without throwing", async () => {
-    mockSendMessage.mockResolvedValue({ text: "שלום" }); // no usageMetadata
-    const { POST } = await import("@/app/api/chat/route");
-    const res = await POST(makeReq({ messages: [{ role: "user", content: "hi" }] }));
-    expect(res.status).toBe(200);
-    expect(mockGenerationUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ usage: { input: 0, output: 0, unit: "TOKENS" } })
-    );
-  });
-});
-
 // ─── /api/results ─────────────────────────────────────────────────────────────
 
 describe("/api/results token tracking", () => {

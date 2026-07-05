@@ -6,9 +6,7 @@ _Built: 2026-07-01. Companion to `docs/ANALYTICS-DESIGN.md` (event schema, produ
 
 ## Board: "Election Assistant — Core Analytics"
 
-- **Project**: Production (4038344), EU region
-- **Dashboard ID**: `11325742`
-- **URL**: https://eu.mixpanel.com/project/4038344/app/boards#id=11325742
+- **Project**: Production, EU region
 - Structure mirrors `ANALYTICS-DESIGN.md`'s Q1–Q7 exactly: one text header per question, followed by its report(s).
 
 Built via the official Mixpanel MCP server (`https://mcp-eu.mixpanel.com/mcp`, added with `claude mcp add --transport http mixpanel https://mcp-eu.mixpanel.com/mcp`), not the Mixpanel UI directly.
@@ -65,7 +63,7 @@ Applied via `Bulk-Edit-Events`/`Edit-Property` so labels are readable everywhere
 
 4. **Adding many new rows in a single `Update-Dashboard` call is unreliable.** A 19-row batch add partially applied (6 rows) then silently stopped. Add one row at a time and verify each before moving to the next.
 
-5. **The pre-existing "🌱 Starter Board"** (dashboard id `11314796`) is separate from this board — don't confuse the two. It has Mixpanel's default templates (Active Users, Retention) plus a recreated "Total active users" (all-time unique `$session_start`, report id `91100171`) after an accidental move-and-delete during this session.
+5. **The pre-existing "🌱 Starter Board"** is separate from this board — don't confuse the two. It has Mixpanel's default templates (Active Users, Retention) plus a recreated "Total active users" (all-time unique `$session_start`) after an accidental move-and-delete during this session.
 
 ---
 

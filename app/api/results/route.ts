@@ -5,6 +5,7 @@ import { GROUNDINGS, derivePartySourceQuality, compareEntryQuality, getBestEvide
 import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
+import { sanitizeUserInput } from "@/lib/sanitize";
 
 function makeLangfuse() {
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
@@ -119,8 +120,7 @@ export async function POST(req: NextRequest) {
   };
 
   const { topParties, answeredTopicIds = [], topicCoveredAspects = {}, sessionId } = body;
-  // Server-side length limit on answersSummary
-  const answersSummary = (body.answersSummary ?? "").slice(0, 500);
+  const answersSummary = sanitizeUserInput(body.answersSummary ?? "", 500);
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return NextResponse.json({ errorCode: "AUTH_ERROR" }, { status: 500 });

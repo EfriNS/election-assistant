@@ -42,8 +42,8 @@
    - **STOP**: Investigate root cause instead
 
 **Example**:
-- ❌ Bad: "ChromaDB returns >1.0, change test to `<= 1.001`"
-- ✅ Good: "Trace back → embedding_manager.py:224 formula → ChromaDB returns tiny negative distances → Add clamping in application code"
+- ❌ Bad: "The library returns >1.0, change test to `<= 1.001`"
+- ✅ Good: "Trace back → found the formula in source → the library returns tiny negative distances due to floating-point precision → Add clamping in application code"
 
 ---
 
@@ -82,8 +82,8 @@
    - CLI flag/option added? → Add CLI tests (or document manual validation)
 
 2. **Test coverage verification**:
-   - Run tests for modified module: `pytest tests/path/to/test_module.py -xvs`
-   - Check coverage didn't drop: `pytest --cov=src/module --cov-report=term-missing`
+   - Run tests scoped to the modified module using the project's test runner
+   - Check coverage didn't drop using the project's coverage tooling
    - If coverage dropped: Add tests for uncovered lines
 
 3. **Red flags indicating missing tests**:
@@ -98,11 +98,11 @@
    - **Refactor**: Existing tests must still pass (no new tests needed if behavior unchanged)
    - **API/schema change**: Update mocks + verify all callers tested
 
-**Example workflow** (AI-Enhanced Severity Classification):
-- ✅ Phase 1: Add `importance` field → Added 3 unit tests for new classification logic
-- ✅ Phase 2: Backfill AI integration → Added 3 integration tests (success, fallback, failure)
-- ✅ Phase 3: Source name mapping → Updated 14 parametrized tests
-- ⚠️ Phase 4: CLI filtering → Documented manual validation (CLI tests are complex)
+**Example workflow** (phased feature rollout):
+- ✅ Phase 1: New field/capability added → Added unit tests for the new logic
+- ✅ Phase 2: External integration wired in → Added integration tests (success, fallback, failure)
+- ✅ Phase 3: Data mapping/normalization added → Updated parametrized tests
+- ⚠️ Phase 4: Edge-case handling → Documented manual validation where automated coverage is impractical
 
 **When tests are NOT needed**:
 - Documentation-only changes (README, comments)
@@ -301,7 +301,7 @@ item.get("name") or item.get("title") or ""  # Works for absent OR None
 
 **When this matters**: APIs, scrapers, and external data sources often set fields to `None` explicitly rather than omitting the key. Both cases must be handled.
 
-**Real example**: Blog RSS scrapers produced `{"name": None, "title": "Post Title"}`. The `.get("name", fallback)` pattern returned `None` instead of `"Post Title"`, silently storing empty strings in ChromaDB.
+**Real example**: An integration produced `{"name": None, "title": "Post Title"}`. The `.get("name", fallback)` pattern returned `None` instead of `"Post Title"`, silently storing empty values downstream.
 
 [#first:2026-02-23]
 

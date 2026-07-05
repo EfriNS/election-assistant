@@ -6,7 +6,7 @@ import type { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { GATE_SCORE_CAP } from "@/lib/scoring";
-import { formatHebrewDate } from "@/lib/formatDate";
+import { formatHebrewDate } from "@/lib/format-date";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
@@ -21,6 +21,40 @@ export type PdfResultsData = {
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   quotaExceeded?: boolean;
 };
+
+const VALID_ACCENT_COLORS = ["blue", "emerald", "amber", "purple", "teal"] as const;
+
+// The request body is untrusted client JSON (no TypeScript guarantee at runtime).
+// score/rawScore are interpolated directly into HTML/CSS below without the `e()`
+// escape helper (a real number can never contain HTML metacharacters) — so this
+// check is what actually keeps that interpolation safe, not just a shape check.
+export function validatePdfResultsData(data: unknown): PdfResultsData | null {
+  if (!data || typeof data !== "object") return null;
+  const d = data as Record<string, unknown>;
+
+  if (!Array.isArray(d.results) || d.results.length === 0) return null;
+  for (const r of d.results) {
+    if (!r || typeof r !== "object") return null;
+    const party = r as Record<string, unknown>;
+    if (typeof party.id !== "string" || typeof party.name !== "string") return null;
+    if (typeof party.score !== "number" || !Number.isFinite(party.score)) return null;
+    if (
+      party.rawScore !== undefined &&
+      (typeof party.rawScore !== "number" || !Number.isFinite(party.rawScore))
+    ) {
+      return null;
+    }
+  }
+
+  if (
+    typeof d.accentColor !== "string" ||
+    !(VALID_ACCENT_COLORS as readonly string[]).includes(d.accentColor)
+  ) {
+    return null;
+  }
+
+  return data as PdfResultsData;
+}
 
 const ACCENT_COLORS = {
   blue:    { highlight: "bg-blue-50 border-blue-300",       bar: "bg-blue-400",    score: "text-blue-700",    link: "text-blue-500"   },

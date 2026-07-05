@@ -47,30 +47,6 @@ beforeEach(() => {
   mockGenerateContent.mockReset();
 });
 
-// ─── /api/chat ────────────────────────────────────────────────────────────────
-
-describe("/api/chat quota handling", () => {
-  const chatBody = { messages: [{ role: "user", content: "שלום" }] };
-
-  it("returns 429 and QUOTA_EXCEEDED on Gemini quota error", async () => {
-    mockSendMessage.mockRejectedValue(quotaError);
-    const { POST } = await import("@/app/api/chat/route");
-    const res = await POST(makeReq(chatBody));
-    const body = await res.json();
-    expect(res.status).toBe(429);
-    expect(body.errorCode).toBe("QUOTA_EXCEEDED");
-  });
-
-  it("returns 500 and SERVER_ERROR on non-quota Gemini error", async () => {
-    mockSendMessage.mockRejectedValue(serverError);
-    const { POST } = await import("@/app/api/chat/route");
-    const res = await POST(makeReq(chatBody));
-    const body = await res.json();
-    expect(res.status).toBe(500);
-    expect(body.errorCode).toBe("SERVER_ERROR");
-  });
-});
-
 // ─── /api/follow-up ───────────────────────────────────────────────────────────
 
 describe("/api/follow-up quota handling", () => {

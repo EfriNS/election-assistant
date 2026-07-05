@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { escapeSlackMrkdwn } from "@/lib/slack";
 
 const MAX_TEXT_LENGTH = 1000;
 
@@ -8,12 +9,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  const text = body.text.trim().slice(0, MAX_TEXT_LENGTH);
+  const text = escapeSlackMrkdwn(body.text.trim().slice(0, MAX_TEXT_LENGTH));
   if (!text) {
     return NextResponse.json({ error: "Empty feedback" }, { status: 400 });
   }
 
-  const context: string = typeof body.context === "string" ? body.context : "—";
+  const context: string = escapeSlackMrkdwn(typeof body.context === "string" ? body.context : "—");
 
   const webhookUrl = process.env.FEEDBACK_SLACK_WEBHOOK_URL;
   if (!webhookUrl) {

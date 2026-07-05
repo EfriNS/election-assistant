@@ -51,12 +51,12 @@
 13a. **Run tests immediately after API changes, not at end** - When making breaking changes (renaming fields, changing function signatures), run tests right away to see full impact. Don't wait until "implementation complete" - test failures reveal scope of changes needed. Saves time by catching all affected code early.
    (#first:2025-12-03)
 
-   **Session 2025-12-03**: Implemented competitor config restructure (vendor_sites → supported). Waited until end to run tests, discovered 28 failures across 3 test files. If tested immediately, would have seen full scope and updated tests incrementally. "Implementation complete" without tests = false confidence.
+   **Session 2025-12-03**: Implemented a config-shape restructure (renamed a field across the codebase). Waited until the end to run tests, discovered 28 failures across 3 test files. If tested immediately, would have seen full scope and updated tests incrementally. "Implementation complete" without tests = false confidence.
 
-13b. **Unit + integration tests ≠ production-ready** - Passing tests validate individual components, not end-to-end workflows. Before declaring "ready for production/beta", identify critical user flows and plan E2E validation. Unit tests pass ≠ Docker installation works ≠ config persists ≠ daily scraper runs.
+13b. **Unit + integration tests ≠ production-ready** - Passing tests validate individual components, not end-to-end workflows. Before declaring "ready for production/beta", identify critical user flows and plan E2E validation. Unit tests pass ≠ installation works ≠ config persists ≠ scheduled jobs run.
    (#first:2025-12-03)
 
-   **Session 2025-12-03**: Completed MCP mode implementation, all 850 tests passing. User asked "what about E2E tests?" - realized gap: no validation that MCP installation works, volumes persist, daily workflows complete. Tests validate code correctness, not deployment success. E2E gap should have been identified in planning, not after "implementation complete".
+   **Session 2025-12-03**: Completed a major feature with the full test suite passing. User asked "what about E2E tests?" - realized gap: no validation that the deployed installation actually works end-to-end. Tests validate code correctness, not deployment success. E2E gap should have been identified in planning, not after "implementation complete".
 
 14. **Don't skip tests, fix or document complexity** - When tests seem impossible, ask user "is this feature implemented?" before skipping. (#first:2025-10-19)
 
@@ -65,7 +65,7 @@
 16. **Create working test before modifying behavior** - When debugging behavior, create isolated test demonstrating CURRENT behavior before making changes. Prevents making things worse, provides clear baseline for verification.
    (#first:2025-11-28)
 
-   **Session 2025-11-28**: Attempted to simplify Slack validation → broke file uploads. User demanded: "create /tmp/test_slack_upload.py that works, before making any more changes." Working test proved files_upload_v2 REQUIRES channel IDs, not names. Test revealed channels:read + groups:read scopes mandatory.
+   **Session 2025-11-28**: Attempted to simplify a third-party API integration → broke an existing feature. User demanded a working test proving the actual requirement before any more changes. The working test revealed the API required a different parameter shape than assumed, and specific scopes/permissions were mandatory that hadn't been documented.
 
 ### Test Infrastructure
 

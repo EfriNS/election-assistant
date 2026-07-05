@@ -5,7 +5,7 @@ import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
-import { formatHebrewDate } from "@/lib/formatDate";
+import { formatHebrewDate } from "@/lib/format-date";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
