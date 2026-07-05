@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
-import { getGroundingsForTopic, getBestEvidenceForTopic } from "@/lib/groundings";
+import { getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
@@ -367,20 +367,17 @@ function QuizInner() {
     const { ranked: currentRankings } = calcResults(buckets, syntheticTopicQA, questionSet);
     const currentScores = Object.fromEntries(currentRankings.map((p) => [p.id, p.score]));
 
-    // Filter grounding data to close parties only (top-5 + within 20 pts of 5th place).
-    // This prevents the AI from seeing groundings for irrelevant parties.
-    const scoreEntries = Object.entries(currentScores).sort((a, b) => b[1] - a[1]);
-    const top5MinScore = scoreEntries[4]?.[1] ?? 0;
-    const closePartyIds = new Set(
-      scoreEntries
-        .filter(([, s]) => s >= top5MinScore - 20)
-        .map(([id]) => id)
-    );
-
     // Best evidence only per party: official material when it exists, third-party/
     // joint-list sources only as a fallback — same rule as scoring and quoting.
+    // Deliberately NOT filtered to "close" parties by current running score — a
+    // follow-up's job is to probe a potentially different axis than the opener
+    // (e.g. territorial policy vs. security self-reliance), and gating grounding
+    // by who's currently leading hid real, well-grounded positions from parties
+    // who simply hadn't led on anything yet (2026-07-05 incident: a security
+    // opener favoring self-reliance made every left-leaning party's genuine,
+    // grounded withdrawal/1967-borders position invisible to the follow-up AI).
     const partyGroundings = PARTIES
-      .filter((p) => closePartyIds.has(p.id) && (groundingMap[p.id]?.length ?? 0) > 0)
+      .filter((p) => (groundingMap[p.id]?.length ?? 0) > 0)
       .map((p) => ({
         partyId: p.id,
         partyName: p.name,
@@ -391,33 +388,13 @@ function QuizInner() {
         })),
       }));
 
-    // Compute the suggested next dimension: first uncovered key dimension where
-    // at least one close party has grounding data. This gives the AI a concrete
-    // starting point while still allowing intelligent deviation.
+    // Compute the suggested next dimension (see lib/groundings.ts's
+    // selectSuggestedDimension for why this is NOT gated by current closeness).
     const coveredAspects = topicQA[topicId]?.coveredAspects ?? [];
     const uncoveredKeyDims = (TOPIC_KEY_DIMENSIONS[topicId] ?? [])
       .filter((d) => !coveredAspects.includes(d));
 
-    // Prefer a dimension backed by official party material; fall back to any
-    // evidence (joint-list/third-party) only if no uncovered dimension has official backing.
-    const suggestedNextDimension: string | null =
-      uncoveredKeyDims.find((dim) =>
-        [...closePartyIds].some((pid) =>
-          (groundingMap[pid] ?? []).some(
-            (e) =>
-              e.aspect === dim &&
-              !e.absent &&
-              (e.provenance === "official-current" || e.provenance === "official-outdated")
-          )
-        )
-      ) ??
-      uncoveredKeyDims.find((dim) =>
-        [...closePartyIds].some((pid) =>
-          (groundingMap[pid] ?? []).some((e) => e.aspect === dim && !e.absent)
-        )
-      ) ??
-      uncoveredKeyDims[0] ??
-      null;
+    const suggestedNextDimension = selectSuggestedDimension(uncoveredKeyDims, groundingMap);
 
     const res = await fetch("/api/follow-up", {
       method: "POST",

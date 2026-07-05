@@ -146,3 +146,40 @@ export function getBestEvidenceForTopic(partyId: string, topicId: string): Groun
   const pool = official.length > 0 ? official : entries;
   return [...pool].sort(compareEntryQuality);
 }
+
+/**
+ * Picks the next follow-up dimension to probe: the first uncovered key dimension
+ * with official grounding evidence from ANY party, falling back to any evidence,
+ * falling back to the first uncovered dimension with no evidence at all.
+ *
+ * Deliberately takes the FULL groundingMap (every party with grounding for the
+ * topic), not a pre-filtered subset — scoping this to only "currently close"
+ * parties by running score was a real 2026-07-05 bug: a security opener
+ * favoring self-reliance made every left-leaning party's genuine, grounded
+ * withdrawal/territorial-policy position invisible, because they weren't
+ * "close" yet on an unrelated axis. Callers should pass grounding for every
+ * party, not a closeness-filtered slice.
+ */
+export function selectSuggestedDimension(
+  uncoveredKeyDims: string[],
+  groundingMap: Record<string, GroundingEntry[]>
+): string | null {
+  const entryLists = Object.values(groundingMap);
+  return (
+    uncoveredKeyDims.find((dim) =>
+      entryLists.some((entries) =>
+        entries.some(
+          (e) =>
+            e.aspect === dim &&
+            !e.absent &&
+            (e.provenance === "official-current" || e.provenance === "official-outdated")
+        )
+      )
+    ) ??
+    uncoveredKeyDims.find((dim) =>
+      entryLists.some((entries) => entries.some((e) => e.aspect === dim && !e.absent))
+    ) ??
+    uncoveredKeyDims[0] ??
+    null
+  );
+}
