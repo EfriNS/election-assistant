@@ -5,6 +5,7 @@ import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+import { formatHebrewDate } from "@/lib/formatDate";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
@@ -141,7 +142,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                 className={`px-1.5 py-0.5 rounded border text-xs leading-none ${chip.cls}`}
                 title={`${TOPIC_LABELS[topicId]}: ${pct}%`}
               >
-                {shortLabel} {chip.symbol}
+                {shortLabel} {chip.symbol} {pct}%
               </span>
             );
           })}
@@ -201,7 +202,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>
           </button>
           {lastVerified && (
-            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {lastVerified}</p>
+            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {formatHebrewDate(lastVerified)}</p>
           )}
 
           {groundingOpen && (
@@ -265,7 +266,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                               ארכיון ↗
                             </a>
                           )}
-                          <span className="text-xs text-gray-400">{e.dateRetrieved}</span>
+                          <span className="text-xs text-gray-400">{formatHebrewDate(e.dateRetrieved)}</span>
                         </div>
                       </div>
                     ))}

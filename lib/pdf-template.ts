@@ -6,6 +6,7 @@ import type { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { GATE_SCORE_CAP } from "@/lib/scoring";
+import { formatHebrewDate } from "@/lib/formatDate";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
@@ -61,7 +62,7 @@ function renderChips(
           ? "bg-red-50 border-red-200 text-red-600"
           : "bg-gray-50 border-gray-200 text-gray-400";
       const symbol = pct >= 60 ? "v" : pct < 40 ? "x" : "~";
-      return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol}</span>`;
+      return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol} ${pct}%</span>`;
     })
     .join("\n");
 }
@@ -77,7 +78,7 @@ function renderGrounding(
     .sort()
     .at(-1);
   const lastVerifiedHtml = lastVerified
-    ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(lastVerified)}</p>`
+    ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(formatHebrewDate(lastVerified))}</p>`
     : "";
 
   const outdatedWarning =
@@ -117,7 +118,7 @@ function renderGrounding(
             <div class="flex items-center gap-2 mt-1 flex-wrap">
               <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
               ${GROUNDING_ARCHIVE_PUBLIC ? `<a href="${e(ARCHIVE_BASE_URL + entry.archivePath)}" class="text-xs text-gray-400">ארכיון</a>` : ""}
-              <span class="text-xs text-gray-400">${e(entry.dateRetrieved)}</span>
+              <span class="text-xs text-gray-400">${e(formatHebrewDate(entry.dateRetrieved))}</span>
             </div>
           </div>`
         )
