@@ -63,7 +63,7 @@ export default function ShareButton({ variant = "prominent" }: Props) {
         ) : (
           <>
             <span>🗳️</span>
-            <span>שתפו עם חבר ←</span>
+            <span>שתפו עם חברים ←</span>
           </>
         )}
       </button>
@@ -83,7 +83,7 @@ export default function ShareButton({ variant = "prominent" }: Props) {
       ) : (
         <>
           <span>🗳️</span>
-          <span>שתפו עם חבר</span>
+          <span>שתפו עם חברים</span>
         </>
       )}
     </button>
