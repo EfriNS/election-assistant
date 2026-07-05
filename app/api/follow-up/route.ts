@@ -262,8 +262,10 @@ export async function POST(req: NextRequest) {
   // Do not pass prompt as input — it contains user answers (PII).
   const generation = trace?.generation({ name: "gemini-follow-up", model });
 
-  // Hoisted so the catch block can log the raw AI output to Langfuse on parse errors.
+  // Hoisted so the catch block can log the raw AI output + diagnostics on parse errors.
   let rawText = "";
+  let finishReason = "";
+  let outputTokens = 0;
 
   try {
     const ai = new GoogleGenAI({ apiKey });
@@ -279,6 +281,8 @@ export async function POST(req: NextRequest) {
     });
 
     rawText = response.text ?? "";
+    finishReason = response.candidates?.[0]?.finishReason ?? "";
+    outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
     if (!rawText) {
       generation?.update({ output: "", level: "WARNING" });
       generation?.end();
@@ -318,11 +322,12 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
-    const langfuseOutput = rawText ? `${msg}\n\nRAW:\n${rawText.slice(0, 500)}` : msg;
+    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/500`;
+    const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
     generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}`);
+    await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}\n${diagnostics}`);
     if (isQuota) return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
     return NextResponse.json({ prologue: null, followUp: null });
   }

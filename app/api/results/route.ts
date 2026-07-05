@@ -164,6 +164,11 @@ export async function POST(req: NextRequest) {
   const allPartyIds = topParties.map((p) => p.id);
   const groundings = buildGroundingsForParties(allPartyIds, answeredTopicIds, topicCoveredAspects);
 
+  // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
+  let text = "";
+  let finishReason = "";
+  let outputTokens = 0;
+
   try {
     const chat = ai.chats.create({
       model,
@@ -178,7 +183,9 @@ export async function POST(req: NextRequest) {
     });
 
     const response = await chat.sendMessage({ message: userMessage });
-    let text = (response.text ?? "").trim();
+    text = (response.text ?? "").trim();
+    finishReason = response.candidates?.[0]?.finishReason ?? "";
+    outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
 
     if (text.startsWith("```")) {
       text = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
@@ -204,10 +211,12 @@ export async function POST(req: NextRequest) {
     console.error("Results AI error:", msg);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
     const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    generation?.update({ output: msg, level: "ERROR" });
+    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500`;
+    const langfuseOutput = text ? `${msg}\n\n${diagnostics}\n\nRAW:\n${text}` : `${msg}\n\n${diagnostics}`;
+    generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}`);
+    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
     // Return groundings even on AI failure — deterministic results + quotes still useful
     return NextResponse.json({ errorCode, groundings }, { status: isQuota ? 429 : 500 });
   }
