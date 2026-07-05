@@ -192,32 +192,46 @@ export async function POST(req: NextRequest) {
   let rawText = "";
   let finishReason = "";
   let outputTokens = 0;
+  let promptTokens = 0;
+  let retried = false;
+  let scores: ScoreTopicsResult | undefined;
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    const response = await ai.models.generateContent({
-      model,
-      contents: prompt,
-      config: {
-        temperature: 0.2,
-        maxOutputTokens: 1500,
-        responseMimeType: "application/json",
-        responseJsonSchema: buildScoreResponseSchema(topics),
-      },
-    });
 
-    rawText = response.text ?? "";
-    finishReason = response.candidates?.[0]?.finishReason ?? "";
-    outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
-    const scores = parseScores(rawText, topics);
+    // Retry once on parse failure — see app/api/follow-up/route.ts's comment for why
+    // (confirmed rare/non-deterministic, not a token-budget issue; genuine API errors
+    // still propagate immediately, uncaught here).
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+          temperature: 0.2,
+          maxOutputTokens: 1500,
+          responseMimeType: "application/json",
+          responseJsonSchema: buildScoreResponseSchema(topics),
+        },
+      });
+
+      rawText = response.text ?? "";
+      finishReason = response.candidates?.[0]?.finishReason ?? "";
+      outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
+      promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
+
+      try {
+        scores = parseScores(rawText, topics);
+        break;
+      } catch (parseErr) {
+        if (attempt === 1) { retried = true; continue; }
+        throw parseErr;
+      }
+    }
 
     generation?.update({
       output: rawText,
-      usage: {
-        input:  response.usageMetadata?.promptTokenCount    ?? 0,
-        output: response.usageMetadata?.candidatesTokenCount ?? 0,
-        unit:   "TOKENS",
-      },
+      usage: { input: promptTokens, output: outputTokens, unit: "TOKENS" },
+      metadata: { retried },
     });
     generation?.end();
     await langfuse?.flushAsync();
@@ -227,7 +241,7 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : String(err);
     const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
     const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500`;
+    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
     const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
     generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
