@@ -121,6 +121,10 @@ export default function Home() {
         >
           התחילו ←
         </button>
+        <p className="mt-2 text-center text-xs text-gray-400">
+          בלחיצה על &quot;התחילו&quot; אתם מסכימים ל
+          <a href="/terms" className="underline hover:text-gray-600">תנאי השימוש ומדיניות הפרטיות</a>.
+        </p>
 
         {/* Share */}
         <div className="mt-3">
@@ -133,8 +137,6 @@ export default function Home() {
             <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
             {" · "}
             <a href="/about" className="underline hover:text-gray-600">אודות</a>
-            {" · "}
-            <a href="/terms" className="underline hover:text-gray-600">תנאי שימוש ופרטיות</a>
           </p>
         </div>
 

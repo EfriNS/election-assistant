@@ -3,13 +3,15 @@
 
 import type { Party } from "@/lib/parties";
 import type { PartyGroundingResult } from "@/lib/grounding-types";
-import { TOPIC_LABELS } from "@/lib/topics";
+import { TOPIC_LABELS, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+import { GATE_SCORE_CAP } from "@/lib/scoring";
+import { formatHebrewDate } from "@/lib/formatDate";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 export type PdfResultsData = {
-  results: Array<Party & { score: number }>;
+  results: Array<Party & { score: number; rawScore?: number; criticalConflicts?: string[] }>;
   aiProfile?: string;
   partyBlurbs?: Record<string, string>;
   groundings?: Record<string, PartyGroundingResult>;
@@ -60,7 +62,7 @@ function renderChips(
           ? "bg-red-50 border-red-200 text-red-600"
           : "bg-gray-50 border-gray-200 text-gray-400";
       const symbol = pct >= 60 ? "v" : pct < 40 ? "x" : "~";
-      return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol}</span>`;
+      return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol} ${pct}%</span>`;
     })
     .join("\n");
 }
@@ -68,14 +70,15 @@ function renderChips(
 function renderGrounding(
   groundingData: PartyGroundingResult,
   sourceLinkLabel: string,
-  topicAnswerTexts: Record<string, string> | undefined
+  topicAnswerTexts: Record<string, string> | undefined,
+  criticalConflicts: string[] | undefined
 ): string {
   const lastVerified = groundingData.topics
     .flatMap((tg) => tg.entries.map((entry) => entry.dateRetrieved))
     .sort()
     .at(-1);
   const lastVerifiedHtml = lastVerified
-    ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(lastVerified)}</p>`
+    ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(formatHebrewDate(lastVerified))}</p>`
     : "";
 
   const outdatedWarning =
@@ -86,11 +89,23 @@ function renderGrounding(
         </div>`
       : "";
 
-  const topics = groundingData.topics
+  // Critical-topic conflicts sort first and get a highlight — same reordering
+  // rule as PartyResultCard's accordion.
+  const sortedTopics = [...groundingData.topics].sort((a, b) => {
+    const aGated = criticalConflicts?.includes(a.topicId) ? 0 : 1;
+    const bGated = criticalConflicts?.includes(b.topicId) ? 0 : 1;
+    return aGated - bGated;
+  });
+
+  const topics = sortedTopics
     .map((tg) => {
+      const isGateTopic = criticalConflicts?.includes(tg.topicId);
       const userAnswer = topicAnswerTexts?.[tg.topicId];
       const userAnswerHtml = userAnswer
         ? `<p class="text-xs text-gray-400 italic mb-1.5 border-r-2 border-teal-200 pr-2">ענית: ${e(userAnswer)}</p>`
+        : "";
+      const gateLabelHtml = isGateTopic
+        ? `<p class="text-xs font-semibold text-red-600 mb-1">נושא קריטי שגרם להגבלת הציון</p>`
         : "";
 
       const entries = tg.entries
@@ -103,15 +118,16 @@ function renderGrounding(
             <div class="flex items-center gap-2 mt-1 flex-wrap">
               <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
               ${GROUNDING_ARCHIVE_PUBLIC ? `<a href="${e(ARCHIVE_BASE_URL + entry.archivePath)}" class="text-xs text-gray-400">ארכיון</a>` : ""}
-              <span class="text-xs text-gray-400">${e(entry.dateRetrieved)}</span>
+              <span class="text-xs text-gray-400">${e(formatHebrewDate(entry.dateRetrieved))}</span>
             </div>
           </div>`
         )
         .join("\n");
 
       return `
-        <div class="break-inside-avoid">
-          <p class="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
+        <div class="break-inside-avoid${isGateTopic ? " bg-red-50 border border-red-200 rounded-lg p-2" : ""}">
+          ${gateLabelHtml}
+          <p class="text-xs font-semibold ${isGateTopic ? "text-red-700" : "text-gray-600"} mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
           ${userAnswerHtml}
           <p class="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
           <div class="space-y-2">${entries}</div>
@@ -128,7 +144,7 @@ function renderGrounding(
 }
 
 function renderPartyCard(
-  party: Party & { score: number },
+  party: Party & { score: number; rawScore?: number; criticalConflicts?: string[] },
   rank: number,
   accentColor: keyof typeof ACCENT_COLORS,
   aiBlurb: string | undefined,
@@ -160,6 +176,17 @@ function renderPartyCard(
       ? `<div class="flex flex-wrap gap-1 mb-3">${renderChips(answeredTopicIds, partyTopicScores)}</div>`
       : "";
 
+  const conflictBanner =
+    party.criticalConflicts && party.criticalConflicts.length > 0
+      ? `<div class="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2">
+          <span class="font-semibold">מתנגשת עם עדיפות שסימנת כקריטית: </span>
+          ${e(party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", "))}.
+          ${party.rawScore !== undefined && party.rawScore !== party.score
+            ? `<span class="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: ${party.rawScore}%).</span>`
+            : ""}
+        </div>`
+      : "";
+
   const aiBlurbHtml = aiBlurb
     ? `<div class="mt-1 mb-2 pt-2 border-t border-gray-100">
         <p class="text-xs text-gray-500 leading-relaxed">
@@ -181,7 +208,7 @@ function renderPartyCard(
 
   const groundingHtml =
     hasGrounding && groundingData
-      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts)
+      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts, party.criticalConflicts)
       : "";
 
   return `
@@ -197,6 +224,7 @@ function renderPartyCard(
         <div class="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
           <div class="h-full ${c.bar} rounded-full" style="width: ${party.score}%"></div>
         </div>
+        ${conflictBanner}
         ${chips}
         <p class="text-xs text-gray-500 mb-2">${e(party.description)}</p>
         ${aiBlurbHtml}
@@ -286,7 +314,11 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
         </div>
         <div>
           <strong class="text-gray-600">משקל העדיפויות</strong>
-          <p class="mt-1">נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1). כך נושאים שחשובים לך באמת שולטים בתוצאה.</p>
+          <p class="mt-1">נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1). כך נושאים שחשובים לך באמת שולטים בתוצאה. ניתן לסמן עד ${MAX_CRITICAL_TOPICS} נושאים כ״קריטי״ — כדי לשמור על המשמעות שלו.</p>
+        </div>
+        <div>
+          <strong class="text-gray-600">התנגשות עם עדיפות קריטית</strong>
+          <p class="mt-1">אם מפלגה מתנגדת לעמדתך בנושא שסימנת כ״קריטי״, ציון ההתאמה הכולל שלה מוגבל לכל היותר ל-${GATE_SCORE_CAP}%, גם אם היא מסכימה איתך ברוב שאר הנושאים. כרטיסיית המפלגה מציינת מפורשות כשזה קורה.</p>
         </div>
         <div>
           <strong class="text-gray-600">ציון סופי</strong>

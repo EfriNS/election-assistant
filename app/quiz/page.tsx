@@ -6,6 +6,7 @@ import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic, getBestEvidenceForTopic } from "@/lib/groundings";
 import { calcResults, TopicQA } from "@/lib/scoring";
+import { CRITICAL_WEIGHT } from "@/lib/topics";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
@@ -23,8 +24,16 @@ const BUCKET_LABELS: Record<number, string> = {
 };
 
 const OTHER_OPTION = "אחר — פרט";
-const FOLLOW_UP_HARD_CAP_SHORT = 1;
-const FOLLOW_UP_HARD_CAP_DEEP  = 3;
+
+// Follow-up depth scales with how important the user marked the topic —
+// a קריטי topic gets probed deeper than a merely-important one, at both
+// depth settings. Deep mode's weight-2/3 caps are intentionally lower than
+// the old flat cap-of-3: depth is concentrated where the user asked for it
+// instead of spread evenly across every selected topic.
+const FOLLOW_UP_CAPS: Record<string, Record<number, number>> = {
+  short: { [CRITICAL_WEIGHT]: 2, 3: 1, 2: 1 },
+  deep:  { [CRITICAL_WEIGHT]: 3, 3: 2, 2: 1 },
+};
 
 const LOADING_VERBS_FORMAL = ["מנתח...", "שוקל...", "חושב...", "מגבש..."];
 const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...", "מתבשל...", "מתפלסף..."];
@@ -431,6 +440,8 @@ function QuizInner() {
         tone,
         depth,
         followUpsAskedThisTopic: askedCount,
+        followUpCapForTopic: FOLLOW_UP_CAPS[depth]?.[buckets[topicId] ?? 2] ?? 1,
+        topicWeightLabel: BUCKET_LABELS[buckets[topicId] ?? 2],
         partyGroundings,
         currentScores,
         suggestedNextDimension,
@@ -519,8 +530,8 @@ function QuizInner() {
     setShowFollowUpInput(false);
     setFollowUpDraft("");
 
-    // Hard cap — skip API call
-    const followUpHardCap = depth === "deep" ? FOLLOW_UP_HARD_CAP_DEEP : FOLLOW_UP_HARD_CAP_SHORT;
+    // Hard cap — skip API call. Scales with the topic's priority weight.
+    const followUpHardCap = FOLLOW_UP_CAPS[depth]?.[buckets[topicId] ?? 2] ?? 1;
     if (followUpsAskedThisTopic >= followUpHardCap) {
       advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
       return;

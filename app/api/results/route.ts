@@ -98,6 +98,7 @@ Your task:
 
 Rules:
 - Hebrew output only
+- Your output must be valid JSON. When writing a Hebrew acronym that contains an internal quotation mark (e.g. צה"ל, מו"מ, ת"א) — including inside a quoted excerpt — use the Hebrew gershayim character ״ (U+05F4), never a plain ASCII double-quote ("), which breaks the JSON structure.
 - Second person (אתה/את)
 - Be specific — mention actual answers the user gave
 - Each party blurb MUST cite at least one quote from the platform quotes provided. Do not invent quotes or positions not in the provided data.
@@ -164,36 +165,55 @@ export async function POST(req: NextRequest) {
   const allPartyIds = topParties.map((p) => p.id);
   const groundings = buildGroundingsForParties(allPartyIds, answeredTopicIds, topicCoveredAspects);
 
+  // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
+  let text = "";
+  let finishReason = "";
+  let outputTokens = 0;
+  let promptTokens = 0;
+  let retried = false;
+  let parsed: any;
+
   try {
-    const chat = ai.chats.create({
-      model,
-      history: [],
-      config: {
-        systemInstruction: SYSTEM_PROMPT,
-        temperature: 0.5,
-        maxOutputTokens: 1500,
-        responseMimeType: "application/json",
-        responseJsonSchema: RESULTS_RESPONSE_SCHEMA,
-      },
-    });
+    // Retry once on parse/shape failure — see app/api/follow-up/route.ts's comment
+    // for why (confirmed rare/non-deterministic, not a token-budget issue). A fresh
+    // chat per attempt so a malformed first reply isn't fed back as history.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const chat = ai.chats.create({
+        model,
+        history: [],
+        config: {
+          systemInstruction: SYSTEM_PROMPT,
+          temperature: 0.5,
+          maxOutputTokens: 1500,
+          responseMimeType: "application/json",
+          responseJsonSchema: RESULTS_RESPONSE_SCHEMA,
+        },
+      });
 
-    const response = await chat.sendMessage({ message: userMessage });
-    let text = (response.text ?? "").trim();
+      const response = await chat.sendMessage({ message: userMessage });
+      text = (response.text ?? "").trim();
+      finishReason = response.candidates?.[0]?.finishReason ?? "";
+      outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
+      promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
 
-    if (text.startsWith("```")) {
-      text = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
+      if (text.startsWith("```")) {
+        text = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
+      }
+
+      try {
+        parsed = JSON.parse(text);
+        if (!parsed.profile || !parsed.partyBlurbs) throw new Error("unexpected shape");
+        break;
+      } catch (parseErr) {
+        if (attempt === 1) { retried = true; continue; }
+        throw parseErr;
+      }
     }
-
-    const parsed = JSON.parse(text);
-    if (!parsed.profile || !parsed.partyBlurbs) throw new Error("unexpected shape");
 
     generation?.update({
       output: text,
-      usage: {
-        input:  response.usageMetadata?.promptTokenCount    ?? 0,
-        output: response.usageMetadata?.candidatesTokenCount ?? 0,
-        unit:   "TOKENS",
-      },
+      usage: { input: promptTokens, output: outputTokens, unit: "TOKENS" },
+      metadata: { retried },
     });
     generation?.end();
     await langfuse?.flushAsync();
@@ -204,10 +224,12 @@ export async function POST(req: NextRequest) {
     console.error("Results AI error:", msg);
     const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
     const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    generation?.update({ output: msg, level: "ERROR" });
+    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
+    const langfuseOutput = text ? `${msg}\n\n${diagnostics}\n\nRAW:\n${text}` : `${msg}\n\n${diagnostics}`;
+    generation?.update({ output: langfuseOutput, level: "ERROR" });
     generation?.end();
     await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}`);
+    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
     // Return groundings even on AI failure — deterministic results + quotes still useful
     return NextResponse.json({ errorCode, groundings }, { status: isQuota ? 429 : 500 });
   }

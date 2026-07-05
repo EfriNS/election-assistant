@@ -7,6 +7,8 @@ import { PartyGroundingResult } from "@/lib/grounding-types";
 import PartyResultCard from "@/components/PartyResultCard";
 import ShareButton from "@/components/ShareButton";
 import { mpTrack } from "@/lib/mixpanel";
+import { GATE_SCORE_CAP } from "@/lib/scoring";
+import { MAX_CRITICAL_TOPICS } from "@/lib/topics";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -16,7 +18,7 @@ type AiData = {
 };
 
 type Props = {
-  results: Array<Party & { score: number }>;
+  results: Array<Party & { score: number; rawScore?: number; criticalConflicts?: string[] }>;
   userAnswersSummary?: string;
   answeredTopicIds?: string[];
   topicAnswerTexts?: Record<string, string>;
@@ -251,7 +253,16 @@ export default function UnifiedResultsPage({
               <strong className="text-gray-600">משקל העדיפויות</strong>
               <p className="mt-1">
                 נושא שסימנת כ״קריטי״ תורם פי-4 לציון הסופי לעומת ״פחות חשוב״ (יחס 4:3:2:1).
-                כך נושאים שחשובים לך באמת שולטים בתוצאה.
+                כך נושאים שחשובים לך באמת שולטים בתוצאה. ניתן לסמן עד {MAX_CRITICAL_TOPICS}{" "}
+                נושאים כ״קריטי״ — כדי לשמור על המשמעות שלו.
+              </p>
+            </div>
+            <div>
+              <strong className="text-gray-600">התנגשות עם עדיפות קריטית</strong>
+              <p className="mt-1">
+                אם מפלגה מתנגדת לעמדתך בנושא שסימנת כ״קריטי״, ציון ההתאמה הכולל שלה
+                מוגבל לכל היותר ל-{GATE_SCORE_CAP}%, גם אם היא מסכימה איתך ברוב שאר
+                הנושאים. כרטיסיית המפלגה מציינת מפורשות כשזה קורה.
               </p>
             </div>
             <div>

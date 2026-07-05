@@ -5,11 +5,12 @@ import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
+import { formatHebrewDate } from "@/lib/formatDate";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 type Props = {
-  party: Party & { score: number };
+  party: Party & { score: number; rawScore?: number; criticalConflicts?: string[] };
   rank: number;
   accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   aiBlurb?: string;
@@ -54,6 +55,17 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         .at(-1)
     : undefined;
 
+  // Critical-topic conflicts surface first in the accordion, with a distinct
+  // highlight — same underlying "ענית / עמדת המפלגה" pairing as any other
+  // topic, just reordered so the reason for a capped score isn't buried.
+  const sortedTopicGroups = hasGrounding
+    ? [...groundingData!.topics].sort((a, b) => {
+        const aGated = party.criticalConflicts?.includes(a.topicId) ? 0 : 1;
+        const bGated = party.criticalConflicts?.includes(b.topicId) ? 0 : 1;
+        return aGated - bGated;
+      })
+    : [];
+
   const accordionLabel =
     sourceQuality === "official" && groundingData?.platformAvailable === true
       ? "מה כתוב במצע?"
@@ -90,6 +102,17 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         <div className={`h-full ${c.bar} rounded-full`} style={{ width: `${party.score}%` }} />
       </div>
 
+      {/* Critical-topic conflict banner */}
+      {party.criticalConflicts && party.criticalConflicts.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2">
+          <span className="font-semibold">⚠ מתנגשת עם עדיפות שסימנת כקריטית: </span>
+          {party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", ")}.
+          {party.rawScore !== undefined && party.rawScore !== party.score && (
+            <span className="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: {party.rawScore}%).</span>
+          )}
+        </div>
+      )}
+
       {/* Per-topic breakdown chips */}
       {showTopicBreakdown && answeredTopicIds && partyTopicScores && (
         <div className="flex flex-wrap gap-1 mb-3" dir="rtl">
@@ -119,7 +142,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                 className={`px-1.5 py-0.5 rounded border text-xs leading-none ${chip.cls}`}
                 title={`${TOPIC_LABELS[topicId]}: ${pct}%`}
               >
-                {shortLabel} {chip.symbol}
+                {shortLabel} {chip.symbol} {pct}%
               </span>
             );
           })}
@@ -179,7 +202,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>
           </button>
           {lastVerified && (
-            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {lastVerified}</p>
+            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {formatHebrewDate(lastVerified)}</p>
           )}
 
           {groundingOpen && (
@@ -192,10 +215,15 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                 </div>
               )}
 
-              {/* Topic-grouped quotes */}
-              {groundingData!.topics.map((tg) => (
-                <div key={tg.topicId}>
-                  <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">
+              {/* Topic-grouped quotes — critical-conflict topics sort first and get a highlight */}
+              {sortedTopicGroups.map((tg) => {
+                const isGateTopic = party.criticalConflicts?.includes(tg.topicId);
+                return (
+                <div key={tg.topicId} className={isGateTopic ? "bg-red-50 border border-red-200 rounded-lg p-2" : undefined}>
+                  {isGateTopic && (
+                    <p className="text-xs font-semibold text-red-600 mb-1">⚠ נושא קריטי שגרם להגבלת הציון</p>
+                  )}
+                  <p className={`text-xs font-semibold mb-1 uppercase tracking-wide ${isGateTopic ? "text-red-700" : "text-gray-600"}`}>
                     {tg.topicLabel}
                   </p>
                   {topicAnswerTexts?.[tg.topicId] && (
@@ -238,13 +266,14 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                               ארכיון ↗
                             </a>
                           )}
-                          <span className="text-xs text-gray-400">{e.dateRetrieved}</span>
+                          <span className="text-xs text-gray-400">{formatHebrewDate(e.dateRetrieved)}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
