@@ -109,7 +109,7 @@ export default function PrioritiesStep({
           יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ&quot;חשוב&quot; או יותר כדי להמשיך.
         </p>
         <p className="text-sm text-gray-600 mb-8">
-          עד {MAX_CRITICAL_TOPICS} נושאים ניתן לסמן כ&quot;קריטי&quot; — כדי לשמור על המשמעות שלו:
+          ניתן לסמן כ-&quot;קריטי&quot; עד {MAX_CRITICAL_TOPICS} נושאים — כדי לשמור על המשמעות שלו:
           מפלגה שמתנגדת לתשובה שלך בנושא קריטי לא תוכל להיות ההתאמה המובילה שלך,
           לא משנה כמה טובה ההתאמה בשאר הנושאים.
         </p>
