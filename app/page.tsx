@@ -137,8 +137,6 @@ export default function Home() {
             <a href="https://github.com/EfriNS/election-assistant" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">קוד המקור ב-GitHub</a>
             {" · "}
             <a href="/about" className="underline hover:text-gray-600">אודות</a>
-            {" · "}
-            <a href="/terms" className="underline hover:text-gray-600">תנאי שימוש ופרטיות</a>
           </p>
         </div>
 
