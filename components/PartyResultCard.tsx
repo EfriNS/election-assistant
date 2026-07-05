@@ -54,6 +54,17 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
         .at(-1)
     : undefined;
 
+  // Critical-topic conflicts surface first in the accordion, with a distinct
+  // highlight — same underlying "ענית / עמדת המפלגה" pairing as any other
+  // topic, just reordered so the reason for a capped score isn't buried.
+  const sortedTopicGroups = hasGrounding
+    ? [...groundingData!.topics].sort((a, b) => {
+        const aGated = party.criticalConflicts?.includes(a.topicId) ? 0 : 1;
+        const bGated = party.criticalConflicts?.includes(b.topicId) ? 0 : 1;
+        return aGated - bGated;
+      })
+    : [];
+
   const accordionLabel =
     sourceQuality === "official" && groundingData?.platformAvailable === true
       ? "מה כתוב במצע?"
@@ -203,10 +214,15 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                 </div>
               )}
 
-              {/* Topic-grouped quotes */}
-              {groundingData!.topics.map((tg) => (
-                <div key={tg.topicId}>
-                  <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">
+              {/* Topic-grouped quotes — critical-conflict topics sort first and get a highlight */}
+              {sortedTopicGroups.map((tg) => {
+                const isGateTopic = party.criticalConflicts?.includes(tg.topicId);
+                return (
+                <div key={tg.topicId} className={isGateTopic ? "bg-red-50 border border-red-200 rounded-lg p-2" : undefined}>
+                  {isGateTopic && (
+                    <p className="text-xs font-semibold text-red-600 mb-1">⚠ נושא קריטי שגרם להגבלת הציון</p>
+                  )}
+                  <p className={`text-xs font-semibold mb-1 uppercase tracking-wide ${isGateTopic ? "text-red-700" : "text-gray-600"}`}>
                     {tg.topicLabel}
                   </p>
                   {topicAnswerTexts?.[tg.topicId] && (
@@ -255,7 +271,8 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                     ))}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

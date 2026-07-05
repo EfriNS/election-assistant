@@ -69,7 +69,8 @@ function renderChips(
 function renderGrounding(
   groundingData: PartyGroundingResult,
   sourceLinkLabel: string,
-  topicAnswerTexts: Record<string, string> | undefined
+  topicAnswerTexts: Record<string, string> | undefined,
+  criticalConflicts: string[] | undefined
 ): string {
   const lastVerified = groundingData.topics
     .flatMap((tg) => tg.entries.map((entry) => entry.dateRetrieved))
@@ -87,11 +88,23 @@ function renderGrounding(
         </div>`
       : "";
 
-  const topics = groundingData.topics
+  // Critical-topic conflicts sort first and get a highlight — same reordering
+  // rule as PartyResultCard's accordion.
+  const sortedTopics = [...groundingData.topics].sort((a, b) => {
+    const aGated = criticalConflicts?.includes(a.topicId) ? 0 : 1;
+    const bGated = criticalConflicts?.includes(b.topicId) ? 0 : 1;
+    return aGated - bGated;
+  });
+
+  const topics = sortedTopics
     .map((tg) => {
+      const isGateTopic = criticalConflicts?.includes(tg.topicId);
       const userAnswer = topicAnswerTexts?.[tg.topicId];
       const userAnswerHtml = userAnswer
         ? `<p class="text-xs text-gray-400 italic mb-1.5 border-r-2 border-teal-200 pr-2">ענית: ${e(userAnswer)}</p>`
+        : "";
+      const gateLabelHtml = isGateTopic
+        ? `<p class="text-xs font-semibold text-red-600 mb-1">נושא קריטי שגרם להגבלת הציון</p>`
         : "";
 
       const entries = tg.entries
@@ -111,8 +124,9 @@ function renderGrounding(
         .join("\n");
 
       return `
-        <div class="break-inside-avoid">
-          <p class="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
+        <div class="break-inside-avoid${isGateTopic ? " bg-red-50 border border-red-200 rounded-lg p-2" : ""}">
+          ${gateLabelHtml}
+          <p class="text-xs font-semibold ${isGateTopic ? "text-red-700" : "text-gray-600"} mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
           ${userAnswerHtml}
           <p class="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
           <div class="space-y-2">${entries}</div>
@@ -193,7 +207,7 @@ function renderPartyCard(
 
   const groundingHtml =
     hasGrounding && groundingData
-      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts)
+      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts, party.criticalConflicts)
       : "";
 
   return `
