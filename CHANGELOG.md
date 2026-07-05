@@ -1,5 +1,47 @@
 # Changelog
 
+## 2026-07-05 — Critical-topic priority gate (real user feedback → resolved TODO #13), production JSON-error hardening
+
+### Context
+
+A soft-launch tester's feedback ("top match contradicts my security answer, in two separate sessions") was root-caused via Langfuse traces cross-referenced with Mixpanel's `priorities_submitted` event (same `session_id` links both — the sessions turned out to be on the Preview Mixpanel project, not production). Real data showed she'd marked 5 topics קריטי (not the 4 she recalled), all tied at the same weight — `calcResults` is a fully compensatory weighted average, so a strong disagreement on her #1 priority (security) was simply outvoted by agreement on the other four. This reactivated backlog item #13 ("squared weights + critical-topic cap"), deferred 2026-06-27 for lack of real signal — this was that signal.
+
+### Scoring model changes
+
+- **Cap קריטי to 2 topics max** (`lib/topics.ts`'s `MAX_CRITICAL_TOPICS`, enforced in `PrioritiesStep.tsx`) — the label was diluting itself into meaninglessness when 5 topics could all claim it.
+- **Follow-up depth now scales with topic priority** (`app/quiz/page.tsx`'s `FOLLOW_UP_CAPS`) — a קריטי topic gets more follow-up questions than a merely-important one, at both `short`/`deep` settings; previously every selected topic got the same flat cap regardless of weight.
+- **A real gate, not just a curve** (`lib/scoring.ts`): a party opposed to the user's stance on a קריטי topic (using the AI/grounding score when available, else the opener's deterministic score — deliberately distinct from the 50/50 blend used for the general topic score) now has its overall match score capped at `GATE_SCORE_CAP=40`, regardless of how well it does elsewhere. Key design constraint from user feedback: a rank-only exclusion was rejected as confusing ("how comes the score is still high but it's not #1") — the cap had to live in the score itself so the number and the rank always tell the same story. `rawScore` and `criticalConflicts` are exposed alongside the capped `score` so the UI can explain why.
+- Sort order now breaks ties on `rawScore` — multiple parties capped at the flat 40% ceiling were previously falling back to `PARTIES`' fixed array order instead of their actual underlying alignment.
+
+### Surfacing the gate in the UI
+
+Reused existing infrastructure rather than adding new UI: the grounding accordion already paired "ענית: X" (your answer) with "עמדת המפלגה במסמכיה" (the party's position) per topic — the gated topic now just sorts first within that accordion and gets a red highlight + explicit label ("נושא קריטי שגרם להגבלת הציון"), instead of duplicating that detail in the compact banner near the score (which stays as-is, unchanged). Accordion stays closed by default. Mirrored in `lib/pdf-template.ts` (no accordion state there — PDF always renders everything expanded).
+
+### Other results-page/PDF polish (from live-testing the preview branch)
+
+- Topic chips now show the percentage inline (`שם ✓ 72%`) instead of hover-only — the PDF has no hover at all, so the score was invisible there entirely.
+- Source dates (`מקורות עודכנו לאחרונה` + per-quote dates) were raw `YYYY-MM-DD`; added `lib/formatDate.ts` (matches the PDF header's existing he-IL long-format date, e.g. "5 ביולי 2026") and applied everywhere a source date is shown.
+- Landing page: added a terms/privacy agreement notice next to the CTA itself ("בלחיצה על 'התחילו' אתם מסכימים ל...") rather than only in the footer, and removed the now-redundant footer link.
+- `ShareButton.tsx`: all three variants now consistently say "שתפו עם חברים" (plural) — the "landing" and "prominent" variants still said the singular "חבר".
+- Two RTL/bidi text-order issues in the priorities-screen copy turned out to be a stale, deployment-pinned preview URL rather than a real rendering bug — confirmed by fetching the actual rendered HTML from a local server on the exact same commit, twice, before making any further "fix."
+
+### Production incident: `/api/follow-up` JSON.parse failure
+
+A Slack alert ("Expected ',' or ']' after array element in JSON at position 981") was root-caused to the exact trace (Langfuse session + timestamp match), on a request pattern (2nd follow-up call under `depth=short`) that only exists because of the depth-scaling change above — not a new bug, just more exposure to a rare, pre-existing Gemini-output fragility (the same Hebrew-gershayim-in-acronym class of bug as the 2026-07-02 incidents, recurring despite `responseJsonSchema`). Confirmed via direct reproduction against the real API (8 calls with the exact failing trace's context: `finishReason=STOP` at 222–350/700 tokens, 0 failures) that this is not a token-budget or config issue — cross-checked against Google's own docs (claims "syntactically correct JSON" as a guarantee) vs. a still-open `googleapis/python-genai` GitHub issue documenting the same failure class as unresolved.
+
+Hardening shipped across all three Gemini-JSON routes (`follow-up`, `score-topics`, `results`):
+- **Retry once** on parse/shape failure (fresh API call, not re-parsing the same bad response) — genuine API errors (quota, network) still propagate immediately, no retry wasted on those.
+- **Explicit gershayim prompt instruction** (follow-up + results, both generate free-text Hebrew) — previously this guidance only existed as a code comment, never actually sent to the model.
+- **Full raw-output logging on failure** — `follow-up`/`score-topics` were truncating the Langfuse error log to 500 characters (the real incident's error was at character 981, past the cutoff); `results` wasn't hoisting the raw text out of the try block at all. All three now log in full and also capture `finishReason`/token counts, matching what the success path already did.
+- `follow-up`'s `maxOutputTokens` bumped 500→700 as a defensive margin (real usage runs 220-350 tokens with headroom; costs nothing since Gemini bills actual usage).
+- Corrected an overconfident code comment/doc claim that `responseJsonSchema` "guarantees" valid JSON — documented the incident, the research, and the reproduction method in `docs/learnings/project/AI-INTEGRATION.md`.
+
+### Tests
+
+6 new cases in `tests/calcResults.test.ts` (gate triggering/scoping/AI-preference/opener-fallback/flat-capping) and 6 new cases in `tests/tokenTracking.test.ts` (retry-then-succeed, give-up-gracefully-after-2-attempts, quota-errors-not-retried — across all three routes). 304 tests passing, `tsc`/`eslint` clean throughout.
+
+Commits: `7b3b958`, `8b70435`, `e87d995`, `ed69094`, `bc987f0`, `09cfb3b`, `c07a64c`, `143ef5a`, `ee1ca04`, `d50bfb8`, `40ee5f1` (merged to main as `9734c65`)
+
 ## 2026-07-04 — Pre-launch legal/privacy risk review, fully implemented
 
 ### Context
