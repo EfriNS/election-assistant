@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-07-07 — Claude tooling migrated to the dev-workflow plugin; learnings consolidated
+
+### Context
+
+Dedicated session on the tabled learnings-token-bloat backlog item, expanded to the full cross-repo review the user requested: skills, slash commands, and the learnings system had drifted across four repos copied from `claude-code-template` (which was itself the most outdated copy), learnings had ballooned (~35K words here vs 8.4K in the template, "127 universal principles, largely unaudited" by INDEX.md's own admission), obsolete commands survived in siblings (`/save`+`/continue`, superseded by native `claude --resume`), and nothing was model-aware.
+
+### Decision: plugin over copies
+
+`claude-code-template` was converted into a Claude Code plugin (`dev-workflow`) + marketplace (`efri-tools`, GitHub `EfriNS/claude-code-template`) — one source of truth, updates propagate, universal insights get promoted by editing the plugin skill rather than growing per-repo files. This repo now enables it via `.claude/settings.json` (`extraKnownMarketplaces` + `enabledPlugins`).
+
+### What moved out of this repo (−6,721 lines, +71)
+
+- `.claude/commands/`: `start`, `checkpoint`, `switch`, `wrapup`, `relearn`, `product-review`, `review-continue` → plugin (rewritten as policy, ~25% of previous length; product-review rebuilt as a thin orchestrator + 7 model-tiered PM agents — Sonnet lenses, Opus contrarian/synthesis — with anti-fabrication rules replacing the fill-in-metrics templates).
+- `.claude/skills/second-opinion/` → plugin (pinned to an Opus `Plan` agent).
+- `docs/learnings/universal/` (8 files) → distilled into 6 lazy-loaded plugin skills (`coding-principles`, `debugging-discipline`, `testing-discipline`, `collaboration-process`, `ai-prompt-engineering`, `competitive-research`); recent hard-won items (retry-vs-workaround test, type-annotation escaping hole, stale-deployment-URL lesson) survived, Contendre-era narratives and duplicated cross-cutting restatements did not.
+
+### What changed in this repo
+
+- `docs/learnings/INDEX.md` rewritten as a thin map of the 5 `project/` topic files (~400 words, was ~3,000 incl. an unbounded session-log tail — history belongs here in CHANGELOG).
+- `CLAUDE.md`: learning-system section points at plugin skills; 🛑 STOP triggers invoke the `coding-principles` skill; the "stop everything and ask for /relearn" compact protocol slimmed to match how compaction actually works now (CLAUDE.md stays auto-loaded — never re-read it); new Model Tiering section (Sonnet default; haiku for `/build`/`/test`/`/ci` via `model:` frontmatter; opus for design-heavy planning / second-opinion / review synthesis).
+- Kept per-repo: `/build` `/test` `/ci` `/test-e2e` `/pre-deploy` (project-specific), `collect-party-data` + `langfuse` skills, `docs/learnings/project/`.
+
+Follow-ups (verify `model:` frontmatter isn't session-sticky, first real `/product-review` run, sibling-repo migrations, CLAUDE.md checklist/diagram single-sourcing) are tracked in `claude-code-template`'s TODO.md, not here.
+
+Verified: 321 vitest tests, `tsc --noEmit`, `eslint`, production build. Commits: `2edf5d5`, `68ae3f1`, merged via `47db6f0`. Template-side work: `claude-code-template` `804f43d`..`90634fc`.
+
 ## 2026-07-06 (later) — Repo is public: post-flip checklist complete
 
 The user flipped `election-assistant` from private to public on GitHub. Completed the checklist TODO.md backlog #2 had queued for this exact moment:
