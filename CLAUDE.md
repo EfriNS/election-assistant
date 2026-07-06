@@ -535,7 +535,7 @@ git pull origin feature/slack-integration
 
 ### Standard Operations
 
-- **Context compacting**: Re-read this CLAUDE.md file + `docs/learnings/INDEX.md`, then tell user you've re-read it
+- **Context compacting**: CLAUDE.md stays auto-loaded — don't re-read it; run `/relearn` only if project context is actually missing
 - **Wrapping up behavior**: Use `/wrapup` slash command which handles:
   1. **Feature branch merge** (if on feature branch - see workflow above)
   2. Session retrospective assessment
