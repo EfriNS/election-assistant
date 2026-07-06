@@ -1,3 +1,8 @@
+---
+model: haiku
+description: "Run the unit test suite and report results"
+---
+
 Run the unit test suite and report results:
 
 1. Run unit tests: `npm test` (or `npx vitest run` for a single file: `npx vitest run tests/<file>.test.ts`)

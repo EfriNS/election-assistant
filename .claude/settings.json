@@ -5,5 +5,16 @@
       "Bash(gcloud logging read *)",
       "Bash(gcloud compute instances list *)"
     ]
+  },
+  "extraKnownMarketplaces": {
+    "efri-tools": {
+      "source": {
+        "source": "github",
+        "repo": "EfriNS/claude-code-template"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "dev-workflow@efri-tools": true
   }
 }

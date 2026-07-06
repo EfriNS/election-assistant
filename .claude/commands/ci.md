@@ -1,3 +1,8 @@
+---
+model: haiku
+description: "Run the full local verification pipeline (tests + tsc + eslint + build)"
+---
+
 Run the full local verification pipeline (there is no GitHub Actions workflow in this repo — this simulates the mandatory pre-push checklist from CLAUDE.md):
 
 1. **Lint**: `npm run lint`

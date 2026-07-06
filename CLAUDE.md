@@ -4,58 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## *LEARNING SYSTEM - READ THIS FIRST*
 
-**Purpose**: The `docs/learnings/` system exists primarily for **Claude Code (me) to consume**.
+**Purpose**: learnings change Claude's behavior. If a principle doesn't affect how Claude works, it's documentation (belongs in docs/ or comments), not a learning.
 
 **Structure**:
-- `docs/learnings/universal/` - Transferable principles (copied from template)
-- `docs/learnings/project/` - Project-specific patterns (created during development)
-- `docs/learnings/INDEX.md` - Quick reference hub (read at session start)
+- **Universal disciplines** are lazy-loaded skills from the `dev-workflow` plugin (source of truth: the `claude-code-template` repo): `coding-principles`, `debugging-discipline`, `testing-discipline`, `collaboration-process`, `ai-prompt-engineering`, `competitive-research`, `second-opinion`. Invoke the relevant skill when work touches its area — don't pre-read everything.
+- `docs/learnings/project/` — this repo's patterns and incidents (created during development)
+- `docs/learnings/INDEX.md` — thin map of project topic files (read at session start)
 
-**When Claude reads learnings**:
-- **Session start** (`/start`): Read INDEX.md + relevant topic file for TODO item
-- **Context compacting**: Use `/relearn` command to restore critical context
-- **Session end** (`/wrapup`): Update learnings with new insights
+**When Claude reads learnings**: session start (`/start`) → INDEX.md + the topic file matching the TODO item; session end (`/wrapup`) → route new insights (project file vs plugin-skill edit).
 
-**Key principle**: Learnings change Claude's behavior. If a principle doesn't affect how Claude works, it's documentation (belongs in docs/ or comments), not a learning.
-
----
-
-## *CONTEXT COMPACT PROTOCOL*
-
-**When you notice context has compacted (conversation feels "fresh" or you lack project context):**
-
-1. **IMMEDIATELY ask user to run**: `/relearn`
-2. **Don't proceed** with work until context is restored
-3. **Don't guess** at project patterns or guidelines
-
-**Trigger signals indicating context loss:**
-- ⚠️ User mentions something you should know but don't remember
-- ⚠️ You're about to violate a principle from CLAUDE.md (but don't know it)
-- ⚠️ You don't recognize project-specific patterns or architecture
-- ⚠️ You suggest creating files that likely already exist
-- ⚠️ You ask questions that are answered in REQUIREMENTS.md
-- ⚠️ You don't follow the branching workflow (feature branches)
-- ⚠️ Token usage shows you're near the start of conversation but mid-task
-
-**What NOT to do:**
-- ❌ Don't continue work without context (leads to violations of guidelines)
-- ❌ Don't manually read files one-by-one (use `/relearn` for systematic refresh)
-- ❌ Don't assume you remember - explicitly verify with `/relearn`
-
-**Response template when context loss detected:**
-```
-⚠️ I notice my context may have compacted. Before continuing, please run:
-
-  /relearn
-
-This will restore my knowledge of:
-- Project guidelines and workflow (CLAUDE.md)
-- Key learnings and principles (INDEX.md)
-- Product requirements (REQUIREMENTS.md)
-- Current work context (from conversation/git)
-
-I'll wait for the context refresh before proceeding.
-```
+**After context compaction**: continue the work in flight using the summary; if project-specific context feels missing (unrecognized patterns, about to violate a guideline, re-asking things REQUIREMENTS.md answers), run `/relearn` — a light re-read of CLAUDE.md + INDEX.md + REQUIREMENTS.md — rather than guessing.
 
 ---
 
@@ -103,33 +61,31 @@ Before fixing ANY test failure, error, or unexpected behavior, complete this che
 
 ### 🛑 STOP - Coding Implementation Triggers
 
-**BEFORE writing implementation code, read: [`docs/learnings/universal/CODING-PRINCIPLES.md`](docs/learnings/universal/CODING-PRINCIPLES.md)**
+**BEFORE writing implementation code, invoke the `coding-principles` skill (dev-workflow plugin).**
 
 **Critical checkpoints during implementation:**
 
 **🛑 STOP - Before Adding Error Handling**
-- If you're about to write `try/catch` or error handling → Read CODING-PRINCIPLES.md #1-2
+- If you're about to write `try/catch` or error handling → invoke `coding-principles`
 - Ask: WHERE does this error originate? Can I fix the root cause?
 - Use: Root Cause Investigation Checklist (above)
 
 **🛑 STOP - Before Adding Data Parsing/Validation**
-- If you're about to add parsing, regex, sanitization, or data validation → Read CODING-PRINCIPLES.md #2-3
+- If you're about to add parsing, regex, sanitization, or data validation → invoke `coding-principles`
 - Ask: Why isn't this data already structured? Can I fix upstream (AI prompt, API, data source)?
 - Remember: Trust validated data - don't re-validate internal data
 
 **🛑 STOP - Before Extracting Functions/Creating Utilities**
-- If you're about to extract a function or create a utility → Read CODING-PRINCIPLES.md #4
+- If you're about to extract a function or create a utility → invoke `coding-principles`
 - Ask: Used in 3+ places? Adds actual user value? Simpler than inline?
-- Use: Over-Engineering Check (in CODING-PRINCIPLES.md)
 
 **🛑 STOP - Before Adding Fallbacks/Defaults**
-- If you're about to add fallback logic, default values, or "just in case" handling → Read CODING-PRINCIPLES.md #1
+- If you're about to add fallback logic, default values, or "just in case" handling → invoke `coding-principles`
 - Ask: "Are we adding a workaround again?" What's the root cause?
 - Remember: Avoid workarounds at all costs
 
 **🛑 STOP - After Completing Implementation (BEFORE moving to next phase)**
-- **MANDATORY**: Add tests for all code changes
-- Use: Test Coverage Checklist (CODING-PRINCIPLES.md)
+- **MANDATORY**: Add tests for all code changes (see the `testing-discipline` skill)
 - Verify: Run tests and check coverage didn't drop
 - Red flag: "I'll add tests later" → Add them NOW
 
@@ -240,22 +196,9 @@ If you need to push manually (rare), run all 3 commands above first.
 ### Learning Resources
 
 **Before any task**, consult:
-- `docs/learnings/INDEX.md` - Quick reference hub (Top 10 principles, cross-cutting themes)
-- `docs/learnings/universal/` - Universal principles from template
-- `docs/learnings/project/` - Project-specific patterns (created as we work)
-
-**Relevant topic files**:
-- `TESTING.md` - Testing principles, QA approach, infrastructure
-- `DEBUGGING.md` - Verification discipline, systematic investigation
-- `ARCHITECTURE.md` - Design decisions, simplicity, root cause fixes
-- `CI-CD.md` - Local verification, deployment, workflow debugging
-- `PROCESS.md` - User collaboration, session management, documentation
-- `AI-PROMPTS.md` - Token budgets, prompt design, validation
-
-**Key sections to reference in TESTING.md**:
-- "When to Apply These Principles" - Workflow guidance
-- "Anti-Patterns to Avoid" - What NOT to do
-- "Reference Examples" - Real-world patterns
+- `docs/learnings/INDEX.md` - thin map of project topic files (read at session start)
+- `docs/learnings/project/` - project-specific patterns (created as we work)
+- **dev-workflow plugin skills** (invoke when the work touches the area, instead of pre-reading files): `coding-principles` (before implementation/error handling/parsing/fallbacks/utilities), `debugging-discipline` (bug investigation, destructive ops, before declaring success), `testing-discipline` (writing/fixing tests, coverage planning, pre-push), `collaboration-process` (non-trivial plans, phasing, user pushback), `ai-prompt-engineering` (prompt changes, malformed AI output), `competitive-research`, `second-opinion` (independent review when direction feels uncertain)
 
 ---
 
@@ -295,6 +238,13 @@ npm run score:apply:write            # Apply proposed scores for real
 # Vercel auto-deploys on push (preview on branches, production on main).
 # Never run `vercel deploy` manually — GitHub push is the trigger.
 ```
+
+### Model Tiering
+
+The session default is **Sonnet**. Calibrate per task instead of running everything on one tier:
+- **Down-level (haiku)**: mechanical run-and-report work — `/build`, `/test`, `/ci` already carry `model: haiku` frontmatter; suggest `/model haiku` for sessions that are purely copy tweaks/config.
+- **Up-level (opus)**: design- or judgment-heavy work — `/start` suggests it when the TODO item is architecture-shaped; the `second-opinion` skill and the product-review `pm-contrarian`/`pm-synthesis` agents run on opus by definition.
+- Suggest a switch once at session start (`/start` does this); don't nag mid-session.
 
 ### Project Architecture
 
@@ -597,9 +547,9 @@ git pull origin feature/slack-integration
 - **Session start**: Use `/start` command (reads TODO, loads relevant learnings, **creates feature branch**, executes or plans)
 - **Crash recovery**: Use Claude Code's native session resume (`claude --resume` / `--continue`) — it restores the full conversation transcript, which is more complete than a hand-written summary
 - **Learning system**:
-  - Universal learnings in `docs/learnings/universal/` (from template, rarely changes)
+  - Universal disciplines: `dev-workflow` plugin skills (source of truth in the `claude-code-template` repo — propose edits there via `/wrapup`, never create per-repo universal files)
   - Project learnings in `docs/learnings/project/` (evolves with this project)
-  - INDEX.md provides quick reference (read at session start)
+  - INDEX.md provides the thin project map (read at session start)
   - **Primary consumer**: Claude Code (these change how I work, not user documentation)
 
 ### TODO.md Maintenance Rules
