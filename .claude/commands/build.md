@@ -1,3 +1,8 @@
+---
+model: haiku
+description: "Build the project and report compile status"
+---
+
 Build the project and verify it compiles successfully:
 
 1. Run production build: `npm run build`
