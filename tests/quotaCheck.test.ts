@@ -116,6 +116,7 @@ describe("GET /api/quota-check", () => {
       QUOTA_DAILY_REQUEST_LIMIT:   "500",
       CRON_SECRET:                  undefined,
       QUOTA_SLACK_WEBHOOK_URL:      undefined,
+      VERCEL:                       undefined, // default to "local dev" unless a test opts in
     };
     mockFetchObservations.mockReset();
   });
@@ -145,6 +146,25 @@ describe("GET /api/quota-check", () => {
     const { GET } = await import("@/app/api/quota-check/route");
     stubObservations([]);
     const res = await GET(makeReq("my-secret"));
+    expect(res.status).toBe(200);
+  });
+
+  it("fails closed (503) when CRON_SECRET is unset in a deployed (VERCEL) environment", async () => {
+    // Regression test (2026-07-07 security review): a missing CRON_SECRET in prod
+    // used to leave this endpoint fully public — leaking usage metrics and letting
+    // anyone trigger the Slack alert.
+    process.env.VERCEL = "1";
+    const { GET } = await import("@/app/api/quota-check/route");
+    stubObservations([]);
+    const res = await GET(makeReq());
+    expect(res.status).toBe(503);
+  });
+
+  it("allows unauthenticated access in local dev (no VERCEL) when CRON_SECRET is unset", async () => {
+    // VERCEL is unset by beforeEach — local manual testing must still work.
+    const { GET } = await import("@/app/api/quota-check/route");
+    stubObservations([]);
+    const res = await GET(makeReq());
     expect(res.status).toBe(200);
   });
 

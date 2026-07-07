@@ -53,6 +53,21 @@ export function validatePdfResultsData(data: unknown): PdfResultsData | null {
     return null;
   }
 
+  // topicScores leaf values are interpolated into HTML WITHOUT the e() escaper
+  // (renderChips: `${pct}`) — unlike every other client field, which is escaped.
+  // The `Record<string, Record<string, number>>` type is only a compile-time
+  // claim; a string leaf here is a live injection sink into the page the headless
+  // Chromium renders. Enforce finite-number leaves at this trust boundary.
+  if (d.topicScores !== undefined) {
+    if (!d.topicScores || typeof d.topicScores !== "object") return null;
+    for (const partyScores of Object.values(d.topicScores as Record<string, unknown>)) {
+      if (!partyScores || typeof partyScores !== "object") return null;
+      for (const v of Object.values(partyScores as Record<string, unknown>)) {
+        if (typeof v !== "number" || !Number.isFinite(v)) return null;
+      }
+    }
+  }
+
   return data as PdfResultsData;
 }
 

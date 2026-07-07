@@ -6,7 +6,9 @@ type Limiters = {
   page: Ratelimit;
   followUp: Ratelimit;
   score: Ratelimit;
+  results: Ratelimit;
   pdf: Ratelimit;
+  feedback: Ratelimit;
 };
 
 // Limiters are only active when Upstash credentials are configured.
@@ -39,6 +41,14 @@ function makeLimiters(): Limiters | null {
       analytics: false,
       prefix: "voteassist:score",
     }),
+    // Results API: the 2nd Gemini call, fired once per quiz completion. Same cap
+    // as score — it's an equally-expensive AI route that was previously uncapped.
+    results: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(100, "24 h"),
+      analytics: false,
+      prefix: "voteassist:results",
+    }),
     // Export-pdf: spins up a headless browser (expensive) — called at most a
     // handful of times per session, so keep this tight.
     pdf: new Ratelimit({
@@ -46,6 +56,14 @@ function makeLimiters(): Limiters | null {
       limiter: Ratelimit.slidingWindow(20, "24 h"),
       analytics: false,
       prefix: "voteassist:pdf",
+    }),
+    // Feedback: unauthenticated POST that forwards to an internal Slack webhook.
+    // Generous per-IP cap to stop notification flooding without blocking real use.
+    feedback: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(30, "24 h"),
+      analytics: false,
+      prefix: "voteassist:feedback",
     }),
   };
 }
@@ -68,15 +86,31 @@ export async function middleware(req: NextRequest) {
   } else if (path === "/api/score-topics") {
     const { success } = await limiters.score.limit(ip);
     if (!success) return NextResponse.json({ errorCode: "RATE_LIMITED" }, { status: 429 });
+  } else if (path === "/api/results") {
+    const { success } = await limiters.results.limit(ip);
+    if (!success) return NextResponse.json({ errorCode: "RATE_LIMITED" }, { status: 429 });
   } else if (path === "/api/export-pdf") {
     const { success } = await limiters.pdf.limit(ip);
+    if (!success) return NextResponse.json({ error: "Rate limited" }, { status: 429 });
+  } else if (path === "/api/feedback") {
+    const { success } = await limiters.feedback.limit(ip);
     if (!success) return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
   return NextResponse.next();
 }
 
-// Rate-limit the quiz page, the two AI-calling API routes, and PDF export.
+// Rate-limit the quiz page, all three AI-calling API routes (follow-up,
+// score-topics, results), PDF export, and feedback. Every route that spends a
+// metered/external resource (Gemini quota, headless browser, Slack webhook)
+// must be listed here — a missing entry means an uncapped public endpoint.
 export const config = {
-  matcher: ["/prototype-e", "/api/follow-up", "/api/score-topics", "/api/export-pdf"],
+  matcher: [
+    "/prototype-e",
+    "/api/follow-up",
+    "/api/score-topics",
+    "/api/results",
+    "/api/export-pdf",
+    "/api/feedback",
+  ],
 };

@@ -98,6 +98,11 @@ export async function GET(req: NextRequest) {
     if (auth !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+  } else if (process.env.VERCEL) {
+    // Fail closed in any deployed environment: without CRON_SECRET this endpoint
+    // would be public, leaking usage metrics and letting anyone trigger the Slack
+    // alert. Only local dev (no VERCEL env) may run it unauthenticated.
+    return NextResponse.json({ error: "Not configured" }, { status: 503 });
   }
 
   if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) {
