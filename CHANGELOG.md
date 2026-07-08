@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-07-08 (later) — Stale-quote disclosure + curator notes surfaced to advisor
+
+### Context
+
+Real user feedback (WhatsApp screenshot): the results page showed Likud's 2016 constitution quote — "regular service for every citizen... no special exemptions" — matching a user's pro-equal-service answer, when Likud's actual coalition record on Haredi conscription is the opposite, a live hot-button issue even for right-leaning users. Traced the grounding entry (`data/groundings/likud.json`, `haredi-draft-and-service-burden`) and found the original curator had already flagged this exact contradiction in a `_note` field at collection time (2026-06-23) — but `_note` was never part of the `GroundingEntry`/`PartyGroundings` TypeScript types, so it was invisible to the app, the results page, and the advisor-review doc alike. 26 such notes exist across all 10 parties.
+
+### Fixes (B — provenance disclosure)
+
+1. **Per-quote inline caption** (`PartyResultCard.tsx`) — when an entry's own `provenance === "official-outdated"`, an amber line now renders directly under that quote: "המקור הרשמי העדכני ביותר שאיתרנו למפלגה בנושא זה — עלול שלא לשקף את עמדתה הנוכחית." Deliberately per-quote, not just the existing party-level banner, because the reported bug was exactly a user scrolling past that banner and losing the context by the time they reached a specific topic.
+2. **Methodology disclaimers** — a new "מה ההתאמה לא מודדת" item in the results-page methodology accordion, plus a parallel sentence on `/about`: matches are checked against declared statements, not against governing/coalition track record or member credibility.
+3. **`_note` surfaced to the advisor** — added `_note?: string` to `GroundingEntry` and `PartyGroundings` (`lib/groundings.ts`); `scripts/render-grounding-review.ts` now renders party-level notes as a callout and entry-level notes inline in the table, plus a "📝 unreviewed notes" count in the stats bar. Never rendered in the end-user app — advisor-only, same discipline as `provenance`/`concreteness`.
+
+### Research for the follow-on "documented action" work (TODO #8–9, not implemented this session)
+
+Investigated whether the underlying trust gap (platform text vs. actual party behavior) could be closed with a sourced counter-entry, without violating the project's no-editorializing/verbatim-quotation methodology (`VAA-DESIGN.md` #13, #17):
+
+- Traced the original curator `_note`'s evidentiary basis via the local Claude Code session transcript that wrote it (`~/.claude/projects/.../1e1f201d-....jsonl`, 2026-06-23): one claim ("Likud hasn't published a platform since ~2009; Netanyahu argued the party should be judged by its actions") was a real web-search/Wikipedia finding; the other ("Likud governments have consistently exempted Haredim") had no citation at all in that session. That same session also tried and failed (403/404) to fetch the 37th government's official coalition guidelines from `knesset.gov.il`/`gov.il` as a stronger source.
+- Live-checked the current state (as of this session): re-attempted the same government-site fetches and got the same failure pattern (empty response, connection reset) — confirms these sites resist automated fetching, not a one-off. Found two better current leads via search: an active, not-yet-enacted bill (הצעת חוק שירות ביטחון תיקון 26, Bismuth/Likud) and a Supreme Court ruling (בג"ץ 5819/24) on state non-enforcement.
+- **Methodological finding**: a Supreme Court ruling against "the state" is not party-attributable without an inferential/editorial leap (which party led government, held which ministries) — exactly the kind of judgment call the project's methodology avoids making. A recorded Knesset vote is the clean alternative (named MKs, public record, no interpretation required) — found one for this bill (63–57) — but even that isn't simple: the vote showed real intra-coalition dissent (the Defense Minister voted against his own coalition), so party attribution from a vote still needs an explicit rule for how to handle dissenters. Captured as concrete deliverables in TODO #9, including extending the `collect-party-data` skill with this as a sourcing playbook rather than re-deriving it next time.
+
+### Files
+
+`components/PartyResultCard.tsx`, `components/UnifiedResultsPage.tsx`, `app/about/page.tsx`, `lib/groundings.ts`, `scripts/render-grounding-review.ts`, `docs/advisor-review/grounding-review.html` (regenerated), `TODO.md`.
+
+Verified: 334 vitest tests, `tsc --noEmit`, `eslint`. Commit `823f5f6`, merged via `e71a8de`.
+
 ## 2026-07-08 — Post-public security review: rate-limit gaps, PDF injection, enforced CSP
 
 ### Context
