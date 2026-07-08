@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Rubik } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import FeedbackWidget from "@/components/FeedbackWidget";
@@ -18,7 +19,10 @@ export const metadata: Metadata = {
 const buildId = process.env.BUILD_ID ?? "dev";
 const isPreview = process.env.DEPLOY_ENV !== "production";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Per-request CSP nonce set by middleware.ts (production only). Reading it here
+  // opts every route into dynamic rendering — an inherent cost of a nonce CSP.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang="he" dir="rtl" className={rubik.variable}>
       <head>
@@ -26,8 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ContentSquare removed 2026-07). All page text is masked via
             data-clarity-mask on <body> below, because the quiz records users'
             political opinions (special-category data). Belt-and-suspenders: the
-            Clarity dashboard masking mode should also be set to "Strict". */}
-        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","x8iv051fpw");` }} />
+            Clarity dashboard masking mode should also be set to "Strict".
+            nonce lets this inline script run under the enforced CSP; Clarity's own
+            injected script is then trusted via 'strict-dynamic'. */}
+        <script nonce={nonce} type="text/javascript" dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","x8iv051fpw");` }} />
       </head>
       <body className="bg-gray-50 text-gray-900 font-sans antialiased" data-clarity-mask="true">
         {isPreview && (
