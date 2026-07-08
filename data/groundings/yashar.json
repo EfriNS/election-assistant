@@ -3,7 +3,7 @@
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated health or ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated health or ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail — economy (import/monopoly reform, AI fraud detection — previously 0-coverage aspects for this party), a much more concrete haredi-draft-and-service-burden entry (3% deferral cap + enforcement mechanism), and hardline-enforcement (organized-crime cabinet). /goals/ page is now dead (404), replaced by /topic/missions/. Still unreviewed: /principles/education/, /principles/reservists-honour-and-compensation/ (₪20B commitment), /principles/post-traumatic-stress-recovery/, /principles/inlocation-and-aliya/.",
   "topics": {
     "security": [
       {
@@ -30,6 +30,15 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים קבינט לאומי ייעודי למלחמה בפשיעה המאורגנת בראשות ראש הממשלה ושר הביטחון הפנימי, עם מערך אכיפה ייעודי — יחידות חקירה, מודיעין ותביעה מיוחדות — למיגור עבריינות ההגנה (פרוטקשן), הלבנת הון ושליטה טריטוריאלית של ארגוני פשיעה.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -70,6 +79,33 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נבטל חסמי ייבוא ותקנים ייחודיים לישראל שאין להם הצדקה, ונפתח את השוק ליבוא מקביל; נפרק את הריכוזיות בקבוצות המזון והצריכה הגדולות, תוך שמירה על החקלאות הישראלית.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נטיל דיווח דיגיטלי בזמן אמת על עסקאות גדולות ונפעיל כלי בינה מלאכותית לחשיפת חשבוניות פיקטיביות, תוך צמצום דרמטי בשימוש במזומן.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפחית את מס ההכנסה על ידי הטלת מסים על מוצרים בעלי השפעות שליליות ברורות (כגון מוצרים חד-פעמיים ומשקאות ממותקים).",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
@@ -172,6 +208,16 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "הדיחוי מלימודי תורה יוגבל לעד 3% מכלל מחזור הגיוס מדי שנה; כלל הזכאים לדיחוי יחויבו לבצע חיול והכשרה בסיסית, עם חידוש שנתי מותנה בעמידה בקריטריונים. אי-עמידה בתנאים תוביל לשלילה מדורגת של הטבות — חוזי ממשלה, מלגות מדינה, סיוע בדיור, סבסוד תחבורה, איסור שכירות ארוכת טווח — ואף להעמדה לדין על דיווח כוזב.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "contrary": "פטור נרחב/בלתי מוגבל מגיוס לחרדים",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "justice": [
