@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { MessageIcon, CheckCircleIcon } from "@/components/icons";
 
 const MAX_SUBMISSIONS = 3;
 const THANK_YOU_MS = 3000;
@@ -60,7 +61,9 @@ export default function FeedbackWidget() {
       {open && (
         <div className="mb-2 w-72 bg-white rounded-xl shadow-lg border border-gray-200 p-4 text-right">
           {status === "sent" ? (
-            <p className="text-sm text-gray-500 text-center py-2">תודה על המשוב! 🙏</p>
+            <p className="text-sm text-gray-500 text-center py-2 flex items-center justify-center gap-1.5">
+              <CheckCircleIcon className="w-4 h-4 text-teal-600" />תודה על המשוב!
+            </p>
           ) : (
             <>
               <p className="text-sm font-medium text-gray-700 mb-2">נשמח למשוב, כדי להשתפר</p>
@@ -76,14 +79,14 @@ export default function FeedbackWidget() {
               <div className="flex justify-between items-center mt-2">
                 <button
                   onClick={() => { setOpen(false); if (status === "error") setStatus("idle"); }}
-                  className="text-xs text-gray-400 hover:text-gray-600"
+                  className="text-xs text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
                 >
                   ביטול
                 </button>
                 <button
                   onClick={submit}
                   disabled={!text.trim() || status === "sending"}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-teal-500 text-white hover:bg-teal-600 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="text-xs px-3 py-1.5 rounded-lg bg-teal-500 text-white hover:bg-teal-600 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none"
                 >
                   {status === "sending" ? "שולח..." : "שלחו"}
                 </button>
@@ -97,9 +100,9 @@ export default function FeedbackWidget() {
       )}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 bg-white border border-gray-200 shadow-md rounded-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:shadow-lg transition-shadow"
+        className="flex items-center gap-1.5 bg-white border border-gray-200 shadow-md rounded-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:shadow-lg transition-shadow focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none"
       >
-        <span>💬</span>
+        <MessageIcon className="w-4 h-4" />
         <span>משוב</span>
       </button>
     </div>

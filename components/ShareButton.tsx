@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ShareIcon, CheckCircleIcon } from "@/components/icons";
 
 const isPreview = process.env.DEPLOY_ENV !== "production";
 
@@ -57,12 +58,12 @@ export default function ShareButton({ variant = "prominent" }: Props) {
       >
         {copied ? (
           <>
-            <span>✓</span>
+            <CheckCircleIcon className="w-4 h-4 text-teal-600" />
             <span>הקישור הועתק!</span>
           </>
         ) : (
           <>
-            <span>🗳️</span>
+            <ShareIcon className="w-4 h-4" />
             <span>שתפו עם חברים ←</span>
           </>
         )}
@@ -77,12 +78,12 @@ export default function ShareButton({ variant = "prominent" }: Props) {
     >
       {copied ? (
         <>
-          <span>✓</span>
+          <CheckCircleIcon className="w-4 h-4 text-teal-600" />
           <span>הקישור הועתק!</span>
         </>
       ) : (
         <>
-          <span>🗳️</span>
+          <ShareIcon className="w-4 h-4" />
           <span>שתפו עם חברים</span>
         </>
       )}

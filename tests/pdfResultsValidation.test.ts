@@ -3,7 +3,7 @@ import { validatePdfResultsData } from "@/lib/pdf-template";
 
 const VALID = {
   results: [{ id: "likud", name: "ליכוד", score: 75 }],
-  accentColor: "blue",
+  accentColor: "teal",
 };
 
 describe("validatePdfResultsData", () => {
@@ -50,6 +50,13 @@ describe("validatePdfResultsData", () => {
   it("rejects an invalid accentColor", () => {
     expect(validatePdfResultsData({ ...VALID, accentColor: "<script>" })).toBeNull();
     expect(validatePdfResultsData({ ...VALID, accentColor: undefined })).toBeNull();
+  });
+
+  // "teal" is the only value the UI ever sends (deliberately chosen — one of the
+  // only colors with no Israeli political-party association). The other former
+  // variants (blue/emerald/amber/purple) were dead code and are no longer valid.
+  it("rejects a color other than teal, even a previously-valid one", () => {
+    expect(validatePdfResultsData({ ...VALID, accentColor: "blue" })).toBeNull();
   });
 
   // topicScores is interpolated into the PDF HTML unescaped (renderChips: `${pct}`),

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ShareButton from "@/components/ShareButton";
+import { BrandMark } from "@/components/icons";
 
 type Tone = "formal" | "personal";
 type Depth = "short" | "deep";
@@ -30,7 +31,8 @@ export default function Home() {
 
         {/* Headline */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="flex items-center gap-3 text-3xl font-bold text-gray-900 mb-3">
+            <BrandMark className="w-9 h-9 shrink-0" />
             עוזר הבחירות
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed">
@@ -58,7 +60,7 @@ export default function Home() {
               <button
                 key={t}
                 onClick={() => handleTone(t)}
-                className="flex items-center gap-3 text-right py-2 group"
+                className="flex items-center gap-3 text-right py-2 group focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
               >
                 <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
                   tone === t ? "border-teal-500" : "border-gray-300 group-hover:border-gray-400"
@@ -92,7 +94,7 @@ export default function Home() {
               <button
                 key={d}
                 onClick={() => handleDepth(d)}
-                className="flex items-center gap-3 text-right py-2 group"
+                className="flex items-center gap-3 text-right py-2 group focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
               >
                 <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
                   depth === d ? "border-teal-500" : "border-gray-300 group-hover:border-gray-400"
@@ -117,7 +119,7 @@ export default function Home() {
         <button
           onClick={handleStart}
           disabled={!ready}
-          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold text-base hover:bg-teal-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none"
         >
           התחילו ←
         </button>

@@ -106,7 +106,7 @@ function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack, isFoll
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">← חזרה</button>
+        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">→ חזרה</button>
         <span className="text-sm text-gray-400">{counterLabel}</span>
       </div>
       <div
@@ -553,7 +553,6 @@ function QuizInner() {
       <PrioritiesStep
         buckets={buckets}
         setBuckets={setBuckets}
-        accentColor="teal"
         onBack={() => { mpTrack("quiz_abandoned", { session_id: sessionId, step: "rank", topics_completed_so_far: 0 }); window.location.href = "/"; }}
         onContinue={() => {
           mpTrack("priorities_submitted", {
@@ -587,7 +586,7 @@ function QuizInner() {
               setCurrentPrologue(null);
               setFollowUpsAskedThisTopic(0);
             }}
-            className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">← חזרה</button>
+            className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">→ חזרה</button>
           <h2 className="text-xl font-bold mb-3">משהו שרצית להוסיף?</h2>
           <p className="text-sm text-gray-500 mb-6">
             אם יש עמדה חשובה שלא עלתה, אפשר לכתוב כאן — זה יעזור לקבל המלצה מדויקת יותר.
@@ -652,7 +651,6 @@ function QuizInner() {
                 : qa.openerAnswerText];
             })
         )}
-        accentColor="teal"
         sessionId={sessionId}
         onBack={() => setStep("close")}
       />
