@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026",
+  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026 + תוכנית נקודות אפריל 2026",
   "sourceUrl": "https://yes.democrats.org.il",
   "archiveDir": "docs/sources/democrats/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Topics 'health' and 'ecology' are not yet available from this source; see archive doc for details. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf. 2026-07-08: 'תוכנית הנקודות לסדר היום הרעיוני' (April 2026, https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf) — previously noted as unfetchable, now live — added; fills ecology (was empty) and healthcare-workforce/gender-equality/disability-elderly (previously 0-coverage aspects). Housing still has only 1 entry — no housing-specific content found in this source either.",
   "topics": {
     "security": [
       {
@@ -181,6 +181,15 @@
         "contrary": "הרחבה בלתי מוסדרת של הרפואה הפרטית",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "dateRetrieved": "2026-07-08",
+        "text": "נחזק את המערכת הרפואית הציבורית – תוספת רופאים, אחיות ומיטות אשפוז.",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "religion": [
@@ -336,8 +345,55 @@
         "dateRetrieved": "2026-06-22",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נוקיע גזענות, הדרת נשים, קנאות דתית ולאומנות אלימה, מתרבות השיח ועד למדיניות השלטון.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "dateRetrieved": "2026-07-08",
+        "contrary": "הדרת נשים מהמרחב הציבורי",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הגדלת השקעה בשירותים החברתיים עם עדיפות לאוכלוסיות מוחלשות – בעלי מוגבלויות, קשישים, משפחות חד-הוריות ונוער בסיכון.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "generic"
       }
     ],
-    "ecology": []
+    "ecology": [
+      {
+        "text": "נצמצם את פליטות גזי החממה ב-50% עד שנת 2030 וב-100% עד שנת 2050, במסגרת \"חוק חוסן אקלימי לאומי\" עם יעדים ברורים ואכיפתיים.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נגיע ליעד של 30% שטחים מוגנים וערכי טבע מסך שטח המדינה עד 2030, ונקדם שיקום אקולוגי ל-30% מהמערכות האקולוגיות המדורדרות עד אותה שנה.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ביטחון משאבי מים ואנרגיה הינו נדבך מרכזי בסיס לניהול סיכונים אזוריים; נקדם פתרונות סביבתיים חוצי-גבולות מול שכנותינו לתועלת הצדדים.",
+        "aspect": "international-and-regional-climate-cooperation",
+        "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
+        "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ]
   }
 }
