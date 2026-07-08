@@ -67,6 +67,7 @@ type Row = {
   provenance: Provenance;
   concreteness: Concreteness;
   sourceUrl: string;
+  note?: string;
 };
 
 const partyIds = Object.keys(GROUNDINGS).sort(
@@ -85,6 +86,7 @@ const parties = partyIds.map((partyId) => {
         provenance: entry.provenance,
         concreteness: entry.concreteness,
         sourceUrl: entry.sourceUrl,
+        note: entry._note,
       });
     }
   }
@@ -92,17 +94,21 @@ const parties = partyIds.map((partyId) => {
     "official-current": 0, "official-outdated": 0, "joint-list": 0, "third-party": 0,
   };
   for (const r of rows) provCounts[r.provenance]++;
+  const entryNoteCount = rows.filter((r) => r.note).length;
   return {
     partyId,
     name: PARTY_NAME[partyId] ?? partyId,
     platformLabel: pg.platformLabel ?? "",
     sourceQuality: derivePartySourceQuality(pg),
+    partyNote: pg._note,
     rows,
     provCounts,
+    entryNoteCount,
   };
 });
 
 const totalEntries = parties.reduce((s, p) => s + p.rows.length, 0);
+const totalNotes = parties.reduce((s, p) => s + p.entryNoteCount + (p.partyNote ? 1 : 0), 0);
 
 function barHtml(counts: Record<Provenance, number>): string {
   const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
@@ -115,13 +121,17 @@ function barHtml(counts: Record<Provenance, number>): string {
   return `<div class="bar">${segs.join("")}</div>`;
 }
 
-const summaryHtml = parties.map((p) => `
+const summaryHtml = parties.map((p) => {
+  const noteCount = p.entryNoteCount + (p.partyNote ? 1 : 0);
+  return `
     <a class="sumrow" href="#p-${p.partyId}">
       <span class="sumname">${e(p.name)}</span>
       ${barHtml(p.provCounts)}
       <span class="sumcounts">${p.rows.length} ציטוטים</span>
       <span class="sumquality">${e(SOURCE_QUALITY_LABEL[p.sourceQuality])}</span>
-    </a>`).join("");
+      <span class="sumnotes">${noteCount > 0 ? `📝 ${noteCount}` : ""}</span>
+    </a>`;
+}).join("");
 
 const sectionsHtml = parties.map((p) => {
   const rowsHtml = p.rows.map((r) => {
@@ -130,7 +140,10 @@ const sectionsHtml = parties.map((p) => {
     return `
             <tr>
               <td class="colTopic">${e(TOPIC_LABELS[r.topicId] ?? r.topicId)}</td>
-              <td class="colText" dir="rtl">${e(r.text)}</td>
+              <td class="colText" dir="rtl">
+                ${e(r.text)}
+                ${r.note ? `<p class="entrynote">📝 ${e(r.note)}</p>` : ""}
+              </td>
               <td class="colTier"><span class="chip ${pm.cls}">${pm.label}</span></td>
               <td class="colConc"><span class="subchip ${cm.cls}">${cm.label}</span></td>
               <td class="colDomain"><span class="domain" dir="ltr">${e(domainOf(r.sourceUrl))}</span></td>
@@ -145,6 +158,7 @@ const sectionsHtml = parties.map((p) => {
         <span class="partyquality">${e(SOURCE_QUALITY_LABEL[p.sourceQuality])}</span>
         <span class="partycount">${p.rows.length} ציטוטים</span>
       </summary>
+      ${p.partyNote ? `<div class="partynote" dir="rtl"><strong>📝 הערת אספן (רמת מפלגה):</strong> ${e(p.partyNote)}</div>` : ""}
       <div class="tablewrap">
         <table>
           <thead><tr><th>נושא</th><th>ציטוט</th><th>מקור (provenance)</th><th>קונקרטיות</th><th>דומיין</th></tr></thead>
@@ -178,13 +192,15 @@ h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 0.4rem; }
 .stat .num { font-size: 1.5rem; font-weight: 700; color: var(--accent); display:block; }
 .stat .label { font-size: 0.74rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
 .summarybox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.4rem; margin-bottom: 2.2rem; }
-.sumrow { display: grid; grid-template-columns: 10rem 1fr 6rem 5rem; align-items: center; gap: 1rem; padding: 0.65rem 0.9rem; text-decoration: none; color: var(--ink); border-radius: 8px; }
+.sumrow { display: grid; grid-template-columns: 10rem 1fr 6rem 5rem 3.5rem; align-items: center; gap: 1rem; padding: 0.65rem 0.9rem; text-decoration: none; color: var(--ink); border-radius: 8px; }
 .sumrow:hover { background: var(--accent-soft); }
 .sumname { font-weight: 600; font-size: 0.9rem; }
 .bar { display: flex; height: 0.5rem; border-radius: 4px; overflow: hidden; background: var(--line); }
 .bar .seg { display: inline-block; height: 100%; }
 .seg.p1 { background: var(--p1); } .seg.p2 { background: var(--p2); } .seg.p3 { background: var(--p3); } .seg.p4 { background: var(--p4); }
-.sumcounts, .sumquality { font-size: 0.75rem; color: var(--ink-soft); white-space: nowrap; }
+.sumcounts, .sumquality, .sumnotes { font-size: 0.75rem; color: var(--ink-soft); white-space: nowrap; }
+.partynote { margin: 0 1.3rem 0.9rem; padding: 0.7rem 0.9rem; background: #FBF3E4; border: 1px solid #E8D6AC; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; color: #6B5324; }
+.entrynote { margin: 0.35rem 0 0; font-size: 0.76rem; color: #8A6D2F; line-height: 1.4; }
 details.party { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
 summary { cursor: pointer; padding: 0.95rem 1.3rem; display: flex; align-items: center; gap: 0.8rem; font-weight: 600; list-style: none; }
 summary::-webkit-details-marker { display: none; }
@@ -234,6 +250,7 @@ footer { margin-top: 2.5rem; font-size: 0.76rem; color: var(--ink-soft); }
   <div class="stats">
     <div class="stat"><span class="num">${totalEntries}</span><span class="label">סה"כ ציטוטים</span></div>
     <div class="stat"><span class="num">${parties.length}</span><span class="label">מפלגות</span></div>
+    <div class="stat"><span class="num">${totalNotes}</span><span class="label">📝 הערות אספן (לא נבדקו)</span></div>
   </div>
 
   <div class="summarybox">${summaryHtml}</div>

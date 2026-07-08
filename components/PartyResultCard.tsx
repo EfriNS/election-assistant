@@ -247,6 +247,11 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                         <p className="text-xs text-gray-700 leading-relaxed">
                           &ldquo;{e.text}&rdquo;
                         </p>
+                        {e.provenance === "official-outdated" && (
+                          <p className="text-xs text-amber-700 mt-1">
+                            המקור הרשמי העדכני ביותר שאיתרנו למפלגה בנושא זה — עלול שלא לשקף את עמדתה הנוכחית.
+                          </p>
+                        )}
                         <div className="flex items-center gap-2 mt-1 flex-wrap">
                           <a
                             href={e.sourceUrl}

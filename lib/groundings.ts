@@ -48,6 +48,7 @@ export type GroundingEntry = {
   concreteness: Concreteness;
   contrary?: string;      // a position the party explicitly opposes (optional)
   absent?: boolean;       // true = party has no known position on this sub-dimension
+  _note?: string;         // curator-only annotation (collection gaps, contradictions) — never rendered in the app; see docs/advisor-review/grounding-review.html
 };
 
 export type PartyGroundings = {
@@ -56,6 +57,7 @@ export type PartyGroundings = {
   sourceUrl?: string;
   archiveDir?: string;
   topics: Record<string, GroundingEntry[]>;
+  _note?: string;         // curator-only annotation for the whole party's collection — never rendered in the app; see docs/advisor-review/grounding-review.html
 };
 
 // A party's overall source quality is derived from its entries' provenance,
