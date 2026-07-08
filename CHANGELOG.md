@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-07-08 (evening) — Grounding-data freshness check across all 10 parties
+
+### Context
+
+It had been ~2 weeks since the initial grounding collection (2026-06-22/27). User asked to check all 10 parties for platform updates — a broader sweep than the standing backlog item (#11, likud/shas only). Ran 10 parallel research-only agents (one per party), each comparing the archived source text against a live re-fetch of the party's official platform/site, plus a targeted search for any newly-published platform where none existed before.
+
+### Findings
+
+**5 parties unchanged, confirmed not just assumed:** hadash (site content byte-identical to archive), likud (still no formal platform since ~2009; primaries set for 2026-08-04, worth re-checking then), shas (site now fully unresponsive — `curl` times out rather than refusing, consistent with abandonment, not a blip), yahadut-hatorah (no official site), raam (no official site or platform; noted a non-grounding fact — Ra'am formally split from the Islamic Movement's Shura Council in Dec 2025).
+
+**5 parties had real official-current updates, merged via the `collect-party-data` process (one commit each):**
+
+1. **democrats** (`b6254eb`) — a previously-unreachable April 2026 policy PDF is now fetchable, filling the **ecology topic, which was completely empty** for this party (quantified 2030/2050 emissions and land-protection targets, regional climate cooperation), plus healthcare-workforce and gender-equality.
+2. **beitenu** (`42c86df`) — a new "קווי יסוד לממשלה הבאה" platform section adds Oct-7 accountability (previously uncovered) and concrete Gaza/Judea-Samaria specifics.
+3. **yashar** (`dd86d3c`, `3651347`) — post-campaign-launch (2026-06-30), all 7 `/principles/` sub-pages replaced the old "10 steps" brochure: market-structure, fiscal-discipline, and higher-education (all 0→covered), a quantified 3%-deferral-cap Haredi-draft entry, a reserve-duty cap, the ₪20B reservist-support commitment, and yashar's **first-ever health entry** (health had zero dedicated policy before this).
+4. **beyahad** (`4f618f3`) — 2 more of the originally-11 planned plan pages went live (education, cost-of-living), filling core-curriculum and market-structure (0→covered); now 6/11 categories published.
+5. **otzmah-yehudit** (`d6c8d66`) — 3 new dated items from the official "עדכונים" feed, all hardline-enforcement, consistent with this party's real footprint (near-total concentration on security/justice, tied to Ben Gvir's ministerial portfolio).
+
+Two aliyah/absorption items (beitenu, yashar) were reviewed but deliberately **not** added — genuinely don't fit any of the 9 canonical topics, documented in the archive files instead of forced into a mismatched bucket.
+
+### Net effect
+
+257 → 284 grounding entries. `data/groundings/*.json`, `docs/sources/*/`, and `docs/advisor-review/grounding-review.html` all updated; each party got its own commit with full archive-markdown provenance per `collect-party-data`'s discipline.
+
+### Files
+
+`data/groundings/{democrats,beitenu,yashar,beyahad,otzmah-yehudit}.json`, `docs/sources/{democrats,beitenu,yashar,beyahad,otzmah-yehudit}/`, `docs/advisor-review/grounding-review.html` (regenerated after each party).
+
+Verified: 334 vitest tests, `tsc --noEmit`, `eslint` — clean after every commit and again after the merge. Commits `b6254eb`, `42c86df`, `dd86d3c`, `4f618f3`, `d6c8d66`, `3651347`, merged via `6ebc3e3`.
+
 ## 2026-07-08 (later) — Stale-quote disclosure + curator notes surfaced to advisor
 
 ### Context

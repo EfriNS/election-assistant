@@ -13,7 +13,7 @@ Collects party platform content from any source and merges it into the structure
 /collect-party-data <partyId> [source]
 ```
 
-- `partyId` — one of: `hadash`, `democrats`, `beyahad`, `yashar`, `beitenu`, `likud`, `shas`
+- `partyId` — one of: `hadash`, `raam`, `democrats`, `beyahad`, `yashar`, `beitenu`, `likud`, `shas`, `yahadut-hatorah`, `otzmah-yehudit`
 - `source` — optional: a URL, "paste" (user will provide text in chat), or omit to start interactively
 
 If no source is provided, read the existing JSON to see what's already there and ask the user what new source to use.
