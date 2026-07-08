@@ -155,3 +155,28 @@ Add `?notrack=1` to the production URL to suppress Mixpanel initialization entir
 The PDF export button passes the `groundings` state variable directly to `/api/export-pdf`. That state is populated from the `/api/results` response. Any filtering applied in `buildGroundingsForParties` (e.g., `coveredAspects` filtering) flows through to the PDF with zero extra code.
 
 **Rule**: When modifying what groundings are returned from `/api/results`, the PDF is automatically updated. Only if a future data path bypasses `/api/results` (e.g., a direct PDF-only fetch) would a separate PDF change be needed.
+
+---
+
+## Security Headers & CSP
+
+### The `x-forwarded-for` rate-limit key is safe on Vercel — don't "fix" it (#first:2026-07-08)
+
+`middleware.ts` derives the rate-limit key from `req.headers.get("x-forwarded-for")?.split(",")[0]`. The leftmost-value pattern is the classic *spoofable* one on a generic proxy — but on Vercel it's safe: Vercel **overwrites** `x-forwarded-for` with the real client IP and does not forward external values, unless an Enterprise "trusted proxy" is enabled (this project isn't). Confirmed via Vercel's request-headers docs.
+
+**Rule**: on this deployment, leave it as-is — a security review flagging it as spoofable would be wrong here. It only becomes spoofable if the app is ever self-hosted behind a different proxy; at that point switch to `@vercel/functions`' `ipAddress()` helper.
+
+### Enforced nonce CSP lives in middleware, is production-only, and forces dynamic rendering (#first:2026-07-08)
+
+The enforced Content-Security-Policy (`buildCspHeader()` in `middleware.ts`) uses a per-request nonce + `'strict-dynamic'` so there's **no `'unsafe-inline'`** in `script-src`. Mechanics: the nonce is set on both the *request* headers (Next reads it from the request CSP header to stamp its own inline/hydration scripts) and the *response* headers (the browser enforces it). The one hand-written inline script (Clarity, `app/layout.tsx`) is nonced there via `(await headers()).get("x-nonce")`.
+
+- **It's production-only** (`process.env.NODE_ENV === "production"` gate) — dev stays relaxed so HMR/eval/websockets aren't blocked. Verify it with `npm run build && npm start`, not `npm run dev`.
+- **It forces dynamic rendering.** Reading the nonce in the *root* layout opts every route into dynamic rendering — `/`, `/about`, `/terms` went from `○ (Static)` to `ƒ (Dynamic)` in the build output. This is inherent to any nonce CSP in the App Router; there's no static-compatible path (Next's own inline scripts have no stable hash to allowlist).
+- **To allow a new third-party script/pixel/embed**, add its origin to the right directive in `buildCspHeader()` (usually `connect-src` for beacons; script hosts are covered by `'strict-dynamic'` for browsers that support it). `/api/csp-report` logs violations to server logs (Vercel runtime logs) — the tripwire for anything silently blocked.
+- Verified end-to-end on a preview browser session (2026-07-08): Clarity, Mixpanel (`api-eu.mixpanel.com` in `connect-src`), Vercel Analytics (same-origin), and all app routes work under the policy.
+
+### Rate-limit coverage is a data table, not a comment (#first:2026-07-08)
+
+Two Gemini/Slack routes (`/api/results`, `/api/feedback`) shipped uncapped because the rate-limit dispatch was a hand-maintained if/else chain whose comment said "the two AI-calling routes" while there were three. The matcher also had to broaden to all pages for the CSP nonce, so it can no longer serve as the coverage list.
+
+**Rule**: rate-limit rules live in the exported `RATE_LIMIT_RULES` table (path → limiter → on-limit action), and `tests/middlewareRateLimit.test.ts` asserts every resource-spending route is in it. Any new route that spends a metered/external resource (Gemini quota, headless browser, Slack webhook) must be added there — the test, not a prose comment, is the guard.

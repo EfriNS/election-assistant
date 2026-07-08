@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-07-08 — Post-public security review: rate-limit gaps, PDF injection, enforced CSP
+
+### Context
+
+Second security review, requested now that the repo is public (the first was 2026-07-06's pre-flip pass). Re-verified the four prior fixes still hold, ran a fresh full-history secrets scan, and audited the whole request surface under the "the code is now a public map for abuse" threat model.
+
+### Findings + fixes (ranked)
+
+1. **`/api/results` (Gemini) and `/api/feedback` (Slack) were uncapped public endpoints** — both missing from `middleware.ts`'s rate-limit matcher (whose comment even said "the two AI-calling routes" while there are three). An attacker reading the source could script `/api/results` to drain Gemini quota (DoS for real users via `QUOTA_EXCEEDED`; direct cost on paid tier) or flood the team Slack via `/api/feedback`. Added `results` (100/24h) and `feedback` (30/24h) limiters, and refactored the dispatch into a data-driven `RATE_LIMIT_RULES` table so the guard is a testable list, not a hand-maintained if/else + comment.
+2. **HTML/JS injection into the PDF's headless Chromium via unvalidated `topicScores`** — `validatePdfResultsData()` checked `results`/`accentColor` but not `topicScores`, whose leaves are interpolated unescaped in `renderChips` (`${pct}`). A crafted string leaf executes in the Puppeteer-rendered page (which loads the Tailwind CDN, i.e. runs scripts). Second instance of the 2026-07-06 export-pdf lesson — the same validator still had an uncovered numeric-typed field. Fixed by validating finite-number leaves at the boundary.
+3. **`/api/quota-check` failed open when `CRON_SECRET` is unset** — now returns 503 in any deployed (VERCEL) environment; local dev stays open.
+4. **No HTTP security headers** — added X-Content-Type-Options, Referrer-Policy, X-Frame-Options SAMEORIGIN, HSTS, Permissions-Policy in `next.config.ts`.
+
+Verified clean, not findings: gitleaks (305 commits) zero leaks — working-tree hits all gitignored (`.env.local`, `.next/`); the `x-forwarded-for` IP rate-limit key is safe because Vercel overwrites the header and anti-spoofs it on non-Enterprise (confirmed via Vercel docs); Mixpanel is `ip:false`, EU-hosted, sends no raw answer text. `npm audit`'s 3 moderate are Next 16.2.9's bundled postcss (build-time CSS stringification, not user-input-driven) — re-accepted; `audit fix --force` would downgrade Next.
+
+### Analytics: three session-replay trackers → Clarity only, masked
+
+Cut Hotjar and ContentSquare (and the `ContentSquareTracker` component); kept Microsoft Clarity with **all page text masked** (`data-clarity-mask` on `<body>`) because the quiz records political opinions — special-category data under Amendment 13 (VAA-DESIGN #77). Updated `/terms` (names only Clarity, states masking), README, ANALYTICS-DESIGN.md. This also removed two of the inline third-party scripts, shrinking the CSP.
+
+### Enforced nonce-based CSP
+
+Added an enforced, production-only CSP in `middleware.ts` with **no `'unsafe-inline'` in script-src**: a per-request nonce set on both request headers (so Next stamps its own hydration scripts) and response headers; `script-src 'self' 'nonce-…' 'strict-dynamic'`. Clarity's inline bootstrap is nonced in `app/layout.tsx`; its injected script is trusted transitively. Rate-limit matcher broadened to all pages (required for the nonce); `RATE_LIMIT_RULES` is now the coverage guard. Minimal `/api/csp-report` sink logs violations to server logs (no Slack — noisy). **Tradeoff:** the nonce forces dynamic rendering — `/`, `/about`, `/terms` etc. are no longer statically prerendered (`ƒ`, not `○`).
+
+**Verified on a Vercel preview** (browser): no console CSP violations; full quiz→results flow (follow-up/score-topics/results all 200) plus Clarity `collect` 204s, Mixpanel `track`/`engage` 200 (`ip=0`), Vercel Analytics `view` 200 — the policy blocks nothing relied on.
+
+### Files
+
+`middleware.ts`, `app/layout.tsx`, `lib/pdf-template.ts`, `app/api/quota-check/route.ts`, `next.config.ts`, `app/api/csp-report/route.ts` (new), `app/terms/page.tsx`, `README.md`, `docs/ANALYTICS-DESIGN.md`, `components/ContentSquareTracker.tsx` (deleted); tests: `middlewareRateLimit.test.ts` (renamed from `middlewareMatcher`), `pdfResultsValidation.test.ts`, `quotaCheck.test.ts`.
+
+Verified: 334 vitest tests, `tsc --noEmit`, `eslint`, production build. Commits `f8cd781`, `7fd51f6`, `1d3313f`, merged via `9495dea`.
+
 ## 2026-07-07 — Claude tooling migrated to the dev-workflow plugin; learnings consolidated
 
 ### Context

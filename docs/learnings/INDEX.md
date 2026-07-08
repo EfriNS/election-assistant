@@ -19,7 +19,7 @@ Gemini structured-output patterns (`responseJsonSchema` mandatory — prompt ins
 React/Next.js/Vitest specifics: `vi.mock` + `importOriginal` for modules whose own helpers are called internally, Hebrew/RTL interpolation rules, client-component testability. Read when writing components or tests.
 
 ### [INFRA-PATTERNS](project/INFRA-PATTERNS.md)
-Vercel deploy behavior (deployment-pinned preview URLs vs branch aliases), Upstash rate limiting, cron/env-var wiring, quota monitoring. Read when touching middleware, env vars, or deployment.
+Vercel deploy behavior (deployment-pinned preview URLs vs branch aliases), Upstash rate limiting (data-driven `RATE_LIMIT_RULES`), the enforced nonce CSP + security headers (prod-only, forces dynamic rendering), `x-forwarded-for` anti-spoof on Vercel, cron/env-var wiring, quota monitoring. Read when touching middleware, env vars, CSP/headers, or deployment.
 
 ### [ANALYTICS-PATTERNS](project/ANALYTICS-PATTERNS.md)
 Mixpanel event schema gotchas (`aspects_probed` ↔ `TOPIC_KEY_DIMENSIONS`, Lexicon timing) and Mixpanel MCP quirks (unreliable success/error signals — re-fetch state after mutations, free-tier report cap). Read when touching analytics or querying Mixpanel.

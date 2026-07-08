@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Post-public security review + hardening** — Second review since the repo went public. Fixed two uncapped public endpoints (`/api/results` Gemini, `/api/feedback` Slack), an unvalidated-`topicScores` HTML injection into the PDF's headless Chromium, and quota-check failing open; added baseline security headers, cut session-replay trackers to Clarity-only (masked, special-category data), and shipped an enforced nonce-based CSP (verified on a preview — nothing blocked). gitleaks clean across 305 commits. Full detail: CHANGELOG 2026-07-08. (2026-07-08)
 - **Claude tooling migrated to the dev-workflow plugin; learnings consolidated** — Resolved the tabled learnings-token-bloat item (was backlog #13): universal commands/skills/learnings now come from the `dev-workflow` plugin (`claude-code-template` repo), universal/ learnings distilled into 6 lazy-loaded skills, INDEX.md cut to a thin project map, CLAUDE.md gained model tiering (haiku for /build /test /ci, opus for judgment-heavy work), product-review rebuilt as model-tiered agents. Net −6,650 lines here; follow-ups tracked in claude-code-template's TODO. (2026-07-07)
 - **Open-sourced the repository — repo is now public** — Pre-flip: comment/docs safety audit (redacted internal identifiers with no reason to be public), README cleanup, security re-assessment (4 real fixes, most notably an HTML-injection point in `/api/export-pdf` and a dead unauthenticated `/api/chat` route), plus an unscoped repo structure/naming pass. Post-flip: `GROUNDING_ARCHIVE_PUBLIC` → `true`, `/terms` reworded to present tense with live links, all GitHub URLs spot-checked (200), private vulnerability reporting enabled. Considered a git-history rewrite/private-historical-repo split, decided to flip directly and keep full history intact. Full detail: CHANGELOG.md 2026-07-06 (two entries). (2026-07-06)
-- **Critical-topic priority gate + soft-launch fixes** — Real user feedback (2 sessions, root-caused via Langfuse+Mixpanel) showed marking multiple topics קריטי let a strong disagreement on one be outvoted by agreement on the others. Capped קריטי to 2 topics, scaled follow-up depth by priority weight, and added a real scoring gate (opposed party's score capped at 40% on a קריטי topic, surfaced via the existing grounding accordion reordered+highlighted). Resolved backlog #13. Diagnosed and hardened a production `/api/follow-up` JSON-parse error (retry-once, explicit gershayim prompt instruction, full error logging, token-budget bump) — confirmed via direct Gemini API reproduction to be a rare upstream glitch, not a config issue. Follow-up review from the same tester then found a second real issue: follow-up option sets could be one-sided (a right-leaning security answer made every left-leaning party's grounded territorial-policy position invisible) because dimension-selection and grounding were gated by "currently close parties" — extracted `selectSuggestedDimension()` to fix, confirmed via live API reproduction. (2026-07-05)
 
 > See CHANGELOG.md for complete details.
 
@@ -38,12 +38,14 @@ _Ordered by RICE thinking (reach × impact × confidence ÷ effort) — each ite
 
 12. **Tune critical-topic gate constants (`MAX_CRITICAL_TOPICS=2`, `GATE_SCORE_CAP=40`) with real usage** — _Single data point so far (the feedback that drove the feature) — not enough signal yet to retune, just watch._ Both are reasoned defaults, not validated against a range of real sessions. Revisit if soft-launch feedback suggests the cap is too aggressive/lenient, or if users routinely try to mark more than 2 topics קריטי.
 
-13. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
+13. **CSP rollout cleanup** — _Tiny; do it once the enforced CSP has been quiet in production for a week or two, not before._ When the `[csp-report]` server logs stay empty on production, delete the `app/api/csp-report` endpoint (a rollout safety net, not permanent infra). Also set the Clarity dashboard masking mode to "Strict" (Settings → Masking) as the backstop to the `data-clarity-mask` attribute — a human dashboard task, outside the repo.
+
+14. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
     - Russian, Arabic, English UI layers; party platforms stay in Hebrew, answers/explanations translated
 
-14. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
+15. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
 
-15. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+16. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
