@@ -116,7 +116,7 @@
 
 **ביטחון אישי (`/principles/homeland-security/`):** קבינט לאומי ייעודי למלחמה בפשיעה מאורגנת בראשות רה"מ ושר הביטחון הפנימי; מערך אכיפה ייעודי (חקירה, מודיעין, תביעה) נגד פרוטקשן, הלבנת הון ושליטה טריטוריאלית של ארגוני פשע.
 
-**עדיין לא נבדקו** (קיימים אך לא נפתחו): `/principles/education/`, `/principles/reservists-honour-and-compensation/` (כולל התחייבות ₪20 מיליארד ל-3 שנים לתמיכה כלכלית במשרתי מילואים/סדיר), `/principles/post-traumatic-stress-recovery/`, `/principles/inlocation-and-aliya/` — לא נוספו כערכי grounding בסבב זה; לבדיקה בעדכון עתידי.
+**עודכן — נבדקו באותו יום:** `/principles/education/`, `/principles/reservists-honour-and-compensation/` (כולל התחייבות ₪20 מיליארד ל-3 שנים לתמיכה כלכלית במשרתי מילואים/סדיר), `/principles/post-traumatic-stress-recovery/`, `/principles/inlocation-and-aliya/` — ראו סעיף "המשך עדכון 2026-07-08" למטה לפירוט המלא ולערכי ה-grounding שנוספו.
 
 ---
 
