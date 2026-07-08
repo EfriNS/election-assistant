@@ -561,3 +561,18 @@ vi.mock("@/lib/groundings", async (importOriginal) => {
 ```
 
 Fixture data also needs every field the real helpers read (e.g. `provenance`/`concreteness` on each mock grounding entry) — a mock object missing a field a real helper's sort/lookup depends on fails differently (`NaN` comparisons, `undefined` lookups) than a missing export does. Default to `importOriginal` for any module mock in this codebase unless the test deliberately wants every export stubbed.
+
+---
+
+## Static Assets
+
+### A missing favicon is a real, measurable cost, not just cosmetic (#first:2026-07-08)
+
+With no `public/` directory and no `app/icon.*`/`favicon.ico`, every browser tab load auto-requests `/favicon.ico` (often `/favicon.png` too) and 404s through `/_not-found` — a real function invocation each time (the enforced CSP nonce middleware runs on all pages), visible in Vercel logs as elevated `/_not-found` counts uncorrelated with actual page traffic. Diagnosed by cross-referencing `mcp__plugin_vercel_vercel__get_runtime_logs` (`group_by: "requestPath"`) against a plain `find` for icon files in `app/`/`public/`.
+
+**Fix, using Next.js App Router's file conventions** (no manual `metadata.icons` needed — Next auto-injects the `<link>` tags):
+- `app/icon.svg` — static vector, primary favicon for modern browsers. Prerenders as a **static** route (`○`) even though the rest of this app is forced dynamic by the CSP-nonce middleware (`INFRA-PATTERNS.md`) — icon/asset routes that don't call `headers()` aren't swept into that cost.
+- `app/apple-icon.tsx` — `ImageResponse` from `next/og` (bundled with Next, no install) generates the PNG at request time; use `size`/`contentType` exports. iOS applies its own corner mask on home-screen icons — ship this one as a flat square, not pre-rounded, or you get double-rounding.
+- `app/favicon.ico` — browsers request this literal path regardless of `<link>` tags (why Next has a dedicated convention for it, separate from `icon.*`). Modern ICO format can embed a PNG directly per frame — no BMP encoding needed: a 6-byte `ICONDIR` header + one 16-byte `ICONDIRENTRY` per size + the raw PNG bytes back-to-back. Built via a one-off script using `sharp` (already present in `node_modules` transitively) to rasterize the SVG at each size, not committed — only the resulting binary is.
+
+Verify with a real production build + local `npm start`, not just `npm run dev`: `curl -I` each icon path for status/content-type, and grep the served HTML for the auto-injected `<link rel="icon">`/`<link rel="apple-touch-icon">` tags.

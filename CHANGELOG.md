@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-07-08 (night) — App icon (favicon + apple-touch-icon)
+
+### Context
+
+User noticed 21 `/_not-found` invocations vs. 17 `/api/follow-up` calls in Vercel logs and asked if it was an issue. Traced it: the app has no favicon at all — no `public/` directory, no `app/icon.*`, no `icons` in `layout.tsx` metadata — so every browser tab auto-requests `/favicon.ico` (and often `/favicon.png`) and gets routed through `/_not-found`, a real function invocation under the enforced CSP-nonce middleware. Confirmed live: `curl -I https://voteassist.me/favicon.ico` → 404.
+
+### Design
+
+Reviewed 3 concepts via an Artifact mockup (browser-tab + home-screen previews, light and dark) before writing any code: a ring-and-dot echoing the app's own answer-selection UI, a quotation mark for the verbatim-quote trust mechanism, and a Hebrew ע lettermark. Deliberately did not pursue a ballot-box/checkmark/compass — the default reach for anything vote-adjacent, and a compass specifically conflicts with this project's own rejection of 2D political-compass framing (`VAA-DESIGN.md` #16). User picked Concept A (ring + dot) — a solid teal (`#0F766E`) squircle badge with a bold white ring and center dot.
+
+### Implementation
+
+- `app/icon.svg` — static vector favicon; Next.js auto-injects the `<link>` tag. Prerenders as a static route, unaffected by the CSP-nonce dynamic-rendering cost the rest of the app pays.
+- `app/apple-icon.tsx` — 180×180 PNG via `next/og`'s `ImageResponse` for iOS home-screen/Safari; shipped as a flat square (no border-radius) since iOS applies its own corner mask.
+- `app/favicon.ico` — a real ICO (16/32/48px PNG-in-ICO frames) for the literal `/favicon.ico` path browsers probe regardless of `<link>` tags. Built via a one-off `sharp`-based script (not committed — only the binary output is) exploiting the fact that modern ICO format can embed PNG frames directly, no BMP encoder needed.
+
+### Verification
+
+Production build: both icon routes prerender static (`○`). Local `npm start`: `/favicon.ico` (200, `image/x-icon`), `/icon.svg` (200, `image/svg+xml`), `/apple-icon` (200, `image/png`) — all 3 `<link>` tags auto-injected into `<head>`. Visually confirmed the rendered mark at actual favicon size (32×32, extracted from the ICO) and at apple-icon size (180×180) — reads clean at both. 334 vitest tests, `tsc --noEmit`, `eslint` all clean.
+
+### Files
+
+`app/icon.svg` (new), `app/apple-icon.tsx` (new), `app/favicon.ico` (new, binary).
+
+Verified: 334 vitest tests, `tsc --noEmit`, `eslint`, production build. Commit `92ee92a`, merged via `2575628`.
+
 ## 2026-07-08 (evening) — Grounding-data freshness check across all 10 parties
 
 ### Context
