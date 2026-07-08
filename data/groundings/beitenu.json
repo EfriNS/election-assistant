@@ -3,7 +3,7 @@
   "platformLabel": "מצע המפלגה (beytenu.org.il)",
   "sourceUrl": "https://beytenu.org.il/party-platform/",
   "archiveDir": "docs/sources/beitenu/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry.",
   "topics": {
     "security": [
       {
@@ -41,6 +41,33 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "הפסקת אחריות ישראלית על רצועת עזה – סגירת מעברים וניתוק אספקת מים, חשמל ודלקים; העברת האחריות לגורם בינלאומי מוסכם, לצד שמירה על חופש פעולה ביטחוני מלא לצה\"ל.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביהודה ושומרון: ייצוב ביטחוני וכלכלי בשיתוף פעולה עם ירדן.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "ועדת חקירה ממלכתית שתבחן את המחדלים שקדמו לטבח השבעה באוקטובר.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "economy": [
