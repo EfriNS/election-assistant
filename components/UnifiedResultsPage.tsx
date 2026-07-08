@@ -234,6 +234,15 @@ export default function UnifiedResultsPage({
           </summary>
           <div className="px-4 pb-4 pt-3 border-t border-gray-200 space-y-3">
             <div>
+              <strong className="text-gray-600">מה ההתאמה לא מודדת</strong>
+              <p className="mt-1">
+                ההתאמה נבדקת מול מה שמפלגה כותבת ומצהירה באופן רשמי — במצע, בחוקה
+                או בהצהרות. היא אינה מודדת את האופן שבו המפלגה פעלה בעבר בשלטון
+                או בקואליציה, ולא את מהימנות חבריה. מסמך רשמי, גם כשהוא עדכני,
+                אינו ערובה להתנהלות בפועל — אלה שיקולים חשובים שכדאי לבחון בנפרד.
+              </p>
+            </div>
+            <div>
               <strong className="text-gray-600">ציון לנושא: 2− עד 2+</strong>
               <p className="mt-1">
                 לכל תשובה לשאלת הפתיחה יש ציון מוגדר מראש לכל מפלגה: 2+ (התאמה מלאה),
