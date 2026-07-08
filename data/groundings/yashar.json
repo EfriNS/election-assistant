@@ -3,7 +3,7 @@
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated health or ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail — economy (import/monopoly reform, AI fraud detection — previously 0-coverage aspects for this party), a much more concrete haredi-draft-and-service-burden entry (3% deferral cap + enforcement mechanism), and hardline-enforcement (organized-crime cabinet). /goals/ page is now dead (404), replaced by /topic/missions/. Still unreviewed: /principles/education/, /principles/reservists-honour-and-compensation/ (₪20B commitment), /principles/post-traumatic-stress-recovery/, /principles/inlocation-and-aliya/.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only.",
   "topics": {
     "security": [
       {
@@ -41,6 +41,15 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שירות המילואים יוגבל לעד 50 ימים בשנה, ולא יותר מ-150 ימים על פני שלוש שנים; דרישה לתכנון מוקדם ועדכון עם הודעה של 6 חודשים לפחות, בכפוף לאילוצים מבצעיים.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "economy": [
@@ -106,6 +115,15 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשקיע 20 מיליארד ₪ לאורך 3 שנים בתמיכה כלכלית במשרתים — יחידים, משפחות, פרנסה ומעסיקים; העלאת שכר של 15% לכלל משרתי החובה, ו-50% ללוחמים בשנת שירותם השלישית. פיצוי מלא למעסיקים מהביטוח הלאומי על עלויות המילואים.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "housing": [
@@ -118,6 +136,15 @@
         "_note": "No standalone housing policy; housing mentioned only as benefit tied to national service",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "הקצאת קרקע ייעודית ופרויקטים לשכירות ארוכת טווח למשרתים, בהתאם לרמת השירות.",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "education": [
@@ -166,6 +193,24 @@
         "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטיח מסלולי גיוס הוראה חלופיים המבוססים על איכות וביצועים; מבנה תגמול נפרד למנהלי בתי ספר בהתאם לאחריותם בפועל; מעבר מבחינות בגרות חיצוניות להערכה מבוססת-כשירויות ותיק עבודות.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הרחבת זכאות למלגות לימודים; לוחמים יזכו לכיסוי מלא (100%) של שכר הלימוד.",
+        "aspect": "higher-education-and-vocational-training",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "health": [
@@ -178,6 +223,15 @@
         "_note": "No dedicated health policy; health mentioned only as part of general periphery investment",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נבנה תוכנית מניעה ארצית ללימוד כלי התמודדות נפשית בבתי ספר, בצבא ובמקומות עבודה; נקים מנהלות שיקום אזוריות כנקודת גישה אחת לאוכלוסיות הנפגעות, עם מדידת הצלחה לפי שיקום בפועל (תעסוקה, השכלה, יציבות משפחתית) ולא רק לפי הוצאה כספית.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "religion": [
