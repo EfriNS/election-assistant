@@ -76,7 +76,7 @@ export default function TermsPage() {
           <ul className="text-sm text-gray-600 leading-relaxed space-y-2 list-disc list-inside">
             <li><strong className="text-gray-700">Mixpanel</strong> — אילו נושאים דורגו כחשובים, כמה שאלות נענו, ולאיזו מפלגה הייתה ההתאמה הגבוהה ביותר (ברמת האחוזים בלבד). מקושר למזהה אנונימי חד-פעמי שנוצר לכל ביקור, לא לשמכם או לפרטים מזהים.</li>
             <li><strong className="text-gray-700">Langfuse</strong> — ניטור טכני של מערכת הבינה המלאכותית: זמני תגובה, שגיאות, ואיזו מפלגה הייתה ההתאמה המובילה. לעולם לא תוכן התשובות החופשיות שלכם.</li>
-            <li><strong className="text-gray-700">Hotjar, Microsoft Clarity, ContentSquare</strong> — כלים שמראים לנו איך אנשים מנווטים באתר (קליקים, גלילה, מסכים שבהם משתמשים מתעכבים). תיבות הטקסט החופשי בשאלון אינן מוקלטות על ידם.</li>
+            <li><strong className="text-gray-700">Microsoft Clarity</strong> — כלי שמראה לנו כיצד אנשים מנווטים באתר (קליקים, גלילה, מסכים שבהם משתמשים מתעכבים). תוכן הטקסט באתר, ובכלל זה תשובותיך בשאלון, מוסתר בהקלטות ואינו נגיש לנו.</li>
             <li><strong className="text-gray-700">Vercel Analytics</strong> — נתוני צפיות וביצועים בסיסיים של האתר.</li>
           </ul>
 

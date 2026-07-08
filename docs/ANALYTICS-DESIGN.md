@@ -166,7 +166,7 @@ Answers: Q7 (operational problems)
 | Follow-up question content | Langfuse (AI-layer traces) |
 | Free-text answer content | Langfuse |
 | Per-call latency / token counts | Langfuse |
-| Session recordings / heatmaps | Hotjar / Clarity / ContentSquare (still active; removal deferred until Mixpanel proves value) |
+| Session recordings / heatmaps | Microsoft Clarity (masked; Hotjar + ContentSquare removed 2026-07) |
 
 ---
 
@@ -174,5 +174,5 @@ Answers: Q7 (operational problems)
 
 1. **EU endpoint is mandatory** — `api_host: "https://api-eu.mixpanel.com"` in `mixpanel.init()`. The default US endpoint silently discards events for EU projects while returning `1` (success). Verified empirically.
 2. **`NEXT_PUBLIC_*` vars are baked at build time** — changing them in Vercel requires a fresh build (not `vercel redeploy`).
-3. **Hotjar/Clarity/ContentSquare removal** — deferred. Remove only after Mixpanel proves its value at real traffic.
+3. **Session-replay trackers** — reduced to Microsoft Clarity only (2026-07); Hotjar + ContentSquare removed. Clarity records with all page text masked (`data-clarity-mask` on `<body>`) because quiz answers are political opinions (special-category data). Set the Clarity dashboard masking mode to "Strict" as a backstop.
 4. **Simplified ID Merge** — verify this is enabled in both Mixpanel project Settings before significant data accumulates (one-way door).
