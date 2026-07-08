@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "תכניות עבודה (חלקי) — רק 4 מתוך 11 קטגוריות פורסמו",
+  "platformLabel": "תכניות עבודה (חלקי) — 6 מתוך 11 קטגוריות פורסמו",
   "sourceUrl": "https://bennett2026.org.il/plans/",
   "archiveDir": "docs/sources/beyahad/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-06-23 only 4 of 11 announced plan categories have detailed pages: meshartim, negev, rehabilitation, kiryat-shmona. Education, health, ecology, justice, and 6 other categories have no published content yet.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-07-08, 6 of 11 announced plan categories have detailed pages: meshartim, negev, rehabilitation, kiryat-shmona, education (added 2026-07-08), yoker/cost-of-living (added 2026-07-08). Health, ecology, justice, and 5 other categories still have no published content.",
   "topics": {
     "security": [
       {
@@ -71,6 +71,24 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "ישראל מדורגת מקום 5 ב-OECD ביוקר מזון — כ-33% מעל הממוצע; חיסכון פוטנציאלי של כ-8,000 ₪ בשנה למשפחה אם המחירים יתואמו לממוצע. נפרק מונופולי-על לאורך כל שרשרת הייצור והאספקה — יבואנים גדולים לא יוכלו להפיץ מספר מותגים מונופוליסטיים, ותאגידים לא יוכלו לשלוט במספר ענפי מזון בו-זמנית.",
+        "aspect": "cost-of-living-and-affordability",
+        "sourceUrl": "https://bennett2026.org.il/plans/yoker/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נאחד את הפיקוח על המזון תחת \"רשות מזון\" אחת במקום אישורים כפולים ממשרדי הבריאות, החקלאות והרבנות; נכיר אוטומטית בהכשרי כשרות בינלאומיים; נחליף מכסות יבוא בתמיכה ישירה בחקלאים תוך הפחתה הדרגתית של מכסים.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://bennett2026.org.il/plans/yoker/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
@@ -140,6 +158,25 @@
         "contrary": "מימון עצמאי ללא תוכנית לימודים ממלכתית",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "\"לא ממלכתי – לא על חשבוני\": מוסדות חינוך שאינם ממלכתיים לא יזכו למימון ציבורי; בחינוך החרדי — פיקוח מלא ולימודי ליבה (מתמטיקה, אנגלית, אוריינות דיגיטלית).",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://bennett2026.org.il/plans/education/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-07-08",
+        "contrary": "מימון ציבורי למוסדות לא-ממלכתיים ללא פיקוח",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "תוכנית חירום לגיוס אקדמאים להוראה ותגמול המורים לפי מצוינות; ביטול המחוזות והפיכת משרד החינוך לגוף מפקח בלבד, עם העברת 70% מהחלטות החינוך לרשויות ולבתי הספר.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://bennett2026.org.il/plans/education/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "health": [
