@@ -3,7 +3,7 @@
   "platformLabel": "אתר רשמי (ozma-yeudit.co.il) — פעולות ממשלתיות מתועדות; משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק",
   "sourceUrl": "https://ozma-yeudit.co.il",
   "archiveDir": "docs/sources/otzmah-yehudit/",
-  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed of actual legislative/ministerial actions (dated June-July 2026). That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail.",
+  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed of actual legislative/ministerial actions (dated June-July 2026). That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail. 2026-07-08: 3 more dated items added from the same 'עדכונים' feed (gun-license eligibility expansion, Shin Bet Arab-sector-crime funding, an AG/National-Security-Committee dispute) — same security/justice concentration pattern holds, still no genuine economy/education/health/housing/ecology coverage from official material.",
   "topics": {
     "security": [
       {
@@ -106,6 +106,33 @@
         "dateRetrieved": "2026-07-03",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "ועדת הביטחון הלאומי, בראשות ח\"כ צבי פוגל, אישרה הרחבת האוכלוסיות הזכאיות לרישיון נשק אזרחי: שוטרי שח\"מ, לוחמי כליאה, חיילים המצויים בפרק משימה, עובדי כבאות והצלה וקצינים אקדמאיים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "השב\"כ מצטרף למאבק בפשיעה בחברה הערבית ביוזמת השר בן גביר והסגנית מאי גולן; יועבר לכך תקציב של חצי מיליארד ש\"ח.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ח\"כ צבי פוגל עתר לבג\"ץ לאחר שהיועצת המשפטית לממשלה סירבה להתייצב בפני ועדת הביטחון הלאומי בנושא פשיעה בחברה הערבית.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "economy": [
