@@ -26,6 +26,24 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/export-pdf": ["./node_modules/@sparticuz/chromium/bin/**/*"],
   },
+  // Baseline security headers (2026-07-07 review, "Tier A"). Deliberately no CSP
+  // here — the app loads inline third-party tracker bootstraps, so a strict CSP
+  // is deferred to a Report-Only rollout after the tracker cleanup. X-Frame-Options
+  // SAMEORIGIN forecloses the future embeddable-widget idea; revisit if that ships.
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

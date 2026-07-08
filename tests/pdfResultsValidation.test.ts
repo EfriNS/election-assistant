@@ -51,4 +51,34 @@ describe("validatePdfResultsData", () => {
     expect(validatePdfResultsData({ ...VALID, accentColor: "<script>" })).toBeNull();
     expect(validatePdfResultsData({ ...VALID, accentColor: undefined })).toBeNull();
   });
+
+  // topicScores is interpolated into the PDF HTML unescaped (renderChips: `${pct}`),
+  // so a string leaf is a live injection sink — the type annotation alone doesn't
+  // guard it. (2026-07-07 security review.)
+  it("accepts a well-formed topicScores map", () => {
+    const data = { ...VALID, topicScores: { likud: { security: 80, economy: 30 } } };
+    expect(validatePdfResultsData(data)).toEqual(data);
+  });
+
+  it("accepts payloads with no topicScores (optional field)", () => {
+    expect(validatePdfResultsData(VALID)).toEqual(VALID);
+  });
+
+  it("rejects a string topicScores leaf (the injection vector)", () => {
+    const data = {
+      ...VALID,
+      topicScores: { likud: { security: "<img src=x onerror=alert(1)>" } },
+    };
+    expect(validatePdfResultsData(data)).toBeNull();
+  });
+
+  it("rejects a non-finite topicScores leaf", () => {
+    const data = { ...VALID, topicScores: { likud: { security: Infinity } } };
+    expect(validatePdfResultsData(data)).toBeNull();
+  });
+
+  it("rejects a non-object party value in topicScores", () => {
+    expect(validatePdfResultsData({ ...VALID, topicScores: { likud: "80" } })).toBeNull();
+    expect(validatePdfResultsData({ ...VALID, topicScores: "nope" })).toBeNull();
+  });
 });
