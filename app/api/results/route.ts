@@ -18,11 +18,14 @@ function makeLangfuse() {
 
 type PartyRef = { id: string; name: string; score: number };
 
-// Structured-output schema (constrained decoding guarantees valid JSON,
-// including correctly escaped Hebrew gershayim/acronym characters like צה"ל
-// that appear in verbatim party-platform quotes the model is instructed to
-// cite — see app/api/follow-up/route.ts for the same fix applied first,
-// after two production JSON.parse failures caused by exactly this).
+// Structured-output schema (constrained decoding guarantees syntactically
+// valid JSON) — but not correct escaping of Hebrew gershayim/acronym
+// characters like צה"ל: the model can emit a plain ASCII quote instead,
+// which silently closes the JSON string early rather than throwing (see
+// app/api/follow-up/route.ts, same root cause, and
+// docs/learnings/project/AI-INTEGRATION.md for the incidents). Fix: the
+// system prompt below avoids acronym-with-internal-quote forms in the
+// model's own prose, and normalizes to a single geresh in verbatim quotes.
 export const RESULTS_RESPONSE_SCHEMA = {
   type: "object",
   properties: {
@@ -86,7 +89,7 @@ export function buildGroundingsForParties(
 
 // ─── System prompt ────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `You write a personalized analysis for a voting-decision aid tool. All output must be in Hebrew.
+export const SYSTEM_PROMPT = `You write a personalized analysis for a voting-decision aid tool. All output must be in Hebrew.
 
 You receive:
 1. The user's answers from a values questionnaire
@@ -99,7 +102,7 @@ Your task:
 
 Rules:
 - Hebrew output only
-- Your output must be valid JSON. When writing a Hebrew acronym that contains an internal quotation mark (e.g. צה"ל, מו"מ, ת"א) — including inside a quoted excerpt — use the Hebrew gershayim character ״ (U+05F4), never a plain ASCII double-quote ("), which breaks the JSON structure.
+- Your output must be valid JSON. In your own written sentences, avoid Hebrew acronyms that need an internal quotation mark — use the plain word instead: הצבא (not צה"ל), משא ומתן (not מו"מ), סדר הכוחות (not סד"כ), תל אביב (not ת"א). If a verbatim platform quote itself contains such an acronym, keep the words exactly as given but mark it with a single geresh ׳ (U+05F3) rather than gershayim ״ — never a plain ASCII double-quote ("), which breaks the JSON structure.
 - Second person (אתה/את)
 - Be specific — mention actual answers the user gave
 - Each party blurb MUST cite at least one quote from the platform quotes provided. Do not invent quotes or positions not in the provided data.
