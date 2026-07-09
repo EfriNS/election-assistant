@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Rubik } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </div>
         <FeedbackWidget />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
