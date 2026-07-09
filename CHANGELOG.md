@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-07-09 (latest) — Enable Vercel Speed Insights
+
+### Changes
+
+Added `<SpeedInsights />` (`@vercel/speed-insights/next`) to the root layout, next to the existing `<Analytics />` — same integration pattern, same package family.
+
+### Verification
+
+Checked whether this needed any CSP/security-header changes, given the app runs an enforced nonce CSP with `'strict-dynamic'` and no `'unsafe-inline'`. Built for production and inspected the served HTML: the component renders nothing server-side — it injects its script client-side after hydration, meaning it's trusted the same way Clarity's own injected script already is (Next's nonced hydration script propagates trust via `'strict-dynamic'` to whatever it loads, regardless of host). The script and vitals-beacon paths (`/_vercel/speed-insights/*`) are same-origin, Vercel-proxied — not a third-party domain — so `'self'` already covers them, matching how `@vercel/analytics` already works under this exact CSP (verified 2026-07-08). Confirmed via `vercel project speed-insights` that it was already enabled at the Vercel project level. No `middleware.ts` changes made or needed.
+
+335 tests, `tsc`, `eslint`, production build all clean.
+
+### Files
+
+`app/layout.tsx`, `package.json`, `package-lock.json` (dependency already installed by the user before this session).
+
+Commit `503776f`, merged via `017ebe0`.
+
 ## 2026-07-09 (later) — Fix: quota-check cron broken since CRON_SECRET was never added to Vercel; added a Firewall rate-limit floor
 
 ### Context
