@@ -6,13 +6,13 @@ import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { formatHebrewDate } from "@/lib/format-date";
+import { WarningIcon, ChevronIcon } from "@/components/icons";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
 
 type Props = {
   party: Party & { score: number; rawScore?: number; criticalConflicts?: string[] };
   rank: number;
-  accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   aiBlurb?: string;
   aiLoading?: boolean;
   groundingData?: PartyGroundingResult;
@@ -22,22 +22,25 @@ type Props = {
   showTopicBreakdown?: boolean;
 };
 
-const COLORS = {
-  blue:    { highlight: "bg-blue-50 border-blue-300",       bar: "bg-blue-400",    score: "text-blue-700",    link: "text-blue-500"   },
-  emerald: { highlight: "bg-emerald-50 border-emerald-300", bar: "bg-emerald-400", score: "text-emerald-700", link: "text-emerald-600" },
-  amber:   { highlight: "bg-amber-50 border-amber-300",     bar: "bg-amber-400",   score: "text-amber-700",   link: "text-amber-600"  },
-  purple:  { highlight: "bg-purple-50 border-purple-300",   bar: "bg-purple-400",  score: "text-purple-700",  link: "text-purple-600" },
-  teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-400",    score: "text-teal-700",    link: "text-teal-600"   },
-};
+// Single brand color — teal was deliberately chosen as one of the only colors
+// with no Israeli political-party association; don't reintroduce a color prop.
+const BRAND = { highlight: "bg-teal-50 border-teal-300", bar: "bg-teal-500", score: "text-teal-700", link: "text-teal-600" };
 
-export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiLoading, groundingData, topicAnswerTexts, partyTopicScores, answeredTopicIds, showTopicBreakdown }: Props) {
-  const c = COLORS[accentColor];
+export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groundingData, topicAnswerTexts, partyTopicScores, answeredTopicIds, showTopicBreakdown }: Props) {
+  const c = BRAND;
   const isTop = rank === 0;
   const [groundingOpen, setGroundingOpen] = useState(false);
 
   const hasGrounding = (groundingData?.topics?.length ?? 0) > 0;
-  const isOutdated = hasGrounding && groundingData?.platformAvailable === false;
   const sourceQuality = groundingData?.sourceQuality;
+  // Real evidentiary reliability gap — a stale or third-party-only source is a
+  // bigger trust concern than "official material exists but has no single URL"
+  // (that milder case gets amber below). Both read as red, with accurate text
+  // per reason: "outdated" means a real old document from the party exists;
+  // "thirdParty" means no official document ever existed for this — the quotes
+  // are someone else's analysis, not the party's own words. Driven by
+  // sourceQuality directly (not the loosely-related platformAvailable flag),
+  // so it can't mismatch the same-file link-row badge below.
   const isLowQualitySource = sourceQuality === "thirdParty" || sourceQuality === "outdated";
   const sourceLinkLabel =
     sourceQuality === "official"
@@ -87,7 +90,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             <span className="text-xs text-gray-400 mr-2">({party.subtitle})</span>
           )}
         </div>
-        <span className={`font-bold ${c.score}`}>{party.score}%</span>
+        <span className={`font-bold tabular-nums ${c.score}`}>{party.score}%</span>
       </div>
 
       {/* Score bar */}
@@ -104,12 +107,15 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
 
       {/* Critical-topic conflict banner */}
       {party.criticalConflicts && party.criticalConflicts.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2">
-          <span className="font-semibold">⚠ מתנגשת עם עדיפות שסימנת כקריטית: </span>
-          {party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", ")}.
-          {party.rawScore !== undefined && party.rawScore !== party.score && (
-            <span className="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: {party.rawScore}%).</span>
-          )}
+        <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-700 leading-relaxed mb-2 flex items-start gap-1.5">
+          <WarningIcon className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+          <span>
+            <span className="font-semibold">מתנגשת עם עדיפות שסימנת כקריטית: </span>
+            {party.criticalConflicts.map((id) => TOPIC_LABELS[id]).join(", ")}.
+            {party.rawScore !== undefined && party.rawScore !== party.score && (
+              <span className="text-red-400"> ציון ההתאמה הכולל מוגבל בגלל זה (לפני ההגבלה: {party.rawScore}%).</span>
+            )}
+          </span>
         </div>
       )}
 
@@ -152,14 +158,16 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
       {/* Description */}
       <p className="text-xs text-gray-500 mb-2">{party.description}</p>
 
-      {/* AI blurb */}
+      {/* AI blurb — neutral container like every other notice on this page;
+          the teal ✦ marker alone signals "this is the AI's interpretation,"
+          rather than a whole second brand color for AI content. */}
       {(aiLoading || aiBlurb) && (
         <div className="mt-1 mb-2 pt-2 border-t border-gray-100">
           {aiLoading && !aiBlurb ? (
-            <p className="text-xs text-indigo-300 animate-pulse">✦ מנתח התאמה...</p>
+            <p className="text-xs text-gray-400 animate-pulse"><span className="text-teal-500 mr-1">✦</span>מנתח התאמה...</p>
           ) : (
             <p className="text-xs text-gray-500 leading-relaxed">
-              <span className="text-indigo-400 mr-1">✦</span>{aiBlurb}
+              <span className="text-teal-500 mr-1">✦</span>{aiBlurb}
             </p>
           )}
         </div>
@@ -199,7 +207,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
             aria-label={`${party.name} — ${accordionLabel}`}
           >
             <span className="flex-1 text-right">{accordionLabel}</span>
-            <span className="text-gray-300">{groundingOpen ? "▲" : "▼"}</span>
+            <ChevronIcon className={`w-3.5 h-3.5 text-gray-300 transition-transform ${groundingOpen ? "-rotate-90" : "rotate-90"}`} />
           </button>
           {lastVerified && (
             <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {formatHebrewDate(lastVerified)}</p>
@@ -207,11 +215,23 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
 
           {groundingOpen && (
             <div className="mt-3 space-y-4">
-              {/* Outdated platform warning */}
-              {isOutdated && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 leading-relaxed">
-                  <span className="font-semibold">⚠️ המפלגה לא פרסמה מצע בחירות עדכני.</span>{" "}
-                  ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
+              {/* Low-reliability source warning — accurate per reason, not just "outdated" */}
+              {isLowQualitySource && (
+                <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800 leading-relaxed flex items-start gap-1.5">
+                  <WarningIcon className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                  <span>
+                    {sourceQuality === "outdated" ? (
+                      <>
+                        <span className="font-semibold">המפלגה לא פרסמה מצע בחירות עדכני.</span>{" "}
+                        ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-semibold">למפלגה זו אין מצע רשמי משלה.</span>{" "}
+                        הציטוטים מבוססים על ניתוח צד שלישי — לא על דברי המפלגה עצמה.
+                      </>
+                    )}
+                  </span>
                 </div>
               )}
 
@@ -221,7 +241,7 @@ export default function PartyResultCard({ party, rank, accentColor, aiBlurb, aiL
                 return (
                 <div key={tg.topicId} className={isGateTopic ? "bg-red-50 border border-red-200 rounded-lg p-2" : undefined}>
                   {isGateTopic && (
-                    <p className="text-xs font-semibold text-red-600 mb-1">⚠ נושא קריטי שגרם להגבלת הציון</p>
+                    <p className="text-xs font-semibold text-red-600 mb-1 flex items-center gap-1"><WarningIcon className="w-3.5 h-3.5" />נושא קריטי שגרם להגבלת הציון</p>
                   )}
                   <p className={`text-xs font-semibold mb-1 uppercase tracking-wide ${isGateTopic ? "text-red-700" : "text-gray-600"}`}>
                     {tg.topicLabel}

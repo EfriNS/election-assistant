@@ -18,11 +18,14 @@ export type PdfResultsData = {
   topicScores?: Record<string, Record<string, number>>;
   answeredTopicIds?: string[];
   topicAnswerTexts?: Record<string, string>;
-  accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
+  // Single literal — teal was deliberately chosen as one of the only colors
+  // with no Israeli political-party association; the whitelist below rejects
+  // anything else rather than accepting a color the UI never actually sends.
+  accentColor: "teal";
   quotaExceeded?: boolean;
 };
 
-const VALID_ACCENT_COLORS = ["blue", "emerald", "amber", "purple", "teal"] as const;
+const VALID_ACCENT_COLORS = ["teal"] as const;
 
 // The request body is untrusted client JSON (no TypeScript guarantee at runtime).
 // score/rawScore are interpolated directly into HTML/CSS below without the `e()`
@@ -72,11 +75,7 @@ export function validatePdfResultsData(data: unknown): PdfResultsData | null {
 }
 
 const ACCENT_COLORS = {
-  blue:    { highlight: "bg-blue-50 border-blue-300",       bar: "bg-blue-400",    score: "text-blue-700",    link: "text-blue-500"   },
-  emerald: { highlight: "bg-emerald-50 border-emerald-300", bar: "bg-emerald-400", score: "text-emerald-700", link: "text-emerald-600" },
-  amber:   { highlight: "bg-amber-50 border-amber-300",     bar: "bg-amber-400",   score: "text-amber-700",   link: "text-amber-600"  },
-  purple:  { highlight: "bg-purple-50 border-purple-300",   bar: "bg-purple-400",  score: "text-purple-700",  link: "text-purple-600" },
-  teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-400",    score: "text-teal-700",    link: "text-teal-600"   },
+  teal:    { highlight: "bg-teal-50 border-teal-300",       bar: "bg-teal-500",    score: "text-teal-700",    link: "text-teal-600"   },
 };
 
 // ─── HTML escape ──────────────────────────────────────────────────────────────
@@ -130,13 +129,17 @@ function renderGrounding(
     ? `<p class="text-xs text-gray-400 mb-1">מקורות עודכנו לאחרונה: ${e(formatHebrewDate(lastVerified))}</p>`
     : "";
 
-  const outdatedWarning =
-    groundingData.platformAvailable === false
-      ? `<div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 leading-relaxed">
-          <span class="font-semibold">המפלגה לא פרסמה מצע בחירות עדכני.</span>
-          ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.
-        </div>`
-      : "";
+  // Mirrors PartyResultCard.tsx: driven by sourceQuality (not the loosely-related
+  // platformAvailable flag), red not amber — a stale or third-party-only source
+  // is a real reliability gap, with accurate text per reason.
+  const isLowQualitySourcePdf = groundingData.sourceQuality === "thirdParty" || groundingData.sourceQuality === "outdated";
+  const outdatedWarning = isLowQualitySourcePdf
+    ? `<div class="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800 leading-relaxed">
+        ${groundingData.sourceQuality === "outdated"
+          ? `<span class="font-semibold">המפלגה לא פרסמה מצע בחירות עדכני.</span> ציטוטים אלה מבוססים על מסמכים ישנים ועלולים שלא לשקף את עמדותיה הנוכחיות.`
+          : `<span class="font-semibold">למפלגה זו אין מצע רשמי משלה.</span> הציטוטים מבוססים על ניתוח צד שלישי — לא על דברי המפלגה עצמה.`}
+      </div>`
+    : "";
 
   // Critical-topic conflicts sort first and get a highlight — same reordering
   // rule as PartyResultCard's accordion.
@@ -311,8 +314,9 @@ export function buildPdfHtml(data: PdfResultsData, generatedAt: string): string 
     : "";
 
   const profileBox = aiProfile
-    ? `<div class="bg-indigo-50 border border-indigo-100 rounded-xl px-4 py-3 flex items-start gap-2">
-        <p class="text-sm text-indigo-900 leading-relaxed">${e(aiProfile)}</p>
+    ? `<div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex items-start gap-2">
+        <span class="text-teal-500 mt-0.5 shrink-0 text-xs">&#10022;</span>
+        <p class="text-sm text-gray-700 leading-relaxed">${e(aiProfile)}</p>
       </div>`
     : "";
 

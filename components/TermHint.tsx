@@ -13,7 +13,7 @@ export function TermHint({ definition, label = "מה זה אומר?" }: TermHint
     <span className="inline-block">
       <button
         onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
-        className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+        className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
         aria-expanded={open}
       >
         <span className="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center leading-none">?</span>

@@ -9,6 +9,7 @@ import ShareButton from "@/components/ShareButton";
 import { mpTrack } from "@/lib/mixpanel";
 import { GATE_SCORE_CAP } from "@/lib/scoring";
 import { MAX_CRITICAL_TOPICS } from "@/lib/topics";
+import { DocumentIcon, SpinnerIcon, ChevronIcon } from "@/components/icons";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -24,7 +25,6 @@ type Props = {
   topicAnswerTexts?: Record<string, string>;
   topicCoveredAspects?: Record<string, string[]>;
   topicScores?: Record<string, Record<string, number>>; // partyId → topicId → 0–100
-  accentColor: "blue" | "emerald" | "amber" | "purple" | "teal";
   sessionId?: string;
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
@@ -39,7 +39,6 @@ export default function UnifiedResultsPage({
   topicAnswerTexts,
   topicCoveredAspects,
   topicScores,
-  accentColor,
   sessionId,
   onBack,
   externalAiData,
@@ -119,7 +118,7 @@ export default function UnifiedResultsPage({
           topicScores,
           answeredTopicIds,
           topicAnswerTexts,
-          accentColor,
+          accentColor: "teal",
           quotaExceeded,
         }),
       });
@@ -144,7 +143,7 @@ export default function UnifiedResultsPage({
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
         <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">
-          ← חזרה
+          → חזרה
         </button>
 
         <h1 className="text-2xl font-bold mb-2">התוצאות שלך</h1>
@@ -158,14 +157,15 @@ export default function UnifiedResultsPage({
           </div>
         )}
 
-        {/* AI profile summary */}
+        {/* AI profile summary — neutral container like every other notice on this
+            page; the teal ✦ marker alone signals "this is the AI's interpretation." */}
         {(aiLoading || aiData?.profile) && (
-          <div className="bg-indigo-50 border border-indigo-100 rounded-xl px-4 py-3 mb-6 flex items-start gap-2 min-h-[56px]">
-            <span className="text-indigo-300 mt-0.5 shrink-0 text-xs">✦</span>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-2 min-h-[56px]">
+            <span className="text-teal-500 mt-0.5 shrink-0 text-xs">✦</span>
             {aiLoading ? (
-              <p className="text-xs text-indigo-300 animate-pulse">מנתח את עמדותיך...</p>
+              <p className="text-xs text-gray-400 animate-pulse">מנתח את עמדותיך...</p>
             ) : (
-              <p className="text-sm text-indigo-900 leading-relaxed">{aiData!.profile}</p>
+              <p className="text-sm text-gray-700 leading-relaxed">{aiData!.profile}</p>
             )}
           </div>
         )}
@@ -201,7 +201,6 @@ export default function UnifiedResultsPage({
                   <PartyResultCard
                     party={r}
                     rank={i}
-                    accentColor={accentColor}
                     aiBlurb={aiData?.partyBlurbs[r.id]}
                     aiLoading={aiLoading && i < 3}
                     groundingData={groundings?.[r.id]}
@@ -230,7 +229,7 @@ export default function UnifiedResultsPage({
               <strong className="text-gray-600">שיטת החישוב:</strong>{" "}
               ציוני ההתאמה מבוססים על ציטוטים ממצעי המפלגות — המקורות מקושרים בכרטיסיות למטה.
             </span>
-            <span className="mr-3 shrink-0 text-gray-400 group-open:rotate-90 transition-transform duration-150">◀</span>
+            <ChevronIcon className="mr-3 shrink-0 w-3.5 h-3.5 text-gray-400 rotate-90 group-open:-rotate-90 transition-transform duration-150" />
           </summary>
           <div className="px-4 pb-4 pt-3 border-t border-gray-200 space-y-3">
             <div>
@@ -301,12 +300,12 @@ export default function UnifiedResultsPage({
             >
               {pdfLoading ? (
                 <>
-                  <span className="animate-spin">⏳</span>
+                  <SpinnerIcon className="w-4 h-4" />
                   <span>מכין את הקובץ...</span>
                 </>
               ) : (
                 <>
-                  <span>📄</span>
+                  <DocumentIcon className="w-4 h-4" />
                   <span>שמור תוצאות כ-PDF</span>
                 </>
               )}
@@ -321,17 +320,17 @@ export default function UnifiedResultsPage({
         {/* Home navigation */}
         <div className="mt-6 text-center">
           {!confirmHome ? (
-            <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600">
-              ← חזרה לדף הבית
+            <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">
+              → חזרה לדף הבית
             </button>
           ) : (
             <div className="flex items-center justify-center gap-2 text-sm">
               <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
-              <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium">
+              <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium focus-visible:ring-2 focus-visible:ring-red-300 focus-visible:outline-none rounded">
                 בטוח
               </button>
               <span className="text-gray-300">|</span>
-              <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600">
+              <button onClick={() => setConfirmHome(false)} className="text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">
                 ביטול
               </button>
             </div>

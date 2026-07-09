@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { ClockIcon } from "@/components/icons";
 
 export default function RateLimitedPage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4" dir="rtl">
       <div className="w-full max-w-sm text-center">
-        <p className="text-4xl mb-6">⏳</p>
+        <ClockIcon className="w-10 h-10 mx-auto mb-6 text-gray-400" />
         <h1 className="text-xl font-bold mb-3">הגעת למכסת השימוש היומית</h1>
         <p className="text-sm text-gray-500 leading-relaxed mb-8">
           כדי שהכלי יישאר זמין לכולם, מספר השימושים ביום מוגבל לכל כתובת IP.
