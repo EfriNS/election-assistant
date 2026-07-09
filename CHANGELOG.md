@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-07-10 — Fix: acronym-quote JSON truncation in follow-up/results prompts
+
+### Context
+
+User reported a nonsensical follow-up option ("הרחבת סד") in a live session and asked what caused it — not a translation issue, a data bug.
+
+### Investigation
+
+Root-caused against the actual production trace (Langfuse, `gemini-follow-up`, session `21401c54…`, 2026-07-08 23:59 UTC) rather than guessing from the screenshot alone. The raw model output showed Gemini emitting a plain ASCII quote instead of the Hebrew gershayim character inside two acronyms in the same response — צה"ל (in the prologue) and סד"כ (in option 1) — while correctly using gershayim for צה״ל elsewhere in that same response, confirming per-mention flakiness rather than a systemic misunderstanding of the rule. A bare ASCII `"` is JSON's string terminator, so each string ended right there — and the JSON was still syntactically valid afterward (comma → next key), so `JSON.parse` succeeded on the truncated fragment. This is the same failure class as the 2026-07-02 and 2026-07-05 incidents (`docs/learnings/project/AI-INTEGRATION.md`) but a worse variant: those threw a `JSON.parse` exception that the existing retry-once logic caught; this one produces valid-but-truncated JSON, so it silently reached a real user with no error logged anywhere.
+
+### Fix
+
+The prior mitigation ("use gershayim, never ASCII quote," added 2026-07-05) was already present in both prompts and evidently isn't reliable enough on its own. Replaced it with a two-tier instruction that removes the risky token choice instead of hoping the model picks the right one:
+- **Prefer plain-word substitutes** in the model's own generated prose: הצבא (not צה"ל), משא ומתן (not מו"מ), סדר הכוחות (not סד"כ), תל אביב (not ת"א).
+- **Single-geresh fallback** (׳, U+05F3) for any other acronym — not a JSON meta-character, so it can't break the JSON structure regardless of which quote-like glyph the model actually emits.
+- For `results`, which must reproduce verbatim platform quotes, own-prose gets the plain-word treatment; verbatim quotes keep their exact wording but normalize the internal mark to single geresh instead of gershayim.
+
+Added `tests/acronymQuoteHardening.test.ts` (5 tests) asserting the new instruction text is present in both prompts and the old bare-gershayim instruction is gone — a regression guard against the prompt reverting, not a way to test Gemini's actual behavior (which is inherently non-deterministic; real confidence comes from watching Langfuse/Slack over the following days, same verification caveat as the 2026-07-05 incident).
+
+340 tests, `tsc`, `eslint`, production build all clean.
+
+### Files
+
+`app/api/follow-up/route.ts`, `app/api/results/route.ts` (both: prompt text + exported `buildPrompt`/`SYSTEM_PROMPT` for testability), `tests/acronymQuoteHardening.test.ts` (new), `docs/learnings/project/AI-INTEGRATION.md`.
+
+Commit `bd46d31`, merged via `6edc8ee`.
+
 ## 2026-07-09 (latest) — Enable Vercel Speed Insights
 
 ### Changes
