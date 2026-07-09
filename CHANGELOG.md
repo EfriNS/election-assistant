@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-07-09 — Graphic polish pass: icons, color consistency, RTL, a11y
+
+### Context
+
+Follow-on from the app-icon work: asked for a graphic-design review of the overall UI ("wearing the graphic designer hat"). Explicitly scoped as polish, not redesign — a prior presentation-layer redesign exploration (2026-07-03) had already concluded none was needed after a thorough, good-faith attempt, so this pass stayed strictly to substitution/addition within the existing structure: no layout, copy, or mechanic changes.
+
+### Process
+
+Read the full UI (landing, quiz flow, results page, party cards, about/terms/rate-limited) and proposed 5 findings, mocked as before/after panes in an Artifact. Before implementing, ran an independent review via the `second-opinion` skill — a fresh Opus agent given the same problem and constraints but no visibility into the 5 proposed findings, reading the real code itself. Converged independently on the two biggest items (emoji-as-icons including the exact same ⚠/⚠️ inconsistency; the unused brand mark). The fresh pass also caught something I'd gotten backwards — I'd rated the AI-content indigo color as deliberate and worth keeping; the independent review correctly flagged it as a second, blue-adjacent brand color and the only colored info box on the page.
+
+User pushback during reconciliation improved the evidence-reliability fix specifically: I initially proposed softening the link-row's red "outdated/third-party" badge to amber to match the (wrong) accordion box. The user asked to verify real "nothing found" cases existed and pointed out stale/third-party sourcing reads as more severe than amber to them — correctly. Tracing it properly surfaced that the real fix was the opposite direction (bring the accordion up to red), and that the accordion's trigger (`platformAvailable`) and its text (always "based on old documents") were actually wrong for third-party-sourced parties like Raam, who have no old document at all.
+
+### Changes
+
+- **New `components/icons.tsx`** — single-color stroke-SVG set (`currentColor`), replacing 10 platform-emoji instances across `ShareButton`, `FeedbackWidget`, `UnifiedResultsPage`, `PartyResultCard`, and `rate-limited/page.tsx`.
+- **Brand mark in the product** — the real `app/icon.svg` ring-and-dot now sits next to the landing headline; previously existed only as a favicon.
+- **`accentColor` collapsed to one teal constant** across `PartyResultCard`, `UnifiedResultsPage`, `PrioritiesStep`, and the PDF-export pipeline (`lib/pdf-template.ts` + its whitelist validator + test) — removes 4 dead color variants and the latent risk of ever selecting a politically-associated color (teal was deliberately chosen as one of the only colors with none).
+- **AI-generated content drops indigo** — results profile + per-party blurb now render in the same neutral gray container as every other notice on the page, with only a small teal `✦` marker signaling "this is the AI's interpretation." Applied to both the live page and the PDF.
+- **Evidence-reliability color + text fixed at the root** — driven by `sourceQuality` (not the loosely-related `platformAvailable` flag), red consistently in both the link row and the accordion, with accurate per-reason text (real stale document vs. never-had-an-official-document). Mirrored in the PDF template.
+- **One chevron convention** (was ▲/▼ swap in one accordion, ◀+rotate in another) — down when closed, up when open, both places.
+- **Fixed a real RTL bug**: every "back" button used ← (the documented "proceed" direction per `VAA-DESIGN.md` #41) instead of →. "Continue" buttons were already correct.
+- **Focus-visible rings** added to every interactive element that was missing them (landing radios/CTA, back links, home-nav confirm buttons, `FeedbackWidget`, `TermHint`).
+- **`tabular-nums`** on the score percentage.
+
+### Verification
+
+335 vitest tests, `tsc --noEmit`, `eslint`, production build (icon routes still prerender static) all clean. No local Chrome/`chromium-cli` in this sandbox to screenshot the client-state-heavy quiz/results flow directly, so pushed the feature branch to a Vercel preview deployment and the user verified there before merge.
+
+### Files
+
+`components/icons.tsx` (new), `app/page.tsx`, `app/quiz/page.tsx`, `app/rate-limited/page.tsx`, `components/{FeedbackWidget,PartyResultCard,PrioritiesStep,ShareButton,TermHint,UnifiedResultsPage}.tsx`, `lib/pdf-template.ts`, `tests/pdfResultsValidation.test.ts`.
+
+Commits `38863cf`, merged via `6431c13`.
+
 ## 2026-07-08 (night) — App icon (favicon + apple-touch-icon)
 
 ### Context
