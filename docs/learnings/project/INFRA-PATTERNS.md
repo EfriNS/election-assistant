@@ -39,11 +39,29 @@ Real-time threshold alerts (e.g., "80% of quota used") should be sent **by the a
 
 **Constraint**: Async alerting requires a KV store for de-duplication (otherwise every call after crossing 80% sends a Slack message). On Vercel Hobby without a KV store, async alerts would spam Slack. Decision: implement async alerts only when a KV store is available.
 
-### Vercel CRON_SECRET — not QUOTA_CRON_SECRET (#first:2026-06-28)
+### Vercel CRON_SECRET — not auto-injected; must be set manually (#first:2026-06-28, corrected 2026-07-09)
 
-Vercel automatically injects a `CRON_SECRET` system env var and sends it as `Authorization: Bearer <CRON_SECRET>` on every cron invocation (both scheduled and the dashboard "Run" button). Do NOT create a custom secret var for cron auth — use `process.env.CRON_SECRET`.
+**Correction to this entry's original claim.** It used to say "Vercel automatically injects a `CRON_SECRET` system env var" — **false**, and this false belief caused a real 2-day production outage (see the incident below). What's actually true: `CRON_SECRET` is an ordinary project env var *you* must create (any value, e.g. `openssl rand -hex 32`) in Vercel's dashboard/CLI. The only thing Vercel does automatically is *forward* whatever value is stored there as `Authorization: Bearer <value>` when it invokes the cron — scheduled runs, the dashboard "Run" button, and `vercel crons run <path>` all send it. If the var doesn't exist, Vercel has nothing to send, and `process.env.CRON_SECRET` is `undefined` in your function regardless of what any *other*, differently-named var contains.
 
-**Failure mode**: Custom secret mismatch → every invocation returns 401 → Vercel omits non-2xx runs from the cron log → appears as "0 log lines" with no indication the cron ever fired.
+**Incident (2026-07-09): this wrong belief silently broke the quota-check cron for ~2 days.** Timeline: 2026-06-28 rename commit (`eb9298a`) switched the code from a custom `QUOTA_CRON_SECRET` to `process.env.CRON_SECRET`, and — believing the false claim above — deleted `QUOTA_CRON_SECRET` from Vercel without ever adding `CRON_SECRET` in its place. At the time, the auth check was `if (cronSecret) { ...401 check... }` with no else-branch, so a missing secret just skipped the check entirely — the endpoint was quietly *unauthenticated* but still worked, so the daily Slack report kept arriving and nobody noticed. On 2026-07-07, an unrelated security review correctly closed that "fails open when unset" hole by adding a fail-closed 503 for any Vercel deployment missing `CRON_SECRET` — a good fix in isolation, but since the var still didn't exist, every invocation from that point on 503'd before ever reaching Langfuse/Slack. Nobody caught it until the user noticed the daily Slack message was missing, two days later. Diagnosis path: confirmed via `vercel crons ls`/`vercel crons run` (cron *was* correctly registered/enabled) and runtime logs (zero invocations at all before the fix — ruling out an app-level failure, since even a rejected request would have logged a status code) — the failure was invisible until a manual trigger surfaced the 503.
+
+**Rule**: never trust a claim about platform "automatic" behavior in a past commit/changelog entry at face value, even your own — verify it against current official docs before relying on it, especially when it's used to justify deleting or renaming a credential. Vercel's own doc snippet for securing a cron route (`if (!cronSecret || authHeader !== ...)`) makes clear the value must already exist; there's no auto-provisioning path.
+
+### Vercel env var changes require a redeploy to take effect (#first:2026-07-09)
+
+Adding or changing a Vercel environment variable (via dashboard or `vercel env add`) does **not** update an already-running production deployment. Env vars are baked into a deployment at build time; the currently-live deployment keeps serving with whatever env vars existed when *it* was built.
+
+**Symptom**: added `CRON_SECRET` via `vercel env add CRON_SECRET production`, then immediately re-triggered `/api/quota-check` via `vercel crons run` — still got the same 503 as before, because the request hit the deployment that existed before the var was added.
+
+**Fix**: `vercel redeploy <deployment-url> --target=production` rebuilds the exact same already-pushed commit (no code changes) so functions pick up the current env var set. This is different from `vercel deploy` (which would push new/uncommitted local state) — safe to use as the standard way to make an env-var-only fix take effect without waiting for the next natural git push.
+
+### Diagnosing cron jobs: `vercel crons ls` / `vercel crons run` (#first:2026-07-09)
+
+The installed global `vercel` CLI in this environment (48.4.1) predates the `crons` subcommand — `vercel crons ls` silently mis-parses as `vercel deploy crons ls` ("Can't deploy more than one path"). Use `npx vercel@latest crons ls` / `npx vercel@latest crons run <path>` instead (beta command, works even though the global CLI is outdated).
+
+- `vercel crons ls --format json` confirms whether a cron is actually registered/enabled on Vercel's side and which deployment it's currently pointed at — useful for ruling out a config/registration problem before suspecting the app code.
+- `vercel crons run <path>` triggers a real cron invocation (correct auth header included) on demand — the fastest way to test whether a cron route actually works right now, without waiting for the schedule. Note it has real side effects if the route does something on success (e.g. posts to Slack) — treat it like any other production action, not a pure dry-run.
+- Absence of any log lines for a cron's path (checked via runtime-log `requestPath`/`route` grouping) means the invocation never reached the function at all — distinct from, and diagnosed before, an application-level failure (which would still show a non-2xx status).
 
 ### Vercel `framework` key in vercel.json (#first:2026-06-28)
 
@@ -180,3 +198,13 @@ The enforced Content-Security-Policy (`buildCspHeader()` in `middleware.ts`) use
 Two Gemini/Slack routes (`/api/results`, `/api/feedback`) shipped uncapped because the rate-limit dispatch was a hand-maintained if/else chain whose comment said "the two AI-calling routes" while there were three. The matcher also had to broaden to all pages for the CSP nonce, so it can no longer serve as the coverage list.
 
 **Rule**: rate-limit rules live in the exported `RATE_LIMIT_RULES` table (path → limiter → on-limit action), and `tests/middlewareRateLimit.test.ts` asserts every resource-spending route is in it. Any new route that spends a metered/external resource (Gemini quota, headless browser, Slack webhook) must be added there — the test, not a prose comment, is the guard.
+
+### `RATE_LIMIT_RULES` (app-level) and Vercel Firewall (platform-level) solve different problems (#first:2026-07-09)
+
+Prompted by a user question while fixing the quota-check incident above: "isn't there a DDoS risk on routes not in `RATE_LIMIT_RULES`?" The honest answer required distinguishing two layers that look similar but aren't:
+
+- **`RATE_LIMIT_RULES` + Upstash** (`middleware.ts`) is a *cost-control* mechanism for specific routes that spend metered money per call (Gemini tokens, headless Chromium, Slack posts). It runs *inside* the request — every request, including ones that get rejected, still costs a full function invocation plus a Redis round-trip. It does nothing to stop a volumetric flood; it just caps sustained per-IP cost on the routes it lists.
+- **Vercel's automatic DDoS mitigation** is a separate, always-on platform layer — enabled for every project on every plan (including Hobby) with zero configuration, covering L3/L4/L7 attacks, in front of *all* traffic before it reaches middleware or app code. Blocked traffic isn't billed. This already covers every route, including ones with no `RATE_LIMIT_RULES` entry (like `/api/quota-check`) — so "not in `RATE_LIMIT_RULES`" does not mean "unprotected from DDoS."
+- **The real gap**: moderate-volume single-IP abuse that stays under the automatic-DDoS-mitigation threshold but above what's reasonable for one visitor. Adding a route to `RATE_LIMIT_RULES` wouldn't close this gap efficiently (still bills a function invocation per rejected request); the right tool is a **Vercel Firewall custom rule** with a `rate_limit` action, which enforces at Vercel's edge *before* the function runs — rejected requests aren't billed, and one rule covers every path instead of needing a per-route entry.
+
+**What we added**: a blanket Firewall rule (all paths, 300 req/IP/60s, staged `log`-only first per the recommended rollout, then published) as a floor under the whole app — complementary to, not a replacement for, `RATE_LIMIT_RULES`. Managed via `vercel firewall rules add/list/diff/publish` (see `vercel:vercel-firewall` skill); mutating commands only stage a draft, the user publishes.

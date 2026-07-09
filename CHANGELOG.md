@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-07-09 (later) — Fix: quota-check cron broken since CRON_SECRET was never added to Vercel; added a Firewall rate-limit floor
+
+### Context
+
+User reported not receiving that day's "Gemini daily usage summary" Slack message from the `/api/quota-check` cron (`0 6 * * *` UTC = 9am Israel time).
+
+### Investigation
+
+Ruled out, in order: Vercel platform incident (status page clean, Cron Jobs 100% uptime), cron registration (`vercel crons ls` confirmed it was registered/enabled and pointed at the current deployment), and the rate-limit middleware (route isn't in `RATE_LIMIT_RULES`, not blocked there). Runtime logs showed **zero requests** to `/api/quota-check` in the prior 23h — ruling out an app-level failure, since even a rejected request would have logged a status code. Manually triggering it now (`vercel crons run /api/quota-check`) reproduced a `503` and surfaced the real bug.
+
+Git archaeology found the root cause: a 2026-06-28 rename commit (`eb9298a`) switched the code to check `CRON_SECRET` instead of a custom `QUOTA_CRON_SECRET`, and its CHANGELOG entry claimed Vercel "automatically injects" `CRON_SECRET` as a system env var — **false**. Vercel only forwards whatever value is *already set* as the bearer token; nothing auto-provisions it. That false belief led to deleting `QUOTA_CRON_SECRET` from Vercel without ever adding `CRON_SECRET` in its place. The auth check at the time (`if (cronSecret) {...}`, no else) just skipped when the var was missing, so the endpoint quietly ran unauthenticated but still worked — until the 2026-07-07 security review (`f8cd781`) correctly closed that "fails open" hole with a fail-closed 503, which (since the var still didn't exist) turned into a silent 2-day outage of the daily report.
+
+### Fix
+
+- Generated a new random secret, added as `CRON_SECRET` to Vercel (Production only, Sensitive/encrypted).
+- `vercel redeploy` on the current commit (no code changes) — env vars are baked in at build time, so the already-running deployment didn't see the new var until rebuilt.
+- Verified: `vercel crons run /api/quota-check` → `200`; user confirmed the Slack message arrived.
+- `.env.local`'s stale `QUOTA_CRON_SECRET` renamed to `CRON_SECRET` to match (`.env.example` already documented the correct name/behavior — no change needed there).
+- Corrected the false "auto-injected" claim in `docs/learnings/project/INFRA-PATTERNS.md` (dated 2026-06-28) — that entry was the actual origin of the incident.
+
+### Also: Vercel Firewall blanket rate-limit floor
+
+User asked a good follow-up: doesn't skipping `RATE_LIMIT_RULES` for routes like `/api/quota-check` leave them open to a DDoS? Clarified the two layers are different: `RATE_LIMIT_RULES` (Upstash, app-level) is a *cost-control* mechanism for routes that spend metered money per call — it runs inside the function, so even rejections cost a full invocation. Vercel's automatic DDoS mitigation (always-on, every plan, no config) already covers volumetric floods on every route regardless. The actual gap is moderate-volume single-IP abuse below the DDoS threshold — for that, staged a Vercel Firewall custom rule: all paths, 300 requests/IP/60s, `log`-only first for review, which the user then published. Firewall-level blocks aren't billed and don't require a per-route entry, unlike the app-level middleware.
+
+### Files
+
+No application code changed. Vercel env vars + Firewall config (external to repo), `.env.local` (gitignored, not committed), `docs/learnings/project/INFRA-PATTERNS.md`, `docs/learnings/INDEX.md`.
+
 ## 2026-07-09 — Graphic polish pass: icons, color consistency, RTL, a11y
 
 ### Context

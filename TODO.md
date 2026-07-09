@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Fix: quota-check cron broken since CRON_SECRET was never added to Vercel; added Firewall rate-limit floor** — User reported a missing daily Slack usage message. Root-caused via git archaeology: a 2026-06-28 rename assumed Vercel auto-injects `CRON_SECRET` (false — corrected the wrong learning that caused this), leaving the auth check inert until a 2026-07-07 security fix turned it into a silent 2-day outage. Fixed: new secret added to Vercel, redeployed (env vars bake in at build time), verified 200 + Slack delivery confirmed. Also staged + user-published a blanket Vercel Firewall rule (300 req/IP/60s, all paths, currently log-only) as a volumetric floor distinct from the app's cost-control `RATE_LIMIT_RULES`. Full detail: CHANGELOG 2026-07-09 (later). (2026-07-09)
 - **Graphic polish pass: icons, color consistency, RTL, a11y** — UI review requested after the app-icon work, scoped strictly as polish (not redesign — a prior exploration already closed that question). Icon set replacing 10 platform emoji, brand mark added to the landing header, `accentColor` collapsed to one teal constant everywhere including the PDF pipeline, AI content dropped its second (indigo) brand color, evidence-reliability color+text fixed at the root (was inconsistent red/amber for the same state, and wrong text for third-party-sourced parties like Raam), one chevron convention, a real RTL back-arrow bug fixed, focus-visible gaps closed. Cross-checked against an independent fresh-agent review (`second-opinion` skill) before implementing — converged on the two biggest findings independently, caught one thing reversed (the AI color call). User verified on a Vercel preview before merge. Full detail: CHANGELOG 2026-07-09. (2026-07-09)
 - **App icon (favicon + apple-touch-icon)** — Missing favicon was causing elevated `/_not-found` invocations (every browser tab auto-requesting `/favicon.ico` with nothing to serve it). Reviewed 3 concepts via an Artifact mockup before building; shipped a ring-and-dot mark echoing the app's own answer-selection UI on a teal squircle badge. `app/icon.svg` (static, prerenders) + `app/apple-icon.tsx` (`next/og` `ImageResponse`) + `app/favicon.ico` (real ICO, built via one-off `sharp` script). Full detail: CHANGELOG 2026-07-08 (night). (2026-07-08)
-- **Grounding-data freshness check across all 10 parties** — First systematic re-check since initial collection (~2 weeks prior). 10 parallel research agents compared archived sources against live re-fetches. 5 parties unchanged (confirmed, not assumed — likud/shas/yahadut-hatorah/raam still have no formal platform; shas's site is now fully unresponsive). 5 had real updates, merged via `collect-party-data`: democrats (filled the previously-empty ecology topic), beitenu (Oct-7 accountability + Gaza/Judea-Samaria specifics), yashar (all 7 post-launch `/principles/` pages — first-ever health entry), beyahad (2 more plan-category pages, now 6/11), otzmah-yehudit (3 new updates-feed items). 257 → 284 entries. Full detail: CHANGELOG 2026-07-08 (evening). (2026-07-08)
 
 > See CHANGELOG.md for complete details.
 
@@ -48,12 +48,14 @@ _Ordered by RICE thinking (reach × impact × confidence ÷ effort) — each ite
 
 15. **CSP rollout cleanup** — _Tiny; do it once the enforced CSP has been quiet in production for a week or two, not before._ When the `[csp-report]` server logs stay empty on production, delete the `app/api/csp-report` endpoint (a rollout safety net, not permanent infra). Also set the Clarity dashboard masking mode to "Strict" (Settings → Masking) as the backstop to the `data-clarity-mask` attribute — a human dashboard task, outside the repo.
 
-16. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
+16. **Tighten the blanket Firewall rate-limit rule from log to enforce** — _Tiny; same wait-and-observe pattern as CSP cleanup above — give it a few days of real traffic first._ The 300 req/IP/60s all-paths rule (added 2026-07-09) is currently `log`-only. Once the Firewall traffic dashboard confirms no legitimate traffic trips it, switch the rule's action from `log` to `rate_limit` (429) so it actually enforces.
+
+17. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
     - Russian, Arabic, English UI layers; party platforms stay in Hebrew, answers/explanations translated
 
-17. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
+18. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
 
-18. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+19. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
