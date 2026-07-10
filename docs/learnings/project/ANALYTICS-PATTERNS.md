@@ -47,3 +47,9 @@ The `aspects_probed` array property on `topic_completed` is populated from `cove
 ### Mixpanel Lexicon only registers events/properties that have actually fired (#first:2026-07-01)
 
 Can't set a display name on `api_error` via `Edit-Event` until it occurs at least once in the project — Mixpanel returns `"Events not found"`. Same applies to any newly-added tracking property (e.g. `topics_missed`, added 2026-07-01) — it won't appear in `List-Properties` or be usable as a report breakdown until real data with that property exists.
+
+### Optional analytics-payload params with `??` defaults silently corrupt data (#first:2026-07-10)
+
+The follow-up-skip bug: `advanceToNextTopic(prologue, completed?)` defaulted every metric (`completed?.followUpCount ?? 0`, etc.), so the two skip buttons — which passed no payload — recorded every skipped topic as "0 follow-ups, no free text, no aspects," conflating *user disengagement* with the Q4 "AI not engaging" signal for a week of production data.
+
+**Rule**: analytics payloads at call sites with divergent context should be a *required* param — let the type system force every new call site to state what happened explicitly. A `?? default` on a tracking payload is the workaround-shaped hole: it compiles, fires, and produces plausible-looking wrong data that no error will ever surface. (Same class: interpret pre-2026-07-10 `topic_completed` Q4 metrics with this caveat; `skipped_follow_up`/`opener_answered` exist only after.)

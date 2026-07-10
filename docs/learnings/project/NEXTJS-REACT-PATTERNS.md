@@ -576,3 +576,17 @@ With no `public/` directory and no `app/icon.*`/`favicon.ico`, every browser tab
 - `app/favicon.ico` — browsers request this literal path regardless of `<link>` tags (why Next has a dedicated convention for it, separate from `icon.*`). Modern ICO format can embed a PNG directly per frame — no BMP encoding needed: a 6-byte `ICONDIR` header + one 16-byte `ICONDIRENTRY` per size + the raw PNG bytes back-to-back. Built via a one-off script using `sharp` (already present in `node_modules` transitively) to rasterize the SVG at each size, not committed — only the resulting binary is.
 
 Verify with a real production build + local `npm start`, not just `npm run dev`: `curl -I` each icon path for status/content-type, and grep the served HTML for the auto-injected `<link rel="icon">`/`<link rel="apple-touch-icon">` tags.
+
+---
+
+## Headless E2E Verification
+
+### Full-flow browser verification with zero installs: puppeteer-core + @sparticuz/chromium (#first:2026-07-10)
+
+Both are already dependencies (PDF export), so the real quiz flow can be driven headlessly against a local dev server with no Chrome install: `puppeteer.launch({ executablePath: await chromium.executablePath(), args: [...chromium.args, "--no-sandbox"] })`. Used to verify the analytics round 2 event schema end-to-end by intercepting `page.on("request")` for `mixpanel.com/track` and decoding the `data=` payload (URL-decoded JSON, base64 fallback). Local dev sends to the Mixpanel *Preview* project (the later of the two duplicate `NEXT_PUBLIC_MIXPANEL_TOKEN` lines in `.env.local` wins), so test runs don't pollute production data.
+
+Gotchas that cost a debugging cycle each:
+- **The script must live under the repo root** (temp file, delete after) — bare imports don't resolve from the scratchpad since Node walks `node_modules` up from the *script's* path, not cwd.
+- **One state-updating click per `page.evaluate`, with a pause between.** Clicking three priority buckets in one evaluate clobbered state down to the last click: each handler does `setBuckets({ ...buckets, ... })` from the *same* stale props object when no re-render happens between clicks. Real users always get a re-render between clicks; a synchronous bot doesn't.
+- **Selector precision**: option buttons were matched by "contains a `span.rounded-full`" — but `TermHint`'s "מה זה אומר?" button also has one. Match the digit inside the circle (`/^\d+$/` on the span text), not the circle.
+- **StrictMode double-fires mount-effect events in dev** — duplicated `results_viewed`/`results_ai_loaded` in captured output are a dev-only artifact (also: duplicate `/api/results` fetches locally), not a bug to fix; production single-fires.
