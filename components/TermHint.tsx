@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { mpTrack } from "@/lib/mixpanel";
 
 interface TermHintProps {
   definition: string;
@@ -12,7 +13,13 @@ export function TermHint({ definition, label = "מה זה אומר?" }: TermHint
   return (
     <span className="inline-block">
       <button
-        onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          // The terminology hints were a direct user-testing request (round 1) —
+          // this measures whether they're actually used.
+          if (!open) mpTrack("hint_opened", { label });
+          setOpen(!open);
+        }}
         className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
         aria-expanded={open}
       >

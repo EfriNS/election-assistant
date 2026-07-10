@@ -130,6 +130,23 @@ export default function UnifiedResultsPage({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Results dwell for tab-close/refresh/external-nav exits. In-app exits are
+  // already timestamped by their own events (back_to_quiz, go_home_confirmed),
+  // so this covers only the paths that would otherwise vanish silently.
+  useEffect(() => {
+    const mountedAt = Date.now();
+    const onPageHide = () => {
+      mpTrack(
+        "results_exit",
+        { session_id: sessionId, seconds_on_results: Math.round((Date.now() - mountedAt) / 1000) },
+        { transport: "sendBeacon" }
+      );
+    };
+    window.addEventListener("pagehide", onPageHide);
+    return () => window.removeEventListener("pagehide", onPageHide);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSavePdf = async () => {
     trackInteraction("pdf_export");
     setPdfLoading(true);

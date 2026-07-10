@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import OpenFeedbackButton from "@/components/OpenFeedbackButton";
+import PageViewTracker from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "אודות — עוזר הבחירות",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-16" dir="rtl">
+      <PageViewTracker event="about_viewed" />
       <div className="w-full max-w-md space-y-8">
 
         <div>

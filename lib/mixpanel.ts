@@ -27,6 +27,12 @@ export function mpIdentify(distinctId: string, superProps: Record<string, unknow
   mp.register(superProps);
 }
 
-export function mpTrack(event: string, props: Record<string, unknown>) {
-  getMixpanel()?.track(event, props);
+export function mpTrack(
+  event: string,
+  props: Record<string, unknown>,
+  // e.g. { transport: "sendBeacon" } for pagehide/exit events — bypasses
+  // request batching so the event survives the page being torn down.
+  options?: { transport?: "sendBeacon" | "xhr" }
+) {
+  getMixpanel()?.track(event, props, options);
 }

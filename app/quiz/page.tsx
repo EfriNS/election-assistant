@@ -156,6 +156,8 @@ function QuizInner() {
   const rankStartRef = useRef(0);
   const topicStartRef = useRef(0);
   const questionStartRef = useRef(0);
+  // Hesitation signal: selection changes on the current question before confirming.
+  const answerSwitchesRef = useRef(0);
   const [quizCompletedAt, setQuizCompletedAt] = useState<number | null>(null);
 
   // All Q&A collected per topic
@@ -221,7 +223,10 @@ function QuizInner() {
     if (step === "questions") topicStartRef.current = Date.now();
   }, [step, questionIndex]);
   useEffect(() => {
-    if (step === "questions" && !loading) questionStartRef.current = Date.now();
+    if (step === "questions" && !loading) {
+      questionStartRef.current = Date.now();
+      answerSwitchesRef.current = 0;
+    }
   }, [step, questionIndex, currentFollowUp, loading]);
 
   // Fire /api/score-topics when entering the close step. This runs in the background while
@@ -347,10 +352,20 @@ function QuizInner() {
       answer_mode: answerMode,
       ...(followUpIndex !== undefined ? { follow_up_index: followUpIndex } : {}),
       seconds_on_question: secondsSince(questionStartRef.current),
+      switch_count: answerSwitchesRef.current,
     });
   };
 
   const goBack = () => {
+    // Back-navigation frequency is the "progress feels confusing" signal from
+    // user testing — worth counting even though it re-fires question events later.
+    mpTrack("navigated_back", {
+      session_id: sessionId,
+      from_step: "questions",
+      from_question_type: currentFollowUp !== null ? "follow_up" : "opener",
+      topic_id: topicsToAsk[questionIndex],
+      topic_index: questionIndex,
+    });
     setShowOpenerInput(false);
     setOpenerDraft("");
     setShowFollowUpInput(false);
@@ -501,6 +516,8 @@ function QuizInner() {
   // Step 1: mark a structured option as selected (no API call — user can change mind)
   const selectOpenerOption = (optionId: string, optionText: string) => {
     const topicId = topicsToAsk[questionIndex];
+    const prevSelection = topicQA[topicId]?.openerAnswerId;
+    if (prevSelection && prevSelection !== optionId) answerSwitchesRef.current += 1;
     setTopicQA((prev) => ({
       ...prev,
       [topicId]: { openerAnswerId: optionId, openerAnswerText: optionText, followUps: [] },
@@ -512,6 +529,9 @@ function QuizInner() {
   // Step 2: confirm selection and call API (triggered by "המשך" button or free-text submit)
   const handleOpenerAnswer = async (optionId: string, optionText: string) => {
     const topicId = topicsToAsk[questionIndex];
+    // Confirming free text after a structured option was selected is a switch too.
+    const prevSelection = topicQA[topicId]?.openerAnswerId;
+    if (optionId === "other" && prevSelection && prevSelection !== "other") answerSwitchesRef.current += 1;
     trackQuestionAnswered("opener", optionId === "other" ? "free_text" : "choice");
 
     setTopicQA((prev) => ({
@@ -652,6 +672,7 @@ function QuizInner() {
         <div className="w-full max-w-xl">
           <button
             onClick={() => {
+              mpTrack("navigated_back", { session_id: sessionId, from_step: "close" });
               setStep("questions");
               setQuestionIndex(topicsToAsk.length - 1);
               setCurrentFollowUp(null);
@@ -810,7 +831,12 @@ function QuizInner() {
                     <div className="flex-1">
                       <textarea
                         value={followUpDraft}
-                        onChange={(e) => { setFollowUpDraft(e.target.value); setSelectedFollowUpAnswer(null); }}
+                        onChange={(e) => {
+                          // Typing after selecting an option = a switch; selection goes
+                          // null on the first keystroke, so this counts exactly once.
+                          if (selectedFollowUpAnswer) answerSwitchesRef.current += 1;
+                          setFollowUpDraft(e.target.value); setSelectedFollowUpAnswer(null);
+                        }}
                         placeholder={`כתבו בחופשיות — למשל: "1+3, אבל לא..." או עמדה אחרת לגמרי`}
                         className="w-full text-sm resize-none bg-transparent focus:outline-none placeholder-gray-400 leading-snug text-right"
                         rows={2}
@@ -829,7 +855,10 @@ function QuizInner() {
                 );
               }
               return (
-                <button key={i} onClick={() => { setSelectedFollowUpAnswer(answerText); setFollowUpDraft(""); }}
+                <button key={i} onClick={() => {
+                  if (selectedFollowUpAnswer && selectedFollowUpAnswer !== answerText) answerSwitchesRef.current += 1;
+                  setSelectedFollowUpAnswer(answerText); setFollowUpDraft("");
+                }}
                   className={`border-2 rounded-xl py-4 px-5 font-medium text-sm leading-snug transition-all flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
                     selected
                       ? "border-teal-500 bg-teal-50 text-teal-900"
@@ -967,12 +996,13 @@ function QuizInner() {
 
         <button onClick={() => {
           trackQuestionAnswered("opener", "skip");
-          // A selected-but-unconfirmed opener option is still stored in topicQA
-          // (and counts in scoring), so report it rather than assuming unanswered.
+          // Report stored state, not zeros: a selected-but-unconfirmed option still
+          // counts in scoring, and a back-navigated topic may already have answered
+          // follow-ups / probed aspects from its first pass.
           advanceToNextTopic(null, {
-            followUpCount: 0,
+            followUpCount: topicQA[topicId]?.followUps?.length ?? 0,
             openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other",
-            aspectsProbed: [],
+            aspectsProbed: topicQA[topicId]?.coveredAspects ?? [],
             openerAnswered: !!topicQA[topicId]?.openerAnswerId,
           });
         }}

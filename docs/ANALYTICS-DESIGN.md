@@ -96,7 +96,7 @@ Topic analytics data (follow-up count, aspects probed) was computed inside a clo
 
 ---
 
-## Event Schema (13 events)
+## Event Schema (17 events)
 
 All events include `session_id`. Super properties `tone`, `depth`, and `variant` (the pair, e.g. `formal/short` — added Round 2 so any report, funnels included, can segment by one breakdown) auto-attach via `mp.register()`.
 
@@ -129,8 +129,12 @@ session_id, topic_id, topic_index,
 question_type (opener | follow_up), follow_up_index (1-based, follow-ups only),
 answer_mode (choice | free_text | skip),
 seconds_on_question   (excludes AI-generation wait)
+switch_count          (R2 — selection changes before confirming: clicking a different
+                       option, or moving from a selected option to free text.
+                       With seconds_on_question this is the hesitation signal —
+                       the behavioral replacement for session recordings)
 ```
-Answers: Q1 (sub-topic drop-off attribution), Q4 (free-text and skip rates per question type)
+Answers: Q1 (sub-topic drop-off attribution), Q4 (free-text and skip rates per question type, hesitation per question)
 
 ### `topic_completed`
 Fires when user advances past a topic (including via skip).
@@ -192,6 +196,31 @@ session_id, action (pdf_export | methodology_opened | grounding_expanded |
 party_id, party_rank   (grounding_expanded only; rank is 1-based)
 ```
 Answers: Q6 (engagement; grounding_expanded tracks the "see details" discoverability fix)
+
+### `navigated_back` _(R2)_
+Fires on any backward navigation inside the quiz (question header back, close-step back). The rank-step back fires `quiz_abandoned` instead (leaves the quiz). User testing flagged navigation/progress confusion — this measures it.
+```
+session_id, from_step (questions | close),
+from_question_type (opener | follow_up), topic_id, topic_index   (questions only)
+```
+
+### `hint_opened` _(R2)_
+Fires when a TermHint explainer is expanded (quiz opener option hints, follow-up hints) — the terminology hints were a round-1 user-testing request; this measures whether they're used.
+```
+label   (the hint's button label, e.g. מה זה "טייקונים"?)
+```
+
+### `results_exit` _(R2)_
+Fires on `pagehide` from the results page (tab close / refresh / external navigation), sent via `sendBeacon` to survive teardown. In-app exits are timestamped by their own events (`back_to_quiz`, `go_home_confirmed`) — together they give results-page dwell time.
+```
+session_id, seconds_on_results
+```
+
+### `about_viewed` _(R2)_
+Fires on /about page mount (via `PageViewTracker`).
+```
+page
+```
 
 ### `share_clicked` _(R2)_
 Fires on any share button (results page and landing page).

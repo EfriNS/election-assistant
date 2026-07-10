@@ -89,7 +89,11 @@ Baseline at review time (30d, 32 sessions): funnel 32 → 27 (84%) → 18 (67%) 
 9. **Q6: results engagement**: `results_interaction` total, breakdown by `action`; separately `grounding_expanded` by `party_rank` (the "see details" discoverability signal).
 10. **Q6: decisiveness trend**: `results_viewed` average `score_spread_top2` (line, daily) next to the existing top-3 spread; optionally breakdown by `ai_scoring_used`.
 11. **Q5/Q6: perceived latency**: `results_ai_loaded` average `seconds_to_load` + `results_viewed` average `seconds_to_results` (line, daily) — quantifies the "loading feels frozen" complaint from user-testing round 4.
-12. **Lexicon**: add display names for the 6 new events + new properties once they've fired in production (run one real quiz post-deploy to seed them, or wait for organic traffic).
+12. **Hesitation report** (behavioral session-recording replacement): `question_answered` average `switch_count` + average `seconds_on_question`, breakdown by `question_type` (optionally `topic_id`) — which questions make users waver.
+13. **Back-navigation rate**: `navigated_back` total by `from_question_type` + `topic_id` — the navigation-confusion signal from user testing.
+14. **Explainer usage**: `hint_opened` total by `label`; plus `about_viewed` daily count.
+15. **Results dwell**: `results_exit` average `seconds_on_results` (tab-close exits; in-app exits derivable from `back_to_quiz`/`go_home_confirmed` timestamps).
+16. **Lexicon**: add display names for the 10 new events + new properties once they've fired in production (run one real quiz post-deploy to seed them, or wait for organic traffic).
 
 ---
 
