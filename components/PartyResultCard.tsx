@@ -6,6 +6,7 @@ import { PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { formatHebrewDate } from "@/lib/format-date";
+import { mpTrack } from "@/lib/mixpanel";
 import { WarningIcon, ChevronIcon } from "@/components/icons";
 
 const ARCHIVE_BASE_URL = "https://github.com/EfriNS/election-assistant/blob/main/";
@@ -201,7 +202,12 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
       {hasGrounding && (
         <div className="mt-2 border-t border-gray-100 pt-2">
           <button
-            onClick={() => setGroundingOpen((o) => !o)}
+            onClick={() => {
+              // The "see details" discoverability problem from user testing —
+              // expand-rate per party/rank is the signal that it's been solved.
+              if (!groundingOpen) mpTrack("results_interaction", { action: "grounding_expanded", party_id: party.id, party_rank: rank + 1 });
+              setGroundingOpen((o) => !o);
+            }}
             className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors w-full text-right focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
             aria-expanded={groundingOpen}
             aria-label={`${party.name} — ${accordionLabel}`}

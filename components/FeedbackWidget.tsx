@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { mpTrack } from "@/lib/mixpanel";
 import { MessageIcon, CheckCircleIcon } from "@/components/icons";
 
 const MAX_SUBMISSIONS = 3;
@@ -19,10 +20,13 @@ export default function FeedbackWidget() {
   }, []);
 
   useEffect(() => {
-    const handler = () => setOpen(true);
+    const handler = () => {
+      if (!open) mpTrack("feedback_opened", { page: pageRef.current });
+      setOpen(true);
+    };
     window.addEventListener("open-feedback-widget", handler);
     return () => window.removeEventListener("open-feedback-widget", handler);
-  }, []);
+  }, [open]);
 
   if (done) return null;
 
@@ -36,6 +40,7 @@ export default function FeedbackWidget() {
         body: JSON.stringify({ text, context: pageRef.current }),
       });
       if (res.ok) {
+        mpTrack("feedback_submitted", { page: pageRef.current });
         const next = count + 1;
         setCount(next);
         setText("");
@@ -99,7 +104,10 @@ export default function FeedbackWidget() {
         </div>
       )}
       <button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          if (!open) mpTrack("feedback_opened", { page: pageRef.current });
+          setOpen((o) => !o);
+        }}
         className="flex items-center gap-1.5 bg-white border border-gray-200 shadow-md rounded-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:shadow-lg transition-shadow focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none"
       >
         <MessageIcon className="w-4 h-4" />

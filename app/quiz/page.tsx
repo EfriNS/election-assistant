@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
@@ -37,6 +37,8 @@ const FOLLOW_UP_CAPS: Record<string, Record<number, number>> = {
 
 const LOADING_VERBS_FORMAL = ["מנתח...", "שוקל...", "חושב...", "מגבש..."];
 const LOADING_VERBS_PERSONAL = ["מקשיב...", "מעכל...", "מהרהר...", "מתבשל...", "מתפלסף..."];
+
+const secondsSince = (startMs: number) => Math.round((Date.now() - startMs) / 1000);
 
 // ─── Scoring — see lib/scoring.ts ────────────────────────────────────────────
 
@@ -135,8 +137,10 @@ function QuizInner() {
 
   // Identify this quiz session in Mixpanel and fire session-init event.
   // Runs once on mount; tone/depth are URL params and don't change.
+  // `variant` duplicates tone+depth as one property so any report (funnels
+  // included) can segment by the pair with a single breakdown.
   useEffect(() => {
-    mpIdentify(sessionId, { tone, depth });
+    mpIdentify(sessionId, { tone, depth, variant: `${tone}/${depth}` });
     mpTrack("quiz_session_init", { session_id: sessionId, tone, depth });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -144,6 +148,15 @@ function QuizInner() {
   const [step, setStep] = useState<Step>("rank");
   const [buckets, setBuckets] = useState<Record<string, number>>({});
   const [questionIndex, setQuestionIndex] = useState(0);
+
+  // Timing anchors for analytics duration props. Refs, not state — handlers
+  // read them synchronously and updates must not trigger re-renders. Initialized
+  // to 0 (render must stay pure); the reset effects below stamp real times
+  // before any event reads them.
+  const rankStartRef = useRef(0);
+  const topicStartRef = useRef(0);
+  const questionStartRef = useRef(0);
+  const [quizCompletedAt, setQuizCompletedAt] = useState<number | null>(null);
 
   // All Q&A collected per topic
   const [topicQA, setTopicQA] = useState<Record<string, TopicQA>>({});
@@ -198,6 +211,19 @@ function QuizInner() {
     setFollowUpDraft("");
   }, [currentFollowUp]);
 
+  // Reset analytics timing anchors when the visible view changes. `loading` is
+  // in the question-anchor deps so AI-generation wait doesn't count as time the
+  // user spent reading/answering a question.
+  useEffect(() => {
+    if (step === "rank") rankStartRef.current = Date.now();
+  }, [step]);
+  useEffect(() => {
+    if (step === "questions") topicStartRef.current = Date.now();
+  }, [step, questionIndex]);
+  useEffect(() => {
+    if (step === "questions" && !loading) questionStartRef.current = Date.now();
+  }, [step, questionIndex, currentFollowUp, loading]);
+
   // Fire /api/score-topics when entering the close step. This runs in the background while
   // the user writes their close-step text, hiding latency before results render.
   useEffect(() => {
@@ -234,9 +260,14 @@ function QuizInner() {
           body: JSON.stringify({ topics: topicsForScoring, sessionId }),
         });
         const data = await r.json() as { scores?: Record<string, Record<string, number | null>>; errorCode?: string };
-        if (active && data.scores) setAiScores(data.scores);
+        if (active && data.scores) {
+          setAiScores(data.scores);
+        } else if (!data.scores) {
+          mpTrack("api_error", { session_id: sessionId, endpoint: "/api/score-topics", error_code: data.errorCode ?? "SERVER_ERROR" });
+        }
       } catch {
         // silently degrade: calcResults falls back to deterministic-only
+        mpTrack("api_error", { session_id: sessionId, endpoint: "/api/score-topics", error_code: "SERVER_ERROR" });
       } finally {
         setIsScoring(false);
       }
@@ -260,17 +291,29 @@ function QuizInner() {
     });
 
   // ── Navigation helpers ──────────────────────────────────────────────────────
-  type TopicCompletedProps = { followUpCount: number; openerWasFreeText: boolean; aspectsProbed: string[] };
+  // `completed` is deliberately required: an optional param with ?? defaults let
+  // the skip buttons silently record every skipped topic as "0 follow-ups, no
+  // free text, no aspects" — corrupting the AI-engagement metrics.
+  type TopicCompletedProps = {
+    followUpCount: number;
+    openerWasFreeText: boolean;
+    aspectsProbed: string[];
+    openerAnswered: boolean;
+    skippedFollowUp?: boolean;
+  };
 
-  const advanceToNextTopic = (prologue: string | null, completed?: TopicCompletedProps) => {
+  const advanceToNextTopic = (prologue: string | null, completed: TopicCompletedProps) => {
     mpTrack("topic_completed", {
       session_id: sessionId,
       topic_id: topicsToAsk[questionIndex],
       topic_index: questionIndex,
       total_topics: topicsToAsk.length,
-      follow_up_count: completed?.followUpCount ?? 0,
-      opener_was_free_text: completed?.openerWasFreeText ?? false,
-      aspects_probed: completed?.aspectsProbed ?? [],
+      follow_up_count: completed.followUpCount,
+      opener_was_free_text: completed.openerWasFreeText,
+      aspects_probed: completed.aspectsProbed,
+      opener_answered: completed.openerAnswered,
+      skipped_follow_up: completed.skippedFollowUp ?? false,
+      seconds_on_topic: secondsSince(topicStartRef.current),
     });
     setCurrentFollowUp(null);
     setCurrentPrologue(prologue);
@@ -286,6 +329,25 @@ function QuizInner() {
     } else {
       setStep("close");
     }
+  };
+
+  // Question-grain progression event — the "last event seen" from a session
+  // that never reaches topic_completed tells us exactly where it stalled
+  // (opener vs. follow-up #N), which topic-grain events can't.
+  const trackQuestionAnswered = (
+    questionType: "opener" | "follow_up",
+    answerMode: "choice" | "free_text" | "skip",
+    followUpIndex?: number
+  ) => {
+    mpTrack("question_answered", {
+      session_id: sessionId,
+      topic_id: topicsToAsk[questionIndex],
+      topic_index: questionIndex,
+      question_type: questionType,
+      answer_mode: answerMode,
+      ...(followUpIndex !== undefined ? { follow_up_index: followUpIndex } : {}),
+      seconds_on_question: secondsSince(questionStartRef.current),
+    });
   };
 
   const goBack = () => {
@@ -450,6 +512,7 @@ function QuizInner() {
   // Step 2: confirm selection and call API (triggered by "המשך" button or free-text submit)
   const handleOpenerAnswer = async (optionId: string, optionText: string) => {
     const topicId = topicsToAsk[questionIndex];
+    trackQuestionAnswered("opener", optionId === "other" ? "free_text" : "choice");
 
     setTopicQA((prev) => ({
       ...prev,
@@ -480,20 +543,21 @@ function QuizInner() {
           }));
         }
       } else {
-        advanceToNextTopic(data.prologue ?? null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [] });
+        advanceToNextTopic(data.prologue ?? null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [], openerAnswered: true });
       }
     } catch {
       mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
-      advanceToNextTopic(null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [] });
+      advanceToNextTopic(null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [], openerAnswered: true });
     } finally {
       setLoading(false);
     }
   };
 
   // ── Follow-up answer handler ────────────────────────────────────────────────
-  const handleFollowUpAnswer = async (answerText: string) => {
+  const handleFollowUpAnswer = async (answerText: string, answerMode: "choice" | "free_text") => {
     const topicId = topicsToAsk[questionIndex];
     const answeredFollowUp = currentFollowUp!;
+    trackQuestionAnswered("follow_up", answerMode, followUpsAskedThisTopic);
 
     const newFollowUps = [
       ...(topicQA[topicId]?.followUps ?? []),
@@ -510,7 +574,7 @@ function QuizInner() {
     // Hard cap — skip API call. Scales with the topic's priority weight.
     const followUpHardCap = FOLLOW_UP_CAPS[depth]?.[buckets[topicId] ?? 2] ?? 1;
     if (followUpsAskedThisTopic >= followUpHardCap) {
-      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
+      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [], openerAnswered: true });
       return;
     }
 
@@ -537,11 +601,11 @@ function QuizInner() {
           }));
         }
       } else {
-        advanceToNextTopic(data.prologue ?? null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
+        advanceToNextTopic(data.prologue ?? null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [], openerAnswered: true });
       }
     } catch {
       mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
-      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [] });
+      advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [], openerAnswered: true });
     } finally {
       setLoading(false);
     }
@@ -564,6 +628,14 @@ function QuizInner() {
             very_important_count: Object.values(buckets).filter((w) => w === 3).length,
             important_count: Object.values(buckets).filter((w) => w === 2).length,
             low_count: Object.values(buckets).filter((w) => w === 1).length,
+            // List props duplicate the {topic}_bucket wide props: breaking down
+            // by a list property is the only way Mixpanel shows real topic names
+            // per bucket instead of 9 generically-lettered metrics.
+            critical_topics: TOPICS.filter((t) => buckets[t.id] === 4).map((t) => t.id),
+            very_important_topics: TOPICS.filter((t) => buckets[t.id] === 3).map((t) => t.id),
+            important_topics: TOPICS.filter((t) => buckets[t.id] === 2).map((t) => t.id),
+            low_topics: TOPICS.filter((t) => buckets[t.id] === 1).map((t) => t.id),
+            seconds_on_step: secondsSince(rankStartRef.current),
             ...Object.fromEntries(TOPICS.map((t) => [`${t.id}_bucket`, buckets[t.id] ?? 0])),
           });
           setQuestionIndex(0);
@@ -607,7 +679,10 @@ function QuizInner() {
               topics_completed: topicsToAsk.filter((tid) => topicQA[tid]).length,
               topics_missed: topicsToAsk.length - topicsToAsk.filter((tid) => topicQA[tid]).length,
               has_close_text: closeText.trim().length > 0,
+              close_text_length: closeText.trim().length,
+              free_text_opener_count: topicsToAsk.filter((tid) => topicQA[tid]?.openerAnswerId === "other").length,
             });
+            setQuizCompletedAt(Date.now());
             setStep("results");
           }}
             className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold hover:bg-teal-700 transition-colors">
@@ -652,6 +727,11 @@ function QuizInner() {
             })
         )}
         sessionId={sessionId}
+        quizContext={{
+          topicsSelected: topicsToAsk.length,
+          aiScoringUsed: aiScores !== undefined,
+          quizCompletedAtMs: quizCompletedAt,
+        }}
         onBack={() => setStep("close")}
       />
     );
@@ -738,7 +818,7 @@ function QuizInner() {
                       />
                       {followUpDraft.trim() && (
                         <button
-                          onClick={() => handleFollowUpAnswer(followUpDraft.trim())}
+                          onClick={() => handleFollowUpAnswer(followUpDraft.trim(), "free_text")}
                           className="mt-2 w-full bg-teal-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none"
                         >
                           המשך ←
@@ -766,14 +846,26 @@ function QuizInner() {
 
           {selectedFollowUpAnswer && (
             <button
-              onClick={() => handleFollowUpAnswer(selectedFollowUpAnswer)}
+              onClick={() => handleFollowUpAnswer(selectedFollowUpAnswer, "choice")}
               className="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:outline-none mb-3"
             >
               המשך ←
             </button>
           )}
 
-          <button onClick={() => advanceToNextTopic(null)}
+          <button onClick={() => {
+            // Skipping a shown follow-up still completes the topic — report the
+            // real opener/follow-up state, not zeros (the opener was answered,
+            // and the AI did probe an aspect even if the user didn't answer it).
+            trackQuestionAnswered("follow_up", "skip", followUpsAskedThisTopic);
+            advanceToNextTopic(null, {
+              followUpCount: topicQA[topicId]?.followUps?.length ?? 0,
+              openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other",
+              aspectsProbed: topicQA[topicId]?.coveredAspects ?? [],
+              openerAnswered: true,
+              skippedFollowUp: true,
+            });
+          }}
             className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
             דלג על שאלה זו
           </button>
@@ -873,7 +965,17 @@ function QuizInner() {
           </button>
         )}
 
-        <button onClick={() => advanceToNextTopic(null)}
+        <button onClick={() => {
+          trackQuestionAnswered("opener", "skip");
+          // A selected-but-unconfirmed opener option is still stored in topicQA
+          // (and counts in scoring), so report it rather than assuming unanswered.
+          advanceToNextTopic(null, {
+            followUpCount: 0,
+            openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other",
+            aspectsProbed: [],
+            openerAnswered: !!topicQA[topicId]?.openerAnswerId,
+          });
+        }}
           className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg px-4 py-2 hover:border-gray-300 hover:text-gray-600 transition-all text-center focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none">
           דלג על שאלה זו
         </button>

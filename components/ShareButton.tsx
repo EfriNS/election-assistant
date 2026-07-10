@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { mpTrack } from "@/lib/mixpanel";
 import { ShareIcon, CheckCircleIcon } from "@/components/icons";
 
 const isPreview = process.env.DEPLOY_ENV !== "production";
@@ -23,8 +24,10 @@ export default function ShareButton({ variant = "prominent" }: Props) {
     if (navigator.share) {
       try {
         await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url });
+        mpTrack("share_clicked", { placement: variant, method: "native", completed: true });
       } catch {
-        // user cancelled — nothing to do
+        // user cancelled — still worth counting the intent
+        mpTrack("share_clicked", { placement: variant, method: "native", completed: false });
       }
       return;
     }
@@ -34,8 +37,10 @@ export default function ShareButton({ variant = "prominent" }: Props) {
       await navigator.clipboard.writeText(`${SHARE_TEXT}\n${url}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+      mpTrack("share_clicked", { placement: variant, method: "clipboard", completed: true });
     } catch {
       // clipboard also unavailable — silently fail
+      mpTrack("share_clicked", { placement: variant, method: "clipboard", completed: false });
     }
   };
 

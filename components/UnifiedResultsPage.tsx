@@ -26,6 +26,8 @@ type Props = {
   topicCoveredAspects?: Record<string, string[]>;
   topicScores?: Record<string, Record<string, number>>; // partyId → topicId → 0–100
   sessionId?: string;
+  // Quiz-session context for analytics enrichment (only the quiz flow passes it)
+  quizContext?: { topicsSelected: number; aiScoringUsed: boolean; quizCompletedAtMs: number | null };
   onBack: () => void;
   // When provided, skips the internal /api/results call (used by prototype D)
   externalAiData?: AiData | null;
@@ -40,6 +42,7 @@ export default function UnifiedResultsPage({
   topicCoveredAspects,
   topicScores,
   sessionId,
+  quizContext,
   onBack,
   externalAiData,
   externalAiLoading,
@@ -58,8 +61,12 @@ export default function UnifiedResultsPage({
   const aiData = isExternal ? externalAiData : internalAiData;
   const aiLoading = isExternal ? (externalAiLoading ?? false) : internalAiLoading;
 
+  const trackInteraction = (action: string, extra?: Record<string, unknown>) =>
+    mpTrack("results_interaction", { session_id: sessionId, action, ...extra });
+
   useEffect(() => {
     if (isExternal) return;
+    const fetchStart = Date.now();
     fetch("/api/results", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -81,6 +88,14 @@ export default function UnifiedResultsPage({
       .then((data) => {
         if (data.profile && data.partyBlurbs) setInternalAiData(data);
         if (data.groundings) setGroundings(data.groundings);
+        // How long users stared at the "analyzing" state, and whether the AI
+        // layer actually arrived — Q6 results can't be interpreted without this.
+        mpTrack("results_ai_loaded", {
+          session_id: sessionId,
+          blurb_shown: !!(data.profile && data.partyBlurbs),
+          groundings_shown: !!data.groundings,
+          seconds_to_load: Math.round((Date.now() - fetchStart) / 1000),
+        });
       })
       .catch(() => {
         mpTrack("api_error", { session_id: sessionId, endpoint: "/api/results", error_code: "SERVER_ERROR" });
@@ -96,14 +111,27 @@ export default function UnifiedResultsPage({
       session_id: sessionId,
       top_party: results[0].id,
       top_score: results[0].score,
-      ...(results[1] ? { second_party: results[1].id, second_score: results[1].score } : {}),
+      // spread_top2 measures recommendation decisiveness (#1 vs #2);
+      // spread_top3 measures how muddy the whole top group is.
+      ...(results[1] ? { second_party: results[1].id, second_score: results[1].score, score_spread_top2: results[0].score - results[1].score } : {}),
       ...(results[2] ? { third_party: results[2].id, third_score: results[2].score, score_spread_top3: results[0].score - results[2].score } : {}),
+      top3_parties: results.slice(0, 3).map((r) => r.id),
       ...Object.fromEntries(results.map((r) => [`score_${r.id}`, r.score])),
+      ...(quizContext
+        ? {
+            topics_selected: quizContext.topicsSelected,
+            ai_scoring_used: quizContext.aiScoringUsed,
+            ...(quizContext.quizCompletedAtMs
+              ? { seconds_to_results: Math.round((Date.now() - quizContext.quizCompletedAtMs) / 1000) }
+              : {}),
+          }
+        : {}),
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSavePdf = async () => {
+    trackInteraction("pdf_export");
     setPdfLoading(true);
     setPdfError(false);
     try {
@@ -132,6 +160,7 @@ export default function UnifiedResultsPage({
       URL.revokeObjectURL(url);
     } catch (e) {
       console.error("[export-pdf]", e);
+      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/export-pdf", error_code: "SERVER_ERROR" });
       setPdfError(true);
       setTimeout(() => setPdfError(false), 4000);
     } finally {
@@ -142,7 +171,7 @@ export default function UnifiedResultsPage({
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-xl">
-        <button onClick={onBack} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">
+        <button onClick={() => { trackInteraction("back_to_quiz"); onBack(); }} className="text-sm text-gray-400 hover:text-gray-600 mb-8 inline-block">
           → חזרה
         </button>
 
@@ -223,7 +252,9 @@ export default function UnifiedResultsPage({
         })()}
 
         {/* Methodology */}
-        <details className="bg-gray-50 border border-gray-200 rounded-xl mt-6 text-xs text-gray-500 leading-relaxed group">
+        <details
+          onToggle={(e) => { if (e.currentTarget.open) trackInteraction("methodology_opened"); }}
+          className="bg-gray-50 border border-gray-200 rounded-xl mt-6 text-xs text-gray-500 leading-relaxed group">
           <summary className="px-4 py-3 cursor-pointer select-none list-none flex items-center justify-between text-gray-500 hover:text-gray-700">
             <span>
               <strong className="text-gray-600">שיטת החישוב:</strong>{" "}
@@ -320,13 +351,13 @@ export default function UnifiedResultsPage({
         {/* Home navigation */}
         <div className="mt-6 text-center">
           {!confirmHome ? (
-            <button onClick={() => setConfirmHome(true)} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">
+            <button onClick={() => { trackInteraction("go_home_clicked"); setConfirmHome(true); }} className="text-sm text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded">
               → חזרה לדף הבית
             </button>
           ) : (
             <div className="flex items-center justify-center gap-2 text-sm">
               <span className="text-gray-500">התשובות והתוצאות יאבדו —</span>
-              <button onClick={() => router.push("/")} className="text-red-500 hover:text-red-700 font-medium focus-visible:ring-2 focus-visible:ring-red-300 focus-visible:outline-none rounded">
+              <button onClick={() => { trackInteraction("go_home_confirmed"); router.push("/"); }} className="text-red-500 hover:text-red-700 font-medium focus-visible:ring-2 focus-visible:ring-red-300 focus-visible:outline-none rounded">
                 בטוח
               </button>
               <span className="text-gray-300">|</span>
