@@ -1,5 +1,46 @@
 # Changelog
 
+## 2026-07-11 — Mixpanel analytics round 2: richer collection, behavioral signals, honest dashboards
+
+### Context
+
+User requested a data-analyst review of the whole analytics setup (ANALYTICS-DESIGN.md + MIXPANEL-DASHBOARDS.md): what's collected, how it's presented, and whether the Q1–Q7 product questions are actually answerable. Review was grounded in live production data (30d: 32 sessions, 34% completion, 14/27 selecting all 9 topics).
+
+### Collection (code) — event schema grew 7 → 18 events
+
+- **Skip data bug fixed (the round's headline)**: the follow-up skip button called `advanceToNextTopic` with no payload, so `?? 0`/`?? []` defaults recorded every skipped topic as "0 follow-ups, no free text, no aspects" — inflating Q4's "AI not engaging" signal with user disengagement. Structural fix: the payload param is now *required* (the type system blocks future omission); skips report stored state plus new `skipped_follow_up`/`opener_answered` props. Pre-2026-07-10 Q4 data carries this caveat (noted in ANALYTICS-DESIGN.md).
+- **New events**: `question_answered` (question-grain progression + `switch_count` hesitation + per-question timing, skip/free-text modes), `topic_priority` (long-format, one per topic — enables per-topic × per-level stacked reports with real labels, replacing the A–I lettered metrics), `results_interaction` (pdf/methodology/grounding-expand per party+rank/back/home), `results_ai_loaded` (blurb delivery + perceived wait), `results_exit` (dwell via pagehide + sendBeacon), `share_clicked`, `feedback_opened`/`feedback_submitted`, `hint_opened` (TermHint usage — a round-1 user-testing request, previously unmeasured), `navigated_back`, `about_viewed` (new `PageViewTracker`).
+- **Enriched events**: `priorities_submitted` + topic-id list props (`critical_topics` etc.) + `seconds_on_step`; `results_viewed` + `score_spread_top2`/`top3_parties`/`ai_scoring_used`/`seconds_to_results`; `quiz_completed` + `close_text_length`/`free_text_opener_count`; `topic_completed` + `seconds_on_topic`; `variant` super prop (tone/depth pair); `api_error` now covers `/api/score-topics` (was silently swallowed) and `/api/export-pdf`.
+- Together these replace what session recordings were for (Clarity stays, masked, for discovery-of-unknowns only): time-on-X, open-X, hesitation, skips.
+
+### Dashboards (board 11325742)
+
+4 per-variant funnels (tone×depth, user-requested); "Topic-by-topic survival by topics selected" (funnel breakdown by `total_topics` — one survival curve per cohort, replacing the aggregate that conflated "selected fewer" with "dropped off"); "Completion rate by topics selected" (replaces the survivorship-biased "Selected vs. completed"); stacked "Topics missed by completers" (bars = N selected, stacks = missed; applied via UI after persistent API write failures on that cell); "Sessions per day" + "Completion rate over time" context pair; free-text opener rate now displays % via ×100 formula. Two user-facing display mysteries root-caused: "277.5%"/"134%" badges are Mixpanel's relative-to-overall display layer, not data.
+
+**First findings from the new views**: all four 3–5-topic sessions abandoned while 9-topic selectors completed at 50% (inverts the "long quiz kills completion" hypothesis; small n); priorities behavior is forced-classification (avg 8 of 9 topics classified, 6+ marked very-important+, low marks rare at 0.48/session) — drove the copy change below.
+
+### Product copy (PrioritiesStep)
+
+Selection↔length tradeoff line (replaces one-sided "more topics = more precise"), "less important? just leave it blank" hint, and the critical-gate consequence sentence bolded (users surprised by gated results). Approved wording by user; no pre-marking of defaults (decided against — anchors users, erases the engagement signal).
+
+### Infra/tooling learned the hard way (distilled into learnings files)
+
+Mixpanel MCP: every mutation returns an error while usually applying (verify via `Get-Dashboard`, or `Get-Report` bookmark timestamps when the board won't read); row adds corrupt the board's API read path (UI unaffected; user UI edits heal it — mostly); some cell writes fail persistently for real; `Duplicate-Dashboard` retried itself into 3 copies; segment sort order and metric labels are UI-only. Headless verification pattern established: puppeteer-core + `@sparticuz/chromium` driving the real quiz, intercepting Mixpanel payloads (caught the port-3001-stale-server trap — Next silently moves ports; verify the served code before trusting a test run). `results_exit` beacon verified server-side in the Preview project.
+
+### New repo asset: `docs/mixpanel/`
+
+Config backup (layout snapshot + authored Run-Query payloads per bookmark). Exists because Mixpanel has no query-export or board-import API — the repo copy is the only rebuild material, proven necessary by two board corruptions this round. Maintenance habit documented: refresh after any board/query mutation session.
+
+### Verification
+
+Full headless E2E of the quiz flow (both skip paths, free-text opener, option switching, back-navigation, hint open, about page) capturing decoded Mixpanel payloads; `results_exit` confirmed via MCP query against the Preview project. 340 tests, `tsc`, `eslint`, production build all clean.
+
+### Files
+
+`app/quiz/page.tsx`, `components/{UnifiedResultsPage,PartyResultCard,ShareButton,FeedbackWidget,TermHint,PrioritiesStep,PageViewTracker(new)}.tsx`, `app/about/page.tsx`, `lib/mixpanel.ts`, `docs/{ANALYTICS-DESIGN,MIXPANEL-DASHBOARDS}.md`, `docs/mixpanel/*` (new), `docs/learnings/project/{ANALYTICS-PATTERNS,INFRA-PATTERNS,NEXTJS-REACT-PATTERNS}.md`, `TODO.md`.
+
+Commits `70ef144`…`09ea120` (9), merged via `96fc21c`. Phase 3 reports (stacked priorities, labeled critical marks, hesitation/skip/engagement views) now unblocked by this deploy — TODO backlog #4.
+
 ## 2026-07-10 — Fix: acronym-quote JSON truncation in follow-up/results prompts
 
 ### Context
