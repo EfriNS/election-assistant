@@ -67,18 +67,18 @@ Applied via `Bulk-Edit-Events`/`Edit-Property` so labels are readable everywhere
 
 ---
 
-## Round 2 Report Plan (2026-07-10) — PENDING EXECUTION
+## Round 2 Report Plan (2026-07-10) — Phase 2 executed, see status marks
 
-_From the data-analyst review (see ANALYTICS-DESIGN.md Round 2). The collection side shipped in `feature/mixpanel-analytics-round2`; the report changes below could not be executed that session (Mixpanel MCP disconnected mid-session; tools return only after a Claude Code restart). Execute them one report at a time per the gotchas above._
+_From the data-analyst review (see ANALYTICS-DESIGN.md Round 2). The collection side shipped in `feature/mixpanel-analytics-round2`. Phase 2 was executed 2026-07-10 (post-restart session) — status marked per item below. **Incident**: mid-execution, a text-header-cell add left board 11325742 unreadable via the MCP's `Get-Dashboard` (every read errors; `List-Dashboards` works; layout is intact server-side — the board still duplicates). Recovery is via the web UI: check the board renders, delete any stray "Context — volume & completion trend" text row, and verify/drag row order (intended: context row top; 4 variant funnels under the core funnel). Do not keep mutating an unreadable board via MCP._
 
 Baseline at review time (30d, 32 sessions): funnel 32 → 27 (84%) → 18 (67%) → 11 completed (34% overall); ~45s on priorities, ~11–12 min to complete; 14/27 sessions selected all 9 topics; survival curve shows gradual attrition, no cliff.
 
-### Phase 2 — works on existing data (build immediately)
+### Phase 2 — works on existing data (executed 2026-07-10)
 
-1. **Q1: four per-variant funnels** (user-requested): same 4 steps (`quiz_session_init → priorities_submitted → topic_completed → quiz_completed`, session window), one report per tone×depth pair via two global filters (`tone equals X` + `depth equals Y`): formal/short, formal/deep, personal/short, personal/deep. Keep the existing overall funnel. Note: formal/deep had only 3 sessions/30d at build time — expect noise until launch volume.
-2. **Q2: sort "Topics selected per session" by topic_count ascending (1→9)**, not by value (user-requested). If the insights sort config isn't reachable via MCP, use a numeric-bucket breakdown (min 1, max 9, size 1) which renders in natural order.
-3. **Q2: replace "Selected vs completed"** (survivorship-biased — averages over completers only) with **completion rate by topic_count**: funnel `priorities_submitted → quiz_completed`, breakdown by `topic_count` (buckets 3–5 / 6–8 / 9 to fight sparsity). This answers "is the quiz the right length" directly: do 9-topic selectors finish less often?
-4. **Context row at the top of the board**: (a) sessions/day line (`quiz_session_init`, total, daily); (b) completion-rate-over-time (Q1 funnel, `trends` chart type, weekly) — shows whether shipped fixes move completion.
+1. ✅ **Q1: four per-variant funnels** (user-requested): reports 91328275 (formal/short) + 91328355 (formal/deep) in row `eEZoqDiS`, 91328385 (personal/short) + 91328418 (personal/deep) in row `gVwX5xqN`. Same 4 steps, session window, two global filters each. Existing overall funnel kept. formal/deep had only 3 sessions/30d at build time — expect noise until launch volume.
+2. ✅ **Q2: "Topics selected per session" sorted 1→9** (user-requested): cell `oCuZt8Ui` updated in place with a numeric-bucket breakdown (min 1, max 10, size 1, per-value groups — max 10 so 9 gets its own bucket instead of a ">= 9" overflow group).
+3. ✅ **Q2: "Selected vs completed" replaced** with **"Completion rate by topics selected"** (cell `BHJQXEjD`): `priorities_submitted → quiz_completed` funnel bucketed `intervals: [6,9]` → <6 / 6–<9 / ≥9. First read (30d, n=27): ≥9 topics = 50% completion, 6–8 = 44%, **3–5 = 0% (0 of 4)** — the light selectors abandoned, opposite of the "long quiz kills completion" hypothesis. Small n; watch.
+4. ⚠️ **Context row**: "Sessions per day" (report 91328451, row `c73G95T3`) ✅. "Completion rate over time" cell attach unverified (the board became unreadable before verification — check in UI). The text header add is what corrupted the read path — **skip text headers for this row**; the report names are self-explanatory. Row placement (top of board) unverified — drag in UI if needed.
 
 ### Phase 3 — needs R2 events in production first (Lexicon gotcha: properties must fire before they're usable in reports)
 
