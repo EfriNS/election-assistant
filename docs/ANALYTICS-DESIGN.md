@@ -96,7 +96,7 @@ Topic analytics data (follow-up count, aspects probed) was computed inside a clo
 
 ---
 
-## Event Schema (17 events)
+## Event Schema (18 events)
 
 All events include `session_id`. Super properties `tone`, `depth`, and `variant` (the pair, e.g. `formal/short` — added Round 2 so any report, funnels included, can segment by one breakdown) auto-attach via `mp.register()`.
 
@@ -121,6 +121,13 @@ seconds_on_step   (R2 — time spent ranking)
 {topic_id}_bucket  (one per topic, value 0–4)
 ```
 Answers: Q2 (topics selected), Q3 (priority distribution)
+
+### `topic_priority` _(R2)_
+Fires once per topic (all 9, including unmarked) alongside `priorities_submitted` — the long-format companion. This is the only event shape Mixpanel can turn into per-topic × per-level reports with real topic labels (e.g. a stacked bar of critical/very-important/important marks per topic); the wide `{topic}_bucket` props label metrics A–I and list props can't stack levels. Also directly measures "left blank" vs. "marked low" (`0_not_marked` vs `1_low`).
+```
+session_id, topic_id, bucket (0–4), bucket_label (0_not_marked … 4_critical)
+```
+Answers: Q3 (per-topic priority distribution, properly labeled)
 
 ### `question_answered` _(R2)_
 Fires on every answered or skipped question — the question-grain progression event. A session's last `question_answered` tells you exactly where it stalled (opener vs. follow-up #N), which `topic_completed` alone can't.

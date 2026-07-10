@@ -23,6 +23,12 @@ const BUCKET_LABELS: Record<number, string> = {
   4: "קריטי", 3: "חשוב מאוד", 2: "חשוב", 1: "פחות חשוב",
 };
 
+// English level names for analytics (Mixpanel breakdowns can't map Hebrew
+// values to display names; ids keep reports readable and sortable).
+const PRIORITY_LEVEL_LABELS: Record<number, string> = {
+  4: "4_critical", 3: "3_very_important", 2: "2_important", 1: "1_low", 0: "0_not_marked",
+};
+
 const OTHER_OPTION = "אחר — פרט";
 
 // Follow-up depth scales with how important the user marked the topic —
@@ -658,6 +664,19 @@ function QuizInner() {
             seconds_on_step: secondsSince(rankStartRef.current),
             ...Object.fromEntries(TOPICS.map((t) => [`${t.id}_bucket`, buckets[t.id] ?? 0])),
           });
+          // Long-format companion: one event per topic. This is the only shape
+          // Mixpanel can turn into per-topic × per-level reports with real topic
+          // labels (stacked bars) — wide props label metrics A–I, list props
+          // can't stack levels. 9 events/session is negligible volume.
+          for (const t of TOPICS) {
+            const bucket = buckets[t.id] ?? 0;
+            mpTrack("topic_priority", {
+              session_id: sessionId,
+              topic_id: t.id,
+              bucket,
+              bucket_label: PRIORITY_LEVEL_LABELS[bucket],
+            });
+          }
           setQuestionIndex(0);
           setStep("questions");
         }}
