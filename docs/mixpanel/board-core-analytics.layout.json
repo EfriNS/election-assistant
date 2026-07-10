@@ -3,70 +3,277 @@
     "board_id": 11325742,
     "board_title": "Election Assistant — Core Analytics",
     "project_id": 4038344,
-    "as_of": "2026-07-10T20:03 last full Get-Dashboard read, patched with the one verified change since (report 91092898 rename/query, verified via Get-Report 2026-07-10T20:17). Pending user UI edits not yet reflected: stacked upgrade of 91338944, description edit on 91100366. Refresh when the board is readable again.",
+    "as_of": "2026-07-11: layout from last full Get-Dashboard read (2026-07-10T20:03) + verified changes since. Both user UI edits applied 2026-07-10 evening: 91338944 upgraded to stacked topics_selected × topics_missed (bookmark modified 22:46, name kept as 'Topics missed by completers'), 91100366 description edited. Get-Dashboard on this board remains broken for the MCP (UI unaffected) — refresh this snapshot when it reads again.",
     "note": "Row/cell ids are Mixpanel-internal and change if rows are recreated; report ids (bookmarks) are the stable references."
   },
   "rows": [
-    { "row_id": "SGADi75n", "cells": [{ "type": "text", "html": "<h2>Q1 — Is the funnel working?</h2>" }] },
-    { "row_id": "eEZoqDiS", "cells": [
-      { "type": "report", "report_id": 91328275, "name": "Funnel — formal/short", "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=formal AND depth=short (register+length pair). One of 4 per-variant funnels." },
-      { "type": "report", "report_id": 91328355, "name": "Funnel — formal/deep", "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=formal AND depth=deep. One of 4 per-variant funnels. Low volume at build time (3 sessions/30d) — expect noise until launch." }
-    ] },
-    { "row_id": "gVwX5xqN", "cells": [
-      { "type": "report", "report_id": 91328385, "name": "Funnel — personal/short", "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=personal AND depth=short. One of 4 per-variant funnels." },
-      { "type": "report", "report_id": 91328418, "name": "Funnel — personal/deep", "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=personal AND depth=deep. One of 4 per-variant funnels." }
-    ] },
-    { "row_id": "A68p1f1m", "cells": [
-      { "type": "report", "report_id": 91092898, "name": "Topic-by-topic survival by topics selected", "description": "One survival curve per cohort: the breakdown splits sessions by how many topics they selected (total_topics), so each colored segment is its own funnel. READ EACH SEGMENT ONLY UP TO ITS OWN N — steps beyond a cohort's N are structurally zero (a 7-topic session can't answer an 8th topic), not drop-off. Within-cohort full completion is the number to watch (e.g. 9-selected: 70% answer all 9). $overall = the old aggregate view." }
-    ] },
-    { "row_id": "lCjSjCdH", "cells": [{ "type": "text", "html": "<h2>Q2 — Is the quiz the right length?</h2>" }] },
-    { "row_id": "NYGkFmfW", "cells": [
-      { "type": "report", "report_id": 91092909, "name": "Topics selected per session", "description": "Distribution of topics selected (topic_count) per session, from Priorities Submitted events. Numeric-bucketed breakdown so bars are ordered 1→9 by topic count, not by frequency. (1→9 ordering itself is a UI sort setting, saved manually.)" }
-    ] },
-    { "row_id": "SAuLiFCR", "cells": [
-      { "type": "report", "report_id": 91092914, "name": "Completion rate by topics selected", "description": "Priorities Submitted → Quiz Completed conversion, bucketed by topic_count (3–5 / 6–8 / 9). Replaces the survivorship-biased 'Selected vs. completed' (which averaged over completers only). Answers the actual length question: do users who select more topics finish less often?" }
-    ] },
-    { "row_id": "iYZUqCQM", "cells": [
-      { "type": "report", "report_id": 91338944, "name": "Topics missed by completers", "description": "PENDING USER UI UPGRADE to stacked topics_selected × topics_missed view (MCP cell updates on this cell fail persistently). Target name: 'Topics missed by topics selected (completers)'. Current: quiz_completed count, breakdown topics_missed (per-value buckets)." }
-    ] },
-    { "row_id": "X89imVmD", "cells": [{ "type": "text", "html": "<h2>Q3 — How are priorities distributed?</h2>" }] },
-    { "row_id": "PJiZFUDz", "cells": [
-      { "type": "report", "report_id": 91092931, "name": "Priority bucket distribution", "description": "Average Critical / Very Important / Important / Low priority counts per session, from Priorities Submitted events" }
-    ] },
-    { "row_id": "f7xU8dDW", "cells": [
-      { "type": "report", "report_id": 91100214, "name": "Critical marks by topic", "description": "Metrics A–I = count of sessions marking each topic's priority as CRITICAL (bucket=4), fixed order: A=Security, B=Economy, C=Housing, D=Education, E=Health, F=Religion, G=Justice, H=Equality, I=Ecology. To be replaced post-deploy by a topic_priority breakdown (real labels)." }
-    ] },
-    { "row_id": "tHiFcEJ1", "cells": [{ "type": "text", "html": "<h2>Q4 — Is the content calibrated?</h2>" }] },
-    { "row_id": "MG4w4UJk", "cells": [
-      { "type": "report", "report_id": 91100284, "name": "Free-text opener rate by topic", "description": "% of each topic's opener answers that were free-text (formula: average of the 0/1 Opener Was Free-Text × 100, so 30 = 30%). Note: any extra % badge Mixpanel shows next to a bar is that topic relative to the overall average — not the rate itself." }
-    ] },
-    { "row_id": "E22MTBWC", "cells": [
-      { "type": "report", "report_id": 91100366, "name": "Follow-up depth by topic", "description": "Average Follow-up Count by Topic and Depth, from Topic Completed events. PENDING USER UI EDIT: add note that values are counts and '% of overall' badges are segment-vs-overall-average display artifacts." }
-    ] },
-    { "row_id": "c5bFox7p", "cells": [
-      { "type": "report", "report_id": 91100460, "name": "Aspects probed", "description": "Which follow-up 'aspect' (party-platform dimension) got covered per topic (TOPIC_KEY_DIMENSIONS, lib/questions.ts), from the AI's targetedAspect per follow-up. '(empty list)' = zero aspects covered. Post skip-bug fix (2026-07-10), pair with skipped_follow_up to separate user skips from AI-not-engaging." }
-    ] },
-    { "row_id": "PGu3z8j8", "cells": [{ "type": "text", "html": "<h2>Q5 — Are personalization choices meaningful?</h2>" }] },
-    { "row_id": "rUdymYt6", "cells": [
-      { "type": "report", "report_id": 91100524, "name": "Follow-up count by depth", "description": "Average Follow-up Count from Topic Completed events, by Depth" }
-    ] },
-    { "row_id": "HWESZmJN", "cells": [
-      { "type": "report", "report_id": 91100576, "name": "Completion by tone", "description": "4-step funnel (Quiz Started → Priorities Submitted → Topic Completed → Quiz Completed), breakdown by Tone only" }
-    ] },
-    { "row_id": "ODuMt2T4", "cells": [{ "type": "text", "html": "<h2>Q6 — Are results useful?</h2>" }] },
-    { "row_id": "pNzHHYij", "cells": [
-      { "type": "report", "report_id": 91100632, "name": "Top party distribution", "description": "Count of Results Viewed events by Top Matched Party" }
-    ] },
-    { "row_id": "bRG3VqoK", "cells": [
-      { "type": "report", "report_id": 91100650, "name": "Score spread (top 3)", "description": "score_spread_top3 = (top match score) − (3rd match score). High = clear front-runner; low = muddy top group. score_spread_top2 exists post-2026-07-10 for #1-vs-#2 decisiveness." }
-    ] },
-    { "row_id": "nJuzeFPH", "cells": [{ "type": "text", "html": "<h2>Q7 — Are there operational problems?</h2>" }] },
-    { "row_id": "sDEyT2KC", "cells": [
-      { "type": "report", "report_id": 91100712, "name": "API errors over time", "description": "Count of API Error events by API Endpoint and Error Code, trended daily" }
-    ] },
-    { "row_id": "c73G95T3", "cells": [
-      { "type": "report", "report_id": 91328451, "name": "Sessions per day", "description": "Daily Quiz Started count — volume context for every other number on this board." },
-      { "type": "report", "report_id": 91328518, "name": "Completion rate over time", "description": "Quiz Started → Quiz Completed conversion trended over time (funnel trends view, 3 months) — shows whether shipped fixes move completion." }
-    ] }
+    {
+      "row_id": "SGADi75n",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q1 — Is the funnel working?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "eEZoqDiS",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91328275,
+          "name": "Funnel — formal/short",
+          "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=formal AND depth=short (register+length pair). One of 4 per-variant funnels."
+        },
+        {
+          "type": "report",
+          "report_id": 91328355,
+          "name": "Funnel — formal/deep",
+          "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=formal AND depth=deep. One of 4 per-variant funnels. Low volume at build time (3 sessions/30d) — expect noise until launch."
+        }
+      ]
+    },
+    {
+      "row_id": "gVwX5xqN",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91328385,
+          "name": "Funnel — personal/short",
+          "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=personal AND depth=short. One of 4 per-variant funnels."
+        },
+        {
+          "type": "report",
+          "report_id": 91328418,
+          "name": "Funnel — personal/deep",
+          "description": "Started → Prioritized → Topic answered → Completed, filtered to tone=personal AND depth=deep. One of 4 per-variant funnels."
+        }
+      ]
+    },
+    {
+      "row_id": "A68p1f1m",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91092898,
+          "name": "Topic-by-topic survival by topics selected",
+          "description": "One survival curve per cohort: the breakdown splits sessions by how many topics they selected (total_topics), so each colored segment is its own funnel. READ EACH SEGMENT ONLY UP TO ITS OWN N — steps beyond a cohort's N are structurally zero (a 7-topic session can't answer an 8th topic), not drop-off. Within-cohort full completion is the number to watch (e.g. 9-selected: 70% answer all 9). $overall = the old aggregate view."
+        }
+      ]
+    },
+    {
+      "row_id": "lCjSjCdH",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q2 — Is the quiz the right length?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "NYGkFmfW",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91092909,
+          "name": "Topics selected per session",
+          "description": "Distribution of topics selected (topic_count) per session, from Priorities Submitted events. Numeric-bucketed breakdown so bars are ordered 1→9 by topic count, not by frequency. (1→9 ordering itself is a UI sort setting, saved manually.)"
+        }
+      ]
+    },
+    {
+      "row_id": "SAuLiFCR",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91092914,
+          "name": "Completion rate by topics selected",
+          "description": "Priorities Submitted → Quiz Completed conversion, bucketed by topic_count (3–5 / 6–8 / 9). Replaces the survivorship-biased 'Selected vs. completed' (which averaged over completers only). Answers the actual length question: do users who select more topics finish less often?"
+        }
+      ]
+    },
+    {
+      "row_id": "iYZUqCQM",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91338944,
+          "name": "Topics missed by completers",
+          "description": "Stacked: bars = sessions that finished having selected N topics; stacks = how many of those N they skipped (topics_missed). Upgraded via UI 2026-07-10 (MCP writes to this cell fail persistently). Query in report-queries.json."
+        }
+      ]
+    },
+    {
+      "row_id": "X89imVmD",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q3 — How are priorities distributed?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "PJiZFUDz",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91092931,
+          "name": "Priority bucket distribution",
+          "description": "Average Critical / Very Important / Important / Low priority counts per session, from Priorities Submitted events"
+        }
+      ]
+    },
+    {
+      "row_id": "f7xU8dDW",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100214,
+          "name": "Critical marks by topic",
+          "description": "Metrics A–I = count of sessions marking each topic's priority as CRITICAL (bucket=4), fixed order: A=Security, B=Economy, C=Housing, D=Education, E=Health, F=Religion, G=Justice, H=Equality, I=Ecology. To be replaced post-deploy by a topic_priority breakdown (real labels)."
+        }
+      ]
+    },
+    {
+      "row_id": "tHiFcEJ1",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q4 — Is the content calibrated?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "MG4w4UJk",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100284,
+          "name": "Free-text opener rate by topic",
+          "description": "% of each topic's opener answers that were free-text (formula: average of the 0/1 Opener Was Free-Text × 100, so 30 = 30%). Note: any extra % badge Mixpanel shows next to a bar is that topic relative to the overall average — not the rate itself."
+        }
+      ]
+    },
+    {
+      "row_id": "E22MTBWC",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100366,
+          "name": "Follow-up depth by topic",
+          "description": "Average Follow-up Count by Topic and Depth, from Topic Completed events. Values are counts, not %; '% of overall' badges are segment-vs-overall-average display artifacts (description added via UI 2026-07-10)."
+        }
+      ]
+    },
+    {
+      "row_id": "c5bFox7p",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100460,
+          "name": "Aspects probed",
+          "description": "Which follow-up 'aspect' (party-platform dimension) got covered per topic (TOPIC_KEY_DIMENSIONS, lib/questions.ts), from the AI's targetedAspect per follow-up. '(empty list)' = zero aspects covered. Post skip-bug fix (2026-07-10), pair with skipped_follow_up to separate user skips from AI-not-engaging."
+        }
+      ]
+    },
+    {
+      "row_id": "PGu3z8j8",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q5 — Are personalization choices meaningful?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "rUdymYt6",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100524,
+          "name": "Follow-up count by depth",
+          "description": "Average Follow-up Count from Topic Completed events, by Depth"
+        }
+      ]
+    },
+    {
+      "row_id": "HWESZmJN",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100576,
+          "name": "Completion by tone",
+          "description": "4-step funnel (Quiz Started → Priorities Submitted → Topic Completed → Quiz Completed), breakdown by Tone only"
+        }
+      ]
+    },
+    {
+      "row_id": "ODuMt2T4",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q6 — Are results useful?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "pNzHHYij",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100632,
+          "name": "Top party distribution",
+          "description": "Count of Results Viewed events by Top Matched Party"
+        }
+      ]
+    },
+    {
+      "row_id": "bRG3VqoK",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100650,
+          "name": "Score spread (top 3)",
+          "description": "score_spread_top3 = (top match score) − (3rd match score). High = clear front-runner; low = muddy top group. score_spread_top2 exists post-2026-07-10 for #1-vs-#2 decisiveness."
+        }
+      ]
+    },
+    {
+      "row_id": "nJuzeFPH",
+      "cells": [
+        {
+          "type": "text",
+          "html": "<h2>Q7 — Are there operational problems?</h2>"
+        }
+      ]
+    },
+    {
+      "row_id": "sDEyT2KC",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91100712,
+          "name": "API errors over time",
+          "description": "Count of API Error events by API Endpoint and Error Code, trended daily"
+        }
+      ]
+    },
+    {
+      "row_id": "c73G95T3",
+      "cells": [
+        {
+          "type": "report",
+          "report_id": 91328451,
+          "name": "Sessions per day",
+          "description": "Daily Quiz Started count — volume context for every other number on this board."
+        },
+        {
+          "type": "report",
+          "report_id": 91328518,
+          "name": "Completion rate over time",
+          "description": "Quiz Started → Quiz Completed conversion trended over time (funnel trends view, 3 months) — shows whether shipped fixes move completion."
+        }
+      ]
+    }
   ]
 }

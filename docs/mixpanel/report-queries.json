@@ -12,17 +12,45 @@
       "query": {
         "name": "Funnel — formal/short",
         "metrics": [
-          { "eventName": "quiz_session_init" },
-          { "eventName": "priorities_submitted" },
-          { "eventName": "topic_completed" },
-          { "eventName": "quiz_completed" }
+          {
+            "eventName": "quiz_session_init"
+          },
+          {
+            "eventName": "priorities_submitted"
+          },
+          {
+            "eventName": "topic_completed"
+          },
+          {
+            "eventName": "quiz_completed"
+          }
         ],
-        "conversionTime": { "unit": "session" },
+        "conversionTime": {
+          "unit": "session"
+        },
         "countType": "unique",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } },
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        },
         "filters": [
-          { "type": "string", "propertyName": "tone", "operator": "equals", "value": "formal", "resource": "event" },
-          { "type": "string", "propertyName": "depth", "operator": "equals", "value": "short", "resource": "event" }
+          {
+            "type": "string",
+            "propertyName": "tone",
+            "operator": "equals",
+            "value": "formal",
+            "resource": "event"
+          },
+          {
+            "type": "string",
+            "propertyName": "depth",
+            "operator": "equals",
+            "value": "short",
+            "resource": "event"
+          }
         ]
       }
     },
@@ -47,21 +75,132 @@
       "query": {
         "name": "Topic-by-topic survival by topics selected",
         "metrics": [
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 0 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 1 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 2 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 3 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 4 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 5 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 6 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 7 }] },
-          { "eventName": "topic_completed", "filters": [{ "type": "number", "propertyName": "topic_index", "operator": "is equal to", "value": 8 }] }
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 7
+              }
+            ]
+          },
+          {
+            "eventName": "topic_completed",
+            "filters": [
+              {
+                "type": "number",
+                "propertyName": "topic_index",
+                "operator": "is equal to",
+                "value": 8
+              }
+            ]
+          }
         ],
-        "conversionTime": { "unit": "session" },
+        "conversionTime": {
+          "unit": "session"
+        },
         "countType": "unique",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } },
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        },
         "breakdowns": [
-          { "metric": { "type": "property", "propertyName": "total_topics", "resource": "event", "propertyType": "number" }, "buckets": { "min": 3, "max": 10, "size": 1, "intervals": null } }
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "total_topics",
+              "resource": "event",
+              "propertyType": "number"
+            },
+            "buckets": {
+              "min": 3,
+              "max": 10,
+              "size": 1,
+              "intervals": null
+            }
+          }
         ]
       }
     },
@@ -70,13 +209,40 @@
       "report_type": "insights",
       "query": {
         "name": "Topics selected per session",
-        "metrics": [{ "eventName": "priorities_submitted", "measurement": { "type": "basic", "math": "total" } }],
+        "metrics": [
+          {
+            "eventName": "priorities_submitted",
+            "measurement": {
+              "type": "basic",
+              "math": "total"
+            }
+          }
+        ],
         "breakdowns": [
-          { "metric": { "type": "property", "propertyName": "topic_count", "resource": "event", "propertyType": "number" }, "buckets": { "min": 1, "max": 10, "size": 1, "intervals": null } }
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topic_count",
+              "resource": "event",
+              "propertyType": "number"
+            },
+            "buckets": {
+              "min": 1,
+              "max": 10,
+              "size": 1,
+              "intervals": null
+            }
+          }
         ],
         "chartType": "bar",
         "unit": "month",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        }
       },
       "ui_only": "Ascending 1→9 segment sort is a UI display setting, re-apply manually after rebuild."
     },
@@ -85,29 +251,100 @@
       "report_type": "funnels",
       "query": {
         "name": "Completion rate by topics selected",
-        "metrics": [{ "eventName": "priorities_submitted" }, { "eventName": "quiz_completed" }],
-        "conversionTime": { "unit": "session" },
+        "metrics": [
+          {
+            "eventName": "priorities_submitted"
+          },
+          {
+            "eventName": "quiz_completed"
+          }
+        ],
+        "conversionTime": {
+          "unit": "session"
+        },
         "countType": "unique",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } },
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        },
         "breakdowns": [
-          { "metric": { "type": "property", "propertyName": "topic_count", "resource": "event", "propertyType": "number" }, "buckets": { "min": 3, "max": 9, "size": 3, "intervals": [6, 9] } }
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topic_count",
+              "resource": "event",
+              "propertyType": "number"
+            },
+            "buckets": {
+              "min": 3,
+              "max": 9,
+              "size": 3,
+              "intervals": [
+                6,
+                9
+              ]
+            }
+          }
         ]
       },
       "bucket_note": "intervals [6,9] renders as <6 / 6–<9 / ≥9 ≈ 3–5 / 6–8 / 9."
     },
     "91338944": {
-      "name": "Topics missed by topics selected (completers) — TARGET (pending user UI save; live report is still the single-breakdown version)",
+      "name": "Topics missed by completers (stacked — applied via UI 2026-07-10)",
       "report_type": "insights",
       "query": {
         "name": "Topics missed by topics selected (completers)",
-        "metrics": [{ "eventName": "quiz_completed", "measurement": { "type": "basic", "math": "total" } }],
+        "metrics": [
+          {
+            "eventName": "quiz_completed",
+            "measurement": {
+              "type": "basic",
+              "math": "total"
+            }
+          }
+        ],
         "breakdowns": [
-          { "metric": { "type": "property", "propertyName": "topics_selected", "resource": "event", "propertyType": "number" }, "buckets": { "min": 3, "max": 10, "size": 1, "intervals": null } },
-          { "metric": { "type": "property", "propertyName": "topics_missed", "resource": "event", "propertyType": "number" }, "buckets": { "min": 0, "max": 10, "size": 1, "intervals": null } }
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topics_selected",
+              "resource": "event",
+              "propertyType": "number"
+            },
+            "buckets": {
+              "min": 3,
+              "max": 10,
+              "size": 1,
+              "intervals": null
+            }
+          },
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topics_missed",
+              "resource": "event",
+              "propertyType": "number"
+            },
+            "buckets": {
+              "min": 0,
+              "max": 10,
+              "size": 1,
+              "intervals": null
+            }
+          }
         ],
         "chartType": "stacked-bar",
         "unit": "month",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        }
       }
     },
     "91100284": {
@@ -115,12 +352,40 @@
       "report_type": "insights",
       "query": {
         "name": "Free-text opener rate by topic",
-        "metrics": [{ "eventName": "topic_completed", "measurement": { "type": "aggregate-property", "math": "average", "propertyName": "opener_was_free_text" } }],
-        "formulas": [{ "label": "% free-text openers", "value": "A*100" }],
-        "breakdowns": [{ "metric": { "type": "property", "propertyName": "topic_id", "resource": "event" } }],
+        "metrics": [
+          {
+            "eventName": "topic_completed",
+            "measurement": {
+              "type": "aggregate-property",
+              "math": "average",
+              "propertyName": "opener_was_free_text"
+            }
+          }
+        ],
+        "formulas": [
+          {
+            "label": "% free-text openers",
+            "value": "A*100"
+          }
+        ],
+        "breakdowns": [
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topic_id",
+              "resource": "event"
+            }
+          }
+        ],
         "chartType": "bar",
         "unit": "month",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        }
       }
     },
     "91100366": {
@@ -128,14 +393,41 @@
       "report_type": "insights",
       "query": {
         "name": "Follow-up depth by topic",
-        "metrics": [{ "eventName": "topic_completed", "measurement": { "type": "aggregate-property", "math": "average", "propertyName": "follow_up_count" } }],
+        "metrics": [
+          {
+            "eventName": "topic_completed",
+            "measurement": {
+              "type": "aggregate-property",
+              "math": "average",
+              "propertyName": "follow_up_count"
+            }
+          }
+        ],
         "breakdowns": [
-          { "metric": { "type": "property", "propertyName": "topic_id", "resource": "event" } },
-          { "metric": { "type": "property", "propertyName": "depth", "resource": "event" } }
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "topic_id",
+              "resource": "event"
+            }
+          },
+          {
+            "metric": {
+              "type": "property",
+              "propertyName": "depth",
+              "resource": "event"
+            }
+          }
         ],
         "chartType": "table",
         "unit": "month",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        }
       },
       "query_note": "Semantically equivalent rebuild of the 2026-07-01 original (exact original JSON never captured; live report may differ in date range)."
     },
@@ -144,10 +436,24 @@
       "report_type": "insights",
       "query": {
         "name": "Sessions per day",
-        "metrics": [{ "eventName": "quiz_session_init", "measurement": { "type": "basic", "math": "total" } }],
+        "metrics": [
+          {
+            "eventName": "quiz_session_init",
+            "measurement": {
+              "type": "basic",
+              "math": "total"
+            }
+          }
+        ],
         "chartType": "line",
         "unit": "day",
-        "dateRange": { "type": "relative", "range": { "unit": "day", "value": 30 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "day",
+            "value": 30
+          }
+        }
       }
     },
     "91328518": {
@@ -155,11 +461,26 @@
       "report_type": "funnels",
       "query": {
         "name": "Completion rate over time",
-        "metrics": [{ "eventName": "quiz_session_init" }, { "eventName": "quiz_completed" }],
-        "conversionTime": { "unit": "session" },
+        "metrics": [
+          {
+            "eventName": "quiz_session_init"
+          },
+          {
+            "eventName": "quiz_completed"
+          }
+        ],
+        "conversionTime": {
+          "unit": "session"
+        },
         "countType": "unique",
         "chartType": "trends",
-        "dateRange": { "type": "relative", "range": { "unit": "month", "value": 3 } }
+        "dateRange": {
+          "type": "relative",
+          "range": {
+            "unit": "month",
+            "value": 3
+          }
+        }
       }
     }
   }
