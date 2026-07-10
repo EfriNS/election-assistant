@@ -1,6 +1,7 @@
 # Analytics Design — Election Assistant
 
 _Decided: 2026-06-28. Implemented in `feature/mixpanel-analytics`._
+_Round 2 (2026-07-10, `feature/mixpanel-analytics-round2`): data-analyst review added question-grain events, results-engagement events, timing props, list-format priority props, and fixed the follow-up-skip data bug (see Event Schema below)._
 
 ---
 
@@ -95,9 +96,11 @@ Topic analytics data (follow-up count, aspects probed) was computed inside a clo
 
 ---
 
-## Event Schema (8 events)
+## Event Schema (18 events)
 
-All events include `session_id`. Super properties `tone` and `depth` auto-attach via `mp.register()`.
+All events include `session_id`. Super properties `tone`, `depth`, and `variant` (the pair, e.g. `formal/short` — added Round 2 so any report, funnels included, can segment by one breakdown) auto-attach via `mp.register()`.
+
+Round 2 additions are marked _(R2)_ — properties added 2026-07-10 exist only on events from that date forward.
 
 ### `quiz_session_init`
 Fires on component mount. Establishes the session.
@@ -112,28 +115,59 @@ Fires when user confirms topic weights and enters the quiz.
 session_id, tone, depth,
 topic_count,
 critical_count, very_important_count, important_count, low_count,
+critical_topics, very_important_topics, important_topics, low_topics   (R2 — topic-id lists;
+  breaking down by a list prop shows real topic names instead of A–I lettered metrics)
+seconds_on_step   (R2 — time spent ranking)
 {topic_id}_bucket  (one per topic, value 0–4)
 ```
 Answers: Q2 (topics selected), Q3 (priority distribution)
 
+### `topic_priority` _(R2)_
+Fires once per topic (all 9, including unmarked) alongside `priorities_submitted` — the long-format companion. This is the only event shape Mixpanel can turn into per-topic × per-level reports with real topic labels (e.g. a stacked bar of critical/very-important/important marks per topic); the wide `{topic}_bucket` props label metrics A–I and list props can't stack levels. Also directly measures "left blank" vs. "marked low" (`0_not_marked` vs `1_low`).
+```
+session_id, topic_id, bucket (0–4), bucket_label (0_not_marked … 4_critical)
+```
+Answers: Q3 (per-topic priority distribution, properly labeled)
+
+### `question_answered` _(R2)_
+Fires on every answered or skipped question — the question-grain progression event. A session's last `question_answered` tells you exactly where it stalled (opener vs. follow-up #N), which `topic_completed` alone can't.
+```
+session_id, topic_id, topic_index,
+question_type (opener | follow_up), follow_up_index (1-based, follow-ups only),
+answer_mode (choice | free_text | skip),
+seconds_on_question   (excludes AI-generation wait)
+switch_count          (R2 — selection changes before confirming: clicking a different
+                       option, or moving from a selected option to free text.
+                       With seconds_on_question this is the hesitation signal —
+                       the behavioral replacement for session recordings)
+```
+Answers: Q1 (sub-topic drop-off attribution), Q4 (free-text and skip rates per question type, hesitation per question)
+
 ### `topic_completed`
-Fires when user advances past a topic.
+Fires when user advances past a topic (including via skip).
 ```
 session_id, topic_id, topic_index, total_topics,
-follow_up_count, opener_was_free_text, aspects_probed (array)
+follow_up_count, opener_was_free_text, aspects_probed (array),
+opener_answered   (R2 — false = topic skipped entirely at the opener)
+skipped_follow_up (R2 — true = a shown follow-up went unanswered)
+seconds_on_topic  (R2)
 ```
-Answers: Q2 (completion per topic index), Q4 (aspects probed, free-text rate)
+**Data-quality note (R2 bug fix)**: before 2026-07-10, skipping a shown follow-up recorded `follow_up_count: 0, opener_was_free_text: false, aspects_probed: []` regardless of the real state — inflating the "(empty list) = AI not engaging" signal with user disengagement. Interpret pre-R2 Q4 metrics with that caveat.
+
+Answers: Q2 (completion per topic index), Q4 (aspects probed, free-text rate, skip-vs-AI-not-engaging)
 
 ### `quiz_completed`
 Fires when user submits and goes to results.
 ```
 session_id, tone, depth,
-topics_selected, topics_completed, has_close_text
+topics_selected, topics_completed, topics_missed, has_close_text,
+close_text_length      (R2)
+free_text_opener_count (R2 — session-level free-text engagement)
 ```
 Answers: Q1 (completion), Q5 (depth/tone vs completion)
 
 ### `quiz_abandoned`
-Fires on beforeunload / back navigation.
+Fires only on the rank-step back button (not beforeunload — that was never implemented and is unreliable anyway, especially mobile Safari). Mid-quiz abandonment is inferred from the last `question_answered` / `topic_completed` seen for a session (the standard "last event seen" pattern).
 ```
 session_id, step, topics_completed_so_far
 ```
@@ -144,14 +178,72 @@ Fires on results page mount once scores are present.
 ```
 session_id,
 top_party, top_score,
-second_party, second_score,
+second_party, second_score, score_spread_top2   (R2 — #1 vs #2 decisiveness),
 third_party, third_score, score_spread_top3,
+top3_parties       (R2 — list prop, readable breakdown)
+topics_selected    (R2 — denormalized for report-level joins)
+ai_scoring_used    (R2 — false = deterministic-only fallback; segment Q6 by this)
+seconds_to_results (R2 — from quiz_completed click to results render, incl. scoring wait)
 score_{party_id}  (one per party)
 ```
-Answers: Q6 (score distribution, concentration)
+Answers: Q6 (score distribution, concentration, degraded-vs-full sessions)
+
+### `results_ai_loaded` _(R2)_
+Fires when the `/api/results` fetch resolves (results page shows scores before this).
+```
+session_id, blurb_shown, groundings_shown, seconds_to_load
+```
+Answers: Q6/Q7 (AI-layer delivery rate, perceived loading wait)
+
+### `results_interaction` _(R2)_
+Fires on results-page engagement — the behavioral "are results useful" signal.
+```
+session_id, action (pdf_export | methodology_opened | grounding_expanded |
+                    back_to_quiz | go_home_clicked | go_home_confirmed),
+party_id, party_rank   (grounding_expanded only; rank is 1-based)
+```
+Answers: Q6 (engagement; grounding_expanded tracks the "see details" discoverability fix)
+
+### `navigated_back` _(R2)_
+Fires on any backward navigation inside the quiz (question header back, close-step back). The rank-step back fires `quiz_abandoned` instead (leaves the quiz). User testing flagged navigation/progress confusion — this measures it.
+```
+session_id, from_step (questions | close),
+from_question_type (opener | follow_up), topic_id, topic_index   (questions only)
+```
+
+### `hint_opened` _(R2)_
+Fires when a TermHint explainer is expanded (quiz opener option hints, follow-up hints) — the terminology hints were a round-1 user-testing request; this measures whether they're used.
+```
+label   (the hint's button label, e.g. מה זה "טייקונים"?)
+```
+
+### `results_exit` _(R2)_
+Fires on `pagehide` from the results page (tab close / refresh / external navigation), sent via `sendBeacon` to survive teardown. In-app exits are timestamped by their own events (`back_to_quiz`, `go_home_confirmed`) — together they give results-page dwell time.
+```
+session_id, seconds_on_results
+```
+
+### `about_viewed` _(R2)_
+Fires on /about page mount (via `PageViewTracker`).
+```
+page
+```
+
+### `share_clicked` _(R2)_
+Fires on any share button (results page and landing page).
+```
+placement (prominent | landing | subtle), method (native | clipboard), completed
+```
+Answers: Q6 (advocacy signal). No session_id — joins via distinct_id where identified.
+
+### `feedback_opened` / `feedback_submitted` _(R2)_
+Fires on the global feedback widget.
+```
+page  (pathname where the widget was used)
+```
 
 ### `api_error`
-Fires on API failures in `/api/results`, `/api/follow-up`, `/api/score-topics`.
+Fires on API failures in `/api/results`, `/api/follow-up`, `/api/score-topics` _(R2 — was silently swallowed)_, `/api/export-pdf` _(R2)_.
 ```
 session_id, endpoint, error_code (QUOTA_EXCEEDED | SERVER_ERROR | ...)
 ```

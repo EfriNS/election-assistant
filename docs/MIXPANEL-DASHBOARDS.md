@@ -67,6 +67,39 @@ Applied via `Bulk-Edit-Events`/`Edit-Property` so labels are readable everywhere
 
 ---
 
+## Round 2 Report Plan (2026-07-10) — Phase 2 executed, see status marks
+
+_From the data-analyst review (see ANALYTICS-DESIGN.md Round 2). The collection side shipped in `feature/mixpanel-analytics-round2`. Phase 2 was executed 2026-07-10 (post-restart session) — status marked per item below. **Incident**: mid-execution, a text-header-cell add left board 11325742 unreadable via the MCP's `Get-Dashboard` (every read errors; `List-Dashboards` works; layout is intact server-side — the board still duplicates). Recovery is via the web UI: check the board renders, delete any stray "Context — volume & completion trend" text row, and verify/drag row order (intended: context row top; 4 variant funnels under the core funnel). Do not keep mutating an unreadable board via MCP._
+
+Baseline at review time (30d, 32 sessions): funnel 32 → 27 (84%) → 18 (67%) → 11 completed (34% overall); ~45s on priorities, ~11–12 min to complete; 14/27 sessions selected all 9 topics; survival curve shows gradual attrition, no cliff.
+
+### Phase 2 — works on existing data (executed 2026-07-10)
+
+1. ✅ **Q1: four per-variant funnels** (user-requested): reports 91328275 (formal/short) + 91328355 (formal/deep) in row `eEZoqDiS`, 91328385 (personal/short) + 91328418 (personal/deep) in row `gVwX5xqN`. Same 4 steps, session window, two global filters each. Existing overall funnel kept. formal/deep had only 3 sessions/30d at build time — expect noise until launch volume.
+2. ✅ **Q2: "Topics selected per session" sorted 1→9** (user-requested): cell `oCuZt8Ui` updated in place with a numeric-bucket breakdown (min 1, max 10, size 1, per-value groups — max 10 so 9 gets its own bucket instead of a ">= 9" overflow group).
+3. ✅ **Q2: "Selected vs completed" replaced** with **"Completion rate by topics selected"** (cell `BHJQXEjD`): `priorities_submitted → quiz_completed` funnel bucketed `intervals: [6,9]` → <6 / 6–<9 / ≥9. First read (30d, n=27): ≥9 topics = 50% completion, 6–8 = 44%, **3–5 = 0% (0 of 4)** — the light selectors abandoned, opposite of the "long quiz kills completion" hypothesis. Small n; watch.
+4b. ✅ **Q1 survival rebuilt per cohort (2026-07-10, later)**: "Topic-by-topic survival by topics selected" (report 91092898) — 9 topic_index steps broken down by `total_topics` (per-value buckets), one survival curve per N-selected cohort. Read each segment only up to its own N (beyond N is structurally zero, not drop-off). Replaced the interim "(7+ selected)" filter version after user feedback.
+4c. ⏳ **Two cell updates repeatedly failed for real** (bookmark `modified` never moved — not the usual false-negative): (a) upgrading "Topics missed by completers" (91338944) to the stacked topics_selected × topics_missed view — built query: https://eu.mixpanel.com/project/4038344/view/4534612/app/insights#em9Q4KTs6zcE — open, then save over the existing report; (b) "Follow-up depth by topic" (91100366) description explaining that values are counts and any "% of overall" badge (e.g. 134%) is segment-vs-overall-average, a UI display layer — edit the description in the UI.
+4d. ✅ **"Free-text opener rate by topic"** now displays % directly (×100 formula); the "277.5%" a user saw was the relative-to-overall badge, not a rate.
+4. ⚠️ **Context row**: "Sessions per day" (report 91328451, row `c73G95T3`) ✅. "Completion rate over time" cell attach unverified (the board became unreadable before verification — check in UI). The text header add is what corrupted the read path — **skip text headers for this row**; the report names are self-explanatory. Row placement (top of board) unverified — drag in UI if needed.
+
+### Phase 3 — needs R2 events in production first (Lexicon gotcha: properties must fire before they're usable in reports)
+
+5. **Q3: replace "Critical marks by topic" (A–I letters)** with `priorities_submitted` total, breakdown by the `critical_topics` list property — real topic names, one metric. Note the cutover date in the description (list props exist only from 2026-07-10).
+6. **Q4: "AI not engaging rate"**: % of `topic_completed` with `follow_up_count = 0` **and** `skipped_follow_up = false`, by topic — now an honest signal (pre-R2 it conflated user skips).
+7. **Q4: skip rate by topic / question type**: `question_answered` filtered `answer_mode = skip`, breakdown by `topic_id` + `question_type`.
+8. **Q1: question-grain drop-off**: `question_answered` count by `question_type` + `follow_up_index` — where mid-topic stalls happen.
+9. **Q6: results engagement**: `results_interaction` total, breakdown by `action`; separately `grounding_expanded` by `party_rank` (the "see details" discoverability signal).
+10. **Q6: decisiveness trend**: `results_viewed` average `score_spread_top2` (line, daily) next to the existing top-3 spread; optionally breakdown by `ai_scoring_used`.
+11. **Q5/Q6: perceived latency**: `results_ai_loaded` average `seconds_to_load` + `results_viewed` average `seconds_to_results` (line, daily) — quantifies the "loading feels frozen" complaint from user-testing round 4.
+12. **Hesitation report** (behavioral session-recording replacement): `question_answered` average `switch_count` + average `seconds_on_question`, breakdown by `question_type` (optionally `topic_id`) — which questions make users waver.
+13. **Back-navigation rate**: `navigated_back` total by `from_question_type` + `topic_id` — the navigation-confusion signal from user testing.
+14. **Explainer usage**: `hint_opened` total by `label`; plus `about_viewed` daily count.
+15. **Results dwell**: `results_exit` average `seconds_on_results` (tab-close exits; in-app exits derivable from `back_to_quiz`/`go_home_confirmed` timestamps).
+16. **Lexicon**: add display names for the 10 new events + new properties once they've fired in production (run one real quiz post-deploy to seed them, or wait for organic traffic).
+
+---
+
 ## What's NOT Automatable Here
 
 Mixpanel's public REST API is read/write for events and query data, but dashboard/bookmark management goes through their *internal* app API (same one the web UI uses) via the MCP server — there's no independently documented, stable contract for it. Treat the gotchas above as living knowledge, not a permanent guarantee; Mixpanel could change this internal behavior without notice.

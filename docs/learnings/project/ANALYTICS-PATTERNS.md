@@ -47,3 +47,31 @@ The `aspects_probed` array property on `topic_completed` is populated from `cove
 ### Mixpanel Lexicon only registers events/properties that have actually fired (#first:2026-07-01)
 
 Can't set a display name on `api_error` via `Edit-Event` until it occurs at least once in the project — Mixpanel returns `"Events not found"`. Same applies to any newly-added tracking property (e.g. `topics_missed`, added 2026-07-01) — it won't appear in `List-Properties` or be usable as a report breakdown until real data with that property exists.
+
+### Optional analytics-payload params with `??` defaults silently corrupt data (#first:2026-07-10)
+
+The follow-up-skip bug: `advanceToNextTopic(prologue, completed?)` defaulted every metric (`completed?.followUpCount ?? 0`, etc.), so the two skip buttons — which passed no payload — recorded every skipped topic as "0 follow-ups, no free text, no aspects," conflating *user disengagement* with the Q4 "AI not engaging" signal for a week of production data.
+
+**Rule**: analytics payloads at call sites with divergent context should be a *required* param — let the type system force every new call site to state what happened explicitly. A `?? default` on a tracking payload is the workaround-shaped hole: it compiles, fires, and produces plausible-looking wrong data that no error will ever surface. (Same class: interpret pre-2026-07-10 `topic_completed` Q4 metrics with this caveat; `skipped_follow_up`/`opener_answered` exist only after.)
+
+### Update-Dashboard false-negative errors are now ~100%, and new failure modes (#update:2026-07-10)
+
+Round-2 execution against board 11325742 sharpened the 2026-07-01 findings:
+
+- **Every single mutating call errored while applying** — cell updates ("Unexpected error"), row adds ("row is not present in rows order" — misleading, no rows_order fixes it), cell adds to existing rows ("missing cells found"), row deletes, dashboard deletes ("Dashboard not found" *after* successfully deleting). Treat the error text as noise; `Get-Dashboard` is the only truth. **Never retry on error before verifying** — a blind retry after the first funnel add created a duplicate row.
+- **`Duplicate-Dashboard` retried internally on its false-negative error**: one call created *three* copies.
+- **Row adds (text OR report) can corrupt the MCP read path** — happened twice (2026-07-10): a text-row add and, later, a report-row add each left `Get-Dashboard` failing permanently ("Unexpected error") the moment they ran, while `List-Dashboards` worked and the board stayed duplicable (layout intact server-side; corruption travels into duplicates). The web UI renders the board fine both times, and the user editing/re-saving the layout in the UI *heals* the MCP read. Rules: (1) prefer in-place cell updates over row adds; (2) after a row add, expect the read to break — verify the mutation through `Get-Report`/`Search-Entities` on the bookmark instead (bookmarks stay readable when the board isn't; `Search-Entities` finds a just-created report by name); (3) hand row *placement* to the user in the UI; (4) when the board is unreadable, stop mutating it via MCP.
+- **Report cells CAN be updated in place** (`['<cell_id>', 'update', 'report', {query_id, name, description}]`) — preserves board position; prefer this over delete+re-add when replacing a report's query.
+- **Numeric bucket gotcha**: `buckets: {min: 1, max: 9, size: 1, intervals: null}` puts the value 9 into a ">= 9" overflow group — set `max` one above the true maximum (10) so the top value gets its own labeled bucket.
+
+### Bar-segment sort order is UI-only — the MCP insights query schema has no sort field (#first:2026-07-10)
+
+Verified against the full `Get-Query-Schema(insights)` output: there is no sort/display-order field anywhere in the query JSON. Numeric bucketing (`intervals: null`, one group per value) changes the *grouping* but Mixpanel still renders bar segments sorted by count. To order bars by segment value (e.g. topic_count 1→9), someone must open the saved report in the web UI, set "sort by segment ascending" on the breakdown column, and Save — it persists to the board card. New rows added via `Update-Dashboard` always land at the bottom of the board; repositioning via `rows_order` is unreliable — plan on dragging rows in the UI.
+
+### Verifying board mutations without a readable board: bookmark `modified` timestamps (#first:2026-07-10)
+
+Cell updates rewrite the underlying saved report (bookmark), so `Get-Report`'s `modified` timestamp + `name` prove whether an Update-Dashboard cell update actually applied — works even while `Get-Dashboard` is failing. This also exposed that some cell updates **fail for real, repeatedly, on specific cells** (same call shape that succeeds on other cells), so the false-negative rule cuts both ways: never trust the error, never trust silence — check the bookmark. Escape hatch for handoff: every `Run-Query` returns a `report_url` that opens the exact built query in the web UI — the user can save it over the existing report manually.
+
+### Dashboard config lives in the repo, not in Mixpanel (#first:2026-07-11)
+
+Mixpanel cannot export query definitions (`Get-Report` = metadata only; boards have no public export/import API), so `docs/mixpanel/` holds the authored `Run-Query` payloads (`report-queries.json`) and a layout snapshot (`board-core-analytics.layout.json`) — the only rebuild material after board corruption or accidental deletion. **After any session that mutates a report query or the board: update the queries file and refresh the layout snapshot.** UI edits to queries made directly in Mixpanel silently drift from this backup — note them when they happen.

@@ -72,15 +72,19 @@ export default function PrioritiesStep({
         <h1 className="text-2xl font-bold mb-2">כמה כל נושא חשוב לך?</h1>
         <p className="text-gray-500 text-sm mb-1 leading-relaxed">
           לכל נושא — בחר את רמת החשיבות שלו עבורך.
-          ככל שתסמן יותר נושאים כחשובים, כך התוצאה תהיה מדויקת יותר.
+          על כל נושא שתסמן כ&quot;חשוב&quot; או יותר תישאל לפחות שאלה אחת —
+          ככל שתסמן יותר נושאים, התוצאה תהיה מדויקת יותר, אך השאלון יתארך בהתאם.
         </p>
         <p className="text-sm text-gray-600 mb-2">
           יש לסמן <strong>לפחות {MIN_IMPORTANT} נושאים{" "}</strong>כ-&quot;חשוב&quot; או יותר כדי להמשיך.
+          נושא שפחות חשוב לך? אפשר פשוט להשאיר אותו ריק.
         </p>
         <p className="text-sm text-gray-600 mb-8">
-          ניתן לסמן כ-&quot;קריטי&quot; <strong>עד {MAX_CRITICAL_TOPICS} נושאים</strong>.
-          מפלגה שמתנגדת לתשובה שלך בנושא קריטי לא תוכל להיות ההתאמה המובילה שלך,
-          לא משנה כמה טובה ההתאמה בשאר הנושאים.
+          ניתן לסמן כ-&quot;קריטי&quot; <strong>עד {MAX_CRITICAL_TOPICS} נושאים</strong>.{" "}
+          <strong>
+            מפלגה שמתנגדת לתשובה שלך בנושא קריטי לא תוכל להיות ההתאמה המובילה שלך,
+            לא משנה כמה טובה ההתאמה בשאר הנושאים.
+          </strong>
         </p>
 
         <div className="flex flex-col gap-3 mb-8">
