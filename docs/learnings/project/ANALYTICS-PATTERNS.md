@@ -67,3 +67,7 @@ Round-2 execution against board 11325742 sharpened the 2026-07-01 findings:
 ### Bar-segment sort order is UI-only — the MCP insights query schema has no sort field (#first:2026-07-10)
 
 Verified against the full `Get-Query-Schema(insights)` output: there is no sort/display-order field anywhere in the query JSON. Numeric bucketing (`intervals: null`, one group per value) changes the *grouping* but Mixpanel still renders bar segments sorted by count. To order bars by segment value (e.g. topic_count 1→9), someone must open the saved report in the web UI, set "sort by segment ascending" on the breakdown column, and Save — it persists to the board card. New rows added via `Update-Dashboard` always land at the bottom of the board; repositioning via `rows_order` is unreliable — plan on dragging rows in the UI.
+
+### Verifying board mutations without a readable board: bookmark `modified` timestamps (#first:2026-07-10)
+
+Cell updates rewrite the underlying saved report (bookmark), so `Get-Report`'s `modified` timestamp + `name` prove whether an Update-Dashboard cell update actually applied — works even while `Get-Dashboard` is failing. This also exposed that some cell updates **fail for real, repeatedly, on specific cells** (same call shape that succeeds on other cells), so the false-negative rule cuts both ways: never trust the error, never trust silence — check the bookmark. Escape hatch for handoff: every `Run-Query` returns a `report_url` that opens the exact built query in the web UI — the user can save it over the existing report manually.
