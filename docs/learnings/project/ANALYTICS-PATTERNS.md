@@ -71,3 +71,7 @@ Verified against the full `Get-Query-Schema(insights)` output: there is no sort/
 ### Verifying board mutations without a readable board: bookmark `modified` timestamps (#first:2026-07-10)
 
 Cell updates rewrite the underlying saved report (bookmark), so `Get-Report`'s `modified` timestamp + `name` prove whether an Update-Dashboard cell update actually applied — works even while `Get-Dashboard` is failing. This also exposed that some cell updates **fail for real, repeatedly, on specific cells** (same call shape that succeeds on other cells), so the false-negative rule cuts both ways: never trust the error, never trust silence — check the bookmark. Escape hatch for handoff: every `Run-Query` returns a `report_url` that opens the exact built query in the web UI — the user can save it over the existing report manually.
+
+### Dashboard config lives in the repo, not in Mixpanel (#first:2026-07-11)
+
+Mixpanel cannot export query definitions (`Get-Report` = metadata only; boards have no public export/import API), so `docs/mixpanel/` holds the authored `Run-Query` payloads (`report-queries.json`) and a layout snapshot (`board-core-analytics.layout.json`) — the only rebuild material after board corruption or accidental deletion. **After any session that mutates a report query or the board: update the queries file and refresh the layout snapshot.** UI edits to queries made directly in Mixpanel silently drift from this backup — note them when they happen.
