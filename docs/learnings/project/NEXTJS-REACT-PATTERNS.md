@@ -192,6 +192,12 @@ const rankings = calcResults(buckets, syntheticTopicQA, questionSet);
 
 Rule: any callback that reads React state and then passes it to a pure function should ask: "could state have been set but not flushed between the setter call and this function call?" If yes, build a synthetic object from local variables. (`app/prototype-e/page.tsx:callFollowUpAPI`) (#first:2026-06-26)
 
+### Back-navigation must roll back *every* piece of state the forward step wrote — audit the appends, not just the visible question (#first:2026-07-11)
+
+`goBack` in `app/quiz/page.tsx` rolled back `followUps` and the asked-count when withdrawing a displayed follow-up, but not `coveredAspects` — appended when a question is *generated*, not answered. User-visible result: pressing back on follow-up N silently consumed N's dimension — the regenerated question skipped it, or the topic transitioned early when it was the last dimension with grounding evidence. Fixing it required first persisting `targetedAspect` on each stored entry: the aspect had only lived in the accumulated list, so rollback had nothing to key on (removal is by last occurrence — an aspect can legitimately recur after rollback+regeneration).
+
+Rule: when adding "append X on step forward" bookkeeping to a flow with back-navigation, write the rollback in the same change — and keep enough per-step provenance in state that a rollback *can* be computed later. An accumulated list whose items don't record which step produced them cannot be unwound.
+
 ---
 
 ## Testing (Vitest)

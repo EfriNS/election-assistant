@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-07-11 — Answer-option order randomization + back-nav dimension rollback
+
+### Context
+
+Soft-launch user feedback: "התשובות שבחרתי היו בד"כ מס' 1 באפשרויות. כדאי אולי לערבב אותן יותר" — and Efri confirmed the same experience across both openers and follow-ups.
+
+### Investigation — two independent, real biases
+
+- **Openers** (`lib/questions.ts`, rendered in fixed authoring order): in **8 of 9 topics the first option was the left-liberal or broad-consensus position** (מדינת רווחה, בנייה ציבורית, מצוינות בהוראה, הרחבת הסל, חופש דתי, עצמאות שיפוטית, חוק ברור, מחויבות ירוקה; security was the lone right-leaning-first exception). A center-left user therefore saw their own view as option #1 nearly every topic — primacy bias compounding an authoring-order lean nobody had decided on.
+- **Follow-ups** (`/api/follow-up`): the prompt gave Gemini no ordering constraint, the model sees the user's prior answers in-context (LLMs lead with the stance-adjacent option), and party groundings were fed in `PARTIES` order — roughly left→right — anchoring generation the same way.
+
+### Fix — randomize at display, de-bias generation inputs
+
+- `lib/shuffle.ts` (new): non-mutating Fisher-Yates + a keep-free-text-last variant.
+- Openers: per-session shuffled `questionSet` copy (`useState` initializer — stable across back-navigation, hydration-safe since the initial render is the rank step).
+- Follow-ups: AI-returned options shuffled **at receipt, before storage**, so `topicQA.followUps[].options` always matches the displayed numbering (free-text answers like "1+3" reference those numbers; back-navigation re-renders stored options). "אחר — פרט" stays pinned last.
+- Generation level: `partyGroundings` shuffled per call before reaching Gemini; prompt now requires comparable length/specificity/rhetorical strength across options (the content bias a display shuffle can't fix). Deliberately did NOT add an "order randomly" prompt instruction — LLMs can't self-randomize; the client owns ordering.
+- Verified scoring is position-independent throughout: opener scores keyed by option `id` (`lib/scoring.ts`), follow-up answers stored as self-contained `"N. <text>"`.
+- Analytics: `option_position` + `option_count` on `question_answered` (choice mode) — post-deploy, the position distribution of picks should flatten; needs a Lexicon description once it fires in production.
+
+### Second fix (same session, user-reported after verifying the shuffle on preview): back-nav consumed the withdrawn follow-up's dimension
+
+A follow-up's `targetedAspect` was appended to `coveredAspects` at question *generation* but never removed when `goBack` discarded the displayed, unanswered question. Re-answering the previous follow-up then regenerated the next question with that dimension excluded — silently skipping it, or transitioning to the next topic when it was the last dimension with grounding evidence. Fix: persist `targetedAspect` on stored `followUps` entries (it previously lived only in the accumulated list, so rollback had nothing to key on), carry it through `goBack`'s re-display, and remove the withdrawn question's aspect (last occurrence only — aspects can recur after rollback+regeneration). Answered questions' aspects stay covered; opener re-answer already resets topic state wholesale. Also fixes `aspects_probed` analytics over-reporting withdrawn dimensions.
+
+### Verification
+
+347 tests (9 new in `tests/optionShuffle.test.ts`), `tsc`, `eslint`, production build all clean. Shuffle verified live on the Vercel preview by the user ("works well"). The back-nav scenario needs a critical-weight topic (follow-up cap ≥ 2): answer follow-up 1, press back on follow-up 2, re-answer — the regenerated question should probe the same dimension. No component-test harness exists for the quiz flow's navigation state machine — added TODO #17 (component tests or reducer extraction; low priority).
+
+### Files
+
+`lib/shuffle.ts` (new), `tests/optionShuffle.test.ts` (new), `app/quiz/page.tsx`, `app/api/follow-up/route.ts`, `lib/scoring.ts`, `TODO.md`.
+
+Commits `113ec4d`, `d665000`, `fab8c76`, merged via `5093e71`.
+
 ## 2026-07-11 — Mixpanel analytics round 2: richer collection, behavioral signals, honest dashboards
 
 ### Context
