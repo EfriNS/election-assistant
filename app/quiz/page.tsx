@@ -876,6 +876,7 @@ function QuizInner() {
   // ── Follow-up question ───────────────────────────────────────────────────────
   if (currentFollowUp) {
     const openerAnswerText = topicQA[topicId]?.openerAnswerText;
+    const followUpAnswersSoFar = (topicQA[topicId]?.followUps ?? []).map((f) => f.answer);
     return (
       <main className="min-h-screen flex flex-col items-center px-4 py-12">
         <div className="w-full max-w-xl">
@@ -887,11 +888,16 @@ function QuizInner() {
             <span className="text-xs text-gray-400">↳ שאלת המשך</span>
           </div>
 
-          {/* Opener answer recap */}
+          {/* Answered-so-far recap: opener answer + this topic's follow-up answers.
+              From follow-up #2 on, the prologue responds to the *latest* answer, so
+              the recap must show the whole chain — opener alone reads as a mismatch. */}
           {openerAnswerText && (
             <div className="border-r-2 border-teal-200 pr-3 mb-5">
               <p className="text-xs text-gray-400 mb-0.5">ענית:</p>
               <p className="text-sm text-gray-500 leading-snug">{openerAnswerText}</p>
+              {followUpAnswersSoFar.map((answer, i) => (
+                <p key={i} className="text-sm text-gray-500 leading-snug line-clamp-2 mt-1">↳ {answer}</p>
+              ))}
             </div>
           )}
 
