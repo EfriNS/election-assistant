@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-07-11 — Follow-up recap shows the topic's full answer chain
+
+### Context
+
+While verifying the same-day randomization deploy, Efri noticed that on follow-up #2 the "ענית:" recap showed only the opener answer — not the follow-up #1 answer the prologue was visibly responding to — and asked whether that was intended.
+
+### Fix
+
+The recap block (`app/quiz/page.tsx`, follow-up view) was a deliberate "opener answer recap" designed when every topic got at most one follow-up, so "ענית:" + opener was always the just-given answer. Multi-follow-up topics (depth scaling, 2026-07-05) made the label misleading from follow-up #2 on. The recap now renders the topic's full answered chain: opener answer as before, plus each follow-up answer beneath it (`↳`-prefixed — the marker `PartyResultCard` already uses for follow-up references — clamped to 2 lines since free-text answers can be long). Follow-up #1 renders identically to before. Back-navigation stays consistent for free: `goBack` pops the re-displayed question's answer from the stored chain before the recap reads it.
+
+### Files
+
+`app/quiz/page.tsx`. Commit `6993ac6`, merged via `8099de9`. 347 tests, `tsc`, `eslint` clean.
+
 ## 2026-07-11 — Answer-option order randomization + back-nav dimension rollback
 
 ### Context
