@@ -32,6 +32,13 @@ const PRIORITY_LEVEL_LABELS: Record<number, string> = {
 
 const OTHER_OPTION = "אחר — פרט";
 
+// Removes the last occurrence only — an aspect can legitimately appear twice
+// in coveredAspects (probed, rolled back via goBack, then probed again).
+const removeLastOccurrence = (arr: string[], value: string): string[] => {
+  const i = arr.lastIndexOf(value);
+  return i === -1 ? arr : [...arr.slice(0, i), ...arr.slice(i + 1)];
+};
+
 // Follow-up depth scales with how important the user marked the topic —
 // a קריטי topic gets probed deeper than a merely-important one, at both
 // depth settings. Deep mode's weight-2/3 caps are intentionally lower than
@@ -393,18 +400,35 @@ function QuizInner() {
     setCurrentPrologue(null);
 
     if (currentFollowUp !== null) {
-      // On a follow-up: go back to the previous follow-up, or opener if none
+      // On a follow-up: go back to the previous follow-up, or opener if none.
+      // The displayed (unanswered) question is withdrawn, so its dimension must
+      // leave coveredAspects — otherwise the regenerated question silently skips
+      // it, or the topic transitions early when it was the last dimension with
+      // grounding evidence. Aspects of answered/stored questions stay covered.
       const tid = topicsToAsk[questionIndex];
       const stored = topicQA[tid]?.followUps ?? [];
+      const discardedAspect = currentFollowUp.targetedAspect;
       if (stored.length > 0) {
         const prev = stored[stored.length - 1];
-        setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+        setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint, targetedAspect: prev.targetedAspect });
         setFollowUpsAskedThisTopic(stored.length);
         setTopicQA((qa) => ({
           ...qa,
-          [tid]: { ...qa[tid], followUps: stored.slice(0, -1) },
+          [tid]: {
+            ...qa[tid],
+            followUps: stored.slice(0, -1),
+            ...(discardedAspect
+              ? { coveredAspects: removeLastOccurrence(qa[tid]?.coveredAspects ?? [], discardedAspect) }
+              : {}),
+          },
         }));
       } else {
+        if (discardedAspect) {
+          setTopicQA((qa) => ({
+            ...qa,
+            [tid]: { ...qa[tid], coveredAspects: removeLastOccurrence(qa[tid]?.coveredAspects ?? [], discardedAspect) },
+          }));
+        }
         setCurrentFollowUp(null);
         setFollowUpsAskedThisTopic(0);
         // useEffect restores "other" textarea if needed
@@ -419,7 +443,7 @@ function QuizInner() {
         setQuestionIndex((i) => i - 1);
         if (prevStored.length > 0) {
           const prev = prevStored[prevStored.length - 1];
-          setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+          setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint, targetedAspect: prev.targetedAspect });
           setFollowUpsAskedThisTopic(prevStored.length);
           setTopicQA((qa) => ({
             ...qa,
@@ -638,7 +662,7 @@ function QuizInner() {
 
     const newFollowUps = [
       ...(topicQA[topicId]?.followUps ?? []),
-      { question: answeredFollowUp.question, options: answeredFollowUp.options, hint: answeredFollowUp.hint, answer: answerText },
+      { question: answeredFollowUp.question, options: answeredFollowUp.options, hint: answeredFollowUp.hint, targetedAspect: answeredFollowUp.targetedAspect, answer: answerText },
     ];
     setTopicQA((prev) => ({
       ...prev,
