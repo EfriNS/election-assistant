@@ -13,7 +13,7 @@ const rubik = Rubik({
 
 export const metadata: Metadata = {
   title: "עוזר הבחירות",
-  description: "גלה לאיזו מפלגה אתה הכי קרוב",
+  description: "גלו לאיזו מפלגה אתם הכי קרובים",
 };
 
 // BUILD_ID/DEPLOY_ENV are injected by next.config.ts at build time (works both locally and on Vercel)
