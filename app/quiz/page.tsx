@@ -885,7 +885,7 @@ function QuizInner() {
           {/* Topic + follow-up label */}
           <div className="flex items-center gap-2 mb-4">
             <p className="text-xs font-medium text-teal-600 uppercase tracking-wider">{topic.label}</p>
-            <span className="text-xs text-gray-400">↳ שאלת המשך</span>
+            <span className="text-xs text-gray-400">↲ שאלת המשך</span>
           </div>
 
           {/* Answered-so-far recap: opener answer + this topic's follow-up answers.
@@ -896,7 +896,7 @@ function QuizInner() {
               <p className="text-xs text-gray-400 mb-0.5">ענית:</p>
               <p className="text-sm text-gray-500 leading-snug">{openerAnswerText}</p>
               {followUpAnswersSoFar.map((answer, i) => (
-                <p key={i} className="text-sm text-gray-500 leading-snug line-clamp-2 mt-1">↳ {answer}</p>
+                <p key={i} className="text-sm text-gray-500 leading-snug line-clamp-2 mt-1">↲ {answer}</p>
               ))}
             </div>
           )}
