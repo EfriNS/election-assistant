@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
+import { shuffleArray, shuffleOptionsKeepLast } from "@/lib/shuffle";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
@@ -30,6 +31,13 @@ const PRIORITY_LEVEL_LABELS: Record<number, string> = {
 };
 
 const OTHER_OPTION = "אחר — פרט";
+
+// Removes the last occurrence only — an aspect can legitimately appear twice
+// in coveredAspects (probed, rolled back via goBack, then probed again).
+const removeLastOccurrence = (arr: string[], value: string): string[] => {
+  const i = arr.lastIndexOf(value);
+  return i === -1 ? arr : [...arr.slice(0, i), ...arr.slice(i + 1)];
+};
 
 // Follow-up depth scales with how important the user marked the topic —
 // a קריטי topic gets probed deeper than a merely-important one, at both
@@ -137,7 +145,15 @@ function QuizInner() {
   const searchParams = useSearchParams();
   const tone = searchParams.get("tone") ?? "formal";
   const depth = searchParams.get("depth") ?? "short";
-  const questionSet = tone === "personal" ? QUESTIONS_PERSONAL : QUESTIONS_FORMAL;
+  // Opener options are shuffled once per session (see lib/shuffle.ts for why):
+  // stable across back-navigation, hydration-safe because the initial render is
+  // the "rank" step. Scoring is unaffected — options are looked up by id.
+  const [questionSet] = useState<Record<string, TopicQ>>(() => {
+    const base = tone === "personal" ? QUESTIONS_PERSONAL : QUESTIONS_FORMAL;
+    return Object.fromEntries(
+      Object.entries(base).map(([tid, q]) => [tid, { ...q, options: shuffleArray(q.options) }])
+    );
+  });
 
   const [sessionId] = useState(() => crypto.randomUUID());
 
@@ -348,7 +364,11 @@ function QuizInner() {
   const trackQuestionAnswered = (
     questionType: "opener" | "follow_up",
     answerMode: "choice" | "free_text" | "skip",
-    followUpIndex?: number
+    followUpIndex?: number,
+    // Displayed 1-based position of the chosen option — choice mode only.
+    // Options are shuffled per session, so a flat position distribution here
+    // is the post-deploy verification that the primacy-bias fix works.
+    choice?: { position: number; count: number }
   ) => {
     mpTrack("question_answered", {
       session_id: sessionId,
@@ -357,6 +377,7 @@ function QuizInner() {
       question_type: questionType,
       answer_mode: answerMode,
       ...(followUpIndex !== undefined ? { follow_up_index: followUpIndex } : {}),
+      ...(choice ? { option_position: choice.position, option_count: choice.count } : {}),
       seconds_on_question: secondsSince(questionStartRef.current),
       switch_count: answerSwitchesRef.current,
     });
@@ -379,18 +400,35 @@ function QuizInner() {
     setCurrentPrologue(null);
 
     if (currentFollowUp !== null) {
-      // On a follow-up: go back to the previous follow-up, or opener if none
+      // On a follow-up: go back to the previous follow-up, or opener if none.
+      // The displayed (unanswered) question is withdrawn, so its dimension must
+      // leave coveredAspects — otherwise the regenerated question silently skips
+      // it, or the topic transitions early when it was the last dimension with
+      // grounding evidence. Aspects of answered/stored questions stay covered.
       const tid = topicsToAsk[questionIndex];
       const stored = topicQA[tid]?.followUps ?? [];
+      const discardedAspect = currentFollowUp.targetedAspect;
       if (stored.length > 0) {
         const prev = stored[stored.length - 1];
-        setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+        setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint, targetedAspect: prev.targetedAspect });
         setFollowUpsAskedThisTopic(stored.length);
         setTopicQA((qa) => ({
           ...qa,
-          [tid]: { ...qa[tid], followUps: stored.slice(0, -1) },
+          [tid]: {
+            ...qa[tid],
+            followUps: stored.slice(0, -1),
+            ...(discardedAspect
+              ? { coveredAspects: removeLastOccurrence(qa[tid]?.coveredAspects ?? [], discardedAspect) }
+              : {}),
+          },
         }));
       } else {
+        if (discardedAspect) {
+          setTopicQA((qa) => ({
+            ...qa,
+            [tid]: { ...qa[tid], coveredAspects: removeLastOccurrence(qa[tid]?.coveredAspects ?? [], discardedAspect) },
+          }));
+        }
         setCurrentFollowUp(null);
         setFollowUpsAskedThisTopic(0);
         // useEffect restores "other" textarea if needed
@@ -405,7 +443,7 @@ function QuizInner() {
         setQuestionIndex((i) => i - 1);
         if (prevStored.length > 0) {
           const prev = prevStored[prevStored.length - 1];
-          setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint });
+          setCurrentFollowUp({ question: prev.question, options: prev.options, hint: prev.hint, targetedAspect: prev.targetedAspect });
           setFollowUpsAskedThisTopic(prevStored.length);
           setTopicQA((qa) => ({
             ...qa,
@@ -459,7 +497,10 @@ function QuizInner() {
     // who simply hadn't led on anything yet (2026-07-05 incident: a security
     // opener favoring self-reliance made every left-leaning party's genuine,
     // grounded withdrawal/1967-borders position invisible to the follow-up AI).
-    const partyGroundings = PARTIES
+    // Shuffled per call: PARTIES order runs roughly left→right, and feeding the
+    // quotes in a fixed ideological order anchors which positions the model
+    // reads first — biasing both question framing and generated option order.
+    const partyGroundings = shuffleArray(PARTIES
       .filter((p) => (groundingMap[p.id]?.length ?? 0) > 0)
       .map((p) => ({
         partyId: p.id,
@@ -469,7 +510,7 @@ function QuizInner() {
           aspect: e.aspect,
           contrary: e.contrary,
         })),
-      }));
+      })));
 
     // Compute the suggested next dimension (see lib/groundings.ts's
     // selectSuggestedDimension for why this is NOT gated by current closeness).
@@ -511,11 +552,24 @@ function QuizInner() {
       }),
     });
 
-    return res.json() as Promise<{
+    const data = await res.json() as {
       prologue: string | null;
       followUp: FollowUpQ | null;
       freeTextInterpretation?: string;
-    }>;
+    };
+
+    // Shuffle AI-returned options here — at receipt, before storage/display —
+    // so topicQA.followUps[].options always matches the numbering the user saw
+    // (free-text answers reference those numbers, back-navigation re-renders
+    // stored options). The free-text escape hatch stays pinned last.
+    if (data.followUp?.options) {
+      data.followUp = {
+        ...data.followUp,
+        options: shuffleOptionsKeepLast(data.followUp.options, OTHER_OPTION),
+      };
+    }
+
+    return data;
   };
 
   // ── Opener answer handlers ──────────────────────────────────────────────────
@@ -538,7 +592,15 @@ function QuizInner() {
     // Confirming free text after a structured option was selected is a switch too.
     const prevSelection = topicQA[topicId]?.openerAnswerId;
     if (optionId === "other" && prevSelection && prevSelection !== "other") answerSwitchesRef.current += 1;
-    trackQuestionAnswered("opener", optionId === "other" ? "free_text" : "choice");
+    const openerOptions = questionSet[topicId]?.options ?? [];
+    trackQuestionAnswered(
+      "opener",
+      optionId === "other" ? "free_text" : "choice",
+      undefined,
+      optionId === "other"
+        ? undefined
+        : { position: openerOptions.findIndex((o) => o.id === optionId) + 1, count: openerOptions.length }
+    );
 
     setTopicQA((prev) => ({
       ...prev,
@@ -583,11 +645,24 @@ function QuizInner() {
   const handleFollowUpAnswer = async (answerText: string, answerMode: "choice" | "free_text") => {
     const topicId = topicsToAsk[questionIndex];
     const answeredFollowUp = currentFollowUp!;
-    trackQuestionAnswered("follow_up", answerMode, followUpsAskedThisTopic);
+    // Choice answers are our own "N. <option>" construction — the leading
+    // integer is the displayed position. Count excludes the free-text option
+    // (choosing it reports as free_text, never choice).
+    trackQuestionAnswered(
+      "follow_up",
+      answerMode,
+      followUpsAskedThisTopic,
+      answerMode === "choice"
+        ? {
+            position: parseInt(answerText, 10),
+            count: answeredFollowUp.options.filter((o) => o !== OTHER_OPTION).length,
+          }
+        : undefined
+    );
 
     const newFollowUps = [
       ...(topicQA[topicId]?.followUps ?? []),
-      { question: answeredFollowUp.question, options: answeredFollowUp.options, hint: answeredFollowUp.hint, answer: answerText },
+      { question: answeredFollowUp.question, options: answeredFollowUp.options, hint: answeredFollowUp.hint, targetedAspect: answeredFollowUp.targetedAspect, answer: answerText },
     ];
     setTopicQA((prev) => ({
       ...prev,

@@ -50,12 +50,14 @@ _Ordered by RICE thinking (reach × impact × confidence ÷ effort) — each ite
 
 16. **Tighten the blanket Firewall rate-limit rule from log to enforce** — _Tiny; same wait-and-observe pattern as CSP cleanup above — give it a few days of real traffic first._ The 300 req/IP/60s all-paths rule (added 2026-07-09) is currently `log`-only. Once the Firewall traffic dashboard confirms no legitimate traffic trips it, switch the rule's action from `log` to `rate_limit` (429) so it actually enforces.
 
-17. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
+17. **Make the quiz-flow state machine testable (component tests or reducer extraction)** — _Low priority: the logic is stable and the harness is the main cost — but the gap is proven, not hypothetical._ The quiz page's navigation/state logic (`goBack`, `coveredAspects` bookkeeping, back/re-answer cycles, follow-up caps) lives inside the client component and currently has zero automated coverage — the 2026-07-11 back-nav bug (withdrawn follow-up silently consumed its dimension, sometimes ending the topic early) was user-reported and could only be verified manually. Two options when picked up: (a) component tests — React Testing Library + jsdom under vitest, mocked `fetch` for `/api/follow-up` — exercising real back/re-answer flows; or (b) extract the flow into a pure reducer (`state + action → state`) unit-testable without DOM, with the component dispatching — likely the better long-term shape but a bigger refactor. Either way, the first regression test to write is the back-nav dimension-rollback scenario.
+
+18. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
     - Russian, Arabic, English UI layers; party platforms stay in Hebrew, answers/explanations translated
 
-18. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
+19. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
 
-19. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+20. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 

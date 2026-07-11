@@ -4,7 +4,9 @@ import { CRITICAL_WEIGHT } from "@/lib/topics";
 export type TopicQA = {
   openerAnswerId: string;
   openerAnswerText: string;
-  followUps: { question: string; options: string[]; hint?: string; answer: string }[];
+  // targetedAspect is carried so back-navigation can roll the aspect out of
+  // coveredAspects when a question is withdrawn (see goBack in app/quiz/page.tsx).
+  followUps: { question: string; options: string[]; hint?: string; targetedAspect?: string; answer: string }[];
   coveredAspects?: string[];
   freeTextInterpretation?: string;
 };
