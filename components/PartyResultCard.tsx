@@ -265,7 +265,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                         className={`border-r-2 pr-3 ${e.matched ? "border-teal-300" : "border-gray-200"}`}
                       >
                         {e.matched && (
-                          <p className="text-xs text-teal-500 font-medium mb-0.5">↳ קשור לשאלת ההמשך שענית עליה</p>
+                          <p className="text-xs text-teal-500 font-medium mb-0.5">↲ קשור לשאלת ההמשך שענית עליה</p>
                         )}
                         {e.contrary && (
                           <p className="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת ל: {e.contrary}</p>

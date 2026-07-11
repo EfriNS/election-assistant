@@ -164,7 +164,7 @@ function renderGrounding(
         .map(
           (entry) => `
           <div class="border-r-2 pr-3 ${entry.matched ? "border-teal-300" : "border-gray-200"}">
-            ${entry.matched ? `<p class="text-xs text-teal-500 font-medium mb-0.5">↳ קשור לשאלת ההמשך שענית עליה</p>` : ""}
+            ${entry.matched ? `<p class="text-xs text-teal-500 font-medium mb-0.5">↲ קשור לשאלת ההמשך שענית עליה</p>` : ""}
             ${entry.contrary ? `<p class="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת ל: ${e(entry.contrary)}</p>` : ""}
             <p class="text-xs text-gray-700 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
             <div class="flex items-center gap-2 mt-1 flex-wrap">
