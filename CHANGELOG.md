@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-07-11 — RTL continuation arrow mirrored (↳ → ↲)
+
+Verifying the answer-chain recap on preview, Efri noticed the `↳` continuation arrow points rightwards — away from the Hebrew text flow — and that the same glyph appears elsewhere. Arrows are not bidi-mirrored by `dir="rtl"` (Unicode mirroring covers paired punctuation only), so the direction-correct codepoint `↲` (U+21B2) is now used in all four places: the quiz "שאלת המשך" label, the answer-chain recap, the results-card "קשור לשאלת ההמשך" marker (`PartyResultCard`), and the PDF template (same Unicode block — serverless-Chromium font coverage unchanged). Learning added to NEXTJS-REACT-PATTERNS § RTL Copy.
+
+Files: `app/quiz/page.tsx`, `components/PartyResultCard.tsx`, `lib/pdf-template.ts`. Commit `bef3243`, merged via `032077b`. 347 tests, `tsc`, `eslint` clean.
+
 ## 2026-07-11 — Follow-up recap shows the topic's full answer chain
 
 ### Context

@@ -458,6 +458,10 @@ In RTL text, `")"` and `"?"` are both weak-direction characters. When they appea
 
 Rule: in Hebrew UI strings, never end with `")?"`. The `"?"` closes the main clause; any parenthetical note comes after it.
 
+### Direction-sensitive glyphs don't mirror with dir="rtl" — pick the mirrored codepoint yourself (#first:2026-07-11)
+
+Unicode bidi mirroring applies to paired punctuation (parens, brackets), **not** to arrows and similar symbols: `↳` (U+21B3, tip-rightwards, "continuation" in LTR) renders tip-rightwards even inside an RTL paragraph, pointing *away* from the Hebrew text flow. User-reported after the ↳-prefixed answer-chain recap shipped; the same glyph had been in the follow-up label, results-card quote marker, and PDF template for weeks. Fix: use the direction-correct codepoint (`↲`, U+21B2) — and when adding any arrow/chevron/progress glyph to this RTL-first app, ask "which way does this point in *this* text direction?" rather than copying the LTR-conventional symbol. (Continuation/back buttons here already follow this: "המשך ←".)
+
 ---
 
 ## Server-side PDF generation (Puppeteer + @sparticuz/chromium)
