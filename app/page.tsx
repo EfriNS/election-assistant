@@ -50,7 +50,7 @@ export default function Home() {
         {/* Advisor style */}
         <div className="mb-2">
           <p className="text-sm font-semibold text-gray-700 mb-4">
-            מי אני כיועץ שלכם?
+            מי אני כעוזר שלכם?
           </p>
           <div className="flex flex-col gap-3">
             {([
