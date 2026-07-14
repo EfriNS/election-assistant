@@ -9,6 +9,7 @@ import { shuffleArray, shuffleOptionsKeepLast } from "@/lib/shuffle";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
+import { describeRequestFailure } from "@/lib/request-diagnostics";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
@@ -455,20 +456,6 @@ function QuizInner() {
         }
       }
     }
-  };
-
-  // Diagnostics for a fetch()/res.json() failure — these only fire on network-level
-  // transport failures (a real server response, even an error one, is always valid
-  // JSON here — see route.ts), so this is "was the request lost", not "did the server
-  // error". Non-PII: JS exception name/message plus browser connectivity/tab state.
-  const describeRequestFailure = (err: unknown) => {
-    const e = err instanceof Error ? err : null;
-    return {
-      error_name: e?.name ?? "Unknown",
-      error_message: (e?.message ?? String(err)).slice(0, 200),
-      online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
-      visibility: typeof document !== "undefined" ? document.visibilityState : undefined,
-    };
   };
 
   // ── Shared API call ─────────────────────────────────────────────────────────
