@@ -9,6 +9,7 @@ import { shuffleArray, shuffleOptionsKeepLast } from "@/lib/shuffle";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
 import { mpIdentify, mpTrack } from "@/lib/mixpanel";
+import { describeRequestFailure } from "@/lib/request-diagnostics";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
@@ -520,43 +521,60 @@ function QuizInner() {
 
     const suggestedNextDimension = selectSuggestedDimension(uncoveredKeyDims, groundingMap);
 
-    const res = await fetch("/api/follow-up", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        conversationSoFar: buildConversationSoFar(questionIndex),
-        currentTopic: {
-          label: topic.label,
-          openerQuestion: questionSet[topicId]?.question ?? "",
-          openerAnswer: openerAnswerText,
-          freeTextInterpretation: topicQA[topicId]?.freeTextInterpretation,
-          followUpQA: followUpQA.map(({ question, answer }) => ({ question, answer })),
-        },
-        nextTopic: nextTopicId
-          ? {
-              label: TOPICS.find((t) => t.id === nextTopicId)?.label ?? nextTopicId,
-              question: questionSet[nextTopicId]?.question ?? "",
-            }
-          : null,
-        tone,
-        depth,
-        followUpsAskedThisTopic: askedCount,
-        followUpCapForTopic: FOLLOW_UP_CAPS[depth]?.[buckets[topicId] ?? 2] ?? 1,
-        topicWeightLabel: BUCKET_LABELS[buckets[topicId] ?? 2],
-        partyGroundings,
-        currentScores,
-        suggestedNextDimension,
-        uncoveredKeyDims,
-        openerIsFreeText,
-        sessionId,
-      }),
+    const requestBody = JSON.stringify({
+      conversationSoFar: buildConversationSoFar(questionIndex),
+      currentTopic: {
+        label: topic.label,
+        openerQuestion: questionSet[topicId]?.question ?? "",
+        openerAnswer: openerAnswerText,
+        freeTextInterpretation: topicQA[topicId]?.freeTextInterpretation,
+        followUpQA: followUpQA.map(({ question, answer }) => ({ question, answer })),
+      },
+      nextTopic: nextTopicId
+        ? {
+            label: TOPICS.find((t) => t.id === nextTopicId)?.label ?? nextTopicId,
+            question: questionSet[nextTopicId]?.question ?? "",
+          }
+        : null,
+      tone,
+      depth,
+      followUpsAskedThisTopic: askedCount,
+      followUpCapForTopic: FOLLOW_UP_CAPS[depth]?.[buckets[topicId] ?? 2] ?? 1,
+      topicWeightLabel: BUCKET_LABELS[buckets[topicId] ?? 2],
+      partyGroundings,
+      currentScores,
+      suggestedNextDimension,
+      uncoveredKeyDims,
+      openerIsFreeText,
+      sessionId,
     });
 
-    const data = await res.json() as {
-      prologue: string | null;
-      followUp: FollowUpQ | null;
-      freeTextInterpretation?: string;
+    const fetchAndParse = async () => {
+      const res = await fetch("/api/follow-up", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: requestBody,
+      });
+      return res.json() as Promise<{
+        prologue: string | null;
+        followUp: FollowUpQ | null;
+        freeTextInterpretation?: string;
+        errorCode?: string;
+      }>;
     };
+
+    // One retry on transport failure (dropped connection / truncated body) — the
+    // 2026-07-11 incident (SERVER_ERROR w/ no server-side trace at all) traced back
+    // to a mobile in-app-browser network drop, not a genuine server error. Mirrors
+    // the existing retry-once pattern in route.ts for Gemini output flakiness.
+    // Any error that still reaches the caller below has already been retried once.
+    let data;
+    try {
+      data = await fetchAndParse();
+    } catch {
+      await new Promise((r) => setTimeout(r, 400));
+      data = await fetchAndParse();
+    }
 
     // Shuffle AI-returned options here — at receipt, before storage/display —
     // so topicQA.followUps[].options always matches the numbering the user saw
@@ -631,10 +649,13 @@ function QuizInner() {
           }));
         }
       } else {
+        if (data.errorCode) {
+          mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: data.errorCode, topic_id: topicId, topic_index: questionIndex });
+        }
         advanceToNextTopic(data.prologue ?? null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [], openerAnswered: true });
       }
-    } catch {
-      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
+    } catch (err) {
+      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "REQUEST_FAILED", topic_id: topicId, topic_index: questionIndex, retried: true, ...describeRequestFailure(err) });
       advanceToNextTopic(null, { followUpCount: 0, openerWasFreeText: optionId === "other", aspectsProbed: [], openerAnswered: true });
     } finally {
       setLoading(false);
@@ -702,10 +723,13 @@ function QuizInner() {
           }));
         }
       } else {
+        if (data.errorCode) {
+          mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: data.errorCode, topic_id: topicId, topic_index: questionIndex });
+        }
         advanceToNextTopic(data.prologue ?? null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [], openerAnswered: true });
       }
-    } catch {
-      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "SERVER_ERROR", topic_id: topicId, topic_index: questionIndex });
+    } catch (err) {
+      mpTrack("api_error", { session_id: sessionId, endpoint: "/api/follow-up", error_code: "REQUEST_FAILED", topic_id: topicId, topic_index: questionIndex, retried: true, ...describeRequestFailure(err) });
       advanceToNextTopic(null, { followUpCount: newFollowUps.length, openerWasFreeText: topicQA[topicId]?.openerAnswerId === "other", aspectsProbed: topicQA[topicId]?.coveredAspects ?? [], openerAnswered: true });
     } finally {
       setLoading(false);
