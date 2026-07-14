@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-07-15 — Debugged the Jul 11 follow-up SERVER_ERROR: client-side network drop, not a server bug
+
+### Context
+
+Efri surfaced a Mixpanel `api_error` event from 2026-07-11: `error_code: SERVER_ERROR` on `/api/follow-up`, Android/Chrome, referred from `go.bsky.app` (Bluesky's in-app browser), and asked for it to be debugged.
+
+### Investigation — three independent sources, all pointing the same way
+
+- **Langfuse**: `route.ts` creates a trace unconditionally before its try block and logs+flushes on every path, including the catch. The affected session's trace list showed zero record for the failing call — not even an errored one — meaning the server-side handler never ran to completion for this request.
+- **Vercel**: `get_runtime_errors` returned zero for the entire project, for the entire day. If the function had thrown, it would show here.
+- **Mixpanel**: broke down `api_error` on `endpoint = /api/follow-up` by `error_code` and `$initial_referring_domain` over 30 days — exactly 1 occurrence, this one, tied to the Bluesky in-app-browser referrer.
+
+Conclusion: a client-side transport failure (`fetch()` rejecting or `res.json()` throwing on a truncated body — consistent with an in-app browser suspending network activity when backgrounded), not a genuine server error. The client's catch-all `error_code: "SERVER_ERROR"` label (hardcoded in `app/quiz/page.tsx`, unconditional on any thrown exception) had no way to distinguish the two, which briefly pointed debugging in the wrong direction.
+
+### Fix
+
+- **Retry once** on transport failure inside `callFollowUpAPI` before giving up on a topic's follow-up — mirrors `route.ts`'s existing retry-once-on-Gemini-flakiness pattern. Cleanly scoped: this catch only ever fires on network/parse failures, never on a real quota (429) response, which is valid JSON and doesn't throw.
+- **Fixed a related gap**: `QUOTA_EXCEEDED` on `/api/follow-up` was silently swallowed (never tracked) because neither caller checked `data.errorCode`, unlike `score-topics`' equivalent handling. Both callers now track it before falling back to "advance without a follow-up."
+- **Renamed** the transport-failure code from `SERVER_ERROR` to `REQUEST_FAILED` — accurate now that we know this route always returns valid JSON, so this catch never actually reflects a server error.
+- **Enriched diagnostics**: `error_name`, `error_message` (truncated 200 chars), `online` (`navigator.onLine`), `visibility` (`document.visibilityState`) attached to the tracking event, so a recurrence is diagnosable directly from Mixpanel instead of re-triangulated from scratch.
+- Extracted the pure diagnostic-building piece (`describeRequestFailure`) into `lib/request-diagnostics.ts` with unit test coverage — the only part of this change that's DOM/React-independent and testable under this repo's Node-only Vitest setup. The retry-timing and `errorCode` branch wiring stay untested for the same reason as TODO #17 (no RTL/jsdom harness for `app/quiz/page.tsx`); folded this incident into that item as a second concrete example rather than opening a duplicate.
+- Decided **not** to add a Slack alert for this error class — unlike quota/server errors, a single dropped mobile connection isn't actionable per-occurrence; the enriched Mixpanel event is the right signal if this needs a threshold-based alert later (`/api/quota-check` pattern) instead of per-event noise.
+
+### Verification
+
+Full CI pipeline (`lint`, `tsc --noEmit`, `vitest run`, `next build`) all green. 351 tests (4 new in `tests/requestDiagnostics.test.ts`).
+
+### Files
+
+`app/quiz/page.tsx`, `lib/request-diagnostics.ts` (new), `tests/requestDiagnostics.test.ts` (new), `TODO.md`.
+
+Commits `c5ff1c1`, `b6d4467`, merged via `5f30334`.
+
 ## 2026-07-11 — RTL continuation arrow mirrored (↳ → ↲)
 
 Verifying the answer-chain recap on preview, Efri noticed the `↳` continuation arrow points rightwards — away from the Hebrew text flow — and that the same glyph appears elsewhere. Arrows are not bidi-mirrored by `dir="rtl"` (Unicode mirroring covers paired punctuation only), so the direction-correct codepoint `↲` (U+21B2) is now used in all four places: the quiz "שאלת המשך" label, the answer-chain recap, the results-card "קשור לשאלת ההמשך" marker (`PartyResultCard`), and the PDF template (same Unicode block — serverless-Chromium font coverage unchanged). Learning added to NEXTJS-REACT-PATTERNS § RTL Copy.

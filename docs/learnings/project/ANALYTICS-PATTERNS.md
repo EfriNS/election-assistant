@@ -54,6 +54,10 @@ The follow-up-skip bug: `advanceToNextTopic(prologue, completed?)` defaulted eve
 
 **Rule**: analytics payloads at call sites with divergent context should be a *required* param — let the type system force every new call site to state what happened explicitly. A `?? default` on a tracking payload is the workaround-shaped hole: it compiles, fires, and produces plausible-looking wrong data that no error will ever surface. (Same class: interpret pre-2026-07-10 `topic_completed` Q4 metrics with this caveat; `skipped_follow_up`/`opener_answered` exist only after.)
 
+### A hardcoded `error_code: "SERVER_ERROR"` catch-all hid a client-only failure (#first:2026-07-15)
+
+Same incident as AI-INTEGRATION.md's "Client-side SERVER_ERROR" entry — the analytics-specific lesson: when a catch-all error event's `error_code` is hardcoded per call site rather than derived from what actually failed, the event can't distinguish "the server errored" from "the request never completed." One occurrence in 30 days was still enough to send debugging down the wrong path initially, purely because the label implied server involvement. Renamed to `REQUEST_FAILED` and added `error_name`/`error_message`/`online`/`visibility` fields so the *next* occurrence carries enough dimensions to breakdown-query immediately, instead of needing a fresh Langfuse+Vercel+Mixpanel triangulation each time. General rule: an error-tracking event's code should reflect what was actually observed to fail, not the call site's assumption about where failures come from.
+
 ### Update-Dashboard false-negative errors are now ~100%, and new failure modes (#update:2026-07-10)
 
 Round-2 execution against board 11325742 sharpened the 2026-07-01 findings:

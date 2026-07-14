@@ -115,6 +115,14 @@ Rationale: the prompt fix addresses non-determinism at the source. The client st
    - Auth: `message.includes("401") || message.includes("403") || message.includes("API_KEY")`
    - Default: `SERVER_ERROR`
 
+### Client-side "SERVER_ERROR" can mean the request never reached the server at all (#first:2026-07-15)
+
+A Mixpanel `api_error` on `/api/follow-up` with `error_code: SERVER_ERROR` (2026-07-11, Android/Chrome, referred from a Bluesky in-app browser) turned out not to be a server error at all — `app/quiz/page.tsx`'s catch blocks hardcoded `"SERVER_ERROR"` for *any* thrown exception in `callFollowUpAPI` (a `fetch()` network failure, a truncated `res.json()` body), regardless of whether the server was ever involved. This is a distinct failure class from the item above (server-side `errorCode` mapping in `route.ts`) — a client-side catch-all needs its own label space, or a real server error and a dropped mobile connection become indistinguishable in analytics.
+
+**Diagnosis method** (worth repeating for the next ambiguous client-reported error): check every layer of instrumentation for *any* record, not just error records. `route.ts` creates a Langfuse trace unconditionally before its try block and logs+flushes on every path including the catch — so a session's trace list showing zero record for the failing call (not even an errored one) means the server-side handler never ran to completion. Cross-checked with `Vercel get_runtime_errors` (zero for the whole project that day) and a Mixpanel breakdown of the same `error_code` by `$initial_referring_domain`/device (1 occurrence in 30 days, tied to the in-app-browser referrer) — three independent absences/patterns pointing the same way, not one, before concluding "client-side network drop, not a server bug."
+
+**Fix**: renamed the client catch-all to `REQUEST_FAILED`, added a retry-once wrapper (mirrors the existing retry-once-on-Gemini-flakiness pattern above) before giving up on a topic's follow-up, and attached non-PII diagnostics (`error.name`/`message`, `navigator.onLine`, `document.visibilityState`, extracted to `lib/request-diagnostics.ts`) so a recurrence is diagnosable directly from Mixpanel instead of re-triangulated from scratch.
+
 ### LLM Observability (Langfuse)
 
 5. **Helicone new signups are closed** — As of 2026-06, us.helicone.ai shows "New signups are disabled". Use Langfuse instead. (#first:2026-06-16)
