@@ -3,7 +3,7 @@
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only. 2026-08-07: found an 8th /principles/ sub-page, agriculture — added 2 economy entries (market-structure-and-competition: food-market anti-monopoly; fiscal-discipline-and-efficiency: subsidy-transparency reform); remaining agriculture content (food-security planning, farm insurance, ag-crime enforcement, agrotech R&D, agrivoltaics, rural development) is sector-specific policy uncovered by the current economy aspect taxonomy — flagged, not added. Main /agenda_point/ 10-steps page unchanged since last check.",
   "topics": {
     "security": [
       {
@@ -124,6 +124,24 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "נצא למלחמה בכוח המונופוליסטי בשוק המזון ונתמוך ביוזמות מכירה ישירה לצרכן.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעבור מהגנות עקיפות לא-יעילות לתמיכה שקופה וממוקדת בענף החקלאות, תוך עיגון מעמדו האסטרטגי בחקיקה ובניית רשתות ביטחון לחקלאים.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
