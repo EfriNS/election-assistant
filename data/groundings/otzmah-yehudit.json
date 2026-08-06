@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "אתר רשמי (ozma-yeudit.co.il) — פעולות ממשלתיות מתועדות; משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק",
+  "platformLabel": "אתר רשמי (ozma-yeudit.co.il) — משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק",
   "sourceUrl": "https://ozma-yeudit.co.il",
   "archiveDir": "docs/sources/otzmah-yehudit/",
-  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed of actual legislative/ministerial actions (dated June-July 2026). That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail. 2026-07-08: 3 more dated items added from the same 'עדכונים' feed (gun-license eligibility expansion, Shin Bet Arab-sector-crime funding, an AG/National-Security-Committee dispute) — same security/justice concentration pattern holds, still no genuine economy/education/health/housing/ecology coverage from official material. 2026-08-07: re-checked 'עדכונים' feed and homepage — 6 new dated items (2026-07-21 through 2026-08-04), added 2 with genuine new policy content (gun-license expansion to Beer Sheva streets; Ben Gvir's Temple Mount ascent on Tisha B'Av reinforcing the sovereignty stance), skipped 4 as event/rhetoric-only with no new mechanism or stance (tree-planting photo-op, Eizenkot spat, East Jerusalem tour rhetoric, Chavat Gilad fire-briefing visit). Site nav/structure unchanged. Still no economy/education/health/housing/ecology coverage from official material — persistent gap, not a collection failure.",
+  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed. That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail. CORRECTED 2026-08-07: removed 9 entries (added 2026-07-03 through 2026-08-07) that were administrative/news-report items from the 'עדכונים' feed — ministerial visits, committee approvals, an MK's court petition, budget/relocation decisions — not platform text. Per lib/groundings.ts, `text` must be 'a verbatim Hebrew quote from the party's source document'; these described dated actions in third-person narrative, not stated positions, yet carried the same official-current/quantified tags as genuine platform quotes, which risked outranking real platform text in getBestEvidenceForTopic()'s selection. This is exactly the not-yet-designed 'documented action' evidence type discussed in TODO.md items #8-#9 (which scopes it to Likud) — if that feature is ever built with proper attribution rules, these 9 items (see docs/sources/otzmah-yehudit/2026-06-23-party-program.md for the full removed list) are candidates to reintroduce under it, not under ordinary platform-quote provenance. 3 borderline items (active legislative proposals — muezzin-noise enforcement bill, criminal-responsibility-age bill, a minister's public ceasefire stance) were kept as they state a position/intent rather than just report a completed action. Still no genuine economy/education/health/housing/ecology coverage from official material — persistent gap, not a collection failure.",
   "topics": {
     "security": [
       {
@@ -72,15 +72,6 @@
         "concreteness": "specific-stance"
       },
       {
-        "text": "הרחבת רשימת היישובים הזכאים לרישוי נשק אזרחי (יבנה, ראשון לציון, עפרה, מועצה אזורית דרומית) כחלק מרפורמת הנשק של השר בן גביר; קודם לכן הורחב הרישוי ליישוב ה-100.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-03",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
         "text": "השר בן גביר: ישראל צריכה לדחות כל הסכם הפסקת אש בין ארה\"ב לאיראן, בדגש על סדרי עדיפויות ביטחוניים אזרחיים וצבאיים.",
         "aspect": "foreign-policy-and-nonproliferation",
         "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
@@ -88,60 +79,6 @@
         "dateRetrieved": "2026-07-03",
         "provenance": "official-current",
         "concreteness": "generic"
-      },
-      {
-        "text": "ביקור השר בן גביר במתקן מעצר בנושא תמיכה בעונש מוות למחבלים — פעולה ממשלתית בפועל, מאששת עמדה שדווחה קודם על ידי ניתוח IDI.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-03",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "העברת מפקדת המשטרה הצפונית ומרכז הפיקוד מנצרת לנוף הגליל, בעלות של עשרות מיליוני ₪, באישור השר בן גביר.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-03",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "ועדת הביטחון הלאומי, בראשות ח\"כ צבי פוגל, אישרה הרחבת האוכלוסיות הזכאיות לרישיון נשק אזרחי: שוטרי שח\"מ, לוחמי כליאה, חיילים המצויים בפרק משימה, עובדי כבאות והצלה וקצינים אקדמאיים.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "השב\"כ מצטרף למאבק בפשיעה בחברה הערבית ביוזמת השר בן גביר והסגנית מאי גולן; יועבר לכך תקציב של חצי מיליארד ש\"ח.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "ח\"כ צבי פוגל עתר לבג\"ץ לאחר שהיועצת המשפטית לממשלה סירבה להתייצב בפני ועדת הביטחון הלאומי בנושא פשיעה בחברה הערבית.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "\"מהפכת הנשק\" של השר בן גביר בבאר שבע — אישור מאות רחובות חדשים כזכאים לרישיון נשק אישי, המשך רפורמת הרחבת רישוי הנשק האזרחי.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "quantified"
       }
     ],
     "economy": [
@@ -276,16 +213,6 @@
         "contrary": "כיבוד חופש הפולחן הדתי למיעוט המוסלמי",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
-      },
-      {
-        "text": "בן גביר עלה להר הבית בצום תשעה באב, יחד עם שר הנגב יצחק וסרלאוף — פעולה מתוארכת המאששת בפועל את עמדת המפלגה על ריבונות יהודית בהר הבית.",
-        "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-08-07",
-        "contrary": "הסדר הסטאטוס קוו של הר הבית",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
       }
     ],
     "justice": [
@@ -337,15 +264,6 @@
         "contrary": "ועדת מינויים מקצועית בלתי-תלויה",
         "provenance": "third-party",
         "concreteness": "specific-stance"
-      },
-      {
-        "text": "ועדת הביטחון הלאומי אישרה קריאה טרומית לחוק המונע ביקורי הצלב האדום לאסירים מחבלים (יזמה: ח\"כ גלית דיסטל אטבריאן).",
-        "aspect": "emergency-powers-and-security-law",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-03",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
       },
       {
         "text": "הצעה להורדת גיל האחריות הפלילית ל-10 שנים.",
