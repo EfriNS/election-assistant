@@ -154,6 +154,34 @@ When the user has a stored memory/feedback note like "never run `vercel deploy` 
 
 ---
 
+## GitHub Security Alerts (Dependabot / CodeQL)
+
+### `npm audit fix` can't cross a version boundary a direct dependency's own range caps (#first:2026-08-07)
+
+22 Dependabot alerts: 21 were transitive packages already inside their direct parent's declared semver range (just a stale lockfile resolution) — `npm audit fix` picked up the patched versions with zero package.json changes. `sharp` (bundled under `next`'s `optionalDependencies`) was the exception: `next@16.2.11`'s own declared range for it is `^0.34.5`, which — since major is `0` — means `>=0.34.5 <0.35.0` and excludes `0.35.0`, the version that actually fixes the libvips CVEs. No `npm update`/`audit fix` can cross that boundary; it's not a stale-lockfile problem, it's the parent's declared range lagging the advisory.
+
+**Rule**: when an alert survives `npm audit fix`, check whether the *direct* parent's own `package.json` range excludes the patched version (`npm view <parent>@<installed-version> dependencies` / `optionalDependencies`) before assuming something's broken. If so, add an `overrides` entry (`package.json`) pinning the sub-dependency to the patched version — this is the standard, non-hacky npm mechanism for exactly this case (a parent that hasn't bumped its own bound yet), not a workaround. Verify with `npm ls <pkg>` afterward — it should show `overridden`.
+
+### GitHub's "enable Dependabot" button can leave an incomplete config (#first:2026-08-07)
+
+The auto-generated `.github/dependabot.yml` from GitHub's UI had `package-ecosystem: ""` (the doc-comment placeholder, never filled in) — syntactically present but functionally inert, so scheduled version-update PRs were never actually configured. This is separate from Dependabot *alerts* (security scanning via the dependency graph, which runs regardless of this file) — it only affects routine version-bump PRs.
+
+**Rule**: after enabling Dependabot via the GitHub UI, open `.github/dependabot.yml` and confirm `package-ecosystem` actually names a real ecosystem (`"npm"`, `"github-actions"`, etc.), not the leftover placeholder string.
+
+### CodeQL's taint analysis doesn't propagate "already validated" across a `.map()`-derived array into another function (#first:2026-08-07)
+
+Fixed `js/prototype-polluting-assignment` (`result[t.topicId][party.id] = ...` with a client-supplied `topicId`) by validating `topicId` against a canonical `Set` early in the `POST` handler, before the array was `.map()`'d into the shape passed to a separate `parseScores` function. CodeQL's re-scan still flagged the same line — it doesn't prove the whole-array invariant "every element of `rawTopics` was checked, therefore every element of the derived `topics` array is safe" across a function boundary; that kind of reasoning is a known blind spot for taint-tracking static analysis generally, not specific to this query.
+
+**Rule**: for CodeQL-flagged sinks (prototype pollution, injection, etc.), add the guard **immediately at the dangerous write/call**, inside the same function, even if the data was already validated upstream. This is also just better engineering regardless of the tool — a function shouldn't depend on a caller's earlier validation to be safe on its own. Keep the upstream check too if it produces a cleaner user-facing error (e.g. `INVALID_INPUT` before doing any work) — the two serve different purposes, not redundant.
+
+### CodeQL alerts can need more than one pass — its counterexamples are stricter than the obvious fix (#first:2026-08-07)
+
+Fixing `js/bad-tag-filter` (`</script>` regex not matching `</script >` with a trailing space) by adding `\s*` before `>` closed the *original* alert but CodeQL's re-scan raised a fresh instance with its own counterexample: `</script\t\n bar>` — arbitrary trailing content, not just whitespace, matching the `[^>]*` leniency already used on the *opening* tag. The fix converged once the closing-tag pattern was made symmetric with the opening one (`[^>]*` both places).
+
+**Rule**: after pushing a CodeQL fix, don't assume the alert is closed until the re-scan confirms it (`gh api repos/:owner/:repo/code-scanning/alerts` — check `state`, and watch for a *new* alert number on the same rule/file, which means the first fix was too narrow). `results_count: 0` on the analysis for your exact commit SHA is the actual signal, not "I made a plausible-looking change."
+
+---
+
 ## Testing
 
 ### ?notrack=1 for analytics-clean testing (#first:2026-06-29)

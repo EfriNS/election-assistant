@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-08-07 — Cleared all GitHub Dependabot (22) and code-scanning (6) alerts
+
+### Context
+
+Efri enabled GitHub Dependabot on the repo and asked for the resulting alerts to be triaged and fixed: 22 dependency-vulnerability alerts, then separately 6 CodeQL code-scanning alerts once those became visible.
+
+### Dependabot (22 alerts → 0)
+
+Package-by-package: `next`/`eslint-config-next` bumped `16.2.9 → 16.3.0` (9 advisories — SSRF in Server Actions/rewrites, cache confusion, middleware bypass, DoS); `postcss`, `js-yaml`, `ip-address`, `brace-expansion`, `protobufjs` were all transitive and already inside their direct parent's declared semver range — just a stale lockfile — so `npm audit fix` picked them up with no `package.json` changes. `sharp` was the one exception: `next`'s own `optionalDependencies` range (`^0.34.5`) excludes `0.35.0`, the version that fixes the libvips CVEs (0.x semver — a parent-range boundary no plain update can cross), so it needed an explicit `overrides` entry. Separately noticed and fixed: `.github/dependabot.yml` (added by Efri in the same session) had `package-ecosystem: ""` — the doc-comment placeholder from GitHub's UI, never filled in — so scheduled version-update PRs weren't actually configured; set to `"npm"`.
+
+Also fixed the one pre-existing lint warning surfaced during this pass while the tree was already clean: `window.location.href` for the quiz priorities-step "back" button → `useRouter().push()` (it's called from an `onClick` handler already, so no render-phase concern).
+
+### Code scanning (6 alerts → 0, across two CodeQL passes)
+
+- **`lib/sanitize.ts`** (`js/polynomial-redos` + `js/incomplete-multi-character-sanitization`): `sanitizeUserInput` ran an unbounded `/<[^>]*>/g` regex *before* truncating to `maxLen` — quadratic-time on an adversarial `"<"`-heavy body, and the same paired-delimiter regex let an unclosed `<script` (no `>`) through untouched. Fixed by truncating first (bounds worst-case cost to a small constant) and stripping `<`/`>` individually instead of matching whole tag pairs — eliminates the unclosed-tag bypass by construction, not just mitigates it.
+- **`app/api/score-topics/route.ts`** (`js/prototype-polluting-assignment`): client-supplied `topicId` was used as an object key (`result[t.topicId][party.id] = ...`) with no membership check, so `"__proto__"` could rewrite the result object's prototype. Added `TOPIC_IDS` (`lib/topics.ts`) and validated in `POST`'s input-validation block — but CodeQL's re-scan still flagged the same line, because its taint analysis doesn't prove that whole-array-validated invariant survives a `.map()` into the `topics` array `parseScores` receives. Second pass: added the same guard directly at the write site inside `parseScores` itself (defense-in-depth — the function is now safe on its own regardless of caller behavior).
+- **`scripts/apply-scores.ts`** (`js/incomplete-sanitization`): `optionId` and stringified scores were interpolated into a `new RegExp(...)` source with only `-` escaped, not backslash or other metacharacters. Added a proper `escapeRegExp` helper.
+- **`scripts/auto-score.ts`** `htmlToText()` (`js/bad-tag-filter` ×2 + `js/double-escaping`): the script/style closing-tag regexes required a literal `</script>`/`</style>` with zero tolerance — first fix added `\s*` before `>` (closed the original alert), but CodeQL's re-scan raised a *new* instance with a stricter counterexample (`</script\t\n bar>`, arbitrary trailing content) — converged once the closing tag used `[^>]*`, symmetric with the already-lenient opening-tag pattern. Separately, decoding `&amp;` before `&lt;`/`&gt;` in sequential `.replace()` passes meant a legitimately double-encoded `&amp;lt;` (literal text "&lt;") got re-interpreted as a fresh `&lt;` entity and unescaped into an actual `<`. Switched to a single-pass regex+replacer over the original text.
+
+Learnings on the CodeQL iterate-until-`results_count:0` pattern and the npm-`overrides` fix routed to `docs/learnings/project/INFRA-PATTERNS.md` (new "GitHub Security Alerts" section) — both felt more universal-engineering than project-specific, but no existing `dev-workflow` plugin skill was a clean fit, so kept local pending a dedicated home.
+
+### Verification
+
+Each fix pass: full CI (`lint`, `tsc --noEmit`, `vitest run`, `next build`) green, plus `npm audit` (0 vulnerabilities) and `gh api .../code-scanning/alerts` re-checked after each push until every alert showed `state: fixed` and the analysis for the exact commit SHA showed `results_count: 0`. Added `tests/sanitizeUserInput.test.ts` (new, 5 cases including a ReDoS-timing bound) — 356 tests total, up from 351.
+
+### Files
+
+`package.json`, `package-lock.json`, `.github/dependabot.yml`, `app/quiz/page.tsx`, `lib/sanitize.ts`, `lib/topics.ts`, `app/api/score-topics/route.ts`, `scripts/apply-scores.ts`, `scripts/auto-score.ts`, `tests/sanitizeUserInput.test.ts` (new), `docs/learnings/project/INFRA-PATTERNS.md`.
+
+Commits `ad85546`, `f6fdc94`, `5edeaa9`, `fdf558e` — pushed directly to `main` (hotfix mode, no long-lived feature branch).
+
 ## 2026-07-15 — Debugged the Jul 11 follow-up SERVER_ERROR: client-side network drop, not a server bug
 
 ### Context
