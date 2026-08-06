@@ -3,7 +3,7 @@
   "platformLabel": "מצע המפלגה (beytenu.org.il)",
   "sourceUrl": "https://beytenu.org.il/party-platform/",
   "archiveDir": "docs/sources/beitenu/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry. 2026-08-07: re-checked same page (no new page); added 6 more concrete/quantified items (Border Police expansion, port/airport privatization, single chief rabbi, biennial budget, Holocaust-survivor grant amount, Arab-citizenship framing). Two summarized-but-unverified items (anti-Zionist school content, asset-declaration transparency) intentionally not added — need exact-quote follow-up.",
   "topics": {
     "security": [
       {
@@ -68,6 +68,15 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת 12 גדודים חדשים במג\"ב, הקצאת 4,000 לוחמי מג\"ב ליהודה ושומרון בלבד.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "economy": [
@@ -107,6 +116,15 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "הפרטת נמל אשדוד ושדה התעופה בחיפה.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
@@ -227,6 +245,15 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "רב ראשי אחד לישראל, רב עיר אחד לכל רשות מקומית.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
@@ -255,6 +282,15 @@
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "פסקת התגברות / חוק הצרפתי",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הסדרת תקציב המדינה כתקציב דו-שנתי, לצורך שמירה על יציבות הממשלה, הכלכלה והמשק.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
@@ -296,6 +332,25 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "הגדלת המענק השנתי לניצולי השואה ל-8,000 ₪ במקום 6,500 ₪.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
+        "_note": "מכמת את הרשומה הכללית יותר לעיל (רפורמת פנסיה)",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "לערבים כל הזכויות בארץ ישראל, אבל שום זכות על ארץ ישראל. לא נשלים עם התופעה המסוכנת של ההקצנה בקרב חברי הכנסת הערבים, המסיתים נגד המדינה שבפרלמנט שלה הם מכהנים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": []
