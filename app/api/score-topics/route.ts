@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Langfuse } from "langfuse";
 import { PARTIES } from "@/lib/parties";
 import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/groundings";
+import { TOPIC_IDS } from "@/lib/topics";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
 
@@ -147,7 +148,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ errorCode: "INVALID_INPUT" }, { status: 400 });
   }
   for (const t of rawTopics) {
-    if (!t.topicId || !t.openerAnswer) {
+    if (!t.topicId || !TOPIC_IDS.has(t.topicId) || !t.openerAnswer) {
       return NextResponse.json({ errorCode: "INVALID_INPUT" }, { status: 400 });
     }
   }

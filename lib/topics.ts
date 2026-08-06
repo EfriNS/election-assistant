@@ -19,6 +19,11 @@ export const TOPIC_LABELS: Record<string, string> = Object.fromEntries(
   TOPICS.map((t) => [t.id, t.label])
 );
 
+// Validate any client-supplied topicId against this before using it as an
+// object key — closes off prototype-pollution keys ("__proto__" etc.) that
+// `in`/truthy checks on TOPIC_LABELS wouldn't reliably catch.
+export const TOPIC_IDS: Set<string> = new Set(TOPICS.map((t) => t.id));
+
 // Shared with PrioritiesStep (cap enforcement) and lib/scoring.ts (gate check) —
 // one source of truth so the two stay in sync.
 export const CRITICAL_WEIGHT = 4;      // the "קריטי" bucket value

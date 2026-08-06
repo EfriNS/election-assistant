@@ -12,6 +12,12 @@ import { readFileSync, writeFileSync } from "fs";
 
 const DRY_RUN = !process.argv.includes("--apply");
 
+// Full regex-metacharacter escape (including backslash) — needed since both
+// optionId and stringified scores get interpolated into a RegExp source below.
+function escapeRegExp(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 if (DRY_RUN) {
   console.log("🔍 DRY RUN — no files will be changed. Pass --apply to write.\n");
 }
@@ -47,7 +53,7 @@ for (const [key, result] of changed) {
   // The array must appear in a block near the option id to avoid false matches
   // Strategy: find "id: \"<optionId>\"" then find the next "scores:" and replace that array
   const optionPattern = new RegExp(
-    `(id:\\s*"${optionId}"[\\s\\S]*?scores:\\s*)\\[${result.current.map(n => String(n).replace(/-/g, "\\-")).join(",\\s*")}\\]`,
+    `(id:\\s*"${escapeRegExp(optionId)}"[\\s\\S]*?scores:\\s*)\\[${result.current.map(n => escapeRegExp(String(n))).join(",\\s*")}\\]`,
     "g"
   );
 

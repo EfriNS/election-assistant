@@ -99,13 +99,19 @@ function loadEnvLocal() {
 
 // ─── HTML → plain text ────────────────────────────────────────────────────────
 
+const HTML_ENTITIES: Record<string, string> = {
+  amp: "&", lt: "<", gt: ">", nbsp: " ", quot: '"',
+};
+
 function htmlToText(html: string): string {
   return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[^>]*>[\s\S]*?<\/script\s*>/gi, " ")
+    .replace(/<style[^>]*>[\s\S]*?<\/style\s*>/gi, " ")
     .replace(/<[^>]+>/g, " ")
-    .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-    .replace(/&nbsp;/g, " ").replace(/&quot;/g, '"')
+    // Single pass over the original text — decoding &amp; before &lt;/&gt;
+    // in separate passes would re-interpret an already-correct "&amp;lt;"
+    // (literal text "&lt;") as a second, unintended "&lt;" entity.
+    .replace(/&(amp|lt|gt|nbsp|quot);/g, (_, entity: string) => HTML_ENTITIES[entity])
     .replace(/\s+/g, " ")
     .trim();
 }
