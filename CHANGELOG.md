@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-08-07 — Monthly grounding-data refresh: all 10 parties re-checked (25 entries added)
+
+### Context
+
+Efri asked for a re-check of every party's official platform for updates since the last refresh (2026-06-27/07-08), plus regeneration of `docs/advisor-review/grounding-review.html` and any other affected docs.
+
+### Approach
+
+Dispatched 10 parallel forked agents, one per party, each independently running the `collect-party-data` skill's re-run flow (Steps 1-7) against its party's known official source(s) and last-checked date. Forks were instructed not to run `export:grounding-review` or commit — those stayed centralized to avoid races, since all 10 forks wrote disjoint files (each party's own JSON + archive markdown) but shared the one generated artifact.
+
+### Findings (6 of 10 parties had real changes; 288 → 313 entries)
+
+- **democrats** (+15, the largest update): a new `/topics/environment-animals` page appeared since 2026-07-08 (6 ecology entries), and a previously-unfetchable S3-hosted "תוכנית דמוקרטיה ומשפט" PDF became fetchable (5 justice entries — PM term limits, judicial-selection-committee repeal, legal-advisor independence). Also backfilled 3 entries that had been archived 2026-06-22 but never made it into the JSON, and fixed a mis-pointed `sourceUrl` on an existing justice entry.
+- **beitenu** (+6): Border Police expansion (12 battalions, 4,000 personnel), Ashdod Port/Haifa Airport privatization, single national chief rabbi, biennial state budget, a now-quantified Holocaust-survivor grant, and a verbatim platform quote on Arab-citizen rights.
+- **hadash** (+4): re-read of maki.org.il/zoha.org.il surfaced work-week-reduction and collective-bargaining commitments; 2 more commitments flagged as taxonomy-uncovered (Mizrahi/Eastern-Jewish equality, children's/youth rights) rather than force-fit.
+- **otzmah-yehudit** (+2): gun-license expansion to Beer Sheva; Ben Gvir's Tisha B'Av Temple Mount ascent as a dated concrete action.
+- **yashar** (+2): a new `/principles/agriculture/` sub-page (index went 7→8 listed pages); some sector-specific content flagged as taxonomy-uncovered.
+- **beyahad** (0 new entries, but a real change): the party's domain migrated `bennett2026.org.il` → `be-yahad.org.il` (308 redirect); all 25 `sourceUrl` occurrences updated. Still 6/11 plan categories published.
+- **likud, raam, shas, yahadut-hatorah**: re-checked, confirmed still no official 2026 platform. Likud's 2026-08-04 primaries passed with no platform publication. Ra'am is holding its first-ever primaries with a general convention on 2026-08-22 — noted as the next checkpoint (`TODO.md` #11 updated accordingly).
+
+### Data-integrity fix
+
+Found and fixed a pre-existing bug while reviewing hadash's diff: 34 grounding entries cited `archivePath: docs/sources/hadash/2026-06-27-hadash-values-full.md`, a file that was never actually created — the 2026-06-27 collection session had appended that content into the existing `2026-06-23-hadash-principles.md` instead, but the JSON entries were written with a fresh, never-materialized filename. Corrected all 34 references; verified no other party has a dangling `archivePath`. Added a guardrail to the `collect-party-data` skill (Step 6) so future update sessions check this before finishing.
+
+### Verification
+
+Full CI pipeline (`lint`, `tsc --noEmit`, `vitest run` — 356 tests, `next build`) green. `docs/advisor-review/grounding-review.html` regenerated (313 entries, 10 parties).
+
+### Files
+
+`data/groundings/*.json` (all 10), `docs/sources/*/` (9 updated, 2 new files), `docs/advisor-review/grounding-review.html`, `.claude/skills/collect-party-data/SKILL.md`, `TODO.md`.
+
+Commits `10acfad`..`11aaa50` on `feature/grounding-refresh-2026-08`, merged to `main` via `--no-ff`.
+
 ## 2026-08-07 — Cleared all GitHub Dependabot (22) and code-scanning (6) alerts
 
 ### Context
