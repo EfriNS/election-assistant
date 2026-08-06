@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026 + תוכנית נקודות אפריל 2026",
+  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026 (7 עמודי נושא) + תוכנית נקודות אפריל 2026 + תוכנית דמוקרטיה ומשפט מפורטת",
   "sourceUrl": "https://yes.democrats.org.il",
   "archiveDir": "docs/sources/democrats/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf. 2026-07-08: 'תוכנית הנקודות לסדר היום הרעיוני' (April 2026, https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf) — previously noted as unfetchable, now live — added; fills ecology (was empty) and healthcare-workforce/gender-equality/disability-elderly (previously 0-coverage aspects). Housing still has only 1 entry — no housing-specific content found in this source either.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf — fetched successfully 2026-08-07 (previously unfetchable), now grounds justice with mechanism-level entries. 2026-07-08: 'תוכנית הנקודות לסדר היום הרעיוני' (April 2026, https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf) — previously noted as unfetchable, now live — added; fills ecology (was empty) and healthcare-workforce/gender-equality/disability-elderly (previously 0-coverage aspects). 2026-08-07: new dedicated topic page /topics/environment-animals appeared (not present 2026-07-08) — adds 6 mechanism-level ecology entries; also backfilled 2 security + 1 economy entry that were archived 2026-06-22 but never entered into JSON. Housing still has only 1 entry — no housing-specific content found in any source yet.",
   "topics": {
     "security": [
       {
@@ -42,6 +42,26 @@
         "dateRetrieved": "2026-06-22",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נילחם ברדיקלים ונחזק את המתונים - נחליף את חמאס בעזה, נילחם ביד קשה בטרור",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance",
+        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
+      },
+      {
+        "text": "נקים ברית אזורית מול איראן",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance",
+        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
       },
       {
         "text": "שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.",
@@ -90,6 +110,16 @@
         "dateRetrieved": "2026-06-22",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נוביל מהלך לאומי לשיקום העוטף וקו העימות ולשגשוג הצפון והדרום",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance",
+        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
       },
       {
         "text": "הכוונת השכר והמיסוי במגמה לקדם את השוויון הכלכלי והחברתי, להטיב את רמת שכרם של העובדים בייצור ולשמור על הערך הריאלי של השכר.",
@@ -301,9 +331,57 @@
         "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "התנגדות לשינוי הרכב ועדת המינויים לרשות השופטת — בעיקר להגדלת מינויי שופטים על ידי הקואליציה על חשבון הנציגות המשפטית המקצועית.",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "contrary": "רפורמה בוועדת המינויים שתעניק לפוליטיקאים שליטה",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism",
+        "_note": "sourceUrl corrected 2026-08-07 — was mistakenly pointing to security-diplomatic; content is from democracy-justice"
+      },
+      {
+        "text": "נעגן בחוקי יסוד את זכויות האדם ואת הזכויות החברתיות – כולל הזכות לבריאות, לחינוך ולדיור – וניתן להן מעמד חוקתי עליון. נתקן את חוק הלאום כך שישקף באופן ברור את מחויבותה של ישראל להיות גם יהודית וגם דמוקרטית.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+        "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחוקק את חוק יסוד: החקיקה, שיסדיר את מעמדם של חוקי היסוד, יקבע כללים ברורים לחקיקתם ויעגן את הביקורת השיפוטית",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+        "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעגן בחוק את עצמאות הייעוץ המשפטי והמעמד המחייב של חוות הדעת המשפטית, נבטיח הליכי מינוי מקצועיים ושקופים לתפקידים בכירים, ונגן על שומרי הסף מפני לחצים פוליטיים",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+        "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטל את השינויים בוועדה לבחירת שופטים ואת הרחבת סמכויות בתי הדין הדתיים; נמנה שופטים, נקים בתי משפט לערעורים וניזום פתרונות לייעול ההליך המשפטי",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+        "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
+        "dateRetrieved": "2026-08-07",
+        "contrary": "הרחבת סמכויות בתי הדין הדתיים ופוליטיזציה של ועדת בחירת השופטים",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נגביל את כהונת ראש הממשלה לשמונה שנים, נקבע מנגנונים ברורים לנבצרות, ונעגן בחוק איסור כהונה תחת כתב אישום (שרים וראש ממשלה)",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
+        "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
+        "dateRetrieved": "2026-08-07",
+        "contrary": "כהונה ללא הגבלת זמן וללא איסור כהונה תחת כתב אישום",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -391,6 +469,69 @@
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf",
         "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
         "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נעגן זכויות בסיסיות לסביבה בריאה בחוק יסוד - הסביבה ובחוק האקלים",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל התייעלות באנרגיה ומעבר מואץ לאנרגיה מתחדשת",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נשפר את איכות האוויר דרך מהפכה בתחבורה, מעבר צודק לתעשיות נקיות, תוך הגברת האכיפה והענישה על מזהמים",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעודד ונתמרץ כלכלה מעגלית, מקומית, חדשנות סביבתית, צריכה מקיימת וטיפול במשבר הפסולת",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נתקן את חוק התכנון והבנייה ונחזק את איכות ועצמאות מערכות התכנון, שיתוף הציבור וסמכויות הרשויות המקומיות",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נתקן חקיקה ונגדיל משאבים להגנה על בעלי החיים, הצומח והשטחים הפתוחים",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם שיתופי פעולה אזוריים לניהול משאבי הטבע",
+        "aspect": "international-and-regional-climate-cooperation",
+        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-08-07",
         "provenance": "official-current",
         "concreteness": "specific-stance"
       }
