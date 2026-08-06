@@ -120,6 +120,8 @@ For each new source, create `docs/sources/<partyId>/YYYY-MM-DD-<slug>.md` with:
 
 For updates to an existing source, add a dated section to the existing archive file rather than creating a new one.
 
+**Guardrail**: when you append to an existing archive file instead of creating a new one, make sure every new JSON entry's `archivePath` points at that existing filename — not a newly-invented `YYYY-MM-DD-<slug>.md` name that was never actually written. A 2026-08-07 refresh found 34 hadash entries citing an archive file that had never been created (the 2026-06-27 update session appended its content into the existing `2026-06-23-hadash-principles.md` but the JSON entries were written with a fresh `2026-06-27-hadash-values-full.md` path). Before finishing Step 7, verify every `archivePath` you wrote or touched actually exists on disk.
+
 ---
 
 ## Step 7: Update the JSON
