@@ -1,15 +1,15 @@
 {
   "platformAvailable": true,
   "platformLabel": "תכניות עבודה (חלקי) — 6 מתוך 11 קטגוריות פורסמו",
-  "sourceUrl": "https://bennett2026.org.il/plans/",
+  "sourceUrl": "https://be-yahad.org.il/plans/",
   "archiveDir": "docs/sources/beyahad/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-07-08, 6 of 11 announced plan categories have detailed pages: meshartim, negev, rehabilitation, kiryat-shmona, education (added 2026-07-08), yoker/cost-of-living (added 2026-07-08). Health, ecology, justice, and 5 other categories still have no published content.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-08-07, still 6 of 11 announced plan categories have detailed pages: meshartim (now also linked as /plans/servant-law-new/, same content), negev, rehabilitation, kiryat-shmona, education, yoker/cost-of-living. Site migrated domain from bennett2026.org.il to be-yahad.org.il (308 permanent redirect, verified 2026-08-07) — all sourceUrls updated to the new domain. The 5 still-unpublished categories (הממשל בישראל, הבטחון הלאומי, הריבונות והביטחון האישי, שילוב החרדים, מעמד ישראל בעולם) remain teaser text only, no dedicated pages, confirmed 2026-08-07.",
   "topics": {
     "security": [
       {
         "text": "נגבש תפיסת ביטחון חדשה. נחזק את צה\"ל, נבצר את הביטחון בגבולות.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://bennett2026.org.il/plans/",
+        "sourceUrl": "https://be-yahad.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Category label only — no detailed security plan page published yet",
@@ -19,7 +19,7 @@
       {
         "text": "התוכנית תפסיק את המלחמה של הפצועים בבירוקרטיה, ותעניק להם מעטפת שיקום מלאה של זכויות, בית, תמיכה בחזרה לתעסוקה וחוסן נפשי. המדינה תדאג לשיקום כל פצועי צה\"ל בגוף או בנפש.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://bennett2026.org.il/plans/rehabilitation/",
+        "sourceUrl": "https://be-yahad.org.il/plans/rehabilitation/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -28,7 +28,7 @@
       {
         "text": "הגיע הזמן להחזיר את החוק, הסדר והריבונות לנגב. נלחם בפשיעה, בהפרות החוק, בחינוך המנוגד לערכי המדינה ובפוליגמיה.",
         "aspect": "hardline-enforcement",
-        "sourceUrl": "https://bennett2026.org.il/plans/negev/",
+        "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -37,7 +37,7 @@
       {
         "text": "יישובים עירוניים צמודי גדר בצפון המהווים חומת מגן לישראל, ננטשים ונמצאים בסכנה קיומית. יעד: הכפלת מספר התושבים תוך 10 שנים.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
+        "sourceUrl": "https://be-yahad.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -48,7 +48,7 @@
       {
         "text": "יוקר המחיה הגואה הוא לא גזירת גורל. הוא תוצאה של העדר ניהול. הורדת יוקר המחיה היא משימה לאומית דחופה.",
         "aspect": "cost-of-living-and-affordability",
-        "sourceUrl": "https://bennett2026.org.il/",
+        "sourceUrl": "https://be-yahad.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -57,7 +57,7 @@
       {
         "text": "רק מי שמשרת את המדינה, מקבל תקציבים ממנה. מי שלא משרת, לא מקבל כלום. תמריצי המדינה יתועדפו לטובת מי שנושא בנטל.",
         "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -66,7 +66,7 @@
       {
         "text": "ביטול כספים קואליציוניים ומשרדי ממשלה מיותרים.",
         "aspect": "fiscal-discipline-and-efficiency",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -75,7 +75,7 @@
       {
         "text": "ישראל מדורגת מקום 5 ב-OECD ביוקר מזון — כ-33% מעל הממוצע; חיסכון פוטנציאלי של כ-8,000 ₪ בשנה למשפחה אם המחירים יתואמו לממוצע. נפרק מונופולי-על לאורך כל שרשרת הייצור והאספקה — יבואנים גדולים לא יוכלו להפיץ מספר מותגים מונופוליסטיים, ותאגידים לא יוכלו לשלוט במספר ענפי מזון בו-זמנית.",
         "aspect": "cost-of-living-and-affordability",
-        "sourceUrl": "https://bennett2026.org.il/plans/yoker/",
+        "sourceUrl": "https://be-yahad.org.il/plans/yoker/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
@@ -84,7 +84,7 @@
       {
         "text": "נאחד את הפיקוח על המזון תחת \"רשות מזון\" אחת במקום אישורים כפולים ממשרדי הבריאות, החקלאות והרבנות; נכיר אוטומטית בהכשרי כשרות בינלאומיים; נחליף מכסות יבוא בתמיכה ישירה בחקלאים תוך הפחתה הדרגתית של מכסים.",
         "aspect": "market-structure-and-competition",
-        "sourceUrl": "https://bennett2026.org.il/plans/yoker/",
+        "sourceUrl": "https://be-yahad.org.il/plans/yoker/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
@@ -95,7 +95,7 @@
       {
         "text": "מיליון שקל לדירה ראשונה לכל משרת מילואים — ללא הגרלה.",
         "aspect": "service-linked-benefit-mechanics",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -104,7 +104,7 @@
       {
         "text": "קדימות לדירה במחיר למשתכן למשרתי צבא וביטחון.",
         "aspect": "service-linked-benefit-mechanics",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -113,7 +113,7 @@
       {
         "text": "הלוואת דיור של 400,000 ₪ לאקדמאים ואנשי מקצוע שיעברו לצפון — הופכת למתנה לאחר 7 שנות מגורים.",
         "aspect": "sector-and-geographic-equity",
-        "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
+        "sourceUrl": "https://be-yahad.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -124,7 +124,7 @@
       {
         "text": "תואר ראשון חינם לכולם.",
         "aspect": "higher-education-and-vocational-training",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Detailed education plan category exists in menu but has no published page yet (2026-06-23)",
@@ -134,7 +134,7 @@
       {
         "text": "מעונות יום חינם, צהרונים חינם, בית הספר של הקיץ — חינם.",
         "aspect": "sector-specific-equity",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -143,7 +143,7 @@
       {
         "text": "נשיב את הריבונות למערכת החינוך בנגב — נלחם בחינוך המנוגד לערכי המדינה.",
         "aspect": "sector-specific-equity",
-        "sourceUrl": "https://bennett2026.org.il/plans/negev/",
+        "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -153,7 +153,7 @@
         "aspect": "independent-school-funding-and-autonomy",
         "dateRetrieved": "2026-06-27",
         "text": "חינוך ממלכתי כבסיס — הפוגעים ביסוד החינוך האזרחי המשותף אינם ראויים למימון ציבורי מלא. עמדה לא פורשה בפרוט, אך מתיישבת עם העמדה האזרחית-ליברלית של המפלגה.",
-        "sourceUrl": "https://bennett2026.org.il/plans/",
+        "sourceUrl": "https://be-yahad.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "contrary": "מימון עצמאי ללא תוכנית לימודים ממלכתית",
         "provenance": "official-current",
@@ -162,7 +162,7 @@
       {
         "text": "\"לא ממלכתי – לא על חשבוני\": מוסדות חינוך שאינם ממלכתיים לא יזכו למימון ציבורי; בחינוך החרדי — פיקוח מלא ולימודי ליבה (מתמטיקה, אנגלית, אוריינות דיגיטלית).",
         "aspect": "independent-school-funding-and-autonomy",
-        "sourceUrl": "https://bennett2026.org.il/plans/education/",
+        "sourceUrl": "https://be-yahad.org.il/plans/education/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-07-08",
         "contrary": "מימון ציבורי למוסדות לא-ממלכתיים ללא פיקוח",
@@ -172,7 +172,7 @@
       {
         "text": "תוכנית חירום לגיוס אקדמאים להוראה ותגמול המורים לפי מצוינות; ביטול המחוזות והפיכת משרד החינוך לגוף מפקח בלבד, עם העברת 70% מהחלטות החינוך לרשויות ולבתי הספר.",
         "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://bennett2026.org.il/plans/education/",
+        "sourceUrl": "https://be-yahad.org.il/plans/education/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
@@ -183,7 +183,7 @@
       {
         "text": "הקמה והפעלה של חדר מיון חדש בצפון.",
         "aspect": "sector-and-geographic-equity",
-        "sourceUrl": "https://bennett2026.org.il/plans/kiryat-shmona/",
+        "sourceUrl": "https://be-yahad.org.il/plans/kiryat-shmona/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "_note": "בריאות וחוסן category exists in menu but no dedicated plan page published yet (2026-06-23)",
@@ -195,7 +195,7 @@
       {
         "text": "כל ישראלי זכאי לחיות את חייו על פי אמונתו, מתוך כבוד הדדי, סובלנות ואפס כפייה דתית.",
         "aspect": "civil-status-and-public-space-specifics",
-        "sourceUrl": "https://bennett2026.org.il/",
+        "sourceUrl": "https://be-yahad.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -204,7 +204,7 @@
       {
         "text": "מבטלים את חוק ההשתמטות — כולם מתגייסים. ביטול קצבאות אברך, ביטול מעמד אברך=סטודנט, ביטול הנחות בביטוח לאומי ובארנונה.",
         "aspect": "haredi-draft-and-service-burden",
-        "sourceUrl": "https://bennett2026.org.il/plans/meshartim/",
+        "sourceUrl": "https://be-yahad.org.il/plans/meshartim/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "קצבאות ופטורים לאברכי כולל",
@@ -217,7 +217,7 @@
         "aspect": "judicial-appointments-mechanism-specifics",
         "dateRetrieved": "2026-06-27",
         "text": "שמירה על עצמאות מערכת השפיטה; התנגדות לכל שינוי בוועדת המינויים שייתן שליטה לקואליציה על מינוי שופטי בית המשפט העליון.",
-        "sourceUrl": "https://bennett2026.org.il/plans/",
+        "sourceUrl": "https://be-yahad.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "contrary": "מינוי שופטים פוליטי",
         "provenance": "official-current",
@@ -228,7 +228,7 @@
       {
         "text": "האיום הכי גדול על ישראל הוא הפילוג הפנימי שמחליש אותנו. הגיע הזמן לאחד מחדש את העם.",
         "aspect": "demographic-and-citizenship-policy",
-        "sourceUrl": "https://bennett2026.org.il/",
+        "sourceUrl": "https://be-yahad.org.il/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
@@ -237,7 +237,7 @@
       {
         "text": "מי שמשתלב — מרוויח. נושיט יד לחברה הבדואית ונציע אופק של שילוב, השכלה ותעסוקה.",
         "aspect": "arab-minority-specific-mechanisms",
-        "sourceUrl": "https://bennett2026.org.il/plans/negev/",
+        "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
