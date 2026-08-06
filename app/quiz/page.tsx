@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
 import { getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
@@ -143,6 +143,7 @@ function QuestionHeader({ questionIndex, totalSteps, progressPct, onBack, isFoll
 // ─── Inner component ──────────────────────────────────────────────────────────
 
 function QuizInner() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const tone = searchParams.get("tone") ?? "formal";
   const depth = searchParams.get("depth") ?? "short";
@@ -742,7 +743,7 @@ function QuizInner() {
       <PrioritiesStep
         buckets={buckets}
         setBuckets={setBuckets}
-        onBack={() => { mpTrack("quiz_abandoned", { session_id: sessionId, step: "rank", topics_completed_so_far: 0 }); window.location.href = "/"; }}
+        onBack={() => { mpTrack("quiz_abandoned", { session_id: sessionId, step: "rank", topics_completed_so_far: 0 }); router.push("/"); }}
         onContinue={() => {
           mpTrack("priorities_submitted", {
             session_id: sessionId,
