@@ -127,6 +127,10 @@ function parseScores(
   const result: ScoreTopicsResult = {};
 
   for (const t of topics) {
+    // Guard directly at the write, not just in POST's earlier validation:
+    // this keeps parseScores safe against a "__proto__"-style key on its
+    // own, regardless of what a future caller passes in.
+    if (!TOPIC_IDS.has(t.topicId)) continue;
     result[t.topicId] = {};
     for (const party of PARTIES) {
       const key = `${t.topicId}.${party.id}`;

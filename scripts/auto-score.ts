@@ -105,8 +105,8 @@ const HTML_ENTITIES: Record<string, string> = {
 
 function htmlToText(html: string): string {
   return html
-    .replace(/<script[^>]*>[\s\S]*?<\/script\s*>/gi, " ")
-    .replace(/<style[^>]*>[\s\S]*?<\/style\s*>/gi, " ")
+    .replace(/<script[^>]*>[\s\S]*?<\/script[^>]*>/gi, " ")
+    .replace(/<style[^>]*>[\s\S]*?<\/style[^>]*>/gi, " ")
     .replace(/<[^>]+>/g, " ")
     // Single pass over the original text — decoding &amp; before &lt;/&gt;
     // in separate passes would re-interpret an already-correct "&amp;lt;"
