@@ -56,12 +56,14 @@ _Ordered by RICE thinking (reach × impact × confidence ÷ effort) — each ite
 
     **2026-07-15 addition — second concrete example of the same gap**: debugging a one-off `/api/follow-up` `SERVER_ERROR` (root-caused to a client-side network drop in a mobile in-app browser, not a real server error — see CHANGELOG) added a retry-once wrapper + `errorCode`/`mpTrack` wiring inside `callFollowUpAPI` (`app/quiz/page.tsx`). The one genuinely pure piece (`describeRequestFailure`) was extracted to `lib/request-diagnostics.ts` and unit-tested (`tests/requestDiagnostics.test.ts`); the retry-timing and error-branch wiring itself is still untested for the same reason as the back-nav bug — no RTL/jsdom harness. If this item is picked up, the retry-once-then-give-up behavior and the `data.errorCode` branch (both callers) are ready-made test candidates alongside the back-nav scenario.
 
-18. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
+18. **Migrate to Tailwind CSS v4** — _No urgency forcing this — no vulnerability (`npm audit` clean), and v3 is still an actively patched LTS line (`3.4.19`, released 2025-12-10, almost a year after v4 shipped). But v4 is where Tailwind's active development is, and Next.js's own bundled docs now treat v4 as the default setup with v3 as a separate "legacy" guide — worth doing eventually as its own tested phase, not urgent._ Dependabot PR #7 (`3.4.19→4.3.3`) only touched `package.json`/`package-lock.json` — no application-code changes — which is exactly why its Vercel preview build broke: v4 removed the classic PostCSS plugin, so `postcss.config.js`'s `{ tailwindcss: {} }` syntax needs `@tailwindcss/postcss` instead. Closed unmerged (`@dependabot ignore this major version`, 2026-08-14) — `main` was never affected. When picked up: install `@tailwindcss/postcss`, update `postcss.config.js`, convert `app/globals.css` from `@tailwind base/components/utilities` to v4's `@import "tailwindcss"`, and verify `tailwind.config.js`'s content-scanning still applies (v4 changes auto-detection defaults).
+
+19. ⏸️ **Multi-language support** — _Large scope (a full i18n layer) is why this ranks low, not the original blocker — the Hebrew MVP has been live in soft launch for over a week, so "blocked on MVP working in Hebrew" is arguably already satisfied. Revisit once the repo is public and soft launch stabilizes, not before._
     - Russian, Arabic, English UI layers; party platforms stay in Hebrew, answers/explanations translated
 
-19. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
+20. ⏸️ **Candidate records extension** — _blocked on: v1 stable (still actively iterating during soft launch)_ — experience, notable actions/votes (official sources only, no social media)
 
-20. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
+21. ⏸️ **Multi-country generalization** — _blocked on: Israel v1 validated_
 
 ---
 
