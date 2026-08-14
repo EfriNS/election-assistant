@@ -27,7 +27,7 @@
     "@google/genai": "^2.8.0",
     "@sparticuz/chromium": "149.0.0",
     "@upstash/ratelimit": "^2.0.8",
-    "@upstash/redis": "^1.38.0",
+    "@upstash/redis": "^1.38.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "autoprefixer": "^10.5.0",
