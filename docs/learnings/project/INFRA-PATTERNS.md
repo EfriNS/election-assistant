@@ -180,6 +180,24 @@ Fixing `js/bad-tag-filter` (`</script>` regex not matching `</script >` with a t
 
 **Rule**: after pushing a CodeQL fix, don't assume the alert is closed until the re-scan confirms it (`gh api repos/:owner/:repo/code-scanning/alerts` — check `state`, and watch for a *new* alert number on the same rule/file, which means the first fix was too narrow). `results_count: 0` on the analysis for your exact commit SHA is the actual signal, not "I made a plausible-looking change."
 
+### `patched_versions: null` in a GHSA advisory doesn't mean unfixable — the fix can be a dependency swap, not a version bump (#first:2026-08-14)
+
+Dependabot alert #27 (`extract-zip`, symlink path traversal, `GHSA-jmr9-qjv8-65gv`) showed `first_patched_version: null` — no version of `extract-zip` itself fixes it, and none ever will (it's abandoned at `2.0.1`, last published 2020). The real fix was one level up: `@puppeteer/browsers` (the `puppeteer-core` dependency that pulls in `extract-zip`) replaced it entirely with `modern-tar` at its own major version 3.0.0 (shipped via `puppeteer-core@25.0.0`). `npm audit`/`fix` can't discover this — it only reasons about the flagged package's own version line.
+
+**Rule**: when an advisory shows no patched version for the flagged package, check the *direct dependent's* changelog (`npm view <dependent> dependencies` across versions, or its GitHub releases/CHANGELOG) for a version that dropped or swapped the vulnerable sub-dependency, rather than concluding the vulnerability is unfixable. Same root idea as the `sharp`/`overrides` entry above — trace one level up the dependency graph — but the fix shape here is "bump the dependent past a version boundary" instead of an `overrides` pin, because there's no patched *version* of the leaf package to pin to.
+
+### `puppeteer-core` and `@sparticuz/chromium` are version-coupled to a specific Chrome build — pin both exactly (#first:2026-08-14)
+
+Fixing the `extract-zip` advisory meant bumping `puppeteer-core` off `24.43.1`. The obvious move — `^25.1.0` in `package.json` — actually resolved to `25.7.0` (latest satisfying the range) on `npm install`, which rolls to Chrome ~152. But `@sparticuz/chromium` (the serverless Chromium binary used in production via `app/api/export-pdf/route.ts`) only had a `149.0.0` release available — no version matching Chrome 152 existed yet. Caret ranges silently drift to whatever's newest at install time; for this pair, "newest" can outrun what the binary provider has actually shipped.
+
+**Rule**: when bumping `puppeteer`/`puppeteer-core`, cross-reference the target version's own changelog ("roll to Chrome X.Y" lines, e.g. `puppeteer-core`'s CHANGELOG.md on GitHub) against `@sparticuz/chromium`'s available npm versions (`npm view @sparticuz/chromium versions`) and pick the highest `puppeteer-core` version whose Chrome build has a matching (or very close) `@sparticuz/chromium` release — then **pin both as exact versions, not caret**, so a future `npm install` can't drift the pair back out of sync. Verify the actual pairing worked by checking the PDF's own metadata (`/Producer (Skia/PDF m<version>)` in the raw PDF bytes) against the Chromium major version, not just that the build compiles.
+
+### Testing a Vercel-protected preview deployment's API routes directly (#first:2026-08-14)
+
+Preview deployments have Vercel Authentication (SSO) enabled by default, so a plain `curl -X POST <preview-url>/api/...` returns `401 {"error":{"code":"401"},"protection":{"vercel_auth_enabled":true}}` even for a route with no app-level auth of its own — this is platform-level, invisible from the app code. The `mcp__plugin_vercel_vercel__get_access_to_vercel_url` MCP tool mints a 23-hour bypass link (`?_vercel_share=<token>`); visiting it with `curl -c cookies.txt -L` sets an auth cookie, and subsequent requests with `-b cookies.txt` (including `POST`s with a JSON body) pass through normally.
+
+**Rule**: for any route that can't be meaningfully verified by `tsc`/lint/unit tests alone (headless-browser rendering, anything needing real infra), don't stop at "the build succeeded" — get a bypass link, then `curl` the actual endpoint on the live preview with a real payload and inspect the real response (status, content-type, and — where possible — the response body's own fingerprint, like a PDF's embedded renderer version) before merging.
+
 ---
 
 ## Testing

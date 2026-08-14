@@ -1,5 +1,41 @@
 # Changelog
 
+## 2026-08-14 — Closed a bad Dependabot major-bump PR; fixed 2 GitHub security alerts; enabled branch protection
+
+### Context
+
+A Vercel preview build failed with a Tailwind/PostCSS error Efri hadn't caused directly ("It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin"). Investigating that led to triaging two more GitHub security alerts that surfaced over the course of the session, then to enabling branch protection on `main` after GitHub's own repo-health nudge.
+
+### Tailwind v4 Dependabot PR — closed, not merged
+
+Traced the failing preview to Dependabot PR #7 (`tailwindcss` `3.4.19` → `4.3.3`, a major-version bump). Confirmed via the PR's actual diff that it only touched `package.json`/`package-lock.json` — Dependabot never migrates application code, so it never touched `postcss.config.js` or `app/globals.css` for v4's breaking change (the classic `tailwindcss` PostCSS plugin moved to a separate `@tailwindcss/postcss` package). No vulnerability was driving the bump — `npm audit` was clean, the PR carried no `security` label, and `v3.4.19`'s own npm `v3-lts` dist-tag (published 2025-12-10, ~11 months after v4.0.0 shipped) confirms Tailwind Labs is still actively LTS-patching v3. Closed the PR unmerged (`@dependabot ignore this major version`) and added the real migration as a scoped `TODO.md` backlog item (#18) instead of doing it as a side effect of a bot PR.
+
+### GitHub alert #27 — `extract-zip` symlink path traversal (high, CVE-2026-56876)
+
+Transitive via `@puppeteer/browsers` (a `puppeteer-core` dependency). No patched `extract-zip` version exists — it's abandoned at `2.0.1` (2020). The real fix was one level up: `@puppeteer/browsers` 3.x replaced `extract-zip` with `modern-tar` as of `puppeteer-core@25.0.0`. Bumped `puppeteer`/`puppeteer-core` `24.43.1` → `25.1.0` and `@sparticuz/chromium` `147.0.0` → `149.0.0` (all three pinned to exact versions, not caret — `puppeteer-core@25.1.0` rolls to Chrome `149.0.7827.2`, matching `@sparticuz/chromium`'s latest available release; caret ranges would let a fresh `npm install` drift past that pairing, since `^25.1.0` alone resolved to `25.7.0`/Chrome ~152 with no matching Chromium binary yet published). No `app/api/export-pdf/route.ts` changes needed — its Puppeteer API surface (`launch`/`newPage`/`setContent`/`waitForNetworkIdle`/`pdf`/`close`) isn't touched by any of `25.0.0`'s breaking changes.
+
+### GitHub alert #28 — `nanoid` DoS on zero-size custom generators (high per label; CVSS `AC:H`, availability-only)
+
+Transitive via `postcss` (a devDependency — build-time only, never executed in a deployed function). `postcss`'s own declared range (`nanoid: ^3.3.16`) already permitted the patched `3.3.18`, so `npm audit fix` closed it with a pure lockfile change, no `package.json` edit.
+
+### Verification
+
+Both fixes: full CI (`lint`, `tsc --noEmit`, `vitest run` — 356 tests, `next build`) green on every branch and after merging to `main`. For the Puppeteer/Chromium fix specifically, also live-verified the actual rendering pipeline (not just that it compiles) — hit `/api/export-pdf` directly on both the preview (via a Vercel Authentication bypass share-link + cookie jar, since previews require SSO) and production (`voteassist.me`) with a real payload; both returned a genuine PDF (`Producer: Skia/PDF m149`, matching the pinned Chromium version). `gh api .../dependabot/alerts/{27,28}` re-checked after each push until `state: fixed`.
+
+### Branch protection
+
+GitHub's repo-health check flagged `main` as unprotected. Enabled the zero-friction tier only: block force-pushes and branch deletion, `enforce_admins: true` (so it also backstops an accidental mistake by the owner, not just outside collaborators). Deliberately skipped "require pull request before merging" — this repo's actual workflow (including every fix in this session) is local `git merge --no-ff` + direct `git push origin main`, and requiring PRs would break that without a corresponding reviewer to gain from it; revisit if the now-public repo gets outside contributors.
+
+### Learnings
+
+Routed to `docs/learnings/project/INFRA-PATTERNS.md` ("GitHub Security Alerts" section, extended): unpatched-advisory-doesn't-mean-unfixable (check the dependent's changelog for a dependency swap), the `puppeteer-core`/`@sparticuz/chromium` Chrome-version pairing requirement, and the Vercel-protected-preview curl-testing technique. One insight judged universal — "a failing build on an automated dependency-bump PR isn't necessarily your code's fault, diff what the PR actually changed" — promoted to the `dev-workflow` plugin's `debugging-discipline` skill (`claude-code-template` repo, commit `de8661b`) rather than kept project-local.
+
+### Files
+
+`package.json`, `package-lock.json`, `TODO.md`, `docs/learnings/project/INFRA-PATTERNS.md`, `docs/learnings/INDEX.md`; branch protection applied via `gh api` (no repo file — GitHub repo setting).
+
+Commits `39fec70` (TODO/PR-closure), `afb3a1c`+`a9274ea` (`fix/extract-zip-symlink-vuln`, merged), `18ecb03`+`a9a07d3` (`fix/nanoid-dos-advisory`, merged) — all pushed directly to `main` (hotfix mode, each verified on a short-lived branch first).
+
 ## 2026-08-07 — Monthly grounding-data refresh: all 10 parties re-checked (25 entries added)
 
 ### Context
