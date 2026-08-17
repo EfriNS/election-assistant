@@ -1,0 +1,299 @@
+{
+  "platformAvailable": true,
+  "platformLabel": "מצע המפלגה — 13 מסמכים נושאיים (אתר רשמי, 2021–2022)",
+  "sourceUrl": "https://zionutdatit.org.il/מצע-המפלגה/",
+  "archiveDir": "docs/sources/hatzionut-hadatit/",
+  "_note": "הציונות הדתית (בהנהגת בצלאל סמוטריץ') — מפלגה לאומית-דתית. מצע המפלגה באתר הרשמי מורכב מ-13 מסמכי PDF נושאיים (אינפוגרפיקות מעוצבות ב-Illustrator, לא טקסט רגיל), שכולם נושאים תאריך יצירה 2021-2022 — קודמים לקדנציה הנוכחית וגם לתקופת ה-7 באוקטובר. האתר עדיין מציג אותם כמצע הנוכחי ללא עדכון מזוהה, ולכן כל הרשומות מסומנות provenance=official-outdated (בדומה לטיפול בחוקת הליכוד 2016). איכות חילוץ הטקסט מהמסמכים משתנה — ראו docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md לפירוט מלא כולל רמת הביטחון בכל מסמך. תוכן מסמך 'ערכי משפחה' (רפורמת מזונות/משמורת) אינו מכוסה על ידי הטקסונומיה הנוכחית (לא religion ולא equality) ולכן לא נוסף — מסומן שם לדיון עתידי. הרשומות ל-equality/lgbtq-specific-policy-mechanisms אינן מגובות ישירות במסמכי המצע שנאספו (שאינם עוסקים ב-LGBTQ במפורש); מבוססות על עמדות ציבוריות מתועדות ומוכרות של המפלגה ומנהיגה — ראו _note ברמת הרשומה.",
+  "topics": {
+    "security": [
+      {
+        "text": "המשך והרחבת ההתיישבות היהודית בגליל, בנגב וביהודה ושומרון כערך ציוני-לאומי מרכזי, כולל הסדרת מעמד יישובים קיימים.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/התיישבות-ריבונית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "נסיגה משטחי יהודה ושומרון; מדינה פלסטינית",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance",
+        "_note": "מסמך צפוף וללא נקודות ברורות; ביטחון חילוץ בינוני (נושא כללי ברור, ניסוח מדויק פחות ודאי)."
+      },
+      {
+        "text": "\"נפעל אל מול מדינות העולם להגדרת הרשות הפלסטינית כארגון טרור.\"",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "\"הפרקליטות תונחה להגיש כתבי אישום כנגד מחבלים בבקשה לעונש מוות.\"",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"נקדם חקיקה והחלטות ממשלה להצמדת תנאי כליאת האסירים הביטחוניים למינימום המחויב על פי החוק הבינלאומי\" (הקשחת תנאי מאסר). כן: הארכת תקופת ההתיישנות לתביעות נזקי טרור ל-20 שנה, וביטול עילת הסבירות על החלטות הריסת בתי מחבלים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "עמדה כללית לחיזוק תגמול ותמיכה למשרתים ולמשרתי מילואים, וקידום גיוס רחב יותר לכלל האוכלוסייה.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/מילואים.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "generic",
+        "_note": "ביטחון חילוץ נמוך-בינוני — מסמך צפוף, ניסוח מדויק לא ודאי. הניסוח 'גיוס משמעותי לכלל האוכלוסייה' עולה בקנה אחד עם עמדת המפלגה הידועה בעד גיוס אוניברסלי (כולל הציבור החרדי), אך לא ניתן היה לאמת ציטוט מדויק."
+      }
+    ],
+    "economy": [
+      {
+        "text": "מדיניות כלכלית המדגישה צמצום נטל בירוקרטי ורגולציה על עסקים, ורפורמות במגזר הציבורי.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/כלכלה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "הרחבת רגולציה והתערבות ממשלתית בשוק",
+        "provenance": "official-outdated",
+        "concreteness": "generic",
+        "_note": "ביטחון חילוץ נמוך-בינוני — מסמך ארוך וצפוף טקסט; נושאים כלליים ברורים בלבד."
+      },
+      {
+        "text": "תוכניות לשילוב בתעסוקה ולהרחבת שירותי רווחה ובריאות הנפש.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/רווחה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "generic",
+        "_note": "ביטחון חילוץ נמוך-בינוני."
+      },
+      {
+        "text": "\"חקלאות היא ציונות במלוא מובן המילה. היא היחס לאדמה, שמירת הקרקע, הביטחון התזונתי והקיימות.\" — מענה ביטוחי ואמצעי מניעה לחקלאים נפגעי פשיעה חקלאית, לצד פיתוח חקלאי-אקולוגי בנגב ובגליל.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/פשיעה-חקלאית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      }
+    ],
+    "housing": [
+      {
+        "text": "המשך והרחבת ההתיישבות היהודית בגליל, בנגב וביהודה ושומרון, כולל הסדרת מעמד יישובים קיימים ופיתוח תשתיות.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/התיישבות-ריבונית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "הקפאת בנייה מעבר לקו הירוק",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance",
+        "_note": "ביטחון חילוץ בינוני — ראו הערה במסמך המקור. אין למפלגה מסמך מצע ייעודי לדיור כלכלי (שוק/בנייה ציבורית) מעבר להיבט ההתיישבותי."
+      }
+    ],
+    "education": [
+      {
+        "text": "\"אנו מבקשים שיזוכה תקציבי בין מגזרות החינוך הממלכתי לזה הממלכתי דתי\" — התאמת נוסחת חלוקת השכל״מ למאפייני החינוך הדתי, והכרה בייחודיותו בבסיס התקציב (לא רק כתקציב ייעודי).",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/חינוך.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance",
+        "_note": "ביטחון חילוץ בינוני-גבוה לציטוט הפתיחה; פחות ודאי לניסוח המדויק של סעיפי הפעולה הבודדים."
+      },
+      {
+        "text": "תיקון \"חוק החמ״ד\" לעיגון עצמאותו ותקצובו של החינוך הממלכתי-דתי בחקיקה.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/חינוך.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שמירת מעמד ותקציבי הישיבות הגבוהות, ישיבות ההסדר, המדרשות והמכינות הקדם-צבאיות.",
+        "aspect": "higher-education-and-vocational-training",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/חינוך.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      }
+    ],
+    "health": [
+      {
+        "text": "הרחבת שירותי בריאות הנפש כחלק מתוכנית תעסוקה, רווחה ובריאות הנפש.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/רווחה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "generic",
+        "_note": "ביטחון חילוץ נמוך-בינוני; אין למפלגה מסמך מצע ייעודי לבריאות ציבורית כללית מעבר להיבט בריאות הנפש."
+      }
+    ],
+    "religion": [
+      {
+        "text": "\"נפעל שלא להכיר בגיור רפורמי וקונסרבטיבי כמייצג את היהדות בישראל\" — צמצום השפעת הזרמים הרפורמי והקונסרבטיבי בישראל.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/זהות-יהודית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "הכרה בגיור רפורמי/קונסרבטיבי; פלורליזם דתי",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "שימור \"הסטטוס-קוו\" ביחסי דת ומדינה, לרבות מוסדות הדת (רבנות) והגיור המסורתי.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/זהות-יהודית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "הפרדת דת ומדינה; נישואין אזרחיים",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "עיגון זהותה היהודית של מדינת ישראל בחקיקה, והגנה על חוק יסוד: ישראל — מדינת הלאום היהודי.",
+        "aspect": "national-religious-symbolism",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/זהות-יהודית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "עמדה כללית לחיזוק תגמול ותמיכה למשרתים, וקידום גיוס רחב יותר לכלל האוכלוסייה.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/מילואים.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "generic",
+        "_note": "ביטחון חילוץ נמוך-בינוני — ראו הערה תחת security/military-doctrine (אותו מסמך מקור, אותה מגבלת ודאות)."
+      }
+    ],
+    "justice": [
+      {
+        "text": "שינוי הרכב הוועדה לבחירת שופטים להגברת משקל נבחרי הציבור; ביטול עילת הסבירות; פסקת התגברות המאפשרת לכנסת לחוקק מחדש חוק שנפסל; צמצום הסמכות המחייבת של היועצים המשפטיים לייעוץ בלבד.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/משפט.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "עצמאות שיפוטית; הרכב ועדה נוכחי",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שינויים במבנה הרכב בג״ץ הדן בעתירות נגד חקיקה, והפרדת רשויות מחודשת בין הממשלה, הכנסת והרשות השופטת.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/משפט.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"נחוקק תיקון לחוק יסוד: השפיטה שם תבוטל עילת הסבירות על החלטות של נבחרי ציבור בכנסת ובממשלה. כך לא יוכל בג״ץ לפסול החלטה בנוגע להריסת בתי מחבלים.\"",
+        "aspect": "emergency-powers-and-security-law",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"נתקן בחקיקה את חוק ההתיישנות ונאריך את הזמן להגשת תביעות בגין נזקי הטרור ל-20 שנה\"; פעולה מול מדינות העולם להגדרת הרשות הפלסטינית כארגון טרור.",
+        "aspect": "international-law-and-accountability",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "quantified"
+      }
+    ],
+    "equality": [
+      {
+        "text": "\"נעדכן את חוק השבות ואת הסייגים לו כך שיבטא את הלכי הרוח העדכניים... (ביטול סעיף הנכד, ביטול הסייג של מוגבלות נפשית, וכד').\"",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2022/10/יהדות-התפוצות-וקליטת-עליה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "הרחבת זכאות חוק השבות; שימור סעיף הנכד",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"בשנה האחרונה נרשם שיא שלילי היסטורי, כאשר מרביתם המוחלט של המהגרים לישראל אינם יהודים\" — קריאה להוצאת מסתננים ממדינת ישראל בחקיקה ראשית, ביטול חינוך חינם לילדי עובדים זרים חסרי מעמד, ולימודם בבתי ספר נפרדים \"כדי למנוע השתקעות ולהכין לחזרה לארץ המוצא\".",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/מסתננים.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "מדיניות הגירה פתוחה; שוויון זכויות חינוך לילדי מהגרים",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "\"נפעל להובלת תוכנית להעלאת 50,000 יהודים מצרפת שלפי המחקר האחרון רוצים לעלות אך אינם יכולים מחוסר בתוכנית פרואקטיבית להעלאתם.\"",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2022/10/יהדות-התפוצות-וקליטת-עליה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "עיגון זהותה היהודית-לאומית של המדינה כערך מרכזי, לרבות הגנה על חוק יסוד: מדינת הלאום היהודי.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/זהות-יהודית.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism",
+        "_note": "כפילות תמטית מכוונת מול religion/national-religious-symbolism — אותו מקור, שני היבטים (זהות דתית מול מדיניות אזרחות/דמוגרפיה)."
+      },
+      {
+        "text": "המפלגה מזוהה ציבורית ובאופן עקבי בהתנגדות לנישואי חד-מיניים ולזכויות זוגיות/משפחה ל-LGBTQ+, כחלק ממסגור 'ערכי משפחה' מסורתיים.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/דיני-משפחה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "contrary": "נישואין שוויוניים; זכויות LGBTQ+",
+        "provenance": "third-party",
+        "concreteness": "generic",
+        "_note": "אינה מגובה בציטוט ישיר ממסמכי המצע שנאספו (שאינם עוסקים ב-LGBTQ במפורש) — מבוססת על עמדות ציבוריות מתועדות ומוכרות של המפלגה ומנהיגה. מסומנת third-party בהתאם. יש לחפש מקור רשמי ישיר בעדכון עתידי."
+      }
+    ],
+    "ecology": [
+      {
+        "text": "מסגור דתי-ערכי לאחריות סביבתית, בציטוט ממדרש קהלת רבה: \"...בשעה שברא הקב\"ה את אדם הראשון... אל תקלקלו ותחריבו את עולמי, שאם קלקלתם אין מי שיתקן אחריכם.\"",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טבע-וסביבה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "generic"
+      },
+      {
+        "text": "שימור שמורות טבע ושיקום נחלים, לצד פיתוח חקלאי-אקולוגי בגליל ובנגב.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טבע-וסביבה.pdf",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance",
+        "_note": "ביטחון חילוץ נמוך-בינוני."
+      }
+    ]
+  }
+}
