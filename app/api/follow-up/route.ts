@@ -1,17 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
-import { NextRequest, NextResponse } from "next/server";
-import { Langfuse } from "langfuse";
+import { NextRequest, NextResponse, after } from "next/server";
+import { startObservation, propagateAttributes } from "@langfuse/tracing";
+import { langfuseSpanProcessor } from "@/instrumentation";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
-
-function makeLangfuse() {
-  if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
-  return new Langfuse({
-    secretKey: process.env.LANGFUSE_SECRET_KEY,
-    publicKey: process.env.LANGFUSE_PUBLIC_KEY,
-    baseUrl: process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
-  });
-}
 
 // Gemini's structured-output mode (responseJsonSchema) uses constrained
 // decoding, which is far more reliable than plain responseMimeType:
@@ -264,109 +256,112 @@ export async function POST(req: NextRequest) {
     partyGroundings, currentScores, suggestedNextDimension, uncoveredKeyDims, openerIsFreeText
   );
 
-  const langfuse = makeLangfuse();
-  const trace = langfuse?.trace({
-    name: "follow-up-generation",
-    sessionId,
-    metadata: {
-      prototype: "e",
-      topic: currentTopic.label,
-      tone,
-      depth,
-      followUpsAskedThisTopic,
-      openerIsFreeText,
-      suggestedNextDimension,
-      hasGroundingData: partyGroundings.length > 0,
-    },
-  });
-  // Do not pass prompt as input — it contains user answers (PII).
-  const generation = trace?.generation({ name: "gemini-follow-up", model });
-
-  // Hoisted so the catch block can log the raw AI output + diagnostics on parse errors.
-  let rawText = "";
-  let finishReason = "";
-  let outputTokens = 0;
-  let promptTokens = 0;
-  let retried = false;
-  let parsed: any;
-
-  try {
-    const ai = new GoogleGenAI({ apiKey });
-
-    // Retry once on malformed/empty output — confirmed via reproduction (2026-07-05,
-    // see docs/learnings/project/AI-INTEGRATION.md) to be a rare, non-deterministic
-    // Gemini generation glitch, not a token-budget or config issue. A same-request
-    // retry is a resilience pattern for that flakiness, not a parse-around-it hack —
-    // genuine API errors (quota, network) still propagate immediately, uncaught here.
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      const response = await ai.models.generateContent({
+  return propagateAttributes({ sessionId, traceName: "follow-up-generation" }, async () => {
+    // Do not pass prompt as input — it contains user answers (PII).
+    const generation = startObservation(
+      "gemini-follow-up",
+      {
         model,
-        contents: prompt,
-        config: {
-          temperature: 0.7,
-          maxOutputTokens: MAX_OUTPUT_TOKENS,
-          responseMimeType: "application/json",
-          responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
+        metadata: {
+          prototype: "e",
+          topic: currentTopic.label,
+          tone,
+          depth,
+          followUpsAskedThisTopic,
+          openerIsFreeText,
+          suggestedNextDimension,
+          hasGroundingData: partyGroundings.length > 0,
         },
-      });
+      },
+      { asType: "generation" }
+    );
 
-      rawText = response.text ?? "";
-      finishReason = response.candidates?.[0]?.finishReason ?? "";
-      outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
-      promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
+    // Hoisted so the catch block can log the raw AI output + diagnostics on parse errors.
+    let rawText = "";
+    let finishReason = "";
+    let outputTokens = 0;
+    let promptTokens = 0;
+    let retried = false;
+    let parsed: any;
 
-      if (!rawText) {
-        if (attempt === 1) { retried = true; continue; }
-        generation?.update({ output: "", level: "WARNING" });
-        generation?.end();
-        await langfuse?.flushAsync();
-        await notifySlack(`⚠️ /api/follow-up — parse failure: AI returned empty response (after retry)`);
-        return NextResponse.json({ prologue: null, followUp: null });
-      }
+    try {
+      const ai = new GoogleGenAI({ apiKey });
 
-      try {
-        parsed = JSON.parse(rawText);
-        break;
-      } catch (parseErr) {
-        if (attempt === 1) { retried = true; continue; }
-        throw parseErr;
-      }
-    }
+      // Retry once on malformed/empty output — confirmed via reproduction (2026-07-05,
+      // see docs/learnings/project/AI-INTEGRATION.md) to be a rare, non-deterministic
+      // Gemini generation glitch, not a token-budget or config issue. A same-request
+      // retry is a resilience pattern for that flakiness, not a parse-around-it hack —
+      // genuine API errors (quota, network) still propagate immediately, uncaught here.
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const response = await ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: {
+            temperature: 0.7,
+            maxOutputTokens: MAX_OUTPUT_TOKENS,
+            responseMimeType: "application/json",
+            responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
+          },
+        });
 
-    generation?.update({
-      output: rawText,
-      usage: { input: promptTokens, output: outputTokens, unit: "TOKENS" },
-      metadata: { retried },
-    });
-    generation?.end();
-    await langfuse?.flushAsync();
+        rawText = response.text ?? "";
+        finishReason = response.candidates?.[0]?.finishReason ?? "";
+        outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
+        promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
 
-    const followUp = parsed.followUp
-      ? {
-          question: parsed.followUp.question,
-          options: parsed.followUp.options,
-          hint: parsed.followUp.hint ?? undefined,
-          // Prefer the client-computed dimension over whatever the AI guessed
-          targetedAspect: suggestedNextDimension ?? parsed.followUp.targetedAspect ?? parsed.targetedAspect ?? undefined,
+        if (!rawText) {
+          if (attempt === 1) { retried = true; continue; }
+          generation.update({ output: "", level: "WARNING" });
+          generation.end();
+          after(() => langfuseSpanProcessor.forceFlush());
+          await notifySlack(`⚠️ /api/follow-up — parse failure: AI returned empty response (after retry)`);
+          return NextResponse.json({ prologue: null, followUp: null });
         }
-      : null;
 
-    // Return the AI's free-text interpretation only on the first follow-up for "other" openers
-    const freeTextInterpretation = (openerIsFreeText && followUpsAskedThisTopic === 0)
-      ? (parsed.freeTextInterpretation ?? undefined)
-      : undefined;
+        try {
+          parsed = JSON.parse(rawText);
+          break;
+        } catch (parseErr) {
+          if (attempt === 1) { retried = true; continue; }
+          throw parseErr;
+        }
+      }
 
-    return NextResponse.json({ prologue: parsed.prologue || null, followUp, freeTextInterpretation });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
-    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/${MAX_OUTPUT_TOKENS}, retried=${retried}`;
-    const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
-    generation?.update({ output: langfuseOutput, level: "ERROR" });
-    generation?.end();
-    await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}\n${diagnostics}`);
-    if (isQuota) return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
-    return NextResponse.json({ prologue: null, followUp: null });
-  }
+      generation.update({
+        output: rawText,
+        usageDetails: { input: promptTokens, output: outputTokens },
+        metadata: { retried },
+      });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
+
+      const followUp = parsed.followUp
+        ? {
+            question: parsed.followUp.question,
+            options: parsed.followUp.options,
+            hint: parsed.followUp.hint ?? undefined,
+            // Prefer the client-computed dimension over whatever the AI guessed
+            targetedAspect: suggestedNextDimension ?? parsed.followUp.targetedAspect ?? parsed.targetedAspect ?? undefined,
+          }
+        : null;
+
+      // Return the AI's free-text interpretation only on the first follow-up for "other" openers
+      const freeTextInterpretation = (openerIsFreeText && followUpsAskedThisTopic === 0)
+        ? (parsed.freeTextInterpretation ?? undefined)
+        : undefined;
+
+      return NextResponse.json({ prologue: parsed.prologue || null, followUp, freeTextInterpretation });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
+      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/${MAX_OUTPUT_TOKENS}, retried=${retried}`;
+      const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
+      generation.update({ output: langfuseOutput, level: "ERROR" });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
+      await notifySlack(`🚨 /api/follow-up — ${isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR"}\n${msg.slice(0, 300)}\n${diagnostics}`);
+      if (isQuota) return NextResponse.json({ errorCode: "QUOTA_EXCEEDED" }, { status: 429 });
+      return NextResponse.json({ prologue: null, followUp: null });
+    }
+  });
 }

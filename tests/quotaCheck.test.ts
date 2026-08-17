@@ -8,20 +8,20 @@ import { NextRequest } from "next/server";
 
 // ─── Mock Langfuse ────────────────────────────────────────────────────────────
 
-const { mockFetchObservations } = vi.hoisted(() => ({
-  mockFetchObservations: vi.fn(),
+const { mockGetMany } = vi.hoisted(() => ({
+  mockGetMany: vi.fn(),
 }));
 
-vi.mock("langfuse", () => ({
-  Langfuse: vi.fn(function() {
-    return { fetchObservations: mockFetchObservations };
+vi.mock("@langfuse/client", () => ({
+  LangfuseClient: vi.fn(function() {
+    return { api: { observations: { getMany: mockGetMany } } };
   }),
 }));
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function makeObs(inputTokens: number, outputTokens: number, name = "gemini-chat") {
-  return { name, usage: { input: inputTokens, output: outputTokens } };
+  return { name, usageDetails: { input: inputTokens, output: outputTokens } };
 }
 
 function makeReq(secret?: string): NextRequest {
@@ -32,7 +32,7 @@ function makeReq(secret?: string): NextRequest {
 }
 
 function stubObservations(obs: ReturnType<typeof makeObs>[]) {
-  mockFetchObservations.mockResolvedValue({ data: obs });
+  mockGetMany.mockResolvedValue({ data: obs, meta: {} });
 }
 
 const emptyTotals: UsageTotals = { tokens: 0, requests: 0, byRoute: {} };
@@ -118,7 +118,7 @@ describe("GET /api/quota-check", () => {
       QUOTA_SLACK_WEBHOOK_URL:      undefined,
       VERCEL:                       undefined, // default to "local dev" unless a test opts in
     };
-    mockFetchObservations.mockReset();
+    mockGetMany.mockReset();
   });
 
   afterEach(() => {
@@ -186,9 +186,9 @@ describe("GET /api/quota-check", () => {
     stubObservations([]);
     await GET(makeReq());
 
-    expect(mockFetchObservations).toHaveBeenCalled();
-    const { fromStartTime, toStartTime } = mockFetchObservations.mock.calls[0][0];
-    const spanMs = (toStartTime as Date).getTime() - (fromStartTime as Date).getTime();
+    expect(mockGetMany).toHaveBeenCalled();
+    const { fromStartTime, toStartTime } = mockGetMany.mock.calls[0][0];
+    const spanMs = new Date(toStartTime).getTime() - new Date(fromStartTime).getTime();
     expect(spanMs).toBeCloseTo(24 * 60 * 60 * 1000, -3);
 
     vi.useRealTimers();

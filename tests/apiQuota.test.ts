@@ -21,6 +21,13 @@ vi.mock("@google/genai", () => ({
   }),
 }));
 
+// after() requires a live Next.js request scope, which a direct POST(makeReq(...))
+// call in a unit test doesn't set up — stub it to run its callback inline.
+vi.mock("next/server", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/server")>()),
+  after: (fn: () => unknown) => fn(),
+}));
+
 // ─── Error fixtures ───────────────────────────────────────────────────────────
 
 const quotaError = new Error("Request failed with status 429 RESOURCE_EXHAUSTED: quota exceeded");
