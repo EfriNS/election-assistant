@@ -1,5 +1,45 @@
 # Changelog
 
+## 2026-08-17 — Added הציונות הדתית as 11th party; re-checked all 10 existing parties for platform updates
+
+### Context
+
+Efri: הציונות הדתית (Smotrich) is now polling above אחוז החסימה and needed adding, and "it's time to check for updates on the parties' platforms." Separately flagged 4 more parties as currently sub-threshold — track, don't collect yet: בל"ד (platform unchanged since 2018), ביתנו המילואימניקים and האחדות (ארדן, no platform) — both newly founded, and מקום לכולנו (has a platform, but new/small).
+
+### Adding הציונות הדתית
+
+The party's official site (`zionutdatit.org.il/מצע-המפלגה`) is a landing page linking to 13 topic-specific PDFs — infographics exported from Illustrator (no text layer), all dated 2021–2022 (no newer version found), so every entry is tagged `official-outdated` — same treatment as Likud's 2016 constitution. Collected 21 grounding entries across all 9 topics (`data/groundings/hatzionut-hadatit.json`, archive in `docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md`), including concrete finds: the terror doc's death-penalty/20-year-statute-of-limitations/reasonableness-override asks, and the diaspora doc's named Law of Return "grandchild clause" repeal + a 50,000-French-Jews aliyah plan. One document (family-law/custody reform) doesn't fit any `TOPIC_KEY_DIMENSIONS` bucket — logged in the archive, not force-fit. One equality entry (LGBTQ policy) is scored from public record rather than the collected documents, since none of the 13 address it directly — flagged in its `_note`.
+
+Wired the party into the app: `lib/parties.ts` (metadata, inserted directly before עוצמה יהודית in the left-right order), `lib/groundings.ts` (import + `GROUNDINGS` map), and `lib/questions.ts` (an 11th score inserted into all 66 opener-question arrays — 33 options × FORMAL/PERSONAL — calibrated from the grounding data plus well-documented public positions on the party's core axes: free-market economics, judicial-reform specifics, settlement focus). Same "rough estimate, not verified" caveat that already covers every party in that file.
+
+`tests/calcResults.test.ts` had 4 hardcoded 10-element fixture score arrays (from before this party existed) plus a 10-entry `ALL_PARTY_IDS` list — both silently produced `NaN` scores for the new 11th party once `PARTIES.length` changed. Fixed to 11 elements/ids.
+
+### Re-checking all 10 existing parties
+
+Per-party site re-check against each `sourceUrl` (last checked 2026-08-07):
+- **democrats**: 3 new short homepage teaser lines (gender equality, public safety, reservists). Added reservists as a new `military-doctrine` entry; gender-equality was a near-duplicate of an existing entry (skipped, noted as a second-source confirmation); public-safety doesn't fit any current taxonomy bucket (skipped, noted in archive).
+- **beitenu**: 3 new welfare items (pension reform to minimum wage, free transit for pensioners, Holocaust survivor grant → ₪8,000) — added under `economy/social-safety-net-and-labor-protections`.
+- **hadash, beyahad, yashar, otzmah-yehudit**: re-checked in full, no content changes — each got a dated confirmation note in its archive file. (otzmah-yehudit's `עדכונים` news feed was deliberately *not* re-scraped, per the 2026-08-07 decision — see VAA-DESIGN item 94 — that it needs a real "documented action" evidence type before being pulled from again.)
+- **likud, shas, yahadut-hatorah, raam**: re-verified still no official platform (site down / no platform page found). TODO #11's last-checked date updated; רע"ם's first-ever primaries convention (2026-08-22) hasn't happened yet, worth another check after.
+
+### Doc/reference fixes found in review
+
+Efri's review caught two stale references my own sweep missed: `.claude/skills/collect-party-data/SKILL.md`'s `partyId` enum didn't include `hatzionut-hadatit` (would have broken future re-runs of the skill on this party), and README.md's "Parties Covered (June 2026)" section still listed only the original 10 — missed because that grep was case-sensitive and didn't match capitalized "Parties." Also updated `docs/API-COST-ANALYSIS.md`'s stale "not all 10" reference and flagged that its cost baseline (measured 2026-06-30) predates the 11th party — not re-measured, but score-topics/results prompts now carry ~10% more party-platform context.
+
+### Verification
+
+Full pre-push checklist (`vitest run` — 377 tests, `tsc --noEmit`, `eslint .`, `next build`) green after each phase (new-party addition, existing-party re-check, doc fixes). `npm run export:grounding-review` confirms 11 parties, 335 entries.
+
+### Learnings
+
+Routed to `docs/learnings/project/VAA-DESIGN.md` — item 95: batching multiple `Read` calls on scanned/image-only PDFs (Illustrator exports, no text layer) in one turn silently drops some of them (no error, just missing content — 6 requested, only 2 came back, a repeat attempt returned a different subset); keep such `Read` calls to 2-3 per turn and re-issue any that come back empty. Also noted that per-document transcription confidence varies with layout (dense single-column reads cleanly; multi-column infographics yield confident headers but uncertain bullet detail) and should be recorded per-document in the archive, not assumed uniform. Added a matching actionable note to `collect-party-data`'s PDF-handling section so it's applied next time, not just logged.
+
+### Files
+
+`data/groundings/hatzionut-hadatit.json` (new), `docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md` (new), `lib/parties.ts`, `lib/groundings.ts`, `lib/questions.ts`, `tests/calcResults.test.ts`, `data/groundings/{democrats,beitenu,likud,shas,yahadut-hatorah,raam}.json`, `docs/sources/{democrats,beitenu,beyahad,hadash,yashar,otzmah-yehudit}/*.md`, `docs/advisor-review/grounding-review.html`, `.claude/skills/collect-party-data/SKILL.md`, `README.md`, `docs/API-COST-ANALYSIS.md`, `docs/learnings/project/VAA-DESIGN.md`, `TODO.md`.
+
+Branch `feature/add-religious-zionism-party`, merged to `main`.
+
 ## 2026-08-17 — Triaged 4 open Dependabot PRs: 3 applied fresh, 1 closed (ESLint 10 breaks lint)
 
 ### Context
