@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-08-17 — Triaged 4 open Dependabot PRs: 3 applied fresh, 1 closed (ESLint 10 breaks lint)
+
+### Context
+
+Efri asked whether the 4 open Dependabot PRs (`#4` `@types/node`, `#5` `eslint`, `#6` `@upstash/redis`, `#8` `autoprefixer`, all created 2026-08-13) should be accepted, abandoned, or something else.
+
+### Finding: all 4 branches were stale
+
+Every branch was based on `main` from 2026-08-07 — before the 2026-08-14 session's security fixes (extract-zip/puppeteer, nanoid). `npm audit` on each branch showed those two already-fixed high-severity vulnerabilities back, confirming that merging any of them as-is via GitHub would have silently reintroduced both. This ruled out a raw GitHub merge for every PR regardless of the dependency-bump verdict below.
+
+### Verified each bump on its own merits (checked out, ran full lint/tsc/vitest/build — not just the changelog)
+
+- **`#8` autoprefixer 10.5.0→10.5.4** (patch, pure bugfixes) — clean.
+- **`#6` @upstash/redis 1.38.0→1.38.2** (patch, telemetry-header dedup fix) — clean.
+- **`#4` @types/node 20.19.43→26.2.0** (types-only; the large major-version number is misleading — `@types/node`'s major tracks Node's own release line, not real breaking-change count) — clean.
+- **`#5` eslint 9.39.4→10.8.1** (real major) — **breaks linting outright**: `eslint-config-next`'s bundled `eslint-plugin-react` crashes (`TypeError: contextOrFilename.getFilename is not a function`) while linting `app/about/page.tsx`, under ESLint 10's changed rule-context API. Not our bug — `eslint-plugin-react` hasn't shipped ESLint-10 compatibility yet.
+
+### Resolution
+
+Applied the 3 safe bumps directly against current `main` (`fix/dependabot-batch-2026-08-13`, commit `5ca6882`, merged `1ad5796`) rather than merging the stale branches — same pattern as the nanoid/puppeteer fixes on 2026-08-14. Closed all 4 PRs: `#4`/`#6`/`#8` with a comment pointing to the batch commit, `#5` with the ESLint 10 failure detail plus `@dependabot ignore this major version` (stops Dependabot re-opening it) and a new low-priority `TODO.md` item (#19) to revisit once the ecosystem catches up.
+
+### Verification
+
+Full pre-push checklist (`vitest run` — 356 tests, `tsc --noEmit`, `eslint .`, `next build`) green on the batch branch and again on `main` post-merge; `npm audit` clean (0 vulnerabilities) after applying, confirming the stale-branch vulnerabilities were never actually reintroduced.
+
+### Files
+
+`package.json`, `package-lock.json`, `TODO.md`.
+
+Branch `fix/dependabot-batch-2026-08-13`, merged to `main`.
+
 ## 2026-08-17 — Langfuse SDK v3 → v5 migration (ahead of platform's Nov 16 2026 v4 cutover)
 
 ### Context
