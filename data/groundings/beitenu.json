@@ -125,6 +125,24 @@
         "dateRetrieved": "2026-08-07",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"השלמת הרפורמה הפנסיונית עד שכר מינימום\"; \"נסיעות חינם בתחבורה לפנסיונרים\".",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "\"הגדלת מענק לניצולי שואה ל-8,000 ₪\".",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-08-17",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "housing": [

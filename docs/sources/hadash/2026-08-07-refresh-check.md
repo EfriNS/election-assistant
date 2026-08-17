@@ -37,3 +37,7 @@ Per the collect-party-data skill, not inventing new slugs for these — flagging
 ## Pre-existing gap noticed (not part of this refresh's scope, flagging for the user)
 
 Many entries in `data/groundings/hadash.json` cite `archivePath: "docs/sources/hadash/2026-06-27-hadash-values-full.md"`, but that file does not exist in `docs/sources/hadash/` — only `2026-06-23-hadash-principles.md` is present. This predates today's refresh (introduced in commit `487c002`, "add full values platform"). The underlying quotes in the JSON look sound; only the archive markdown for that source was apparently never committed. Recommend either reconstructing that archive file from a fresh full fetch of hadash.org.il/#values, or updating the `archivePath` fields to point at wherever that content actually lives.
+
+## עדכון 2026-08-17 — בדיקה חוזרת, ללא שינוי
+
+`hadash.org.il/#values` נבדק שוב. 8 העקרונות ורשימת המועמדים זהים לגמרי למה שכבר ב-JSON. אין תוכן חדש.
