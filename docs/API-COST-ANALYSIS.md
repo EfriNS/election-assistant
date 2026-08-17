@@ -47,7 +47,8 @@ Haiku is ~3.5× more expensive than Gemini Flash Lite; Sonnet is ~10×.
 ## Notes
 
 1. **Gemini pricing** confirmed from current docs — $0.25/$1.50 per 1M in/out for Gemini 2.0 Flash Lite.
-2. **Cost driver**: score-topics is 40% of token spend. Reducing the party-platform excerpts passed per call (e.g. only sending relevant parties' excerpts, not all 10) would cut costs proportionally.
+2. **Cost driver**: score-topics is 40% of token spend. Reducing the party-platform excerpts passed per call (e.g. only sending relevant parties' excerpts, not all 11) would cut costs proportionally.
+6. **Stale baseline**: this measurement predates הציונות הדתית being added as an 11th party (2026-08-17). The score-topics/results prompts now carry ~10% more party-platform context, which should nudge per-session cost up by a similar margin — not re-measured, but small enough that the trigger points below still hold.
 3. **Batch pricing**: Gemini offers 50% off for batch processing. At 1,000 users/day you could run nightly scoring batches and cut costs to ~$440/mo.
 4. **Power users**: assumes 1 complete flow = 1 user. Users who restart or re-run the quiz multiply costs.
 5. **Free tier**: currently using Gemini free tier (rate-limited). Quota monitoring cron + Slack alerts at 50/80/90% in place.
