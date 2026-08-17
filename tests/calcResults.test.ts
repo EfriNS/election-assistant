@@ -12,15 +12,15 @@ const questionSet: Record<string, TopicQ> = {
   security: {
     question: "Security question",
     options: [
-      { id: "peace",   text: "Peace",   scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
-      { id: "control", text: "Control", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+      { id: "peace",   text: "Peace",   scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "control", text: "Control", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
     ],
   },
   economy: {
     question: "Economy question",
     options: [
-      { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
-      { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+      { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
     ],
   },
 };
@@ -30,7 +30,7 @@ const questionSetNeutral: Record<string, TopicQ> = {
   security: {
     question: "Security question",
     options: [
-      { id: "neutral", text: "Neutral", scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+      { id: "neutral", text: "Neutral", scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
     ],
   },
 };
@@ -43,7 +43,7 @@ function qa(openerAnswerId: string, openerAnswerText = openerAnswerId, followUps
 // Helper: same AI score for every party, with per-party overrides (used by the
 // critical-topic gate tests below, which need full aiScores maps to keep
 // hasAiScore true for every party).
-const ALL_PARTY_IDS = ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"];
+const ALL_PARTY_IDS = ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","hatzionut-hadatit","otzmah-yehudit"];
 function allAi(value: number, overrides: Record<string, number> = {}): Record<string, number> {
   return Object.fromEntries(ALL_PARTY_IDS.map((id) => [id, overrides[id] ?? value]));
 }
@@ -53,9 +53,9 @@ function qaWithFollowUp(openerAnswerId: string): TopicQA {
   return { openerAnswerId, openerAnswerText: openerAnswerId, followUps: [{ question: "Q", options: ["A"], answer: "A" }] };
 }
 
-// The actual PARTIES list has 10 entries (hadash … otzmah-yehudit).
-// We reference only index 0 (hadash) and 9 (otzmah-yehudit) for assertions.
-// "peace" option has scores[0]=2, scores[9]=-2; "control" is the reverse.
+// The actual PARTIES list has 11 entries (hadash … otzmah-yehudit).
+// We reference only hadash (index 0) and otzmah-yehudit (last index) for assertions, by id.
+// "peace" option has scores[0]=2, scores[last]=-2; "control" is the reverse.
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
@@ -342,7 +342,7 @@ describe("calcResults — critical-topic gate", () => {
       ...questionSet,
       housing: {
         question: "Housing question",
-        options: [{ id: "pro", text: "Pro", scores: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }],
+        options: [{ id: "pro", text: "Pro", scores: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }],
       },
     };
     // otzmah: gated on both security and economy (AI very negative on both,

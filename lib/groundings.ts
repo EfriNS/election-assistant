@@ -14,6 +14,7 @@ import beitenuData from "../data/groundings/beitenu.json";
 import likudData from "../data/groundings/likud.json";
 import shasData from "../data/groundings/shas.json";
 import yahadutData from "../data/groundings/yahadut-hatorah.json";
+import hatzionutHadatitData from "../data/groundings/hatzionut-hadatit.json";
 import otzmahData from "../data/groundings/otzmah-yehudit.json";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -101,6 +102,7 @@ export const GROUNDINGS: GroundingsMap = {
   likud:            likudData     as PartyGroundings,
   shas:             shasData      as PartyGroundings,
   "yahadut-hatorah": yahadutData  as PartyGroundings,
+  "hatzionut-hadatit": hatzionutHadatitData as PartyGroundings,
   "otzmah-yehudit":  otzmahData   as PartyGroundings,
 };
 
