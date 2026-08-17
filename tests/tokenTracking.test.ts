@@ -18,24 +18,30 @@ vi.mock("@google/genai", () => ({
   }),
 }));
 
-vi.mock("langfuse", () => ({
-  Langfuse: vi.fn(function() {
-    return {
-      trace: vi.fn().mockReturnValue({
-        generation: vi.fn().mockReturnValue({
-          update: mockGenerationUpdate,
-          end:    vi.fn(),
-        }),
-      }),
-      flushAsync: vi.fn().mockResolvedValue(undefined),
-    };
+vi.mock("@langfuse/tracing", () => ({
+  startObservation: vi.fn().mockReturnValue({
+    update: mockGenerationUpdate,
+    end:    vi.fn(),
   }),
+  // Trace-scoped attribute propagation isn't under test here — just run the callback.
+  propagateAttributes: (_params: unknown, fn: () => unknown) => fn(),
+}));
+
+vi.mock("@/instrumentation", () => ({
+  langfuseSpanProcessor: { forceFlush: vi.fn().mockResolvedValue(undefined) },
+}));
+
+// after() requires a live Next.js request scope, which a direct POST(makeReq(...))
+// call in a unit test doesn't set up — stub it to run its callback inline.
+vi.mock("next/server", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/server")>()),
+  after: (fn: () => unknown) => fn(),
 }));
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 
 const USAGE = { promptTokenCount: 120, candidatesTokenCount: 45, totalTokenCount: 165 };
-const EXPECTED_USAGE = { input: 120, output: 45, unit: "TOKENS" };
+const EXPECTED_USAGE = { input: 120, output: 45 };
 
 function makeReq(body: unknown): NextRequest {
   return new NextRequest("http://localhost/test", {
@@ -71,7 +77,7 @@ describe("/api/results token tracking", () => {
     }));
     expect(res.status).toBe(200);
     expect(mockGenerationUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ usage: EXPECTED_USAGE })
+      expect.objectContaining({ usageDetails: EXPECTED_USAGE })
     );
   });
 });
@@ -95,7 +101,7 @@ describe("/api/follow-up token tracking", () => {
     const res = await POST(makeReq(FOLLOW_UP_BODY));
     expect(res.status).toBe(200);
     expect(mockGenerationUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ usage: EXPECTED_USAGE })
+      expect.objectContaining({ usageDetails: EXPECTED_USAGE })
     );
   });
 });
@@ -121,7 +127,7 @@ describe("/api/score-topics token tracking", () => {
     const res = await POST(makeReq(TOPICS_BODY));
     expect(res.status).toBe(200);
     expect(mockGenerationUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ usage: EXPECTED_USAGE })
+      expect.objectContaining({ usageDetails: EXPECTED_USAGE })
     );
   });
 });

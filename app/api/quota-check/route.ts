@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Langfuse } from "langfuse";
+import { LangfuseClient } from "@langfuse/client";
 
 const GEMINI_MODEL = "gemini-3.1-flash-lite";
 
@@ -13,37 +13,38 @@ type RouteStats = { count: number; tokens: number };
 export type UsageTotals = { tokens: number; requests: number; byRoute: Record<string, RouteStats> };
 
 export async function fetchWindowUsage(
-  client: Langfuse,
+  client: LangfuseClient,
   fromTime: Date,
   toTime: Date
 ): Promise<UsageTotals> {
   let tokens = 0;
   let requests = 0;
   const byRoute: Record<string, RouteStats> = {};
-  let page = 1;
+  let cursor: string | undefined;
   const limit = 100;
 
   while (true) {
-    const result = await client.fetchObservations({
-      fromStartTime: fromTime,
-      toStartTime:   toTime,
+    const result = await client.api.observations.getMany({
+      fromStartTime: fromTime.toISOString(),
+      toStartTime:   toTime.toISOString(),
       type:          "GENERATION",
-      page,
+      fields:        "core,basic,usage",
+      cursor,
       limit,
     });
 
     for (const obs of result.data) {
-      const t = (obs.usage?.input ?? 0) + (obs.usage?.output ?? 0);
+      const t = (obs.usageDetails?.input ?? 0) + (obs.usageDetails?.output ?? 0);
       tokens += t;
       requests++;
-      const name = (obs.name as string) ?? "unknown";
+      const name = obs.name ?? "unknown";
       if (!byRoute[name]) byRoute[name] = { count: 0, tokens: 0 };
       byRoute[name].count++;
       byRoute[name].tokens += t;
     }
 
-    if (result.data.length < limit) break;
-    page++;
+    cursor = result.meta.cursor;
+    if (!cursor) break;
   }
 
   return { tokens, requests, byRoute };
@@ -112,7 +113,7 @@ export async function GET(req: NextRequest) {
   const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 500);
   const webhookUrl   = process.env.QUOTA_SLACK_WEBHOOK_URL;
 
-  const client = new Langfuse({
+  const client = new LangfuseClient({
     secretKey: process.env.LANGFUSE_SECRET_KEY,
     publicKey:  process.env.LANGFUSE_PUBLIC_KEY,
     baseUrl:   process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",

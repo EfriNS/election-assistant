@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-08-17 — Langfuse SDK v3 → v5 migration (ahead of platform's Nov 16 2026 v4 cutover)
+
+### Context
+
+Langfuse emailed that Cloud projects must be "v4 ready" by 2026-11-16. Verified against Langfuse's own docs and installed package type definitions (not training-data memory, which was stale here): once the platform's v4 cutover completes, JS/TS SDK v3 and older are rejected at ingestion entirely, not degraded. This repo pinned `langfuse@^3.38.20` — the old imperative client (`new Langfuse()` → `.trace()` → `.generation()` → `.update()`/`.end()` → `.flushAsync()`) — across all 4 Langfuse touch points: `app/api/results`, `app/api/score-topics`, `app/api/follow-up` (tracing), and `app/api/quota-check` (usage-report querying). Deadline had ~3 months of runway, but the shape of the work — a real architecture change, not a version bump — was fixed regardless of when it happened, so planned and executed it now rather than leaving it for a future deadline scramble.
+
+### What changed
+
+No drop-in replacement exists: v5 replaces the single `langfuse` package with an OpenTelemetry-based family (`@langfuse/tracing`, `@langfuse/otel`, `@langfuse/client`) plus `@vercel/otel` for Next.js registration. New root `instrumentation.ts` registers a `LangfuseSpanProcessor` (`exportMode: "immediate"`, since serverless functions can be frozen right after responding) via `registerOTel`. The three Gemini-tracing routes now wrap their handler body in `propagateAttributes({ sessionId, traceName }, async () => {...})` and create the generation via `startObservation(name, { model, metadata }, { asType: "generation" })` — `.update()`/`.end()` keep the same call sites, just with `usageDetails` replacing `usage` (Langfuse's own doc-fetch tooling paraphrased this as `usage` — installed `.d.ts` files were the actual source of truth). `await langfuse.flushAsync()` becomes `after(() => langfuseSpanProcessor.forceFlush())` (not awaited — `after()` from `next/server` keeps the function alive post-response instead of delaying it, Langfuse's documented pattern for serverless). `quota-check`'s read-side usage query moved to `@langfuse/client`'s `LangfuseClient().api.observations.getMany(...)` — same `fromStartTime`/`toStartTime`/`type` filters as before, but cursor-based pagination (`meta.cursor`) instead of `page`.
+
+One design note: `propagateAttributes`' own `metadata` param is typed `Record<string, string>` (≤200 chars) — the routes' existing trace-level metadata (booleans, arrays, numbers — e.g. `followUpsAskedThisTopic`, `hasGroundingData`) doesn't fit that. Moved it onto the generation's own `metadata` instead, which stays `Record<string, unknown>` — avoids a pointless string-coercion pass and keeps the metadata exactly as rich as before.
+
+### Testing gotcha: `after()` requires a live Next.js request scope
+
+Both `tests/tokenTracking.test.ts` and `tests/apiQuota.test.ts` call route handlers directly (`POST(makeReq(...))`), bypassing the real Next.js server machinery that sets up `after()`'s required `AsyncLocalStorage` context. `after()` throws `` `after` was called outside a request scope `` in that setup — not a bug in the migration, just untestable-as-written. Fixed with a partial `next/server` mock preserving everything else: `vi.mock("next/server", async (importOriginal) => ({ ...(await importOriginal()), after: (fn) => fn() }))`.
+
+### Verification
+
+Full pre-push checklist (`vitest run` — 356 tests, `tsc --noEmit`, `eslint .`, `next build`) green after each phase. Beyond that — per this repo's "never declare success without verification" rule, a clean build doesn't prove traces actually arrive — ran a live smoke test: started the dev server against real `.env.local` Langfuse credentials, sent a real `/api/follow-up` request with a tagged `sessionId`, then queried the Langfuse Cloud API directly (`npx langfuse-cli api observations list --name gemini-follow-up`) and confirmed the trace landed with the correct `sessionId`, `name`, and `type: GENERATION`.
+
+### Learnings
+
+Routed to `docs/learnings/project/AI-INTEGRATION.md`'s "LLM Observability (Langfuse)" section — item 6 there recommended the now-superseded v3 direct-SDK pattern outright, so corrected it in place (not appended) with the v5 pattern, the `usageDetails`-not-`usage` gotcha, and the `after()` test-mocking fix, rather than leaving a stale recommendation next to a new one.
+
+### Files
+
+`instrumentation.ts` (new), `app/api/results/route.ts`, `app/api/score-topics/route.ts`, `app/api/follow-up/route.ts`, `app/api/quota-check/route.ts`, `tests/tokenTracking.test.ts`, `tests/apiQuota.test.ts`, `tests/quotaCheck.test.ts`, `package.json`/`package-lock.json` (removed `langfuse`; added `@langfuse/tracing`, `@langfuse/otel`, `@langfuse/client`, `@vercel/otel`), `docs/learnings/project/AI-INTEGRATION.md`, `TODO.md`.
+
+Branch `fix/langfuse-v5-migration`.
+
 ## 2026-08-14 — Closed a bad Dependabot major-bump PR; fixed 2 GitHub security alerts; enabled branch protection
 
 ### Context

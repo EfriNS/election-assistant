@@ -1,20 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
-import { NextRequest, NextResponse } from "next/server";
-import { Langfuse } from "langfuse";
+import { NextRequest, NextResponse, after } from "next/server";
+import { startObservation, propagateAttributes } from "@langfuse/tracing";
+import { langfuseSpanProcessor } from "@/instrumentation";
 import { GROUNDINGS, derivePartySourceQuality, compareEntryQuality, getBestEvidenceForTopic } from "@/lib/groundings";
 import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
 import { sanitizeUserInput } from "@/lib/sanitize";
-
-function makeLangfuse() {
-  if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
-  return new Langfuse({
-    secretKey: process.env.LANGFUSE_SECRET_KEY,
-    publicKey: process.env.LANGFUSE_PUBLIC_KEY,
-    baseUrl: process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
-  });
-}
 
 type PartyRef = { id: string; name: string; score: number };
 
@@ -153,87 +145,87 @@ export async function POST(req: NextRequest) {
     (top3GroundingContext ? `Platform quotes to cite in each blurb (cite at least one per party):\n${top3GroundingContext}\n\n` : "") +
     `Write blurbs for the top 3 parties (use id as key): ${blurbTargets}`;
 
-  const langfuse = makeLangfuse();
-  const trace = langfuse?.trace({
-    name: "results-generation",
-    sessionId,
-    metadata: { model, topParty: topParties[0]?.id ?? null },
-  });
-  // Do not pass userMessage as input — it contains user answers (PII).
-  const generation = trace?.generation({ name: "gemini-results", model });
-
   const ai = new GoogleGenAI({ apiKey });
 
   // Build groundings for ALL parties (for the UI quote display)
   const allPartyIds = topParties.map((p) => p.id);
   const groundings = buildGroundingsForParties(allPartyIds, answeredTopicIds, topicCoveredAspects);
 
-  // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
-  let text = "";
-  let finishReason = "";
-  let outputTokens = 0;
-  let promptTokens = 0;
-  let retried = false;
-  let parsed: any;
+  return propagateAttributes({ sessionId, traceName: "results-generation" }, async () => {
+    // Do not pass userMessage as input — it contains user answers (PII).
+    const generation = startObservation(
+      "gemini-results",
+      { model, metadata: { topParty: topParties[0]?.id ?? null } },
+      { asType: "generation" }
+    );
 
-  try {
-    // Retry once on parse/shape failure — see app/api/follow-up/route.ts's comment
-    // for why (confirmed rare/non-deterministic, not a token-budget issue). A fresh
-    // chat per attempt so a malformed first reply isn't fed back as history.
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      const chat = ai.chats.create({
-        model,
-        history: [],
-        config: {
-          systemInstruction: SYSTEM_PROMPT,
-          temperature: 0.5,
-          maxOutputTokens: 1500,
-          responseMimeType: "application/json",
-          responseJsonSchema: RESULTS_RESPONSE_SCHEMA,
-        },
+    // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
+    let text = "";
+    let finishReason = "";
+    let outputTokens = 0;
+    let promptTokens = 0;
+    let retried = false;
+    let parsed: any;
+
+    try {
+      // Retry once on parse/shape failure — see app/api/follow-up/route.ts's comment
+      // for why (confirmed rare/non-deterministic, not a token-budget issue). A fresh
+      // chat per attempt so a malformed first reply isn't fed back as history.
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const chat = ai.chats.create({
+          model,
+          history: [],
+          config: {
+            systemInstruction: SYSTEM_PROMPT,
+            temperature: 0.5,
+            maxOutputTokens: 1500,
+            responseMimeType: "application/json",
+            responseJsonSchema: RESULTS_RESPONSE_SCHEMA,
+          },
+        });
+
+        const response = await chat.sendMessage({ message: userMessage });
+        text = (response.text ?? "").trim();
+        finishReason = response.candidates?.[0]?.finishReason ?? "";
+        outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
+        promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
+
+        if (text.startsWith("```")) {
+          text = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
+        }
+
+        try {
+          parsed = JSON.parse(text);
+          if (!parsed.profile || !parsed.partyBlurbs) throw new Error("unexpected shape");
+          break;
+        } catch (parseErr) {
+          if (attempt === 1) { retried = true; continue; }
+          throw parseErr;
+        }
+      }
+
+      generation.update({
+        output: text,
+        usageDetails: { input: promptTokens, output: outputTokens },
+        metadata: { retried },
       });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
 
-      const response = await chat.sendMessage({ message: userMessage });
-      text = (response.text ?? "").trim();
-      finishReason = response.candidates?.[0]?.finishReason ?? "";
-      outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
-      promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
-
-      if (text.startsWith("```")) {
-        text = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
-      }
-
-      try {
-        parsed = JSON.parse(text);
-        if (!parsed.profile || !parsed.partyBlurbs) throw new Error("unexpected shape");
-        break;
-      } catch (parseErr) {
-        if (attempt === 1) { retried = true; continue; }
-        throw parseErr;
-      }
+      return NextResponse.json({ ...parsed, groundings });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error("Results AI error:", msg);
+      const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
+      const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
+      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
+      const langfuseOutput = text ? `${msg}\n\n${diagnostics}\n\nRAW:\n${text}` : `${msg}\n\n${diagnostics}`;
+      generation.update({ output: langfuseOutput, level: "ERROR" });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
+      await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
+      // Return groundings even on AI failure — deterministic results + quotes still useful
+      return NextResponse.json({ errorCode, groundings }, { status: isQuota ? 429 : 500 });
     }
-
-    generation?.update({
-      output: text,
-      usage: { input: promptTokens, output: outputTokens, unit: "TOKENS" },
-      metadata: { retried },
-    });
-    generation?.end();
-    await langfuse?.flushAsync();
-
-    return NextResponse.json({ ...parsed, groundings });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("Results AI error:", msg);
-    const isQuota = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.toLowerCase().includes("quota");
-    const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
-    const langfuseOutput = text ? `${msg}\n\n${diagnostics}\n\nRAW:\n${text}` : `${msg}\n\n${diagnostics}`;
-    generation?.update({ output: langfuseOutput, level: "ERROR" });
-    generation?.end();
-    await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/results — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
-    // Return groundings even on AI failure — deterministic results + quotes still useful
-    return NextResponse.json({ errorCode, groundings }, { status: isQuota ? 429 : 500 });
-  }
+  });
 }

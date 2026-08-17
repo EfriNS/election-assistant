@@ -127,16 +127,28 @@ A Mixpanel `api_error` on `/api/follow-up` with `error_code: SERVER_ERROR` (2026
 
 5. **Helicone new signups are closed** — As of 2026-06, us.helicone.ai shows "New signups are disabled". Use Langfuse instead. (#first:2026-06-16)
 
-6. **Langfuse: use direct SDK, not OTel, for Next.js serverless** — The direct SDK (`import { Langfuse } from "langfuse"`) is simpler than the OpenTelemetry-based wrapper for serverless API routes. Pattern:
+6. **Superseded 2026-08-17 — Langfuse v3 SDK migrated to v5 (OTel-based), ahead of the platform's Nov 16 2026 v4 cutover** (Langfuse Cloud rejects JS/TS SDK v3 and older at ingestion post-cutover; the direct-SDK `langfuse` npm package has no v4/v5 release — it's replaced by the `@langfuse/*` family). Current pattern, verified against installed `.d.ts` files (not docs paraphrase — Langfuse's own doc-fetch tooling summarizes imprecisely, e.g. it says `usage`/`objectContaining` field names that turned out to be `usageDetails`):
    ```typescript
-   const lf = new Langfuse({ secretKey, publicKey, baseUrl });
-   const trace = lf.trace({ name, sessionId, metadata });
-   const gen = trace.generation({ name, model, input });
-   // ... call AI ...
-   gen.update({ output }); gen.end();
-   await lf.flushAsync(); // CRITICAL for serverless
+   // instrumentation.ts (root) — registered once via Next.js's instrumentation hook
+   import { registerOTel } from "@vercel/otel";
+   import { LangfuseSpanProcessor } from "@langfuse/otel";
+   export const langfuseSpanProcessor = new LangfuseSpanProcessor({ exportMode: "immediate" });
+   export function register() { registerOTel({ spanProcessors: [langfuseSpanProcessor] }); }
+
+   // in a route handler
+   import { startObservation, propagateAttributes } from "@langfuse/tracing";
+   import { after } from "next/server";
+   import { langfuseSpanProcessor } from "@/instrumentation";
+
+   return propagateAttributes({ sessionId, traceName: "..." }, async () => {
+     const generation = startObservation(name, { model, metadata }, { asType: "generation" });
+     // ... call AI ...
+     generation.update({ output, usageDetails: { input, output } }); // not "usage"
+     generation.end();
+     after(() => langfuseSpanProcessor.forceFlush()); // not awaited — after() keeps the function alive post-response
+   });
    ```
-   `flushAsync()` is mandatory: serverless processes exit immediately after response, before background flush completes. (#first:2026-06-16)
+   Two gotchas: (1) `propagateAttributes`' own `metadata` param is `Record<string, string>` (≤200 chars) — arbitrary-typed trace metadata (booleans, arrays, numbers) goes on the generation's own `metadata` instead, which stays `Record<string, unknown>`. (2) `after()` throws `` `after` was called outside a request scope `` when a route handler is invoked directly in a unit test (no real Next.js request context) — mock it in tests: `vi.mock("next/server", async (importOriginal) => ({ ...(await importOriginal()), after: (fn) => fn() }))`. Read-side usage queries (e.g. quota-check's usage report) move to a separate package, `@langfuse/client`'s `LangfuseClient().api.observations.getMany(...)` — same `fromStartTime`/`toStartTime`/`type` filters as before, but cursor-based pagination (`meta.cursor`) instead of `page`. (#first:2026-08-17)
 
 7. **Pass sessionId from client for conversation grouping** — Generate `sessionId` with `crypto.randomUUID()` in the React client on mount (`useState(() => crypto.randomUUID())`). Send it with every API request body. Use it as Langfuse `sessionId` to group all turns of one conversation. This lets you view a full conversation in Langfuse traces. (#first:2026-06-16)
 

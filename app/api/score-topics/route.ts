@@ -1,20 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
-import { NextRequest, NextResponse } from "next/server";
-import { Langfuse } from "langfuse";
+import { NextRequest, NextResponse, after } from "next/server";
+import { startObservation, propagateAttributes } from "@langfuse/tracing";
+import { langfuseSpanProcessor } from "@/instrumentation";
 import { PARTIES } from "@/lib/parties";
 import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/groundings";
 import { TOPIC_IDS } from "@/lib/topics";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
-
-function makeLangfuse() {
-  if (!process.env.LANGFUSE_SECRET_KEY || !process.env.LANGFUSE_PUBLIC_KEY) return null;
-  return new Langfuse({
-    secretKey: process.env.LANGFUSE_SECRET_KEY,
-    publicKey: process.env.LANGFUSE_PUBLIC_KEY,
-    baseUrl: process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
-  });
-}
 
 type FollowUpQA = { question: string; answer: string };
 
@@ -180,78 +172,81 @@ export async function POST(req: NextRequest) {
     .filter((p) => GROUNDINGS[p.id]?.platformAvailable)
     .map((p) => p.id);
 
-  const langfuse = makeLangfuse();
-  const trace = langfuse?.trace({
-    name: "score-topics",
-    sessionId,
-    metadata: {
-      topicsRequested: topics.map((t) => t.topicId),
-      topicsWithGroundings: topicsWithGroundings.map((t) => t.topicId),
-      partiesWithData,
-    },
-  });
-  // Do not pass prompt as input — it contains user answers (PII).
-  const generation = trace?.generation({ name: "gemini-score-topics", model });
-
-  // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
-  let rawText = "";
-  let finishReason = "";
-  let outputTokens = 0;
-  let promptTokens = 0;
-  let retried = false;
-  let scores: ScoreTopicsResult | undefined;
-
-  try {
-    const ai = new GoogleGenAI({ apiKey });
-
-    // Retry once on parse failure — see app/api/follow-up/route.ts's comment for why
-    // (confirmed rare/non-deterministic, not a token-budget issue; genuine API errors
-    // still propagate immediately, uncaught here).
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      const response = await ai.models.generateContent({
+  return propagateAttributes({ sessionId, traceName: "score-topics" }, async () => {
+    // Do not pass prompt as input — it contains user answers (PII).
+    const generation = startObservation(
+      "gemini-score-topics",
+      {
         model,
-        contents: prompt,
-        config: {
-          temperature: 0.2,
-          maxOutputTokens: 1500,
-          responseMimeType: "application/json",
-          responseJsonSchema: buildScoreResponseSchema(topics),
+        metadata: {
+          topicsRequested: topics.map((t) => t.topicId),
+          topicsWithGroundings: topicsWithGroundings.map((t) => t.topicId),
+          partiesWithData,
         },
-      });
+      },
+      { asType: "generation" }
+    );
 
-      rawText = response.text ?? "";
-      finishReason = response.candidates?.[0]?.finishReason ?? "";
-      outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
-      promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
+    // Hoisted so the catch block can log the raw AI output + diagnostics on parse failure.
+    let rawText = "";
+    let finishReason = "";
+    let outputTokens = 0;
+    let promptTokens = 0;
+    let retried = false;
+    let scores: ScoreTopicsResult | undefined;
 
-      try {
-        scores = parseScores(rawText, topics);
-        break;
-      } catch (parseErr) {
-        if (attempt === 1) { retried = true; continue; }
-        throw parseErr;
+    try {
+      const ai = new GoogleGenAI({ apiKey });
+
+      // Retry once on parse failure — see app/api/follow-up/route.ts's comment for why
+      // (confirmed rare/non-deterministic, not a token-budget issue; genuine API errors
+      // still propagate immediately, uncaught here).
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const response = await ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: {
+            temperature: 0.2,
+            maxOutputTokens: 1500,
+            responseMimeType: "application/json",
+            responseJsonSchema: buildScoreResponseSchema(topics),
+          },
+        });
+
+        rawText = response.text ?? "";
+        finishReason = response.candidates?.[0]?.finishReason ?? "";
+        outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;
+        promptTokens = response.usageMetadata?.promptTokenCount ?? 0;
+
+        try {
+          scores = parseScores(rawText, topics);
+          break;
+        } catch (parseErr) {
+          if (attempt === 1) { retried = true; continue; }
+          throw parseErr;
+        }
       }
+
+      generation.update({
+        output: rawText,
+        usageDetails: { input: promptTokens, output: outputTokens },
+        metadata: { retried },
+      });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
+
+      return NextResponse.json({ scores });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
+      const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
+      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
+      const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
+      generation.update({ output: langfuseOutput, level: "ERROR" });
+      generation.end();
+      after(() => langfuseSpanProcessor.forceFlush());
+      await notifySlack(`🚨 /api/score-topics — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
+      return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
     }
-
-    generation?.update({
-      output: rawText,
-      usage: { input: promptTokens, output: outputTokens, unit: "TOKENS" },
-      metadata: { retried },
-    });
-    generation?.end();
-    await langfuse?.flushAsync();
-
-    return NextResponse.json({ scores });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
-    const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-    const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
-    const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
-    generation?.update({ output: langfuseOutput, level: "ERROR" });
-    generation?.end();
-    await langfuse?.flushAsync();
-    await notifySlack(`🚨 /api/score-topics — ${errorCode}\n${msg.slice(0, 300)}\n${diagnostics}`);
-    return NextResponse.json({ errorCode }, { status: isQuota ? 429 : 500 });
-  }
+  });
 }
