@@ -45,6 +45,8 @@ Try fetching the URL. If the response is useful:
 ### B. URL → PDF
 Fetch the PDF URL with WebFetch. The tool saves the binary to a local cache path (shown in the result). Then use the **Read tool** on that local path to extract the text. The Read tool renders PDFs visually — you can read all pages.
 
+**Scanned/image-only PDFs (no text layer — common for Illustrator-exported infographic platforms)**: WebFetch can be batched freely (it just downloads), but batching many `Read` calls on large image-PDFs in one turn is unreliable — some silently come back empty ("PDF file read (N MB)" with no visible content) with no error. Keep these `Read` calls to 2-3 per turn and re-issue any that come back empty rather than assuming nothing was there. Transcription confidence also varies a lot by document layout (dense single-column text reads cleanly; multi-column infographics often yield only confident section headers) — record per-document confidence in the archive markdown instead of treating every extraction as equally verbatim-reliable. See `docs/learnings/project/VAA-DESIGN.md` item 95.
+
 ### C. User copy-paste
 The user has pasted text directly in chat. Skip fetching. Use the text as-is.
 

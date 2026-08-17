@@ -18,9 +18,9 @@ Match scores blend two signals:
 
 Final score = weighted average across your prioritised topics, normalised to 0–100%.
 
-## Parties Covered (June 2026)
+## Parties Covered (August 2026)
 
-חד"ש-תע"ל · רע"מ · הדמוקרטים · ביחד (בנט/לפיד) · ישר! (איזנקוט) · ישראל ביתנו · ליכוד · ש"ס · יהדות התורה · עוצמה יהודית
+חד"ש-תע"ל · רע"מ · הדמוקרטים · ביחד (בנט/לפיד) · ישר! (איזנקוט) · ישראל ביתנו · ליכוד · ש"ס · יהדות התורה · הציונות הדתית (סמוטריץ') · עוצמה יהודית
 
 Parties without a published current platform are shown with an explicit outdatedness warning and the source used (e.g. coalition principles, older manifesto).
 
