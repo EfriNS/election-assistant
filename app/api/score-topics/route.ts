@@ -7,6 +7,7 @@ import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/g
 import { TOPIC_IDS } from "@/lib/topics";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
+import { isTransientGeminiError } from "@/lib/gemini-errors";
 
 type FollowUpQA = { question: string; answer: string };
 
@@ -199,19 +200,27 @@ export async function POST(req: NextRequest) {
       const ai = new GoogleGenAI({ apiKey });
 
       // Retry once on parse failure — see app/api/follow-up/route.ts's comment for why
-      // (confirmed rare/non-deterministic, not a token-budget issue; genuine API errors
-      // still propagate immediately, uncaught here).
+      // (confirmed rare/non-deterministic, not a token-budget issue). Also retries once
+      // on a transient API-level error (503 UNAVAILABLE/overloaded) — genuine quota
+      // errors still propagate immediately, uncaught here.
       for (let attempt = 1; attempt <= 2; attempt++) {
-        const response = await ai.models.generateContent({
-          model,
-          contents: prompt,
-          config: {
-            temperature: 0.2,
-            maxOutputTokens: 1500,
-            responseMimeType: "application/json",
-            responseJsonSchema: buildScoreResponseSchema(topics),
-          },
-        });
+        let response;
+        try {
+          response = await ai.models.generateContent({
+            model,
+            contents: prompt,
+            config: {
+              temperature: 0.2,
+              maxOutputTokens: 1500,
+              responseMimeType: "application/json",
+              responseJsonSchema: buildScoreResponseSchema(topics),
+            },
+          });
+        } catch (callErr) {
+          const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          throw callErr;
+        }
 
         rawText = response.text ?? "";
         finishReason = response.candidates?.[0]?.finishReason ?? "";
