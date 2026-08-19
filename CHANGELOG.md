@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-08-19 — Fix: retry once on transient Gemini 503 errors across all 3 AI routes
+
+### Context
+
+Efri pasted 4 Slack alerts from the last 2 days: `/api/follow-up — SERVER_ERROR` with `{"error":{"code":503,"message":"This model is currently experiencing high demand... Please try again later.","status":"UNAVAILABLE"}}` and `retried=false` on every one, asking whether retries exist for this and whether it needs fixing.
+
+### Diagnosis
+
+Traced the existing retry-once loop (`app/api/follow-up/route.ts`, and the identical pattern in `score-topics`/`results`) — it only covers a successful API call that returns empty/malformed output (`JSON.parse` failure). A 503 thrown *by* `ai.models.generateContent()`/`chat.sendMessage()` itself skips the loop entirely and lands straight in the outer `catch`, matching `retried=false` on every alert exactly. Since 503 `UNAVAILABLE` is Google's own explicit "transient, try again" signal — distinct from 429 quota exhaustion, which won't resolve on retry — this was a genuine gap, not expected behavior. Impact varies by route: `follow-up` already degrades gracefully (`followUp: null` → quiz silently skips that topic's follow-up, no visible error), but `score-topics`/`results` hard-fail the user (500/`SERVER_ERROR`) — the latter meaning no results page at all.
+
+### Fix
+
+Added `lib/gemini-errors.ts`'s `isTransientGeminiError()` (matches `"503"`/`"UNAVAILABLE"`/`"overloaded"`). Wrapped the `generateContent()`/`sendMessage()` call site itself in a try/catch inside each route's existing attempt loop: on attempt 1, a transient error now retries once (same as the existing parse-failure branch); on attempt 2, or a non-transient error (quota, unrelated network fault), it still rethrows immediately to the outer catch, unchanged from before. Applied identically to all three routes since all three shared the exact same structural gap.
+
+### Verification
+
+Full pre-push checklist green (`vitest run` — 380 tests including new `tests/geminiErrors.test.ts`, `tsc --noEmit`, `eslint .`, `next build`).
+
+### Learnings
+
+Routed to `docs/learnings/project/AI-INTEGRATION.md` as a correction to the 2026-07-05 hardening entry, whose own doc comment ("genuine API errors (quota, network) are NOT retried") had conflated a permanent failure (quota) with a self-described temporary one (503) — worth re-checking that kind of blanket claim whenever a new error shape shows up in production.
+
+### Files
+
+`lib/gemini-errors.ts` (new), `tests/geminiErrors.test.ts` (new), `app/api/follow-up/route.ts`, `app/api/score-topics/route.ts`, `app/api/results/route.ts`, `docs/learnings/project/AI-INTEGRATION.md`.
+
+Branch `fix/gemini-transient-retry`, merged to `main`.
+
 ## 2026-08-17 — Added הציונות הדתית as 11th party; re-checked all 10 existing parties for platform updates
 
 ### Context
