@@ -7,6 +7,7 @@ import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
 import { sanitizeUserInput } from "@/lib/sanitize";
+import { isTransientGeminiError } from "@/lib/gemini-errors";
 
 type PartyRef = { id: string; name: string; score: number };
 
@@ -170,7 +171,9 @@ export async function POST(req: NextRequest) {
     try {
       // Retry once on parse/shape failure — see app/api/follow-up/route.ts's comment
       // for why (confirmed rare/non-deterministic, not a token-budget issue). A fresh
-      // chat per attempt so a malformed first reply isn't fed back as history.
+      // chat per attempt so a malformed first reply isn't fed back as history. Also
+      // retries once on a transient API-level error (503 UNAVAILABLE/overloaded) —
+      // genuine quota errors still propagate immediately, uncaught here.
       for (let attempt = 1; attempt <= 2; attempt++) {
         const chat = ai.chats.create({
           model,
@@ -184,7 +187,14 @@ export async function POST(req: NextRequest) {
           },
         });
 
-        const response = await chat.sendMessage({ message: userMessage });
+        let response;
+        try {
+          response = await chat.sendMessage({ message: userMessage });
+        } catch (callErr) {
+          const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          throw callErr;
+        }
         text = (response.text ?? "").trim();
         finishReason = response.candidates?.[0]?.finishReason ?? "";
         outputTokens = response.usageMetadata?.candidatesTokenCount ?? 0;

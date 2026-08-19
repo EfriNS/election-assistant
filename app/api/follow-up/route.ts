@@ -4,6 +4,7 @@ import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
+import { isTransientGeminiError } from "@/lib/gemini-errors";
 
 // Gemini's structured-output mode (responseJsonSchema) uses constrained
 // decoding, which is far more reliable than plain responseMimeType:
@@ -290,19 +291,27 @@ export async function POST(req: NextRequest) {
       // Retry once on malformed/empty output — confirmed via reproduction (2026-07-05,
       // see docs/learnings/project/AI-INTEGRATION.md) to be a rare, non-deterministic
       // Gemini generation glitch, not a token-budget or config issue. A same-request
-      // retry is a resilience pattern for that flakiness, not a parse-around-it hack —
-      // genuine API errors (quota, network) still propagate immediately, uncaught here.
+      // retry is a resilience pattern for that flakiness, not a parse-around-it hack.
+      // Also retries once on a transient API-level error (503 UNAVAILABLE/overloaded) —
+      // genuine quota errors still propagate immediately, uncaught here.
       for (let attempt = 1; attempt <= 2; attempt++) {
-        const response = await ai.models.generateContent({
-          model,
-          contents: prompt,
-          config: {
-            temperature: 0.7,
-            maxOutputTokens: MAX_OUTPUT_TOKENS,
-            responseMimeType: "application/json",
-            responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
-          },
-        });
+        let response;
+        try {
+          response = await ai.models.generateContent({
+            model,
+            contents: prompt,
+            config: {
+              temperature: 0.7,
+              maxOutputTokens: MAX_OUTPUT_TOKENS,
+              responseMimeType: "application/json",
+              responseJsonSchema: FOLLOW_UP_RESPONSE_SCHEMA,
+            },
+          });
+        } catch (callErr) {
+          const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          throw callErr;
+        }
 
         rawText = response.text ?? "";
         finishReason = response.candidates?.[0]?.finishReason ?? "";
