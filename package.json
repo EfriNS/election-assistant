@@ -36,7 +36,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "autoprefixer": "^10.5.4",
     "mixpanel-browser": "^2.80.0",
-    "next": "^16.2.11",
+    "next": "^16.3.4",
     "puppeteer-core": "25.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
