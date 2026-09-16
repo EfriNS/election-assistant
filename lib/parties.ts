@@ -112,7 +112,7 @@ export const PARTIES: Party[] = [
     id: "hatzionut-hadatit",
     name: "הציונות הדתית",
     subtitle: "סמוטריץ'",
-    description: "ימין לאומי-דתי — התיישבות וריבונות, רפורמה משפטית, מדיניות הגירה מצמצמת.",
+    description: "ימין לאומי-דתי — התיישבות וריבונות, רפורמה משפטית, מדיניות הגירה מצמצמת. ריצה משותפת \"טכנית\" (2026) עם זהות (פייגלין) — כל צד שומר על מצעו הנפרד.",
     website: "https://zionutdatit.org.il",
     platformUrl: "https://zionutdatit.org.il/מצע-המפלגה/",
     platformLabel: "מצע המפלגה (13 מסמכים נושאיים, 2021–2022)",
