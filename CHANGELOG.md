@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-09-16 — Cleared the Dependabot PR backlog (5 merged: vitest 5, tsx, react, postcss + earlier next/sharp/js-yaml)
+
+### Context
+
+Efri had already merged 4 Dependabot PRs (js-yaml, next, sharp, vitest→4.1.11) and flagged that the latest one, PR #12 (vitest `4.1.11→5.0.0`), was failing its Vercel build check — asked me to check it.
+
+### Diagnosis and fix (PR #12)
+
+Reproduced the failure locally: `@vitest/coverage-v8` was still pinned at `^4.1.9` in `package.json`, which peer-requires `vitest@4.1.11` exactly — Dependabot's PR only bumped `vitest` itself, leaving an unresolvable `ERESOLVE` conflict that broke `npm install` (and therefore the Vercel build). Bumped `@vitest/coverage-v8` to `^5.0.0` to match, verified full pipeline (380 tests, `tsc`, `eslint`, `next build`) on the rebased branch, pushed the fix onto PR #12's own branch, confirmed CI green, and merged on request.
+
+### The other 3 open PRs (#9 tsx, #10 react, #11 postcss)
+
+All three predated the vitest merge. #9 and #10 merged main in cleanly; #11 had a genuine `package-lock.json` conflict (regenerated the lockfile fresh rather than hand-resolving). Verified the full pipeline on each before pushing.
+
+Pushing those fix commits directly onto Dependabot's own branches caused Dependabot to auto-close all three PRs (unmerged, head ref deleted) within seconds — confirmed via the GitHub timeline API (`dependabot[bot]` as the actor) and confirmed the branches/commits themselves were untouched via `git ls-remote`. Reopened all three with `gh pr reopen` (which also fixed GitHub's stale cached view of the PR — an unrelated multi-minute sync lag had been blocking merge attempts before the reopen), re-verified CI, merged all three.
+
+### Verification
+
+Full pre-push checklist green on `main` after all 4 merges (380 tests, `tsc --noEmit`, `eslint .`, `next build`). Confirmed the actual Vercel **Production** deployment (not just a preview) completed for the final commit via the GitHub Deployments API. Separately checked PR #13 (eslint) — already closed by `dependabot[bot]` itself as genuinely redundant (`package.json`'s `^9.39.4` range already floats to the proposed `9.39.5`, confirmed installed) — no action needed.
+
+### Learnings
+
+Routed two: the `vitest`/`@vitest/coverage-v8` lockstep-bump requirement, project-specific → `docs/learnings/project/INFRA-PATTERNS.md`. The Dependabot-auto-closes-after-manual-push behavior, universal (any Dependabot-using repo) → promoted into the `dev-workflow` plugin's `debugging-discipline` skill (committed in the local `claude-code-template` checkout, not pushed).
+
+### Files
+
+`package.json`, `package-lock.json` (4 separate merge commits across PRs #12/#9/#10/#11), `docs/learnings/project/INFRA-PATTERNS.md`.
+
+Hotfix-mode work directly against `main` (no feature branch) — this was dependency-PR triage, not a planned TODO item.
+
 ## 2026-08-19 — Fix: retry once on transient Gemini 503 errors across all 3 AI routes
 
 ### Context
