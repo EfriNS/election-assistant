@@ -1,0 +1,29 @@
+{
+  "platformAvailable": false,
+  "platformLabel": "אין מצע — עמוד גיוס/היכרות בלבד",
+  "sourceUrl": "https://amchaisrael.co.il/",
+  "archiveDir": "docs/sources/amcha-yisrael/",
+  "_note": "Brand-new party launched 2026-08-25 by תא\"ל (מיל') עופר וינטר. Genuinely different from every other 'no official platform' party in this dataset (likud/shas/yahadut-hatorah/raam) — those have decades of coalition history, IDI analysis, and public record to draw on; this party has three weeks of a recruitment landing page and no other public record at all. Polling above threshold (~4 mandates) in most post-list-closing polls, explicitly self-identifies with 'מחנה הימין... ממשלת ימין רחבה' (the Netanyahu bloc), which is the only concrete signal used for the lib/questions.ts score estimate — user approved a rough right-bloc-lane estimate across all 9 topics (2026-09-16), security leaning closer to Otzma/Religious Zionism (Winter's military background + explicit bloc alignment), other topics closer to Likud/Beitenu's more moderate right lane, since no specific commitments exist to justify a sharper estimate anywhere. This is below even this file's own usual 'rough estimate, not verified' bar — re-check once the party publishes actual policy content or gives substantive interviews. See docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md for full reasoning.",
+  "topics": {
+    "security": [
+      {
+        "text": "\"אנחנו חלק ברור ומובהק במחנה הימין. נעשה הכל כדי להקים ממשלת ימין רחבה.\"",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://www.c14.co.il/article/1677258",
+        "archivePath": "docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md",
+        "dateRetrieved": "2026-09-16",
+        "_note": "היחיד ה'ציטוט' הזמין כרגע — הצהרת מיצוב גושי כללית, לא עמדת מדיניות ביטחונית קונקרטית. וינטר עצמו מפקד צבאי בכיר לשעבר (חטיבת גבעתי), ידוע במיוחד ב'מכתב הפקודה' הדתי-לאומי השנוי במחלוקת ממלחמת עזה 2014 — נתון זיהוי, לא עמדת מדיניות מצוטטת.",
+        "provenance": "third-party",
+        "concreteness": "generic"
+      }
+    ],
+    "economy": [],
+    "housing": [],
+    "education": [],
+    "health": [],
+    "religion": [],
+    "justice": [],
+    "equality": [],
+    "ecology": []
+  }
+}

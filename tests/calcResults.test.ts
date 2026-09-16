@@ -12,15 +12,15 @@ const questionSet: Record<string, TopicQ> = {
   security: {
     question: "Security question",
     options: [
-      { id: "peace",   text: "Peace",   scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
-      { id: "control", text: "Control", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+      { id: "peace",   text: "Peace",   scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "control", text: "Control", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
     ],
   },
   economy: {
     question: "Economy question",
     options: [
-      { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
-      { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
+      { id: "left-econ",  text: "Left econ",  scores: [2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2] },
+      { id: "right-econ", text: "Right econ", scores: [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2] },
     ],
   },
 };
@@ -30,7 +30,7 @@ const questionSetNeutral: Record<string, TopicQ> = {
   security: {
     question: "Security question",
     options: [
-      { id: "neutral", text: "Neutral", scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+      { id: "neutral", text: "Neutral", scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
     ],
   },
 };
@@ -43,7 +43,7 @@ function qa(openerAnswerId: string, openerAnswerText = openerAnswerId, followUps
 // Helper: same AI score for every party, with per-party overrides (used by the
 // critical-topic gate tests below, which need full aiScores maps to keep
 // hasAiScore true for every party).
-const ALL_PARTY_IDS = ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","hatzionut-hadatit","otzmah-yehudit"];
+const ALL_PARTY_IDS = ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah","hatzionut-hadatit","otzmah-yehudit"];
 function allAi(value: number, overrides: Record<string, number> = {}): Record<string, number> {
   return Object.fromEntries(ALL_PARTY_IDS.map((id) => [id, overrides[id] ?? value]));
 }
@@ -53,7 +53,7 @@ function qaWithFollowUp(openerAnswerId: string): TopicQA {
   return { openerAnswerId, openerAnswerText: openerAnswerId, followUps: [{ question: "Q", options: ["A"], answer: "A" }] };
 }
 
-// The actual PARTIES list has 11 entries (hadash … otzmah-yehudit).
+// The actual PARTIES list has 13 entries (hadash … otzmah-yehudit).
 // We reference only hadash (index 0) and otzmah-yehudit (last index) for assertions, by id.
 // "peace" option has scores[0]=2, scores[last]=-2; "control" is the reverse.
 
@@ -110,7 +110,7 @@ describe("calcResults — AI score blending", () => {
       { security: 4 },
       { security: qa("other", "My custom view") },
       questionSet,
-      { security: { hadash: 2, "otzmah-yehudit": -2, ...Object.fromEntries(["raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0])) } }
+      { security: { hadash: 2, "otzmah-yehudit": -2, ...Object.fromEntries(["raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah"].map(id => [id, 0])) } }
     );
     expect(results.find((p) => p.id === "hadash")!.score).toBe(100);
     expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
@@ -122,7 +122,7 @@ describe("calcResults — AI score blending", () => {
     // blend: hadash effectiveScore = 2*0.5 + 0*0.5 = 1.0 → normalized 0.75 → curved 0.75^n
     //        otzmah effectiveScore = -2*0.5 + 0*0.5 = -1.0 → normalized 0.25 → curved 0.25^n
     const allPartyAiScores = Object.fromEntries(
-      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah","otzmah-yehudit"].map(id => [id, 0])
+      ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah","otzmah-yehudit"].map(id => [id, 0])
     );
     const { ranked: results } = calcResults(
       { security: 4 },
@@ -138,7 +138,7 @@ describe("calcResults — AI score blending", () => {
 
   it("falls back to deterministic when AI score is null for a specific party", () => {
     const aiScores = Object.fromEntries(
-      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0])
+      ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah"].map(id => [id, 0])
     );
     aiScores["otzmah-yehudit"] = null as unknown as number;
     const { ranked: results } = calcResults(
@@ -155,7 +155,7 @@ describe("calcResults — AI score blending", () => {
 
   it("skips topic for a party when 'other' opener and AI score is null → score stays 50", () => {
     const aiWithNull: Record<string, number | null> = Object.fromEntries(
-      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 0 as number | null])
+      ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah"].map(id => [id, 0 as number | null])
     );
     aiWithNull["otzmah-yehudit"] = null;
     const { ranked: results } = calcResults(
@@ -209,7 +209,7 @@ describe("calcResults — topicScores", () => {
 
   it("omits a party from topicScores when effectiveScore is null", () => {
     const aiWithNull: Record<string, number | null> = Object.fromEntries(
-      ["hadash","raam","democrats","beyahad","yashar","beitenu","likud","shas","yahadut-hatorah"].map(id => [id, 2 as number | null])
+      ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah"].map(id => [id, 2 as number | null])
     );
     aiWithNull["otzmah-yehudit"] = null;
     const { topicScores } = calcResults(
@@ -342,7 +342,7 @@ describe("calcResults — critical-topic gate", () => {
       ...questionSet,
       housing: {
         question: "Housing question",
-        options: [{ id: "pro", text: "Pro", scores: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }],
+        options: [{ id: "pro", text: "Pro", scores: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }],
       },
     };
     // otzmah: gated on both security and economy (AI very negative on both,

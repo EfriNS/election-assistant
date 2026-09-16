@@ -1,0 +1,167 @@
+{
+  "platformAvailable": true,
+  "platformLabel": "מצע המפלגה הכלכלית — hakalkalit.org",
+  "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+  "archiveDir": "docs/sources/miluimnikim/",
+  "_note": "New joint list for 2026 — יועז הנדל (המילואימניקים) + ד\"ר ירון זליכה (המפלגה הכלכלית), submitted 2026-09-07, polling right around the electoral threshold. The detailed, quantified platform content here comes from hakalkalit.org — Zlicha's pre-existing Economic Party platform, which now forms the economic arm of the joint list; Hendel himself hasn't published an equally detailed platform of his own. One security/hardline-enforcement entry and the haredi-draft-and-service-burden entry are third-party sourced (news paraphrase, not verbatim) since they come from coverage of Hendel's own positions/founding identity, not the hakalkalit.org document. Health topic left thin: the platform's OECD-healthcare-spending-level commitment doesn't fit any current TOPIC_KEY_DIMENSIONS health bucket (all are mechanism/equity-specific, not overall-budget-level) — logged in archive, not force-fit. Informal-education budget commitment similarly has no fitting education bucket — logged, not added as a scored entry. Pension/vehicle-prices/transportation/high-tech/agriculture sections exist on the source site but weren't fully collected this pass — see archive 'נושאים שסעיפים קיימים' section for a follow-up collection list.",
+  "topics": {
+    "security": [
+      {
+        "text": "צבא הגנה גדול, איכותי, מאומן ומצויד היטב. ההוצאה הביטחונית ירדה מ-7% ל-5% מהתמ\"ג — מגמה שיש להפוך.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "המשך צמצום ההוצאה הביטחונית כאחוז מהתמ\"ג",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "חיזוק אכיפת החוק, הקמת יחידה ייעודית למניעת פשיעה, והחמרת הענישה על עבירות נשק.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://www.kore.co.il/viewArticle/193897",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "_note": "פרפרזה עיתונאית של עמדת יועז הנדל — לא ציטוט מילולי ממצע כתוב.",
+        "provenance": "third-party",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "economy": [
+      {
+        "text": "הורדת מע\"מ מ-18% ל-17% בשנה הראשונה, ולאחר מכן הפחתה שנתית של 1% עד ל-12%.",
+        "aspect": "cost-of-living-and-affordability",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הגבלת מס הכנסה שולי ל-40% (כולל ביטוח לאומי ומס בריאות); מס חברות אחיד של 40% (מצטבר, כולל מס דיבידנד).",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ביטול הטבות מס למונופולים ולתאגידים גדולים; ביטול חוק רווחים כלואים וחוק רווח הון.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "הטבות מס למונופולים כתמריץ להשקעה",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביטול משרדי ממשלה מיותרים שהוקמו משיקולים פוליטיים; ועדת ביקורת חיצונית לפטורים ממכרזים; ביטול פטורים גורפים ממכרזים; הקפאת צבירת זכויות בקרנות הפנסיה התקציביות.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביטול מוחלט של מכסות ייבוא; איסור על יבואנים בלעדיים למנופל על יצרנים מובילים; פירוק מועצות הייצור (חלב, ביצים, דבש וכו'); אכיפת חוק בסגנון אירופי נגד תמחור מונופוליסטי מופרז.",
+        "aspect": "cost-of-living-and-affordability",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "מכסות ייבוא ומועצות ייצור כהגנה על יצרנים מקומיים",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת בנק פרטי חדש במימון ממשלתי-זר משותף; החזרת קרנות אשראי לעסקים קטנים בריבית נמוכה; חיוב הבנקים בתשלום ריבית על עו\"ש; הפיכת הפיקוח על הבנקים מ'פודל לרוטוויילר'.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "housing": [
+      {
+        "text": "הורדת מחירי הדירות בישראל בהדרגה לרמה של כ-120 משכורות ממוצעות, תוך יצירת אפיקי השקעה חלופיים כדי להסיט הון מהשוק הדיור.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      }
+    ],
+    "education": [
+      {
+        "text": "הקשר הברור והחד-משמעי בין חינוך לרווחה כלכלית — ביקורת על כך שתקציבי חינוך גדלים בלי שיפור בשעות ההוראה בהשוואה למדינות המערב.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "generic"
+      }
+    ],
+    "religion": [
+      {
+        "text": "הפרטת הפיקוח על הכשרות; מתן אפשרות לכל רב מוסמך להעניק תעודת הכשר.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "מונופול הרבנות הראשית על הכשרות",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הרשימה נבנתה סביב פעילי מילואים ומשפחות שכולות/פצועים שקידמו את נושא הגיוס השוויוני (נטל שירות שווה).",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://he.wikipedia.org/wiki/יועז_הנדל",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "_note": "זיהוי מייסד/זהות הרשימה, לא ציטוט ממצע כתוב — provenance: third-party.",
+        "provenance": "third-party",
+        "concreteness": "generic"
+      }
+    ],
+    "justice": [
+      {
+        "text": "ועדת ביקורת חיצונית לפטורים ממכרזים; ביטול פטורים גורפים ממכרזים.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "equality": [
+      {
+        "text": "החמרת הענישה על רצח נשים בידי בני זוג; הגנה על נשים המדווחות על אלימות במשפחה; הקצאת תקציבים ייעודיים למאבק באלימות נגד נשים; הכשרת שוטרים ייעודית.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "ecology": [
+      {
+        "text": "התייחסות למשבר האקלים ולקיימות; יישום אמצעי הגנת סביבה.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "generic"
+      }
+    ],
+    "health": []
+  }
+}

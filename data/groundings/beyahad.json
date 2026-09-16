@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "תכניות עבודה (חלקי) — 6 מתוך 11 קטגוריות פורסמו",
+  "platformLabel": "תכניות עבודה — 18 קטגוריות פורסמו",
   "sourceUrl": "https://be-yahad.org.il/plans/",
   "archiveDir": "docs/sources/beyahad/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. As of 2026-08-07, still 6 of 11 announced plan categories have detailed pages: meshartim (now also linked as /plans/servant-law-new/, same content), negev, rehabilitation, kiryat-shmona, education, yoker/cost-of-living. Site migrated domain from bennett2026.org.il to be-yahad.org.il (308 permanent redirect, verified 2026-08-07) — all sourceUrls updated to the new domain. The 5 still-unpublished categories (הממשל בישראל, הבטחון הלאומי, הריבונות והביטחון האישי, שילוב החרדים, מעמד ישראל בעולם) remain teaser text only, no dedicated pages, confirmed 2026-08-07.",
+  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Site migrated domain from bennett2026.org.il to be-yahad.org.il (308 permanent redirect, verified 2026-08-07). 2026-09-16 re-check (post candidacy-submission review): all 5 previously teaser-only categories (הממשל בישראל, הבטחון הלאומי, הריבונות והביטחון האישי, שילוב החרדים, מעמד ישראל בעולם) now have full detailed pages, plus 4 entirely new categories (LGBTQ equality, disability inclusion, elderly/aging, women's status) — 18 total plan pages vs. 6 previously. See docs/sources/beyahad/2026-06-23-bennett2026-plans.md's 2026-09-16 section. Collected from the /plans/ summary page (per-plan detail pages not individually fetched this pass) — quotes in quotation marks are direct, rest is close paraphrase.",
   "topics": {
     "security": [
       {
@@ -42,6 +42,42 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "מדיניות \"אפס הכלה\" — לא רחפן, לא רקטה; \"מעבר מסבבים להכרעה\"; מניעה אפקטיבית של כל איום; גיוס 20,000 חיילים נוספים.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://be-yahad.org.il/plans/בטחון-לאומי/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "סיום בידוד מדיני והובלת \"בריתות אזוריות\" כחלק מ\"ארכיטקטורה מדינית חדשה\"; מאבק ב\"מסע השפעה עוין\"; ריכוז סמכויות בגוף הסברה לאומי.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://be-yahad.org.il/plans/foreign-policy/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הכרזת פשיעה מאורגנת כ\"איום ביטחוני לאומי\"; ניהול דרך \"קבינט מדיני-ביטחוני\" בשיתוף שב\"כ וצה\"ל; שיטת \"אל קאפונה\" נגד משפחות פשע — פעולה \"מהר יותר וחזק יותר\".",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://be-yahad.org.il/plans/personal-security/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ועדת חקירה ממלכתית לאירועי 7 באוקטובר.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://be-yahad.org.il/plans/ממשלה/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "economy": [
@@ -210,6 +246,17 @@
         "contrary": "קצבאות ופטורים לאברכי כולל",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חוק שירות לכל צעירים וצעירות בישראל; זרם חינוך ממלכתי יחיד מתוקצב (כללי, דתי, חרדי) — \"כל ילדי ישראל ילמדו לימודי ליבה וערכי מדינה\"; גמול למשרתים ועידוד השכלה ותעסוקה; \"לא נממן\" מערכות חינוך לא-ממלכתיות או השתמטות משירות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://be-yahad.org.il/plans/שילוב-חרדים/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "זרמי חינוך נפרדים ולא-מתוקצבים אחידה; פטור גורף משירות",
+        "_note": "יותר מפורט מהערך הקיים (ביטול חוק ההשתמטות/קצבאות אברך) — מוסיף את מנגנון \"זרם חינוך ממלכתי יחיד מתוקצב\", לא כפילות.",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
@@ -222,6 +269,16 @@
         "contrary": "מינוי שופטים פוליטי",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חוקה על בסיס עקרונות מגילת העצמאות; הגבלת כהונת ראש הממשלה ל-8 שנים; סדר חקיקה החותר להסכמות רחבות.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://be-yahad.org.il/plans/ממשלה/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "כהונת ראש ממשלה ללא הגבלה; חקיקה ברוב קואליציוני מינימלי",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "equality": [
@@ -242,6 +299,44 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "עיגון שוויון בחוק יסוד; רישום זוגיות אזרחי שוויוני; הורות שווה מהרגע הראשון; איסור \"טיפולי המרה\" וההסתה; סביבה בטוחה בבתי ספר; תקציב קבוע לארגוני הקהילה הגאה.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://be-yahad.org.il/plans/pride/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "התנגדות להכרה בזוגיות חד-מינית/הורות שווה; היתר לטיפולי המרה",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שימור 60% מקצבת הנכות לאחר יציאה לעבודה; נגישות 100% לאוטובוסים בין-עירוניים; מרכז שירות אחד לאבחון וזכאות; מעבר מדיור מוסדי לדיור בקהילה.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://be-yahad.org.il/plans/access/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "מדיניות ארוכת טווח לגיל השלישי — העלאת קצבת זקנה לנזקקים, הסדרת תחום הסיעוד, תמיכה בבני משפחה מטפלים, השקעה בבריאות, תעסוקה וקהילה.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://be-yahad.org.il/plans/הזדקנות-בכבוד/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "_note": "פוקוס על גיל שלישי, לצד הערך הקיים שמתמקד באנשים עם מוגבלות — לא כפילות.",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "טיפול דחוף באלימות נגד נשים; 50% ייצוג נשים בדרג בכיר; ביטול פערי שכר ופנסיה; מעטפת מלאה לנשות המשרתים (מילואים); חופש לנשים \"להיות במרחב הציבורי\".",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://be-yahad.org.il/plans/women/",
+        "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
+        "dateRetrieved": "2026-09-16",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "ecology": []

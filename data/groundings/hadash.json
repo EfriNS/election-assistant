@@ -3,7 +3,7 @@
   "platformLabel": "עקרונות חד\"ש — hadash.org.il",
   "sourceUrl": "https://hadash.org.il/#values",
   "archiveDir": "docs/sources/hadash/",
-  "_note": "Hadash is a joint front uniting Maki (Israeli Communist Party) and other groups. The 2026 electoral list is חד\"ש-תע\"ל (joint with Ahmad Tibi's Taal). This file covers Hadash/Maki positions; Taal positions not separately documented. Three sources: (1) hadash.org.il/#values — full detailed values page collected 2026-06-27, treated as party platform; (2) maki.org.il foundational principles; (3) zoha.org.il economic analysis. platformAvailable set to true 2026-06-27 after full values page collected. Re-checked all three sources 2026-08-07 (no removals/contradictions; a few previously-uncaptured items added — see docs/sources/hadash/2026-08-07-refresh-check.md). Two maki.org.il commitments remain uncovered by the current TOPIC_KEY_DIMENSIONS taxonomy and were NOT added as scored entries: Mizrahi/Eastern-Jewish-community equality (no equality-topic bucket fits) and children's/youth rights (no fitting topic). Fixed 2026-08-07: 34 entries cited archivePath docs/sources/hadash/2026-06-27-hadash-values-full.md, a file that was never actually created — the 2026-06-27 commit appended that content into 2026-06-23-hadash-principles.md (under a dated '## עדכון 2026-06-27' section) instead. Corrected all 34 archivePath references to point to the real file.",
+  "_note": "Hadash is a joint front uniting Maki (Israeli Communist Party) and other groups. As of 2026-08-19 the 2026 electoral list is הרשימה המשותפת — a technical reunification of חד\"ש, תע\"ל (Ahmad Tibi), and בל\"ד (Sami Abu Shehadeh), confirmed by Balad's own statement that no unified platform was agreed — see docs/sources/hadash/2026-09-16-balad-joint-list.md. This file covers Hadash/Maki positions as primary; Taal positions not separately documented; two Balad-sourced entries added 2026-09-16 (third-party provenance — Balad's own official platform site, altajamoa.org, is currently unreachable — confirmed dead site, not just 'no page yet'; re-check when the site or Wayback Machine is back up). Balad's one-state 'מדינת כל אזרחיה' position directly contradicts this file's existing Hadash-sourced two-state entries under security/territorial-endgame-specifics — both are kept as distinct, individually-flagged entries reflecting the technical (not ideological) nature of the alliance, not reconciled into one. Three original sources: (1) hadash.org.il/#values — full detailed values page collected 2026-06-27, treated as party platform; (2) maki.org.il foundational principles; (3) zoha.org.il economic analysis. platformAvailable set to true 2026-06-27 after full values page collected. Re-checked all three sources 2026-08-07 (no removals/contradictions; a few previously-uncaptured items added — see docs/sources/hadash/2026-08-07-refresh-check.md). Two maki.org.il commitments remain uncovered by the current TOPIC_KEY_DIMENSIONS taxonomy and were NOT added as scored entries: Mizrahi/Eastern-Jewish-community equality (no equality-topic bucket fits) and children's/youth rights (no fitting topic). Fixed 2026-08-07: 34 entries cited archivePath docs/sources/hadash/2026-06-27-hadash-values-full.md, a file that was never actually created — the 2026-06-27 commit appended that content into 2026-06-23-hadash-principles.md (under a dated '## עדכון 2026-06-27' section) instead. Corrected all 34 archivePath references to point to the real file. 2026-09-16 re-check (post candidacy-submission review) of hadash.org.il/#values: content matches what's already captured — no new items found.",
   "topics": {
     "security": [
       {
@@ -82,6 +82,17 @@
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
         "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נסיגה מלאה מכל השטחים שנכבשו ב-1967, מימוש זכות השיבה של הפליטים הפלסטינים, וירושלים כבירת מדינת פלסטין.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/balad/",
+        "archivePath": "docs/sources/hadash/2026-09-16-balad-joint-list.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "פתרון שתי המדינות; ויתור על זכות השיבה",
+        "_note": "בל\"ד (שותפה בהרשימה המשותפת מ-2026) — עמדת מדינה אחת, בניגוד ישיר לעמדת שתי-המדינות של חד\"ש (הרשומות הקודמות באותו aspect). הסתירה משקפת את האופי ה'טכני' (לא אידאולוגי) של האיחוד — ר' docs/sources/hadash/2026-09-16-balad-joint-list.md. מקור עיתונאי/אנליטי (לא ציטוט מילולי מהמצע הרשמי) — אתר המצע הרשמי של בל\"ד (altajamoa.org) אינו זמין נכון ל-2026-09-16.",
+        "provenance": "third-party",
         "concreteness": "specific-stance"
       }
     ],
@@ -468,6 +479,17 @@
         "dateRetrieved": "2026-06-27",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "מדינת כל אזרחיה — המדינה היהודית-דמוקרטית כפי שהיא מוגדרת כיום יוצרת הפליה מובנית נגד האזרחים הערבים; הפתרון הוא מדינה אזרחית שוויונית לכלל אזרחיה, יהודים וערבים כאחד.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://www.srugim.co.il/712881-בלד-רצה-לבד-הפתרון-שלנו-מדינת-כל-אזרחיה",
+        "archivePath": "docs/sources/hadash/2026-09-16-balad-joint-list.md",
+        "dateRetrieved": "2026-09-16",
+        "contrary": "מדינת הלאום היהודי; שימור אופייה היהודי של המדינה",
+        "_note": "בל\"ד (שותפה בהרשימה המשותפת מ-2026) — עמדת הדגל המזוהה ביותר עם בל\"ד. מקור עיתונאי מצטט (לא מהמצע הרשמי ישירות) — אתר המצע הרשמי (altajamoa.org) אינו זמין נכון ל-2026-09-16.",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": [
