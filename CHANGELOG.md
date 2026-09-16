@@ -1,5 +1,50 @@
 # Changelog
 
+## 2026-09-16 — Post candidacy-submission party/grounding review: joint-list restructure, 2 new parties, 11-party re-check
+
+### Context
+
+Parties officially submitted candidacy to the Central Elections Committee 2026-09-07/08 (38 lists total). Efri asked for a full review of party platforms/grounding data plus a check of the party list itself, flagging two specific new parties (עמך ישראל / עופר וינטר, and הציבור החרדי / מוטי לייטנר) and pointing to Kan/Haaretz/N12 for current polling.
+
+### Research phase
+
+Cross-referenced Haaretz, N12/Mako, Ynet, Maariv, Walla, Kan, and the Israel Democracy Institute (WebSearch snippets proved more reliable than WebFetch's page summaries, which showed internal inconsistencies — e.g. misattributing "Labor" as a separate running party when it's institutionally still inside הדמוקרטים). Found: חד"ש-תע"ל reunited with בל"ד into הרשימה המשותפת (2026-08-19, explicitly a "technical" alliance — Balad stated no unified platform was agreed); two new parties polling near/above the ~4-mandate threshold (עמך ישראל, המילואימניקים-הכלכלית); several new parties still polling well below threshold (הציבור החרדי, האחדות/ארדן, כחול לבן/גנץ, נעם לישראל/מעוז independent again) — logged as watch-only, not added, per the existing sub-threshold methodology; and a "technical" Smotrich-Feiglin (Zehut) joint list that doesn't change either party's own platform.
+
+Confirmed the plan with Efri before executing: (1) restructure the hadash entry as one party (matching the existing חד"ש-תע"ל pattern) rather than splitting it, after research confirmed Balad's alliance is technical/non-merger; (2) add both new parties this session — עמך ישראל with an explicit rough-estimate score (it has no platform, just a 3-week-old recruitment page) and מילואימניקים with a real sourced platform; (3) re-check all 11 existing parties, same as the 2026-08-17 session.
+
+### Joint List restructure (הרשימה המשותפת)
+
+Renamed the `hadash` party entry (id kept stable — avoids touching every scoring array) to reflect the 3-way list (Jabareen/חד"ש heads it, Tibi/תע"ל #2, Abu Shehadeh/בל"ד #3). Balad's own platform site (`altajamoa.org`) is confirmed dead — timed out on live fetch and on retry, and the Wayback Machine was itself down at the time, so this is a genuine "site down" gap, not "no page yet" (same class as ש"ס's dead site). Added 2 news-corroborated (third-party provenance) entries for Balad's positions instead, and explicitly flagged in both the JSON `_note` and a grounding entry `_note` that Balad's one-state "מדינת כל אזרחיה" position directly contradicts Hadash's own existing two-state entries — kept both rather than reconciling them, since the alliance itself is technical, not ideological.
+
+### Two new parties added
+
+- **המילואימניקים-הכלכלית** (יועז הנדל / ד"ר ירון זליכה): real, quantified platform sourced from `hakalkalit.org` (Zlicha's pre-existing Economic Party site, now the list's economic arm). 15 grounding entries across 8 of 9 topics; health and informal-education content logged as taxonomy gaps rather than force-fit into a wrong bucket.
+- **עמך ישראל** (עופר וינטר): polling above threshold in most post-list-closing polls, but the party's site is a pure recruitment landing page — no policy content at all. Per Efri's explicit decision, scored with a rough right-wing-bloc estimate across all 9 opener topics (security closer to Otzma/Religious Zionism given Winter's military background and the party's declared bloc alignment; other topics closer to Likud/Beitenu's more moderate lane) — flagged as unusually low-confidence, below this dataset's own usual "rough estimate" bar, in `lib/parties.ts`, the grounding JSON's `_note`, and the archive markdown.
+
+Mechanical wiring for both: `lib/parties.ts`, `lib/groundings.ts`, and — the largest piece — inserting 2 new per-party scores into all 66 opener-question option arrays in `lib/questions.ts` (33 unique arrays × FORMAL/PERSONAL registers, which share identical scores). Did this via a small Node script that transforms each array and verifies exactly 2 occurrences replaced per array, rather than 66 manual edits — safer against a mis-keyed insertion than doing it by hand. `tests/calcResults.test.ts` had the same class of hardcoded-array-length issue as the 2026-08-17 session (11-element fixtures, `ALL_PARTY_IDS`, 4 inline id-list literals) — fixed all of them.
+
+### Full 11-party re-check
+
+Same methodology as 2026-08-17. Real content found for 2 of 11:
+- **beyahad**: all 5 previously teaser-only plan categories now have full pages, plus 4 entirely new categories not on the site before (LGBTQ equality, disability inclusion, elderly/aging, women's status) — 18 published plans vs. 6 at last check. Added 11 new entries across security, religion, justice, and equality.
+- **raam**: the flagged 2026-08-22 convention happened — Ra'am completed its institutional split from the Islamic Movement/Shura Council (July 2026) and now positions itself as an independent "civic party" open to Jewish and Arab members alike. Added 1 entry; confirmed it did not join the reunified Joint List.
+
+No new content for the other 9 (hadash's own primary sources, democrats, yashar, beitenu, likud, shas, yahadut-hatorah, otzmah-yehudit, hatzionut-hadatit) — each got a dated re-check confirmation in its `_note`. beitenu's platform gained a youth/informal-education section that hits the same taxonomy gap as miluimnikim's (logged, not force-fit); its disability-employment item was a confirmed duplicate of an existing entry.
+
+### Verification
+
+Full pre-push checklist (`vitest run`, `tsc --noEmit`, `eslint .`, `next build`) green after each of the 3 phases before committing. `npm run export:grounding-review`: 13 parties, 364 entries (was 335 after the 2026-08-17 session). Merged clean, no conflicts (main hadn't moved during the session).
+
+### Learnings
+
+Routed to `docs/learnings/project/VAA-DESIGN.md`: (1) a "technical joint list" pattern — when parties explicitly state they couldn't agree on a unified platform, keep one party entry per the existing חד"ש-תע"ל precedent, add the new constituent's positions as a separate flagged source, and explicitly note any resulting internal contradiction rather than reconciling it away; (2) treat a source site that times out on repeated direct fetch *and* has no Wayback Machine snapshot available as a distinct "site down" gap (not "no page yet") — same class as ש"ס's dead site; (3) for a brand-new party with literally no platform, get explicit user sign-off on the scoring approach before estimating — this project's existing "rough estimate, not verified" bar already assumes a real platform exists somewhere to estimate *from*, which doesn't hold for a 3-week-old recruitment page.
+
+### Files
+
+`lib/parties.ts`, `lib/groundings.ts`, `lib/questions.ts`, `tests/calcResults.test.ts`, `data/groundings/{hadash,beyahad,raam,democrats,yashar,beitenu,likud,shas,yahadut-hatorah,hatzionut-hadatit,otzmah-yehudit}.json`, `data/groundings/{miluimnikim,amcha-yisrael}.json` (new), `docs/sources/hadash/2026-09-16-balad-joint-list.md` (new), `docs/sources/{miluimnikim,amcha-yisrael}/*.md` (new), `docs/sources/{beyahad,raam}/*.md`, `docs/advisor-review/{grounding-review.html,questions-review.md,questions-review.html}`, `README.md`, `docs/API-COST-ANALYSIS.md`, `.claude/skills/collect-party-data/SKILL.md`, `scripts/export-questions-review.ts`.
+
+Branch `data/2026-09-candidacy-review`, merged to `main` via `/wrapup`.
+
 ## 2026-09-16 — Cleared the Dependabot PR backlog (5 merged: vitest 5, tsx, react, postcss + earlier next/sharp/js-yaml)
 
 ### Context
