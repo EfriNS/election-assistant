@@ -10,8 +10,10 @@ import raamData from "../data/groundings/raam.json";
 import democratsData from "../data/groundings/democrats.json";
 import beyahadData from "../data/groundings/beyahad.json";
 import yasharData from "../data/groundings/yashar.json";
+import miluimnikimData from "../data/groundings/miluimnikim.json";
 import beitenuData from "../data/groundings/beitenu.json";
 import likudData from "../data/groundings/likud.json";
+import amchaYisraelData from "../data/groundings/amcha-yisrael.json";
 import shasData from "../data/groundings/shas.json";
 import yahadutData from "../data/groundings/yahadut-hatorah.json";
 import hatzionutHadatitData from "../data/groundings/hatzionut-hadatit.json";
@@ -98,8 +100,10 @@ export const GROUNDINGS: GroundingsMap = {
   democrats:        democratsData as PartyGroundings,
   beyahad:          beyahadData   as PartyGroundings,
   yashar:           yasharData    as PartyGroundings,
+  miluimnikim:      miluimnikimData as PartyGroundings,
   beitenu:          beitenuData   as PartyGroundings,
   likud:            likudData     as PartyGroundings,
+  "amcha-yisrael":  amchaYisraelData as PartyGroundings,
   shas:             shasData      as PartyGroundings,
   "yahadut-hatorah": yahadutData  as PartyGroundings,
   "hatzionut-hadatit": hatzionutHadatitData as PartyGroundings,

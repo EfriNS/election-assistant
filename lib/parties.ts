@@ -6,7 +6,9 @@
 //
 // SCORING NOTE: Party positions in each prototype are rough estimates based on known public
 // positions. They have NOT been verified against official current party platforms.
-// New parties (ביחד, ישר!) are scored based on their founders' known positions.
+// New parties (ביחד, ישר!, המילואימניקים-הכלכלית) are scored based on their founders' known
+// positions/platform. עמך ישראל (added 2026-09-16, no published platform) is an even rougher
+// estimate — see data/groundings/amcha-yisrael.json's _note.
 
 export type Party = {
   id: string;
@@ -20,7 +22,7 @@ export type Party = {
 
 // Ordered left→right on the general political spectrum.
 // Scoring arrays in each prototype must follow this same order.
-// Last updated: June 2026 (based on user corrections)
+// Last updated: September 2026 (13 parties — added miluimnikim + amcha-yisrael for the 2026-09 candidacy review)
 export const PARTIES: Party[] = [
   {
     id: "hadash",
@@ -65,6 +67,15 @@ export const PARTIES: Party[] = [
     platformLabel: "10 הצעדים (יוני 2026)",
   },
   {
+    id: "miluimnikim",
+    name: "המילואימניקים-הכלכלית",
+    subtitle: "הנדל / זליכה",
+    description: "מרכז, לא משויך לגוש — שילוב בכירים ביטחוניים ומומחי כלכלה: הורדת יוקר המחיה, מלחמה במונופולים, נטל שירות שווה.",
+    website: "https://www.hakalkalit.org",
+    platformUrl: "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+    platformLabel: "מצע המפלגה הכלכלית",
+  },
+  {
     id: "beitenu",
     name: "ישראל ביתנו",
     description: "ימין חילוני — הפרדת דת ומדינה לצד עמדות ביטחוניות נוקשות.",
@@ -76,6 +87,13 @@ export const PARTIES: Party[] = [
     name: "ליכוד",
     description: "ימין לאומי — ביטחון חזק, כלכלת שוק, שמרנות חברתית.",
     website: "https://likud.org.il",
+  },
+  {
+    id: "amcha-yisrael",
+    name: "עמך ישראל",
+    subtitle: "וינטר",
+    description: "ימין — מפלגה חדשה (אוגוסט 2026) בראשות תא\"ל (מיל') עופר וינטר; זהות \"מחנה הימין\" מוצהרת, אין עדיין מצע מדיניות מפורסם.",
+    website: "https://amchaisrael.co.il/",
   },
   {
     id: "shas",
