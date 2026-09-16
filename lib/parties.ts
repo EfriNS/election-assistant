@@ -24,11 +24,12 @@ export type Party = {
 export const PARTIES: Party[] = [
   {
     id: "hadash",
-    name: 'חד"ש-תע"ל',
-    description: "שמאל יהודי-ערבי — שלום, שוויון אזרחי, זכויות עובדים ורפואה ציבורית.",
+    name: "הרשימה המשותפת",
+    subtitle: 'חד"ש-תע"ל-בל"ד',
+    description: "שמאל יהודי-ערבי — שלום, שוויון אזרחי, זכויות עובדים ורפואה ציבורית. איחוד אלקטורלי טכני (2026) של חד\"ש, תע\"ל ובל\"ד — ללא מצע מדיני מוסכם משותף.",
     website: "https://hadash.org.il",
     platformUrl: "https://hadash.org.il/#values",
-    platformLabel: 'עקרונות חד"ש',
+    platformLabel: 'עקרונות חד"ש (מקור עיקרי — ראו הערה על בל"ד בנתוני המצע)',
   },
   {
     id: "raam",
