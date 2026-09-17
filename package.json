@@ -23,7 +23,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.105.0",
+    "@anthropic-ai/sdk": "^0.125.0",
     "@google/genai": "^2.8.0",
     "@langfuse/client": "^5.10.1",
     "@langfuse/otel": "^5.10.1",
