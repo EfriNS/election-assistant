@@ -1,11 +1,26 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# Dependabot version-update PRs. See docs/learnings/project/INFRA-PATTERNS.md
+# ("GitHub Security Alerts") for why the groups and ignores below exist.
 
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/" # Location of package manifests
+    directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      # Must share one Chrome build — bumping one without the other breaks production PDF export.
+      puppeteer-chromium:
+        patterns:
+          - "puppeteer"
+          - "puppeteer-core"
+          - "@sparticuz/chromium"
+      # @vitest/coverage-v8 peer-requires the exact vitest version — split bumps fail npm install.
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+    ignore:
+      # typescript-eslint (via eslint-config-next) doesn't support TS 7 yet:
+      # https://github.com/typescript-eslint/typescript-eslint/issues/10940
+      - dependency-name: "typescript"
+        versions: [">=7.0.0"]
