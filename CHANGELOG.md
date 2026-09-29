@@ -6,6 +6,8 @@
 - **Closed #21 (TypeScript 5.9 → 7.0.2)**: `tsc`/tests/`next build` pass but `eslint` crashes — `typescript-eslint` (via `eslint-config-next`) supports only TS `<6.1` (typescript-eslint#10940). Vercel's green check missed it because `next build` doesn't lint.
 - **`.github/dependabot.yml`**: grouped `puppeteer`/`puppeteer-core`/`@sparticuz/chromium` and `vitest`/`@vitest/*` into single PRs (version-coupled pairs, see `INFRA-PATTERNS.md`); ignore `typescript >=7.0.0` until typescript-eslint supports it.
 - 423/423 tests, `tsc`, `eslint`, `next build` green.
+- **Production verified** after deploy `a71b20e`: POST to `/api/export-pdf` on `election-assistant-snowy.vercel.app` → HTTP 200, 2-page PDF, `Skia/PDF m153`, ~6.7s incl. cold start; page 1 rendered and visually checked (RTL, fonts, bars, chips). Local stale `/tmp/chromium` (Chrome 149) deleted.
+- **Learnings**: `INFRA-PATTERNS.md` — stale `/tmp/chromium` masks pairing checks locally; Dependabot grouping note; new entry "a green Dependabot check here = `next build` only (no tests/lint)".
 
 ## 2026-09-29/30 — Gemini latency resilience: free-tier root cause, paid tier, 503 backoff, slow-AI notice
 
