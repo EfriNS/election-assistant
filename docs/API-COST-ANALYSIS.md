@@ -51,7 +51,7 @@ Haiku is ~3.5× more expensive than Gemini Flash Lite; Sonnet is ~10×.
 6. **Stale baseline**: this measurement predates הציונות הדתית being added as an 11th party (2026-08-17) and מילואימניקים/עמך ישראל being added as a 12th/13th (2026-09-16). The score-topics/results prompts now carry meaningfully more party-platform context than this baseline — not re-measured, but small enough per-party that the trigger points below still hold.
 3. **Batch pricing**: Gemini offers 50% off for batch processing. At 1,000 users/day you could run nightly scoring batches and cut costs to ~$440/mo.
 4. **Power users**: assumes 1 complete flow = 1 user. Users who restart or re-run the quiz multiply costs.
-5. **Free tier**: currently using Gemini free tier (rate-limited). Quota monitoring cron + Slack alerts at 50/80/90% in place.
+5. **Tier**: paid Tier 1 since 2026-09-29 (enabled because free-tier traffic was deprioritized under load — 503s and 60s+ responses, see `docs/learnings/project/AI-INTEGRATION.md`). Limits for `gemini-3.1-flash-lite`: RPM 4K, TPM 4M, RPD 150K. Daily Slack summary via the quota-check cron. The volume table below predates this and assumed staying on free tier at low volume.
 
 ---
 

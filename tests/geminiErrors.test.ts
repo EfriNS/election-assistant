@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { isTransientGeminiError } from "@/lib/gemini-errors";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { isTransientGeminiError, waitBeforeTransientRetry, TRANSIENT_RETRY_DELAY_MS } from "@/lib/gemini-errors";
 
 describe("isTransientGeminiError", () => {
   it("classifies the observed production 503 UNAVAILABLE message as transient", () => {
@@ -15,5 +15,20 @@ describe("isTransientGeminiError", () => {
 
   it("does not classify an unrelated error as transient", () => {
     expect(isTransientGeminiError("TypeError: fetch failed")).toBe(false);
+  });
+});
+
+describe("waitBeforeTransientRetry", () => {
+  afterEach(() => vi.useRealTimers());
+
+  it("does not resolve immediately — an instant retry lands in the same 503 demand spike", async () => {
+    vi.useFakeTimers();
+    let done = false;
+    const p = waitBeforeTransientRetry().then(() => { done = true; });
+    await vi.advanceTimersByTimeAsync(TRANSIENT_RETRY_DELAY_MS - 1);
+    expect(done).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    await p;
+    expect(done).toBe(true);
   });
 });

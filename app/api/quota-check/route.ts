@@ -110,7 +110,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Langfuse not configured" }, { status: 503 });
   }
 
-  const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 500);
+  // Paid Tier 1 limits for gemini-3.1-flash-lite (billing enabled 2026-09-29):
+  // RPM 4K, TPM 4M, RPD 150K. RPD is the only limit a once-a-day cron can measure.
+  // FYI if we ever drop back to the free tier: RPD 500, RPM 10 — set
+  // QUOTA_DAILY_REQUEST_LIMIT=500 in Vercel rather than changing this default.
+  const requestLimit = getEnvInt("QUOTA_DAILY_REQUEST_LIMIT", 150_000);
   const webhookUrl   = process.env.QUOTA_SLACK_WEBHOOK_URL;
 
   const client = new LangfuseClient({
