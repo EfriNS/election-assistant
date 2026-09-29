@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-30 — Dependabot follow-up batch (post-grouping)
+
+Dependabot opened 5 new PRs ~1 min after the new `dependabot.yml` landed (the first grouped run).
+- **Merged as one change (superseding #24–#27)**: `vitest` + `@vitest/coverage-v8` 5.0.0 → 5.0.2 (group), `@types/node` 26.6.1 → 26.6.3, `tsx` → 4.23.15, `@anthropic-ai/sdk` → ^0.128.0. 423/423 tests, `tsc`, `eslint`, `next build` green.
+- **#23 left open, do not merge**: the grouped puppeteer PR bumps `puppeteer`/`puppeteer-core` to 25.12.0 = Chrome 154.0.8037.57, but the latest `@sparticuz/chromium` is 153 — merging would mismatch production PDF export. Grouping keeps the packages in one PR but can't create a Chromium release that doesn't exist yet; the PR should pick up `@sparticuz/chromium` 154 once published, then verify + merge.
+
 ## 2026-09-30 — Dependabot triage: puppeteer/Chromium 153, Anthropic SDK, TS 7 deferred
 
 - **Merged (as one change, superseding #18/#19/#20/#22)**: `puppeteer-core` + `puppeteer` 25.1.0 → 25.11.0 and `@sparticuz/chromium` 149.0.0 → 153.0.0 (both Chrome 153.0.8010.36, still exact-pinned); `@anthropic-ai/sdk` ^0.105 → ^0.125 (only `scripts/auto-score.ts`). Verified: real RTL PDF render reports `HeadlessChrome/153.0.8010.0` / `Skia/PDF m153`. Note: `@sparticuz/chromium` reuses an already-extracted `/tmp/chromium`, so a local run can report the *old* Chrome until that file is deleted — Vercel instances extract fresh.
