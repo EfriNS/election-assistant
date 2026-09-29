@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-09-29/30 — Gemini latency resilience: free-tier root cause, paid tier, 503 backoff, slow-AI notice
+
+### Context
+
+User feedback "נתקע כל הזמן!" (2026-09-15, 20:22) arrived alongside Slack `/api/follow-up — SERVER_ERROR` 503 UNAVAILABLE alerts at 20:16/20:23, plus two more 503 alerts on 2026-09-29 (15:19/15:29).
+
+### Investigation (Langfuse)
+
+- **The 503s were not what felt "stuck".** They failed fast (~2.5s) and the quiz silently skipped that follow-up. The stuck feeling came from *successful* follow-up calls taking **56.6s, 58.5s, 71.8s** with normal-size output (~300–400 tokens, mostly `retried=false`) — Gemini queueing under load. No alert covers slow successes.
+- **Root cause: free tier.** Google deprioritizes free-tier traffic during demand spikes → both 503s and minute-long successes. Not a prompt, schema, or model issue.
+- **2026-09-29 session (still free tier):** one user, 9 topics, completed. 5/13 Gemini calls hit a 503 on first attempt; the instant retry rescued 3, 2 failed (security's 2nd follow-up and human-rights' only follow-up were silently skipped → human-rights scored on opener alone). Latency otherwise 2.5–6.6s, one 13.5s.
+
+### Changes
+
+- **Billing enabled (Tier 1)** by Efri, 2026-09-29. `gemini-3.1-flash-lite` paid limits: RPM 4K, TPM 4M, RPD 150K.
+- **503 retry backoff** — `lib/gemini-errors.ts`: `waitBeforeTransientRetry()` (1.5s, `TRANSIENT_RETRY_DELAY_MS`), used in `follow-up`, `score-topics`, `results` before their single transient retry (previously instant, landing in the same spike).
+- **"AI is slower than usual" notice** — new `components/SlowAiNotice.tsx`, appears after 8s (`SLOW_AI_NOTICE_MS`, above the normal 2–6s) in every Gemini wait: quiz follow-up loading, scoring screen (`app/quiz/page.tsx`), results AI profile box (`components/UnifiedResultsPage.tsx`). Wording deliberately names the AI ("ה-AI איטי מהרגיל כרגע — …") rather than "we" — Efri's call; AI use is already disclosed. `role="status"` live region present from mount so screen readers announce it. No hard timeout/cutoff — Efri chose the message over a fallback.
+- **Quota check** — `QUOTA_DAILY_REQUEST_LIMIT` default 500 → 150,000 (`app/api/quota-check/route.ts`), free-tier limits kept in a comment as FYI. RPM/TPM not monitored (a daily cron can't see per-minute spikes; 4K RPM ≈ hundreds of simultaneous sessions).
+- **Docs** — tier/limits + free-tier deprioritization learning in `docs/learnings/project/AI-INTEGRATION.md`; `docs/API-COST-ANALYSIS.md` tier note.
+- **TODO** — replaced "Gemini paid tier: decide when to switch" with "Evaluate Gemini 3.5 Flash-Lite" (pros: better reasoning; cons: thinking step ~6s TTFT likely *slower*, mid-campaign score drift, prompts tuned to 3.1 — needs side-by-side replay eval, not a blind swap).
+
+### Verification
+
+- `tests/geminiErrors.test.ts`: retry wait doesn't resolve before 1.5s (fake timers). 423/423 tests, `tsc`, `eslint`, `next build` green.
+- Browser-verified all 3 notice spots via headless `puppeteer-core` + `@sparticuz/chromium` against `npm run dev`, with `/api/follow-up`, `/api/score-topics`, `/api/results` intercepted and delayed 12s: notice empty at 3s, shown at ~9s, gone on response.
+
+### Open follow-ups
+
+- Check whether Vercel still sets `QUOTA_DAILY_REQUEST_LIMIT=500` (overrides the new default) — CLI wasn't logged in, unverified.
+- Consider a Google Cloud budget alert for spend (platform-native; not built in-app).
+- Confirm in Langfuse over the next days that 503s/slow calls drop on the paid tier.
+
 ## 2026-09-16 — Post candidacy-submission party/grounding review: joint-list restructure, 2 new parties, 11-party re-check
 
 ### Context
