@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-30 — Dependabot triage: puppeteer/Chromium 153, Anthropic SDK, TS 7 deferred
+
+- **Merged (as one change, superseding #18/#19/#20/#22)**: `puppeteer-core` + `puppeteer` 25.1.0 → 25.11.0 and `@sparticuz/chromium` 149.0.0 → 153.0.0 (both Chrome 153.0.8010.36, still exact-pinned); `@anthropic-ai/sdk` ^0.105 → ^0.125 (only `scripts/auto-score.ts`). Verified: real RTL PDF render reports `HeadlessChrome/153.0.8010.0` / `Skia/PDF m153`. Note: `@sparticuz/chromium` reuses an already-extracted `/tmp/chromium`, so a local run can report the *old* Chrome until that file is deleted — Vercel instances extract fresh.
+- **Closed #21 (TypeScript 5.9 → 7.0.2)**: `tsc`/tests/`next build` pass but `eslint` crashes — `typescript-eslint` (via `eslint-config-next`) supports only TS `<6.1` (typescript-eslint#10940). Vercel's green check missed it because `next build` doesn't lint.
+- **`.github/dependabot.yml`**: grouped `puppeteer`/`puppeteer-core`/`@sparticuz/chromium` and `vitest`/`@vitest/*` into single PRs (version-coupled pairs, see `INFRA-PATTERNS.md`); ignore `typescript >=7.0.0` until typescript-eslint supports it.
+- 423/423 tests, `tsc`, `eslint`, `next build` green.
+
 ## 2026-09-29/30 — Gemini latency resilience: free-tier root cause, paid tier, 503 backoff, slow-AI notice
 
 ### Context
