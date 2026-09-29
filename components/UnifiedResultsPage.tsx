@@ -6,6 +6,7 @@ import { Party } from "@/lib/parties";
 import { PartyGroundingResult } from "@/lib/grounding-types";
 import PartyResultCard from "@/components/PartyResultCard";
 import ShareButton from "@/components/ShareButton";
+import SlowAiNotice from "@/components/SlowAiNotice";
 import { mpTrack } from "@/lib/mixpanel";
 import { GATE_SCORE_CAP } from "@/lib/scoring";
 import { MAX_CRITICAL_TOPICS } from "@/lib/topics";
@@ -209,7 +210,10 @@ export default function UnifiedResultsPage({
           <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-2 min-h-[56px]">
             <span className="text-teal-500 mt-0.5 shrink-0 text-xs">✦</span>
             {aiLoading ? (
-              <p className="text-xs text-gray-400 animate-pulse">מנתח את עמדותיך...</p>
+              <div>
+                <p className="text-xs text-gray-400 animate-pulse">מנתח את עמדותיך...</p>
+                <SlowAiNotice message="ה-AI איטי מהרגיל כרגע — הניתוח יופיע בעוד רגע" className="mt-1" />
+              </div>
             ) : (
               <p className="text-sm text-gray-700 leading-relaxed">{aiData!.profile}</p>
             )}

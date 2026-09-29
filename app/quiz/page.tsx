@@ -13,6 +13,7 @@ import { describeRequestFailure } from "@/lib/request-diagnostics";
 import PrioritiesStep, { TOPICS, MIN_IMPORTANT } from "@/components/PrioritiesStep";
 import UnifiedResultsPage from "@/components/UnifiedResultsPage";
 import { TermHint } from "@/components/TermHint";
+import SlowAiNotice from "@/components/SlowAiNotice";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -840,6 +841,7 @@ function QuizInner() {
       return (
         <main className="min-h-screen flex flex-col items-center justify-center px-4">
           <LoadingIndicator verbs={scoringVerbs} />
+          <SlowAiNotice message="ה-AI איטי מהרגיל כרגע — עוד רגע ממשיכים" />
         </main>
       );
     }
@@ -893,6 +895,7 @@ function QuizInner() {
         <div className="w-full max-w-xl">
           <QuestionHeader questionIndex={questionIndex} totalSteps={totalSteps} progressPct={progressPct} onBack={goBack} />
           <LoadingIndicator verbs={verbs} />
+          <SlowAiNotice message="ה-AI איטי מהרגיל כרגע — עוד רגע ממשיכים" />
         </div>
       </main>
     );

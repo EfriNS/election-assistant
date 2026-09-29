@@ -7,7 +7,7 @@ import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/g
 import { TOPIC_IDS } from "@/lib/topics";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
-import { isTransientGeminiError } from "@/lib/gemini-errors";
+import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
 type FollowUpQA = { question: string; answer: string };
 
@@ -218,7 +218,7 @@ export async function POST(req: NextRequest) {
           });
         } catch (callErr) {
           const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
-          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; await waitBeforeTransientRetry(); continue; }
           throw callErr;
         }
 

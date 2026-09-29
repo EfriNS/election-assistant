@@ -7,7 +7,7 @@ import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
 import { sanitizeUserInput } from "@/lib/sanitize";
-import { isTransientGeminiError } from "@/lib/gemini-errors";
+import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
 type PartyRef = { id: string; name: string; score: number };
 
@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
           response = await chat.sendMessage({ message: userMessage });
         } catch (callErr) {
           const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
-          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; await waitBeforeTransientRetry(); continue; }
           throw callErr;
         }
         text = (response.text ?? "").trim();

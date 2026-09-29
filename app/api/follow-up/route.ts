@@ -4,7 +4,7 @@ import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
 import { sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
-import { isTransientGeminiError } from "@/lib/gemini-errors";
+import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
 // Gemini's structured-output mode (responseJsonSchema) uses constrained
 // decoding, which is far more reliable than plain responseMimeType:
@@ -309,7 +309,7 @@ export async function POST(req: NextRequest) {
           });
         } catch (callErr) {
           const callMsg = callErr instanceof Error ? callErr.message : String(callErr);
-          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; continue; }
+          if (attempt === 1 && isTransientGeminiError(callMsg)) { retried = true; await waitBeforeTransientRetry(); continue; }
           throw callErr;
         }
 
