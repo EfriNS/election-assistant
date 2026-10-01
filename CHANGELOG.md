@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 — Dependabot weekly batch (Next.js security fix) + `/dep-triage` command
+
+- **Merged as one change (superseding #28–#31)**: `next` 16.3.5 → 16.3.6 — **security fix GHSA-vcvr-r3jv-pc5j** (RCE in `next/og` `ImageResponse`; `app/apple-icon.tsx` uses it with static content); `@google/genai` 2.22 → 2.24 (features only); `@upstash/ratelimit` 2.1 → 2.2 (fixes in `cachedFixedWindow`/token bucket/`blockUntilReady` — `middleware.ts` only uses `slidingWindow`); `@anthropic-ai/sdk` 0.128 → 0.129 (`scripts/auto-score.ts` only). Verified: 437/437 tests, `tsc`, `eslint`, `next build`; on a local production build `/apple-icon` renders and a real `/api/follow-up` Gemini call returns valid structured Hebrew output; production deploy succeeded and `/apple-icon` serves 200. Dependabot closed #28–#31 itself once main had the versions.
+- **#23 still held** (puppeteer 25.12 → Chrome 154; `@sparticuz/chromium` latest is still 153).
+- **PR cadence assessed**: ~4–5 Dependabot PRs/week since August — normal for ~25 direct deps; Dependabot security alerts + automatic security fixes are enabled (0 open alerts), so the weekly version-update cadence isn't the security path. Proposed (user: not yet) a catch-all minor/patch group + a GitHub Actions PR check (tests/tsc/eslint — the Vercel check doesn't run them); auto-merge rejected for now (main auto-deploys to production mid-campaign).
+- **New `/dep-triage` command** (`.claude/commands/dep-triage.md`): inventories Dependabot PRs and held items, assesses each (release notes → our actual usage → known coupling rules), applies the safe ones on one `chore/deps-*` branch, runs the full suite + targeted runtime smoke checks, reports a decision table, and stops before merge. Trial run (nothing to apply) correctly kept #23 on hold. Scheduling it as a cloud routine is backlog item 20, blocked on 2–3 clean manual runs.
+
 ## 2026-10-02 — Daily Slack usage summary: quizzes, cost, production/dev split
 
 On paid Tier 1, "Requests: 16 / 150,000 (0.0%)" was correct but meaningless. Redesigned `/api/quota-check`'s Slack summary (options A+B+C from a 4-option proposal; peak-RPM option D not taken):

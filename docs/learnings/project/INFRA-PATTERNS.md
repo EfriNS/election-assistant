@@ -198,6 +198,8 @@ Fixing the `extract-zip` advisory meant bumping `puppeteer-core` off `24.43.1`. 
 
 **A `dependabot.yml` change on main triggers an immediate Dependabot run (#first:2026-09-30)**: 5 new PRs appeared about 1 minute after the config push. After pushing a config change, re-check `gh pr list` a few minutes later before reporting that no PRs are open.
 
+**Triage with `/dep-triage`; supersede PRs by applying their bumps on main (#first:2026-10-02)**: `.claude/commands/dep-triage.md` encodes the flow: release notes, then actual usage of what changed, then the coupling rules above, then one combined branch, the full suite, and runtime smoke checks, stopping before merge. The tests mock Gemini, so a real `/api/follow-up` call on a local production build is the only check that a `@google/genai` bump still works. After the combined change reaches main, Dependabot closes the superseded PRs itself (observed within roughly an hour), so there's no need to close them manually.
+
 ### `vitest` and `@vitest/coverage-v8` are version-locked siblings — a Dependabot PR bumping only one breaks `npm install` (#first:2026-09-16)
 
 Dependabot's PR bumping `vitest` `4.1.11 → 5.0.0` left `@vitest/coverage-v8` pinned at `^4.1.9` in `package.json` — that version strictly peer-requires `vitest@4.1.11`, so `npm install`/`npm ci` failed with an unresolvable `ERESOLVE` conflict, which is what actually broke the PR's Vercel build check (not any code issue). Dependabot only tracks and bumps the package named in the update — it doesn't know `@vitest/coverage-v8` must move in lockstep with `vitest`'s major version. Same shape as the `puppeteer-core`/`@sparticuz/chromium` pairing above, different mechanism (npm `peerDependencies` vs. a runtime binary version match).
