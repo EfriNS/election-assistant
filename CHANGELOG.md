@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-02 — Daily Slack usage summary: quizzes, cost, production/dev split
+
+On paid Tier 1, "Requests: 16 / 150,000 (0.0%)" was correct but meaningless. Redesigned `/api/quota-check`'s Slack summary (options A+B+C from a 4-option proposal; peak-RPM option D not taken):
+- **Leads with product usage**: completed quizzes (= `gemini-results` calls; retries stay inside one generation) vs. previous 24h, follow-up questions generated.
+- **Est. cost today + month to date (UTC)** — Langfuse's own per-generation cost calculation (built-in `gemini-3.1-flash-lite` pricing $0.25/$1.50 per 1M in/out), no hardcoded price table. ~1–2¢ per completed quiz.
+- **Production vs. dev/other split**: main numbers + by-route block are production only; a `Dev/other: N requests, $X · month to date: $Y` line appears only on days with non-production calls (local `next dev` is tagged `default` in Langfuse). Flags unwanted dev usage without cluttering normal days.
+- **Request-limit headroom shown only from 10%**, counting all environments (the RPD limit is per API key).
+- **Routes ordered by quiz flow** (follow-up → score-topics → results; unknown routes last), not by tokens.
+- **Langfuse Metrics API replaces observation paging**: one aggregate query per window (3 windows, parallel) instead of 1 request per 100 observations (~1,500 page fetches at the RPD limit). Route JSON response now returns `today: { production, other }` + `costMonthToDate`.
+- **Investigated a duplicate `gemini-results` pair (5ms apart, same session)**: env `default`, no deployment version → local dev, React Strict Mode's double mount effect. 90 days of production data: zero duplicates on any route. No change.
+- Files: `app/api/quota-check/route.ts`, `tests/quotaCheck.test.ts`. Verified against live Langfuse data (rendered real summaries for 2026-09-30 and 2026-10-02). 437/437 tests, `tsc`, `eslint`, `next build` green.
+
 ## 2026-09-30 — Dependabot follow-up batch (post-grouping)
 
 Dependabot opened 5 new PRs ~1 min after the new `dependabot.yml` landed (the first grouped run).
