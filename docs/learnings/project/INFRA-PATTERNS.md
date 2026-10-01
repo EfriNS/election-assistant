@@ -55,6 +55,18 @@ Adding or changing a Vercel environment variable (via dashboard or `vercel env a
 
 **Fix**: `vercel redeploy <deployment-url> --target=production` rebuilds the exact same already-pushed commit (no code changes) so functions pick up the current env var set. This is different from `vercel deploy` (which would push new/uncommitted local state) — safe to use as the standard way to make an env-var-only fix take effect without waiting for the next natural git push.
 
+### Gemini API keys: one Google project per app; handle keys without ever printing them (#first:2026-10-02)
+
+**Billing and rate limits belong to the Google project; a key belongs to exactly one project.** A key shared across repos silently moves every app's usage onto whichever project it lives in — when billing was enabled for the election project (2026-09-29), Contendre's and cv-refinery's Gemini calls (same key in their `.env`/Supabase secrets) started billing there too, visible only as unexpected models in AI Studio. Each app gets its own project; a second key in the *same* project separates nothing. Since 2026-10-02 the election project has two keys (`-vercel`, `-local`).
+
+**New Google projects can't use 2.x Gemini models** (404 "no longer available to new users"), so moving an app to a fresh project can force a model bump — probe the target model with the new key before switching.
+
+**Comparing keys across repos/services**: fingerprint with `printf %s "$v" | sha256sum | cut -c1-10` — `printf %s`, not `echo`/pipelines that keep the trailing newline (that produced a false mismatch once). `supabase secrets list -o json` returns the full sha256 of each value, so its prefix compares directly.
+
+**Setting a secret via CLI**: pipe it on stdin from the shell builtin — `printf %s "$(tr -d ' \r\n' < keyfile)" | npx vercel env add NAME production --force --sensitive`. Never `--value "$(…)"`: the expanded value is in the process's argv. **Incident**: a `pgrep -fa` check on a hung `vercel env add --value` printed ~30 of the key's 53 chars into the session; the key had to be regenerated. Don't list process command lines while a secret may be in one.
+
+**Verifying a redeploy picked up a new env value**: confirm the serving deployment was *created after* the env change (`vercel inspect <dpl>` → `created`), and match the Langfuse generation's `version` (the `dpl_…` id) to it. A test call against the previous deployment still succeeds — on the old key.
+
 ### Diagnosing cron jobs: `vercel crons ls` / `vercel crons run` (#first:2026-07-09)
 
 The installed global `vercel` CLI in this environment (48.4.1) predates the `crons` subcommand — `vercel crons ls` silently mis-parses as `vercel deploy crons ls` ("Can't deploy more than one path"). Use `npx vercel@latest crons ls` / `npx vercel@latest crons run <path>` instead (beta command, works even though the global CLI is outdated).

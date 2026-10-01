@@ -2,9 +2,9 @@
 
 ## ✅ RECENTLY COMPLETED (Last 3)
 
+- **Gemini API keys separated per app + election key rotated** — Traced unexpected `gemini-2.5-flash` usage to Contendre and cv-refinery sharing the (now paid) election key; moved both to their own free-tier Google projects (with required model bumps to 3.5 Flash-Lite), and rotated the election key (it was in cv-refinery's git history) into separate Vercel/local keys. Full detail: CHANGELOG 2026-10-02. (2026-10-02)
 - **Dependabot weekly batch + `/dep-triage` command** — Merged #28–#31 as one verified change, incl. a Next.js RCE security fix (`next/og`); #23 still held (no Chromium 154). Assessed PR cadence as normal (~4–5/week) and added a `/dep-triage` command that encodes the triage flow and stops before merge. Full detail: CHANGELOG 2026-10-02. (2026-10-02)
 - **Daily Slack usage summary redesigned for the paid tier** — Replaced the meaningless "16 / 150,000 (0.0%)" with completed quizzes (vs. previous 24h), follow-ups, and Langfuse-calculated cost (today + month to date); production numbers separated from a dev/other line shown only when non-zero; limit headroom only from 10%. Switched to the Langfuse Metrics API (one aggregate query per window). A suspected duplicate results call turned out to be local-dev Strict Mode only. Full detail: CHANGELOG 2026-10-02. (2026-10-02)
-- **Dependabot triage: puppeteer/Chromium 153 pair + Anthropic SDK merged, TypeScript 7 deferred** — Applied the 4 safe bumps as one change so the Chrome-coupled trio couldn't deploy mismatched; verified on production (`/api/export-pdf` → `Skia/PDF m153`, RTL render checked). TS 7 closed: green on Vercel but breaks ESLint (typescript-eslint supports only TS <6.1). `dependabot.yml` now groups the coupled packages and ignores `typescript >=7`. The first grouped run's patch bumps (vitest group, @types/node, tsx, SDK 0.128) were also merged; the puppeteer group PR #23 is held (Chrome 154 vs. Chromium 153). Full detail: CHANGELOG 2026-09-30. (2026-09-30)
 
 > See CHANGELOG.md for complete details.
 

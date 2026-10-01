@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-02 — Gemini API keys: per-app Google projects + election key rotation
+
+AI Studio showed `gemini-2.5-flash` usage on the election project. Traced via key fingerprints (sha256 of `.env` values, never printing keys): **Contendre** (daily anacron → Docker pipeline summarizing competitor releases, 214 runs since 2026-02) and **cv-refinery** (Supabase Edge Functions) used the election project's key — since billing was enabled 2026-09-29, their usage was billed to the election project and shared its per-project rate limits. Election-assistant itself only ever used `gemini-3.1-flash-lite` (Langfuse).
+- **Contendre**: own free-tier Google project + key; `GEMINI_MODEL=gemini-3.5-flash-lite` pinned in its `.env` (no rebuild — `.env` is `.dockerignore`d and loaded via `env_file` per run). Verified inside the real container.
+- **cv-refinery**: own free-tier project + key; 3 edge functions switched `gemini-2.5-flash-lite` → `gemini-3.5-flash-lite` (cv-refinery `5532104`), deployed, Supabase `GEMINI_API_KEY` secret swapped (digest verified against the new key), verified by a real CV analysis (log: "with gemini"; usage visible in the new AI Studio project).
+- **Why the model bumps were required**: new Google projects get 404 "no longer available to new users" on all 2.x models; 3.1/3.5 Flash-Lite work.
+- **Election key rotated**: the old key had been committed to cv-refinery's (private) git history in Aug 2025 as `VITE_GEMINI_API_KEY` (current cv-refinery bundle checked clean; older deployments unknown). Two new keys in the election project — `-vercel` (Production + Preview) and `-local` (`.env.local`). Verified: production redeploy created after the env change, real `/api/follow-up` call → 200, Langfuse trace on that deployment. Old key deleted in AI Studio.
+- **Incident during rotation**: passing the key via `vercel env add --value "$(…)"` put it in the process list, and a process listing printed ~30 of its 53 chars into the session. Regenerated that key and re-set it via stdin (`printf %s … | vercel env add … --force --sensitive`); exposed key deleted.
+
 ## 2026-10-02 — Dependabot weekly batch (Next.js security fix) + `/dep-triage` command
 
 - **Merged as one change (superseding #28–#31)**: `next` 16.3.5 → 16.3.6 — **security fix GHSA-vcvr-r3jv-pc5j** (RCE in `next/og` `ImageResponse`; `app/apple-icon.tsx` uses it with static content); `@google/genai` 2.22 → 2.24 (features only); `@upstash/ratelimit` 2.1 → 2.2 (fixes in `cachedFixedWindow`/token bucket/`blockUntilReady` — `middleware.ts` only uses `slidingWindow`); `@anthropic-ai/sdk` 0.128 → 0.129 (`scripts/auto-score.ts` only). Verified: 437/437 tests, `tsc`, `eslint`, `next build`; on a local production build `/apple-icon` renders and a real `/api/follow-up` Gemini call returns valid structured Hebrew output; production deploy succeeded and `/apple-icon` serves 200. Dependabot closed #28–#31 itself once main had the versions.

@@ -8,7 +8,7 @@
 
 ### Gemini Tier & Limits (Critical!)
 
-**Current: paid Tier 1 since 2026-09-29.** `gemini-3.1-flash-lite` limits: RPM 4K, TPM 4M, RPD 150K. `/api/quota-check` defaults `QUOTA_DAILY_REQUEST_LIMIT` to 150K. Items 1–2 below are the free-tier history, kept as FYI in case we go back (then set `QUOTA_DAILY_REQUEST_LIMIT=500` in Vercel).
+**Current: paid Tier 1 since 2026-09-29.** The project's keys are election-assistant-only since 2026-10-02 (Contendre and cv-refinery moved to their own free-tier projects — see INFRA-PATTERNS "Gemini API keys"). `gemini-3.1-flash-lite` limits: RPM 4K, TPM 4M, RPD 150K. `/api/quota-check` defaults `QUOTA_DAILY_REQUEST_LIMIT` to 150K. Items 1–2 below are the free-tier history, kept as FYI in case we go back (then set `QUOTA_DAILY_REQUEST_LIMIT=500` in Vercel).
 
 0. **Free tier is deprioritized under load — 503s and minute-long successes are the symptom, not the model** — On 2026-09-15 a user reported "נתקע כל הזמן!": Langfuse showed normal-size outputs (~300 tokens, no retry) taking 57–72s, interleaved with fast-failing 503 UNAVAILABLE. On 2026-09-29, 5 of one session's 13 calls hit a 503 on first attempt. Both are Google serving free-tier traffic last during demand spikes. Before blaming prompts/schemas or switching models for latency/503 bursts, check the tier. (#first:2026-09-29)
 
