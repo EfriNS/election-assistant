@@ -75,6 +75,10 @@ The installed global `vercel` CLI in this environment (48.4.1) predates the `cro
 - `vercel crons run <path>` triggers a real cron invocation (correct auth header included) on demand — the fastest way to test whether a cron route actually works right now, without waiting for the schedule. Note it has real side effects if the route does something on success (e.g. posts to Slack) — treat it like any other production action, not a pure dry-run.
 - Absence of any log lines for a cron's path (checked via runtime-log `requestPath`/`route` grouping) means the invocation never reached the function at all — distinct from, and diagnosed before, an application-level failure (which would still show a non-2xx status).
 
+### A long-idle Vercel project can fail on an unchanged `vercel.json` (#first:2026-10-02)
+
+Vercel tightens its `vercel.json` schema over time: `nattelshay-landing`'s first deploy in ~11 months failed with "should NOT have additional property `public`" (a legacy property, removed). The GitHub status only says "Deployment failed" and links to generic docs; the real message is in `npx vercel api /v13/deployments/<url>` → `errorMessage` (`vercel inspect --logs` showed nothing for a config-validation failure). After pushing to a rarely-deployed repo, wait for the commit status before reporting it live.
+
 ### Vercel `framework` key in vercel.json (#first:2026-06-28)
 
 `framework: "nextjs"` in `vercel.json` IS required (despite not being documented as a standard key). Removing it causes Vercel to fall back to static-site mode → "No Output Directory named 'public'" build error.

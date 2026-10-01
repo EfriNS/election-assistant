@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 — Listed on nattelshay.com + GitHub repo metadata
+
+- **Landing page** (`nattelshay-landing` repo): Election Assistant added as the first project card → `https://voteassist.me`, with a "Source on GitHub" link under the card (nested links are invalid HTML); CV Refinery second; footer `© 2025–2026 Efri Nattel Shay`. Ordered first while the campaign is live — revisit after the election. Checked at desktop + mobile widths (Hebrew name kept unbroken).
+- **Wording check**: "assistant"/"matches", never "advice"/"recommends" — consistent with `/about`'s "הכלי אינו ממליץ על מפלגה".
+- **GitHub repo**: description set ("Free, transparent AI election assistant for Israeli voters — matches your views to official party platforms, with exact quotes as evidence. Next.js + Gemini."); homepage changed from the `*.vercel.app` URL to `voteassist.me`.
+- **Landing deploy fix**: Vercel's `vercel.json` schema now rejects the legacy `"public": true` property (first deploy since Oct 2025 failed with "should NOT have additional property `public`"); removed it. This repo's `vercel.json` doesn't use it.
+
 ## 2026-10-02 — Gemini API keys: per-app Google projects + election key rotation
 
 AI Studio showed `gemini-2.5-flash` usage on the election project. Traced via key fingerprints (sha256 of `.env` values, never printing keys): **Contendre** (daily anacron → Docker pipeline summarizing competitor releases, 214 runs since 2026-02) and **cv-refinery** (Supabase Edge Functions) used the election project's key — since billing was enabled 2026-09-29, their usage was billed to the election project and shared its per-project rate limits. Election-assistant itself only ever used `gemini-3.1-flash-lite` (Langfuse).
