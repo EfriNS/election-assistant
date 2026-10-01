@@ -29,7 +29,7 @@
     "@langfuse/otel": "^5.10.1",
     "@langfuse/tracing": "^5.10.1",
     "@sparticuz/chromium": "153.0.0",
-    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/ratelimit": "^2.2.0",
     "@upstash/redis": "^1.38.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/otel": "^2.1.3",
