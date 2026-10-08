@@ -25,7 +25,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.129.0",
     "@google/genai": "^2.24.0",
-    "@langfuse/client": "^5.10.1",
+    "@langfuse/client": "^5.13.0",
     "@langfuse/otel": "^5.10.1",
     "@langfuse/tracing": "^5.10.1",
     "@sparticuz/chromium": "153.0.0",
