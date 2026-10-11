@@ -9,6 +9,7 @@ Triage the open Dependabot PRs (or only `$ARGUMENTS` if given). Goal: one verifi
 
 - `gh pr list --state open --author app/dependabot --json number,title,createdAt,headRefName`
 - `gh api "repos/{owner}/{repo}/dependabot/alerts?state=open" -q length` — open security alerts
+- `npm audit` — Dependabot alerts lag it (2026-10-11: 0 open alerts while `next` had six advisories four days old). A finding with an in-range fix for a direct or overridden dependency → apply it as its own commit and lead the report with it.
 - Find PRs deliberately held in earlier sessions: grep `CHANGELOG.md` / `TODO.md` for the PR numbers and "held" / "do not merge". Re-check each held PR's blocker — don't re-decide it from scratch.
 
 ## 2. Assess each PR
@@ -24,6 +25,7 @@ For each: `gh pr view <n> --json body -q .body` (release notes), then decide.
   - `puppeteer`/`puppeteer-core` must match the Chrome build of `@sparticuz/chromium` — check `npm view @sparticuz/chromium version` against the Chrome version in puppeteer's release notes. Mismatch → hold.
   - `typescript` majors: check `typescript-eslint`'s supported range — a green Vercel build doesn't run eslint.
   - `vitest` + `@vitest/*` move together.
+  - `@langfuse/client`, `@langfuse/otel`, `@langfuse/tracing` move together (not grouped in `dependabot.yml`): a PR bumping one leaves a second `@langfuse/core`/`tracing` copy nested under it. Bump all three to the same version.
 
 Verdict per PR: **superseded** / **apply** / **hold** (with the blocking condition) / **close** (with reason) / **ask** (needs a user decision).
 
@@ -31,6 +33,7 @@ Verdict per PR: **superseded** / **apply** / **hold** (with the blocking conditi
 
 - `git fetch origin main`, start from an up-to-date `main`, branch `chore/deps-YYYY-MM-DD`.
 - `npm install <pkg>@<version> ...` for every "apply" PR in one go — one combined change, superseding the individual PRs.
+- If `npm install` crashes with `Cannot read properties of null (reading 'edgesOut')` (npm 10 peer resolver, seen on a vitest bump), run that install with `npx -y npm@11`; then confirm `lockfileVersion` is still 3 and `npm ci` works.
 - **No code changes.** If an update requires one (breaking API change), stop and report it as "ask" instead.
 
 ## 4. Verify
@@ -51,4 +54,4 @@ Verdict per PR: **superseded** / **apply** / **hold** (with the blocking conditi
 
 A table: PR | update | verdict | risk / why | how verified. Then held PRs with their blockers, then open security alerts. End by asking the user whether to merge (merge = production deploy).
 
-**After approval (next turn)**: merge `--no-ff` to main, push main + branch, wait for the Vercel commit status to succeed and spot-check production. Dependabot closes superseded PRs on its own once main has the versions. Add a CHANGELOG entry.
+**After approval (next turn)**: merge `--no-ff` to main, push main + branch, wait for the Vercel commit status to succeed and spot-check production. Dependabot closes superseded PRs on its own once main has the versions. Re-run `gh pr list` after the push: the dependency-graph update can open a new security PR within minutes (#36, 2026-10-11). Add a CHANGELOG entry.

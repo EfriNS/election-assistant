@@ -87,6 +87,10 @@ Vercel tightens its `vercel.json` schema over time: `nattelshay-landing`'s first
 
 Vercel warns at build time: "Provided `memory` setting in `vercel.json` is ignored on Active CPU billing." Both `memory` and `maxDuration` in the `functions` block are no-ops on Fluid Compute. The default `maxDuration` is 300s — don't set it lower thinking you're capping cost.
 
+### "Functions storage" on the Vercel dashboard = retained deployments × ~100 MB (#first:2026-10-11)
+
+The team-level figure (6.15 of 10 GB Hobby) is almost all this project: every retained deployment stores its own function bundle, and ours carries `@sparticuz/chromium` (~67 MB) plus ~25 MB of Next server output. 62 ready deployments in the 30-day retention window ≈ 6 GB (per-deployment size estimated from the local build). It is a rolling window, not growth — it scales with deployments per month (every push to main incl. docs-only commits, every Dependabot PR/rebase); ~100/month would reach the limit, where Vercel can block deploys and prunes old ones immediately (current production + 3 latest are always kept). Count with `vercel api "/v6/deployments?projectId=…&teamId=…&limit=100"`.
+
 ---
 
 ## PDF Generation (@sparticuz/chromium)
@@ -227,6 +231,16 @@ Dependabot's PR bumping `vitest` `4.1.11 → 5.0.0` left `@vitest/coverage-v8` p
 This repo has no GitHub Actions CI; a PR's checks are CodeQL (neutral) plus the Vercel preview deploy. `next build` type-checks but does **not** run ESLint or vitest. The TypeScript 5.9 → 7.0.2 PR (#21) was all green, but `npx eslint .` crashed: `typescript-eslint` (via `eslint-config-next`) supports only TS `<6.1` (typescript-eslint#10940). Merging it would have broken the `/checkpoint`/`/wrapup` lint gate on every later branch.
 
 **Rule**: before merging any Dependabot PR, run the full local pipeline (`vitest` + `tsc` + `eslint` + `next build`) on the bump applied to current main. Use a throwaway `git worktree` so the main checkout stays clean. For toolchain majors (TypeScript, ESLint), also check `npm ls <pkg>` for `invalid` peer ranges. When a major isn't supported yet, prefer a `dependabot.yml` `ignore` with `versions: [">=N"]` over closing the PR by hand. Dependabot auto-closes the open PR as soon as the ignore rule lands on main, so leave the explanation as a comment afterwards.
+
+### Dependabot alerts lag `npm audit`; security PRs bypass version ignores (#first:2026-10-11)
+
+With 0 open Dependabot alerts, `npm audit` reported `next` 16.3.6 (six advisories published four days earlier, fixed in 16.3.8) and `sharp` <0.35.5. No alert or PR existed for either. **Rule**: "0 open alerts" is not "nothing to patch" — run `npm audit` in every dependency pass (now step 1 of `/dep-triage`).
+
+Minutes after that push, Dependabot opened security PR #36 (Tailwind 3 → 4, to drop `postcss-selector-parser`) although Tailwind's major had been ignored via `@dependabot ignore this major version` on PR #7: ignores apply to version updates, not security updates. A security PR whose only fix is a major migration fails its build by design — leave it open as the reminder and track the migration in TODO.
+
+### npm 10 can crash resolving a peer-locked pair; Node 20 locally vs 24 on Vercel (#first:2026-10-11)
+
+`npm install -D vitest@5.0.3 @vitest/coverage-v8@5.0.3` on npm 10.8.2 died with `Cannot read properties of null (reading 'edgesOut')` (arborist `#loadPeerSet`), also when installed alone. `npx -y npm@11 install …` worked; the lockfile stayed v3 and `npm ci` on npm 10 consumed it. The local toolchain is Node 20.19 / npm 10 while `@sparticuz/chromium` and `@puppeteer/browsers` declare `node >=22` (EBADENGINE warnings) and Vercel builds on Node 24 — an install-time failure seen only locally may be the old local npm, not the bump.
 
 ### Testing a Vercel-protected preview deployment's API routes directly (#first:2026-08-14)
 
