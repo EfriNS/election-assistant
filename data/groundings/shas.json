@@ -3,7 +3,7 @@
   "platformLabel": "מסמך עקרונות התנועה (2006, IDI) + עמדות קואליציוניות 2022 — אין מצע רשמי",
   "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
   "archiveDir": "docs/sources/shas/",
-  "_note": "Shas has no official 2026 election platform. Official website (shas.org.il) unreachable (ECONNREFUSED as of 2026-08-07; timed out on 2026-06-23). Re-checked 2026-08-07: shasnet.co.il and shas.co.il don't resolve, hiddush.org Shas subchannel last updated 2021, Hebrew Wikipedia has no 2026 platform mention. Still no official platform. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-17: shas.org.il still unreachable (ECONNREFUSED) — no change. Re-checked 2026-09-16 (post candidacy-submission review): no official platform or website found — no change. Re-checked 2026-10-11: no official platform or website found — candidate list filed with the Central Elections Committee, no policy document. No change.",
+  "_note": "2026-10-11 (cont.): remaining source pages read in full — 19 verbatim entries added, 0 merged into existing entries (39 in total). Shas has no official 2026 election platform. Official website (shas.org.il) unreachable (ECONNREFUSED as of 2026-08-07; timed out on 2026-06-23). Re-checked 2026-08-07: shasnet.co.il and shas.co.il don't resolve, hiddush.org Shas subchannel last updated 2021, Hebrew Wikipedia has no 2026 platform mention. Still no official platform. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-17: shas.org.il still unreachable (ECONNREFUSED) — no change. Re-checked 2026-09-16 (post candidacy-submission review): no official platform or website found — no change. Re-checked 2026-10-11: no official platform or website found — candidate list filed with the Central Elections Committee, no policy document. No change.",
   "topics": {
     "security": [
       {
@@ -21,6 +21,15 @@
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "תנועת ש״ס שואפת לקבץ את כל נידחי ישראל מכל הגלויות, כדי לבנות בית יהודי במדינה יהודית גדולה וחזקה בכל שטחי ארץ ישראל.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-outdated",
         "concreteness": "specific-stance"
       }
@@ -62,6 +71,60 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "העלאת שכר המינימום הדרגתית ב 25% - עד סוף 2007. איסור גורף על העסקת עובדי קבלן במשרדי הממשלה ובכל הגופים והארגונים המתוקצבים על ידי המדינה.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "חיזוק מעמדו העצמאי של המוסד לביטוח לאומי. החזרת קצבאות ילדים מדורגות לקדמותן.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חקיקת סל שרותי רווחה חובה אשר יבטיח אספקת סל שירותים בסיסי לכל ילד, זקן, נכה ומשפחה הלוקה בתפקודה.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "צמצום משמעותי של היקף העובדים הזרים, מדיניות של ״שמים סגורים״ והגנה על זכויותיהם של אלה המועסקים בהיתר.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מיקוד החוק לעידוד השקעות הון לצורך הקמת ומעבר של מפעלים עתירי ידע וטכנולוגיות מתקדמות בישובי הפריפריה. פיתוח תשתיות תחבורה שיקרבו את המרכז אל הפריפריה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הגדלת ההשקעות בתשתיות לאומיות כמנוף להנעת גלגלי המשק ולהעלאת הצמיחה הכלכלית.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
       }
     ],
     "housing": [
@@ -82,6 +145,24 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "quantified"
+      },
+      {
+        "text": "מתן מענקים לרכישת דיור בפריפריה.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "סיוע לחסרי דירה ולמשפחות החיות בצפיפות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
       }
     ],
     "education": [
@@ -111,6 +192,42 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שיפור מעמדם של המורים והעלאת שכרם.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הבטחת משאבים מלאים לשילובים של ילדים עם צרכים מיוחדים במסגרות חינוך רגילות. חידוש מפעל ההזנה בבתי ספר מכל הזרמים, בהשתתפות מימון של ההורים, על פי יכולתם הכלכלית.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הכשרה מקצועית לכל חייל משוחרר וראש משפחה חסר מקצוע.",
+        "aspect": "higher-education-and-vocational-training",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חיזוק החינוך התורני והנחלתו לכלל ילדי ישראל, בכל זרמי החינוך, יתרום תרומה משמעותית לביסוסנו כחברה, וכעם היונק ידע וערכים מתורת ישראל וממסורתו המפוארת.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
       }
     ],
     "health": [
@@ -131,6 +248,24 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "קיצור תקופת ההמתנה לאשפוז סיעודי. איחוד כל השירותים לאוכלוסיית הקשישים למסגרת ארגונית מקצועית אחת.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "תנועת ש״ס תפעל לשמור על יישום חוק ביטוח בריאות ממלכתי מתוך תפיסת הרפואה כרפואה ציבורית שוויונית.",
+        "aspect": "private-sector-regulation-mechanics",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
       }
     ],
     "religion": [
@@ -164,6 +299,24 @@
         "provenance": "third-party",
         "concreteness": "named-mechanism",
         "_note": "נוסח עודכן בבדיקת מקורות צד ג׳ 2026-10-11: הרשומה צומצמה למה שמופיע במקור המצוטט."
+      },
+      {
+        "text": "יחד עם זאת תנועת ש״ס רואה את חובתה של המדינה לספק גם את צרכי הדת של בני הדתות החיים במדינה.",
+        "aspect": "minority-religious-autonomy",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הקמת מתקנים לצרכי דת בכל הארץ. תמיכה במוסדות תורניים.",
+        "aspect": "national-religious-symbolism",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
@@ -196,6 +349,15 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "הכרה בהוצאות הבית (מטפלת לילדים, מעון יום, צהרון ועזרה בניקיון הבית) של נשים עובדות לצורכי מיסוי.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ],
     "ecology": [
@@ -207,6 +369,15 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "חקיקת חוקים שמטרתם הגנה על הטבע, על מקורות המים ועל חופי הים. הגבלת תעשיות הפוגעות, הורסות ומזהמות של תשתיות הטבע הלאומיות.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
+        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-outdated",
+        "concreteness": "named-mechanism"
       }
     ]
   }

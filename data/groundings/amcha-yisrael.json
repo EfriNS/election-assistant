@@ -3,7 +3,7 @@
   "platformLabel": "אבני היסוד + תכנית 18 הנקודות לביטחון + מנגנון חקירת 7 באוקטובר (amchaisrael.co.il)",
   "sourceUrl": "https://amchaisrael.co.il/foundations",
   "archiveDir": "docs/sources/amcha-yisrael/",
-  "_note": "2026-10-11 re-check: the party now publishes real policy content — a 'תוכניות' menu with four pages (אבני היסוד = a full cross-topic platform incl. 'המשימות שלנו' commitments; תכנית 18 הנקודות לביטחון; a detailed Oct-7 inquiry-mechanism proposal; and תכנית המשרתים, which is 4 video titles only, no text). 26 official-current entries added across security/economy/housing/education/religion/justice/equality — see docs/sources/amcha-yisrael/2026-10-11-programs.md. Still no health or ecology content (energy appears only as national-infrastructure independence, not environmental policy). The foundations page itself says detailed work plans 'יפורסמו בנפרד' for decisive-victory/emigration, service status, and judicial trust — re-check for those. RESCORED 2026-10-11 (user-approved): the lib/questions.ts column was re-read option by option against this content. Four scores moved (economy/market 1→2, economy/growth 1→2, education/equal 0→1, justice/oversight 1→2); every other score was kept — either confirmed by the platform (security, settlement, service-linked housing, Jewish-identity education) or still an estimate because the platform is silent (all of health, ecology, LGBTQ, religious pluralism, welfare/redistribution). Several positions here (חוק יסוד: השירות with universal service, 'יהדות מזמינה ולא כופה', core curriculum for every child, state-commission-level Oct-7 inquiry) are more specific than, and in places different from, the generic right-bloc lane assumed. The single older third-party entry (c14 launch coverage) is kept. Previous note (2026-09-16): Brand-new party launched 2026-08-25 by תא\"ל (מיל') עופר וינטר. Genuinely different from every other 'no official platform' party in this dataset (likud/shas/yahadut-hatorah/raam) — those have decades of coalition history, IDI analysis, and public record to draw on; this party has three weeks of a recruitment landing page and no other public record at all. Polling above threshold (~4 mandates) in most post-list-closing polls, explicitly self-identifies with 'מחנה הימין... ממשלת ימין רחבה' (the Netanyahu bloc), which is the only concrete signal used for the lib/questions.ts score estimate — user approved a rough right-bloc-lane estimate across all 9 topics (2026-09-16), security leaning closer to Otzma/Religious Zionism (Winter's military background + explicit bloc alignment), other topics closer to Likud/Beitenu's more moderate right lane, since no specific commitments exist to justify a sharper estimate anywhere. This is below even this file's own usual 'rough estimate, not verified' bar — re-check once the party publishes actual policy content or gives substantive interviews. See docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md for full reasoning.",
+  "_note": "2026-10-11 (cont.): remaining source pages read in full — 10 verbatim entries added, 0 merged into existing entries (37 in total). 2026-10-11 re-check: the party now publishes real policy content — a 'תוכניות' menu with four pages (אבני היסוד = a full cross-topic platform incl. 'המשימות שלנו' commitments; תכנית 18 הנקודות לביטחון; a detailed Oct-7 inquiry-mechanism proposal; and תכנית המשרתים, which is 4 video titles only, no text). 26 official-current entries added across security/economy/housing/education/religion/justice/equality — see docs/sources/amcha-yisrael/2026-10-11-programs.md. Still no health or ecology content (energy appears only as national-infrastructure independence, not environmental policy). The foundations page itself says detailed work plans 'יפורסמו בנפרד' for decisive-victory/emigration, service status, and judicial trust — re-check for those. RESCORED 2026-10-11 (user-approved): the lib/questions.ts column was re-read option by option against this content. Four scores moved (economy/market 1→2, economy/growth 1→2, education/equal 0→1, justice/oversight 1→2); every other score was kept — either confirmed by the platform (security, settlement, service-linked housing, Jewish-identity education) or still an estimate because the platform is silent (all of health, ecology, LGBTQ, religious pluralism, welfare/redistribution). Several positions here (חוק יסוד: השירות with universal service, 'יהדות מזמינה ולא כופה', core curriculum for every child, state-commission-level Oct-7 inquiry) are more specific than, and in places different from, the generic right-bloc lane assumed. The single older third-party entry (c14 launch coverage) is kept. Previous note (2026-09-16): Brand-new party launched 2026-08-25 by תא\"ל (מיל') עופר וינטר. Genuinely different from every other 'no official platform' party in this dataset (likud/shas/yahadut-hatorah/raam) — those have decades of coalition history, IDI analysis, and public record to draw on; this party has three weeks of a recruitment landing page and no other public record at all. Polling above threshold (~4 mandates) in most post-list-closing polls, explicitly self-identifies with 'מחנה הימין... ממשלת ימין רחבה' (the Netanyahu bloc), which is the only concrete signal used for the lib/questions.ts score estimate — user approved a rough right-bloc-lane estimate across all 9 topics (2026-09-16), security leaning closer to Otzma/Religious Zionism (Winter's military background + explicit bloc alignment), other topics closer to Likud/Beitenu's more moderate right lane, since no specific commitments exist to justify a sharper estimate anywhere. This is below even this file's own usual 'rough estimate, not verified' bar — re-check once the party publishes actual policy content or gives substantive interviews. See docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md for full reasoning.",
   "topics": {
     "security": [
       {
@@ -107,6 +107,51 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בסוריה: שומרים על ההישגים. לא מוותרים על שטחי המפתח בהם שולט צה״ל, חונקים את חיזבאללה בלבנון, מונעים התבססות טורקית עוינת ומגינים על בני העדה הדרוזית ממעשי הטבח של המיליציות המוסלמיות הקיצוניות במדינה.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "מדינת ישראל תשאף להכרעה מהירה של האויב. מכיוון שצה״ל בנוי על מערך מילואים רחב, תפקידם של אנשי המילואים הוא לא לשרת שירות קבע, אלא לבנות את הכלכלה של מדינת ישראל.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המנדט יכלול את בחינת התהליכים וההחלטות שהובילו לאירועי 7 באוקטובר, ובכלל זה בחינת הלקחים והכשלים שנצברו לאורך השנים שקדמו להם, החל ממבצע צוק איתן.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://amchaisrael.co.il/inquiry",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נדרוש להוביל תכנית הגירה מרצון עבור מי שמבקש לעזוב את הרצועה ולהשתקם, ונפעל במסגרת הסכמות בין-לאומיות ובשיתוף מדינות שיסכימו לקלוט מהגרים.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בזירה הבין-לאומית, ישראל תפעיל מערך דיפלומטיה ציבורית יוזמת ואסרטיבית, תחזק את מעמדה ואת בריתותיה, ותפעל להרחבת חופש הפעולה המדיני והביטחוני שלה באמצעות מערך תודעה והסברה יוזם ולא מתנצל.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "economy": [
@@ -136,6 +181,24 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "לצד חובת השירות, המדינה תקדם מערך תגמולים דיפרנציאלי, שיתבסס על סוג השירות, אופיו, משכו ומידת הסיכון והמאמץ הכרוכים בו, כך שלוחמים, תומכי לחימה ומשרתי מילואים בהיקפים משמעותיים יתוגמלו בהתאם לתרומתם.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "המדינה תקבע תכנית רב-שנתית לאנרגיה, מים, תחבורה, תקשורת ונמלים, עם יעדים ברורים ואחריות מוגדרת. המדינה תזהה טכנולוגיות בעלות חשיבות אסטרטגית ותשקיע בהן בזמן, כדי להבטיח את יתרונה ועצמאותה של ישראל.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
@@ -156,6 +219,15 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם התיישבות יהודית איתנה במרחבי הגבול ובאזורים מאוימים, טיפוח ההון האנושי, עיבוד הקרקע ופיתוח החקלאות - שהם חלק בלתי נפרד מביסוס הריבונות, מחיזוק אחיזתה של מדינת ישראל בכל מרחביה.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "education": [
@@ -176,6 +248,15 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "נפעל להחזרת העצמאות למנהלי בתי הספר באמצעות העברת האחריות והסמכות בקבלת החלטות, בגיוס ובניהול כוח האדם ובבניית תכניות חינוכיות, תוך הצבת פרמטרים למדידה ערכית ולהישגים.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "health": [],
@@ -206,6 +287,15 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "עלינו להכניס אל ציבור המשרתים את האוכלוסייה החרדית בצורה משמעותית. אנחנו נעשה את זה בשום שכל, בהסכמה ובכבוד.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "justice": [

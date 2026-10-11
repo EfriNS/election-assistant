@@ -460,6 +460,15 @@
         "_note": "נוסח עודכן בבדיקת מקורות צד ג׳ 2026-10-11: הרשומה צומצמה למה שמופיע במקור המצוטט.",
         "provenance": "third-party",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "הבטחת שוויון הזדמנויות לכל, ללא הבדל מין, לאום, עדה, גיל או מקום מגורים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://hadash.org.il/#values",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": [

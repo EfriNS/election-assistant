@@ -3,7 +3,7 @@
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
-  "_note": "2026-10-11 re-check: /principles/ now has 15 sub-pages (was 8). New: housing, senior-citizens, north-reconstruction-and-prosperity, youth-and-young-adults, culture, aliyah-and-integration (alongside the older inlocation-and-aliya). 8 entries added — housing 2→6 (it is now a real standalone policy, no longer only a service-linked benefit — the earlier 'housing appears only as a service-based benefit' remark below is superseded), elderly inclusion, a quantified north-reconstruction commitment (₪15B over 5 years), and a conscript-pay raise. Culture and aliyah pages are outside the 9-topic taxonomy — archived only. Still no ecology page. Main /agenda_point/ 10-steps page unchanged. See docs/sources/yashar/2026-06-23-yashar-10-steps.md § 2026-10-11. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only. 2026-08-07: found an 8th /principles/ sub-page, agriculture — added 2 economy entries (market-structure-and-competition: food-market anti-monopoly; fiscal-discipline-and-efficiency: subsidy-transparency reform); remaining agriculture content (food-security planning, farm insurance, ag-crime enforcement, agrotech R&D, agrivoltaics, rural development) is sector-specific policy uncovered by the current economy aspect taxonomy — flagged, not added. Main /agenda_point/ 10-steps page unchanged since last check. 2026-09-16 re-check (post candidacy-submission review): /agenda_point/ 10-steps content matches what's already captured — no new items found.",
+  "_note": "2026-10-11 full harvest: the source was re-read in full and the grounding rebuilt as verbatim quotes — 14 earlier summary entries were replaced by 94 verbatim entries covering the same commitments and the ones previously missing (33 entries kept unchanged; 127 in total). The replaced texts are listed in the source archive. Previous note: 2026-10-11 re-check: /principles/ now has 15 sub-pages (was 8). New: housing, senior-citizens, north-reconstruction-and-prosperity, youth-and-young-adults, culture, aliyah-and-integration (alongside the older inlocation-and-aliya). 8 entries added — housing 2→6 (it is now a real standalone policy, no longer only a service-linked benefit — the earlier 'housing appears only as a service-based benefit' remark below is superseded), elderly inclusion, a quantified north-reconstruction commitment (₪15B over 5 years), and a conscript-pay raise. Culture and aliyah pages are outside the 9-topic taxonomy — archived only. Still no ecology page. Main /agenda_point/ 10-steps page unchanged. See docs/sources/yashar/2026-06-23-yashar-10-steps.md § 2026-10-11. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only. 2026-08-07: found an 8th /principles/ sub-page, agriculture — added 2 economy entries (market-structure-and-competition: food-market anti-monopoly; fiscal-discipline-and-efficiency: subsidy-transparency reform); remaining agriculture content (food-security planning, farm insurance, ag-crime enforcement, agrotech R&D, agrivoltaics, rural development) is sector-specific policy uncovered by the current economy aspect taxonomy — flagged, not added. Main /agenda_point/ 10-steps page unchanged since last check. 2026-09-16 re-check (post candidacy-submission review): /agenda_point/ 10-steps content matches what's already captured — no new items found.",
   "topics": {
     "security": [
       {
@@ -34,27 +34,90 @@
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נקים קבינט לאומי ייעודי למלחמה בפשיעה המאורגנת בראשות ראש הממשלה ושר הביטחון הפנימי, עם מערך אכיפה ייעודי — יחידות חקירה, מודיעין ותביעה מיוחדות — למיגור עבריינות ההגנה (פרוטקשן), הלבנת הון ושליטה טריטוריאלית של ארגוני פשיעה.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "שירות המילואים יוגבל לעד 50 ימים בשנה, ולא יותר מ-150 ימים על פני שלוש שנים; דרישה לתכנון מוקדם ועדכון עם הודעה של 6 חודשים לפחות, בכפוף לאילוצים מבצעיים.",
+        "text": "נעלה את שכר משרתי החובה כולם ב-15% וב-50% ללוחמים בשנת שירותם השלישית .",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "נעלה את שכר משרתי החובה כולם ב-15% וב-50% ללוחמים בשנת שירותם השלישית .",
+        "text": "נקים קבינט לאומי ייעודי שירכז סמכויות, מודיעין ויעדים ויתאם בין המאמצים, בהובלת פרויקטור ממשלתי תחת ראש הממשלה והשר לביטחון פנים, שיוביל מאבק מתואם וחוצה משרדי ממשלה, בפשיעה המאורגנת.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבנה תוכנית רב־שנתית להתעצמות משטרת ישראל, הכוללת תיקון לפקודת המשטרה, תכנון ארוך טווח של כוח אדם והכשרות, שילוב ופיתוח אמצעים טכנולוגיים, תשתיות ויכולות חקירה ואכיפה מתקדמות. לצד זאת, יוקצה תקציב חירום לארבע שנים לצמצום פערי כוח אדם, חיזוק מערכי החקירה והמודיעין והאצת פריסת יכולות מבצעיות.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים מערך אכיפה ייעודי להתמודדות עם הפשיעה המאורגנת, אשר יכלול יחידות חקירה ומודיעין ייעודיות, לצד גוף תביעה ייעודי בפרקליטות ובתי משפט מתמחים בעבירות פשיעה מאורגנת.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם מאבק מערכתי בתופעת הפרוטקשן (גביית דמי חסות) באמצעות: יחידות אכיפה ייעודיות בצפון ובדרום, חקיקה משלימה, רגולציה בעולמות הביטוח, חיזוק הרשויות המקומיות והגנה אפקטיבית על נפגעים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נגבש תפיסת הגנה אזרחית־יישובית לאומית חדשה, המבוססת על למידה מלקחי שבעה באוקטובר ועל ההבנה כי ביטחון הפנים מחייב נוכחות מבצעית, מוכנות אזרחית והגדרת אחריות ברורה בין גופי המדינה, הרשויות המקומיות והקהילה. נגדיר תו תקן להכשרה, מימון ומבנה ההגנה היישובית ויוקצה סל כלים ממשלתי הבנוי כמעטפת הגנה מערכתית.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "המאבק יתמקד בפירוק ״צינורות החמצן״ של ארגוני הפשיעה: זרימת כסף, הלבנת הון, שליטה בשטח, הפחדה וגביית דמי חסות והוא יכלול שימוש בכלים מנהליים, כלי חילוט כלכליים, סגירת עסקים עברייניים, ניתוק הפשיעה ממוקדי כוח מקומיים ופגיעה ביכולת ההתאוששות שלהם.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם הסדרה אשר תגביל את מספר ימי המילואים בשנה לעד 50 ימים, ובתנאי שלא יעלו על 150 ימי מילואים בשלוש שנים. נחייב תכנון ועדכון מוקדם (בכפוף למגבלות מבצעיות) של זמני שירות המילואים, בהודעה מוקדמת של לפחות 6 חודשים.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נגדיר את מיגון הצפון כפרויקט לאומי בחירום, נקדם מיגון מיידי של כלל יח״ד, גנים, בתי ספר ומרפאות בטווח 0-9 ק״מ מהגבול הצפוני. נפעל להקדמת צפי השלמת המיגון מ-2035 ל-2030 כאשר מיגון צמודי קרקע 1-5 ק״מ יבוצע עד סוף 2028 וצמודי קרקע 5-9 ק״מ עד סוף 2029.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקים יחידת אכיפה מחוזית (300 שוטרים) בראשות תנ״צ לטיפול בתופעות פשיעה חמורות, שסוגרת מעגלי אכיפה מלאים (מודיעין; חקירות; מבצעים; ענישה; תביעה).",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
@@ -99,60 +162,6 @@
         "concreteness": "generic"
       },
       {
-        "text": "נבטל חסמי ייבוא ותקנים ייחודיים לישראל שאין להם הצדקה, ונפתח את השוק ליבוא מקביל; נפרק את הריכוזיות בקבוצות המזון והצריכה הגדולות, תוך שמירה על החקלאות הישראלית.",
-        "aspect": "market-structure-and-competition",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נטיל דיווח דיגיטלי בזמן אמת על עסקאות גדולות ונפעיל כלי בינה מלאכותית לחשיפת חשבוניות פיקטיביות, תוך צמצום דרמטי בשימוש במזומן.",
-        "aspect": "fiscal-discipline-and-efficiency",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נפחית את מס ההכנסה על ידי הטלת מסים על מוצרים בעלי השפעות שליליות ברורות (כגון מוצרים חד-פעמיים ומשקאות ממותקים).",
-        "aspect": "fiscal-discipline-and-efficiency",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נשקיע 20 מיליארד ₪ לאורך 3 שנים בתמיכה כלכלית במשרתים — יחידים, משפחות, פרנסה ומעסיקים; העלאת שכר של 15% לכלל משרתי החובה, ו-50% ללוחמים בשנת שירותם השלישית. פיצוי מלא למעסיקים מהביטוח הלאומי על עלויות המילואים.",
-        "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "נצא למלחמה בכוח המונופוליסטי בשוק המזון ונתמוך ביוזמות מכירה ישירה לצרכן.",
-        "aspect": "market-structure-and-competition",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נעבור מהגנות עקיפות לא-יעילות לתמיכה שקופה וממוקדת בענף החקלאות, תוך עיגון מעמדו האסטרטגי בחקיקה ובניית רשתות ביטחון לחקלאים.",
-        "aspect": "fiscal-discipline-and-efficiency",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
         "text": "אנו מתחייבים להשקעה של כ-15 מיליארד ש״ח ב-5 שנים הקרובות בתכנית כולה, ומתוכם כ-6 מיליארד ש״ח במיגון, מתוך הבנה שהשקעה בצפון היום היא השקעה בחוסן הלאומי של ישראל למחר.",
         "aspect": "regional-and-sector-development",
         "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
@@ -160,6 +169,240 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "אנחנו מתחייבים להשקיע במשרתי המילואים 20 מיליארד ש״ח בשלוש שנים הבאות – עבור הפרט, משפחתו, פרנסתו ומעסיקיו. ניתן פיצוי מלא למעסיקים מביטוח לאומי בגין ההפרשות הסוציאליות לתקופת המילואים של עובדיהם.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ניתן מענק ותמיכה למשפחות וילדים לפי היקף השירות וסוגו, לשימוש חופשי – מעונות, גנים, צהרונים, בייביסיטר, חוגים ונסיעות – ללא בירוקרטיה, קבלות או החזרים.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקבע קריטריון ברור: מנגנוני סיוע ותמיכה ממשלתים, הטבות דיור וסבסוד מעונות יום יתועדפו למשרתי מילואים ולמשפחות עובדות ויצרניות – לפני כולם. נשנה את חוקי המס כך שנקודות הזיכוי וההטבות יתגמלו את מי שנושא בנטל הכלכלי והביטחוני, ונבטיח שהעבודה תשתלם תמיד יותר מקצבה.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטל חסמי ייבוא ותקנים ייחודיים לישראל שאין להם הצדקה, ונפתח את השוק לייבוא מקביל. נפעל לשבור את כוחן של קבוצות הריכוז בשווקי המזון והצריכה תוך שימור ועידוד החקלאות הישראלית.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם רפורמות בכשרות ובייבוא מוצרים כשרים, נקדם מהלכי התייעלות וביזוריות מבנית בענפי המשק הריכוזיים, נפעל לצמצום הנטל הבירוקרטי ועלותו ליצרנים והייבואנים ונסיר חסמים לכניסתן של חברות זרות ושחקנים נוספים.",
+        "aspect": "cost-of-living-and-affordability",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפחית את מס ההכנסה על ידי הטלת מסים על מוצרים בעלי השפעות שליליות ברורות כגון כלים חד פעמיים ומשקאות ממותקים. נשנה את כללי ההטבות כך שהנחות בארנונה, פטורי מס וקצבאות יינתנו לפי מצב סוציואקונומי אחרי מיצוי השתכרות בלבד – לא לפי שיוך מגזרי.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נכריז מלחמה על ההון השחור: נחייב דיווח דיגיטלי בזמן אמת לעסקאות גדולות, נצמצם דרמטית את השימוש במזומן ונפעיל כלי AI לחשיפת חשבוניות פיקטיביות.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשדרג תשתיות ושירותים ממשלתיים באזורים אלו, נעבור למודל ביצוע עם תמריצים לקבלנים עבור עמידה בלוחות זמנים, ונממן ישירות מיגון מבנים ושיקום שכונות היכן שכוחות השוק אינם מספיקים. בתחבורה – נקדם השלמת רשת רכבות מהירות שתחבר פריפריה למרכז, ונאיץ הקמת מטרו ורכבות קלות במטרופולינים, כי חיבור הפריפריה הוא מנוע צמיחה לאומי.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נסייע בהקמת מרכזי מחשוב (Data Centers) מקומיים וניצור ריבונות טכנולוגית שתיתן כוח מחשוב אמיתי לסטארט-אפים ישראליים. נטמיע AI במסגרת תהליכי דיגיטליזציה בשירות הציבורי ונקצר תורים והליכים בירוקרטיים – ישירות, ללא מתווכים.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נגבש תכנית רב-שנתית לביטחון המזון; התכנית תכלול את גיבוש צרכי המזון של האוכלוסייה בעתיד ובמצבי בחירום, הגדרה ומעקב אחרי יעדים לאומיים לענף החקלאות, מיפוי וקידום פריסה גיאוגרפית של מוצרים חיוניים ומלאים אסטרטגיים במחסני חירום",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תכנית משותפת והדרגתית עם ענף החקלאות להסבת מנגנון התמיכה הממשלתי מהגנות לא-יעילות לתמיכה שקופה ומכוונת בחקלאות. במסגרת התכנית נעגן בחקיקה את מעמד החקלאות כענף אסטרטגי חיוני והתחייבות המדינה לתמיכה ממושכת",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל לשבירת הכוח המונופוליסטי בשוק המזון ולהשבת כוח מיקוח לחקלאים והצרכנים. כמו כן, נתמוך ביוזמות מכירה ישירה של תוצרת חקלאית לצרכנים.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נרחיב ונחזק את מסגרת הביטוח לחקלאים, בדגש על אסונות טבע, אירועי מלחמה ופגיעות הנובעות מפרוטקשן ופשיעה מאורגנת",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נתמוך בצעירים המעוניינים לעסוק בחקלאות, נספק להם רשת ביטחון בשנים הראשונות ונקדם תהליכי ליווי, הדרכה ואימוץ טכנולוגיות.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל לחיזוק ההתיישבות במרחב הכפרי, נשלים את המיגון ביישובי הצפון, הדרום ואזורי הספר, נוריד חסמים רגולטורים ונקדם חוזי פיתוח אזוריים רב-שנתיים",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבנה מחדש את מערך ההוקרה וההטבות האזרחיות במדינת ישראל כך שמשרתי צה״ל, ובראשם הלוחמים, יקבלו עדיפות בזכויות. דחויי שירות אשר קיבלו פטור משירות, לא יהיו זכאים להטבות אזרחיות המיועדות למשרתים כפי שהוגדרו במדרג התגמולים.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים חשבון זינוק אישי לצעירים, שישמש מאגר מידע מרוכז לכלל הכספים והזכויות העומדים לרשותם בכניסה לחיים הבוגרים, לרבות חיסכון לכל ילד, מענק השחרור והפיקדון האישי.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נצמצם את שיעור הצעירים חסרי המעש – אלו שאינם עובדים, לומדים או נמצאים בהכשרה. במסגרת זו, נקדם תכנית לשילוב צעירים אלו בתעסוקה, בהשכלה ובהכשרה באמצעות יחידות ייעודיות ברשויות המקומיות, ונקבע יעדים לאומיים שעל פיהם תימדד הצלחת התכנית.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעדכן את תעריפי התחבורה הציבורית ונחזיר הוגנות והגיון לסבסוד – כשצעירים ומשרתים, המשתמשים העיקריים בתחב״צ, יקבלו את ההטבות ולא מגזרים לפי עיוות פוליטי.",
+        "aspect": "cost-of-living-and-affordability",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "צפון חזק ומשגשג הוא חבל ארץ שנוספו לו עוד 150 אלף תושבים לפחות בעשור הקרוב.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקדם פתיחת עסקים חדשים ע״י עדכון חוק עידוד השקעות הון ויצירת שתי מדרגות חדשות בחוק – 2.5% מס חברות לקו העימות (א'++) ו-5% למחוז צפון בקו קריות-כנרת (א'+).",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נשקם את הקיים באמצעות מענק שיקום מיוחד לעסקים בנוסף למסלולי הפיצוי של מס רכוש (נזק עקיף) ונקל על העסקים בהוצאות דרך הפחתה בארנונה העסקית בשנים 2026-2028, תוך שיפוי מלא של הרשויות המקומיות.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נגדיל הטבות המס ליישובים במתווה דיפרנציאלי. נגדיל את תקרת ההטבה של ישובים עירוניים צמודי הגדר ל-25%, נעלה את תקרת ההטבה של יתר הישובים צמודי הגדר ל-20% ונעלה את תקרת ההטבה של יתר היישובים ב-4% נוספים.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נתקצב פיתוח תיירות בהיקף של 250 מלש״ח ל-3 שנים באזור התכנית, ונגדיל את מענק עידוד השקעות הון ל-40% לתקופה של חמש שנים, ללא דרישה ללינות חוץ.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקדם סבסוד למעונות לגיל הרך (מלידה עד גיל 3) של 2,000 ש״ח לילד לזוגות הורים עובדים, כאשר אחד או יותר מהם בוגרי שירות צבאי, ו-3,000 ש״ח אם אחד או יותר מהם משרתי מילואים פעילים, עבור משפחות המתגוררות באזור 0-9 ק״מ מהגבול בצפון.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נגבש, יחד עם בנק ישראל והמערכת הפיננסית, מדיניות מחייבת שתסיר חסמים בנקאיים וכלכליים עמם מתמודדים העולים.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
@@ -172,15 +415,6 @@
         "_note": "הטבת דיור למשרתים. מאז פורסם עמוד דיור ייעודי (נאסף 2026-10-11) — ראו הרשומות המפורטות באותו נושא.",
         "provenance": "official-current",
         "concreteness": "specific-stance"
-      },
-      {
-        "text": "הקצאת קרקע ייעודית ופרויקטים לשכירות ארוכת טווח למשרתים, בהתאם לרמת השירות.",
-        "aspect": "service-linked-benefit-mechanics",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
       },
       {
         "text": "נציב יעד לאומי ברור: לצמצם משמעותית את הפער שנפער בין מחירי הדיור להכנסה, ולהחזיר את נגישות הדיור למשפחות העובדות. את הצלחתנו נמדוד בבנייה שהושלמה ובאכלוס בפועל.",
@@ -217,6 +451,123 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "ניתן הטבות דיור למשרתי המילואים ע״י הקצאת קרקעות ייעודית למגורים ללוחמי המילואים ופרויקטי דיור להשכרה ארוכת טווח – לפי מדרג שירות.",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בדיור – נמנף את הצורך במיגון כמנוע התחדשות עירונית, נציף את השוק בדירות חדשות ונטיל מס על קרקעות שאינן מקודמות לבנייה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם הסדרה של ״דיור תומך״, שתאפשר לאזרחים ותיקים להמשיך לגור בביתם ולקבל שירותים וטיפולים הדרושים להם בצורה מפוקחת ומוסדרת.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאגד ונפרסם לציבור נתוני מחירים אמינים – הן ממחירי השכירות (חוזי שכירות שייאספו דרך הרשויות המקומיות) והן ממחירי הרכישה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תיקון חקיקה, שיסגור את הפרצה הקיימת בחוק בכל הנוגע לגביית דמי תיווך משוכרים, ונגביר את הפיקוח על מתווכי נדל״ן באמצעות יחידה ייעודית ברשות להגנת הצרכן וסחר הוגן.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם מענה משפטי נגיש ומסובסד לשוכרים צעירים ועולים חדשים ברמה המקומית. רשויות שבהן שיעור השוכרים גבוה יפעילו מחלקת סיוע וגישור לשוכרים.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תכנית מקיפה להתחדשות עירונית במרכז העיר, לצד יישום הסכם גג שיאפשר בניית אלפי יחידות דיור חדשות, שדרוג המרחב הציבורי והרחבת התשתיות העירוניות. נקדם מסלולי שכירות עם אופציה לרכישה במודל בתי אגודה של הסוכנות היהודית בחבל ״תקומה״",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם שכירות ארוכת-טווח, בדומה למודל ״דירה להשכיר״, שבו נחתמים חוזים לשנים ולא לשנה. נבטיח רשת ביטחון לחברות ומשקיעים שיבחרו לפעול בתחום השכירות המוסדית, נבחן מנגנוני BOT לתחום. נתעדף את אוכלוסיית המשרתים בתכניות השכירות ארוכות הטווח.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקצר את הליכי האישור התכנוניים. נעביר סמכויות תכנון לוועדות המקומיות באופן דיפרנציאלי על בסיס הוכחת יכולת קידום וביצוע. נקים צוותי משימה להוצאת היתרי בנייה ושיווק ברשויות המקומיות בעלות מלאי תכנוני גדול שטרם מומש, בדגש על מלאים בהתחדשות עירונית.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל למציאת פתרונות לבעיית ״התושב הגרעוני״, המרתיעה רשויות מאישור בנייה למגורים, ונקדם תמריצים לקבלנים – בונוסים על הקדמה ועמידה באבני דרך, וקנסות על עיכובים ועל רשלנות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל להוספה מהירה של עשרות אלפי עובדים, החסרים בתחום הבניה, ולהכשרתם בזמן קצר. נפעל להקלת הרגולציה באופן שיאפשר ויתמרץ הכנסת טכנולוגיות בניה חדשות ומתקדמות לקיצור משך הבניה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעגן את עקרון הפיתוח מוכוון-התחבורה (TOD). באזורי הביקוש נמקד ונצפף את הבנייה סביב תחנות תחבורה ציבורית עתירות-קיבולת, ברדיוס הליכה מהתחנה, נעודד עירוב שימושים של מגורים, שירותים ציבוריים, תעסוקה ומסחר, ונמנף את השבחת הקרקע סביב התחנות למימון התשתיות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נסיר את חסמי התכנון, הקרקע והרגולציה שמקשים על יישובים, מושבים וקיבוצים לגדול ולקלוט את הדור הבא. נאפשר הרחבות ותהליכי דור המשך, נתאים את התכנון למאפיינים הייחודיים של המרחב הכפרי, ונעשה זאת לצד שמירה על השטחים הפתוחים ועל אופי ההתיישבות.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "education": [
@@ -257,32 +608,139 @@
         "concreteness": "generic"
       },
       {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "עדיפות לחינוך הממלכתי; מימון ציבורי מותנה ביישום תוכנית לימודים ממלכתית כוללת — מתמטיקה, מדעים, אנגלית. אין הצדקה לתקצוב מוסדות הדוחים את לימודי הליבה.",
-        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נבטיח מסלולי גיוס הוראה חלופיים המבוססים על איכות וביצועים; מבנה תגמול נפרד למנהלי בתי ספר בהתאם לאחריותם בפועל; מעבר מבחינות בגרות חיצוניות להערכה מבוססת-כשירויות ותיק עבודות.",
-        "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
-        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "הרחבת זכאות למלגות לימודים; לוחמים יזכו לכיסוי מלא (100%) של שכר הלימוד.",
+        "text": "נרחיב את הזכאות למלגת ״ממדים ללימודים״ לכלל המשרתים – באחוז משתנה לפי מדרג כאשר לוחמים ולוחמות יקבלו מימון של 100% מעלות התואר.",
         "aspect": "higher-education-and-vocational-training",
         "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "נתעדף תקציבית מוסדות ממלכתיים המלמדים מקצועות ליבה, נבטיח שכל ילד יצא עם הכלים להשתלב בשוק העבודה המודרני ונאפשר לשני ההורים לעבוד דרך רפורמה בחינוך לגיל הרך.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מערכת החינוך מחויבת להחזיר את ערכי היסוד שלנו: ציונות, יהדות ותפיסה אזרחית דמוקרטית וליברלית לפי ערכי מגילת העצמאות.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקים גוף סטטוטורי (בדומה למועצה לביטחון לאומי) שיורכב מאנשי אקדמיה, תעשייה ונציגי זרמי החינוך השונים בישראל: ממלכתי-עברי, ממלכתי-ערבי, ממלכתי-דתי וממלכתי-חרדי. המועצה תגדיר תוכנית חומש חינוכית ותקציבית, תיקבע ליבה לאומית מחייבת לכל תלמיד במערכת החינוך הציבורית: זהות יהודית-ישראלית, עברית, אנגלית, מתמטיקה, מדעים, אוריינות בינה מלאכותית, חשיבה ביקורתית, אזרחות ודמוקרטיה.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחיל את חוק חינוך ממלכתי ולימודי ליבה כסטנדרט מחייב לקבלת מימון ציבורי מלא. המדינה תדרוש ממוסדות שאינם ממלכתיים, בדגש על המגזר החרדי מסלול הצטרפות למערכת החרדית הממלכתית (ממ״ח), הכוללת לימודי ליבה מלאים, פיקוח פדגוגי והסדרת מבני הלימוד. בהתאם, יצומצם באופן משמעותי תקצוב למוסדות שלא יעמדו בתו תקן ממלכתי.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעבור ממערכת ריכוזית למערכת מונחת תוצאות. מנהל המוסד יקבל סמכות לניהול ״סל שקלי״ גמיש, שיאפשר לו לרכוש שירותים פדגוגיים, לקבוע מבנה יום הלימודים (למשל: ימי למידה מרוכזים או למידה מרחוק) לתעדף משאבים בין צרכים לימודיים לצרכי חוסן. בנוסף, ניצור טבלת שכר נפרדת למנהלים, שתשקף את האחריות האמיתית שלהם: גודל בית הספר, מורכבות האוכלוסייה, והעמידה ביעדים חינוכיים.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעצים סמכותן של הרשויות המקומיות כשותף מרכזי בניהול מערכת החינוך בתחומן, לרבות הגיל הרך וגיל הינקות.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים מסלולי העסקה מקבילים המבוססים על איכות ותפוקות ולא רק על ותק, תוך הכרה בניסיון מקצועי קודם ושכר פתיחה גבוה. הרפורמה תכלול את הגדרת שבוע העבודה מחדש: הפחתת שעות הוראה פרונטליות לטובת שעות חניכה אישית (Mentoring) וזמן לשיח רגשי וטיפול בבעיות חברתיות.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נצמצם את מספר בחינות הבגרות החיצוניות והן יומרו במבחני מיומנויות ברוח מדדי PISA הבינלאומיים. יבוצע מעבר מהערכה המבוססת על שינון – לשיטות של הערכה חלופית, כמו עבודות חקר מקיפות (PBL) ובניית תיק עבודות מתמשך המציג את התפתחות התלמיד.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בתי הספר ישלבו התנסות מעשית לחיים הבוגרים, למשל אוריינות פיננסית יישומית, ניהול זכויות מול מוסדות המדינה וכלים לניהול עצמאי של תקציב וזמן.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבסס תו איכות לאומי למסגרות גילאי לידה-3 של רישוי, תקני בטיחות וסטנדרט הכשרה מינימלי לצוותים. האחריות על תחום גילאי לידה-3 תאוחד תחת משרד החינוך, שירכז את הרישוי, הפיקוח, קביעת הסטנדרטים וההכשרה המקצועית. כמו כן, ניצור טבלת שכר נפרדת לגננות, עם שכר בסיס גבוה יותר ותגמול מותאם לעבודה מול הורים, רשויות, מערכות תמיכה וילדים בגיל הרגיש ביותר.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעדכן את מודל התקצוב לטובת מחקר יישומי וקיצור משך הלימודים לתארים בחלק מהמקצועות. נאמץ מודל Micro-credentials (תעודות מקצועיות קצרות, המוכרות כנקודות זכות אקדמיות) כדי לאפשר שילוב מהיר בשוק העבודה.",
+        "aspect": "higher-education-and-vocational-training",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/education/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטיח את רציפות תקציב הגפ״ן והגדלתו, ע״י הבטחת תקצוב של 7000 ש״ח לתלמיד לשנה בחמש השנים הראשונות, ולאחר מכן הפחתה הדרגתית לאורך 5 שנים נוספות לרמה הארצית. נגדיל את התקציב לחינוך בלתי פורמלי מ-357 ש״ח ל-1000 ש״ח לתלמיד בשנה, תוך תוספת השקעה של כ-225 מיליון ש״ח במסגרת תכנית חומש.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נבטיח גיוס של מאות מורים בתכניות מצוינות ייעודיות לאזור, לצד יצירת תשתיות למשיכת אנשי חינוך איכותיים, לרבות חבילות רילוקיישן, תוכניות ״סיירות מחנכים״ ותמריצי שכר והטבות.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבנה מעטפת שפתית, לימודית וחברתית לילדים עולים במוסדות החינוך, כולל תגבור ייעודי, הכשרת צוותים ותקצוב מתאים לבתי הספר הקולטים.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "health": [
@@ -297,11 +755,92 @@
         "concreteness": "generic"
       },
       {
-        "text": "נבנה תוכנית מניעה ארצית ללימוד כלי התמודדות נפשית בבתי ספר, בצבא ובמקומות עבודה; נקים מנהלות שיקום אזוריות כנקודת גישה אחת לאוכלוסיות הנפגעות, עם מדידת הצלחה לפי שיקום בפועל (תעסוקה, השכלה, יציבות משפחתית) ולא רק לפי הוצאה כספית.",
+        "text": "נקים מנהלות שיקום שיובילו את התכניות הלאומיות – לצפון ולדרום, וכן לכלל ישראל, ויהוו כתובת יחידה. נמנה שר שיהיה אמון על השיקום, פתיחת חסמים, פירוק בירוקרטיה וייעול מערך הטיפולים.",
         "aspect": "preventive-care-and-specific-benefits",
         "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם ונתקצב תכנית לאומית להגברת מודעות ומתן כלים להתמודדות לכלל האוכלוסייה שתבוצע במסגרות הקיימות: בתי ספר, צה״ל, מילואים, אקדמיה ומקומות עבודה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "כל משוחרר מצה״ל יהיה זכאי לליווי וטיפול במידה והוא נדרש לכך, למניעה אפשרית של התפתחות פוסט-טראומה וחיסכון של ההליך הבירוקרטי הנדרש, כהמשך למענה שיקבל במהלך שירותו.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטיח לכל מטופל זכות בחירה במסלול השיקום שלו. נכשיר כוח אדם מקצועי, ונתמרץ מטפלים קיימים להרחבת היקף העסקתם",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעיל מערכי שיקום וליווי קרובים לבית, בשיתוף פעולה הדוק עם הרשויות המקומיות, כך שיהיה נגיש ונוח לכל אזרח ויעלה את סיכויי ההחלמה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/post-traumatic-stress-recovery/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטיח שהטיפול הרפואי הגריאטרי יותאם לגידול באוכלוסייה, באמצעות מתן תמריצים לרופאים להתמחות בגריאטריה והגדלת מספר מיטות האשפוז הגריאטריות, כולל שיקומיות, ועידוד השקעות בשירותי רפואה שיקומית.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחזק מענים רפואיים וסיעודיים בבית ובקהילה, נקדם רצף טיפולי בין בתי החולים לרפואה בקהילה, נקצה משאבים לתכניות קיימות לרפואה מונעת ואבחון מוקדם במטרה למנוע ירידה תפקודית וקוגניטיבית",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעיל מרכז חירום קדמי בקריית שמונה באמצעות קופת חולים, בית חולים פרטי או מודל משולב, באמצעות SLA מחייב ותקצובו באופן קבוע. נשפר את השירות בקהילה ע״י קביעת סטנדרט מחייב לאספקת שירותי בריאות ע״י קופות החולים, לרבות סנקציה תקציבית",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נרחיב את כח האדם הרפואי והסיעודי באמצעות תמריצים לגיוס ולשימור עובדים, חיזוק שיתופי הפעולה בין בתי החולים, קופות החולים והמוסדות האקדמיים, וקידום מרכזי מצוינות בתחומים רפואיים שבהם קיים מחסור באזור.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאיץ ונייעל תהליכי ההכרה הרגולטורית בהשכלה ובמקצועות: מסלול מהיר ומחייב בזמנים קצובים להכרה בתארים וניסיון תעסוקתי שנצבר, רישוי מקצועי מותנה המאפשר עבודה מיידית תחת ליווי, קורסי הסבה איכותיים הכוללים לימודי עברית מעשית. נקדם שילובם המואץ של רופאים, אנשי בריאות ומורים עולים במערכות הציבוריות בהם המחסור הלאומי פוגש את ההיצע הפוטנציאלי",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -336,14 +875,49 @@
         "concreteness": "generic"
       },
       {
-        "text": "הדיחוי מלימודי תורה יוגבל לעד 3% מכלל מחזור הגיוס מדי שנה; כלל הזכאים לדיחוי יחויבו לבצע חיול והכשרה בסיסית, עם חידוש שנתי מותנה בעמידה בקריטריונים. אי-עמידה בתנאים תוביל לשלילה מדורגת של הטבות — חוזי ממשלה, מלגות מדינה, סיוע בדיור, סבסוד תחבורה, איסור שכירות ארוכת טווח — ואף להעמדה לדין על דיווח כוזב.",
+        "text": "קדימות לשירות בצה״ל ולאחריו מסלולי שירות אזרחי ולאומי משמעותי, בהתאם לצרכי המדינה. צה״ל יבחר את משרתי החובה לפי צרכיו, תוך שמירה על אורח חייהם. מי שלא משרת בצה״ל, יחויב לשרת במסלול שירות אזרחי.",
         "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "dateRetrieved": "2026-07-08",
-        "contrary": "פטור נרחב/בלתי מוגבל מגיוס לחרדים",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "תוקם מנהלת שירות לאומית עצמאית שלה בלבד, הזכות בחוק לפעול מול כלל המועמדים לשירות. ללא יד מגזרית, קהילתית או מפלגתית פוליטית. בהתאם לחוק, המנהלת תזמן את כלל הצעירים לתהליכי מיון, תקצה לצה״ל את החלק המיועד לשירות בצה״ל ממחזור הגיוס ותפנה צעירים שלא ישרתו בצה״ל לשאר מסלולי השירות האזרחי-לאומי.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מדי מחזור שנתי תישמר הקצאה של עד 3% (ההקצאה המדויקת תקבע על פי צרכי מערכת הביטחון) מכלל המחזור, לדיחוי משירות למשך שנה אחת, לצורך לימודי תורה, במיון פתוח, לפי קריטריונים חיצוניים ושיוויוניים. כלל זכאי הדיחוי יבצעו חיול והכשרה בסיסית.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "צעירים שאינם פטורים משירות ולא מילאו חובתם (משתמטים ועריקים), יהיו נתונים לשלילת הטבות אזרחיות וכלכליות ולדין פלילי",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/service-for-all/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם יהדות מכילה ומכבדת, באחריות ובהדברות, תוך הרחבת העצמאות של רשויות מקומיות וקהילות לעצב את השבת במרחב הציבורי בהתאם לאופיין וערכיהן.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "justice": [
@@ -400,6 +974,33 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "עצמאות המשטרה תעוגן בחקיקה, וגורמים פוליטיים יחדלו לעסוק במינויים וחקירות.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים ועדת שרים למלחמה בשחיתות, שתביא המלצות קונקרטיות לשינוי בחקיקה ותקנות, כחלק מתפיסה מניעתית והטמעת נורמות שלטון של מדינה דמוקרטית מתקדמת.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשים סוף לעידן הבינוניות והקומבינות – ננקה את השירות הציבורי ממינויי מקורבים ונחזיר אותו לאנשי המקצוע הטובים ביותר, עם יעדים מדידים ושקיפות מלאה. נסגור משרדים מיותרים ונייעל את מבנה הממשלה.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -447,8 +1048,126 @@
         "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם פעולה משותפת עם הנהגת החברה הערבית והקהילה, ובהתגייסותה האקטיבית של החברה הערבית לטיפול בפשיעה. החל מגיוס צעירים לשירות אזרחי חובה באופן ממוקד במלחמה בפשיעה במגזר הערבי ודרך פעולה עם גופי האכיפה.",
+        "aspect": "arab-minority-specific-mechanisms",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הממשלה תקדם תוכנית מקיפה למניעה ולטיפול באלימות נגד נשים, משפחה, נוער וילדים (פיזית, מינית וכלכלית), תוך הרחבת השימוש באמצעים טכנולוגיים ושילוב כוחות רב משרדי.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/homeland-security/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נייצר מנגנון קבע לשימור ערך הקצבאות ונפעל למניעת שחיקה בהכנסה של אזרחים ותיקים. בנוסף, נדאג למיצוי זכויות יזום מצד גופים ממשלתיים, חברות ממשלתיות ורשויות מקומיות, שיצמצם בירוקרטיה ויסייע בהגדלת התמיכה הממשלתית המגיעה לאזרחים ותיקים.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל תכנית להתמודדות עם בדידות, שהיא אחד האיומים המשמעותיים ביותר על איכות חייהם ובריאותם של אזרחים ותיקים. התכנית תופעל באמצעות מערכים ייעודיים ברשויות המקומיות, ותכלול מיפוי של אוכלוסיית האזרחים הוותיקים בכל יישוב וזיהוי רמת הסיכון לבדידות, פנייה אקטיבית לבודדים ומתן פתרונות מותאמים למצבם ולצרכיהם.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל להקמת מועצה לאומית לאזרחים ותיקים, שתהיה הגוף הממשלתי המרכזי האחראי על גיבוש המדיניות בנושא זה.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבחן אמצעים שיאפשרו לבני 67 ומעלה להמשיך לעבוד ככל שהם מעוניינים בכך ומצבם הבריאותי מאפשר זאת.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחמיר את הענישה על פשעי עוקץ פיננסי של אזרחים ותיקים, נגדיל את המשאבים לאכיפה ונקדם מנגנון השהיית עסקאות באשראי על סכומים גדולים וחובת יצירת קשר כדי למנוע מראש את עבירות העוקץ.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל לצמצום הבירוקרטיה בשירותים לאזרח הוותיק, באמצעות מרכזי שירות אחודים, שירכזו את כל המענים הרלוונטיים במקום אחד (One Stop Shop).",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים מסגרת קליטה אחודה (One-Stop-Shop) שתרכז את מלוא האחריות לתהליך ותלווה את העולה; המסגרת תכלול מסלול ייעודי להשלמת עלייתן של קהילות שאושרו לעלייה וממתינות לה.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעיל מרכז רב-לשוני למיצוי זכויות, בהתאם להמלצת מבקר המדינה, ונוודא הנגשה לשונית בכל המוסדות הציבוריים ובגופים חיוניים נותני שירות.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/aliyah-and-integration/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
-    "ecology": []
+    "ecology": [
+      {
+        "text": "נקדם שדות דו-שימושיים של ייצור חקלאי לצד ייצור אנרגיה סולארית כמנוע כלכלי לחקלאים. נייצר מסגרת רגולטורית ברורה, תמריצי מס ותמיכה ממשלתית, לצד קידום יעדי ייצור אנרגיה מתחדשת והתפתחות תחומי העיסוק הנלווים לחקלאות.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/agriculture/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם גיוון כלכלי בצפון תוך מיצוי הפוטנציאל הרב הגלום והלא ממומש באנרגיות מתחדשות. נפתח את צוואר הבקבוק ברשת ההולכה, נשלב שחקנים פרטיים, נגדיר פיתוח הרשת כתכנית חירום ונאשר תמ״א 41.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נתכנן דיור סביב תחבורה ציבורית, נקדם בניה ירוקה ונשמור על המרחבים הירוקים, כך שכל מקום – עירוני או כפרי – יהיה מקום שראוי לחיות בו.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ]
   }
 }
