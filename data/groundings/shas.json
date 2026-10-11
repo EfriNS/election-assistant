@@ -144,24 +144,26 @@
         "concreteness": "generic"
       },
       {
-        "text": "הצעת חוק יסוד: תורה — לימוד תורה הוא ערך יסוד במורשת העם היהודי; המוקדשים ללימוד תורה יוכרו כמבצעים שירות משמעותי למדינה ולעם ישראל, ולא ייגבה מהם מחיר כלכלי על אי-שירות. כל חברי הכנסת מש\"ס חתמו על ההצעה.",
+        "text": "חוק יסוד: לימוד תורה, שנכלל בהסכמים הקואליציוניים של 2022, עבר בכנסת ב-13 ביולי 2026 וקובע שלימוד התורה הוא ערך יסוד במורשת העם היהודי ומדינת ישראל. הסעיף שהשווה לומדי תורה למשרתים הוסר לפני האישור.",
         "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "contrary": "גיוס חרדים לצה\"ל; ביטול פטורים ממיסים ותשלומים",
         "provenance": "third-party",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "נוסח עודכן בבדיקת מקורות צד ג׳ 2026-10-11: הרשומה צומצמה למה שמופיע במקור המצוטט."
       },
       {
-        "text": "דרעי הגיש חוק המעגן סמכות בלעדית לגופי הרבנות הממלכתיים על הגיור; ביטול גיורים פרטיים מחוץ לרבנות. ביטול רפורמת הכשרות (החזרת כשרות ממלכתית בלבד).",
+        "text": "דרעי הגיש את הצעת חוק ״הגיור הממלכתי״, שנועדה לעקוף את פסיקת בג״ץ ממרץ 2016 שהכירה בגיורים אורתודוקסיים פרטיים לצורך חוק השבות.",
         "aspect": "rabbinate-monopoly-and-conversion-mechanics",
         "sourceUrl": "https://hiddush.org/subchannel-80-0-Shas.aspx",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "contrary": "גיור פרטי, גיור על ידי רבני ערים, כשרות פרטית",
         "provenance": "third-party",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "נוסח עודכן בבדיקת מקורות צד ג׳ 2026-10-11: הרשומה צומצמה למה שמופיע במקור המצוטט."
       }
     ],
     "justice": [

@@ -19,7 +19,7 @@
       {
         "text": "\"המלחמה באויבי ישראל, תהיה טוטאלית, ללא משא ומתן, ללא ויתורים וללא פשרות.\"",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הסכמי שלום; משא ומתן עם אויבים",
@@ -29,7 +29,7 @@
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\"",
         "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -38,7 +38,7 @@
       {
         "text": "\"השבת הביטחון וההרתעה לחיילי צה\"ל.\" קואליציה 2022: הגדלת תקציב משרד ביטחון לאומי ב-45 מיליארד ₪ ל-7 שנים; הקמת \"משמר לאומי\"; בן גביר שר לביטחון לאומי.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -54,9 +54,9 @@
         "concreteness": "specific-stance"
       },
       {
-        "text": "\"לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל שטחי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.\" (הסכם קואליציוני 2022)",
+        "text": "\"לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל מרחבי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.\" (קווי היסוד של הממשלה ה-37, 2022)",
         "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://www.idi.org.il/articles/46842",
+        "sourceUrl": "https://www.idi.org.il/articles/46872",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -86,7 +86,7 @@
       {
         "text": "\"אנחנו נפתח את הכלכלה לפי השיטה של 'קפיטליזם יהודי'.\"",
         "aspect": "market-structure-and-competition",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Term undefined in official materials. JVL platform links it to funding development of Galilee, Negev, and West Bank settlements from gas royalties.",
@@ -107,7 +107,7 @@
       {
         "text": "\"ההתיישבות היהודית בכל חלקי הארץ, תשוב לעמוד כאחד מהערכים עליהם מושתתת מדינת ישראל.\" תכנית הבנייה: עיר חדשה בין אריאל לראש העין; פיתוח עירוני בגליל ובנגב.",
         "aspect": "settlement-and-territorial-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הקפאת ההתנחלויות; פינוי מאחזים",
@@ -126,7 +126,7 @@
       {
         "text": "\"שמירה נחושה על אדמות הלאום, בחקיקה מסודרת.\"",
         "aspect": "settlement-and-territorial-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -137,7 +137,7 @@
       {
         "text": "\"ילדי ישראל יחונכו לאהבת הארץ, ערבות הדדית בתוך העם היהודי, הכרת ההיסטוריה והמורשת של העם היהודי ואוצר היהדות.\"",
         "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -146,7 +146,7 @@
       {
         "text": "עברית היא שפה רשמית יחידה של המדינה. \"מדינת ישראל היא מדינה יהודית... עברית היא שפתה הרשמית היחידה.\"",
         "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הכרה בערבית כשפה רשמית שנייה (חוק יסוד: ישראל — מעמד ב')",
@@ -169,7 +169,7 @@
       {
         "text": "\"נפעל להטמעת המשפט העברי במערכת המשפטית של מדינת ישראל.\"",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הפרדת דת ממדינה; משפט חילוני",
@@ -179,7 +179,7 @@
       {
         "text": "\"ערכי המדינה היהודית יהיו על פי המוסר היהודי.\" \"מדינת ישראל היא מדינה יהודית, באופייה, בסמליה הלאומיים וערכיה המשפטיים.\"",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -188,7 +188,7 @@
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\" — עמדה מרכזית בפלטפורמה; שינוי מהסטאטוס קוו הנוכחי.",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הסדר הסטאטוס קוו של הר הבית; ניהול וואקף",
@@ -262,7 +262,7 @@
       {
         "text": "\"עוצמה יהודית תפעל להוצאת אויבי ישראל מארצנו.\" מסמך JVL: עידוד הגירה, העברת אויבים, חילופי אוכלוסין — \"לצורך הבטחת רוב יהודי ואוכלוסייה אזרחית נאמנה.\" כלי מדינה: מוסד, שב\"כ, קרן קיימת.",
         "aspect": "demographic-and-citizenship-policy",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "שוויון אזרחי; זכות להישאר",
@@ -282,7 +282,7 @@
       {
         "text": "\"פעולת חרום נמרצת לעליית יהודי התפוצות וקליטתם.\" \"מדינת ישראל היא... מדינה יהודית.\" — גישה אתנו-לאומנית מפורשת למדיניות הציבורית.",
         "aspect": "demographic-and-citizenship-policy",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
