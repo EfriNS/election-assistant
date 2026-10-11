@@ -21,7 +21,7 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { readFileSync, writeFileSync } from "fs";
-import { buildScoringPrompt, buildScoreResponseSchema } from "@/lib/score-topics-prompt";
+import { buildScoringPrompt, buildScoreResponseSchema, getScoringEntries } from "@/lib/score-topics-prompt";
 import { calcResults, type TopicQA } from "@/lib/scoring";
 import { QUESTIONS_FORMAL } from "@/lib/questions";
 import { TOPICS } from "@/lib/topics";
@@ -30,7 +30,8 @@ import { PARTIES } from "@/lib/parties";
 const MODEL = "gemini-3.1-flash-lite"; // same as app/api/score-topics/route.ts
 const TOPIC_WEIGHT = 3; // every topic "important", none critical — keeps the gate out of the comparison
 
-type FollowUp = { question: string; options: [string, string, string] };
+// aspect: the sub-dimension the question probes — what /api/follow-up sets as targetedAspect.
+type FollowUp = { question: string; aspect: string; options: [string, string, string] };
 
 // Two fixed follow-ups per topic, each with three answers running roughly
 // left → centre → right, so a profile is just a pick (0/1/2) per question.
@@ -38,6 +39,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   security: [
     {
       question: "מה צריך לקרות ברצועת עזה ביום שאחרי?",
+      aspect: "territorial-endgame-specifics",
       options: [
         "נסיגה ישראלית, שלטון פלסטיני מתון בסיוע בינלאומי, ותהליך מדיני",
         "שליטה ביטחונית ישראלית עד פירוז מלא, בלי לנהל את חיי התושבים",
@@ -46,6 +48,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "איך נכון לפעול מול חיזבאללה ואיראן?",
+      aspect: "foreign-policy-and-nonproliferation",
       options: [
         "הסדרים מדיניים וכוח בינלאומי, בתיאום עם ארצות הברית",
         "אכיפה תקיפה של כל הפרה ושמירה על חופש פעולה צבאי",
@@ -56,6 +59,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   economy: [
     {
       question: "מה הצעד החשוב ביותר להורדת יוקר המחיה?",
+      aspect: "cost-of-living-and-affordability",
       options: [
         "פיקוח על מחירים והגדלת קצבאות ושכר המינימום",
         "פירוק מונופולים ופתיחת השוק ליבוא ולתחרות",
@@ -64,6 +68,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "האם הטבות מהמדינה צריכות להיות תלויות בשירות צבאי או אזרחי?",
+      aspect: "social-safety-net-and-labor-protections",
       options: [
         "לא — זכויות חברתיות מגיעות לכל אזרח לפי צורך",
         "כן, במידה — עדיפות למשרתים בלי לשלול זכויות בסיס",
@@ -74,6 +79,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   housing: [
     {
       question: "מה יוריד את מחירי הדיור?",
+      aspect: "rental-and-affordability-mechanics",
       options: [
         "בנייה ציבורית ודיור להשכרה במחיר מפוקח",
         "קיצור הליכי התכנון והעברת סמכויות לרשויות המקומיות",
@@ -82,6 +88,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "למי צריכה להינתן עדיפות בסיוע בדיור?",
+      aspect: "service-linked-benefit-mechanics",
       options: [
         "למעוטי הכנסה ולזכאי הדיור הציבורי",
         "לזוגות צעירים ולמשפחות עובדות",
@@ -92,6 +99,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   education: [
     {
       question: "האם לממן מוסדות חינוך שאינם מלמדים לימודי ליבה?",
+      aspect: "independent-school-funding-and-autonomy",
       options: [
         "לא — מימון ציבורי רק למי שמלמד ליבה מלאה",
         "לעודד לימודי ליבה בהדרגה, בלי לשלול תקציב",
@@ -100,6 +108,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "מה הכי חשוב לשנות בבתי הספר?",
+      aspect: "core-curriculum-and-teacher-standards",
       options: [
         "תקצוב שוויוני וצמצום פערים בין המרכז לפריפריה ובין המגזרים",
         "שכר גבוה למורים טובים ועצמאות למנהלים",
@@ -110,6 +119,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   health: [
     {
       question: "איך לקצר את התורים במערכת הבריאות?",
+      aspect: "private-sector-regulation-mechanics",
       options: [
         "הגדלת התקציב הציבורי ותוספת מיטות ותקנים",
         "העברת שירותים מבתי החולים לקהילה ושימוש בטכנולוגיה",
@@ -118,6 +128,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "במה להשקיע קודם?",
+      aspect: "sector-and-geographic-equity",
       options: [
         "בבתי חולים ובשירותי בריאות בצפון ובדרום",
         "בבריאות הנפש ובשיקום נפגעי המלחמה",
@@ -128,6 +139,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   religion: [
     {
       question: "מה עמדתך בעניין גיוס בני הישיבות?",
+      aspect: "haredi-draft-and-service-burden",
       options: [
         "גיוס חובה לכולם, ושלילת תקציבים ממי שלא משרת",
         "גיוס הדרגתי בהסכמה, עם מסלולים מותאמים",
@@ -136,6 +148,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "האם לאפשר נישואים אזרחיים ותחבורה ציבורית בשבת?",
+      aspect: "civil-status-and-public-space-specifics",
       options: [
         "כן, בכל הארץ",
         "כל רשות מקומית תחליט לפי אופי תושביה",
@@ -146,6 +159,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   justice: [
     {
       question: "מי צריך לבחור את שופטי בית המשפט העליון?",
+      aspect: "judicial-appointments-mechanism-specifics",
       options: [
         "ועדה מקצועית שאינה נשלטת בידי פוליטיקאים",
         "ועדה מאוזנת בין נבחרי ציבור, שופטים ואנשי מקצוע",
@@ -154,6 +168,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "האם הכנסת צריכה להיות מסוגלת לבטל פסיקה של בית המשפט העליון?",
+      aspect: "separation-of-powers-and-democratic-norms",
       options: [
         "לא — לבית המשפט המילה האחרונה",
         "רק ברוב גדול ובהסכמה רחבה",
@@ -164,6 +179,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   equality: [
     {
       question: "מה עמדתך בעניין זכויות הקהילה הגאה?",
+      aspect: "lgbtq-specific-policy-mechanisms",
       options: [
         "שוויון מלא בחוק, כולל נישואים והורות",
         "הגנה מפני אפליה, בלי לשנות את מוסד הנישואים",
@@ -172,6 +188,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "איך צריכה המדינה להתייחס לאזרחיה הערבים?",
+      aspect: "arab-minority-specific-mechanisms",
       options: [
         "שוויון אזרחי מלא, תיקון חוק הלאום והשקעה בסגירת פערים",
         "שילוב בתעסוקה ובשירות לצד אכיפת החוק",
@@ -182,6 +199,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
   ecology: [
     {
       question: "מה נכון לעשות בעניין משבר האקלים?",
+      aspect: "state-responsibility-framing",
       options: [
         "חוק אקלים מחייב עם יעדים ותקציב, גם אם זה יעלה כסף",
         "מעבר הדרגתי לאנרגיה מתחדשת בלי לייקר את החשמל",
@@ -190,6 +208,7 @@ const FOLLOW_UPS: Record<string, [FollowUp, FollowUp]> = {
     },
     {
       question: "איך לטפל בתעשיות מזהמות, כמו במפרץ חיפה?",
+      aspect: "local-environmental-enforcement",
       options: [
         "לפנות אותן לפי לוח זמנים מחייב",
         "להחמיר אכיפה ותקנים, בלי לסגור מפעלים",
@@ -312,6 +331,7 @@ function buildInputs(profile: Profile) {
     const followUps = FOLLOW_UPS[topic.id].map((fu, i) => ({
       question: fu.question,
       options: [...fu.options],
+      targetedAspect: fu.aspect,
       answer: fu.options[i === 0 ? pick1 : pick2],
     }));
     topicQA[topic.id] = { openerAnswerId: openerId, openerAnswerText: opener.text, followUps };
@@ -321,7 +341,7 @@ function buildInputs(profile: Profile) {
       topicLabel: topic.label,
       openerQuestion: QUESTIONS_FORMAL[topic.id].question,
       openerAnswer: opener.text,
-      followUpQA: followUps.map(({ question, answer }) => ({ question, answer })),
+      followUpQA: followUps.map(({ question, answer, targetedAspect }) => ({ question, answer, targetedAspect })),
     };
   });
   return { topicQA, buckets, scoringTopics };
@@ -363,7 +383,10 @@ async function collect() {
       const aiScores: Record<string, Record<string, number | null>> = {};
       for (const t of scoringTopics) {
         aiScores[t.topicId] = {};
-        for (const p of PARTIES) aiScores[t.topicId][p.id] = flat[`${t.topicId}.${p.id}`] ?? null;
+        // Same rule as the route's parseScores: no text sent for a party → no score.
+        for (const p of PARTIES) {
+          aiScores[t.topicId][p.id] = getScoringEntries(p.id, t).length > 0 ? flat[`${t.topicId}.${p.id}`] ?? null : null;
+        }
       }
       output.records.push({
         profile: profile.id,

@@ -120,6 +120,9 @@
       {
         "text": "הורדת מע״מ כבר בשנה הראשונה מ- 18% כיום ל-17% ותוך שש שנים ל12% (אחוז בשנה).",
         "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -138,6 +141,9 @@
       {
         "text": "הפסקה מיידית של התמיכה במונופולים במסווה של תמיכה בתוצרת המקומית וביטול אינספור הטבות המס שהוענקו לחברות הגדולות.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -174,6 +180,9 @@
       {
         "text": "ביטול מלא של כלל המכסים על מזון וכלל מכסות היבוא שאינן מאפשרות ליבואנים קטנים וזריזים להתחרות עם המונופולים על מחיריהם. איסור על יבואנים בלעדיים להשתלט על היבוא של יצרנים מרכזיים וצולבים. פירוק כלל מועצות הייצור החל ממועצת החלב, דרך מועצת הביצים וכלה במועצת הדבש.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -183,6 +192,9 @@
       {
         "text": "הכרזה על כלל היבואנים הבלעדיים במשק, ובפרט של מזון ומוצרי פארם וקוסמטיקה, כעל מונופולים. כך נחיל עליהם את חוק התחרות הכלכלית המטיל אחריות פלילית על בעל מונופולין שמפעיל חסמים תחרותיים בלתי חוקיים.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -192,6 +204,9 @@
       {
         "text": "חקיקה מחדש של החוק האירופי, שאוסר על מונופולים לגבות מחירים מופרזים, שרוקן מתוכן על ידי הממשלה ובית המשפט העליון. יש לחדול מאישורי מיזוגים.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -228,6 +243,9 @@
       {
         "text": "החזרת הבנקים לתחרות בשוק הפנסיה כדי לדחוף מטה את דמי הניהול. קביעת גודל מרבי של נתח שוק בשוק הפנסיה כאשר כל גוף המגיע אליו ייאלץ למכור את האחזקה העודפת שלו כדי לשמר את המתח התחרותי.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/פנסיה",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -264,6 +282,9 @@
       {
         "text": "התעצמות מדינת ישראל מבוססת על כלכלה חופשית והון אנושי יוצא דופן. עידוד תחרות ושוק חופשי הם הבסיס לכך. מאבק במונופולים: פעולה להגברת התחרות בשוק והורדת יוקר המחיה על ידי פירוק או הגבלת כוחם של גופים דומיננטיים",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -282,6 +303,9 @@
       {
         "text": "ניהול לפי יעדים ומדדים: מדי שנה תכריז הממשלה על שלוש רפורמות כלכליות מרכזיות שילוו ביעדים מדידים ובמדדי הצלחה ברורים. שינוי סדרי עדיפויות בתקציב: העברת תקציבים מהציבור המשתמט אל הציבור המשרת.",
         "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
         "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -311,6 +335,9 @@
       {
         "text": "חלוקת קרקעות למשרתי מילואים באזורי עדיפות לאומית. סבסוד שכר הדירה וביטוחים בתקופות המילואים וזמן קצר לפני ואחרי.",
         "aspect": "service-linked-benefit-mechanics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -320,6 +347,9 @@
       {
         "text": "ריבונות דרך מעשים – חיזוק ההתיישבות ביהודה ושומרון והכרעה על קרקעות בשטחי C חשובה והכרחית -נדבך קריטי מהביטחון הלאומי. הפיכת הגבול המזרחי בדגש בקעת הירדן ליעד לאומי להתיישבות. החזרת ייהוד הנגב והגליל כמשימה לאומית.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -488,6 +518,9 @@
       {
         "text": "המצב הנוכחי שבו רשות שופטת לא נבחרת יכולה לבטל חוק של הכנסת מבלי יכולת של הכנסת להתגבר על הפסיקה בשום תנאי אינו סביר בעיני. אני מתנגד בכל תוקף להצעת החוק של ח״כ רוטמן הדורסת לחלוטין את מעורבות בתי המשפט הן במעשי חקיקה והן בפעולות הממשלה. די לדעתי באפשרות ההדדית הניתנת לכל רשות להתגבר על רעותה ברוב גדול יותר.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "judicial-appointments-mechanism-specifics"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/רפורמה-במערכת-המשפט",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -553,6 +586,9 @@
       {
         "text": "למדנו כי ממשלה שמסתמכת על מפלגות לא ציוניות (חרדיות או ערביות) נסחטת לקבל החלטות לא ציוניות.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-12",
@@ -602,6 +638,9 @@
       {
         "text": "בניית שלושה בתי חולים חדשים בפריפריה הצפונית והדרומית, פתיחת פקולטה חדשה לרפואה, והגדלה דרמטית של מספר הסטודנטים לרפואה ותלמידי הסיעוד בישראל.",
         "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "healthcare-workforce-and-professional-licensing"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/בריאות",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-10-11",

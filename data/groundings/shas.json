@@ -9,6 +9,9 @@
       {
         "text": "תנועת ש\"ס מבקשת ושואפת לחיות בשלום ובטחון עם שכנותינו מדינות ערב, על פי סידורי בטחון שמטרתם להגן על כל נפש מישראל.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -38,6 +41,9 @@
       {
         "text": "אידיאולוגיה כלכלית שמרנית המאמצת ומקדשת את ערכי הגלובליזציה, התחרות החופשית, הפרטת מוסדות רווחה ושירותים — מאיימת על צביון המדינה ופוגעת במסכת הערכים היהודים החשובים של שוויון, צדקה, חמלה וערבות הדדית.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -149,6 +155,9 @@
       {
         "text": "מתן מענקים לרכישת דיור בפריפריה.",
         "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "rental-and-affordability-mechanics"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-10-12",
@@ -169,6 +178,9 @@
       {
         "text": "השוואת התקציבים לחינוך בין כל זרמי החינוך ובין הפריפריה והמרכז.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -178,6 +190,9 @@
       {
         "text": "חינוך חינם מגיל הגן ועד לסיום הלימודים התיכוניים והישיבתיים וסבסוד הלימודים באקדמיה לסטודנטים משכבות חלשות (שכר לימוד פרוגרסיבי).",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -187,6 +202,9 @@
       {
         "text": "תנועת ש\"ס תומכת בתכנית הליבה של דו\"ח ועדת דוברת, ואף מיישמת אותו בבתי הספר של 'מעין החינוך התורני', תוך התאמות לאופי הלימוד התורני הייחודי לה.",
         "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -223,6 +241,9 @@
       {
         "text": "חיזוק החינוך התורני והנחלתו לכלל ילדי ישראל, בכל זרמי החינוך, יתרום תרומה משמעותית לביסוסנו כחברה, וכעם היונק ידע וערכים מתורת ישראל וממסורתו המפוארת.",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-10-12",
@@ -272,6 +293,9 @@
       {
         "text": "שמירת הסטאטוס קוו במדינה, כדי לשמור על צביונה היהודי. תנועת ש\"ס מאמינה כי חוסנה הפנימי של המדינה מושתת על האמונה בבורא עולם ועל קיום מצוות התורה.",
         "aspect": "national-religious-symbolism",
+        "secondaryAspects": [
+          "civil-status-and-public-space-specifics"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",
@@ -281,6 +305,9 @@
       {
         "text": "חוק יסוד: לימוד תורה, שנכלל בהסכמים הקואליציוניים של 2022, עבר בכנסת ב-13 ביולי 2026 וקובע שלימוד התורה הוא ערך יסוד במורשת העם היהודי ומדינת ישראל. הסעיף שהשווה לומדי תורה למשרתים הוסר לפני האישור.",
         "aspect": "haredi-draft-and-service-burden",
+        "secondaryAspects": [
+          "national-religious-symbolism"
+        ],
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-10-11",
@@ -364,6 +391,9 @@
       {
         "text": "תנועת ש\"ס מאמינה בשימור הטבע והנוף כחלק חשוב בחיינו על אדמת ארץ הקודש. לטיפוח איכות הסביבה משמעות יהודית עמוקה, כחלק משמירה על היצירה האלוהית. חקיקת חוקים שמטרתם הגנה על הטבע, על מקורות המים ועל חופי הים.",
         "aspect": "state-responsibility-framing",
+        "secondaryAspects": [
+          "local-environmental-enforcement"
+        ],
         "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
         "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
         "dateRetrieved": "2026-06-23",

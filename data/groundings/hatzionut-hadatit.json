@@ -20,6 +20,9 @@
       {
         "text": "\"נפעל אל מול מדינות העולם להגדרת הרשות הפלסטינית כארגון טרור.\"",
         "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -86,6 +89,9 @@
       {
         "text": "מדיניות כלכלית המדגישה צמצום נטל בירוקרטי ורגולציה על עסקים, ורפורמות במגזר הציבורי.",
         "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/כלכלה.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -136,6 +142,9 @@
       {
         "text": "המשך והרחבת ההתיישבות היהודית בגליל, בנגב וביהודה ושומרון, כולל הסדרת מעמד יישובים קיימים ופיתוח תשתיות.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/התיישבות-ריבונית.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -147,6 +156,9 @@
       {
         "text": "עליה מהירה לקרקע של 20 יישובים חדשים בגליל, ו-20 יישובים חדשים בנגב.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/judaization/",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -156,6 +168,9 @@
       {
         "text": "ביטול תוכניות היוצרות רצפים טריטוריאליים ערבים והשתלטות על אדמות המדינה. קרקע שלא אנחנו מחזיקים בה – יחזיקו בה הערבים.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/judaization/",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -183,6 +198,9 @@
       {
         "text": "משפחות צעירות – דיור בר־השגה, סבסוד פיתוח והטבות. רופאים, מורים ואנשי מקצוע – מענקים ותמריצים למעבר.",
         "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "rental-and-affordability-mechanics"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/judaization/",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
         "dateRetrieved": "2026-10-12",
@@ -194,6 +212,9 @@
       {
         "text": "\"אנו מבקשים שיזוכה תקציבי בין מגזרות החינוך הממלכתי לזה הממלכתי דתי\" — התאמת נוסחת חלוקת השכל״מ למאפייני החינוך הדתי, והכרה בייחודיותו בבסיס התקציב (לא רק כתקציב ייעודי).",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "sector-specific-equity"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/חינוך.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -213,6 +234,9 @@
       {
         "text": "שמירת מעמד ותקציבי הישיבות הגבוהות, ישיבות ההסדר, המדרשות והמכינות הקדם-צבאיות.",
         "aspect": "higher-education-and-vocational-training",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/חינוך.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -246,6 +270,9 @@
       {
         "text": "שימור \"הסטטוס-קוו\" ביחסי דת ומדינה, לרבות מוסדות הדת (רבנות) והגיור המסורתי.",
         "aspect": "civil-status-and-public-space-specifics",
+        "secondaryAspects": [
+          "rabbinate-monopoly-and-conversion-mechanics"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/זהות-יהודית.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -313,6 +340,9 @@
       {
         "text": "שינוי הרכב הוועדה לבחירת שופטים להגברת משקל נבחרי הציבור; ביטול עילת הסבירות; פסקת התגברות המאפשרת לכנסת לחוקק מחדש חוק שנפסל; צמצום הסמכות המחייבת של היועצים המשפטיים לייעוץ בלבד.",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/משפט.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -323,6 +353,9 @@
       {
         "text": "שינויים במבנה הרכב בג״ץ הדן בעתירות נגד חקיקה, והפרדת רשויות מחודשת בין הממשלה, הכנסת והרשות השופטת.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "judicial-appointments-mechanism-specifics"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/משפט.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -332,6 +365,9 @@
       {
         "text": "\"נחוקק תיקון לחוק יסוד: השפיטה שם תבוטל עילת הסבירות על החלטות של נבחרי ציבור בכנסת ובממשלה. כך לא יוכל בג״ץ לפסול החלטה בנוגע להריסת בתי מחבלים.\"",
         "aspect": "emergency-powers-and-security-law",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -341,6 +377,9 @@
       {
         "text": "\"נתקן בחקיקה את חוק ההתיישנות ונאריך את הזמן להגשת תביעות בגין נזקי הטרור ל-20 שנה\"; פעולה מול מדינות העולם להגדרת הרשות הפלסטינית כארגון טרור.",
         "aspect": "international-law-and-accountability",
+        "secondaryAspects": [
+          "emergency-powers-and-security-law"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/wp-content/uploads/2021/12/טרור.pdf",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md",
         "dateRetrieved": "2026-08-17",
@@ -359,6 +398,9 @@
       {
         "text": "השלמת הסדרת הביקורת החוקתית ופסקת ההתגברות. החזרת המגבלות על זכות העמידה.",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/mishpat/",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -368,6 +410,9 @@
       {
         "text": "ביטול ועדות המינויים והחזרת הסמכות לממשלה. אפשרות לממשלה ולשרים למנות עד 50% מבעלי התפקידים הבכירים בשירות המדינה",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "anti-corruption-and-rule-of-law"
+        ],
         "sourceUrl": "https://zionutdatit.org.il/mishpat/",
         "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
         "dateRetrieved": "2026-10-11",

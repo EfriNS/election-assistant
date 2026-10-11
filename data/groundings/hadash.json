@@ -19,6 +19,9 @@
       {
         "text": "נסיגת ישראל מכל השטחים שכבשה מאז 1967: הגדה המערבית, רצועת עזה וירושלים הערבית, שהם שטחיה של מדינת פלסטין, רמת הגולן הסורית ודרום לבנון. קווי ה-4 ביוני 1967 יהיו גבולות השלום המוכרים והבטוחים.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "lebanon-framework-and-hezbollah-disarmament"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -119,6 +122,9 @@
       {
         "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -129,6 +135,9 @@
       {
         "text": "קביעת סדר עדיפויות חדש החותר לצדק חברתי, על יסוד חלוקה צודקת של ההכנסה הלאומית. הקטנה מהותית של ההוצאות הצבאיות וביטול כל ההוצאות להתנחלויות.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -237,6 +246,9 @@
       {
         "text": "חינוך חינם מהגן ועד האוניברסיטה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -328,6 +340,9 @@
       {
         "text": "אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "constitutional-and-minority-language-rights"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -387,6 +402,9 @@
       {
         "text": "הכרה באוכלוסייה הערבית-הפלסטינית בישראל כמיעוט לאומי. שוויון מלא לאזרחים הערבים, הפסקת הפקעת הקרקעות והריסת הבתים, הכרה בכל היישובים הערביים הקיימים.",
         "aspect": "arab-minority-specific-mechanisms",
+        "secondaryAspects": [
+          "demographic-and-citizenship-policy"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -453,6 +471,9 @@
       {
         "text": "יו״ר בל״ד ח״כ סאמי אבו שחאדה: הרעיון של מדינת כל אזרחיה הוא הפתרון הדמוקרטי והחשוב ביותר שהוצג בעשרות השנים האחרונות בישראל.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://www.srugim.co.il/712881-בלד-רצה-לבד-הפתרון-שלנו-מדינת-כל-אזרחיה",
         "archivePath": "docs/sources/hadash/2026-09-16-balad-joint-list.md",
         "dateRetrieved": "2026-10-11",
@@ -484,6 +505,9 @@
       {
         "text": "הקצאת תקציבים הולמים למניעת זיהום האוויר והסביבה ולטיפול במפגעים אקולוגיים.",
         "aspect": "local-environmental-enforcement",
+        "secondaryAspects": [
+          "state-responsibility-framing"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",

@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
-import { getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
+import { entryAspects, getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
 import { shuffleArray, shuffleOptionsKeepLast } from "@/lib/shuffle";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
@@ -273,7 +273,8 @@ function QuizInner() {
           topicLabel: topic.label,
           openerQuestion: questionSet[tid]?.question ?? "",
           openerAnswer: qa.openerAnswerText,
-          followUpQA: qa.followUps.map(({ question, answer }) => ({ question, answer })),
+          followUpQA: qa.followUps.map(({ question, answer, targetedAspect }) => ({ question, answer, targetedAspect })),
+          openerIsFreeText: qa.openerAnswerId === "other",
           ...(qa.freeTextInterpretation ? { freeTextInterpretation: qa.freeTextInterpretation } : {}),
         };
       });
@@ -510,7 +511,7 @@ function QuizInner() {
         partyName: p.name,
         entries: getBestEvidenceForTopic(p.id, topicId).map((e) => ({
           text: e.text,
-          aspect: e.aspect,
+          aspect: entryAspects(e).join(", "),
           contrary: e.contrary,
         })),
       })));

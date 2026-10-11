@@ -110,6 +110,9 @@
       {
         "text": "הסכם 2021 (סעיף 8): תקציב חינוך והשכלה גבוהה נכלל בתכנית החומש — 33 מיליארד ₪ לכלל המגזר הערבי. IDI: קריאה לצמצום פערים במערכת החינוך הערבית ולהקמת אוניברסיטה ערבית.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/raam/",
         "archivePath": "docs/sources/raam/2026-06-23-coalition-agreement-2021.md",
         "dateRetrieved": "2026-06-23",

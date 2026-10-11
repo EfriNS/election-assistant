@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse, after } from "next/server";
 import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
-import { GROUNDINGS, derivePartySourceQuality, compareEntryQuality, getBestEvidenceForTopic } from "@/lib/groundings";
+import { GROUNDINGS, derivePartySourceQuality, compareEntryQuality, entryAspects, getBestEvidenceForTopic } from "@/lib/groundings";
 import { TOPIC_LABELS } from "@/lib/topics";
 import type { GroundingEntryLite, TopicGroundingResult, PartyGroundingResult } from "@/lib/grounding-types";
 import { notifySlack } from "@/lib/slack";
@@ -52,7 +52,7 @@ export function buildGroundingsForParties(
       // entries are surfaced first (stable sort keeps the rest in source order).
       const entries: GroundingEntryLite[] = raw
         .filter((e) => !e.absent && e.text.length > 0)
-        .map((e) => ({ ...e, matched: coveredAspects.includes(e.aspect) }))
+        .map((e) => ({ ...e, matched: entryAspects(e).some((a) => coveredAspects.includes(a)) }))
         // Matched-first, then best-evidence-first (official > joint-list > third-party,
         // quantified > named-mechanism > specific-stance > generic) within each group.
         .sort((a, b) => Number(b.matched) - Number(a.matched) || compareEntryQuality(a, b))

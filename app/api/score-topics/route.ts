@@ -12,6 +12,8 @@ import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-e
 import {
   buildScoreResponseSchema,
   buildScoringPrompt,
+  getScoringAspects,
+  getScoringEntries,
   type ScoreTopicsResult,
   type TopicQAForScoring,
 } from "@/lib/score-topics-prompt";
@@ -35,7 +37,10 @@ function parseScores(
     for (const party of PARTIES) {
       const key = `${t.topicId}.${party.id}`;
       const val = flat[key];
-      result[t.topicId][party.id] = typeof val === "number" ? val : null;
+      // No text was sent for this party on this topic, so there is nothing a
+      // score could be based on — enforced here rather than left to the model.
+      const hasText = getScoringEntries(party.id, t).length > 0;
+      result[t.topicId][party.id] = hasText && typeof val === "number" ? val : null;
     }
   }
 
@@ -90,6 +95,11 @@ export async function POST(req: NextRequest) {
           topicsRequested: topics.map((t) => t.topicId),
           topicsWithGroundings: topicsWithGroundings.map((t) => t.topicId),
           partiesWithData,
+          // topicId → sub-dimensions scored against ("whole-topic" when not narrowed)
+          aspectsScored: Object.fromEntries(topics.map((t) => [t.topicId, getScoringAspects(t) ?? "whole-topic"])),
+          entriesSent: topics.reduce(
+            (n, t) => n + PARTIES.reduce((m, p) => m + getScoringEntries(p.id, t).length, 0), 0
+          ),
         },
       },
       { asType: "generation" }

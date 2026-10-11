@@ -2,9 +2,11 @@
 // schema. Kept apart from the route so tests and scripts can use them without
 // loading the route's server-only dependencies (Next, Langfuse instrumentation).
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, getBestEvidenceForTopic } from "@/lib/groundings";
+import { GROUNDINGS, entryAspects, getBestEvidenceForTopic, type GroundingEntry } from "@/lib/groundings";
+import { TOPIC_KEY_DIMENSIONS } from "@/lib/questions";
 
-export type FollowUpQA = { question: string; answer: string };
+// targetedAspect: the sub-dimension the follow-up question probed (set by /api/follow-up).
+export type FollowUpQA = { question: string; answer: string; targetedAspect?: string };
 
 export type TopicQAForScoring = {
   topicId: string;
@@ -13,7 +15,37 @@ export type TopicQAForScoring = {
   openerAnswer: string;
   followUpQA: FollowUpQA[];
   freeTextInterpretation?: string;
+  openerIsFreeText?: boolean;
 };
+
+/**
+ * The sub-dimensions a topic's follow-up answers are about, or null when the
+ * whole topic is in play: a free-text opener (the AI score then stands in for
+ * the opener score, which is about the topic as a whole), no follow-ups, or a
+ * follow-up without a canonical targetedAspect (e.g. a quiz session that
+ * started before the client sent it).
+ */
+export function getScoringAspects(t: TopicQAForScoring): string[] | null {
+  if (t.openerIsFreeText || t.followUpQA.length === 0) return null;
+  const canonical = TOPIC_KEY_DIMENSIONS[t.topicId] ?? [];
+  const aspects = t.followUpQA.map((fq) => fq.targetedAspect);
+  if (!aspects.every((a): a is string => typeof a === "string" && canonical.includes(a))) return null;
+  return [...new Set(aspects)];
+}
+
+/**
+ * The party texts the model scores a topic against: the party's best evidence
+ * (official-first, see getBestEvidenceForTopic), narrowed to the entries that
+ * address a sub-dimension the follow-ups probed. Sending the whole topic made
+ * the prompt ~3x longer after the 2026-10 full harvest and the scores
+ * measurably noisier (scripts/compare-scoring.ts).
+ */
+export function getScoringEntries(partyId: string, t: TopicQAForScoring): GroundingEntry[] {
+  const entries = getBestEvidenceForTopic(partyId, t.topicId);
+  const aspects = getScoringAspects(t);
+  if (!aspects) return entries;
+  return entries.filter((e) => entryAspects(e).some((a) => aspects.includes(a)));
+}
 
 // scores[topicId][partyId] = number (-2..+2) | null (no platform data)
 export type ScoreTopicsResult = Record<string, Record<string, number | null>>;
@@ -58,12 +90,10 @@ export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const groundingBlock = topics
     .map((t) => {
       const partyLines = PARTIES.map((party) => {
-        // Official material only when it exists; third-party/joint-list sources
-        // are used only as a fallback for parties with no official platform text.
-        const entries = getBestEvidenceForTopic(party.id, t.topicId);
+        const entries = getScoringEntries(party.id, t);
         if (entries.length === 0) return null;
         return entries
-          .map((e) => `  ${party.name} (היבט: ${e.aspect}): "${e.text}"`)
+          .map((e) => `  ${party.name} (היבט: ${entryAspects(e).join(", ")}): "${e.text}"`)
           .join("\n");
       }).filter(Boolean);
 

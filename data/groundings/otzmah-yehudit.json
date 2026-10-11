@@ -19,6 +19,9 @@
       {
         "text": "\"המלחמה באויבי ישראל, תהיה טוטאלית, ללא משא ומתן, ללא ויתורים וללא פשרות.\"",
         "aspect": "military-doctrine",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -38,6 +41,9 @@
       {
         "text": "\"השבת הביטחון וההרתעה לחיילי צה\"ל.\" קואליציה 2022: הגדלת תקציב משרד ביטחון לאומי ב-45 מיליארד ₪ ל-7 שנים; הקמת \"משמר לאומי\"; בן גביר שר לביטחון לאומי.",
         "aspect": "military-doctrine",
+        "secondaryAspects": [
+          "hardline-enforcement"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -124,6 +130,10 @@
       {
         "text": "מיליארדי שקלים יכנסו מצמצום תקציב הבטחון בעקבות הוצאת האויבים מתוכנו, וחלקם יופנה לפיתוח התשתיות, חיזוק התעשיה ומתן סיוע לעסקים קטנים, חיזוק הבניה ויצירת מקומות עבודה בפריפריה. כמו-כן יצומצמו הרגולציות והבירוקרטיה ויופנו משאבים לחיזוק אוכלוסיות חלשות, שילובן בתעסוקה וסיוע לקשישים ולנכים.",
         "aspect": "regional-and-sector-development",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency",
+          "social-safety-net-and-labor-protections"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-10-12",
@@ -135,6 +145,9 @@
       {
         "text": "\"ההתיישבות היהודית בכל חלקי הארץ, תשוב לעמוד כאחד מהערכים עליהם מושתתת מדינת ישראל.\" תכנית הבנייה: עיר חדשה בין אריאל לראש העין; פיתוח עירוני בגליל ובנגב.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -193,6 +206,9 @@
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל, על פני ותיקי יחידות לחמות — תיפסק מיידית.\" העדפה מתקנת לעולים חדשים בתעסוקה ובאקדמיה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -259,6 +275,9 @@
       {
         "text": "תמיכה בהחלשת הביקורת השיפוטית על חקיקה (פסקת התגברות); \"לא נאפשר להרוס את המדינה שלנו בשם הדמוקרטיה.\"",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -319,6 +338,9 @@
       {
         "text": "\"עוצמה יהודית תפעל להוצאת אויבי ישראל מארצנו.\" מסמך JVL: עידוד הגירה, העברת אויבים, חילופי אוכלוסין — \"לצורך הבטחת רוב יהודי ואוכלוסייה אזרחית נאמנה.\" כלי מדינה: מוסד, שב\"כ, קרן קיימת.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -329,6 +351,9 @@
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל... תיפסק מיידית.\" סיוע עירוני מותנה בנאמנות: \"אום אל-פחם לא תקבל יותר סיוע מדימונה.\"",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -358,6 +383,9 @@
       {
         "text": "ביצור ועידוד מעמדה של המשפחה היהודית, עידוד ילודה ומאבק בתופעת ההפלות.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "gender-equality"
+        ],
         "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-10-12",

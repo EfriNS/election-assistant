@@ -19,6 +19,9 @@
       {
         "text": "לא נזוז מילימטר מהקו הצהוב עד שחמאס יתפרק לגמרי מנשקו, והכלל יהיה פשוט: חמאס מתעצם – אנחנו תוקפים; חמאס מתאמן – אנחנו תוקפים. אחרי שנכין את הצבא ואת העולם נציב לחמאס אולטימטום או שהוא מתפרק מנשקו, או שאנחנו נפרק אותו – כי אין לנו עניין לנהל את עזה, רק להבטיח שהיא לא תהיה בסיס לטבח הבא.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "military-doctrine"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/natsec/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -28,6 +31,9 @@
       {
         "text": "אם חיזבאללה פוגע בישראל, ישראל פוגעת באיראן. ביד אחת ישראל תמנע מאיראן גרעין, ובשנייה תאיץ את קריסת המשטר",
         "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "lebanon-framework-and-hezbollah-disarmament"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/natsec/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -46,6 +52,9 @@
       {
         "text": "היא לא ״מדינה מורכבת״ – היא מדינת אויב, ובממשלה הבאה נכריז על כך מיד. נוציא את קטאר ואת טורקיה מכל מעורבות בעזה ונכניס במקומן את מצרים, שיש לה אינטרס אמיתי לפרק את חמאס מנשקו.",
         "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/natsec/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -229,6 +238,9 @@
       {
         "text": "נפרק מונופולי־על לאורך כל שרשרת הייצור והאספקה – מהמפעל והנמל ועד למדף. יבואן גדול לא יורשה להפיץ יותר ממותג מונופוליסטי אחד; מונופולים לא יוכלו לשלוט בכמה ענפים שונים.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/yokermichya/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -238,6 +250,9 @@
       {
         "text": "נפחית רגולציה, נסיר חסמי יבוא ונקים רשות מזון מרכזית – כתובת אחת ברורה, פשוטה ומהירה ליבואנים וליצרנים. נרחיב את העיקרון של מה שטוב לתקינה האירופית טוב לתקינה הישראלית. נפעיל באופן נחוש ובלתי מתפשר את רשות התחרות.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/yokermichya/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -247,6 +262,10 @@
       {
         "text": "נבטל מכסים ובמקומם נתמוך ישירות בחקלאים שחשובים לבטחון התזונתי והלאומי ישראל, ונשבור את מונופול הרבנות באמצעות הכרה אוטומטית בכשרויות מחו״ל (״מה שכשר באירופה, כשר בישראל״).",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability",
+          "regional-and-sector-development"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/yokermichya/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -274,6 +293,9 @@
       {
         "text": "מלוא הסכום – 8.8 מיליארד שקלים – יגיע מביטול כספים קואליציוניים, ביטול קצבאות אברכים וסגירת משרדי ממשלה מיותרים. בלי להגדיל את הגירעון.",
         "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/meshartim-law/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -283,6 +305,9 @@
       {
         "text": "מעונות יום בחינם: הורים משרתים במילואים יקבלו סבסוד מלא למעונות יום בגילאי 0-3. 3,750 שקלים בחודש ללוחמים, 3000 ש״ח לתומכי לחימה ו-1000 ש״ח לכלל הציבור המשרת והעובד.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/meshartim-law/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -292,6 +317,9 @@
       {
         "text": "הכל בחצי: משרתי מילואים פעילים ייהנו מהנחה קבועה של 50% בתשלומי החשמל, המים, הארנונה והאגרות הממשלתיות. מדובר בהטבה מצטברת בשווי ממוצע של כ-7,900 שקלים בשנה לכל משק בית משרת.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/meshartim-law/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -438,6 +466,9 @@
       {
         "text": "ניצור חלופה אמיתית לבעלות: כ־100 אלף דירות להשכרה ארוכת טווח בתוך עשור, לצעירים, למשפחות עובדות ולמשרתי מילואים. 40% מהן יהיו במסלול מסובסד, בהנחה של 30% ממחיר השוק.",
         "aspect": "rental-and-affordability-mechanics",
+        "secondaryAspects": [
+          "service-linked-benefit-mechanics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/housing/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -456,6 +487,9 @@
       {
         "text": "נחזק את היצע הדיור בגליל ובנגב ונעודד משפחות צעירות ומשרתי מילואים לעבור עם מתן הטבות מס ודיור בהלוואת מדינה פוחתת כחלק מיעד לאומי רחב: מיליון ישראלים נוספים בפריפריה בתוך עשור, לחיזוק החוסן והעומק הלאומי.",
         "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "service-linked-benefit-mechanics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/housing/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -465,6 +499,9 @@
       {
         "text": "נשנה את המשוואה – מצד אחד אכלוס מואץ ופיתוח תשתיות בתוך היישובים המוכרים, ומצד שני ריסוק של בנייה בלתי חוקית בפזורה תוך הפעלת סנקציות כלכליות כבדות על סרבני פינוי.",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -539,6 +576,9 @@
       {
         "text": "התוכנית קובעת שכר התחלתי של 12 אלף שקל למורה, מעבירה את רוב סמכויות קבלת ההחלטות ממטה משרד החינוך אל הרשויות המקומיות ואל מנהלות בתי הספר, ומתנה מימון ציבורי בלימודי ליבה מלאים – או 100% ליבה, או 0% תקצוב.",
         "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/education/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -549,6 +589,9 @@
       {
         "text": "לא נאפשר לאף מוסד חינוכי להפוך לחממה להסתה נגד המדינה. מדינת ישראל תאכוף ותדאג שבכל כיתה התלמידים ילמדו תכנים ממלכתיים שמחזקים את שייכותם למדינה. מורה שיחנך נגד ערכי המדינה יעוף מהמערכת.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -585,6 +628,9 @@
       {
         "text": "נחבר את החינוך החרדי למערכת החינוך הממלכתית, מתוך עיקרון פשוט: מימון ציבורי יינתן רק למוסדות המלמדים 100% לימודי ליבה ומעניקים לתלמידים כלים להשתלבות באקדמיה, בתעסוקה, באזרחות ובשירות, בלי לפגוע באורח חייהם ובאמונתם. תוך 8 שנים - כלל התלמידים החרדים מכיתה א' עד י״ב ילמדו לימודי ליבה מלאים. במקביל, נבטיח שבכל שלבי החינוך תהיה זמינות מלאה של מסגרות ממלכתיות-חרדיות.",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/education/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -594,6 +640,9 @@
       {
         "text": "מועצה לאומית לחינוך תקבע ליבה משותפת של 60% מהלימודים לכל ילדי ישראל – ידע, ערכים, אזרחות ומיומנויות לעולם החדש. לצד הבסיס המשותף, 20% מהתכנים ייקבעו בידי כל זרם ו-20% נוספים בידי הרשות המקומית או בית הספר, כדי לשמור על הזהות והייחודיות של כל קהילה.",
         "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/education/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -666,6 +715,9 @@
       {
         "text": "זרם החינוך הממלכתי (כללי, דתי וחרדי) יהיה זרם החינוך המתוקצב היחיד במדינה, במסגרתו כל ילדי ישראל ילמדו לימודי ליבה וערכי מדינת ישראל.",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -740,6 +792,9 @@
       {
         "text": "נקים גוף לאומי לתכנון אסטרטגי של כוח האדם בכלל מערכת הבריאות, שיווסת את ההכשרה וההתמחות, יקבע תקנים לפי צורכי האוכלוסייה, ויכוון אותם לתחומים ולאזורים שבהם המחסור חריף.",
         "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/health/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -785,6 +840,9 @@
       {
         "text": "נרחיב את ספסלי הלימוד בפסיכולוגיה, פסיכיאטריה ועבודה סוציאלית, נייצר תמריצים להשתלבות במערכת הציבורית, ונפתח כלים לטיפול עצמי כדי להגדיל באופן דרמטי את כוח האדם במערך בריאות הנפש.",
         "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "preventive-care-and-specific-benefits"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/rehabilitation/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -895,6 +953,9 @@
       {
         "text": "נפעל לביטול החוקים להרחבת סמכויות בתי הדין הרבניים, נחייב הכשרה משפטית לדיינים ונטמיע פתרונות מניעתיים לסרבנות גט ועגינות.",
         "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "secondaryAspects": [
+          "civil-status-and-public-space-specifics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/women/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -922,6 +983,9 @@
       {
         "text": "נבטל את חוקי ההדרה והאפליה, מהרחבת סמכויות בתי הדין הרבניים ועד ההפרדה המגדרית באקדמיה, ניתן כלים אמיתיים נגד סרבנות גט ועגינות, ונקבע חמישים אחוז ייצוג נשים בתפקידים הבכירים ובמוקדי קבלת ההחלטות.",
         "aspect": "civil-status-and-public-space-specifics",
+        "secondaryAspects": [
+          "rabbinate-monopoly-and-conversion-mechanics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/religionandstate/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -931,6 +995,9 @@
       {
         "text": "היהדות היא דת של תיקון עולם ולא של כפייה. הניסיון לכפות אותה עוקר את ערכיה ומחליש אותה יותר מכל גורם אחר.",
         "aspect": "national-religious-symbolism",
+        "secondaryAspects": [
+          "civil-status-and-public-space-specifics"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/religionandstate/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -953,6 +1020,9 @@
       {
         "text": "נעביר חקיקה שתחזיר למשטרה את עצמאותה כדי שתוכל להיות ארגון חזק, מקצועי ועצמאי שזוכה לאמון הציבור. נעצור את גל עזיבות השוטרים על ידי תגמול ראוי ותמרוץ שומרי חוק מצטיינים.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "anti-corruption-and-rule-of-law"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/personal-security/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -991,6 +1061,9 @@
       {
         "text": "הממשלה שלנו תאכוף את החוק הקיים: כתבי אישום בכל תיק פוליגמיה, ועצירה מוחלטת של קצבאות לאותן משפחות.",
         "aspect": "arab-minority-specific-mechanisms",
+        "secondaryAspects": [
+          "gender-equality"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/negev/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",
@@ -1218,6 +1291,9 @@
       {
         "text": "התוכנית מחוקקת חוק פסולת מתקדם ומקימה רשות כלכלית למשק הפסולת, מפסיקה את ההפעלה השוטפת של יחידות הפחם 1–4 באורות רבין, מאיצה את פינוי התעשייה הפטרוכימית ממפרץ חיפה, ומקימה מערך לאומי למיגור שריפות הפסולת ביהודה ושומרון.",
         "aspect": "local-environmental-enforcement",
+        "secondaryAspects": [
+          "state-responsibility-framing"
+        ],
         "sourceUrl": "https://be-yahad.org.il/plans/enviroment/",
         "archivePath": "docs/sources/beyahad/2026-06-23-bennett2026-plans.md",
         "dateRetrieved": "2026-10-11",

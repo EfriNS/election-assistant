@@ -43,6 +43,9 @@
       {
         "text": "התנגדות להכנסת לימודי ליבה (מתמטיקה, אנגלית, מדעים) לבתי ספר חרדיים.",
         "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
@@ -57,6 +60,9 @@
       {
         "text": "חוק יסוד: לימוד תורה, שנכלל בהסכמים הקואליציוניים של 2022, עבר בכנסת ב-13 ביולי 2026 וקובע שלימוד התורה הוא ערך יסוד במורשת העם היהודי ומדינת ישראל. הסעיף שהשווה לומדי תורה למשרתים הוסר לפני האישור.",
         "aspect": "haredi-draft-and-service-burden",
+        "secondaryAspects": [
+          "national-religious-symbolism"
+        ],
         "sourceUrl": "https://en.idi.org.il/articles/64690",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-10-11",
@@ -79,6 +85,9 @@
       {
         "text": "הרשימה פועלת לשימור הצביון הדתי במדינה.",
         "aspect": "national-religious-symbolism",
+        "secondaryAspects": [
+          "civil-status-and-public-space-specifics"
+        ],
         "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-10-11",
@@ -91,6 +100,9 @@
       {
         "text": "תמיכה בפסקת ההתגברות ובהחלשת הביקורת השיפוטית כחלק מהקואליציה. ח\"כ פינדרוס (יו\"ר): \"חלומי להביא ד-9 ולפוצץ את הבניין של בית המשפט העליון.\"",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",

@@ -90,10 +90,10 @@
 |-----------|-------------------|----------------------|
 | `territorial-endgame-specifics` (11 מפלגות) | | |
 | `military-doctrine` (10 מפלגות) | | |
-| `foreign-policy-and-nonproliferation` (8 מפלגות) | | |
+| `foreign-policy-and-nonproliferation` (10 מפלגות) | | |
 | `hardline-enforcement` (8 מפלגות) | | |
-| `accountability-oct7` (5 מפלגות) | | |
-| `lebanon-framework-and-hezbollah-disarmament` (2 מפלגות) | | |
+| `accountability-oct7` (6 מפלגות) | | |
+| `lebanon-framework-and-hezbollah-disarmament` (5 מפלגות) | | |
 
 ---
 
@@ -134,10 +134,10 @@
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
 | `judicial-appointments-mechanism-specifics` (7 מפלגות) | | |
-| `separation-of-powers-and-democratic-norms` (11 מפלגות) | | |
+| `separation-of-powers-and-democratic-norms` (12 מפלגות) | | |
 | `anti-corruption-and-rule-of-law` (8 מפלגות) | | |
 | `emergency-powers-and-security-law` (6 מפלגות) | | |
-| `constitutional-and-minority-language-rights` (1 מפלגות) | | |
+| `constitutional-and-minority-language-rights` (3 מפלגות) | | |
 | `international-law-and-accountability` (2 מפלגות) | | |
 
 ---
@@ -178,11 +178,11 @@
 
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
-| `social-safety-net-and-labor-protections` (10 מפלגות) | | |
+| `social-safety-net-and-labor-protections` (11 מפלגות) | | |
 | `regional-and-sector-development` (11 מפלגות) | | |
-| `market-structure-and-competition` (7 מפלגות) | | |
-| `cost-of-living-and-affordability` (4 מפלגות) | | |
-| `fiscal-discipline-and-efficiency` (6 מפלגות) | | |
+| `market-structure-and-competition` (11 מפלגות) | | |
+| `cost-of-living-and-affordability` (6 מפלגות) | | |
+| `fiscal-discipline-and-efficiency` (8 מפלגות) | | |
 
 ---
 
@@ -222,10 +222,10 @@
 
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
-| `rental-and-affordability-mechanics` (7 מפלגות) | | |
-| `sector-and-geographic-equity` (9 מפלגות) | | |
-| `service-linked-benefit-mechanics` (5 מפלגות) | | |
-| `settlement-and-territorial-specifics` (5 מפלגות) | | |
+| `rental-and-affordability-mechanics` (8 מפלגות) | | |
+| `sector-and-geographic-equity` (11 מפלגות) | | |
+| `service-linked-benefit-mechanics` (6 מפלגות) | | |
+| `settlement-and-territorial-specifics` (6 מפלגות) | | |
 
 ---
 
@@ -267,8 +267,8 @@
 |-----------|-------------------|----------------------|
 | `independent-school-funding-and-autonomy` (9 מפלגות) | | |
 | `core-curriculum-and-teacher-standards` (10 מפלגות) | | |
-| `sector-specific-equity` (9 מפלגות) | | |
-| `higher-education-and-vocational-training` (6 מפלגות) | | |
+| `sector-specific-equity` (10 מפלגות) | | |
+| `higher-education-and-vocational-training` (10 מפלגות) | | |
 
 ---
 
@@ -307,7 +307,7 @@
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
 | `sector-and-geographic-equity` (7 מפלגות) | | |
-| `private-sector-regulation-mechanics` (5 מפלגות) | | |
+| `private-sector-regulation-mechanics` (6 מפלגות) | | |
 | `preventive-care-and-specific-benefits` (6 מפלגות) | | |
 | `healthcare-workforce-and-professional-licensing` (5 מפלגות) | | |
 
@@ -348,10 +348,10 @@
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
 | `haredi-draft-and-service-burden` (10 מפלגות) | | |
-| `civil-status-and-public-space-specifics` (6 מפלגות) | | |
+| `civil-status-and-public-space-specifics` (8 מפלגות) | | |
 | `rabbinate-monopoly-and-conversion-mechanics` (7 מפלגות) | | |
 | `national-religious-symbolism` (8 מפלגות) | | |
-| `minority-religious-autonomy` (5 מפלגות) | | |
+| `minority-religious-autonomy` (6 מפלגות) | | |
 
 ---
 
@@ -391,10 +391,10 @@
 
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
-| `demographic-and-citizenship-policy` (9 מפלגות) | | |
-| `arab-minority-specific-mechanisms` (6 מפלגות) | | |
-| `gender-equality` (8 מפלגות) | | |
-| `lgbtq-specific-policy-mechanisms` (3 מפלגות) | | |
+| `demographic-and-citizenship-policy` (10 מפלגות) | | |
+| `arab-minority-specific-mechanisms` (9 מפלגות) | | |
+| `gender-equality` (10 מפלגות) | | |
+| `lgbtq-specific-policy-mechanisms` (4 מפלגות) | | |
 | `disability-and-elderly-inclusion` (5 מפלגות) | | |
 
 ---
@@ -435,7 +435,7 @@
 
 | שם תת-ממד | מה המחלוקת בפועל? | מה מבדיל את המפלגות? |
 |-----------|-------------------|----------------------|
-| `state-responsibility-framing` (7 מפלגות) | | |
+| `state-responsibility-framing` (8 מפלגות) | | |
 | `local-environmental-enforcement` (7 מפלגות) | | |
 | `international-and-regional-climate-cooperation` (2 מפלגות) | | |
 

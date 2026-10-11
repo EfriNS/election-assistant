@@ -36,6 +36,9 @@
       {
         "text": "אנו מאמינים כי הסכסוך של מדינת ישראל עם שכנותיה אינו סכסוך טריטוריאלי, אלא סכסוך תלת ממדי משולב: מדינות ערב, הפלסטינים וערביי ישראל. אנו מאמינים כי רק עסקת חבילה אזורית כוללת תוכל להביא לתוצאה הרצויה.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -198,6 +201,9 @@
       {
         "text": "מציאות זו יוצרת, לראשונה, אפשרות להגיע להסדר אזורי כולל, שתנאיו יהיו סבירים ומקובלים מבחינת מדינת ישראל.",
         "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -209,6 +215,9 @@
       {
         "text": "קידום עסקת חבילה למשק, הכוללת הפחתת רגולציה, צמצום משרדי הממשלה והמגזר הציבורי, פירוק מונופולים והגברת התחרות.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -218,6 +227,9 @@
       {
         "text": "הסדרת תחום היבוא המקביל וביטול מעמדו של היבואן הבלעדי. ביטול המונופולים בשוק המזון באמצעות אימוץ מסקנות ועדת בלניקוב למאבק בריכוזיות. פירוק מועצות הייצור, ובהן מועצת הלול ומועצת הצמחים.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -328,6 +340,9 @@
       {
         "text": "הפעלת תוכנית ״שכירות רוכשת״, שתאפשר לזוגות צעירים ולחסרי דירה להתגורר בשכירות ארוכת טווח ולרכוש את הדירה בתום התקופה במחיר שייקבע מראש. במסגרת התוכנית, עד 30% מדמי השכירות ייצברו כהון עצמי לטובת רכישת הדירה, תוך מתן עדיפות למשרתי מילואים, למשפחות עובדות ולתושבי הפריפריה.",
         "aspect": "rental-and-affordability-mechanics",
+        "secondaryAspects": [
+          "service-linked-benefit-mechanics"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -382,6 +397,9 @@
       {
         "text": "חיזוק היישובים הקיימים בנגב ובגליל בהתאם לחזון ההתיישבות הציונית, ויישום מואץ של החלטות הממשלה להקמת יישובים חדשים. שמירה על הצביון ההתיישבותי באמצעות הגדלת מכסת בתי האב שבסמכות ועדות הקבלה ל- 1,000 ועד 1,500 בתי אב, בכפוף לאישור ועדת שרים",
         "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -393,6 +411,9 @@
       {
         "text": "חובת לימודי ליבה לכל תלמיד: מתמטיקה, אנגלית, מחשבים, אזרחות ותנ״ך. מוסדות שלא יעמדו בדרישות הליבה לא יהיו זכאים לתקצוב.",
         "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -402,6 +423,9 @@
       {
         "text": "חובת לימודי ליבה בכל מוסד חינוך כתנאי לקבלת תמיכה ממשלתית, בכפוף לפיקוח חיצוני שיכלול מבחני רמה לפחות אחת בשנה, וביטול מעמדם המיוחד של מוסדות הפטור.",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -438,6 +462,9 @@
       {
         "text": "לפיכך, יש למנוע זליגת תכנים אנטי ישראליים ממערכת החינוך הפלסטינית לזו הישראלית, באמצעות הליך התאמה למערכת החינוך בישראל ומעבר מבחן באזרחות כתנאי להשתלבות בהוראה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -465,6 +492,9 @@
       {
         "text": "נקדם הקטנת כיתות, למידה מתקדמת המותאמת לצרכים השונים של התלמידים, חיזוק מעמד המורות והמורים ושוויון תקציבי בין כלל זרמי החינוך.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -485,6 +515,9 @@
       {
         "text": "אנו שואפים לחזק באופן משמעותי את מערכת הבריאות הציבורית וליצור מערכת המסוגלת לספק שירותי רפואה מתקדמים, איכותיים ונגישים לכל אזרח ואזרחית, ללא קשר למעמדם הסוציו־אקונומי או למקום מגוריהם.",
         "aspect": "private-sector-regulation-mechanics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -503,6 +536,9 @@
       {
         "text": "הגדלת מספר התקנים לרופאים ולאחיות, בדגש על אזורי הפריפריה. הגדלת מספר התקנים לסטודנטים במקצועות הרפואה.",
         "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -539,6 +575,9 @@
       {
         "text": "חיזוק טיפות החלב ושירותי התפתחות הילד, השקעה והרחבה של כוח אדם ותקינה ונגישות לאבחונים ולטיפולים פרא-רפואיים תוך צמצום זמני ההמתנה.",
         "aspect": "preventive-care-and-specific-benefits",
+        "secondaryAspects": [
+          "healthcare-workforce-and-professional-licensing"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -613,6 +652,9 @@
       {
         "text": "אין לאף אדם או גוף מונופול על היהדות. אנו מתנגדים לכל כפייה דתית ולהשתמטות ממילוי החובות האזרחיות והלאומיות בחסות הדת.",
         "aspect": "national-religious-symbolism",
+        "secondaryAspects": [
+          "haredi-draft-and-service-burden"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -660,6 +702,10 @@
       {
         "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות.",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms",
+          "anti-corruption-and-rule-of-law"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -687,6 +733,9 @@
       {
         "text": "נפעל לצייד את מערכת המשפט בכלים חקיקתיים שיאפשרו ענישה מרתיעה בגין הסתה נגד המדינה, השתתפות במפגשים עם אויבי ישראל והתנגדות לעקרונות היסוד של המדינה הציונית. בנוסף, נפעל למנוע הישנות מצבים שבהם החלטות ועדת הבחירות המרכזית בעניין פסילת רשימות או מועמדים יבוטלו.",
         "aspect": "emergency-powers-and-security-law",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -770,6 +819,9 @@
       {
         "text": "״לערבים כל הזכויות בארץ ישראל, אבל שום זכות על ארץ ישראל.״ לא נשלים עם תופעת ההקצנה בקרב חברי הכנסת הערבים המסיתים נגד המדינה שבפרלמנט שלה הם מכהנים.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -779,6 +831,9 @@
       {
         "text": "משמעות תפיסה זו היא כי המיעוט הלא יהודי החי במדינת ישראל, המזדהה עם המדינה ותורם לה, זכאי למלוא הכבוד והזכויות. מנגד, מי שחי עמנו ופועל נגד המדינה – יש להילחם בו בכל האמצעים החוקיים.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",
@@ -788,6 +843,9 @@
       {
         "text": "תיקון חוק הלאום ברוח מגילת העצמאות, כך שיעגן את היותה של מדינת ישראל מדינה יהודית ודמוקרטית, המקיימת שוויון זכויות לבני כל דת ולאום אחר.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-10-11",

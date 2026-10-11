@@ -106,6 +106,10 @@
       {
         "text": "מניעת אפליה על כל רקע מין, נטייה מינית, גזע, עדה, דת, מעמד או השקפה.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "lgbtq-specific-policy-mechanisms",
+          "gender-equality"
+        ],
         "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
         "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
         "dateRetrieved": "2026-06-23",

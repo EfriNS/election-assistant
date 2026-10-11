@@ -19,6 +19,9 @@
       {
         "text": "אויב שיוצא למלחמה נגד ישראל מאבד שטח. מחיר טריטוריאלי הינו חלק מרכזי בבניית ההרתעה. מרחב ששימש בסיס למתקפה על ישראל יעבור לשליטה ביטחונית ישראלית ולא יחזור אוטומטית לידי האויב.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "military-doctrine"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/security",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -111,6 +114,9 @@
       {
         "text": "בסוריה: שומרים על ההישגים. לא מוותרים על שטחי המפתח בהם שולט צה״ל, חונקים את חיזבאללה בלבנון, מונעים התבססות טורקית עוינת ומגינים על בני העדה הדרוזית ממעשי הטבח של המיליציות המוסלמיות הקיצוניות במדינה.",
         "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/security",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-12",
@@ -158,6 +164,9 @@
       {
         "text": "נוביל מהלך להורדת יוקר המחיה באמצעות פירוק מוקדי ריכוזיות וכוח מונופוליסטיים, פתיחת השווקים לתחרות אמיתית, הסרת חסמי יבוא ורגולציה מיותרת - כדי להחזיר את הכוח מהמערכות הריכוזיות אל הצרכן הישראלי.",
         "aspect": "cost-of-living-and-affordability",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -167,6 +176,9 @@
       {
         "text": "נחתור לשוק חופשי ולשבירת מונופולים. המדינה תתגמל עבודה, שירות ותרומה באמצעות הטבות מס ותמרוץ עסקים המעסיקים ומתגמלים משרתים .",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -214,6 +226,9 @@
       {
         "text": "המדינה תעניק עדיפות למי שתורם לביטחונה ולחוסנה הלאומי, ובכלל זה באמצעות הקצאת קרקעות והטבות שיחזקו את ההתיישבות, יעודדו שירות ותרומה למדינה וימשכו הון אנושי איכותי למרחבי הגבול ולאזורים בעדיפות לאומית.",
         "aspect": "service-linked-benefit-mechanics",
+        "secondaryAspects": [
+          "settlement-and-territorial-specifics"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -234,6 +249,9 @@
       {
         "text": "נשאף להעניק לכל ילד בישראל לימודי ליבה איכותיים, לצד חינוך לערכים יהודים, לציונות ואחריות אזרחית ולא נתקצב בתי ספר שיועברו בהם ערכים ו/או תוכניות אנטי ציוניות.",
         "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -302,6 +320,9 @@
       {
         "text": "עצמאות משפטית: לא נאפשר למשפטנים לכבול את ידי הלוחמים שלנו בדרך להכרעת האויב. מדינת ישראל חייבת לפעול בהתאם למציאות ולתנאים בשטח. נפעל לצמצם את ההשפעה המזיקה של מערכת המשפט על כוחות הביטחון.",
         "aspect": "emergency-powers-and-security-law",
+        "secondaryAspects": [
+          "international-law-and-accountability"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/security",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -311,6 +332,9 @@
       {
         "text": "חיי חיילי צה״ל לפני הכול. גם לפני חיי אזרחי האויב ולפני נורמות מופרכות - שהן מוסר כפול. לא נאמץ כללי משחק מנותקים שאנחנו המדינה היחידה שמשחקת לפיהם.",
         "aspect": "international-law-and-accountability",
+        "secondaryAspects": [
+          "emergency-powers-and-security-law"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/security",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -320,6 +344,9 @@
       {
         "text": "נחתור לאיזונים ובלמים במערכת המשפט, לרבות זכות ערעור על החלטות שיפוטיות של בג״ץ באמצעות הקמת ערכאת ערעור עליונה.",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
@@ -329,6 +356,9 @@
       {
         "text": "נקדם את חלוקת תפקיד היועץ המשפטי לממשלה - לתובע כללי עצמאי ולייעוץ המשפטי לממשלה, שיסייע לה לקדם את מדיניותה במסגרת החוק.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "anti-corruption-and-rule-of-law"
+        ],
         "sourceUrl": "https://amchaisrael.co.il/foundations",
         "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
         "dateRetrieved": "2026-10-11",
