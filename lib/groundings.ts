@@ -162,6 +162,23 @@ export function getBestEvidenceForTopic(partyId: string, topicId: string): Groun
 }
 
 /**
+ * getBestEvidenceForTopic's rule applied to one sub-dimension: the party's
+ * official entries that address it, falling back to joint-list/third-party
+ * entries ONLY when no official entry addresses that sub-dimension — even if
+ * the party has official material elsewhere in the topic.
+ */
+export function getBestEvidenceForAspect(partyId: string, topicId: string, aspect: string): GroundingEntry[] {
+  const entries = getTopicGroundings(partyId, topicId).filter(
+    (e) => !e.absent && e.text.length > 0 && entryAspects(e).includes(aspect)
+  );
+  const official = entries.filter(
+    (e) => e.provenance === "official-current" || e.provenance === "official-outdated"
+  );
+  const pool = official.length > 0 ? official : entries;
+  return [...pool].sort(compareEntryQuality);
+}
+
+/**
  * Picks the next follow-up dimension to probe: the first uncovered key dimension
  * with official grounding evidence from ANY party, falling back to any evidence,
  * falling back to the first uncovered dimension with no evidence at all.

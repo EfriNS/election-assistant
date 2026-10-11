@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { getScoringAspects, getScoringEntries, buildScoringPrompt, type TopicQAForScoring } from "@/lib/score-topics-prompt";
-import { entryAspects, getBestEvidenceForTopic } from "@/lib/groundings";
+import { entryAspects, getBestEvidenceForAspect, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/groundings";
 import { PARTIES } from "@/lib/parties";
 
 // Follow-up answers are scored against the sub-dimensions the follow-ups
@@ -66,10 +66,52 @@ describe("getScoringEntries", () => {
       const all = getBestEvidenceForTopic(party.id, t.topicId);
       const sent = getScoringEntries(party.id, t);
       for (const e of sent) expect(entryAspects(e)).toContain("haredi-draft-and-service-burden");
-      expect(sent).toEqual(all.filter((e) => entryAspects(e).includes("haredi-draft-and-service-burden")));
+      expect(sent).toEqual(getBestEvidenceForAspect(party.id, t.topicId, "haredi-draft-and-service-burden"));
       if (sent.length < all.length) narrowed++;
     }
     expect(narrowed).toBeGreaterThan(0);
+  });
+
+  const isOfficial = (e: { provenance: string }) => e.provenance.startsWith("official");
+
+  it("official-first applies per sub-dimension: third-party text is used only where no official entry addresses that sub-dimension", () => {
+    let fallbackCases = 0;
+    for (const party of PARTIES) {
+      for (const aspect of ["military-doctrine", "territorial-endgame-specifics", "hardline-enforcement"]) {
+        const onAspect = getTopicGroundings(party.id, "security").filter(
+          (e) => !e.absent && e.text.length > 0 && entryAspects(e).includes(aspect)
+        );
+        const sent = getBestEvidenceForAspect(party.id, "security", aspect);
+        if (onAspect.some(isOfficial)) {
+          expect(sent.every(isOfficial)).toBe(true);
+          expect(sent).toHaveLength(onAspect.filter(isOfficial).length);
+        } else {
+          expect(sent).toHaveLength(onAspect.length);
+          // The case this rule exists for: official text elsewhere in the topic, none on this sub-dimension.
+          if (onAspect.length > 0 && getTopicGroundings(party.id, "security").some(isOfficial)) fallbackCases++;
+        }
+      }
+    }
+    expect(fallbackCases).toBeGreaterThan(0);
+  });
+
+  it("sends an entry once when it addresses two probed sub-dimensions", () => {
+    const t = topic({
+      topicId: "security",
+      followUpQA: [
+        { question: "א", answer: "א", targetedAspect: "territorial-endgame-specifics" },
+        { question: "ב", answer: "ב", targetedAspect: "foreign-policy-and-nonproliferation" },
+      ],
+    });
+    for (const party of PARTIES) {
+      const sent = getScoringEntries(party.id, t);
+      expect(new Set(sent).size).toBe(sent.length);
+    }
+    // democrats has an entry labelled with both (territorial primary, foreign-policy secondary)
+    const both = getScoringEntries("democrats", t).filter(
+      (e) => entryAspects(e).includes("territorial-endgame-specifics") && entryAspects(e).includes("foreign-policy-and-nonproliferation")
+    );
+    expect(both.length).toBeGreaterThan(0);
   });
 
   it("returns the party's whole best-evidence set when the topic is not narrowed", () => {

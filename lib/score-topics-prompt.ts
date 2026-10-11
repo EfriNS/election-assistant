@@ -2,7 +2,7 @@
 // schema. Kept apart from the route so tests and scripts can use them without
 // loading the route's server-only dependencies (Next, Langfuse instrumentation).
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, entryAspects, getBestEvidenceForTopic, type GroundingEntry } from "@/lib/groundings";
+import { GROUNDINGS, compareEntryQuality, entryAspects, getBestEvidenceForAspect, getBestEvidenceForTopic, type GroundingEntry } from "@/lib/groundings";
 import { TOPIC_KEY_DIMENSIONS } from "@/lib/questions";
 
 // targetedAspect: the sub-dimension the follow-up question probed (set by /api/follow-up).
@@ -34,17 +34,18 @@ export function getScoringAspects(t: TopicQAForScoring): string[] | null {
 }
 
 /**
- * The party texts the model scores a topic against: the party's best evidence
- * (official-first, see getBestEvidenceForTopic), narrowed to the entries that
- * address a sub-dimension the follow-ups probed. Sending the whole topic made
+ * The party texts the model scores a topic against: for each sub-dimension the
+ * follow-ups probed, the party's best evidence on it (official-first per
+ * sub-dimension, see getBestEvidenceForAspect). Sending the whole topic made
  * the prompt ~3x longer after the 2026-10 full harvest and the scores
  * measurably noisier (scripts/compare-scoring.ts).
  */
 export function getScoringEntries(partyId: string, t: TopicQAForScoring): GroundingEntry[] {
-  const entries = getBestEvidenceForTopic(partyId, t.topicId);
   const aspects = getScoringAspects(t);
-  if (!aspects) return entries;
-  return entries.filter((e) => entryAspects(e).some((a) => aspects.includes(a)));
+  if (!aspects) return getBestEvidenceForTopic(partyId, t.topicId);
+  // An entry can address several probed sub-dimensions — send it once.
+  const entries = new Set(aspects.flatMap((a) => getBestEvidenceForAspect(partyId, t.topicId, a)));
+  return [...entries].sort(compareEntryQuality);
 }
 
 // scores[topicId][partyId] = number (-2..+2) | null (no platform data)
