@@ -72,7 +72,8 @@ export const PARTIES: Party[] = [
     name: "המילואימניקים-הכלכלית",
     subtitle: "הנדל / זליכה",
     description: "מרכז, לא משויך לגוש — שילוב בכירים ביטחוניים ומומחי כלכלה: הורדת יוקר המחיה, מלחמה במונופולים, נטל שירות שווה.",
-    website: "https://www.hakalkalit.org",
+    // Two sites, not united: the Miluimnikim party site (homepage link) and the Economic Party platform (platform link).
+    website: "https://www.themiluimnikim.org.il",
     platformUrl: "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
     platformLabel: "מצע המפלגה הכלכלית",
   },
