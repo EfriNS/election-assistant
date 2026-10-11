@@ -3,7 +3,7 @@
   "platformLabel": "10 צעדים לשגשוגה של מדינת ישראל (יוני 2026)",
   "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
   "archiveDir": "docs/sources/yashar/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only. 2026-08-07: found an 8th /principles/ sub-page, agriculture — added 2 economy entries (market-structure-and-competition: food-market anti-monopoly; fiscal-discipline-and-efficiency: subsidy-transparency reform); remaining agriculture content (food-security planning, farm insurance, ag-crime enforcement, agrotech R&D, agrivoltaics, rural development) is sector-specific policy uncovered by the current economy aspect taxonomy — flagged, not added. Main /agenda_point/ 10-steps page unchanged since last check. 2026-09-16 re-check (post candidacy-submission review): /agenda_point/ 10-steps content matches what's already captured — no new items found.",
+  "_note": "2026-10-11 re-check: /principles/ now has 15 sub-pages (was 8). New: housing, senior-citizens, north-reconstruction-and-prosperity, youth-and-young-adults, culture, aliyah-and-integration (alongside the older inlocation-and-aliya). 8 entries added — housing 2→6 (it is now a real standalone policy, no longer only a service-linked benefit — the earlier 'housing appears only as a service-based benefit' remark below is superseded), elderly inclusion, a quantified north-reconstruction commitment (₪15B over 5 years), and a conscript-pay raise. Culture and aliyah pages are outside the 9-topic taxonomy — archived only. Still no ecology page. Main /agenda_point/ 10-steps page unchanged. See docs/sources/yashar/2026-06-23-yashar-10-steps.md § 2026-10-11. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. No dedicated ecology policy. Housing appears only as a service-based benefit (not a standalone policy). PDF brochure: https://yasharwitheisenkot.com/wp-content/uploads/2026/06/Yashar_10_Steps_Brochure.pdf. 2026-07-08: post-launch (2026-06-30) '/principles/' section adds real detail across all 7 sub-pages — economy, hardline-enforcement, a quantified haredi-draft-and-service-burden entry, a reserve-duty cap (military-doctrine), reservist economic support incl. housing/tuition (previously-0-coverage higher-education-and-vocational-training now covered), and a first-ever health entry (preventive-care-and-specific-benefits, PTSD/rehabilitation) — health is no longer coverage-free. /goals/ page is now dead (404), replaced by /topic/missions/. /principles/inlocation-and-aliya/ (aliyah/absorption) reviewed but not added — doesn't fit any of the 9 canonical topics, same as beitenu's analogous aliyah content; documented in the archive only. 2026-08-07: found an 8th /principles/ sub-page, agriculture — added 2 economy entries (market-structure-and-competition: food-market anti-monopoly; fiscal-discipline-and-efficiency: subsidy-transparency reform); remaining agriculture content (food-security planning, farm insurance, ag-crime enforcement, agrotech R&D, agrivoltaics, rural development) is sector-specific policy uncovered by the current economy aspect taxonomy — flagged, not added. Main /agenda_point/ 10-steps page unchanged since last check. 2026-09-16 re-check (post candidacy-submission review): /agenda_point/ 10-steps content matches what's already captured — no new items found.",
   "topics": {
     "security": [
       {
@@ -48,6 +48,15 @@
         "sourceUrl": "https://yasharwitheisenkot.com/principles/reservists-honour-and-compensation/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-07-08",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נעלה את שכר משרתי החובה כולם ב-15% וב-50% ללוחמים בשנת שירותם השלישית .",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/youth-and-young-adults/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       }
@@ -142,6 +151,15 @@
         "dateRetrieved": "2026-08-07",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אנו מתחייבים להשקעה של כ-15 מיליארד ש״ח ב-5 שנים הקרובות בתכנית כולה, ומתוכם כ-6 מיליארד ש״ח במיגון, מתוך הבנה שהשקעה בצפון היום היא השקעה בחוסן הלאומי של ישראל למחר.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/north-reconstruction-and-prosperity/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "housing": [
@@ -151,7 +169,7 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "No standalone housing policy; housing mentioned only as benefit tied to national service",
+        "_note": "הטבת דיור למשרתים. מאז פורסם עמוד דיור ייעודי (נאסף 2026-10-11) — ראו הרשומות המפורטות באותו נושא.",
         "provenance": "official-current",
         "concreteness": "specific-stance"
       },
@@ -163,6 +181,42 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נציב יעד לאומי ברור: לצמצם משמעותית את הפער שנפער בין מחירי הדיור להכנסה, ולהחזיר את נגישות הדיור למשפחות העובדות. את הצלחתנו נמדוד בבנייה שהושלמה ובאכלוס בפועל.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נתקן את חוק הותמ״ל כך שיתמקד במסלולי התחדשות עירונית בקנה מידה גדול , נחזק את הרשות להתחדשות עירונית, וננהל את ההתחדשות כמהלך ציבורי שמכניס מראש את שיקולי התשתיות והמרקם – ולא כאוסף עסקאות נקודתיות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעניק סבסוד דיפרנציאלי לפי פער הכדאיות ונפעיל כלים ייעודיים למימון התחדשות בפריפריה ולמיגון אזורים ברגישות לרעידות אדמה.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "כל החלטה בשרשרת התכנון והבנייה תיבחן לפי השפעתה על האזרח בקצה. המשרתים יקבלו עדיפות בפרויקטי הדיור, בהלוואות המסובסדות ובשכירות הממשלתיים",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/housing/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "education": [
@@ -238,7 +292,7 @@
         "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
         "dateRetrieved": "2026-06-23",
-        "_note": "No dedicated health policy; health mentioned only as part of general periphery investment",
+        "_note": "אזכור כללי במסגרת השקעה בפריפריה. עמוד ייעודי קיים רק לשיקום נפגעי פוסט-טראומה, לא למדיניות בריאות כללית.",
         "provenance": "official-current",
         "concreteness": "generic"
       },
@@ -339,14 +393,13 @@
         "concreteness": "generic"
       },
       {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "הפרדת רשויות מחייבת עצמאות מערכת השפיטה; ועדת המינויים לשפיטה תישאר מקצועית ולא פוליטית, כדי שהרשות השופטת תוכל לבקר את הרשות המבצעת.",
-        "sourceUrl": "https://yasharwitheisenkot.com/agenda_point/",
+        "text": "נשקם את אמון ענף ההייטק באמצעות חקיקה שתבטיח את עצמאות מערכת המשפט ותבטיח הגנה על קניין רוחני כך שישראל תישאר נמל מבטחים ליזמות והשקעות זרות.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/economics",
         "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
-        "contrary": "מינוי שופטים על ידי הרשות המבצעת",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "specific-stance"
       }
     ],
     "equality": [
@@ -376,6 +429,24 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נפעל לחיזוק היציבות והוודאות במערך הסיעודי הקיים ונבחן הטלת חובת ביטוח סיעודי לכלל האוכלוסייה, כדי להבטיח טיפול סיעודי לאזרחים ותיקים גם בעתיד.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעלה את קצבאות הזקנה למי שהכנסתם נמוכה, ובהם ניצולי שואה, עולים שעבדו מאז עלייתם אך צברו פנסיה נמוכה, ואנשים שנתמכו ע״י הרווחה לאורך חייהם.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://yasharwitheisenkot.com/principles/senior-citizens/",
+        "archivePath": "docs/sources/yashar/2026-06-23-yashar-10-steps.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": []

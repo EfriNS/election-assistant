@@ -3,7 +3,7 @@
   "platformLabel": "עמדות מממשלה ה-37 (2022) + ניתוחי IDI ו-Hiddush — אין מצע רשמי",
   "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
   "archiveDir": "docs/sources/yahadut-hatorah/",
-  "_note": "UTJ (Yahadut Hatorah) is an alliance of Agudat Yisrael and Degel Hatorah — non-Zionist Haredi Ashkenazi parties. No formal 2026 platform, no active party website found. Data sourced from IDI party profile, IDI analysis of 37th government coalition agreement (Dec 2022), IDI article on Basic Law: Torah Study, and Hiddush documentation. The party is narrowly sectoral: almost all activity concerns Haredi community interests. Economy/security/ecology topics are essentially absent. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-07: still no official 2026 platform or party site found; no change. Re-checked 2026-08-17: same — no change. Re-checked 2026-09-16 (post candidacy-submission review): still no formal 2026 platform or party website found — no change.",
+  "_note": "UTJ (Yahadut Hatorah) is an alliance of Agudat Yisrael and Degel Hatorah — non-Zionist Haredi Ashkenazi parties. No formal 2026 platform, no active party website found. Data sourced from IDI party profile, IDI analysis of 37th government coalition agreement (Dec 2022), IDI article on Basic Law: Torah Study, and Hiddush documentation. The party is narrowly sectoral: almost all activity concerns Haredi community interests. Economy/security/ecology topics are essentially absent. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-07: still no official 2026 platform or party site found; no change. Re-checked 2026-08-17: same — no change. Re-checked 2026-09-16 (post candidacy-submission review): still no formal 2026 platform or party website found — no change. Re-checked 2026-10-11: still no formal 2026 platform or party website found — coverage is about the Agudat Yisrael/Degel HaTorah list negotiations only. No change.",
   "topics": {
     "security": [
       {
@@ -49,16 +49,6 @@
         "contrary": "חוק לימודי ליבה חובה בכלל המוסדות המתוקצבים",
         "provenance": "third-party",
         "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "דרישה לתקצוב מלא של מוסדות החינוך החרדי (תלמודי תורה, ישיבות קטנות) ללא כל חיוב לימודי ליבה. הסכמי קואליציה כוללים הקפאה מחודשת של יישום לימודי הליבה.",
-        "sourceUrl": "https://www.idi.org.il/policy/parties-and-elections/parties/yahadut-hatorah/",
-        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
-        "contrary": "תוכנית לימודי ליבה חובה כתנאי למימון ממשלתי",
-        "provenance": "third-party",
-        "concreteness": "named-mechanism"
       }
     ],
     "health": [],
@@ -101,16 +91,6 @@
         "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "עצמאות מערכת המשפט; ביקורת שיפוטית על חקיקה דתית",
-        "provenance": "third-party",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "תמיכה במינוי שופטים על ידי נציגים פוליטיים נבחרים, כחלק מהחלשת בית המשפט העליון. ח\"כ פינדרוס: \"חלומי להביא ד-9 ולפוצץ את בניין בית המשפט.\"",
-        "sourceUrl": "https://hiddush.org/subchannel-69-1-United_Torah_Judaism.aspx",
-        "archivePath": "docs/sources/yahadut-hatorah/2026-06-23-coalition-positions.md",
-        "contrary": "עצמאות ועדת המינויים לשפיטה",
         "provenance": "third-party",
         "concreteness": "named-mechanism"
       }

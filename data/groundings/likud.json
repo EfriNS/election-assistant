@@ -3,7 +3,7 @@
   "platformLabel": "חוקת הליכוד (2016), פרק ב': מטרות — אין מצע בחירות רשמי",
   "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
   "archiveDir": "docs/sources/likud/",
-  "_note": "Likud has not published a formal election platform since ~2009. Source: web search finding — 'Since 2009, the Likud party has not published a detailed platform. Prior to elections for the 20th Knesset, Netanyahu opposed publishing a platform, arguing that the party is judged by its actions.' Best available source: party constitution (חוקת הליכוד) 2016, chapter 2 (מטרות), obtained from user-provided screenshot of local PDF (huka0716.pdf, page 3). IMPORTANT: The constitution states ideological goals that are not always reflected in actual government policy — e.g., the constitution calls for universal service for all citizens (item י) while Likud governments have consistently exempted Haredim; the constitution supports democratic rule of law (item ה) while recent Likud-led governments advanced judicial override legislation. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Housing topic has no entry (not addressed in constitution). Ecology entry is very thin. Re-checked 2026-08-07: likud.org.il main nav still has no מצע/platform link — no change. Re-checked 2026-08-17: same — no change. Re-checked 2026-09-16 (post candidacy-submission review): still no published platform — primaries (2026-08-17) and candidate-list news found, no policy document. No change.",
+  "_note": "2026-10-11 re-check: likud.org.il was relaunched as a campaign site. Still no מצע/platform document, but there is now a 'הדרך שלנו' section — 'ששת העמודים של הליכוד' — six one-sentence principles (security, free economy, Jerusalem & Land of Israel, education/identity/heritage, society & periphery, Israel in the world), framed as 'העקרונות שמנחים אותנו בכל החלטה'. Archived verbatim in docs/sources/likud/2026-06-23-party-constitution.md § 2026-10-11 but deliberately NOT added as grounding entries yet — pending a user decision: they are official-current but generic slogans, and because provenance outranks concreteness in getBestEvidenceForTopic(), adding them would displace the more specific 2016-constitution quotes in scoring/quoting for every topic they touch and flip the party's derived source quality from 'outdated' to 'official' (which also requires a platformUrl in lib/parties.ts and drops the staleness caption). The site also has a large 'הישגים' (achievements) section with sourced government-action cards (e.g. '4,298 חרדים התגייסו' in the 2025 draft year vs 2,811) — that is 'documented action' material (TODO #8–#9), not platform text; not collected. Previous note: Likud has not published a formal election platform since ~2009. Source: web search finding — 'Since 2009, the Likud party has not published a detailed platform. Prior to elections for the 20th Knesset, Netanyahu opposed publishing a platform, arguing that the party is judged by its actions.' Best available source: party constitution (חוקת הליכוד) 2016, chapter 2 (מטרות), obtained from user-provided screenshot of local PDF (huka0716.pdf, page 3). IMPORTANT: The constitution states ideological goals that are not always reflected in actual government policy — e.g., the constitution calls for universal service for all citizens (item י) while Likud governments have consistently exempted Haredim; the constitution supports democratic rule of law (item ה) while recent Likud-led governments advanced judicial override legislation. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Housing topic has no entry (not addressed in constitution). Ecology entry is very thin. Re-checked 2026-08-07: likud.org.il main nav still has no מצע/platform link — no change. Re-checked 2026-08-17: same — no change. Re-checked 2026-09-16 (post candidacy-submission review): still no published platform — primaries (2026-08-17) and candidate-list news found, no policy document. No change.",
   "topics": {
     "security": [
       {
@@ -55,16 +55,6 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "generic"
-      },
-      {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "שמירה על ריבוי זרמי החינוך — ממלכתי, ממלכתי-דתי, עצמאי ומוכר שאינו רשמי — תוך תמיכה ממשלתית לכל הזרמים. ביצוע הסכמי הקואליציה הכוללים תקצוב חינוך חרדי ללא כפיית לימודי ליבה.",
-        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
-        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "כפיית תוכנית לימודים אחידה על כלל המוסדות",
-        "provenance": "official-outdated",
-        "concreteness": "named-mechanism"
       }
     ],
     "health": [
@@ -77,16 +67,6 @@
         "_note": "Very general — covers health alongside personal security, employment, and environment in a single clause. No specific health policy in constitution.",
         "provenance": "official-outdated",
         "concreteness": "generic"
-      },
-      {
-        "aspect": "private-sector-regulation-mechanics",
-        "dateRetrieved": "2026-06-27",
-        "text": "עידוד פיתוח מקביל של שירותי בריאות פרטיים לצד המערכת הציבורית; תמיכה בביטוח משלים ושירותים פרטיים כמנוע צמיחה ופתרון לתורי המתנה.",
-        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
-        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "הגבלת הרפואה הפרטית",
-        "provenance": "official-outdated",
-        "concreteness": "specific-stance"
       }
     ],
     "religion": [
@@ -120,16 +100,6 @@
         "_note": "Constitution explicitly includes sexual orientation (נטייה מינית) as a protected class — noteworthy given Likud's coalition record on LGBTQ rights. Constitution supports rule of law but Likud-led government pursued 2023 judicial override legislation.",
         "provenance": "official-outdated",
         "concreteness": "generic"
-      },
-      {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "שינוי הרכב ועדת המינויים לשפיטה — מתן משקל גדול יותר לנציגים נבחרים בבחירת שופטי בית המשפט העליון, לאיזון עם הנציגות המשפטית הקיימת.",
-        "sourceUrl": "https://www.likud.org.il/על-הליכוד/חוקת-הליכוד",
-        "archivePath": "docs/sources/likud/2026-06-23-party-constitution.md",
-        "contrary": "ועדת מינויים בשליטת נציגי השפיטה",
-        "provenance": "official-outdated",
-        "concreteness": "named-mechanism"
       }
     ],
     "equality": [

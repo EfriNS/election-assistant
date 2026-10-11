@@ -1,9 +1,9 @@
 {
   "platformAvailable": true,
-  "platformLabel": "מצע המפלגה — 13 מסמכים נושאיים (אתר רשמי, 2021–2022)",
+  "platformLabel": "מצע המפלגה — 13 מסמכים נושאיים (2021–2022) + 3 תוכניות 2026 (נגב וגליל, מילואים וגיוס חרדים, ״חוק וצדק 2.0״)",
   "sourceUrl": "https://zionutdatit.org.il/מצע-המפלגה/",
   "archiveDir": "docs/sources/hatzionut-hadatit/",
-  "_note": "הציונות הדתית (בהנהגת בצלאל סמוטריץ') — מפלגה לאומית-דתית. מצע המפלגה באתר הרשמי מורכב מ-13 מסמכי PDF נושאיים (אינפוגרפיקות מעוצבות ב-Illustrator, לא טקסט רגיל), שכולם נושאים תאריך יצירה 2021-2022 — קודמים לקדנציה הנוכחית וגם לתקופת ה-7 באוקטובר. האתר עדיין מציג אותם כמצע הנוכחי ללא עדכון מזוהה, ולכן כל הרשומות מסומנות provenance=official-outdated (בדומה לטיפול בחוקת הליכוד 2016). איכות חילוץ הטקסט מהמסמכים משתנה — ראו docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md לפירוט מלא כולל רמת הביטחון בכל מסמך. תוכן מסמך 'ערכי משפחה' (רפורמת מזונות/משמורת) אינו מכוסה על ידי הטקסונומיה הנוכחית (לא religion ולא equality) ולכן לא נוסף — מסומן שם לדיון עתידי. הרשומות ל-equality/lgbtq-specific-policy-mechanisms אינן מגובות ישירות במסמכי המצע שנאספו (שאינם עוסקים ב-LGBTQ במפורש); מבוססות על עמדות ציבוריות מתועדות ומוכרות של המפלגה ומנהיגה — ראו _note ברמת הרשומה. 2026-09-16 re-check (post candidacy-submission review): מבנה 13 המסמכים ב-zionutdatit.org.il/מצע-המפלגה/ ללא שינוי — אין תוכן חדש. בנפרד (לא משפיע על נתוני המצע): ב-2026-09-01 הודיעו סמוטריץ' (הציונות הדתית) ומשה פייגלין (זהות) על ריצה משותפת \"טכנית\" לכנסת ה-26 — פייגלין יקבל מקומות 2, 8, 10, 11 ברשימה; כל צד שומר על זהותו ומצעו הנפרד (בדיוק כמו האיחוד חד\"ש-תע\"ל-בל\"ד), ולכן לא נוספו רשומות מצע חדשות עבור זהות/פייגלין בקובץ זה — ייתכן שראוי לשקול קובץ/רשומות נפרדות עבור זהות אם יידרש בעתיד.",
+  "_note": "2026-10-11 re-check: עמוד המצע מקשר כעת לשלוש תוכניות עדכניות לבחירות 2026, שלא נאספו קודם — תוכנית נגב גליל (zionutdatit.org.il/judaization), תוכנית המילואימניקים וגיוס חרדים (miluim.zionutdatit.digital) ותוכנית רוטמן ״חוק וצדק 2.0״ (zionutdatit.org.il/mishpat). נוספו 12 רשומות provenance=official-current — אלה הרשומות העדכניות הראשונות של המפלגה, ולכן איכות המקור הנגזרת עולה מ-outdated ל-official, ובנושאים security/housing/religion/justice/equality הן יקבלו עדיפות על פני מסמכי 2021–2022 ב-getBestEvidenceForTopic(). 13 מסמכי ה-PDF עצמם ללא שינוי. עמוד ״ההישגים שלנו״ (yes.zionutdatit.digital) הוא עמוד הישגים/פעולות (JS בלבד) — לא נאסף, שייך לסוג הראיה ״documented action״ (TODO #8–#9). בעמוד תוכנית המשפט מעורבבים הישגים שכבר בוצעו (״שינינו את שיטת בחירת השופטים״) עם התחייבויות קדימה — נוספו רק התחייבויות קדימה. ראו docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md. הערה קודמת: הציונות הדתית (בהנהגת בצלאל סמוטריץ') — מפלגה לאומית-דתית. מצע המפלגה באתר הרשמי מורכב מ-13 מסמכי PDF נושאיים (אינפוגרפיקות מעוצבות ב-Illustrator, לא טקסט רגיל), שכולם נושאים תאריך יצירה 2021-2022 — קודמים לקדנציה הנוכחית וגם לתקופת ה-7 באוקטובר. האתר עדיין מציג אותם כמצע הנוכחי ללא עדכון מזוהה, ולכן כל הרשומות מסומנות provenance=official-outdated (בדומה לטיפול בחוקת הליכוד 2016). איכות חילוץ הטקסט מהמסמכים משתנה — ראו docs/sources/hatzionut-hadatit/2026-08-17-party-platform.md לפירוט מלא כולל רמת הביטחון בכל מסמך. תוכן מסמך 'ערכי משפחה' (רפורמת מזונות/משמורת) אינו מכוסה על ידי הטקסונומיה הנוכחית (לא religion ולא equality) ולכן לא נוסף — מסומן שם לדיון עתידי. הרשומות ל-equality/lgbtq-specific-policy-mechanisms אינן מגובות ישירות במסמכי המצע שנאספו (שאינם עוסקים ב-LGBTQ במפורש); מבוססות על עמדות ציבוריות מתועדות ומוכרות של המפלגה ומנהיגה — ראו _note ברמת הרשומה. 2026-09-16 re-check (post candidacy-submission review): מבנה 13 המסמכים ב-zionutdatit.org.il/מצע-המפלגה/ ללא שינוי — אין תוכן חדש. בנפרד (לא משפיע על נתוני המצע): ב-2026-09-01 הודיעו סמוטריץ' (הציונות הדתית) ומשה פייגלין (זהות) על ריצה משותפת \"טכנית\" לכנסת ה-26 — פייגלין יקבל מקומות 2, 8, 10, 11 ברשימה; כל צד שומר על זהותו ומצעו הנפרד (בדיוק כמו האיחוד חד\"ש-תע\"ל-בל\"ד), ולכן לא נוספו רשומות מצע חדשות עבור זהות/פייגלין בקובץ זה — ייתכן שראוי לשקול קובץ/רשומות נפרדות עבור זהות אם יידרש בעתיד.",
   "topics": {
     "security": [
       {
@@ -53,6 +53,24 @@
         "provenance": "official-outdated",
         "concreteness": "generic",
         "_note": "ביטחון חילוץ נמוך-בינוני — מסמך צפוף, ניסוח מדויק לא ודאי. הניסוח 'גיוס משמעותי לכלל האוכלוסייה' עולה בקנה אחד עם עמדת המפלגה הידועה בעד גיוס אוניברסלי (כולל הציבור החרדי), אך לא ניתן היה לאמת ציטוט מדויק."
+      },
+      {
+        "text": "לכן נקדם הוראת שעה לאומית למאבק בפשיעה המאורגנת , עם כלים חריגים, ממוקדים ומפוקחים משפטית. לפרק את האוטונומיה הערבית החמושה. הגדרת החזקת אמל״ח בלתי חוקי כטרור.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://zionutdatit.org.il/judaization/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "החזרה מיידית של כ־50,000 חיילים שאינם משובצים כיום ליחידות מילואים פעילות.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://miluim.zionutdatit.digital/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "economy": [
@@ -98,6 +116,33 @@
         "provenance": "official-outdated",
         "concreteness": "specific-stance",
         "_note": "ביטחון חילוץ בינוני — ראו הערה במסמך המקור. אין למפלגה מסמך מצע ייעודי לדיור כלכלי (שוק/בנייה ציבורית) מעבר להיבט ההתיישבותי."
+      },
+      {
+        "text": "עליה מהירה לקרקע של 20 יישובים חדשים בגליל, ו-20 יישובים חדשים בנגב.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/judaization/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ביטול תוכניות היוצרות רצפים טריטוריאליים ערבים והשתלטות על אדמות המדינה. קרקע שלא אנחנו מחזיקים בה – יחזיקו בה הערבים.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/judaization/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "מילואימניקים ומשפחות משרתות – קדימות, הטבות דיור ותמריצי מעבר.",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://zionutdatit.org.il/judaization/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "education": [
@@ -181,6 +226,24 @@
         "provenance": "official-outdated",
         "concreteness": "generic",
         "_note": "ביטחון חילוץ נמוך-בינוני — ראו הערה תחת security/military-doctrine (אותו מסמך מקור, אותה מגבלת ודאות)."
+      },
+      {
+        "text": "התוכנית הלאומית לגיוס חרדים: הקמה ותקצוב של ישיבות הסדר חרדיות. הקמת תנועות נוער וחוגי הכנה לשירות. חיזוק והרחבת החינוך הממלכתי-חרדי (ממ״ח). הגדלת חטיבת חשמונאים. הקמת מסגרות לחימה חרדיות נוספות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://miluim.zionutdatit.digital/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הציבור החרדי יצטרך להשתלב בשירות באופן משמעותי יותר, ונציגי הסיעות החרדיות יצטרכו ליישר קו עם המציאות החדשה. זה לא מאבק נגד הציבור החרדי, אלא דרישה בסיסית של צדק, ביטחון ואחריות לאומית.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://miluim.zionutdatit.digital/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "justice": [
@@ -220,6 +283,42 @@
         "dateRetrieved": "2026-08-17",
         "provenance": "official-outdated",
         "concreteness": "quantified"
+      },
+      {
+        "text": "בחירת נשיא העליון ומשנהו בהצבעה חשאית של כלל שופטי ישראל",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/mishpat/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "השלמת הסדרת הביקורת החוקתית ופסקת ההתגברות. החזרת המגבלות על זכות העמידה.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://zionutdatit.org.il/mishpat/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביטול ועדות המינויים והחזרת הסמכות לממשלה. אפשרות לממשלה ולשרים למנות עד 50% מבעלי התפקידים הבכירים בשירות המדינה",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://zionutdatit.org.il/mishpat/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "מחיקת עבירת הפרת האמונים – ביטול עבירת סל עמומה ובלתי מוגדרת. חוק צרפתי לראשי ממשלה ולשרים – דחיית הליכים פליליים בעבירות מסוימות עד לאחר הכהונה.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://zionutdatit.org.il/mishpat/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -272,6 +371,15 @@
         "provenance": "third-party",
         "concreteness": "generic",
         "_note": "אינה מגובה בציטוט ישיר ממסמכי המצע שנאספו (שאינם עוסקים ב-LGBTQ במפורש) — מבוססת על עמדות ציבוריות מתועדות ומוכרות של המפלגה ומנהיגה. מסומנת third-party בהתאם. יש לחפש מקור רשמי ישיר בעדכון עתידי."
+      },
+      {
+        "text": "היעד: להביא עוד מיליון תושבים יהודים לנגב ולגליל",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://zionutdatit.org.il/judaization/",
+        "archivePath": "docs/sources/hatzionut-hadatit/2026-10-11-2026-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "ecology": [

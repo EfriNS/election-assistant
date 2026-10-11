@@ -3,7 +3,7 @@
   "platformLabel": "מסמך עקרונות התנועה (2006, IDI) + עמדות קואליציוניות 2022 — אין מצע רשמי",
   "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
   "archiveDir": "docs/sources/shas/",
-  "_note": "Shas has no official 2026 election platform. Official website (shas.org.il) unreachable (ECONNREFUSED as of 2026-08-07; timed out on 2026-06-23). Re-checked 2026-08-07: shasnet.co.il and shas.co.il don't resolve, hiddush.org Shas subchannel last updated 2021, Hebrew Wikipedia has no 2026 platform mention. Still no official platform. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-17: shas.org.il still unreachable (ECONNREFUSED) — no change. Re-checked 2026-09-16 (post candidacy-submission review): no official platform or website found — no change.",
+  "_note": "Shas has no official 2026 election platform. Official website (shas.org.il) unreachable (ECONNREFUSED as of 2026-08-07; timed out on 2026-06-23). Re-checked 2026-08-07: shasnet.co.il and shas.co.il don't resolve, hiddush.org Shas subchannel last updated 2021, Hebrew Wikipedia has no 2026 platform mention. Still no official platform. Main source: IDI-hosted party principles document from 2006 elections (17th Knesset) — approximately 20 years old but reflects enduring party ideology. 2022 coalition agreement positions (Basic Law Torah Study, kashrut, conversion) added from IDI and Hiddush analysis — these reflect actual governing positions but are not in the 2006 document. The 2006 document is notably social-democratic in tone; the 2022 coalition positions are more religious-nationalist. Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Re-checked 2026-08-17: shas.org.il still unreachable (ECONNREFUSED) — no change. Re-checked 2026-09-16 (post candidacy-submission review): no official platform or website found — no change. Re-checked 2026-10-11: no official platform or website found — candidate list filed with the Central Elections Committee, no policy document. No change.",
   "topics": {
     "security": [
       {
@@ -111,16 +111,6 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "מימון ממשלתי מלא לרשת מעיין החינוך התורני ולמוסדות החינוך הדתיים, בלי לחייבם בתוכנית לימודי ליבה ממלכתית. רשת מעיין פועלת לפי תוכנית לימודים עצמית.",
-        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
-        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
-        "contrary": "כפיית תוכנית לימודים ממלכתית על חינוך דתי-תורני",
-        "provenance": "official-outdated",
-        "concreteness": "named-mechanism"
       }
     ],
     "health": [
@@ -141,16 +131,6 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-outdated",
         "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "private-sector-regulation-mechanics",
-        "dateRetrieved": "2026-06-27",
-        "text": "דגש על נגישות שוויונית לשירותי רפואה לכלל האוכלוסייה; חשש ממערכת מדורגת שתשרת בעלי אמצעים על חשבון האוכלוסיות החלשות.",
-        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
-        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
-        "contrary": "מערכת בריאות דו-שכבתית",
-        "provenance": "official-outdated",
-        "concreteness": "generic"
       }
     ],
     "religion": [
@@ -194,16 +174,6 @@
         "_note": "The 2006 document has no specific judiciary positions. In the 2022-2023 coalition, Shas supported the judicial override legislation (פסקת התגברות) as a coalition partner.",
         "provenance": "official-outdated",
         "concreteness": "generic"
-      },
-      {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "תמיכה ברפורמה בוועדת המינויים לשפיטה; שינוי הרכבה לאיזון טוב יותר בין נציגים נבחרים לנציגים מקצועיים, כחלק מהסכמי הקואליציה.",
-        "sourceUrl": "https://www.idi.org.il/media/6856/shas-17.pdf",
-        "archivePath": "docs/sources/shas/2026-06-23-idi-principles-2006.md",
-        "contrary": "ועדת מינויים בשליטת 'האליטות המשפטיות'",
-        "provenance": "official-outdated",
-        "concreteness": "named-mechanism"
       }
     ],
     "equality": [

@@ -3,7 +3,7 @@
   "platformLabel": "מצע המפלגה (beytenu.org.il)",
   "sourceUrl": "https://beytenu.org.il/party-platform/",
   "archiveDir": "docs/sources/beitenu/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry. 2026-08-07: re-checked same page (no new page); added 6 more concrete/quantified items (Border Police expansion, port/airport privatization, single chief rabbi, biennial budget, Holocaust-survivor grant amount, Arab-citizenship framing). Two summarized-but-unverified items (anti-Zionist school content, asset-declaration transparency) intentionally not added — need exact-quote follow-up. 2026-09-16 re-check (post candidacy-submission review): found a 'צעירים ונוער' (youth) section with permanent/equitable non-formal-education funding and youth-council institutional representation — doesn't fit any current education-topic aspect (same gap as miluimnikim's informal-education content), logged not force-fit. Disability-employment item in the welfare section is a confirmed duplicate of the existing entry (skipped). Rest of the platform unchanged.",
+  "_note": "2026-10-11 re-check: page metadata shows it was modified 2026-10-06. Section structure matches the 2026-09-16 capture; the housing plan ('תוכנית הדיור', 9 steps) now carries quantified detail that the two existing paraphrased housing entries don't — added 3 verbatim quantified entries (20K rental units/year, rent-to-own with up to 30% of rent accruing as equity, 2,500 permits per regional council). Health section (7 steps) re-read: same substance as the two existing entries, plus 'החזרת התוכנית הלאומית למאבק בסוכרת' (logged, not added). Still no ecology section. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry. 2026-08-07: re-checked same page (no new page); added 6 more concrete/quantified items (Border Police expansion, port/airport privatization, single chief rabbi, biennial budget, Holocaust-survivor grant amount, Arab-citizenship framing). Two summarized-but-unverified items (anti-Zionist school content, asset-declaration transparency) intentionally not added — need exact-quote follow-up. 2026-09-16 re-check (post candidacy-submission review): found a 'צעירים ונוער' (youth) section with permanent/equitable non-formal-education funding and youth-council institutional representation — doesn't fit any current education-topic aspect (same gap as miluimnikim's informal-education content), logged not force-fit. Disability-employment item in the welfare section is a confirmed duplicate of the existing entry (skipped). Rest of the platform unchanged.",
   "topics": {
     "security": [
       {
@@ -163,6 +163,33 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "הרחבת ההשקעה בפרויקטים של שכירות ארוכת טווח ושיווק קרקעות לבניית 20 אלף יחידות דיור להשכרה מדי שנה, במטרה להגדיל את ההיצע ולמתן את מחירי השכירות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הפעלת תוכנית ״שכירות רוכשת״, שתאפשר לזוגות צעירים ולחסרי דירה להתגורר בשכירות ארוכת טווח ולרכוש את הדירה בתום התקופה במחיר שייקבע מראש. במסגרת התוכנית, עד 30% מדמי השכירות ייצברו כהון עצמי לטובת רכישת הדירה, תוך מתן עדיפות למשרתי מילואים, למשפחות עובדות ולתושבי הפריפריה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "עידוד הבנייה במועצות האזוריות באמצעות הסכמי גג שיאפשרו מתן 2,500 היתרי בנייה בכל רשות במשך ארבע שנים.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
       }
     ],
     "education": [
@@ -294,14 +321,15 @@
         "concreteness": "specific-stance"
       },
       {
-        "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות; שמירה על עצמאות מערכת המשפט.",
+        "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות.",
         "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "contrary": "פסקת התגברות / חוק הצרפתי",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי הנוסח הנוכחי במקור."
       },
       {
         "text": "הסדרת תקציב המדינה כתקציב דו-שנתי, לצורך שמירה על יציבות הממשלה, הכלכלה והמשק.",
@@ -309,16 +337,6 @@
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
         "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "contrary": "מינוי שופטים על ידי הממשלה",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -369,6 +387,15 @@
         "dateRetrieved": "2026-08-07",
         "provenance": "official-current",
         "concreteness": "specific-stance"
+      },
+      {
+        "text": "תיקון חוק הלאום ברוח מגילת העצמאות, כך שיעגן את היותה של מדינת ישראל מדינה יהודית ודמוקרטית, המקיימת שוויון זכויות לבני כל דת ולאום אחר.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "ecology": []

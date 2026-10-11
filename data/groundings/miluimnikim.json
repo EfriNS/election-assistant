@@ -3,7 +3,7 @@
   "platformLabel": "מצע המפלגה הכלכלית — hakalkalit.org",
   "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
   "archiveDir": "docs/sources/miluimnikim/",
-  "_note": "New joint list for 2026 — יועז הנדל (המילואימניקים) + ד\"ר ירון זליכה (המפלגה הכלכלית), submitted 2026-09-07, polling right around the electoral threshold. The detailed, quantified platform content here comes from hakalkalit.org — Zlicha's pre-existing Economic Party platform, which now forms the economic arm of the joint list; Hendel himself hasn't published an equally detailed platform of his own. One security/hardline-enforcement entry and the haredi-draft-and-service-burden entry are third-party sourced (news paraphrase, not verbatim) since they come from coverage of Hendel's own positions/founding identity, not the hakalkalit.org document. Health topic left thin: the platform's OECD-healthcare-spending-level commitment doesn't fit any current TOPIC_KEY_DIMENSIONS health bucket (all are mechanism/equity-specific, not overall-budget-level) — logged in archive, not force-fit. Informal-education budget commitment similarly has no fitting education bucket — logged, not added as a scored entry. Pension/vehicle-prices/transportation/high-tech/agriculture sections exist on the source site but weren't fully collected this pass — see archive 'נושאים שסעיפים קיימים' section for a follow-up collection list.",
+  "_note": "2026-10-11 re-check: main hakalkalit.org platform page unchanged (21 sections; still no mention of המילואימניקים/הנדל and no joint platform or joint site found — news coverage confirms a technical union with both parties keeping their own identity). Collected two of the sub-pages flagged 2026-09-16 as not yet collected: /בריאות and /איכות-הסביבה — 5 entries added, health 0→2 and ecology 1→4 (incl. the first entry in the dataset under ecology/international-and-regional-climate-cooperation). The '8% of GDP on health' commitment still has no fitting health bucket (logged, as before). Still uncollected sub-pages: pension, welfare, vehicle prices, transportation, high-tech, women/domestic violence, agriculture, informal education. Previous note: New joint list for 2026 — יועז הנדל (המילואימניקים) + ד\"ר ירון זליכה (המפלגה הכלכלית), submitted 2026-09-07, polling right around the electoral threshold. The detailed, quantified platform content here comes from hakalkalit.org — Zlicha's pre-existing Economic Party platform, which now forms the economic arm of the joint list; Hendel himself hasn't published an equally detailed platform of his own. One security/hardline-enforcement entry and the haredi-draft-and-service-burden entry are third-party sourced (news paraphrase, not verbatim) since they come from coverage of Hendel's own positions/founding identity, not the hakalkalit.org document. Health topic left thin: the platform's OECD-healthcare-spending-level commitment doesn't fit any current TOPIC_KEY_DIMENSIONS health bucket (all are mechanism/equity-specific, not overall-budget-level) — logged in archive, not force-fit. Informal-education budget commitment similarly has no fitting education bucket — logged, not added as a scored entry. Pension/vehicle-prices/transportation/high-tech/agriculture sections exist on the source site but weren't fully collected this pass — see archive 'נושאים שסעיפים קיימים' section for a follow-up collection list.",
   "topics": {
     "security": [
       {
@@ -160,8 +160,54 @@
         "dateRetrieved": "2026-09-16",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "יעד האנרגיה המתחדשת לייצור חשמל יעמוד על - 30% עד שנת 2030, 70% עד 2040 ומאה אחוז עד שנת 2050",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "שיקום ים המלח - המפלגה הכלכלית תמנע את הארכת הזיכיון לכריית מינרלים מים המלח, עם פקיעתו ב- 2030.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "לכן עלינו לפעול עם שכנותינו מצרים וירדן, לשתף פעולה עם הפלסטינים ועם מדינות שכנות נוספות כדי שהאזור שלנו, שחווה כרגע שינויי מזג אוויר קיצוניים יהיה חלק מאותה מדיניות כלל עולמית.",
+        "aspect": "international-and-regional-climate-cooperation",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
-    "health": []
+    "health": [
+      {
+        "text": "בניית שלושה בתי חולים חדשים בפריפריה הצפונית והדרומית, פתיחת פקולטה חדשה לרפואה, והגדלה דרמטית של מספר הסטודנטים לרפואה ותלמידי הסיעוד בישראל.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://www.hakalkalit.org/בריאות",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הגדלה משמעותית של תקני הרופאים והאחיות במערכת הבריאות, עם דגש על הסגל הזוטר – רופאות, רופאים וסגל סיעודי שכורעים תחת נטל העבודה. נוסיף תקנים לרופאים צעירים כדי להקל על העומס הכבד המוטל עליהם.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://www.hakalkalit.org/בריאות",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ]
   }
 }
