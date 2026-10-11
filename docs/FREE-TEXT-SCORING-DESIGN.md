@@ -67,6 +67,12 @@ Topics where the user chose a fixed opener option with no follow-ups are scored 
 
 **Update 2026-10-12 — scored against the probed sub-topics, not the whole topic.** After the full verbatim harvest (364 → 809 entries) the whole-topic prompt tripled and scores became measurably noisier between identical runs. The call now receives, per party, only the entries on the sub-topics the topic's follow-up questions probed (each follow-up carries its `targetedAspect`; an entry may belong to several sub-topics via `secondaryAspects`). Rules: several follow-ups → the union of their sub-topics; free-text opener, no follow-ups, or a follow-up without a canonical sub-topic → the whole topic as before; a party with no text on the probed sub-topic → `null`, so the topic uses its opener score alone (silence is not scored as disagreement); official-first is applied per sub-topic, so third-party text is used only where the party has nothing official on that sub-topic. Measurements and what is still open: TODO item 26.
 
+**Further rules added 2026-10-12 after real test runs:**
+- **The models see the options the user saw.** The UI numbers every answer option, so free-text answers cite them ("3+1", "like 1 but…"). Both the follow-up call and the scoring call now receive the options in display order (the opener's when the opener is free text; every follow-up's) and are told to resolve number references from that list.
+- **Parties flagged "no platform" are scored on the text they have.** The blanket "no platform → null on every topic" prompt rule is removed.
+- **No score on a free-text topic counts as neutral.** When the opener is free text there is no preset score; a party the AI could not score on that topic gets a neutral contribution (the same as an AI score of 0) in its overall percentage, while the topic chip still says "אין מידע זמין". Leaving the topic out computed that party's percentage over fewer topics, so it could reach 100% on a single topic.
+- **The scoring response is never discarded on the way to the results step.** It was, whenever the user continued before the call returned.
+
 ---
 
 ## What "Hard Facts" Grounding Means Here
