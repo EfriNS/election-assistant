@@ -153,7 +153,7 @@ describe("calcResults — AI score blending", () => {
     expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(0);
   });
 
-  it("skips topic for a party when 'other' opener and AI score is null → score stays 50", () => {
+  it("counts the topic as neutral for a party when 'other' opener and AI score is null — same as an AI score of 0", () => {
     const aiWithNull: Record<string, number | null> = Object.fromEntries(
       ["hadash","raam","democrats","beyahad","yashar","miluimnikim","beitenu","likud","amcha-yisrael","shas","yahadut-hatorah"].map(id => [id, 0 as number | null])
     );
@@ -164,7 +164,30 @@ describe("calcResults — AI score blending", () => {
       questionSet,
       { security: aiWithNull }
     );
-    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(50);
+    // neutral = 0.5 normalized, through the same curve as every other score
+    const neutral = Math.round(Math.pow(0.5, SCORE_CURVE_POWER) * 100);
+    expect(results.find((p) => p.id === "otzmah-yehudit")!.score).toBe(neutral);
+    // identical to the parties the AI scored 0
+    expect(results.find((p) => p.id === "hadash")!.score).toBe(neutral);
+  });
+
+  it("regression 2026-10-12: a party with no score on free-text topics cannot reach 100% on the one topic it has", () => {
+    // Real run: three topics, two answered in free text. A party with no AI score on
+    // those two was ranked on the third alone, got 100% and came first.
+    const scored = (v: number): Record<string, number | null> =>
+      Object.fromEntries(PARTIES.map((p) => [p.id, p.id === "otzmah-yehudit" ? null : v]));
+    const { ranked: results, topicScores } = calcResults(
+      { security: 3, economy: 3, justice: 3 },
+      { security: qa("control", "Control"), economy: qa("other", "Custom"), justice: qa("other", "Custom") },
+      { ...questionSet, justice: questionSet.economy },
+      { economy: scored(1), justice: scored(1) }
+    );
+    const otzmah = results.find((p) => p.id === "otzmah-yehudit")!;
+    // security +2 (full match) + two neutral topics
+    expect(otzmah.score).toBe(Math.round(((1 + 2 * Math.pow(0.5, SCORE_CURVE_POWER)) / 3) * 100));
+    expect(otzmah.score).toBeLessThan(100);
+    // the chips for the unknown topics stay "no information"
+    expect(topicScores["otzmah-yehudit"]).toEqual({ security: 100 });
   });
 
   it("falls back to pure deterministic when aiScores is undefined (AI call failed)", () => {

@@ -2,11 +2,12 @@
 // schema. Kept apart from the route so tests and scripts can use them without
 // loading the route's server-only dependencies (Next, Langfuse instrumentation).
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, compareEntryQuality, entryAspects, getBestEvidenceForAspect, getBestEvidenceForTopic, type GroundingEntry } from "@/lib/groundings";
+import { compareEntryQuality, entryAspects, getBestEvidenceForAspect, getBestEvidenceForTopic, type GroundingEntry } from "@/lib/groundings";
 import { TOPIC_KEY_DIMENSIONS } from "@/lib/questions";
 
 // targetedAspect: the sub-dimension the follow-up question probed (set by /api/follow-up).
-export type FollowUpQA = { question: string; answer: string; targetedAspect?: string };
+// options: the answer options as the user saw them, in display order (the UI numbers them).
+export type FollowUpQA = { question: string; answer: string; targetedAspect?: string; options?: string[] };
 
 export type TopicQAForScoring = {
   topicId: string;
@@ -16,7 +17,17 @@ export type TopicQAForScoring = {
   followUpQA: FollowUpQA[];
   freeTextInterpretation?: string;
   openerIsFreeText?: boolean;
+  // The opener's options in the order the user saw them (shuffled per session, numbered in the UI).
+  openerOptions?: string[];
 };
+
+// The UI numbers every option, and free-text answers refer to those numbers
+// ("3+1", "like 1 but…"). Without the list the model can only guess what a
+// number meant — a real 2026-10-12 run read "3+1" as a hawkish stance.
+function shownOptions(options?: string[]): string {
+  if (!options || options.length === 0) return "";
+  return `\n  אפשרויות שהוצגו למשתמש (ממוספרות כפי שראה אותן): ${options.map((o, i) => `${i + 1}. ${o}`).join(" | ")}`;
+}
 
 /**
  * The sub-dimensions a topic's follow-up answers are about, or null when the
@@ -77,12 +88,14 @@ export function buildScoreResponseSchema(topics: TopicQAForScoring[]) {
 export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const userBlock = topics
     .map((t) => {
-      let block = `[${t.topicLabel}] ${t.openerQuestion}\nתשובה: ${t.openerAnswer}`;
+      let block = `[${t.topicLabel}] ${t.openerQuestion}`;
+      if (t.openerIsFreeText) block += shownOptions(t.openerOptions);
+      block += `\nתשובה: ${t.openerAnswer}`;
       if (t.freeTextInterpretation) {
         block += `\n  פרשנות: ${t.freeTextInterpretation}`;
       }
       t.followUpQA.forEach((fq) => {
-        block += `\n  שאלת המשך: ${fq.question}\n  תשובה: ${fq.answer}`;
+        block += `\n  שאלת המשך: ${fq.question}${shownOptions(fq.options)}\n  תשובה: ${fq.answer}`;
       });
       return block;
     })
@@ -104,17 +117,17 @@ export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
     .filter(Boolean)
     .join("\n\n");
 
-  // Determine which parties have no platform data at all, for the null instruction
-  const partiesWithoutPlatform = PARTIES.filter(
-    (p) => !GROUNDINGS[p.id]?.platformAvailable
-  ).map((p) => p.name);
+  // No blanket exclusion of parties flagged platformAvailable: false (user decision
+  // 2026-10-12): they are scored on whatever text they have, like everyone else.
+  // Excluding them left a free-text topic with no score at all for those parties,
+  // so their overall percentage was computed over fewer topics and could reach 100%.
 
   return `אתה מדרג את ההתאמה בין עמדות פוליטיות של משתמש לבין טקסטים מפורסמים של מפלגות ישראליות.
 
 **כללים:**
 - דרג אך ורק על סמך הטקסטים המסופקים להלן. אל תשתמש בידע כלשהו על המפלגות מעבר למה שמופיע כאן.
 - אם לא סופק טקסט עבור מפלגה מסוימת בנושא מסוים — הוצא null עבורה בנושא זה.
-- מפלגות ללא מצע: ${partiesWithoutPlatform.join(", ")} — null בכל הנושאים.
+- תשובה בטקסט חופשי עשויה להפנות לאפשרויות שהוצגו למשתמש לפי מספרן (למשל "3+1" או "דומה ל-1") — פרש אותה לפי רשימת האפשרויות שמופיעה מעל אותה תשובה, ולא לפי ניחוש.
 
 **סולם הדירוג (מספרים בלי סימן +):**
 2 = התאמה חזקה   1 = התאמה מסוימת   0 = ניטרלי / לא ברור

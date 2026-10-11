@@ -71,7 +71,8 @@ export function calcResults(
         // Pure deterministic: fixed-option opener, no follow-ups or AI unavailable
         effectiveScore = option.scores[pi];
       }
-      // null effectiveScore: no data for this party on this topic — skip entirely
+      // null effectiveScore: a free-text opener (no preset score) and no AI score
+      // for this party — nothing is known about the party on this topic.
 
       // Gate signal — deliberately distinct from effectiveScore's 50/50 blend:
       // prefer the grounding-backed AI score outright when one exists, falling
@@ -87,6 +88,14 @@ export function calcResults(
         maxPossible[pi] += weight;  // max curved contribution is weight × 1^n = weight
         if (!topicScores[party.id]) topicScores[party.id] = {};
         topicScores[party.id][topicId] = Math.round(normalized * 100);  // raw, pre-curve
+      } else if (isOtherOpener) {
+        // Count the topic as neutral (same as a score of 0) in the overall percentage
+        // rather than leaving it out: leaving it out computed the party's percentage
+        // over fewer topics than everyone else's, so a party known on one topic of
+        // three could reach 100% and rank first. topicScores stays unset, so the
+        // topic chip still reads "אין מידע זמין".
+        totals[pi] += weight * Math.pow(0.5, SCORE_CURVE_POWER);
+        maxPossible[pi] += weight;
       }
     });
   });

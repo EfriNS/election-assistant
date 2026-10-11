@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse, after } from "next/server";
 import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
-import { sanitizeUserInput } from "@/lib/sanitize";
+import { sanitizeOptionList, sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
 import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
@@ -47,7 +47,8 @@ export const FOLLOW_UP_RESPONSE_SCHEMA = {
 // Gemini bills actual tokens used, not the cap, so this costs nothing.
 const MAX_OUTPUT_TOKENS = 700;
 
-type FollowUpQA = { question: string; answer: string };
+// options: the answer options as the user saw them, in display order (the UI numbers them).
+type FollowUpQA = { question: string; answer: string; options?: string[] };
 
 type ConversationEntry = {
   topicLabel: string;
@@ -70,6 +71,14 @@ type PartyGroundingRef = {
   entries: PartyGroundingEntry[];
 };
 
+// The UI numbers every option, and free-text answers refer to those numbers
+// ("3+1", "like 1 but…"). Without the list the model can only guess what a
+// number meant — a real 2026-10-12 run interpreted "3+1" as a hawkish stance.
+function shownOptions(options: string[] | undefined, indent: string): string {
+  if (!options || options.length === 0) return "";
+  return `\n${indent}Options shown to the user (numbered as displayed — a free-text answer may refer to them by number, e.g. "3+1"; resolve such references from this list, never guess): ${options.map((o, i) => `${i + 1}. ${o}`).join(" | ")}`;
+}
+
 export function buildPrompt(
   conversationSoFar: ConversationEntry[],
   currentTopic: {
@@ -78,6 +87,8 @@ export function buildPrompt(
     openerAnswer: string;
     freeTextInterpretation?: string;
     followUpQA: FollowUpQA[];
+    // The opener's options in the order the user saw them — sent for free-text openers.
+    openerOptions?: string[];
   },
   nextTopic: TopicRef | null,
   tone: string,
@@ -122,7 +133,9 @@ export function buildPrompt(
     currentTopic.followUpQA.length === 0
       ? ""
       : "\nFollow-up Q&A on this topic so far:\n" +
-        currentTopic.followUpQA.map((fq) => `  Q: ${fq.question}\n  A: ${fq.answer}`).join("\n");
+        currentTopic.followUpQA.map((fq) => `  Q: ${fq.question}${shownOptions(fq.options, "  ")}\n  A: ${fq.answer}`).join("\n");
+
+  const openerOptionsBlock = openerIsFreeText ? shownOptions(currentTopic.openerOptions, "") : "";
 
   const nextTopicBlock = nextTopic
     ? `Next topic: ${nextTopic.label}\nNext question: ${nextTopic.question}`
@@ -166,7 +179,7 @@ Do not repeat the topic's opener question or its core axis in a follow-up — th
 ${historyBlock}
 
 **Current topic:** ${currentTopic.label}
-Opener: ${currentTopic.openerQuestion}
+Opener: ${currentTopic.openerQuestion}${openerOptionsBlock}
 User's answer: ${currentTopic.openerAnswer}${currentTopic.freeTextInterpretation ? `\n[Your prior interpretation of this answer: ${currentTopic.freeTextInterpretation}]` : ""}${followUpQABlock}
 ${groundingBlock}
 ${nextTopicBlock}
@@ -201,7 +214,7 @@ Format:
 export async function POST(req: NextRequest) {
   const raw: {
     conversationSoFar: ConversationEntry[];
-    currentTopic: { label: string; openerQuestion: string; openerAnswer: string; freeTextInterpretation?: string; followUpQA: FollowUpQA[] };
+    currentTopic: { label: string; openerQuestion: string; openerAnswer: string; freeTextInterpretation?: string; followUpQA: FollowUpQA[]; openerOptions?: string[] };
     nextTopic: TopicRef | null;
     tone: string;
     depth: string;
@@ -220,9 +233,11 @@ export async function POST(req: NextRequest) {
   const sanitizedCurrentTopic = {
     ...raw.currentTopic,
     openerAnswer: sanitizeUserInput(raw.currentTopic.openerAnswer, 200),
+    openerOptions: sanitizeOptionList(raw.currentTopic.openerOptions),
     followUpQA: raw.currentTopic.followUpQA.map((fq) => ({
       ...fq,
       answer: sanitizeUserInput(fq.answer, 200),
+      options: sanitizeOptionList(fq.options),
     })),
   };
   const sanitizedHistory = raw.conversationSoFar.map((e) => ({

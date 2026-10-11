@@ -3,9 +3,9 @@ import { NextRequest, NextResponse, after } from "next/server";
 import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, getTopicGroundings } from "@/lib/groundings";
+import { getTopicGroundings } from "@/lib/groundings";
 import { TOPIC_IDS } from "@/lib/topics";
-import { sanitizeUserInput } from "@/lib/sanitize";
+import { sanitizeOptionList, sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
 import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
@@ -66,9 +66,11 @@ export async function POST(req: NextRequest) {
   const topics: TopicQAForScoring[] = rawTopics.map((t) => ({
     ...t,
     openerAnswer: sanitizeUserInput(t.openerAnswer, 500),
+    openerOptions: sanitizeOptionList(t.openerOptions),
     followUpQA: t.followUpQA.map((fq) => ({
       ...fq,
       answer: sanitizeUserInput(fq.answer, 200),
+      options: sanitizeOptionList(fq.options),
     })),
   }));
 
@@ -82,7 +84,7 @@ export async function POST(req: NextRequest) {
     PARTIES.some((p) => getTopicGroundings(p.id, t.topicId).some((e) => !e.absent && e.text))
   );
   const partiesWithData = PARTIES
-    .filter((p) => GROUNDINGS[p.id]?.platformAvailable)
+    .filter((p) => topics.some((t) => getScoringEntries(p.id, t).length > 0))
     .map((p) => p.id);
 
   return propagateAttributes({ sessionId, traceName: "score-topics" }, async () => {
