@@ -289,7 +289,8 @@ election-assistant/
 ```
 
 **Key domain files in `lib/`**:
-- `groundings.ts` — grounding data types + accessors; the `Provenance` × `Concreteness` quality model and `getBestEvidenceForTopic()` (the official-material-first selection rule used everywhere quotes are chosen)
+- `groundings.ts` — grounding data types + accessors; the `Provenance` × `Concreteness` quality model and `getBestEvidenceForTopic()` (the official-material-first selection rule used everywhere quotes are chosen), plus `getBestEvidenceForAspect()` (the same rule for one sub-topic) and `entryAspects()` (an entry's `aspect` + `secondaryAspects`)
+- `score-topics-prompt.ts` — pure builders for `/api/score-topics` (prompt, response schema) and `getScoringEntries()`, which narrows the party text to the sub-topics the follow-ups probed
 - `questions.ts` — opener questions per topic + `TOPIC_KEY_DIMENSIONS` (canonical follow-up dimension taxonomy)
 - `topics.ts` — canonical topic list (`security`, `economy`, `housing`, `education`, `health`, `religion`, `justice`, `equality`, `ecology`)
 - `parties.ts` — party metadata; must stay in sync with `data/groundings/*.json` (see `docs/learnings/project/VAA-DESIGN.md` item 63)
@@ -298,8 +299,8 @@ election-assistant/
 
 **Key Architectural Patterns**:
 - **Quiz flow**: fixed opener question per topic (manually written) → AI-generated follow-up question (Gemini, structured output) → both feed topic scoring
-- **Scoring pipeline**: opener answer (pre-calibrated) + follow-up answer (AI-scored against grounding quotes) → per-topic score → power-curve-weighted overall ranking (`lib/scoring.ts`)
-- **Grounding quality model**: every quote has `provenance` (official-current/official-outdated/joint-list/third-party) × `concreteness` (quantified/named-mechanism/specific-stance/generic); `getBestEvidenceForTopic()` is the single selection rule for scoring, quoting, and follow-up dimension selection — official material only when it exists, third-party/joint-list strictly as a fallback
+- **Scoring pipeline**: opener answer (pre-calibrated) + follow-up answer (AI-scored against the grounding quotes on the sub-topics the follow-ups probed; whole topic for a free-text opener; no text on the sub-topic → no AI score, opener only) → per-topic score → power-curve-weighted overall ranking (`lib/scoring.ts`)
+- **Grounding quality model**: every quote has `provenance` (official-current/official-outdated/joint-list/third-party) × `concreteness` (quantified/named-mechanism/specific-stance/generic); `getBestEvidenceForTopic()` is the single selection rule for scoring, quoting, and follow-up dimension selection — official material only when it exists, third-party/joint-list strictly as a fallback. An entry has one primary sub-topic (`aspect`) and optionally more (`secondaryAspects`), all from `TOPIC_KEY_DIMENSIONS`; match with `entryAspects()`, never `e.aspect ===`
 - **Gemini structured output is mandatory, not optional**: all 3 AI routes (`follow-up`, `score-topics`, `results`) use `responseJsonSchema`/`responseSchema` — prompt instructions alone do not reliably produce valid JSON for Hebrew text with acronyms (two production incidents, see CHANGELOG 2026-07-02)
 
 **Data Flow**:

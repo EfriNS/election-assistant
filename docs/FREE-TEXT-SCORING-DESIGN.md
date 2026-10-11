@@ -65,6 +65,8 @@ The AI outputs an alignment score (−2 to +2) per party per topic, grounded in 
 
 Topics where the user chose a fixed opener option with no follow-ups are scored deterministically as today — no AI call needed.
 
+**Update 2026-10-12 — scored against the probed sub-topics, not the whole topic.** After the full verbatim harvest (364 → 809 entries) the whole-topic prompt tripled and scores became measurably noisier between identical runs. The call now receives, per party, only the entries on the sub-topics the topic's follow-up questions probed (each follow-up carries its `targetedAspect`; an entry may belong to several sub-topics via `secondaryAspects`). Rules: several follow-ups → the union of their sub-topics; free-text opener, no follow-ups, or a follow-up without a canonical sub-topic → the whole topic as before; a party with no text on the probed sub-topic → `null`, so the topic uses its opener score alone (silence is not scored as disagreement); official-first is applied per sub-topic, so third-party text is used only where the party has nothing official on that sub-topic. Measurements and what is still open: TODO item 26.
+
 ---
 
 ## What "Hard Facts" Grounding Means Here
@@ -120,6 +122,7 @@ The grounding data model (already decided, PHASED-ROADMAP.md §4):
 type GroundingEntry = {
   text: string;           // verbatim quote from platform
   aspect: string;         // the sub-dimension this quote addresses (e.g., "tenant protection", "supply-side reform")
+  secondaryAspects?: string[]; // (added 2026-10-12) further sub-dimensions of the same topic it also addresses
   sourceUrl: string;      // URL to the original document
   archivePath: string;    // path in docs/sources/<partyId>/
   dateRetrieved: string;  // ISO date
