@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-11 — Dependabot batch + Next.js/sharp security patches + TypeScript 6
+
+- **Security patches found by `npm audit`, not by a Dependabot PR or alert** (0 open alerts at the time): `next` 16.3.6 → 16.3.8 — six advisories published 2026-10-07, incl. GHSA-cjq9-62q9-8jv4 (high, SSRF in Image Optimization; the app doesn't use `next/image`) and SSG/ISR cache poisoning (GHSA-mcj8-r9mp-w47p, GHSA-4jqv-mc3x-m676); `sharp` 0.35.4 → 0.35.5 via the existing override — GHSA-wq5f-xc86-pv6w (high, librsvg).
+- **Merged as one change (superseding #32–#35)**: `@langfuse/client` 5.11.1 → 5.13.1 with `@langfuse/otel` + `@langfuse/tracing` moved to the same version (the PR bumped only `client`, which would have left a second `@langfuse/tracing`/`core` copy nested under it); `vitest` + `@vitest/coverage-v8` 5.0.2 → 5.0.3; `postcss` 8.5.28 → 8.5.29; `typescript` 5.9.3 → 6.0.3 (major, inside `typescript-eslint`'s `<6.1.0` range; no code or tsconfig changes needed).
+- **Verified**: 437/437 tests, `tsc`, `eslint`, `next build`; on a local production build `/apple-icon` renders, `/` and `/quiz` serve 200, and a real `/api/follow-up` Gemini call returns valid structured Hebrew output with its trace arriving in Langfuse through the new SDK.
+- **#23 still held** (puppeteer 25.12 → Chrome 154; `@sparticuz/chromium` latest is still 153).
+- **npm 10.8.2 crashes on the vitest bump** (`Cannot read properties of null (reading 'edgesOut')` in arborist's peer resolver); installed that pair with `npx npm@11`. Lockfile stays v3 and `npm ci` on npm 10 consumes it.
+- **Left open from `npm audit`**: the `braces`/`micromatch`/`postcss-selector-parser` findings under `tailwindcss` 3 and `eslint-config-next` — build/lint-time only; npm's proposed fixes are Tailwind 4 or an `eslint-config-next` downgrade.
+
 ## 2026-10-02 — Listed on nattelshay.com + GitHub repo metadata
 
 - **Landing page** (`nattelshay-landing` repo): Election Assistant added as the first project card → `https://voteassist.me`, with a "Source on GitHub" link under the card (nested links are invalid HTML); CV Refinery second; footer `© 2025–2026 Efri Nattel Shay`. Ordered first while the campaign is live — revisit after the election. Checked at desktop + mobile widths (Hebrew name kept unbroken).
