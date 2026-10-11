@@ -21,7 +21,7 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { readFileSync, writeFileSync } from "fs";
-import { buildScoringPrompt, buildScoreResponseSchema } from "@/app/api/score-topics/route";
+import { buildScoringPrompt, buildScoreResponseSchema } from "@/lib/score-topics-prompt";
 import { calcResults, type TopicQA } from "@/lib/scoring";
 import { QUESTIONS_FORMAL } from "@/lib/questions";
 import { TOPICS } from "@/lib/topics";
