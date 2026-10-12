@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-10-12 — "מה כתוב במצע?" made visible and digestible (TODO 29)
+
+Merge `22bd758` (branch `feature/platform-quotes-visibility`, 4 commits).
+
+**Why**: the party's own words are the proof behind every match, but the entry point was a grey text link (3 of 36 results viewers opened it in 90 days, Mixpanel) and the opened section was a wall of text.
+
+**What was measured before choosing the fix**
+- Single quotes are short (median 143 characters, longest 385 of 809). The length came from quote count: up to 31 per topic, about 140 for one party. So quotes are capped by count and never shortened.
+- 34 of 36 results viewers were on a phone, so the desktop column was not widened (it is also already ~95 characters per line at the old 12px).
+
+**What changed** (`components/PartyResultCard.tsx`, `lib/pdf-template.ts`, `lib/grounding-types.ts`)
+- **Entry point**: a bordered teal button with the existing label variants and a second line `ציטוטים: N · נושאים: N`.
+- **Topic chips are buttons** when the party has quotes on that topic: a tap opens the panel scrolled to the topic, with a ring for about 2 seconds.
+- **Two quotes per topic** (`QUOTES_SHOWN_PER_TOPIC`), in the existing order (probed sub-topics first, then best evidence), then `הצגת כל הציטוטים בנושא (N)` / `הצגת פחות`. `/api/results` is unchanged and still returns every quote.
+- **Layout**: one bordered block per topic with its score in the header; the user's answer is a filled grey item and each quote an outlined item, with matching insets so labels line up with labels and text with text; quotes are 14px; the "related to your follow-up" and "party opposes" markers are small framed tags; source, archive and date share one line.
+- **PDF**: same layout and cap; a capped topic states `מוצגים 2 מתוך N הציטוטים שנאספו בנושא זה`.
+- **Analytics**: `grounding_expanded` gains `via` (`button` | `chip`) and `topic_id` for chips; new action `grounding_topic_show_all` (`docs/MIXPANEL-DASHBOARDS.md` item 9).
+
+**Decisions (user, 2026-10-12)**: prominent button plus tappable chips, both opening the same panel; 2 quotes per topic; PDF capped the same way; topic blocks chosen over topic tabs ("for now") and over a side-by-side desktop layout; the score stays visible on critical-conflict blocks.
+
+**Verified**: 583/583 tests (3 new in `tests/pdfQuoteCap.test.ts`), `tsc`, `eslint`, `next build`. Real quiz flow driven headlessly at 390px and 1280px, including a critical-conflict card and the Mixpanel payloads. Mobile view and PDF export checked by the user on the Vercel preview. The card has no automated test (node-only test setup).
+
+**Left open**: backlog item 31 (feedback button overlap, a quote filed under two topics, marker frequency); open-rate re-measurement added to item 4.
+
 ## 2026-10-12 — Full platform harvest, sub-topic scoring, five scoring fixes
 
 Merge `53e2b89` (branch `feature/grounding-recheck-2026-10-11`, 17 commits, 2026-10-11 to 2026-10-12).
