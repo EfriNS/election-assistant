@@ -1,5 +1,48 @@
 # Changelog
 
+## 2026-10-12 — Full platform harvest, sub-topic scoring, five scoring fixes
+
+Merge `53e2b89` (branch `feature/grounding-recheck-2026-10-11`, 17 commits, 2026-10-11 to 2026-10-12).
+
+**Grounding data: 364 → 809 entries, verbatim**
+- **Re-check and audit of all 13 parties against their live sources**: 93 new entries across 7 parties; of the 364 older entries, 22 reworded to the parties' current official wording, 21 removed with user approval (inferred text not in the cited sources, duplicates, superseded slogans), 3 replaced.
+- **Third-party and joint-list entries checked against the page they cite** (70 entries, 43 matched as written): 4 removed, 8 reduced to what the source says (incl. the Basic Law: Torah Study entries, updated for the law as passed 2026-07-13), 13 Otzma Yehudit links pointed at the Hebrew page.
+- **Full harvest as verbatim quotes**, checked sentence by sentence against the page text; summary-style entries replaced by the party's own wording: democrats 75 → 133 (all 19 remaining plan PDFs), beyahad 48 → 141, yashar 47 → 127, beitenu 41 → 87, miluimnikim 19 → 66 (Economic Party site plus themiluimnikim.org.il), shas 20 → 39, hatzionut-hadatit 40 → 53, amcha-yisrael 27 → 37, otzmah-yehudit 28 → 36, hadash 51 → 52. Likud, Ra'am and UTJ have no unharvested official text.
+- **34 opener scores corrected** against the harvested texts (6 after the audit, 28 after the harvest), both registers; amcha-yisrael rescored on 4 more.
+- Removed and replaced texts are recorded in each party's source archive (`docs/sources/`). Advisor review files regenerated.
+
+**Sub-topic scoring**
+- **Why**: with 809 entries the scoring prompt grew to 77K tokens and run-to-run noise doubled against the live site.
+- An entry can carry several sub-topics (`aspect` + `secondaryAspects`, matched with `entryAspects()`); 161 entries got extra labels in a full pass.
+- `/api/score-topics` sends only the entries on the sub-topics the topic's follow-ups probed (`getScoringEntries`). The whole topic is sent for a typed opener, no follow-ups, or a follow-up without a canonical sub-topic.
+- **Decisions (user, 2026-10-12)**: a party with no text on the probed sub-topic gets no AI score and the topic uses its opener score alone (enforced in `parseScores`); official-first applies per sub-topic, so third-party text is used where a party has nothing official on that sub-topic (`getBestEvidenceForAspect`, 8 cases); a per-party cap on entries was rejected.
+- Prompt builders moved to `lib/score-topics-prompt.ts`. Langfuse metadata gains `aspectsScored` and `entriesSent`.
+
+**Five scoring fixes (the first three were live bugs)**
+- **Scoring response discarded**: the quiz dropped the `/api/score-topics` response when the user pressed "לתוצאות" before it returned, so results were built with no AI scores. Mixpanel `results_viewed` showed `ai_scoring_used: false` in 30 of 36 views over 90 days. Fixed with a request id (`app/quiz/page.tsx`); closes backlog item 10.
+- **Numbered options unseen**: neither AI call was shown the answer options, so a typed answer citing them ("3+1") was guessed at; a real run ranked right-wing parties first for a left-wing user. The quiz now sends the options as displayed and both prompts list them (`sanitizeOptionList`).
+- **Output cut off**: a nine-topic response needs about 1,450–1,500 output tokens and the cap was a fixed 1,500 (truncated mid-JSON in 2 of 3 measured calls, which drops every AI score). The cap is now sized from the number of scores requested (`scoreOutputTokenBudget`, 2,340 for nine topics).
+- **Parties without a published platform** (Likud, Shas, Ra'am, UTJ) are AI-scored on the text they have; the blanket "no platform → no score" prompt rule is removed (user decision). The flag still drives the results-page labelling.
+- **Typed opener with no AI score** now counts as neutral in that party's overall percentage instead of being left out, which let a party known on one topic of three reach 100% (user decision; `lib/scoring.ts`).
+
+**Measurement** (`scripts/compare-scoring.ts`, new: fixed made-up profiles through the real prompt, model call and `calcResults`, 2 runs each)
+
+| | Prompt tokens | Score change between identical runs | Scores moving 2+ points |
+|---|---|---|---|
+| Before this merge (364 entries, whole topic) | 28,318 | 0.10 | 2 of 492 |
+| 809 entries, whole topic | 77K | 0.22 | 25 of 652 |
+| 809 entries, sub-topic filter, 8 preset profiles | 47,510 | 0.17 | 5 of 693 |
+| Same, 3 typed-opener profiles | 63,692 | 0.32 | 12 of 276 |
+
+- The eight preset profiles kept the same top party in both runs. Typed answers citing option numbers resolve in the right direction.
+- The profiles put two follow-ups on every topic, a heavy case; a typical session is not yet measured.
+
+**Verified**: 580/580 tests, `tsc`, `eslint`, `next build`. A real quiz run in a browser by the user with typed openers; its Langfuse generation shows whole-topic scoring for the two typed openers, one sub-topic for the preset one, 281 entries sent, no truncation.
+
+**Tests added**: `tests/scoringAspectFilter.test.ts`, `tests/shownOptionsInPrompts.test.ts`; `calcResults`, `scoreTopicsPrompt`, `scoreResponseSchema`, `aspectTaxonomy`, `selectSuggestedDimension`, `groundingsFilter` extended. The discarded-response fix has no automated test (needs backlog item 22).
+
+**Left open** (backlog item 30): typed-opener topics are the noisiest path; the four parties without a published platform often get no AI score and that flips between identical runs; the follow-up generator's party text roughly tripled and is not narrowed; two catch-all sub-topics hold 53 entries each. Backlog item 29 (new, high priority): make the platform quotes visible and digestible on the results page.
+
 ## 2026-10-11 — Dependabot batch + Next.js/sharp security patches + TypeScript 6
 
 - **Security patches found by `npm audit`, not by a Dependabot PR or alert** (0 open alerts at the time): `next` 16.3.6 → 16.3.8 — six advisories published 2026-10-07, incl. GHSA-cjq9-62q9-8jv4 (high, SSRF in Image Optimization; the app doesn't use `next/image`) and SSG/ISR cache poisoning (GHSA-mcj8-r9mp-w47p, GHSA-4jqv-mc3x-m676); `sharp` 0.35.4 → 0.35.5 via the existing override — GHSA-wq5f-xc86-pv6w (high, librsvg).

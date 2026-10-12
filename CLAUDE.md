@@ -568,6 +568,7 @@ git pull origin feature/slack-integration
 - Blocked/conditional items marked inline with ⏸️ and `— _blocked on: [condition]_`
 - When completing an item: move to Recently Completed (rotating out oldest), remove from Backlog
 - New items: insert at appropriate priority position, not just appended
+- Item numbers are stable IDs, not positions: a new item gets the highest existing number + 1 (grep the whole Backlog first — the list is priority-ordered, so the highest number is rarely at the bottom), and a completed item's number is not reused
 - When user approves a plan: add as backlog item(s) at appropriate priority
 
 **Reference**:
