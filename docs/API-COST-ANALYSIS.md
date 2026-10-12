@@ -26,7 +26,7 @@ The harvest took the grounding from 364 summary-style entries to 809 verbatim on
 | follow-up generator, party text summed over nine topics | ~56K characters | ~166K characters | estimate; sent once per follow-up question, so a session pays at least this once |
 
 - **score-topics**: with the sub-topic filter the heavy case costs about 17K more input tokens per session than today. At the $0.25 per 1M input rate used below that is about $0.004 per session. The rate is the Gemini 2.0 Flash Lite figure; the route now runs `gemini-3.1-flash-lite` and its price has not been re-checked here.
-- **follow-up generator**: not narrowed. Its party text roughly tripled; at about 0.45 tokens per character (the ratio measured on the scoring prompt) that is on the order of 50K extra input tokens per session, about $0.012 at the same rate — now the larger increase of the two, and it also adds latency to every follow-up question. Tracked in TODO 26(c).
+- **follow-up generator**: not narrowed. Its party text roughly tripled; at about 0.45 tokens per character (the ratio measured on the scoring prompt) that is on the order of 50K extra input tokens per session, about $0.012 at the same rate — now the larger increase of the two, and it also adds latency to every follow-up question. Tracked in TODO 30(c).
 - **Why the filter exists**: quality more than cost — the 77K-token prompt doubled run-to-run score noise (0.10 → 0.22 mean change on identical input). The filter brings it to 0.19.
 - The session totals and scaling tables below have not been re-measured; treat them as a lower bound once this branch is live.
 
