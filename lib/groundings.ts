@@ -44,6 +44,7 @@ export type Concreteness =
 export type GroundingEntry = {
   text: string;           // verbatim Hebrew quote from the party's source document
   aspect: string;         // canonical sub-dimension id — must be a member of TOPIC_KEY_DIMENSIONS[topicId] (lib/questions.ts)
+  secondaryAspects?: string[]; // further sub-dimensions of the same topic this entry also addresses (same canonical ids; never repeats `aspect`)
   sourceUrl: string;      // URL of the original document
   archivePath: string;    // relative path: docs/sources/<partyId>/YYYY-MM-DD-<description>.md
   dateRetrieved: string;  // ISO date (YYYY-MM-DD)
@@ -84,6 +85,11 @@ export function compareEntryQuality(a: GroundingEntry, b: GroundingEntry): numbe
   const p = PROVENANCE_RANK[a.provenance] - PROVENANCE_RANK[b.provenance];
   if (p !== 0) return p;
   return CONCRETENESS_RANK[a.concreteness] - CONCRETENESS_RANK[b.concreteness];
+}
+
+/** Every sub-dimension an entry addresses: its primary `aspect` first, then any secondary ones. */
+export function entryAspects(e: Pick<GroundingEntry, "aspect" | "secondaryAspects">): string[] {
+  return e.secondaryAspects ? [e.aspect, ...e.secondaryAspects] : [e.aspect];
 }
 
 export type GroundingsMap = Record<string, PartyGroundings>;
@@ -156,6 +162,23 @@ export function getBestEvidenceForTopic(partyId: string, topicId: string): Groun
 }
 
 /**
+ * getBestEvidenceForTopic's rule applied to one sub-dimension: the party's
+ * official entries that address it, falling back to joint-list/third-party
+ * entries ONLY when no official entry addresses that sub-dimension — even if
+ * the party has official material elsewhere in the topic.
+ */
+export function getBestEvidenceForAspect(partyId: string, topicId: string, aspect: string): GroundingEntry[] {
+  const entries = getTopicGroundings(partyId, topicId).filter(
+    (e) => !e.absent && e.text.length > 0 && entryAspects(e).includes(aspect)
+  );
+  const official = entries.filter(
+    (e) => e.provenance === "official-current" || e.provenance === "official-outdated"
+  );
+  const pool = official.length > 0 ? official : entries;
+  return [...pool].sort(compareEntryQuality);
+}
+
+/**
  * Picks the next follow-up dimension to probe: the first uncovered key dimension
  * with official grounding evidence from ANY party, falling back to any evidence,
  * falling back to the first uncovered dimension with no evidence at all.
@@ -178,14 +201,14 @@ export function selectSuggestedDimension(
       entryLists.some((entries) =>
         entries.some(
           (e) =>
-            e.aspect === dim &&
+            entryAspects(e).includes(dim) &&
             !e.absent &&
             (e.provenance === "official-current" || e.provenance === "official-outdated")
         )
       )
     ) ??
     uncoveredKeyDims.find((dim) =>
-      entryLists.some((entries) => entries.some((e) => e.aspect === dim && !e.absent))
+      entryLists.some((entries) => entries.some((e) => entryAspects(e).includes(dim) && !e.absent))
     ) ??
     uncoveredKeyDims[0] ??
     null

@@ -3,114 +3,24 @@ import { NextRequest, NextResponse, after } from "next/server";
 import { startObservation, propagateAttributes } from "@langfuse/tracing";
 import { langfuseSpanProcessor } from "@/instrumentation";
 import { PARTIES } from "@/lib/parties";
-import { GROUNDINGS, getBestEvidenceForTopic, getTopicGroundings } from "@/lib/groundings";
+import { getTopicGroundings } from "@/lib/groundings";
 import { TOPIC_IDS } from "@/lib/topics";
-import { sanitizeUserInput } from "@/lib/sanitize";
+import { sanitizeOptionList, sanitizeUserInput } from "@/lib/sanitize";
 import { notifySlack } from "@/lib/slack";
 import { isTransientGeminiError, waitBeforeTransientRetry } from "@/lib/gemini-errors";
 
-type FollowUpQA = { question: string; answer: string };
+import {
+  buildScoreResponseSchema,
+  buildScoringPrompt,
+  getScoringAspects,
+  getScoringEntries,
+  scoreOutputTokenBudget,
+  type ScoreTopicsResult,
+  type TopicQAForScoring,
+} from "@/lib/score-topics-prompt";
 
-type TopicQAForScoring = {
-  topicId: string;
-  topicLabel: string;
-  openerQuestion: string;
-  openerAnswer: string;
-  followUpQA: FollowUpQA[];
-  freeTextInterpretation?: string;
-};
-
-// scores[topicId][partyId] = number (-2..+2) | null (no platform data)
-export type ScoreTopicsResult = Record<string, Record<string, number | null>>;
-
-// Structured-output schema, built per-request from the exact topic×party
-// keys the prompt asks for. `enum` constrains each value to the 5 valid
-// score integers or null — this is what guarantees the model can't emit
-// `+2` (invalid JSON number syntax) the way it occasionally did under plain
-// responseMimeType, and `required` guarantees every key is present so a
-// party/topic can't be silently dropped from the response.
-export function buildScoreResponseSchema(topics: TopicQAForScoring[]) {
-  const properties: Record<string, { type: string[]; enum: (number | null)[] }> = {};
-  for (const t of topics) {
-    for (const party of PARTIES) {
-      properties[`${t.topicId}.${party.id}`] = {
-        type: ["integer", "null"],
-        enum: [-2, -1, 0, 1, 2, null],
-      };
-    }
-  }
-  return {
-    type: "object",
-    properties,
-    required: Object.keys(properties),
-  };
-}
-
-export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
-  const userBlock = topics
-    .map((t) => {
-      let block = `[${t.topicLabel}] ${t.openerQuestion}\nתשובה: ${t.openerAnswer}`;
-      if (t.freeTextInterpretation) {
-        block += `\n  פרשנות: ${t.freeTextInterpretation}`;
-      }
-      t.followUpQA.forEach((fq) => {
-        block += `\n  שאלת המשך: ${fq.question}\n  תשובה: ${fq.answer}`;
-      });
-      return block;
-    })
-    .join("\n\n");
-
-  const groundingBlock = topics
-    .map((t) => {
-      const partyLines = PARTIES.map((party) => {
-        // Official material only when it exists; third-party/joint-list sources
-        // are used only as a fallback for parties with no official platform text.
-        const entries = getBestEvidenceForTopic(party.id, t.topicId);
-        if (entries.length === 0) return null;
-        return entries
-          .map((e) => `  ${party.name} (היבט: ${e.aspect}): "${e.text}"`)
-          .join("\n");
-      }).filter(Boolean);
-
-      if (partyLines.length === 0) return null;
-      return `[${t.topicLabel}]\n${partyLines.join("\n")}`;
-    })
-    .filter(Boolean)
-    .join("\n\n");
-
-  // Determine which parties have no platform data at all, for the null instruction
-  const partiesWithoutPlatform = PARTIES.filter(
-    (p) => !GROUNDINGS[p.id]?.platformAvailable
-  ).map((p) => p.name);
-
-  return `אתה מדרג את ההתאמה בין עמדות פוליטיות של משתמש לבין טקסטים מפורסמים של מפלגות ישראליות.
-
-**כללים:**
-- דרג אך ורק על סמך הטקסטים המסופקים להלן. אל תשתמש בידע כלשהו על המפלגות מעבר למה שמופיע כאן.
-- אם לא סופק טקסט עבור מפלגה מסוימת בנושא מסוים — הוצא null עבורה בנושא זה.
-- מפלגות ללא מצע: ${partiesWithoutPlatform.join(", ")} — null בכל הנושאים.
-
-**סולם הדירוג (מספרים בלי סימן +):**
-2 = התאמה חזקה   1 = התאמה מסוימת   0 = ניטרלי / לא ברור
--1 = סתירה מסוימת  -2 = סתירה חזקה
-
----
-
-**עמדות המשתמש:**
-${userBlock}
-
----
-
-**טקסטים מפלגתיים:**
-${groundingBlock || "(אין טקסטים זמינים — החזר null לכל המפלגות בכל הנושאים)"}
-
----
-
-**פורמט תוצאה — JSON בלבד, ללא markdown:**
-{
-${topics.map((t) => PARTIES.map((p) => `  "${t.topicId}.${p.id}": <מספר_או_null>`).join(",\n")).join(",\n")}
-}`;
-}
+export { buildScoreResponseSchema, buildScoringPrompt };
+export type { ScoreTopicsResult };
 
 function parseScores(
   raw: string,
@@ -128,7 +38,10 @@ function parseScores(
     for (const party of PARTIES) {
       const key = `${t.topicId}.${party.id}`;
       const val = flat[key];
-      result[t.topicId][party.id] = typeof val === "number" ? val : null;
+      // No text was sent for this party on this topic, so there is nothing a
+      // score could be based on — enforced here rather than left to the model.
+      const hasText = getScoringEntries(party.id, t).length > 0;
+      result[t.topicId][party.id] = hasText && typeof val === "number" ? val : null;
     }
   }
 
@@ -154,9 +67,11 @@ export async function POST(req: NextRequest) {
   const topics: TopicQAForScoring[] = rawTopics.map((t) => ({
     ...t,
     openerAnswer: sanitizeUserInput(t.openerAnswer, 500),
+    openerOptions: sanitizeOptionList(t.openerOptions),
     followUpQA: t.followUpQA.map((fq) => ({
       ...fq,
       answer: sanitizeUserInput(fq.answer, 200),
+      options: sanitizeOptionList(fq.options),
     })),
   }));
 
@@ -165,12 +80,13 @@ export async function POST(req: NextRequest) {
 
   const model = "gemini-3.1-flash-lite";
   const prompt = buildScoringPrompt(topics);
+  const maxOutputTokens = scoreOutputTokenBudget(topics);
 
   const topicsWithGroundings = topics.filter((t) =>
     PARTIES.some((p) => getTopicGroundings(p.id, t.topicId).some((e) => !e.absent && e.text))
   );
   const partiesWithData = PARTIES
-    .filter((p) => GROUNDINGS[p.id]?.platformAvailable)
+    .filter((p) => topics.some((t) => getScoringEntries(p.id, t).length > 0))
     .map((p) => p.id);
 
   return propagateAttributes({ sessionId, traceName: "score-topics" }, async () => {
@@ -183,6 +99,11 @@ export async function POST(req: NextRequest) {
           topicsRequested: topics.map((t) => t.topicId),
           topicsWithGroundings: topicsWithGroundings.map((t) => t.topicId),
           partiesWithData,
+          // topicId → sub-dimensions scored against ("whole-topic" when not narrowed)
+          aspectsScored: Object.fromEntries(topics.map((t) => [t.topicId, getScoringAspects(t) ?? "whole-topic"])),
+          entriesSent: topics.reduce(
+            (n, t) => n + PARTIES.reduce((m, p) => m + getScoringEntries(p.id, t).length, 0), 0
+          ),
         },
       },
       { asType: "generation" }
@@ -211,7 +132,7 @@ export async function POST(req: NextRequest) {
             contents: prompt,
             config: {
               temperature: 0.2,
-              maxOutputTokens: 1500,
+              maxOutputTokens: maxOutputTokens,
               responseMimeType: "application/json",
               responseJsonSchema: buildScoreResponseSchema(topics),
             },
@@ -249,7 +170,7 @@ export async function POST(req: NextRequest) {
       const msg = err instanceof Error ? err.message : String(err);
       const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
       const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
+      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/${maxOutputTokens}, retried=${retried}`;
       const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
       generation.update({ output: langfuseOutput, level: "ERROR" });
       generation.end();

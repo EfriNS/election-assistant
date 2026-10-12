@@ -3,165 +3,659 @@
   "platformLabel": "מצע המפלגה הכלכלית — hakalkalit.org",
   "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
   "archiveDir": "docs/sources/miluimnikim/",
-  "_note": "New joint list for 2026 — יועז הנדל (המילואימניקים) + ד\"ר ירון זליכה (המפלגה הכלכלית), submitted 2026-09-07, polling right around the electoral threshold. The detailed, quantified platform content here comes from hakalkalit.org — Zlicha's pre-existing Economic Party platform, which now forms the economic arm of the joint list; Hendel himself hasn't published an equally detailed platform of his own. One security/hardline-enforcement entry and the haredi-draft-and-service-burden entry are third-party sourced (news paraphrase, not verbatim) since they come from coverage of Hendel's own positions/founding identity, not the hakalkalit.org document. Health topic left thin: the platform's OECD-healthcare-spending-level commitment doesn't fit any current TOPIC_KEY_DIMENSIONS health bucket (all are mechanism/equity-specific, not overall-budget-level) — logged in archive, not force-fit. Informal-education budget commitment similarly has no fitting education bucket — logged, not added as a scored entry. Pension/vehicle-prices/transportation/high-tech/agriculture sections exist on the source site but weren't fully collected this pass — see archive 'נושאים שסעיפים קיימים' section for a follow-up collection list.",
+  "_note": "2026-10-11 (cont.): remaining source pages read in full — 22 verbatim entries added, 0 merged into existing entries (66 in total). 2026-10-12 full harvest: the source was re-read in full and the grounding rebuilt as verbatim quotes — 13 earlier summary entries were replaced by 38 verbatim entries covering the same commitments and the ones previously missing (6 entries kept unchanged; 44 in total). The replaced texts are listed in the source archive. Previous note: 2026-10-11 re-check: main hakalkalit.org platform page unchanged (21 sections; still no mention of המילואימניקים/הנדל and no joint platform or joint site found — news coverage confirms a technical union with both parties keeping their own identity). Collected two of the sub-pages flagged 2026-09-16 as not yet collected: /בריאות and /איכות-הסביבה — 5 entries added, health 0→2 and ecology 1→4 (incl. the first entry in the dataset under ecology/international-and-regional-climate-cooperation). The '8% of GDP on health' commitment still has no fitting health bucket (logged, as before). Still uncollected sub-pages: pension, welfare, vehicle prices, transportation, high-tech, women/domestic violence, agriculture, informal education. Previous note: New joint list for 2026 — יועז הנדל (המילואימניקים) + ד\"ר ירון זליכה (המפלגה הכלכלית), submitted 2026-09-07, polling right around the electoral threshold. The detailed, quantified platform content here comes from hakalkalit.org — Zlicha's pre-existing Economic Party platform, which now forms the economic arm of the joint list; Hendel himself hasn't published an equally detailed platform of his own. One security/hardline-enforcement entry and the haredi-draft-and-service-burden entry are third-party sourced (news paraphrase, not verbatim) since they come from coverage of Hendel's own positions/founding identity, not the hakalkalit.org document. Health topic left thin: the platform's OECD-healthcare-spending-level commitment doesn't fit any current TOPIC_KEY_DIMENSIONS health bucket (all are mechanism/equity-specific, not overall-budget-level) — logged in archive, not force-fit. Informal-education budget commitment similarly has no fitting education bucket — logged, not added as a scored entry. Pension/vehicle-prices/transportation/high-tech/agriculture sections exist on the source site but weren't fully collected this pass — see archive 'נושאים שסעיפים קיימים' section for a follow-up collection list.",
   "topics": {
     "security": [
-      {
-        "text": "צבא הגנה גדול, איכותי, מאומן ומצויד היטב. ההוצאה הביטחונית ירדה מ-7% ל-5% מהתמ\"ג — מגמה שיש להפוך.",
-        "aspect": "military-doctrine",
-        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
-        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
-        "contrary": "המשך צמצום ההוצאה הביטחונית כאחוז מהתמ\"ג",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
       {
         "text": "חיזוק אכיפת החוק, הקמת יחידה ייעודית למניעת פשיעה, והחמרת הענישה על עבירות נשק.",
         "aspect": "hardline-enforcement",
         "sourceUrl": "https://www.kore.co.il/viewArticle/193897",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
         "dateRetrieved": "2026-09-16",
-        "_note": "פרפרזה עיתונאית של עמדת יועז הנדל — לא ציטוט מילולי ממצע כתוב.",
+        "_note": "פרפרזה עיתונאית של עמדת יועז הנדל — לא ציטוט מילולי ממצע כתוב. בבדיקת 2026-10-11 לא אותר הנוסח, או חלק ממנו, בעמוד המקור המצוטט. ייתכן שהעמוד השתנה מאז האיסוף; הרשומה נשמרה כפי שהיא.",
         "provenance": "third-party",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "עצם קיומה של מדינת ישראל כפי שהוכח שוב ושוב במלחמות ישראל, תלוי בצבא הגנה גדול, איכותי, מאומן ומצוייד היטב. כל אלו דורשים הקצאת משאבים גדולים מתקציב המדינה.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://www.hakalkalit.org/ביטחון",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "generic"
+      },
+      {
+        "text": "המפלגה הכלכלית תתנגד לכל נסיגה או וויתור ולו הקטן ביותר משטחי מדינת ישראל. לאור זאת המפלגה הכלכלית תתנגד להקמתה של מדינה פלסטינאית. כמו כן, המפלגה הכלכלית רואה בהתיישבות ביהודה ושומרון, כמו בכל חלקי מדינת ישראל, תרומה משמעותית לביטחון ישראל ותתמוך בחיזוק ההתיישבות היהודית ביהודה ושומרון, בנגב בגליל וברמת הגולן.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.hakalkalit.org/ביטחון",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המפלגה הכלכלית תתנגד לכל הסדר ברצועת עזה, שלא יכלול את הפסקת לימודי ההסתה והשקרים נגד יהודים ונגד מדינת ישראל במוסדות החינוך של הילדים ברצועת עזה.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.hakalkalit.org/ביטחון",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "המפלגה הכלכלית מתנגדת לכניסתם של פועלים מאיו״ש ותפעל לביטול מוחלט של אשרות כניסה.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://www.hakalkalit.org/ביטחון",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "על מדינת ישראל לאמץ מדיניות ביטחון אגרסיבית המעבירה את ההכרעה לשטח האויב – ממדיניות הכלה ותגובתיות למדיניות של יוזמה והתקפיות. בנוסף נבצר את עצמאותנו הביטחונית באמצעות חיזוק תעשיות בטחון ישראליות ועידוד פיתוח וייצור נשק כחול לבן.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נפעל כדי למנוע מדינה פלסטינית בצירים הדיפלומטיים והמדיניים, לצד יצירת מציאות של הכרעה בשטח.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "שליטה מלאה לאורך הפרימטר, ברכסים הגבוהים השולטים על יישובים ישראלים, ובציר פילדלפי. הקמת מנהלת הגירה מרצון – לאפשר לתושבי עזה המעוניינים בכך להגר למדינות אחרות",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מערכה מול חיזבאללה- במידה וחיזבאללה לא פורק מנשקו לפי ההסכם שנקבע, תפתח מערכה לפירוק חיזבאללה מנשקו והשתלטות על הרכסים השולטים בלבנון.",
+        "aspect": "lebanon-framework-and-hezbollah-disarmament",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אין לישראל יכולת להכיל איראן עם אמצעי וכוונה לאורך זמן. קידום שיתופי פעולה אזוריים להחלשת הציר האיראני.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "שב״כ מוביל משימת אכיפה עד לבניית המשטרה מחדש. התייחסות לאירועי ירי, אחזקת נשק בלתי חוקי, ופשיעה חקלאית כטרור. הקמת נקודות שיטור נוספות בנגב, בגליל ובכלל במגזר הערבי.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "כדי להשתפר, ללמוד ולצמוח אנחנו חייבים לתחקר ולהבין את כל הכשלים שהובילו אותנו לאסון הגדול ביותר שהעם שלנו ידע מאז השואה ולמלחמה הכי גדולה שעברנו. המילה ממלכתית הפכה לתירוץ כדי לא לחקור. הגיע הזמן לחקור.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "economy": [
       {
-        "text": "הורדת מע\"מ מ-18% ל-17% בשנה הראשונה, ולאחר מכן הפחתה שנתית של 1% עד ל-12%.",
-        "aspect": "cost-of-living-and-affordability",
+        "text": "הורדת מע״מ כבר בשנה הראשונה מ- 18% כיום ל-17% ותוך שש שנים ל12% (אחוז בשנה).",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "הגבלת מס הכנסה שולי ל-40% (כולל ביטוח לאומי ומס בריאות); מס חברות אחיד של 40% (מצטבר, כולל מס דיבידנד).",
+        "text": "קביעת מס הכנסה שולי מרבי (כולל ביטוח לאומי ומס בריאות) בשיעור של 40%, במקום 50% כיום, במהלך הפחתה של חמש שנים, תוך ביטול חוק מס היסף וחוק הרווחים הכלואים שמפלים עסקים קטנים אל מול חברות גדולות. קביעת מס חברות משוקלל (כולל מס על דיבידנדים) בשיעור מצטבר של 40%, במקום 50% כיום, במהלך הפחתה של חמש שנים.",
         "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "ביטול הטבות מס למונופולים ולתאגידים גדולים; ביטול חוק רווחים כלואים וחוק רווח הון.",
+        "text": "הפסקה מיידית של התמיכה במונופולים במסווה של תמיכה בתוצרת המקומית וביטול אינספור הטבות המס שהוענקו לחברות הגדולות.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
-        "contrary": "הטבות מס למונופולים כתמריץ להשקעה",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "ביטול משרדי ממשלה מיותרים שהוקמו משיקולים פוליטיים; ועדת ביקורת חיצונית לפטורים ממכרזים; ביטול פטורים גורפים ממכרזים; הקפאת צבירת זכויות בקרנות הפנסיה התקציביות.",
+        "text": "ביטול מיידי של משרדי ממשלה המיותרים, שנפתחו מסיבות פוליטיות ולא ענייניות. הקפאת המשך הצבירה של זכויות חדשות בפנסיה התקציבית.",
         "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "ביטול מוחלט של מכסות ייבוא; איסור על יבואנים בלעדיים למנופל על יצרנים מובילים; פירוק מועצות הייצור (חלב, ביצים, דבש וכו'); אכיפת חוק בסגנון אירופי נגד תמחור מונופוליסטי מופרז.",
-        "aspect": "cost-of-living-and-affordability",
+        "text": "העברת פרויקטים יקרים של תשתיות מניהול בלעדי של חברות ממשלתיות מסורבלות וכושלות לניהול משותף יעיל עם המגזר הפרטי.",
+        "aspect": "fiscal-discipline-and-efficiency",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
-        "contrary": "מכסות ייבוא ומועצות ייצור כהגנה על יצרנים מקומיים",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "הקמת בנק פרטי חדש במימון ממשלתי-זר משותף; החזרת קרנות אשראי לעסקים קטנים בריבית נמוכה; חיוב הבנקים בתשלום ריבית על עו\"ש; הפיכת הפיקוח על הבנקים מ'פודל לרוטוויילר'.",
+        "text": "אנו נקים בנק פרטי חדש, אבל במימון משותף עם המדינה, ונביא לו ניהול של בנק מחו״ל. נחייב את הבנקים לשלם לכם ריבית על כסף שיש לכם בחשבון העו״ש.",
         "aspect": "market-structure-and-competition",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביטול מלא של כלל המכסים על מזון וכלל מכסות היבוא שאינן מאפשרות ליבואנים קטנים וזריזים להתחרות עם המונופולים על מחיריהם. איסור על יבואנים בלעדיים להשתלט על היבוא של יצרנים מרכזיים וצולבים. פירוק כלל מועצות הייצור החל ממועצת החלב, דרך מועצת הביצים וכלה במועצת הדבש.",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הכרזה על כלל היבואנים הבלעדיים במשק, ובפרט של מזון ומוצרי פארם וקוסמטיקה, כעל מונופולים. כך נחיל עליהם את חוק התחרות הכלכלית המטיל אחריות פלילית על בעל מונופולין שמפעיל חסמים תחרותיים בלתי חוקיים.",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חקיקה מחדש של החוק האירופי, שאוסר על מונופולים לגבות מחירים מופרזים, שרוקן מתוכן על ידי הממשלה ובית המשפט העליון. יש לחדול מאישורי מיזוגים.",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "רישוי מהיר של מקצועות אקדמאים וטכניים בישראל — כולל הכרה מהירה בהסמכות בינלאומיות ויצירת מסלולים מואצים לתעסוקה וליזמות. העצמת אזורי פריפריה לקליטת עולים חדשים באמצעות תמריצי מס, פיתוח תשתיות ציבוריות ומקומות תעסוקה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אין מנוס מהקמת קבינט לשיפור התחבורה בראשות שר האוצר מתוך ראיה תכנונית כוללת.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.hakalkalit.org/תחבורה",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נדרשת תכנית אסטרטגית לאומית להגדלת היצע העובדים הטכנולוגיים.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.hakalkalit.org/תמיכה-בענפי-ההיי-טק",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "החזרת הבנקים לתחרות בשוק הפנסיה כדי לדחוף מטה את דמי הניהול. קביעת גודל מרבי של נתח שוק בשוק הפנסיה כאשר כל גוף המגיע אליו ייאלץ למכור את האחזקה העודפת שלו כדי לשמר את המתח התחרותי.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/פנסיה",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "יצרן מזון מקומי המהווה מונופול, לא יוכל לעסוק ביבוא של מוצרי מזון.",
+        "aspect": "market-structure-and-competition",
+        "sourceUrl": "https://www.hakalkalit.org/חלקאות-וייצור-מזון-מקומי",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חקלאים מצפון לחדרה ומדרום לגדרה יקבלו סובסידיה ישירה (לחקלאי המייצר חקלאות) שתאפשר להם להמשיך לייצר, בדומה למודל האירופי.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.hakalkalit.org/חלקאות-וייצור-מזון-מקומי",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שירות יהווה קריטריון מרכזי בהנחות בתשלומים למעונות יום, משכנתאות, ארנונה, מחיר למשתכן, נקודות זיכוי במס ועוד. פיצוי כספי למעסיקים של משרת מילואים אשר ביצע מעל 15 ימי מילואים בשנה",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "התעצמות מדינת ישראל מבוססת על כלכלה חופשית והון אנושי יוצא דופן. עידוד תחרות ושוק חופשי הם הבסיס לכך. מאבק במונופולים: פעולה להגברת התחרות בשוק והורדת יוקר המחיה על ידי פירוק או הגבלת כוחם של גופים דומיננטיים",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הנחת מס חברות משמעותי: מתן הטבות מס משמעותיות לחברות טכנולוגיות המעסיקות את רוב כוח האדם שלהן (כ 70 אחוז) בנגב, בגליל או בבקעה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "ניהול לפי יעדים ומדדים: מדי שנה תכריז הממשלה על שלוש רפורמות כלכליות מרכזיות שילוו ביעדים מדידים ובמדדי הצלחה ברורים. שינוי סדרי עדיפויות בתקציב: העברת תקציבים מהציבור המשתמט אל הציבור המשרת.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "housing": [
       {
-        "text": "הורדת מחירי הדירות בישראל בהדרגה לרמה של כ-120 משכורות ממוצעות, תוך יצירת אפיקי השקעה חלופיים כדי להסיט הון מהשוק הדיור.",
+        "text": "בכוונת המפלגה הכלכלית לפעול להורדת מחירי הדירות בישראל בהדרגה לרמה של כ- 120 משכורות ממוצעות, זאת ע״י מדיניות כלכלית שתפעל להאיץ את הצמיחה של המשק הישראלי ולכן תייצר הזדמנויות השקעה אלטרנטיביות למשקיעים שיוציאו אותם משוק הדיור.",
         "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "quantified"
-      }
-    ],
-    "education": [
+      },
       {
-        "text": "הקשר הברור והחד-משמעי בין חינוך לרווחה כלכלית — ביקורת על כך שתקציבי חינוך גדלים בלי שיפור בשעות ההוראה בהשוואה למדינות המערב.",
-        "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "text": "יש לשחרר ממלכודת העוני 60 אלף משפחות של דיור ציבורי המתגוררים עשרות שנים בבתים שלא מועברים לבעלותם. במקביל אנו נפעל להגדלת תקציב הסיוע בשכר דירה לזכאי דיור ציבורי.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://www.hakalkalit.org/הרווחה",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
-        "concreteness": "generic"
-      }
-    ],
-    "religion": [
+        "concreteness": "quantified"
+      },
       {
-        "text": "הפרטת הפיקוח על הכשרות; מתן אפשרות לכל רב מוסמך להעניק תעודת הכשר.",
-        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
-        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "text": "חלוקת קרקעות למשרתי מילואים באזורי עדיפות לאומית. סבסוד שכר הדירה וביטוחים בתקופות המילואים וזמן קצר לפני ואחרי.",
+        "aspect": "service-linked-benefit-mechanics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
-        "contrary": "מונופול הרבנות הראשית על הכשרות",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "הרשימה נבנתה סביב פעילי מילואים ומשפחות שכולות/פצועים שקידמו את נושא הגיוס השוויוני (נטל שירות שווה).",
-        "aspect": "haredi-draft-and-service-burden",
-        "sourceUrl": "https://he.wikipedia.org/wiki/יועז_הנדל",
+        "text": "ריבונות דרך מעשים – חיזוק ההתיישבות ביהודה ושומרון והכרעה על קרקעות בשטחי C חשובה והכרחית -נדבך קריטי מהביטחון הלאומי. הפיכת הגבול המזרחי בדגש בקעת הירדן ליעד לאומי להתיישבות. החזרת ייהוד הנגב והגליל כמשימה לאומית.",
+        "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
-        "_note": "זיהוי מייסד/זהות הרשימה, לא ציטוט ממצע כתוב — provenance: third-party.",
-        "provenance": "third-party",
-        "concreteness": "generic"
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ],
+    "education": [
+      {
+        "text": "המפלגה הכלכלית בראשות פרופ' ירון זליכה, תפעל להגדלה משמעותית בתקציבי תנועות וארגוני הנוער דרך חוק תנועות הנוער.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הפחתת מספר שעות הלימוד - ובמקביל הקטנת הכיתות ל-18 ילדים כמו במדינות המערב המתוקנות.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://www.hakalkalit.org/חינוך",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "פירוק מערך הפיקוח והמטה הכבד והלא יעיל - של משרד החינוך והענקת אוטונומיה נרחבת למנהלי בתי הספר תוך שדרוג שכרם באופן שיהלום את אחריותם.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://www.hakalkalit.org/חינוך",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הכנסת מקצוע חובה של חינוך פיננסי כבר בגילאי בית הספר היסודי.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://www.hakalkalit.org/חינוך",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "רפורמה בגיל הרך והקמת מרכזים לגיל הרך, הקמת וסבסוד מעונות יום, חיזוק תנועות הנוער וארגוני הנוער, רפורמה בחינוך הטכנולוגי מדעי, תקצוב דיפרנציאלי של מערכת החינוך לקידום שוויון הזדמנויות בחינוך.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://www.hakalkalit.org/חינוך",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בדיקה יסודית של התקציבים והתקנים שמפנה המועצה להשכלה גבוהה (המל״ג) למוסדות האקדמיים לטובת הרחבת פקולטות במקצועות נדרשים דוגמת מקצועות ההנדסה, הטכנולוגיה והרפואה.",
+        "aspect": "higher-education-and-vocational-training",
+        "sourceUrl": "https://www.hakalkalit.org/חינוך",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם הקמת בתי ספר ממלכתיים-חרדים לבנים ולבנות בשיתוף משרד החינוך והרשויות המקומיות.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://www.hakalkalit.org/שילוב-חרדים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "תקציבי חינוך יינתנו רק למי שתורם למדינה, אין תקצוב ותמיכה למוסדות בלי שותפות בשירות.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "religion": [
+      {
+        "text": "את הכשרות יש להפריט. להוציא את הממשלה על האינטרסים הפוליטיים שלה מהענקת הכשרות ולאפשר לכל רב שקיבל הסמכה לרבנות להעניק שירותי כשרות.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מתן פטור צריך להיעשות אך ורק על פי קריטריונים שוויוניים, כגון בריאות הגוף והנפש, ספורטאים מצטיינים, בעלי כישורים מיוחדים ומוגבל לעד 2,000 בני ישיבות לכל היותר. הציבור החרדי צריך להתגייס, בדיוק באותו האופן שבו מתגייס הציבור החילוני והדתי לאומי. מדינת ישראל לא תתמוך או תסבסד מוסדות מכל סוג שהוא, בהם לומדים עריקים.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://www.hakalkalit.org/ביטחון",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "קביעת מכסת שעות חודשית שצעירים חרדים בני 22-18 יחויבו לתרום לקהילה בתמורה לשובר לימודים באקדמיה לפי בחירתם, תוך הכוונתם למקצועות מועדפים, במטרה להקל על שילובם בכלכלה ובחברה.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://www.hakalkalit.org/שילוב-חרדים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "כל אזרח במדינת ישראל: חילונים ודתיים, יהודים וערבים – בהגיעו לגיל 18 ישרת את המדינה – צבאית או אזרחית. מי שיבחר לא לשרת בוחר בכך לא לקבל זכויות כמו הטבות כלכליות, הזכות לבחור את נציגי הציבור ולהיבחר כנציג ציבור.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת רשות גיוס אחת שממיינת לשירות בצה״ל ולשירות אזרחי. מבחן עילויים בתורה, עילויים באקדמיה וספורטאים מצטיינים לקבלת פטור זמני.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "סנקציות- מניעת הזכות לבחור ולהיבחר, ביטול הנחות מיסוי, שלילת קצבאות, שלילת רישיון נהיגה, איסור יציאה מהארץ ועוד. הקמת מסגרות ייעודיות לגיוס צבאי עבור אותם בני ציבור חרדי המבקשים שלא לשרת ביחידות כלליות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://www.themiluimnikim.org.il/%d7%9e%d7%aa%d7%95%d7%95%d7%94-%d7%94%d7%9e%d7%99%d7%9c%d7%95%d7%90%d7%99%d7%9e%d7%a0%d7%99%d7%a7%d7%99%d7%9d/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "justice": [
       {
-        "text": "ועדת ביקורת חיצונית לפטורים ממכרזים; ביטול פטורים גורפים ממכרזים.",
+        "text": "מינוי חברת בקרה חיצונית שתבחן את כל הפטורים הרבים מחובת מכרזים המייקרים את הרכש הממשלתי ופוגעים בעקרון השוויון.",
         "aspect": "anti-corruption-and-rule-of-law",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "איני תומך במנגנון המוצע כרגע בהצעת החוק של יו״ר הוועדה, ח״כ רוטמן, לפיו תשתלט הממשלה באופן מוחלט על מינוי השופטים. אני סבור שאין מקום למונופול או רוב מוחלט של הממשלה על מינוי שופטים ויש מקום למנגנון יותר מאוזן הנותן מקום רחב לעמדותיהם של האופוזיציה, עורכי הדין, האקדמיה וכמובן השופטים עצמם.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://www.hakalkalit.org/רפורמה-במערכת-המשפט",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הצורך בייצוגיות של השופטים כך שייצגו את כלל שכבות החברה הישראלית - ולא יבואו ממילייה סגור שיקבע את עקרונות המוסר הנובעים מהאינטרסים המעמדיים ומתחושת העליונות של אותו מעמד - הוא צורך העומד ביסוד הדמוקרטיה.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "sourceUrl": "https://www.hakalkalit.org/רפורמה-במערכת-המשפט",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המצב הנוכחי שבו רשות שופטת לא נבחרת יכולה לבטל חוק של הכנסת מבלי יכולת של הכנסת להתגבר על הפסיקה בשום תנאי אינו סביר בעיני. אני מתנגד בכל תוקף להצעת החוק של ח״כ רוטמן הדורסת לחלוטין את מעורבות בתי המשפט הן במעשי חקיקה והן בפעולות הממשלה. די לדעתי באפשרות ההדדית הניתנת לכל רשות להתגבר על רעותה ברוב גדול יותר.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "judicial-appointments-mechanism-specifics"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/רפורמה-במערכת-המשפט",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "אני שב וקורא לכולנו לנסות ולגבש הסכמה רחבה על רפורמה שתחולל אמנם שינוי יסודי במערכת המשפט ותיתן מענה לחוליים ולליקויים המאפיינים אותה, אך שלא תייצר פילוג מסוכן בעם וריב אחים שיהיה גרוע יותר מהמחלה.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://www.hakalkalit.org/רפורמה-במערכת-המשפט",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נפעל לקדם תיקונים במערכת המשפט תחת הסכמות רחבות ובתהליך ציבורי משותף. חוק יסוד החקיקה – הסדרה מחדש בחקיקה של היחסים בין הרשויות המבצעת, המחוקקת והמשפטית.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הגבלת כהונה לשמונה שנים או לשתי קדנציות למשרת ראש ממשלה. ביקורת חיצונית ולא תלויה על מערכת המשפט. פיצול תפקידי היועמ״ש.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הכפלת מספר השופטים בבתי המשפט המקומיים, בקרה על בתי המשפט בהקשר לזמן עד לפסק דין, שחרור עבריינות, חזרה לפשע, ועוד.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "equality": [
       {
-        "text": "החמרת הענישה על רצח נשים בידי בני זוג; הגנה על נשים המדווחות על אלימות במשפחה; הקצאת תקציבים ייעודיים למאבק באלימות נגד נשים; הכשרת שוטרים ייעודית.",
+        "text": "נקדם חקיקה להחמרת הענישה על רצח נשים בידי בני זוגן וחקיקה להגנה על נשים המתלוננות על אלימות במשפחה, כולל בטענה הפסולה של ״כבוד המשפחה״. המפלגה הכלכלית תפעל להעמדת תקציבים למאבק באלימות נגד נשים.",
         "aspect": "gender-equality",
         "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שיפור התקציבים לסיוע של אנשים עם מוגבלות ונכות. הגדלת קצבאות הזקנה ובפרט לקשיש החי מתחת לקו העוני.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://www.hakalkalit.org/הרווחה",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "למדנו כי ממשלה שמסתמכת על מפלגות לא ציוניות (חרדיות או ערביות) נסחטת לקבל החלטות לא ציוניות.",
+        "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "יצירת מסלולי שירות לאומי נוספים לחברה הערבית.",
+        "aspect": "arab-minority-specific-mechanisms",
+        "sourceUrl": "https://www.themiluimnikim.org.il/platform/",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "ecology": [
       {
-        "text": "התייחסות למשבר האקלים ולקיימות; יישום אמצעי הגנת סביבה.",
+        "text": "יעד האנרגיה המתחדשת לייצור חשמל יעמוד על - 30% עד שנת 2030, 70% עד 2040 ומאה אחוז עד שנת 2050",
         "aspect": "state-responsibility-framing",
-        "sourceUrl": "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
         "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "quantified"
+      },
+      {
+        "text": "שיקום ים המלח - המפלגה הכלכלית תמנע את הארכת הזיכיון לכריית מינרלים מים המלח, עם פקיעתו ב- 2030.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "לכן עלינו לפעול עם שכנותינו מצרים וירדן, לשתף פעולה עם הפלסטינים ועם מדינות שכנות נוספות כדי שהאזור שלנו, שחווה כרגע שינויי מזג אוויר קיצוניים יהיה חלק מאותה מדיניות כלל עולמית.",
+        "aspect": "international-and-regional-climate-cooperation",
+        "sourceUrl": "https://www.hakalkalit.org/איכות-הסביבה-קיימות-וזכויות-בעלי-חיים",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
-    "health": []
+    "health": [
+      {
+        "text": "בניית שלושה בתי חולים חדשים בפריפריה הצפונית והדרומית, פתיחת פקולטה חדשה לרפואה, והגדלה דרמטית של מספר הסטודנטים לרפואה ותלמידי הסיעוד בישראל.",
+        "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "healthcare-workforce-and-professional-licensing"
+        ],
+        "sourceUrl": "https://www.hakalkalit.org/בריאות",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הגדלה משמעותית של תקני הרופאים והאחיות במערכת הבריאות, עם דגש על הסגל הזוטר – רופאות, רופאים וסגל סיעודי שכורעים תחת נטל העבודה. נוסיף תקנים לרופאים צעירים כדי להקל על העומס הכבד המוטל עליהם.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://www.hakalkalit.org/בריאות",
+        "archivePath": "docs/sources/miluimnikim/2026-09-16-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ]
   }
 }

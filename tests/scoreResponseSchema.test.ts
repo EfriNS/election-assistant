@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildScoreResponseSchema } from "@/app/api/score-topics/route";
+import { scoreOutputTokenBudget } from "@/lib/score-topics-prompt";
 import { PARTIES } from "@/lib/parties";
 
 // Regression guard, same rationale as the follow-up/results schema tests:
@@ -31,5 +32,13 @@ describe("buildScoreResponseSchema", () => {
     const anyKey = Object.keys(schema.properties)[0];
     expect(schema.properties[anyKey].enum).toEqual([-2, -1, 0, 1, 2, null]);
     expect(schema.properties[anyKey].type).toEqual(["integer", "null"]);
+  });
+
+  // Regression 2026-10-12: with a fixed 1,500-token cap a nine-topic response
+  // (117 keys, ~12.7 tokens each when pretty-printed) was cut off mid-JSON.
+  it("output token budget scales with the number of keys and covers a nine-topic response", () => {
+    const nine = Array.from({ length: 9 }, () => topics[0]);
+    expect(scoreOutputTokenBudget(topics)).toBe(2 * PARTIES.length * 20);
+    expect(scoreOutputTokenBudget(nine)).toBeGreaterThan(9 * PARTIES.length * 12.7 * 1.4);
   });
 });

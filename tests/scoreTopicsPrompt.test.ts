@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { GROUNDINGS, getBestEvidenceForTopic } from "@/lib/groundings";
 import { buildScoringPrompt } from "@/app/api/score-topics/route";
 
 describe("buildScoringPrompt", () => {
@@ -42,10 +43,22 @@ describe("buildScoringPrompt", () => {
     expect(prompt).toContain("security.shas");
   });
 
-  it("includes null instruction for parties without platform", () => {
+  it("tells the model to return null only where no text was supplied", () => {
     const prompt = buildScoringPrompt([baseTopic]);
-    // Parties without a platform should be listed for null instruction
-    expect(prompt).toContain("null");
+    expect(prompt).toContain("אם לא סופק טקסט עבור מפלגה מסוימת בנושא מסוים — הוצא null");
+  });
+
+  it("does not exclude parties flagged platformAvailable: false — their text is sent and scored like any other", () => {
+    // Regression (2026-10-12): the blanket "no platform → null on every topic" rule left a
+    // free-text topic with no score for those parties, so they were ranked on fewer topics.
+    const prompt = buildScoringPrompt([baseTopic]);
+    expect(prompt).not.toContain("מפלגות ללא מצע");
+    for (const partyId of ["likud", "raam", "shas"]) {
+      expect(GROUNDINGS[partyId].platformAvailable).toBe(false);
+      const entries = getBestEvidenceForTopic(partyId, "security");
+      expect(entries.length).toBeGreaterThan(0);
+      expect(prompt).toContain(`"${entries[0].text}"`);
+    }
   });
 
   it("instructs not to use knowledge beyond provided texts", () => {

@@ -21,7 +21,7 @@ vi.mock("@/lib/groundings", async (importOriginal) => {
             { text: "Text absent",    aspect: "absent",    absent: true,  sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
           ],
           economy: [
-            { text: "Text growth", aspect: "growth", absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
+            { text: "Text growth", aspect: "growth", secondaryAspects: ["jobs"], absent: false, sourceUrl: "https://a.com", archivePath: "", dateRetrieved: "2024-01-01", provenance: "official-current", concreteness: "generic" },
           ],
         },
       },
@@ -60,6 +60,12 @@ describe("buildGroundingsForParties", () => {
     // unmatched (military) follows.
     expect(entries.map((e) => e.aspect)).toEqual(["diplomacy", "budget", "military"]);
     expect(entries.map((e) => e.matched)).toEqual([true, true, undefined]);
+  });
+
+  it("flags an entry as matched when a covered aspect is one of its secondary aspects", () => {
+    const result = buildGroundingsForParties(["partyA"], ["economy"], { economy: ["jobs"] });
+    const entries = result["partyA"].topics[0].entries;
+    expect(entries.map((e) => [e.aspect, e.matched])).toEqual([["growth", true]]);
   });
 
   it("shows all entries (none flagged matched) when no aspect tag matches coveredAspects", () => {

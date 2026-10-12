@@ -7,8 +7,9 @@
 // SCORING NOTE: Party positions in each prototype are rough estimates based on known public
 // positions. They have NOT been verified against official current party platforms.
 // New parties (ביחד, ישר!, המילואימניקים-הכלכלית) are scored based on their founders' known
-// positions/platform. עמך ישראל (added 2026-09-16, no published platform) is an even rougher
-// estimate — see data/groundings/amcha-yisrael.json's _note.
+// positions/platform. עמך ישראל (added 2026-09-16, before it had a platform) is an even rougher
+// estimate — rescored 2026-10-11 against its newly published policy pages (topics the platform
+// doesn't cover, e.g. health and ecology, are still bloc-lane guesses); see data/groundings/amcha-yisrael.json's _note.
 
 export type Party = {
   id: string;
@@ -53,8 +54,8 @@ export const PARTIES: Party[] = [
     name: "ביחד",
     subtitle: "בנט / לפיד",
     description: "מרכז — ממשל נקי, חינוך, הפרדת דת ומדינה.",
-    website: "https://bennett2026.org.il/",
-    platformUrl: "https://bennett2026.org.il/plans/",
+    website: "https://be-yahad.org.il/",
+    platformUrl: "https://be-yahad.org.il/plans/",
     platformLabel: "תכניות ביחד",
   },
   {
@@ -71,7 +72,8 @@ export const PARTIES: Party[] = [
     name: "המילואימניקים-הכלכלית",
     subtitle: "הנדל / זליכה",
     description: "מרכז, לא משויך לגוש — שילוב בכירים ביטחוניים ומומחי כלכלה: הורדת יוקר המחיה, מלחמה במונופולים, נטל שירות שווה.",
-    website: "https://www.hakalkalit.org",
+    // Two sites, not united: the Miluimnikim party site (homepage link) and the Economic Party platform (platform link).
+    website: "https://www.themiluimnikim.org.il",
     platformUrl: "https://www.hakalkalit.org/מצע-המפלגה-הכלכלית",
     platformLabel: "מצע המפלגה הכלכלית",
   },
@@ -92,8 +94,9 @@ export const PARTIES: Party[] = [
     id: "amcha-yisrael",
     name: "עמך ישראל",
     subtitle: "וינטר",
-    description: "ימין — מפלגה חדשה (אוגוסט 2026) בראשות תא\"ל (מיל') עופר וינטר; זהות \"מחנה הימין\" מוצהרת, אין עדיין מצע מדיניות מפורסם.",
+    description: "ימין — מפלגה חדשה (אוגוסט 2026) בראשות תא\"ל (מיל') עופר וינטר; זהות \"מחנה הימין\" מוצהרת, דגש על הכרעה ביטחונית ושירות לכל אזרח.",
     website: "https://amchaisrael.co.il/",
+    platformUrl: "https://amchaisrael.co.il/foundations",
   },
   {
     id: "shas",

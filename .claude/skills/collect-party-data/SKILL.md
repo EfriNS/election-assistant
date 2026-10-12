@@ -83,8 +83,9 @@ For each source item, pick the single best-fit topic. If an item clearly spans t
 Each entry:
 ```json
 {
-  "text": "exact quote or close paraphrase in Hebrew",
+  "text": "verbatim Hebrew quote from the source",
   "aspect": "kebab-case-label",
+  "secondaryAspects": ["kebab-case-label"],  // optional: other sub-topics of the SAME topic this entry also addresses
   "sourceUrl": "https://...",
   "archivePath": "docs/sources/<partyId>/YYYY-MM-DD-<slug>.md",
   "dateRetrieved": "YYYY-MM-DD",
@@ -95,7 +96,9 @@ Each entry:
 
 **Aspect labels** must be one of the fixed canonical ids for that topic — see `TOPIC_KEY_DIMENSIONS[topicId]` in `lib/questions.ts`. This is a closed enum (not placeholder slugs): every party's grounding entries share the same small bucket set per topic so the results page and follow-up dimension-selection can match across parties. Read the bucket list and pick the closest fit by content, not by superficial wording similarity. If a source item genuinely doesn't fit any existing bucket for its topic, do NOT invent a new free-text slug — note it in the archive markdown and the JSON `_note` field as "uncovered by current taxonomy" and flag it to the user for a taxonomy update instead.
 
-**Text quality**: prefer direct quotes. If the source refused verbatim, use a close Hebrew paraphrase that preserves the meaning and key terms. Avoid English.
+**Several sub-topics per entry (`secondaryAspects`)**: `aspect` is the entry's main sub-topic. If the text also makes a real commitment on other sub-topics of the same topic, list them in `secondaryAspects` — one, two or more, same canonical ids, never repeating `aspect`. Scoring sends an entry to the model only when a follow-up question probed one of its sub-topics, so a missing label means the party looks silent on something it actually addresses, and a loose label sends off-subject text. Add a label for a concrete position, not for a passing mention. Typical cases: a merged headline + detail entry that spans subjects; a "who gets benefits" entry that is both social-safety-net and cost-of-living; a judicial-selection entry that also states a position on the override clause. `tests/aspectTaxonomy.test.ts` checks the ids.
+
+**Text quality**: verbatim quotes only — `text` is shown to users as the party's own words and is what the AI scores against. If a tool refuses or summarises (WebFetch often does), get the text another way (per-section fetch, the PDF via the Read tool, or ask the user to paste it) rather than paraphrasing. If verbatim text cannot be obtained, do not add the entry — log the gap in the archive and the JSON `_note`. Collect every concrete commitment in the source, not one representative entry per sub-topic.
 
 ---
 

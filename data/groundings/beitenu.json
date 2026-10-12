@@ -3,372 +3,863 @@
   "platformLabel": "מצע המפלגה (beytenu.org.il)",
   "sourceUrl": "https://beytenu.org.il/party-platform/",
   "archiveDir": "docs/sources/beitenu/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry. 2026-08-07: re-checked same page (no new page); added 6 more concrete/quantified items (Border Police expansion, port/airport privatization, single chief rabbi, biennial budget, Holocaust-survivor grant amount, Arab-citizenship framing). Two summarized-but-unverified items (anti-Zionist school content, asset-declaration transparency) intentionally not added — need exact-quote follow-up. 2026-09-16 re-check (post candidacy-submission review): found a 'צעירים ונוער' (youth) section with permanent/equitable non-formal-education funding and youth-council institutional representation — doesn't fit any current education-topic aspect (same gap as miluimnikim's informal-education content), logged not force-fit. Disability-employment item in the welfare section is a confirmed duplicate of the existing entry (skipped). Rest of the platform unchanged.",
+  "_note": "2026-10-11 full harvest: the source was re-read in full and the grounding rebuilt as verbatim quotes — 38 earlier summary entries were replaced by 84 verbatim entries covering the same commitments and the ones previously missing (3 entries kept unchanged; 87 in total). The replaced texts are listed in the source archive. Previous note: 2026-10-11 re-check: page metadata shows it was modified 2026-10-06. Section structure matches the 2026-09-16 capture; the housing plan ('תוכנית הדיור', 9 steps) now carries quantified detail that the two existing paraphrased housing entries don't — added 3 verbatim quantified entries (20K rental units/year, rent-to-own with up to 30% of rent accruing as equity, 2,500 permits per regional council). Health section (7 steps) re-read: same substance as the two existing entries, plus 'החזרת התוכנית הלאומית למאבק בסוכרת' (logged, not added). Still no ecology section. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Full platform available across all 9 topics. Ecology not addressed. 2026-07-08: platform page expanded with a new 10-point 'קווי יסוד לממשלה הבאה' section — added Oct-7 accountability + 2 new territorial-endgame specifics (Gaza, Judea/Samaria-Jordan); other 6 points in that list corroborate existing entries (not re-added). One point ('חיזוק העלייה והקליטה' — aliyah/absorption ministerial committee) doesn't fit any of the 9 canonical topics; documented in the archive only, not added as a grounding entry. 2026-08-07: re-checked same page (no new page); added 6 more concrete/quantified items (Border Police expansion, port/airport privatization, single chief rabbi, biennial budget, Holocaust-survivor grant amount, Arab-citizenship framing). Two summarized-but-unverified items (anti-Zionist school content, asset-declaration transparency) intentionally not added — need exact-quote follow-up. 2026-09-16 re-check (post candidacy-submission review): found a 'צעירים ונוער' (youth) section with permanent/equitable non-formal-education funding and youth-council institutional representation — doesn't fit any current education-topic aspect (same gap as miluimnikim's informal-education content), logged not force-fit. Disability-employment item in the welfare section is a confirmed duplicate of the existing entry (skipped). Rest of the platform unchanged.",
   "topics": {
     "security": [
       {
-        "text": "הגדלת תקציב הביטחון מ-70 ל-95 מיליארד ₪ לשנה למשך 10 שנים; הרחבה מ-3 ל-6 אוגדות תמרון; 5 חטיבות טנקים נוספות.",
-        "aspect": "military-doctrine",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "אפס הכלה — כל חדירת גבול מהווה פלישה. העברת הלחימה לשטח האויב. סיום עימותים עם הכרעה ברורה.",
-        "aspect": "military-doctrine",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "תוכנית לאומית של 3 מיליארד ₪ לחיזוק המשטרה; 3,000 שוטרים חדשים; 3 בתי משפט ייעודיים לעבירות חמורות.",
-        "aspect": "hardline-enforcement",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "הסכסוך עם שכנינו אינו סכסוך טריטוריאלי. נדרשת עסקת חבילה כוללת, לא משא ומתן עם הפלסטינים בלבד.",
-        "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "הפסקת אחריות ישראלית על רצועת עזה – סגירת מעברים וניתוק אספקת מים, חשמל ודלקים; העברת האחריות לגורם בינלאומי מוסכם, לצד שמירה על חופש פעולה ביטחוני מלא לצה\"ל.",
-        "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "ביהודה ושומרון: ייצוב ביטחוני וכלכלי בשיתוף פעולה עם ירדן.",
-        "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-07-08",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "ועדת חקירה ממלכתית שתבחן את המחדלים שקדמו לטבח השבעה באוקטובר.",
+        "text": "החלטת הממשלה הראשונה תהיה הקמת ועדת חקירה ממלכתית לבחינת המחדלים שקדמו לטבח השבעה באוקטובר. לוועדה יינתן מנדט לקבוע אחריות בדרג המדיני, הצבאי והמודיעיני. הוועדה תוסמך להצביע על הכשלים ולמצות את הדין עם האחראים.",
         "aspect": "accountability-oct7",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-07-08",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "הקמת 12 גדודים חדשים במג\"ב, הקצאת 4,000 לוחמי מג\"ב ליהודה ושומרון בלבד.",
+        "text": "שמירה על חופש הפעולה של צה״ל ברצועת עזה והפסקת האחריות הישראלית על הרצועה באמצעות סגירת המעברים וניתוק אספקת המים, החשמל והדלק, תוך כדי העברת האחריות לגורם בינלאומי מוסכם, לצד שמירה על חופש הפעולה הביטחוני של ישראל.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "יהודה ושומרון: ייצוב המצב הביטחוני והכלכלי בשיתוף פעולה עם ירדן.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "אנו מאמינים כי הסכסוך של מדינת ישראל עם שכנותיה אינו סכסוך טריטוריאלי, אלא סכסוך תלת ממדי משולב: מדינות ערב, הפלסטינים וערביי ישראל. אנו מאמינים כי רק עסקת חבילה אזורית כוללת תוכל להביא לתוצאה הרצויה.",
+        "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "ירושלים היא בירתה הנצחית והמאוחדת של מדינת ישראל ושל העם היהודי. לא יתקיים כל משא ומתן על מעמדה של ירושלים.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "אפס הכלה: כל הפרת גבול לשטח ישראל, ולו במילימטר אחד, תיחשב לפלישה. מכה מקדימה לאויב: היוזמה חייבת להיות תמיד בידינו. העברת הלחימה לשטח האויב: רצועת הביטחון תהיה בשטח האויב ולא בשטח מדינת ישראל. הכרעה בכל עימות: תם עידן התיקו. כל עימות חייב להסתיים בהכרעה ברורה, ולא בשאלה מי ניצח ומי הפסיד.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "מניעת התעצמות האויב: לא תתאפשר כל התעצמות של האויב הא-סימטרי. כשירות למלחמה ממושכת: בכל רגע נתון יישמר מלאי חימושים שיספיק ל-45 ימי לחימה, גם בעימות רב-זירתי.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "העברת חוק גיוס חובה לכולם. כל צעיר וצעירה בני 18: יהודים, מוסלמים, נוצרים, דרוזים וצ'רקסים, יחויבו בשירות צבאי או אזרחי. בנוסף, תונהג הורדת גיל הפטור משירות ותוקם מסגרת ייעודית לחרדים ולבני המיעוטים במסגרת פיקוד העורף או השירות הלאומי-אזרחי.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הגדלת תקציב הביטחון מ-70 מיליארד ש״ח ל-95 מיליארד ש״ח בשנה, למשך עשר השנים הבאות. הקמת חמש חטיבות שריון חדשות המצוידות בטנקי ברק, במערכות ״מעיל רוח״ ובאמצעי הגנה מתקדמים נוספים.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "אוגדות – הגדלת מספר האוגדות המתמרנות משלוש לשש. לצד כל אוגדה מתמרנת תוקם אוגדת מילואים תאומה, ברמת כשירות ואימונים גבוהה, כמכפילת כוח.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הקמת חיל טילים עוצמתי, שישלים את יכולותיו של חיל האוויר ויאפשר לצה״ל לפגוע באופן משמעותי בכל יעד במדינות שאין לישראל עמן גבול משותף. פיתוח מערכת יירוט מבוססת לייזר, המסוגלת ליירט טילים כבדים, לצד פיתוח מערכת יירוט ייעודית לרחפנים ולכטב״מים.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "העלאה משמעותית של שכר הנגדים במקצועות הצבאיים, לצד צמצום מספר תקני האלופים במטכ״ל ל-15 לכל היותר ומספר תקני תתי-האלופים ל-50 לכל היותר.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "אימוץ דוח שמגר כבסיס הבלעדי לכל עסקאות שבויים ונעדרים בעתיד.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת מוצבי צה״ל חדשים שישמשו ללחימה התקפית ולא רק למגננה, תוך הרחבה דחופה של מערך המוצבים בגבול הצפון. פיקוד העורף – העברת האחריות למשרד לביטחון לאומי. צה״ל צריך להתמקד במשימות התקפיות.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מג״ב – הקמת 12 גדודים חדשים והקצאת 4,000 לוחמי מג״ב ליהודה ושומרון בלבד. כלל פעילות הביטחון השוטף באזור תועבר לאחריות המשטרה.",
         "aspect": "hardline-enforcement",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
+      },
+      {
+        "text": "גיבוש ויישום תוכנית לאומית לחיזוק והעצמת משטרת ישראל, בהיקף של 3 מיליארד ש״ח, שתכלול תוספת של 3,000 שוטרים: 1,000 שוטרים לנגב, 1,000 שוטרים לצפון ו-1,000 שוטרים נוספים לתחנות המשטרה העירוניות, בדגש על הערים המעורבות.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הקמת מטה לאומי למאבק בפשע המאורגן ובפרוטקשן. הקמת שלושה בתי משפט ייעודיים לפשיעה חמורה – בצפון, בדרום ובלוד. חקיקה ייעודית שתאפשר מעצרים מנהליים לראשי ארגוני פשיעה ושימוש ברוגלות.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "יישום מדיניות של אפס סובלנות כלפי הטרור הפלילי והלאומני, תוך מתן עדיפות למאבק בפשיעה, ובכלל זה בפשיעה המאורגנת, בפשיעה החקלאית, בנגע הסמים, באלימות, בשחיתות הציבורית, בפלישות לקרקעות המדינה ובבנייה הבלתי חוקית.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הרחבת תחולת ״חוק הנכבה״, כדי לאפשר שלילת תקציבים מגופים הפועלים נגד עקרונות המדינה, והטלת סנקציות מרתיעות בגין הסתה נגד המדינה או הנפת דגלי אויב בשטחי הקמפוסים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת מטות מחוזיים ייעודיים במשרד לביטחון לאומי למאבק בפשיעה חקלאית ולאומנית. הקמת רשת ביטחון או קרן ביטוח, בדומה למודל קנ״ט, שתשפה חקלאים ונפגעי גביית דמי חסות.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת מערך הסברה לאומי, מקצועי ומתואם, שירכז את כלל פעילות ההסברה של מדינת ישראל בארץ ובעולם. מאבק שיטתי בדה-לגיטימציה של ישראל, באנטישמיות ובהפצת מידע כוזב נגד המדינה.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מציאות זו יוצרת, לראשונה, אפשרות להגיע להסדר אזורי כולל, שתנאיו יהיו סבירים ומקובלים מבחינת מדינת ישראל.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "economy": [
       {
-        "text": "פירוק מונופולים בשוק המזון בהתאם להמלצות ועדת בלניקוב; הסדרת יבוא מקביל לסיום מעמד היבואן הבלעדי.",
+        "text": "קידום עסקת חבילה למשק, הכוללת הפחתת רגולציה, צמצום משרדי הממשלה והמגזר הציבורי, פירוק מונופולים והגברת התחרות.",
         "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "הרחבת מענק עבודה ליחידים מעל גיל 26 עד הכנסה של 8,000 ₪ לחודש.",
-        "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "quantified"
-      },
-      {
-        "text": "ביטול קצבאות ילדים מהילד החמישי ואילך.",
-        "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "contrary": "קצבאות ילדים ללא הגבלה",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
       },
       {
-        "text": "השקעה של מיליארד ₪ בבינה מלאכותית לאורך 5 שנים; חיזוק מוסדות מחקר ותשתיות מעבדות לאומיות.",
+        "text": "הסדרת תחום היבוא המקביל וביטול מעמדו של היבואן הבלעדי. ביטול המונופולים בשוק המזון באמצעות אימוץ מסקנות ועדת בלניקוב למאבק בריכוזיות. פירוק מועצות הייצור, ובהן מועצת הלול ומועצת הצמחים.",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "cost-of-living-and-affordability"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "המשך מדיניות ההפרטות, לרבות הפרטת נמל אשדוד ושדה התעופה בחיפה.",
         "aspect": "market-structure-and-competition",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הרחבת מעגל הזכאים למענק עבודה לרווקים מעל גיל 26 המשתכרים עד 8,000 ש״ח בחודש.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "הפרטת נמל אשדוד ושדה התעופה בחיפה.",
-        "aspect": "market-structure-and-competition",
+        "text": "ביטול קצבאות הילדים החל מהילד החמישי.",
+        "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "\"השלמת הרפורמה הפנסיונית עד שכר מינימום\"; \"נסיעות חינם בתחבורה לפנסיונרים\".",
+        "text": "קידום חוק בוררות חובה בסכסוכי עבודה בשירותים חיוניים וחוק גישור חובה לפני פנייה לערכאות משפטיות בשירותים שאינם חיוניים.",
         "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-17",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "\"הגדלת מענק לניצולי שואה ל-8,000 ₪\".",
+        "text": "שינוי מודל התגמול בשירות המדינה, מתגמול המבוסס על ותק לתגמול המבוסס על מצוינות. קידום פרישה מרצון במשרות שהתייתרו, ללא איושן מחדש, לצד ניוד עובדים והסבתם לתפקידים נדרשים בשירות המדינה.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "השקעה של מיליארד ש״ח במשך חמש שנים בתחום הבינה המלאכותית, לרבות הקמת תשתיות פיזיות, רכישת מחשבים, הקמת מעבדות, סיוע ועידוד לחברות הזנק והקמת חברות ומרכזי מחקר ופיתוח. השקעה של מיליארד ש״ח בהקמת מעבדות לאומיות ובפיתוח תשתיות מחקר מתקדמות, ובהן מחשבי על, מחשוב קוונטי, פיזיקה, ביוטכנולוגיה ואופטיקה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "שילוב האוכלוסייה החרדית, החברה הערבית ובני המיעוטים במעגל התעסוקה יפחית את הנטל על הציבור העובד ויתרום לשיפור רווחתן של אוכלוסיות אלו ולחיזוק המשק הישראלי.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "קידום רשת ביטחון לעצמאים, בשיתוף המדינה. כל עצמאי יוכל, באופן וולונטרי, להפריש מדי חודש חלק מהכנסתו לקרן ייעודית, והמדינה תשלים סכום זהה (Matching). הכספים יעמדו לרשות העצמאי במקרים של אבטלה, מחלה או מצבי חירום אחרים.",
         "aspect": "social-safety-net-and-labor-protections",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-17",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "סבסוד מעונות היום למשפחות שבהן שני ההורים עובדים, בהיקף השתכרות של לפחות 125% משרה. הרחבת תוכנית בתי הספר של החופש הגדול כך שתפעל לאורך כל חופשת הקיץ בחודשים יולי ואוגוסט.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "השלמת הרפורמה הפנסיונית, כך שכלל הגמלאים בישראל יקבלו השלמת הכנסה עד לגובה שכר המינימום, בשתי פעימות של 15% כל אחת. מתן נסיעה חינם בתחבורה הציבורית לכלל הפנסיונרים בישראל.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       }
     ],
     "housing": [
       {
-        "text": "היפוך פרדיגמת הרכש: קבלנים מתחרים על איכות ומחיר, לא על עלות קרקע; תמריצים לרשויות המקומיות להנפקת היתרי בנייה מהירים.",
+        "text": "הרחבת ההשקעה בפרויקטים של שכירות ארוכת טווח ושיווק קרקעות לבניית 20 אלף יחידות דיור להשכרה מדי שנה, במטרה להגדיל את ההיצע ולמתן את מחירי השכירות.",
         "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "quantified"
       },
       {
-        "text": "השקעה בשכירות ארוכת טווח למיתון מחירי השכירות; מעבר לשיטות בנייה תעשייתיות.",
+        "text": "הפעלת תוכנית ״שכירות רוכשת״, שתאפשר לזוגות צעירים ולחסרי דירה להתגורר בשכירות ארוכת טווח ולרכוש את הדירה בתום התקופה במחיר שייקבע מראש. במסגרת התוכנית, עד 30% מדמי השכירות ייצברו כהון עצמי לטובת רכישת הדירה, תוך מתן עדיפות למשרתי מילואים, למשפחות עובדות ולתושבי הפריפריה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "secondaryAspects": [
+          "service-linked-benefit-mechanics"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "עידוד הבנייה במועצות האזוריות באמצעות הסכמי גג שיאפשרו מתן 2,500 היתרי בנייה בכל רשות במשך ארבע שנים.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "שינוי שיטת שיווק הקרקעות כך שהתחרות תהיה על איכות הבנייה, מהירות מסירת הדירות והמחיר הסופי לצרכן, ולא על מחיר הקרקע. תמרוץ כספי לרשויות מקומיות שיאשרו היתרי בנייה בהיקף נרחב ובפרקי זמן קצרים.",
         "aspect": "rental-and-affordability-mechanics",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      }
-    ],
-    "education": [
-      {
-        "text": "חוק לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך) — ביטול מימון למוסדות מסרבים ליישם.",
-        "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "contrary": "מימון מוסדות חינוך ללא לימודי ליבה",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "מעבר ממודל שכר ותק למצוינות הוראה וחדשנות; העצמת סמכויות מנהלים ומורים בקצה המערכת.",
+        "text": "הרחבת הבנייה המתועשת לשם קיצור זמני הבנייה וצמצום התלות בכוח אדם. חיזוק מערך התכנון והרחבת סמכויותיו לצורך קיצור הליכי התכנון.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "תנאי לזכאות להטבות יהיה שירות צבאי או שירות לאומי. הגדלת הסיוע בשכר דירה לחיילים בודדים משוחררים, בתוספת של עד 1,000 ש״ח בחודש, למשך 12 חודשים ממועד השחרור.",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הגדלת הנחות השומה וקביעת תקרת מחיר לקרקע למגורים בהתאם לנתוני שירות צבאי ושירות מילואים פעיל.",
+        "aspect": "service-linked-benefit-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חיזוק היישובים הקיימים בנגב ובגליל בהתאם לחזון ההתיישבות הציונית, ויישום מואץ של החלטות הממשלה להקמת יישובים חדשים. שמירה על הצביון ההתיישבותי באמצעות הגדלת מכסת בתי האב שבסמכות ועדות הקבלה ל- 1,000 ועד 1,500 בתי אב, בכפוף לאישור ועדת שרים",
+        "aspect": "settlement-and-territorial-specifics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      }
+    ],
+    "education": [
+      {
+        "text": "חובת לימודי ליבה לכל תלמיד: מתמטיקה, אנגלית, מחשבים, אזרחות ותנ״ך. מוסדות שלא יעמדו בדרישות הליבה לא יהיו זכאים לתקצוב.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חובת לימודי ליבה בכל מוסד חינוך כתנאי לקבלת תמיכה ממשלתית, בכפוף לפיקוח חיצוני שיכלול מבחני רמה לפחות אחת בשנה, וביטול מעמדם המיוחד של מוסדות הפטור.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שינוי מודל התגמול למורים, כך שיתבסס על חדשנות, מצוינות ואיכות ההוראה במקום על ותק בלבד. הרחבת העצמאות הניהולית של מנהלי בתי הספר, לרבות האפשרות להעסיק מורים מצטיינים בחוזים אישיים. חיזוק מעמדם ושכרם של המורים הצעירים.",
         "aspect": "core-curriculum-and-teacher-standards",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "named-mechanism"
       },
       {
-        "text": "חיזוק מוסדות ההשכלה הגבוהה והגדלה משמעותית של תקציבי המחקר.",
+        "text": "החלפת מתכונת הלימודים והבחינות הקיימת בשנת י״ב בשנת הכנה לחיים הבוגרים, הכוללת הכנה לשירות צבאי או אזרחי, רכישת מיומנויות מעשיות, התנסות מקצועית, מנהיגות והתנדבות בקהילה.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "התאמת לוח החופשות במערכת החינוך ללוח החופשות במשק.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "לפיכך, יש למנוע זליגת תכנים אנטי ישראליים ממערכת החינוך הפלסטינית לזו הישראלית, באמצעות הליך התאמה למערכת החינוך בישראל ומעבר מבחן באזרחות כתנאי להשתלבות בהוראה.",
+        "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חיזוק מוסדות ההשכלה הגבוהה. הגדלה משמעותית של תקציבי המחקר והפיתוח.",
         "aspect": "higher-education-and-vocational-training",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "generic"
       },
       {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "ביטול מימון ממשלתי למוסדות חינוך המסרבים ליישם לימודי ליבה חובה (מתמטיקה, אנגלית, מחשבים, אזרחות, תנ\"ך). תנאי מחייב לתמיכה כלכלית של המדינה.",
+        "text": "הקמת תוכנית לאומית לפתרון משבר כוח האדם בגיל הרך- שיפור השכר והתנאים,הכשרה מקצועית, מסלולי קידום ותמריצים לגיוס ולשימור כוח אדם. הרחבה של היצע המסגרות האיכותיות והזמינות, צמצום הצפיפות ושיפור היחס בין מספר הילדים לאנשי הצוות, וכן חיזוק מערך הפיקוח.",
+        "aspect": "sector-specific-equity",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "contrary": "תקצוב בלתי מותנה של חינוך חרדי",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם הקטנת כיתות, למידה מתקדמת המותאמת לצרכים השונים של התלמידים, חיזוק מעמד המורות והמורים ושוויון תקציבי בין כלל זרמי החינוך.",
+        "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נעגן בחוק תקצוב סדיר, שוויוני וארוך־טווח של החינוך הבלתי פורמלי.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "health": [
       {
-        "text": "השלמת בניית שני בתי חולים (צפון ודרום); הגדלת מספר רופאים ואחיות בעדיפות לפריפריה; הרחבת מספר מקומות לסטודנטים לרפואה.",
+        "text": "אנו שואפים לחזק באופן משמעותי את מערכת הבריאות הציבורית וליצור מערכת המסוגלת לספק שירותי רפואה מתקדמים, איכותיים ונגישים לכל אזרח ואזרחית, ללא קשר למעמדם הסוציו־אקונומי או למקום מגוריהם.",
+        "aspect": "private-sector-regulation-mechanics",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "generic"
+      },
+      {
+        "text": "השלמת הקמתם של שני בתי חולים חדשים – אחד בצפון ואחד בדרום. הגדלת מספר המיטות בבתי החולים הציבוריים וחיזוק מערכת הבריאות, בדגש על הפריפריה.",
         "aspect": "sector-and-geographic-equity",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "quantified"
+        "concreteness": "named-mechanism"
       },
       {
-        "text": "עדכון סל התרופות באופן שוטף; השקת שירותים אמבולטוריים חדשניים ותוכניות רפואה מונעת.",
+        "text": "הגדלת מספר התקנים לרופאים ולאחיות, בדגש על אזורי הפריפריה. הגדלת מספר התקנים לסטודנטים במקצועות הרפואה.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "עדכון קבוע ושוטף של סל התרופות, במטרה להבטיח את זמינות הטיפולים הנדרשים ולמנוע את הצורך במסע לחצים ציבורי מצד ציבור החולים לעדכון הסל.",
         "aspect": "preventive-care-and-specific-benefits",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הרחבת שירותי הרפואה האמבולטוריים ופיתוח שירותים מתקדמים בתחום הרפואה המונעת. החזרת התוכנית הלאומית למאבק בסוכרת, שהחלה בתקופת כהונתנו במשרד האוצר.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הובלת רפורמה מקיפה בביטוח הסיעוד, לצד חיזוק הרפואה הגריאטרית והטיפול בקהילה, במטרה לצמצם את הבירוקרטיה",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "חיזוק טיפות החלב ושירותי התפתחות הילד, השקעה והרחבה של כוח אדם ותקינה ונגישות לאבחונים ולטיפולים פרא-רפואיים תוך צמצום זמני ההמתנה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "secondaryAspects": [
+          "healthcare-workforce-and-professional-licensing"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "religion": [
       {
-        "text": "נישואים אזרחיים וגירושים אזרחיים; ביטול מועצות הדת; תחבורה ציבורית בשבת לפי החלטת הרשות המקומית.",
-        "aspect": "civil-status-and-public-space-specifics",
+        "text": "חקיקת חוק גיוס חובה לכל אזרח ישראלי בגיל 18, ללא הבדל דת או מוצא, בשני מסלולי שירות: צבאי או אזרחי. השתמטות משירות תוביל לשלילת זכויות, ובהן קצבאות, הנחות בדיור ובארנונה וזכאות לעבודה בשירות המדינה. עריקים יהיו צפויים לרישום פלילי, למניעת יציאה מהארץ ולשלילת זכות ההצבעה.",
+        "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "contrary": "מונופול הרבנות על נישואים; איסור תחבורה בשבת",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "ביטול קצבאות לאברכי ישיבות; תוכנית ממשלתית לשילוב הציבור החרדי בשוק העבודה.",
+        "text": "ביטול תשלומי הקצבאות לתלמידי ישיבות וכוללים. תלמידי הישיבות והכוללים יממנו את לימודיהם מכספם, כפי שעושים הסטודנטים במוסדות להשכלה גבוהה. קידום תוכנית ממשלתית לשילוב המגזר החרדי בשוק העבודה, לרבות עידוד תעסוקה והורדת גיל הפטור משירות.",
         "aspect": "haredi-draft-and-service-burden",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "contrary": "קצבאות ללומדי תורה",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הנהגת נישואין וגירושין אזרחיים לכל אזרח. העברת כלל הסמכויות בנושא פתיחת עסקים והפעלת תחבורה ציבורית בשבת לידי הרשויות המקומיות.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "רב ראשי אחד לישראל ורב עיר אחד לכל רשות מקומית. ביטול המועצות הדתיות והקמת מחלקות עירוניות לשירותי דת.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אימוץ דוח ניסים בנושא הגיור. השלמת רפורמת הגיור באמצעות רבני הערים. יישום הרפורמה בתחום הכשרות.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "השבת האחריות על בתי הדין הרבניים ממשרד הדתות למשרד המשפטים. הבטחת ייצוג הולם לנשים ולכלל המגזרים היהודיים במועצת הרבנות הראשית.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "לתפיסתנו, כל אדם שעלה לישראל מכוח חוק השבות, גם אם אינו יהודי על פי ההלכה, אך משרת בצה״ל, משרת במילואים, עובד ומשלם מסים, הוא חלק בלתי נפרד ממדינת ישראל ומהחברה הישראלית. מדינת ישראל לא תאפשר בדיקה חוזרת של יהדותו של מי שהוכר כיהודי ועלה ארצה מכוח חוק השבות, ולא תאפשר כל התערבות בסעיף הלאום במרשם האוכלוסין, בין אם באמצעות סימנים נסתרים ובין אם באמצעות קודים.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
       },
       {
-        "text": "אימוץ דוח ניסים; רפורמת גיור מלאה דרך רבני ערים; החזרת האחריות על בתי הדין הרבניים למשרד המשפטים.",
-        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "text": "אין לאף אדם או גוף מונופול על היהדות. אנו מתנגדים לכל כפייה דתית ולהשתמטות ממילוי החובות האזרחיות והלאומיות בחסות הדת.",
+        "aspect": "national-religious-symbolism",
+        "secondaryAspects": [
+          "haredi-draft-and-service-burden"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "specific-stance"
       },
       {
-        "text": "הכרה במהגרים לפי חוק השבות כחלק אינטגרלי מהחברה הישראלית ללא קשר למעמדם ההלכתי.",
-        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "text": "נבטיח גישה חופשית לבני כל הדתות למקומות הקדושים להם וחופש פולחן מלא.",
+        "aspect": "minority-religious-autonomy",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "רב ראשי אחד לישראל, רב עיר אחד לכל רשות מקומית.",
-        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "specific-stance"
       }
     ],
     "justice": [
       {
-        "text": "כינון חוקה והקמת בית משפט לחוקה; הגבלת כהונת ראש ממשלה לשתי קדנציות.",
+        "text": "כינון חוקה למדינת ישראל והקמת בית משפט לחוקה. הגבלת כהונת ראש הממשלה לשתי קדנציות. ביטול משרדי ממשלה מיותרים.",
         "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "קידום מתווה חוקה על בסיס עבודתם של פרופ' רייכמן, פרופ' פרידמן ומשה ניסים. בין היתר, יעוגנו זכויות האדם, יוסדרו יחסי הרשויות וחיזוק הדמוקרטיה. תוגבל כהונת ראש הממשלה, יצומצם מספר השרים, יבוצרו חוקי היסוד ותעוגן חובת הנשיאה בנטל.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "איסור בחוק על אדם שהוגש נגדו כתב אישום להתמודד לנשיאות המדינה או להרכיב ממשלה. קביעת חובה לפרסום פומבי של הצהרות ההון של ראש הממשלה, השרים וראשי כלל המפלגות.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms",
+          "anti-corruption-and-rule-of-law"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "קביעה כי בשנתיים הראשונות לכהונת הממשלה ניתן יהיה להפילה רק ברוב של 90 חברי כנסת, באמצעות אימוץ נוהל יושב ראש הכנסת. הסדרת תקציב המדינה כתקציב דו-שנתי, לצורך שמירה על יציבות הממשלה, הכלכלה והמשק.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "איסור בחוק על אדם שהוגש נגדו כתב אישום להתמודד לנשיאות או להרכיב את הממשלה.",
-        "aspect": "anti-corruption-and-rule-of-law",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "התנגדות לחוק הצרפתי ולפסקת ההתגברות; שמירה על עצמאות מערכת המשפט.",
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "contrary": "פסקת התגברות / חוק הצרפתי",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "הסדרת תקציב המדינה כתקציב דו-שנתי, לצורך שמירה על יציבות הממשלה, הכלכלה והמשק.",
+        "text": "חקיקת חוק שקיפות ופיקוח על כלל פעילות המפלגות במרחב המקוון.",
         "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "עצמאות השפיטה דורשת שמירה על ועדת המינויים הנוכחית; דחיית כל שינוי שייתן לקואליציה שליטה על מינוי שופטים לבית המשפט העליון.",
+        "text": "נפעל לצייד את מערכת המשפט בכלים חקיקתיים שיאפשרו ענישה מרתיעה בגין הסתה נגד המדינה, השתתפות במפגשים עם אויבי ישראל והתנגדות לעקרונות היסוד של המדינה הציונית. בנוסף, נפעל למנוע הישנות מצבים שבהם החלטות ועדת הבחירות המרכזית בעניין פסילת רשימות או מועמדים יבוטלו.",
+        "aspect": "emergency-powers-and-security-law",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "contrary": "מינוי שופטים על ידי הממשלה",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "equality": [
       {
-        "text": "ייצוג הולם חובה לנשים ברשימות לכנסת.",
+        "text": "הבטחת ייצוג הולם לנשים ברשימות המתמודדות לכנסת, ברשויות המקומיות ובמועצות הדתיות. מאבק בהדרת נשים מהמרחב הציבורי, לרבות החמרת הענישה על השחתת מודעות ותמונות של נשים על רקע מגדרי.",
         "aspect": "gender-equality",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הרחבת התוכנית הלאומית למניעת אלימות במשפחה והבטחת תקציב קבוע ורב־שנתי. הרחבת המענה לנפגעות ולנפגעי תקיפה מינית, לרבות הגדלת מספר מרכזי וחדרי הטיפול הייעודיים בבתי החולים.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "שירות נשים בצה״ל על בסיס כישורים והתאמה לתפקיד – האדם הנכון במקום הנכון, ללא קשר למגדר.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance"
       },
       {
-        "text": "רפורמת פנסיה: העלאת כלל הפנסיונרים לשכר מינימום; תחבורה ציבורית חינם לכל הפנסיונרים; הגדלת קצבת ניצולי שואה.",
+        "text": "הגדלת קצבאות הזקנה הבסיסיות לכלל האזרחים הוותיקים בצורה מדורגת שתיפרס על פני מספר שנים עד ל -25% מהשכר הממוצע במשק וקביעת מנגנון הצמדה לשכר הממוצע במשק או למדד, לפי הגבוה מבניהם.",
         "aspect": "disability-and-elderly-inclusion",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "שילוב תעסוקתי לאנשים עם מוגבלויות.",
-        "aspect": "disability-and-elderly-inclusion",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-06-23",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "הגדלת המענק השנתי לניצולי השואה ל-8,000 ₪ במקום 6,500 ₪.",
-        "aspect": "disability-and-elderly-inclusion",
-        "sourceUrl": "https://beytenu.org.il/party-platform/",
-        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
-        "_note": "מכמת את הרשומה הכללית יותר לעיל (רפורמת פנסיה)",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "quantified"
       },
       {
-        "text": "לערבים כל הזכויות בארץ ישראל, אבל שום זכות על ארץ ישראל. לא נשלים עם התופעה המסוכנת של ההקצנה בקרב חברי הכנסת הערבים, המסיתים נגד המדינה שבפרלמנט שלה הם מכהנים.",
+        "text": "הבטחת הכנסה לחסרי פנסיה מספקת ומעוטי יכולת הנמצאים בסיכון לעוני בגובה שכר המינימום בצורה מדורגת שתיפרס על פני מספר שנים.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מינוי שר ו/או ייחוד סמכויות ברמת הממשלה לטיפול מקיף ומתכלל בתחום האזרחים הוותיקים והקמת ועדה ייעודית בכנסת. הרחבת והקמת מודלים של ״קהילה תומכת״ בכל שכונה ורשות מקומית.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הגדלת המענק השנתי לניצולי השואה ל-8,000 ש״ח, במקום 6,500 ש״ח. הגדלת המענק למסורבי עלייה ל-10,000 ש״ח, במקום 7,200 ש״ח. הגדלת הקצבה לאסירי ציון ב-25%, לכ-4,375 ש״ח, במקום 3,500 ש״ח.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "קידום תוכנית ממשלתית לשילוב אנשים עם מוגבלות בשוק העבודה.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "״לערבים כל הזכויות בארץ ישראל, אבל שום זכות על ארץ ישראל.״ לא נשלים עם תופעת ההקצנה בקרב חברי הכנסת הערבים המסיתים נגד המדינה שבפרלמנט שלה הם מכהנים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "משמעות תפיסה זו היא כי המיעוט הלא יהודי החי במדינת ישראל, המזדהה עם המדינה ותורם לה, זכאי למלוא הכבוד והזכויות. מנגד, מי שחי עמנו ופועל נגד המדינה – יש להילחם בו בכל האמצעים החוקיים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "תיקון חוק הלאום ברוח מגילת העצמאות, כך שיעגן את היותה של מדינת ישראל מדינה יהודית ודמוקרטית, המקיימת שוויון זכויות לבני כל דת ולאום אחר.",
+        "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
+        "sourceUrl": "https://beytenu.org.il/party-platform/",
+        "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הקמת ועדת שרים ייעודית לעידוד העלייה והקליטה. פעילות מול יהדות התפוצות ליצירת תנאים מיטביים לקליטת רוב יהודי התפוצות בישראל.",
         "aspect": "demographic-and-citizenship-policy",
         "sourceUrl": "https://beytenu.org.il/party-platform/",
         "archivePath": "docs/sources/beitenu/2026-06-23-party-platform.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "named-mechanism"
       }
     ],
     "ecology": []

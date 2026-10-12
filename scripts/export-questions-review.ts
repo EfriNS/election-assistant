@@ -9,7 +9,7 @@
 
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, type TopicQ } from "../lib/questions";
 import { PARTIES } from "../lib/parties";
-import { GROUNDINGS } from "../lib/groundings";
+import { GROUNDINGS, entryAspects } from "../lib/groundings";
 import { TOPICS } from "../lib/topics";
 import { writeFileSync, mkdirSync } from "fs";
 
@@ -18,7 +18,7 @@ import { writeFileSync, mkdirSync } from "fs";
 // unlike the "N parties" figures in TOPIC_KEY_DIMENSIONS' inline comments.
 function countPartiesForAspect(topicId: string, aspectId: string): number {
   return Object.values(GROUNDINGS).filter((pg) =>
-    (pg.topics[topicId] ?? []).some((e) => !e.absent && e.aspect === aspectId)
+    (pg.topics[topicId] ?? []).some((e) => !e.absent && entryAspects(e).includes(aspectId))
   ).length;
 }
 

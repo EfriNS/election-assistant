@@ -25,6 +25,14 @@ describe("selectSuggestedDimension", () => {
     expect(result).toBe("military-doctrine");
   });
 
+  it("counts an entry's secondary aspects as evidence for that dimension", () => {
+    const groundingMap = {
+      partyA: [entry({ aspect: "military-doctrine", secondaryAspects: ["accountability-oct7"] })],
+    };
+    const result = selectSuggestedDimension(["territorial-endgame-specifics", "accountability-oct7"], groundingMap);
+    expect(result).toBe("accountability-oct7");
+  });
+
   it("regression 2026-07-05: a dimension is suggested even when only a single, currently-not-close party has grounding for it", () => {
     // This is exactly the bug: a security opener favoring self-reliance made
     // every left-leaning party's grounded territorial-policy position

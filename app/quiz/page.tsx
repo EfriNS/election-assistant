@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PARTIES } from "@/lib/parties";
 import { QUESTIONS_FORMAL, QUESTIONS_PERSONAL, TOPIC_KEY_DIMENSIONS, TopicQ } from "@/lib/questions";
-import { getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
+import { entryAspects, getGroundingsForTopic, getBestEvidenceForTopic, selectSuggestedDimension } from "@/lib/groundings";
 import { shuffleArray, shuffleOptionsKeepLast } from "@/lib/shuffle";
 import { calcResults, TopicQA } from "@/lib/scoring";
 import { CRITICAL_WEIGHT } from "@/lib/topics";
@@ -206,6 +206,9 @@ function QuizInner() {
   // AI-derived alignment scores from /api/score-topics (topicId → partyId → score or null)
   const [aiScores, setAiScores] = useState<Record<string, Record<string, number | null>> | undefined>(undefined);
   const [isScoring, setIsScoring] = useState(false);
+  // Identifies the latest /api/score-topics request, so a superseded one (user went
+  // back and re-entered the close step) can't overwrite the newer result.
+  const scoringRequestRef = useRef(0);
 
   const topicsToAsk = Object.entries(buckets)
     .filter(([, w]) => w >= 2)
@@ -273,14 +276,21 @@ function QuizInner() {
           topicLabel: topic.label,
           openerQuestion: questionSet[tid]?.question ?? "",
           openerAnswer: qa.openerAnswerText,
-          followUpQA: qa.followUps.map(({ question, answer }) => ({ question, answer })),
+          followUpQA: qa.followUps.map(({ question, answer, targetedAspect, options }) => ({ question, answer, targetedAspect, options })),
+          openerIsFreeText: qa.openerAnswerId === "other",
+          // The numbered options as shown (shuffled per session) — a free-text answer may cite them by number.
+          ...(qa.openerAnswerId === "other" ? { openerOptions: questionSet[tid]?.options.map((o) => o.text) } : {}),
           ...(qa.freeTextInterpretation ? { freeTextInterpretation: qa.freeTextInterpretation } : {}),
         };
       });
 
     if (topicsForScoring.length === 0) return;
 
-    let active = true;
+    // Deliberately no effect cleanup that discards the response: leaving the close
+    // step for the results step is the normal path, and the results step waits on
+    // isScoring for exactly this response. Discarding it there dropped every AI
+    // score for anyone who continued before the call returned.
+    const requestId = ++scoringRequestRef.current;
     async function runScoring() {
       setIsScoring(true);
       try {
@@ -290,20 +300,20 @@ function QuizInner() {
           body: JSON.stringify({ topics: topicsForScoring, sessionId }),
         });
         const data = await r.json() as { scores?: Record<string, Record<string, number | null>>; errorCode?: string };
-        if (active && data.scores) {
+        if (requestId !== scoringRequestRef.current) return;
+        if (data.scores) {
           setAiScores(data.scores);
-        } else if (!data.scores) {
+        } else {
           mpTrack("api_error", { session_id: sessionId, endpoint: "/api/score-topics", error_code: data.errorCode ?? "SERVER_ERROR" });
         }
       } catch {
         // silently degrade: calcResults falls back to deterministic-only
         mpTrack("api_error", { session_id: sessionId, endpoint: "/api/score-topics", error_code: "SERVER_ERROR" });
       } finally {
-        setIsScoring(false);
+        if (requestId === scoringRequestRef.current) setIsScoring(false);
       }
     }
     runScoring();
-    return () => { active = false; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
@@ -510,7 +520,7 @@ function QuizInner() {
         partyName: p.name,
         entries: getBestEvidenceForTopic(p.id, topicId).map((e) => ({
           text: e.text,
-          aspect: e.aspect,
+          aspect: entryAspects(e).join(", "),
           contrary: e.contrary,
         })),
       })));
@@ -530,7 +540,9 @@ function QuizInner() {
         openerQuestion: questionSet[topicId]?.question ?? "",
         openerAnswer: openerAnswerText,
         freeTextInterpretation: topicQA[topicId]?.freeTextInterpretation,
-        followUpQA: followUpQA.map(({ question, answer }) => ({ question, answer })),
+        followUpQA: followUpQA.map(({ question, answer, options }) => ({ question, answer, options })),
+        // The numbered options as shown (shuffled per session) — a free-text answer may cite them by number.
+        ...(openerAnswerId === "other" ? { openerOptions: questionSet[topicId]?.options.map((o) => o.text) } : {}),
       },
       nextTopic: nextTopicId
         ? {

@@ -3,7 +3,7 @@
   "platformLabel": "אתר רשמי (ozma-yeudit.co.il) — משלים 13 עקרונות ממקור לא-רשמי + מסמך JVL מפוקפק",
   "sourceUrl": "https://ozma-yeudit.co.il",
   "archiveDir": "docs/sources/otzmah-yehudit/",
-  "_note": "Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed. That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail. CORRECTED 2026-08-07: removed 9 entries (added 2026-07-03 through 2026-08-07) that were administrative/news-report items from the 'עדכונים' feed — ministerial visits, committee approvals, an MK's court petition, budget/relocation decisions — not platform text. Per lib/groundings.ts, `text` must be 'a verbatim Hebrew quote from the party's source document'; these described dated actions in third-person narrative, not stated positions, yet carried the same official-current/quantified tags as genuine platform quotes, which risked outranking real platform text in getBestEvidenceForTopic()'s selection. This is exactly the not-yet-designed 'documented action' evidence type discussed in TODO.md items #8-#9 (which scopes it to Likud) — if that feature is ever built with proper attribution rules, these 9 items (see docs/sources/otzmah-yehudit/2026-06-23-party-program.md for the full removed list) are candidates to reintroduce under it, not under ordinary platform-quote provenance. 3 borderline items (active legislative proposals — muezzin-noise enforcement bill, criminal-responsibility-age bill, a minister's public ceasefire stance) were kept as they state a position/intent rather than just report a completed action. Still no genuine economy/education/health/housing/ecology coverage from official material — persistent gap, not a collection failure. Re-checked 2026-09-16 (post candidacy-submission review): 'מי אנחנו' page content matches what's already captured — no new items found. Per the 2026-08-07 decision above, the 'עדכונים' news feed was deliberately NOT re-scraped this pass either (still pending the 'documented action' evidence type design, TODO #8-#9).",
+  "_note": "2026-10-11 (cont.): remaining source pages read in full — 8 verbatim entries added, 0 merged into existing entries (36 in total). Otzma Yehudit (Ben Gvir) — far-right Jewish nationalist party ideologically rooted in Kahanism. CORRECTED 2026-07-03: the previously-used 'ozma-yeudit.com' (13 principles) is NOT the official site — its own footer states it is an unofficial supporter site, not authorized by the party, and links to the real official site at ozma-yeudit.co.il (a different domain). The JVL PDF is also suspect: it's an English-language recruitment pamphlet with a personal Gmail contact, not clearly an authentic party document. Re-collected genuine current material from the real official site (ozma-yeudit.co.il) — 'Who We Are' page + 'Updates' feed. That real content concentrates almost entirely on security/justice/religion (matching Ben Gvir's National Security portfolio) — economy, education, health, housing, ecology have no genuine official-current coverage; this is a real gap in the party's public footprint, not a collection failure. Old ozma-yeudit.com/JVL entries kept (not deleted) but need provenance/concreteness reclassification — see docs/sources/otzmah-yehudit/2026-06-23-party-program.md 2026-07-03 update for full detail. CORRECTED 2026-08-07: removed 9 entries (added 2026-07-03 through 2026-08-07) that were administrative/news-report items from the 'עדכונים' feed — ministerial visits, committee approvals, an MK's court petition, budget/relocation decisions — not platform text. Per lib/groundings.ts, `text` must be 'a verbatim Hebrew quote from the party's source document'; these described dated actions in third-person narrative, not stated positions, yet carried the same official-current/quantified tags as genuine platform quotes, which risked outranking real platform text in getBestEvidenceForTopic()'s selection. This is exactly the not-yet-designed 'documented action' evidence type discussed in TODO.md items #8-#9 (which scopes it to Likud) — if that feature is ever built with proper attribution rules, these 9 items (see docs/sources/otzmah-yehudit/2026-06-23-party-program.md for the full removed list) are candidates to reintroduce under it, not under ordinary platform-quote provenance. 3 borderline items (active legislative proposals — muezzin-noise enforcement bill, criminal-responsibility-age bill, a minister's public ceasefire stance) were kept as they state a position/intent rather than just report a completed action. Still no genuine economy/education/health/housing/ecology coverage from official material — persistent gap, not a collection failure. Re-checked 2026-09-16 (post candidacy-submission review): 'מי אנחנו' page content matches what's already captured — no new items found. Per the 2026-08-07 decision above, the 'עדכונים' news feed was deliberately NOT re-scraped this pass either (still pending the 'documented action' evidence type design, TODO #8-#9). Re-checked 2026-10-11: official site nav unchanged (no מצע/עקרונות page); 'מי אנחנו' content matches what's already captured. News: MK טלי גוטליב joined the list from Likud; the Central Elections Committee rejected disqualification requests 11–10 (heading to the Supreme Court) — neither is platform content. 'עדכונים' feed still deliberately not scraped (TODO #8–#9). No change.",
   "topics": {
     "security": [
       {
@@ -19,7 +19,10 @@
       {
         "text": "\"המלחמה באויבי ישראל, תהיה טוטאלית, ללא משא ומתן, ללא ויתורים וללא פשרות.\"",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הסכמי שלום; משא ומתן עם אויבים",
@@ -29,7 +32,7 @@
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\"",
         "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -38,11 +41,15 @@
       {
         "text": "\"השבת הביטחון וההרתעה לחיילי צה\"ל.\" קואליציה 2022: הגדלת תקציב משרד ביטחון לאומי ב-45 מיליארד ₪ ל-7 שנים; הקמת \"משמר לאומי\"; בן גביר שר לביטחון לאומי.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "secondaryAspects": [
+          "hardline-enforcement"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
-        "concreteness": "quantified"
+        "concreteness": "quantified",
+        "_note": "בבדיקת 2026-10-11 לא אותר הנוסח, או חלק ממנו, בעמוד המקור המצוטט. ייתכן שהעמוד השתנה מאז האיסוף; הרשומה נשמרה כפי שהיא."
       },
       {
         "text": "IDI: עמדה בעד עונש מוות למחבלים; הרחבת כללי פתיחה באש.",
@@ -54,9 +61,9 @@
         "concreteness": "specific-stance"
       },
       {
-        "text": "\"לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל שטחי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.\" (הסכם קואליציוני 2022)",
+        "text": "\"לעם היהודי זכות בלעדית ובלתי ניתנת לערעור על כל מרחבי ארץ ישראל. הממשלה תקדם ותפתח התיישבות בכל חלקי ארץ ישראל — בגליל, נגב, גולן, יהודה ושומרון.\" (קווי היסוד של הממשלה ה-37, 2022)",
         "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://www.idi.org.il/articles/46842",
+        "sourceUrl": "https://www.idi.org.il/articles/46872",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -74,18 +81,37 @@
       {
         "text": "השר בן גביר: ישראל צריכה לדחות כל הסכם הפסקת אש בין ארה\"ב לאיראן, בדגש על סדרי עדיפויות ביטחוניים אזרחיים וצבאיים.",
         "aspect": "foreign-policy-and-nonproliferation",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "sourceUrl": "https://ozma-yeudit.co.il/updates/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-07-03",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "generic",
+        "_note": "הפריט פורסם בעמוד העדכונים של המפלגה ביולי 2026 ואינו מופיע בו עוד (נבדק 2026-10-11); הנוסח נשען על הארכיון שלנו."
+      },
+      {
+        "text": "החלת ריבונות על כל חלקי ארץ ישראל ששוחררו במלחמת ששת הימים והסדרת מעמדם של אוייבי ישראל בארצות ערב המקיפות את ארצנו.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "עוברים ממגננה להתקפה, ממדיניות ׳הכלת האויב׳ לחיסולו והשמדתו. מחזירים לצה״ל את ערך הניצחון.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
       }
     ],
     "economy": [
       {
         "text": "\"אנחנו נפתח את הכלכלה לפי השיטה של 'קפיטליזם יהודי'.\"",
         "aspect": "market-structure-and-competition",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "_note": "Term undefined in official materials. JVL platform links it to funding development of Galilee, Negev, and West Bank settlements from gas royalties.",
@@ -100,13 +126,29 @@
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
         "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מיליארדי שקלים יכנסו מצמצום תקציב הבטחון בעקבות הוצאת האויבים מתוכנו, וחלקם יופנה לפיתוח התשתיות, חיזוק התעשיה ומתן סיוע לעסקים קטנים, חיזוק הבניה ויצירת מקומות עבודה בפריפריה. כמו-כן יצומצמו הרגולציות והבירוקרטיה ויופנו משאבים לחיזוק אוכלוסיות חלשות, שילובן בתעסוקה וסיוע לקשישים ולנכים.",
+        "aspect": "regional-and-sector-development",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency",
+          "social-safety-net-and-labor-protections"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
       }
     ],
     "housing": [
       {
         "text": "\"ההתיישבות היהודית בכל חלקי הארץ, תשוב לעמוד כאחד מהערכים עליהם מושתתת מדינת ישראל.\" תכנית הבנייה: עיר חדשה בין אריאל לראש העין; פיתוח עירוני בגליל ובנגב.",
         "aspect": "settlement-and-territorial-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הקפאת ההתנחלויות; פינוי מאחזים",
@@ -125,9 +167,18 @@
       {
         "text": "\"שמירה נחושה על אדמות הלאום, בחקיקה מסודרת.\"",
         "aspect": "settlement-and-territorial-specifics",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "חידוש מפעל גאולת קרקעות המולדת, ברוח הקרן הקיימת לישראל.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "third-party",
         "concreteness": "specific-stance"
       }
@@ -136,7 +187,7 @@
       {
         "text": "\"ילדי ישראל יחונכו לאהבת הארץ, ערבות הדדית בתוך העם היהודי, הכרת ההיסטוריה והמורשת של העם היהודי ואוצר היהדות.\"",
         "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -145,7 +196,7 @@
       {
         "text": "עברית היא שפה רשמית יחידה של המדינה. \"מדינת ישראל היא מדינה יהודית... עברית היא שפתה הרשמית היחידה.\"",
         "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הכרה בערבית כשפה רשמית שנייה (חוק יסוד: ישראל — מעמד ב')",
@@ -155,22 +206,15 @@
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל, על פני ותיקי יחידות לחמות — תיפסק מיידית.\" העדפה מתקנת לעולים חדשים בתעסוקה ובאקדמיה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "העדפה מתקנת לאוכלוסיות מיעוט",
         "provenance": "third-party",
         "concreteness": "specific-stance"
-      },
-      {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "תמיכה בחינוך ייחודי יהודי-לאומי; מימון לרשתות חינוך עצמאיות הפועלות לפי ערכים לאומיים, מבלי לחייבן בתוכנית לימודים ממלכתית אחידה.",
-        "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
-        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "contrary": "תוכנית לימודים אחידה שאינה יהודית-לאומית",
-        "provenance": "third-party",
-        "concreteness": "named-mechanism"
       }
     ],
     "health": [],
@@ -178,7 +222,7 @@
       {
         "text": "\"נפעל להטמעת המשפט העברי במערכת המשפטית של מדינת ישראל.\"",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הפרדת דת ממדינה; משפט חילוני",
@@ -188,7 +232,7 @@
       {
         "text": "\"ערכי המדינה היהודית יהיו על פי המוסר היהודי.\" \"מדינת ישראל היא מדינה יהודית, באופייה, בסמליה הלאומיים וערכיה המשפטיים.\"",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
@@ -197,22 +241,24 @@
       {
         "text": "\"נשיב את הריבונות והבעלות היהודית אל הר הבית.\" — עמדה מרכזית בפלטפורמה; שינוי מהסטאטוס קוו הנוכחי.",
         "aspect": "national-religious-symbolism",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "הסדר הסטאטוס קוו של הר הבית; ניהול וואקף",
         "provenance": "third-party",
-        "concreteness": "specific-stance"
+        "concreteness": "specific-stance",
+        "_note": "בבדיקת 2026-10-11 לא אותר הנוסח, או חלק ממנו, בעמוד המקור המצוטט. ייתכן שהעמוד השתנה מאז האיסוף; הרשומה נשמרה כפי שהיא."
       },
       {
         "text": "קידום חקיקה להחמרת האכיפה נגד רעש קריאות המואזין — איסור כברירת מחדל, היתרים פרטניים ואכיפה מחמירה; בראשות ח\"כ צבי פוגל, יו\"ר ועדת הביטחון הלאומי.",
         "aspect": "minority-religious-autonomy",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "sourceUrl": "https://ozma-yeudit.co.il/updates/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-07-03",
         "contrary": "כיבוד חופש הפולחן הדתי למיעוט המוסלמי",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "הפריט פורסם בעמוד העדכונים של המפלגה ביולי 2026 ואינו מופיע בו עוד (נבדק 2026-10-11); הנוסח נשען על הארכיון שלנו."
       }
     ],
     "justice": [
@@ -229,12 +275,16 @@
       {
         "text": "תמיכה בהחלשת הביקורת השיפוטית על חקיקה (פסקת התגברות); \"לא נאפשר להרוס את המדינה שלנו בשם הדמוקרטיה.\"",
         "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "ביקורת שיפוטית; שלטון החוק",
         "provenance": "third-party",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "בבדיקת 2026-10-11 לא אותר הנוסח, או חלק ממנו, בעמוד המקור המצוטט. ייתכן שהעמוד השתנה מאז האיסוף; הרשומה נשמרה כפי שהיא."
       },
       {
         "text": "שלילת אזרחות וגירוש מיידי עבור כל פעולת טרור או תמיכה בטרור. כל מי שיתמוך ב\"ישות זרה\" — ייחשב כמי שתוקף ביטחון המדינה.",
@@ -256,30 +306,42 @@
         "concreteness": "named-mechanism"
       },
       {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "הפוליטיקאים הנבחרים הם שצריכים לבחור את שופטי בית המשפט העליון; ועדת המינויים הנוכחית היא אנטי-דמוקרטית ומשרתת אליטה לא-נבחרת.",
-        "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
+        "text": "הצעה להורדת גיל האחריות הפלילית ל-10 שנים.",
+        "aspect": "emergency-powers-and-security-law",
+        "sourceUrl": "https://ozma-yeudit.co.il/updates/",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "contrary": "ועדת מינויים מקצועית בלתי-תלויה",
+        "dateRetrieved": "2026-07-03",
+        "provenance": "official-current",
+        "concreteness": "quantified",
+        "_note": "הפריט פורסם בעמוד העדכונים של המפלגה ביולי 2026 ואינו מופיע בו עוד (נבדק 2026-10-11); הנוסח נשען על הארכיון שלנו."
+      },
+      {
+        "text": "נמגר את עיוותי הדין שמנחה את פרקליטות המדינה החותרת להרשעות של חלשים וחפים מפשע, ונשיב את הצדק והאמת להיכלי המשפט.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
         "provenance": "third-party",
         "concreteness": "specific-stance"
       },
       {
-        "text": "הצעה להורדת גיל האחריות הפלילית ל-10 שנים.",
-        "aspect": "emergency-powers-and-security-law",
-        "sourceUrl": "https://ozma-yeudit.co.il/עדכונים/",
+        "text": "דמוקרטיה יהודית, השומרת על האינטרסים של מדינת הלאום היהודי, כערך הדוחה כל ערך אוניברסאלי.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
-        "dateRetrieved": "2026-07-03",
-        "provenance": "official-current",
-        "concreteness": "quantified"
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
       }
     ],
     "equality": [
       {
         "text": "\"עוצמה יהודית תפעל להוצאת אויבי ישראל מארצנו.\" מסמך JVL: עידוד הגירה, העברת אויבים, חילופי אוכלוסין — \"לצורך הבטחת רוב יהודי ואוכלוסייה אזרחית נאמנה.\" כלי מדינה: מוסד, שב\"כ, קרן קיימת.",
         "aspect": "demographic-and-citizenship-policy",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "contrary": "שוויון אזרחי; זכות להישאר",
@@ -289,6 +351,9 @@
       {
         "text": "\"עדיפות בעולם האקדמי ובמקומות העבודה לאויב שאינו משרת בצה\"ל... תיפסק מיידית.\" סיוע עירוני מותנה בנאמנות: \"אום אל-פחם לא תקבל יותר סיוע מדימונה.\"",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://jewishvirtuallibrary.org/jsource/Politics/Otzma_political_platform.pdf",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
@@ -299,11 +364,33 @@
       {
         "text": "\"פעולת חרום נמרצת לעליית יהודי התפוצות וקליטתם.\" \"מדינת ישראל היא... מדינה יהודית.\" — גישה אתנו-לאומנית מפורשת למדיניות הציבורית.",
         "aspect": "demographic-and-citizenship-policy",
-        "sourceUrl": "https://ozma-yeudit.com/program/",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
         "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
         "dateRetrieved": "2026-06-23",
         "provenance": "third-party",
-        "concreteness": "generic"
+        "concreteness": "generic",
+        "_note": "בבדיקת 2026-10-11 לא אותר הנוסח, או חלק ממנו, בעמוד המקור המצוטט. ייתכן שהעמוד השתנה מאז האיסוף; הרשומה נשמרה כפי שהיא."
+      },
+      {
+        "text": "תוקם רשות לאומית לעידוד הגירה. כדי לשמור על אופייה היהודי של המדינה, נפעל למיגור תופעות של הסתננות, הן של גנבי גבול, הן של אזרוח על רקע של ׳איחוד משפחות׳.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ביצור ועידוד מעמדה של המשפחה היהודית, עידוד ילודה ומאבק בתופעת ההפלות.",
+        "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "gender-equality"
+        ],
+        "sourceUrl": "https://ozma-yeudit.com/program/?lang=he",
+        "archivePath": "docs/sources/otzmah-yehudit/2026-06-23-party-program.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "third-party",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": []

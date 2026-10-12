@@ -289,7 +289,8 @@ election-assistant/
 ```
 
 **Key domain files in `lib/`**:
-- `groundings.ts` — grounding data types + accessors; the `Provenance` × `Concreteness` quality model and `getBestEvidenceForTopic()` (the official-material-first selection rule used everywhere quotes are chosen)
+- `groundings.ts` — grounding data types + accessors; the `Provenance` × `Concreteness` quality model and `getBestEvidenceForTopic()` (the official-material-first selection rule used everywhere quotes are chosen), plus `getBestEvidenceForAspect()` (the same rule for one sub-topic) and `entryAspects()` (an entry's `aspect` + `secondaryAspects`)
+- `score-topics-prompt.ts` — pure builders for `/api/score-topics` (prompt, response schema) and `getScoringEntries()`, which narrows the party text to the sub-topics the follow-ups probed
 - `questions.ts` — opener questions per topic + `TOPIC_KEY_DIMENSIONS` (canonical follow-up dimension taxonomy)
 - `topics.ts` — canonical topic list (`security`, `economy`, `housing`, `education`, `health`, `religion`, `justice`, `equality`, `ecology`)
 - `parties.ts` — party metadata; must stay in sync with `data/groundings/*.json` (see `docs/learnings/project/VAA-DESIGN.md` item 63)
@@ -298,8 +299,8 @@ election-assistant/
 
 **Key Architectural Patterns**:
 - **Quiz flow**: fixed opener question per topic (manually written) → AI-generated follow-up question (Gemini, structured output) → both feed topic scoring
-- **Scoring pipeline**: opener answer (pre-calibrated) + follow-up answer (AI-scored against grounding quotes) → per-topic score → power-curve-weighted overall ranking (`lib/scoring.ts`)
-- **Grounding quality model**: every quote has `provenance` (official-current/official-outdated/joint-list/third-party) × `concreteness` (quantified/named-mechanism/specific-stance/generic); `getBestEvidenceForTopic()` is the single selection rule for scoring, quoting, and follow-up dimension selection — official material only when it exists, third-party/joint-list strictly as a fallback
+- **Scoring pipeline**: opener answer (pre-calibrated) + follow-up answer (AI-scored against the grounding quotes on the sub-topics the follow-ups probed; whole topic for a free-text opener; no text on the sub-topic → no AI score, opener only; free-text opener with no AI score → the topic counts as neutral for that party) → per-topic score → power-curve-weighted overall ranking (`lib/scoring.ts`)
+- **Grounding quality model**: every quote has `provenance` (official-current/official-outdated/joint-list/third-party) × `concreteness` (quantified/named-mechanism/specific-stance/generic); `getBestEvidenceForTopic()` is the single selection rule for scoring, quoting, and follow-up dimension selection — official material only when it exists, third-party/joint-list strictly as a fallback. An entry has one primary sub-topic (`aspect`) and optionally more (`secondaryAspects`), all from `TOPIC_KEY_DIMENSIONS`; match with `entryAspects()`, never `e.aspect ===`
 - **Gemini structured output is mandatory, not optional**: all 3 AI routes (`follow-up`, `score-topics`, `results`) use `responseJsonSchema`/`responseSchema` — prompt instructions alone do not reliably produce valid JSON for Hebrew text with acronyms (two production incidents, see CHANGELOG 2026-07-02)
 
 **Data Flow**:
@@ -580,7 +581,8 @@ git pull origin feature/slack-integration
 ### API Route Development (`app/api/<name>/route.ts`)
 
 - Validate request body shape before use (see `app/api/score-topics/route.ts`'s `INVALID_INPUT` check)
-- Sanitize any user-supplied free text before it reaches an AI prompt (`lib/sanitize.ts`'s `sanitizeUserInput`)
+- Sanitize any user-supplied free text before it reaches an AI prompt (`lib/sanitize.ts`'s `sanitizeUserInput`; `sanitizeOptionList` for client-supplied answer options)
+- Any prompt that carries a user's answer must also carry the numbered options the user was shown when the answer can be free text — users cite options by number ("3+1"), and a model that can't see them guesses
 - Return a structured `{ errorCode, ... }` on failure, not a bare error string — the frontend switches on `errorCode` (`QUOTA_EXCEEDED`, `SERVER_ERROR`, `AUTH_ERROR`, `INVALID_INPUT`)
 - Every Gemini-backed route: use `responseMimeType: "application/json"` + `responseJsonSchema`/`responseSchema` — never rely on prompt instructions alone to produce valid JSON (see CHANGELOG 2026-07-02 for the production incident this fixed)
 - Wrap the Gemini call in a Langfuse trace/generation; never pass raw user answers as trace `input` (PII) — pass only metadata

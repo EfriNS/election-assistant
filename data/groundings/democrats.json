@@ -1,71 +1,61 @@
 {
   "platformAvailable": true,
-  "platformLabel": "חוקה (לא מצע) + התחייבויות 2026 (7 עמודי נושא) + תוכנית נקודות אפריל 2026 + תוכנית דמוקרטיה ומשפט מפורטת",
+  "platformLabel": "חוקה (לא מצע) + תוכניות העבודה 2026 (25 עמודי נושא, לכל אחד תוכנית מלאה ב-PDF) + תוכנית נקודות אפריל 2026",
   "sourceUrl": "https://yes.democrats.org.il",
   "archiveDir": "docs/sources/democrats/",
-  "_note": "Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf — fetched successfully 2026-08-07 (previously unfetchable), now grounds justice with mechanism-level entries. 2026-07-08: 'תוכנית הנקודות לסדר היום הרעיוני' (April 2026, https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf) — previously noted as unfetchable, now live — added; fills ecology (was empty) and healthcare-workforce/gender-equality/disability-elderly (previously 0-coverage aspects). 2026-08-07: new dedicated topic page /topics/environment-animals appeared (not present 2026-07-08) — adds 6 mechanism-level ecology entries; also backfilled 2 security + 1 economy entry that were archived 2026-06-22 but never entered into JSON. Housing still has only 1 entry — no housing-specific content found in any source yet. 2026-08-17 re-check: all 7 topic pages + April vision PDF + democracy/justice PDF unchanged; homepage gained 3 short teaser lines (gender equality, public safety, reservists) — reservists added as a new military-doctrine entry, gender-equality is a near-duplicate of an existing entry (skipped), public-safety doesn't fit any current taxonomy bucket (skipped) — see docs/sources/democrats/2026-06-22-yes-democrats-commitments.md for detail. 2026-09-16 re-check (post candidacy-submission review): homepage teasers unchanged in substance — 'north/south prosperity' already captured under regional-and-sector-development, 'aging with dignity' (אזרחים ותיקים) is a near-duplicate of the existing disability-and-elderly-inclusion entry (skipped, second-source confirmation).",
+  "_note": "2026-10-11 re-check: yes.democrats.org.il grew from 7 topic pages to 25 (23 Hebrew + Russian/Arabic versions), each with a 'התחייבויות' list and a link to a full PDF plan. 21 entries added — health 2→7 (from the full health PDF + mental-rehabilitation page), housing 1→4 (first real housing content: the economy-society PDF's 'נטפל במשבר הדיור מהשורש' section + Arab-society outline plans), plus draft/sharing-the-burden, gender (40% representation), Arab society five-year plan, seniors (state nursing-insurance law), disability, crime task force, police depoliticisation, outposts evacuation. Topic pages are JS-rendered: commitments were collected via page fetch (quoted lines), and 3 full PDFs (health, economy-society, draft) were downloaded and text-extracted. Later the same day all remaining full-plan PDFs were downloaded and read (19 plans; 93 more entries added, full text archived). Headline/detail pairs were then merged into single entries (33 merges, 2 cross-plan repeats removed) — 133 entries. Uncovered by taxonomy, logged only: transportation, culture, media, aliyah, countryside/agriculture. See docs/sources/democrats/2026-06-22-yes-democrats-commitments.md § 2026-10-11. Previous note: Aspects are placeholder labels — to be refined by advisor in Phase 0.1 review. Constitution source (July 2025) added 2026-06-22; full democracy/justice plan PDF: https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf — fetched successfully 2026-08-07 (previously unfetchable), now grounds justice with mechanism-level entries. 2026-07-08: 'תוכנית הנקודות לסדר היום הרעיוני' (April 2026, https://democrats.org.il/wp-content/uploads/2026/04/vision0426.pdf) — previously noted as unfetchable, now live — added; fills ecology (was empty) and healthcare-workforce/gender-equality/disability-elderly (previously 0-coverage aspects). 2026-08-07: new dedicated topic page /topics/environment-animals appeared (not present 2026-07-08) — adds 6 mechanism-level ecology entries; also backfilled 2 security + 1 economy entry that were archived 2026-06-22 but never entered into JSON. Housing still has only 1 entry — no housing-specific content found in any source yet. 2026-08-17 re-check: all 7 topic pages + April vision PDF + democracy/justice PDF unchanged; homepage gained 3 short teaser lines (gender equality, public safety, reservists) — reservists added as a new military-doctrine entry, gender-equality is a near-duplicate of an existing entry (skipped), public-safety doesn't fit any current taxonomy bucket (skipped) — see docs/sources/democrats/2026-06-22-yes-democrats-commitments.md for detail. 2026-09-16 re-check (post candidacy-submission review): homepage teasers unchanged in substance — 'north/south prosperity' already captured under regional-and-sector-development, 'aging with dignity' (אזרחים ותיקים) is a near-duplicate of the existing disability-and-elderly-inclusion entry (skipped, second-source confirmation).",
   "topics": {
     "security": [
       {
-        "text": "נוביל יוזמה מדינית אזורית ונקדם נורמליזציה עם סעודיה",
-        "aspect": "foreign-policy-and-nonproliferation",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נביא לסגירת כל זירות הלחימה - עזה, לבנון וסוריה",
+        "text": "נסגור את זירות הלחימה: עזה, לבנון וסוריה, ונמנע מאיראן להגיע לגרעין. בעזה נקדם מהלך לפירוז הרצועה, החלפת שלטון חמאס והקמת מנגנוני אכיפה אפקטיביים בסיוע אזורי ובינלאומי.",
         "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation",
+          "lebanon-framework-and-hezbollah-disarmament"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "specific-stance",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נבלום את הסיפוח, נילחם בטרור היהודי ונקדם אלטרנטיבה פלסטינית מתונה",
-        "aspect": "territorial-endgame-specifics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "סיפוח שטחים",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נקים ועדת חקירה ממלכתית ונשקם את מערכת הביטחון, ננקה אותה מפוליטיקה",
+        "text": "נקים ועדת חקירה ממלכתית ונשקם את מערכת הביטחון. אנו נפעל להקים ועדת חקירה ממלכתית לאירועי 7 באוקטובר וליישם את מסקנותיה במלואן.",
         "aspect": "accountability-oct7",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "named-mechanism"
+        "concreteness": "named-mechanism",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נילחם ברדיקלים ונחזק את המתונים - נחליף את חמאס בעזה, נילחם ביד קשה בטרור",
+        "text": "נילחם ביד קשה בטרור, ונחזק את הגורמים המתונים. כדי לנצח את הטרור ולהבטיח את ביטחונם של אזרחי ישראל נדרש שילוב של יד ברזל יחד עם הקמת אלטרנטיבה.",
         "aspect": "hardline-enforcement",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance",
-        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נקים ברית אזורית מול איראן",
+        "text": "אנו נפעל להובלת מהלך אזורי נרחב יחד עם ארצות הברית ומדינות ערב המתונות, שיאפשר להציב חזית מתונה מול הגורמים הקיצוניים באזור ובראשם איראן, מהלך שיהפוך את ישראל לשותפה מרכזית באזור.",
         "aspect": "foreign-policy-and-nonproliferation",
-        "sourceUrl": "https://yes.democrats.org.il/topics/security-diplomatic",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance",
-        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
         "text": "שלום אמת ובר-קיימא, בין ישראל ושכנותיה; כינון מערכת יחסים, בין כל עמי האזור, שיהיו מושתתים על קיום-יחד בשלום, כיבוד הדדי של הריבונות ושיתוף פעולה למען פיתוח כלכלי וקידום חברתי.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "foreign-policy-and-nonproliferation"
+        ],
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22",
@@ -82,118 +72,375 @@
         "provenance": "official-current"
       },
       {
-        "text": "\"הדמוקרטים יחזירו את המילואימניקים הביתה, אל חייהם ואל משפחותיהם, תוך שמירה מירבית על ביטחון המדינה.\"",
+        "text": "חובתנו כלפי המשרתים היא להחזיר אותם הביתה. הדמוקרטים מציבים יעד של 21-30 ימי מילואים בשנה, שיהיו ידועים מראש ויאפשרו למשפחות לתכנן את חייהם.",
         "aspect": "military-doctrine",
-        "sourceUrl": "https://yes.democrats.org.il",
+        "sourceUrl": "https://yes.democrats.org.il/topics/sharing-the-burden",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-17",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic",
-        "_note": "טיזר קצר מעמוד הבית, לא עמוד נושא מלא."
+        "concreteness": "quantified",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי הנוסח הנוכחי במקור."
+      },
+      {
+        "text": "בלבנון נפעל עם מדינות האזור להכנסת כוח בינ״ל וחיזוק צבא לבנון, למניעת הברחות אמל״ח וסיוע איראני ולהרחקת חיזבאללה מהגבול – כולל הרחקת הטילים ארוכי הטווח. נדאג למנגנון אכיפה נגד הפרות שישאיר לישראל חופש פעולה במקרה הצורך.",
+        "aspect": "lebanon-framework-and-hezbollah-disarmament",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשקם את מערכת היחסים עם ארה״ב ונקדם שיתוף פעולה אזורי. בריתות אלו יסייעו בגיבוש הסדרים חדשים מתוך עמדת כוח, שימנעו מאיראן להגיע לפצצה גרעינית ויצמצמו את איום הטילים הבליסטיים.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נוביל יוזמה מדינית אזורית ונקדם נורמליזציה עם סעודיה. נקדם נורמליזציה עם סעודיה ונעמיק את שיתופי הפעולה הביטחוניים והכלכליים, בראשם תוכנית IMEC – מיזם תשתיות וסחר שיביא פיתוח ושגשוג כלכלי אדיר לאזור כולו.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בסוריה נקדם הסדר ביטחוני שיבלום התבססות של גורמים עוינים, ימנע העברת אמצעי לחימה לחיזבאללה ויבטיח שקט ויציבות בגבול הצפוני.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נעצור את הסיפוח, נילחם בטרור היהודי ונמנע פיצוץ בגדה. נבלום את הקמת המאחזים ונפסיק את תקצוב המאחזים והחוות, שהוקמו בניגוד לחוק ולשיקולי הביטחון. נחזיר את סמכויות ניהול השטח לצה״ל ולמשרד הביטחון ונפעל לבטל את חוקי הסיפוח שחוקקה הממשלה הנוכחית.",
+        "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "hardline-enforcement"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחזק את התיאום הביטחוני עם הרשות הפלסטינית ונסייע לייצובה כגורם שלטוני אפקטיבי אל מול התארגנויות טרור פלסטיני.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נבצר את עצמאות מערכת הביטחון ומקצועיות תהליכי קבלת החלטות, נדאג למינויים ראויים בתפקידי מפתח ונוודא שבכירי המערכת יעבדו מתוך אחריות מקצועית ולמען ביטחון המדינה - ולא מתוך אינטרסים פוליטיים של מי שמינה אותם.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%93%D7%99%D7%A0%D7%99+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%A0%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נאחד את כספי כלל ההטבות, בתוספת תקציבית משמעותית, ונעביר כ-1,000 ש״ח ללוחמים על כל יום מילואים (ומדרג משתנה לתפקידים נוספים לפי רמת הלחימה), בנוסף לפיצוי על השכר. מילואימניקים עצמאים יזכו להטבות מיוחדות, להלוואות ולמענקים בערבות מדינה לשיקום עסקיהם. עלות התכנית כ-10 מיליארד ש״ח בשנה.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9E%D7%A0%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "פינוי המאחזים והחוות להפחתת עומס ההגנה ביהודה ושומרון. נפנה את החוות והמאחזים שהקימה הממשלה, בדגש על מאחזים שמביאים לחיכוך, מקושרים לאירועי טרור יהודי ופוגעים בביטחון המדינה. הקצאת הכוחות תיעשה לפי שיקולי ביטחון, ולא לפי לחצים פוליטיים.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9E%D7%A0%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נוביל תוכנית לאומית רב-שנתית לבניין הכוח של משטרת ישראל, שתאפשר לה לתכנן לטווח ארוך, לגייס ולשמר כוח אדם איכותי. נחזק את המשטרה הכחולה, נגייס שוטרים לתחנות ונשקיע בפריסת כוחות במקומות שהמדינה נעדרה מהם במשך שנים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%99%D7%A7%D7%95%D7%9F+%D7%A9%D7%92%D7%99%D7%90%D7%95%D7%AA+-+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F+%D7%A4%D7%A0%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל תוכנית לאומית למיגור הטרור היהודי. נחזק את מחוז ש״י, ניתן לו כלים, תקנים ומשאבים ונהפוך אותו לגוף שמותאם לאתגרים ומסוגל להוביל את המלחמה בטרור היהודי.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%99%D7%A7%D7%95%D7%9F+%D7%A9%D7%92%D7%99%D7%90%D7%95%D7%AA+-+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F+%D7%A4%D7%A0%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבנה תפיסה לאומית סדורה להגנה הישובית, שתסדיר את הסמכויות, הקצאת המשאבים ומודל ההפעלה של כיתות הכוננות בהתאם למסקנות וללקחים מאירועי 7 באוקטובר. נגביר את הפיקוח על רשיונות נשק ומנגנוני זיהוי מסוכנות בקרב אוחזי נשק פרטי.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%99%D7%A7%D7%95%D7%9F+%D7%A9%D7%92%D7%99%D7%90%D7%95%D7%AA+-+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F+%D7%A4%D7%A0%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נכריז מצב חירום לאומי ונקים כוח משימה מיוחד, שיופעל על-ידי קבינט פשיעה ייעודי. לכוח המשימה יגויסו 5% מכוח האדם המובחר ביותר מכל ארגון אכיפה, לרבות משטרה, שב״כ, צה״ל, שב״ס. תקציב כוח המשימה: מיליארד ש״ח בשנה. מסלול מהיר למלחמה בפשיעה - ממעצר למאסר תוך 9 חודשים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A1%D7%95%D7%9C+%D7%94%D7%A4%D7%A9%D7%A2+%D7%94%D7%9E%D7%90%D7%95%D7%A8%D7%92%D7%9F+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הקמת בתי משפט ייעודיים לפשיעה חמורה. העברה מהירה של חבילת חוקים שיתנו למערכת אכיפת החוק כלים קריטיים למאבק בפשע המאורגן: החמרות ענישה וקביעת עונשי מינימום; שימוש באמצעים ביומטריים לאיתור וזיהוי חשודים; מאבק בפרוטקשן ובהלבנת הון.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A1%D7%95%D7%9C+%D7%94%D7%A4%D7%A9%D7%A2+%D7%94%D7%9E%D7%90%D7%95%D7%A8%D7%92%D7%9F+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ניסוח חקיקה ותקנות במסלול חקיקה מהיר לפסילת חברות ״מלוכלכות״ ממכרזים ממשלתיים. פרוטקשן מהפרוטקשן: חברת ביטוח ממשלתית שתתן כיסוי לחקלאים ובעלי עסקים מאויימים.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A1%D7%95%D7%9C+%D7%94%D7%A4%D7%A9%D7%A2+%D7%94%D7%9E%D7%90%D7%95%D7%A8%D7%92%D7%9F+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בלבנון נתעקש על הרחקת חיזבאללה מעבר לליטאני ופריסת כוחות אכיפה בינ״ל, ונגיע להסדר עם ממשלת לבנון שיאפשר תהליך הדרגתי לפירוק חזבאללה מנשקו.",
+        "aspect": "lebanon-framework-and-hezbollah-disarmament",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחזק משמעותית את מערכי ההגנה על היישובים, מעל ומתחת לקרקע, נגביר את הכוחות בשטח וננהיג מדיניות של אפס סובלנות לכל הפרה ביטחונית.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "economy": [
       {
-        "text": "במקום כסף למקורבים ולמשתמטים, נגדיל משמעותית את ההשקעה בשירותים חברתיים",
-        "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "תקציב לגורמים פוליטיים על חשבון שירותים ציבוריים",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "מלחמת חורמה ביוקר המחיה באמצעות מלחמה במונופולים",
+        "text": "נוריד את יוקר המחיה. נפרק את הריכוזיות, נילחם בקרטלי המזון, התרופות והאנרגיה.",
         "aspect": "cost-of-living-and-affordability",
-        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9B%D7%9C%D7%9B%D7%9C%D7%99+%D7%97%D7%91%D7%A8%D7%AA%D7%99+(1).pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "generic",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נדאג לצרכי המשפחות הצעירות, נשפר את תנאי העבודה, נשפר את איכות המסגרות",
+        "text": "נדאג לצרכי המשפחות הצעירות. נקצר את שבוע העבודה ונוסיף ימי חופשה וימי מחלה לעובדים. נקדם חופשת לידה משמעותית גם לאבות.",
         "aspect": "social-safety-net-and-labor-protections",
-        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9B%D7%9C%D7%9B%D7%9C%D7%99+%D7%97%D7%91%D7%A8%D7%AA%D7%99+(1).pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "generic",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נוביל מהלך לאומי לשיקום העוטף וקו העימות ולשגשוג הצפון והדרום",
+        "text": "נהפוך את הצפון והדרום לסמל לשיקום. נשקיע בתעסוקה ובמנועי צמיחה מקומיים, בחינוך ובהשכלה גבוהה, בשירותי בריאות שלא מחייבים נסיעה של שעתיים למרכז, בתחבורה מעולה, בתרבות ובדיור שמאפשר לאנשים לבנות את חייהם שם.",
         "aspect": "regional-and-sector-development",
-        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9B%D7%9C%D7%9B%D7%9C%D7%99+%D7%97%D7%91%D7%A8%D7%AA%D7%99+(1).pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "specific-stance",
-        "_note": "already in the archive since 2026-06-22 but missed from JSON that pass; re-verified live 2026-08-07"
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
         "text": "הכוונת השכר והמיסוי במגמה לקדם את השוויון הכלכלי והחברתי, להטיב את רמת שכרם של העובדים בייצור ולשמור על הערך הריאלי של השכר.",
         "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "במקום תקציבים מגזריים למקורבים ולמשתמטים, נשקיע בשירותים חברתיים ובציבור העובד והמשרת.",
+        "aspect": "fiscal-discipline-and-efficiency",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
+        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נחזיר את הצמדת הקצבה לשכר הממוצע במשק, באופן שימנע את המשך שחיקתה, ונפעל להגדלה הדרגתית של קצבת הבסיס. במקביל נפעל להגדיל את סכומי השלמת ההכנסה לאזרחים ותיקים ללא פנסיה ואת הסיוע בשכר דירה לאזרחים ותיקים.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשלים את תוכניות תקומה ותנופה ונבטיח ודאות תקציבית ויישום מהיר ויעיל בטווח הזמן הקצר. נבטיח את תקציבי תקומה ותנופה לתושבים עד סוף שנת 2030 בשלב הראשון. נוסיף לפחות 15 מיליארד ש״ח לתוכנית הרב-שנתית לשיקום ופיתוח חבל תנופה בצפון. נחזק את הסמכויות ויכולות הביצוע של מנהלת תנופה בחקיקת חוק שיקום נרחב לחבל תנופה (בדומה לתקומה).",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "הממשלה תקבע מסגרת תקציבית רב-שנתית נפרדת לפיתוח הצפון והדרום, שתאפשר השקעות ארוכות טווח בשירותים הציבוריים, בתשתיות ובמנועי צמיחה אזוריים. המינהלת הלאומית לפיתוח הצפון והדרום תוקם במשרד ראש הממשלה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "במקום תקציבי עתק למאחזים ולסיפוח והטבות מס למתנחלים, נפנה תקציבים לשינוי מציאות בצפון ובדרום. נאשר תוכנית ממשלתית להשקעה בשירותים החברתיים: הצפון והדרום תחילה.",
+        "aspect": "regional-and-sector-development",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נוודא פיצוי הוגן ומהיר על נזקי המלחמה, ונרחיב את תקציבי הבתים לעסקים המלווים עסקים קטנים. נאפשר למשפחות בישובים שנפגעו את זכות הבחירה: חזרה, העתקה זמנית או פיתרון קבע.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%A4%D7%99%D7%AA%D7%95%D7%97+%D7%94%D7%A6%D7%A4%D7%95%D7%9F+%D7%95%D7%94%D7%93%D7%A8%D7%95%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחבר את הצפון לרשת הרכבות הארצית באמצעות קיצור לוחות הזמנים להשלמת קו הרכבת לקריית שמונה. נקדם את הארכת כביש 6 צפונה עד שלומי ואת הרחבת כביש 4 בין חיפה לנהריה. נקדם הקמת שדה תעופה נוסף בנגב לצד פיתוח של נמל התעופה בחיפה.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%97%D7%91%D7%95%D7%A8%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחזק את כוח המיקוח של החקלאים, נצמצם את פערי התיווך, נגביר את השקיפות בשרשרת השיווק וננהל את מדיניות הסחר כך שתגן על הייצור המקומי, תועיל לצרכנים ותחזק את ביטחון המזון.",
+        "aspect": "cost-of-living-and-affordability",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%94%D7%9E%D7%A8%D7%97%D7%91+%D7%94%D7%9B%D7%A4%D7%A8%D7%99+%D7%95%D7%A9%D7%9E%D7%99%D7%A8%D7%94+%D7%A2%D7%9C+%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%95%D7%AA+%D7%94%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תוכנית לאומית לשנת 2050 שתבטיח ייצור מקומי, מלאי חירום וניהול סיכונים, כחלק בלתי נפרד מתפיסת הביטחון הלאומי של ישראל. נבסס מערך תמיכות רב-שנתי בחקלאות, ישירות ואחרות, בהתאם ליעדי הייצור הלאומיים.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%94%D7%9E%D7%A8%D7%97%D7%91+%D7%94%D7%9B%D7%A4%D7%A8%D7%99+%D7%95%D7%A9%D7%9E%D7%99%D7%A8%D7%94+%D7%A2%D7%9C+%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%95%D7%AA+%D7%94%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ],
     "housing": [
       {
-        "text": "נדאג לדיור בר השגה - התחדשות עירונית, שכירות ארוכת טווח ודיור ציבורי",
+        "text": "נקדם פתרונות דיור מגוונים כולל בניית דירות בגדלים שונים שיתנו מענה בר השגה לצרכים שונים, נרחיב משמעותית את האפשרויות לשכירות ארוכת טווח ולדיור ציבורי בר-השגה.",
         "aspect": "rental-and-affordability-mechanics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/economy-society",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9B%D7%9C%D7%9B%D7%9C%D7%99+%D7%97%D7%91%D7%A8%D7%AA%D7%99+(1).pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם באזורי ביקוש ובכלל הארץ תכנון עירוני חכם ותהליכי התחדשות עירונית המעודדים צפיפות, עירוב שימושים והליכתיות, שיאפשרו לבנות יותר דירות קרוב לתחבורה ולתעסוקה.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9B%D7%9C%D7%9B%D7%9C%D7%99+%D7%97%D7%91%D7%A8%D7%AA%D7%99+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם תוכניות מיתאר לישובים הערבים. נוביל מדיניות של הסדרה, תכנון ופיתוח של הישובים הערבים, הדרוזים והבדואים. נבטל את חוק קמיניץ ונקדם הקמת שכונות חדשות, איזורי תעשייה ופיתוח של הרשויות המקומיות הערביות.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%91%D7%A8%D7%94+%D7%A2%D7%A8%D7%91%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל להגדלת היצע הדיור המוגן בר-ההשגה, בין היתר באמצעות הקצאת קרקעות מדינה ייעודיות לפרויקטים של דיור מוגן במחיר מפוקח, מתן עדיפות למיזמי בנייה של חברות ממשלתיות, וקביעת מכסה של יחידות דיור במחיר מפוקח בפרויקטים חדשים של דיור מוגן.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נרחיב את פתרונות הדיור לעולים, נגדיל את הסיוע בשכר דירה ונתקן את הרפורמה בדיור כך שהסיוע בשכר דירה יינתן בכל רחבי הארץ. נפעל לצמצום ההמתנה של עולים הזכאים לדיור ציבורי ונחדש את הגדלת מלאי הדיור הציבורי באמצעות בנייה ורכישה של דירות.",
+        "aspect": "rental-and-affordability-mechanics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%A2%D7%9C%D7%99%D7%99%D7%94+%D7%95%D7%A7%D7%9C%D7%99%D7%98%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל מדיניות שתאפשר לקיבוצים, למושבים וליישובים הקהילתיים להתחדש ולצמוח. נקדם פתרונות דיור מגוונים ובהם שכירות ארוכת טווח, הסרת חסמים תכנוניים והשקעה בתשתיות ובשירותים הציבוריים.",
+        "aspect": "sector-and-geographic-equity",
+        "secondaryAspects": [
+          "rental-and-affordability-mechanics"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%94%D7%9E%D7%A8%D7%97%D7%91+%D7%94%D7%9B%D7%A4%D7%A8%D7%99+%D7%95%D7%A9%D7%9E%D7%99%D7%A8%D7%94+%D7%A2%D7%9C+%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%95%D7%AA+%D7%94%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "education": [
       {
-        "text": "נבטל את האפליה התקציבית נגד החינוך הממלכתי, ונוביל לשוויון בין כל תלמידי ישראל",
-        "aspect": "sector-specific-equity",
-        "sourceUrl": "https://yes.democrats.org.il/topics/education",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "אפליה תקציבית בין זרמי חינוך",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נחייב חינוך לאזרחות ודמוקרטיה לכולם",
-        "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://yes.democrats.org.il/topics/education",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נחזק את מעמד עובדי ועובדות ההוראה והניהול ונשפר את תנאי ההעסקה",
-        "aspect": "core-curriculum-and-teacher-standards",
-        "sourceUrl": "https://yes.democrats.org.il/topics/education",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "נפסיק את מימון הרשתות החרדיות המפלגתיות - חינוך ממלכתי-חרדי לכל ילד חרדי",
-        "aspect": "independent-school-funding-and-autonomy",
-        "sourceUrl": "https://yes.democrats.org.il/topics/education",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "מימון ממשלתי לרשתות חינוך חרדיות בלי פיקוח",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
         "text": "התקדמות לקראת חינוך על-יסודי חינם וחתירה לקראת שוויון אפשרויות למען מעוטי היכולת, הן בחינוך העל-יסודי והן בחינוך הגבוה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://democrats.org.il/wp-content/uploads/2025/10/constitution_240725.pdf",
         "archivePath": "docs/sources/democrats/2025-07-24-constitution-goals.md",
         "dateRetrieved": "2026-06-22",
@@ -202,11 +449,108 @@
       },
       {
         "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "שילוב מוסדות החינוך החרדי במסגרות לימודי ליבה בתמורה לתקצוב ממשלתי; מימון מותנה ביישום תוכנית לימודים המאפשרת השתלבות בשוק העבודה.",
-        "sourceUrl": "https://yes.democrats.org.il",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
+        "dateRetrieved": "2026-10-11",
+        "text": "נפסיק את מימון הרשתות המפלגתיות - חינוך ממלכתי-חרדי איכותי לכל ילד חרדי. נבטל את המעמד המיוחד של רשתות החינוך החרדיות ונפסיק לתקצב אותן. כסף ציבורי לא צריך ללכת למוסדות בבעלות מפלגות שלא מלמדות מתמטיקה, אנגלית ואזרחות, מחנכות להשתמטות מהצבא ומקיימות אפליה על בסיס עדתי.",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "contrary": "תקצוב בלתי מותנה של מוסדות חינוך עצמאיים",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
+      },
+      {
+        "text": "נבטל את האפלייה התקציבית נגד החינוך הממלכתי ונוביל לשוויון בין כל תלמידי ישראל. בתי הספר יתוקצבו באופן שיוויוני בהתאם למספר התלמידים ולרקע החברתי-כלכלי שלהם. בנוסף, נפעל להרחבה של שעות הוראה פרטניות שיתנו מענה לצורך בשיעורים פרטיים, נדאג להפסקת תשלומי הורים בחינוך, להרחבתו של יום לימודים ארוך ומפעל ההזנה.",
+        "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "independent-school-funding-and-autonomy"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים מועצה לחינוך הממלכתי, שתהיה בעלת סמכויות מקבילות למועצת החינוך הממלכתי-דתי: המועצה תתווה חלק מתכנית הלימודים בחינוך הממלכתי, תייצר לו המשכיות, הגנה ויכולת תכנון במנותק משינויים פוליטיים, תטפח זהות וערכים, ותשמש כשומרת סף בכל הנוגע לכניסת גורמים חיצוניים.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחייב חינוך לאזרחות ודמוקרטיה לכולם. נרחיב את לימודי הדמוקרטיה והאזרחות בכלל זרמי החינוך ונעניק להם מעמד מכונן בדומה לאנגלית ומתמטיקה.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נחזק את מעמד עובדי ועובדות ההוראה והניהול ונשפר את תנאי ההעסקה. נטפל במשבר ההוראה ובמחסור במורים, באמצעות רפורמה במבנה ההעסקה וחיזוק המעמד המקצועי של המורים והמנהלים. נבזר סמכויות באופן אחראי לרשויות המקומיות ולמנהלי בתי ספר, ונחזק את העצמאות המקצועית והפדגוגית של צוותי ההוראה.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נהפוך את החינוך הממלכתי-חרדי למסלול הלימוד המרכזי בחברה החרדית. נוביל תכנית חומש לבנייה מאסיבית של בתי ספר ממלכתיים-חרדיים, להסבת בתי ספר פרטיים לממלכתיים ולהכשרה איכותית של מורים.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נגבש תכנית חומש לפיתוח עבור הקטנת כיתות לימוד, בניית בתי ספר ומעונות יום, ומיגון מוסדות חינוך בכל חלקי הארץ.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל להרחבת היצע המסגרות המסובסדות והמפוקחות, ונעלה את שכר הצוותים בהן. נפעל לשיפור איכות החינוך והטיפול לגיל הרך והתאמתם לסטנדרטים הנהוגים בעולם המערבי.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A0%D7%95%D7%9A+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נשים סוף לאפליה התקציבית בין זרמי החינוך, שמשאירה את מערכת החינוך הערבית בתת תקצוב. נפעל לשילובם של מורים מהחברה הערבית במערכת החינוך העברית. נחזק את לימודי העברית והאנגלית בחינוך הערבי.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%91%D7%A8%D7%94+%D7%A2%D7%A8%D7%91%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשקיע בהכשרה ובתגבור של צוותי החינוך והטיפול, נשפר את תנאי ההעסקה במקצועות שבהם קיים מחסור, נרחיב את המענים הטיפוליים בתוך בתי הספר ונקדם הנגשה פדגוגית וטכנולוגית. נגדיל את מלאי כיתות החינוך המיוחד בהתאם לצרכים.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטיח כי כל תלמיד עולה שבבית ספרו אין אולפן יקבל שעות לימוד עברית במימון המדינה במהלך שלוש השנים הראשונות לעלייתו.",
+        "aspect": "sector-specific-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%A2%D7%9C%D7%99%D7%99%D7%94+%D7%95%D7%A7%D7%9C%D7%99%D7%98%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -214,13 +558,16 @@
     "health": [
       {
         "aspect": "private-sector-regulation-mechanics",
-        "dateRetrieved": "2026-06-27",
-        "text": "מניעת \"רפואה לעשירים\" — הגבלת הפרטת שירותי הרפואה כדי לשמור על נגישות שוויונית; חיזוק מערכת הבריאות הציבורית כך שלא תידחק על ידי הסקטור הפרטי.",
-        "sourceUrl": "https://yes.democrats.org.il",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "dateRetrieved": "2026-10-11",
+        "text": "אנחנו נחזיר למדינה את האחריות לבריאות הציבור. נבנה מערכת ציבורית חזקה, שוויונית ואנושית, שמעניקה טיפול איכותי בזמן וללא תלות במקום המגורים או בחשבון הבנק.",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "contrary": "הרחבה בלתי מוסדרת של הרפואה הפרטית",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "generic",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי הנוסח הנוכחי במקור."
       },
       {
         "aspect": "healthcare-workforce-and-professional-licensing",
@@ -230,46 +577,146 @@
         "archivePath": "docs/sources/democrats/2026-04-27-vision-nekudot-lesder-yom-raayoni.md",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
-      }
-    ],
-    "religion": [
+      },
       {
-        "text": "נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואים וגירושים",
-        "aspect": "civil-status-and-public-space-specifics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "text": "נגדיל את מספר הסטודנטים לרפואה ליותר מ-2,000 בשנה במקביל להגדלת התקנים ההכרחית בכלל המערכת, בבתי החולים ובקהילה, ונרחיב את תשתיות ההכשרה וההתמחויות, במיוחד בפריפריה ובקהילה.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "מונופול הרבנות על נישואים וגירושים",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקים מערך ייעודי להשבת רופאות ורופאים ישראלים שעובדים מחוץ לישראל, שישמור על קשר רציף עם רופאים ישראלים בחו״ל ויסייע ביצירת אופק מקצועי ברור לחזרה לישראל.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נפרק את מונופול הרבנות בגיור ובכשרות",
-        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "text": "נחזק את בתי החולים בצפון, נגדיל את מספר המיטות ונרחיב את השירותים רפואיים. נפעל להקמת בית החולים החדש בנגב והבטחת המשאבים הנדרשים להקמתו, ונקדם הקמת בתי חולים חדשים בצפון.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "named-mechanism"
       },
       {
-        "text": "נאבק על מרחב ציבורי חופשי ונקדם תחבורה ציבורית בשבת",
-        "aspect": "civil-status-and-public-space-specifics",
-        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "text": "נגדיל את התוספת השנתית לסל הבריאות בהתחשב בגדילה ובהזדקנות האוכלוסייה ונעגן אותה במסגרת רב-שנתית, כדי לאפשר הכנסת תרופות, טיפולים וטכנולוגיות חדשות בלי מאבק תקציבי מחדש בכל שנה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "named-mechanism"
       },
       {
-        "text": "נוביל שיוויון מוחלט בנטל",
+        "text": "נקים מטה לאומי לשיקום נפשי שיוביל את התוכנית הלאומית ויתכלל את עבודת המשרדים.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://yes.democrats.org.il/topics/mental",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל לחיזוק שירותי הרפואה לגיל השלישי בקופות החולים, לרבות בתחום ביקורי הבית של צוותי סיעוד ורפואה בסיסית. בנוסף נפעל להרחבת מספר מיטות האשפוז במחלקות הגריאטריות בבתי החולים.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "כדי להגדיל את מספר המטפלים במערכת הציבורית, כדי ליצור מערכת שמסוגלת לתת מענה איכותי לצרכי האוכלוסייה ולסגור את הפער מהמדינות המפותחות, נגדיל את ההשקעה הציבורית בבריאות הנפש ב-1.5 מיליארד ש״ח לפחות.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "secondaryAspects": [
+          "healthcare-workforce-and-professional-licensing"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקבע מס' תקנים מינימלי (מפתחות תקינה) בכל מקצועות בריאות הנפש. נפעל להגדיל את מספר הפסיכולוגים המומחים באמצעות ייעול מערך ההתמחויות, נרחיב את התמריצים לעבודה בשירות הציבורי למטפלים במקצועות בריאות הנפש, בדגש על עבודה בפריפריה. נפעל להגדלת מספר הפסיכיאטרים.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "secondaryAspects": [
+          "preventive-care-and-specific-benefits",
+          "sector-and-geographic-equity"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים מערך ארצי לאיתור מוקדם ולפנייה יזומה, בדגש על אוכלוסיות בסיכון מוגבר. נרחיב את מערכי החוסן ברשויות המקומיות ואת תוכנית גוף ונפש, כך שבכל רשות תהיה כתובת מקצועית, תוכנית עבודה ומערך מתואם בין הבריאות, הרווחה והחינוך.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקבע זמני מענה מחייבים ושקופים. נציב את קיצור זמן ההמתנה עד להכרה כיעד מרכזי. ניישם באופן מלא את המהלכים שגיבשה ועדת מור יוסף להנגשה ולייעול תהליכי ההכרה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "ניישם מודל לאומי של טיפול מדורג. נרחיב את השיקום התעסוקתי ונציע מסלולים לחזרה הדרגתית לעבודה. נשנה את מבנה התמריצים כך שהגדלת ההכנסה מעבודה לא תביא לאובדן חד ומיידי של הקצבאות והתמיכות.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפתח חלופות אשפוז, מטיפול אינטנסיבי בקהילה ומסגרות יום ועד בתים מאזנים, כדי להבטיח שמי שאינו זקוק לאשפוז פסיכיאטרי מלא יקבל מסגרת מתאימה.",
+        "aspect": "preventive-care-and-specific-benefits",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA+%D7%9C%D7%A9%D7%99%D7%A7%D7%95%D7%9D+%D7%A0%D7%A4%D7%A9%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפשט ונקצר את הליכי ההכרה בהשכלה ובהסמכות שנרכשו בחו״ל, נבטל דרישות תרגום ואימות מיותרות. נקדם מסלולים מותאמים לעולים במקצועות שבהם נדרש רישוי ישראלי, בדגש על מקצועות הבריאות, המשפטים והחינוך.",
+        "aspect": "healthcare-workforce-and-professional-licensing",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%A2%D7%9C%D7%99%D7%99%D7%94+%D7%95%D7%A7%D7%9C%D7%99%D7%98%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "religion": [
+      {
+        "text": "נוביל שוויון מוחלט בנטל. ננהיג שירות שוויוני לכלל אזרחי ישראל שיאפשר תרומה לביטחון, לחברה ולכלכלה.",
         "aspect": "haredi-draft-and-service-burden",
-        "sourceUrl": "https://yes.democrats.org.il/topics/religion-state",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
+        "dateRetrieved": "2026-10-11",
         "contrary": "פטור מגיוס לחרדים",
         "provenance": "official-current",
-        "concreteness": "generic"
+        "concreteness": "generic",
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
         "text": "שמירה על חופש המצפון והדת, בלא כפייה דתית או אנטי דתית, תוך סובלנות הדדית וסיפוק הצרכים הדתיים הציבוריים.",
@@ -279,55 +726,96 @@
         "dateRetrieved": "2026-06-22",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "כל אזרחי המדינה יעברו תהליך מיון ממלכתי וישובצו לשירות צבאי או אזרחי, כאשר צורכי צה״ל יקבלו קדימות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yes.democrats.org.il/topics/sharing-the-burden",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפסיק את ההטבות למשתמטים ונדאג שמערך התמריצים של המדינה יעבור מעידוד השתמטות לעידוד שירות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://yes.democrats.org.il/topics/sharing-the-burden",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נחוקק חוק נישואין אזרחיים ונאפשר חופש בחירה בנישואין וגירושין. אנחנו נאפשר לכל אזרח ואזרחית להתחתן ולהתגרש לפי בחירתם – בטקס אזרחי או דתי, ללא תלות בדת, מין או מוצא. בנוסף, נאפשר גירושים אזרחיים למי שחפץ בכך – ונוביל פתרונות שיאפשרו זאת גם למי שהתחתן במסלול הדתי.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפרק את מונופול הרבנות בגיור ובכשרות. נכיר בגיור גם במסלולים שאינם אורתודוכסיים. נוביל רפורמה בכשרות שתפסיק את המונופול של הרבנות ותאפשר לבתי עסק לפעול בהתאם לדרכם בשקיפות מול קהל הלקוחות.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נחיל כללים ברורים לסבסוד שירותי דת, כך שגוף מסובסד יחויב לתת שירות בשקיפות וללא אפליה והדרה. נבטיח חופש בחירה מלא בענייני קבורה. נפעל לסבסוד שוויוני של כלל הזרמים והדתות, לקידום הזרמים הליברלים ביהדות ולפיתוח קשרים עם יהדות העולם.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "secondaryAspects": [
+          "minority-religious-autonomy"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאבק על מרחב ציבורי חופשי ונקדם תחבורה ציבורית בשבת. אנחנו נדאג לתחבורה ציבורית שתפעל בכל ימות השבוע ותחבר את כל ערי ישראל. נעניק לרשויות המקומיות סמכויות לקבוע מדיניות לשימוש במרחב הציבורי בהתאם לאופי הקהילות וצרכיהן.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נילחם בהדתה במרחב הציבורי, בצבא ובמערכת החינוך בכל הכוח. נעצור את הדרת הנשים בצה״ל: אסור ששילוב חיילים דתיים יבוא על חשבון הנשים המשרתות.",
+        "aspect": "civil-status-and-public-space-specifics",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%AA+%D7%95%D7%9E%D7%93%D7%99%D7%A0%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נאכוף את חובת הגיוס ונוודא שכסף ציבורי לא מממן השתמטות. נציב יעדי גיוס מחייבים שיביאו אלפי מתגייסים חדשים מדי שנה לתפקידי לחימה ולתפקידי תמיכת לחימה, באמצעות גיוס אלפי חרדים והרחבת גיוס של אוכלוסיות נוספות.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9E%D7%A0%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטל כל הרחבה של סמכויות בתי הדין הרבניים ונעצור את המגמה שמעמיקה את הכפפת חייהם של אזרחיות ואזרחים למערכת דתית שאינה שוויונית.",
+        "aspect": "rabbinate-monopoly-and-conversion-mechanics",
+        "secondaryAspects": [
+          "civil-status-and-public-space-specifics"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%A9%D7%99%D7%95%D7%95%D7%99%D7%95%D7%9F+%D7%9E%D7%92%D7%93%D7%A8%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "justice": [
-      {
-        "text": "נבצר את הזכויות האזרחיות והחברתיות בחוקי יסוד וניתן להם מעמד עליון",
-        "aspect": "separation-of-powers-and-democratic-norms",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נחזק את הכנסת ואת עקרון הפרדת הרשויות",
-        "aspect": "separation-of-powers-and-democratic-norms",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "נבטיח כי בכירים בצמרת הביטחון ובשירות המדינה ועובדי ציבור ישרתו את החוק",
-        "aspect": "anti-corruption-and-rule-of-law",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "generic"
-      },
-      {
-        "text": "נבטל את כל חוקי ההפיכה המשטרית, ונחוקק את חוק יסוד החקיקה",
-        "aspect": "separation-of-powers-and-democratic-norms",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "חוקי ההפיכה המשטרית",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נחוקק את חוקי הגבלת הכהונה ונלחם בשחיתות",
-        "aspect": "anti-corruption-and-rule-of-law",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
       {
         "text": "עמידה על משמר הדמוקרטיה הישראלית, כיבוד מוסדותיה ושמירה על העיקרון של הפרדת הרשויות; הבטחת חירות הביטוי וקיום השפעתם של האזרחים על מעשיו של הממשל באמצעות נבחריהם.",
         "aspect": "separation-of-powers-and-democratic-norms",
@@ -339,83 +827,133 @@
       },
       {
         "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "התנגדות לשינוי הרכב ועדת המינויים לרשות השופטת — בעיקר להגדלת מינויי שופטים על ידי הקואליציה על חשבון הנציגות המשפטית המקצועית.",
-        "sourceUrl": "https://yes.democrats.org.il/topics/democracy-justice",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
+        "dateRetrieved": "2026-10-11",
+        "text": "נבטל את כל חוקי ההפיכה המשטרית ונייעל את מערכת המשפט. נבטל את החוק לשינוי הועדה לבחירת שופטים שיוצר פוליטיזציה של הליך המינוי, ואת החוק להרחבת סמכויות בתי הדין הדתיים, היוצר מערכת שיפוטית מקבילה שאינה כפופה לחוקי המדינה.",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
         "contrary": "רפורמה בוועדת המינויים שתעניק לפוליטיקאים שליטה",
         "provenance": "official-current",
         "concreteness": "named-mechanism",
-        "_note": "sourceUrl corrected 2026-08-07 — was mistakenly pointing to security-diplomatic; content is from democracy-justice"
+        "_note": "נוסח עודכן בבדיקת 2026-10-11 לפי התוכנית המלאה שבאתר; הנוסח הקודם שמור בארכיון."
       },
       {
-        "text": "נעגן בחוקי יסוד את זכויות האדם ואת הזכויות החברתיות – כולל הזכות לבריאות, לחינוך ולדיור – וניתן להן מעמד חוקתי עליון. נתקן את חוק הלאום כך שישקף באופן ברור את מחויבותה של ישראל להיות גם יהודית וגם דמוקרטית.",
+        "text": "נבצר את הזכויות האזרחיות והחברתיות בחוקי יסוד וניתן להם מעמד עליון. נעגן בחוקי יסוד את זכויות האדם ואת הזכויות החברתיות – כולל הזכות לבריאות, לחינוך ולדיור – וניתן להן מעמד חוקתי עליון. נתקן את חוק הלאום כך שישקף באופן ברור את מחויבותה של ישראל להיות גם יהודית וגם דמוקרטית.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "constitutional-and-minority-language-rights"
+        ],
         "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נחוקק את חוק יסוד: החקיקה, שיסדיר את מעמדם של חוקי היסוד, יקבע כללים ברורים לחקיקתם ויעגן את הביקורת השיפוטית",
+        "text": "נחזק את הכנסת ואת עקרון הפרדת הרשויות, ונחוקק את חוק יסוד: החקיקה. נחוקק את חוק יסוד: החקיקה, שיסדיר את מעמדם של חוקי היסוד, יקבע כללים ברורים לחקיקתם ויעגן את הביקורת השיפוטית.",
         "aspect": "separation-of-powers-and-democratic-norms",
         "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נעגן בחוק את עצמאות הייעוץ המשפטי והמעמד המחייב של חוות הדעת המשפטית, נבטיח הליכי מינוי מקצועיים ושקופים לתפקידים בכירים, ונגן על שומרי הסף מפני לחצים פוליטיים",
+        "text": "נבטיח את נאמנות בכירי שירות המדינה ועובדי הציבור לאינטרס הציבורי ולחוק. נעגן בחוק את עצמאות הייעוץ המשפטי והמעמד המחייב של חוות הדעת המשפטית, נבטיח הליכי מינוי מקצועיים ושקופים לתפקידים בכירים, ונגן על שומרי הסף מפני לחצים פוליטיים.",
         "aspect": "anti-corruption-and-rule-of-law",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נבטל את השינויים בוועדה לבחירת שופטים ואת הרחבת סמכויות בתי הדין הדתיים; נמנה שופטים, נקים בתי משפט לערעורים וניזום פתרונות לייעול ההליך המשפטי",
+        "text": "במקביל, נוביל רפורמה אמיתית במערכת המשפט: נמנה שופטים, נקים בתי משפט לערעורים ונפעל לקיצור משך הזמן של הליכים משפטיים.",
         "aspect": "judicial-appointments-mechanism-specifics",
         "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "contrary": "הרחבת סמכויות בתי הדין הדתיים ופוליטיזציה של ועדת בחירת השופטים",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נגביל את כהונת ראש הממשלה לשמונה שנים, נקבע מנגנונים ברורים לנבצרות, ונעגן בחוק איסור כהונה תחת כתב אישום (שרים וראש ממשלה)",
+        "text": "ננהל מלחמת חורמה ואכיפה נחרצת נגד השחיתות, ונחוקק את חוקי הגבלת הכהונה. נגביל את כהונת ראש הממשלה לשמונה שנים, נקבע מנגנונים ברורים לנבצרות, ונעגן בחוק איסור כהונה תחת כתב אישום (שרים וראש ממשלה).",
         "aspect": "anti-corruption-and-rule-of-law",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
         "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%94+%D7%95%D7%9E%D7%A9%D7%A4%D7%98.pdf",
         "archivePath": "docs/sources/democrats/2026-08-07-democracy-justice-program.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "contrary": "כהונה ללא הגבלת זמן וללא איסור כהונה תחת כתב אישום",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נתקן את פקודת המשטרה ונוציא את הפוליטיקה ממשטרת ישראל. נעגן בחוק את עצמאות המשטרה וחובתה לפעול למען הציבור בלבד, נצמצם את מעורבות השר במינויים ונדאג לתהליכי מינוי שקופים, מקצועיים ומפוקחים. נוודא שהשר לא יוכל להשפיע ישירות על מדיניות המשטרה בענייני חקירות, מודיעין ותביעות.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "anti-corruption-and-rule-of-law"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%99%D7%A7%D7%95%D7%9F+%D7%A9%D7%92%D7%99%D7%90%D7%95%D7%AA+-+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F+%D7%A4%D7%A0%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטל את חוק מח״ש, נחזק אותה ונוודא שיש לה את הכלים להתמודד במהירות, ביעילות ובמקצועיות עם כל תלונה כנגד שוטר.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%99%D7%A7%D7%95%D7%9F+%D7%A9%D7%92%D7%99%D7%90%D7%95%D7%AA+-+%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F+%D7%A4%D7%A0%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נבטל את חוקי קרעי ונמפה את כלל המהלכים שנועדו להכפיף את התקשורת לאינטרסים פוליטיים. נבטל את ההחלטה לסגירת גל״צ, נגן בחקיקה על תקציב חטיבת החדשות של השידור הציבורי ונבצר את עצמאותו של השידור הציבורי מהתערבות פוליטית.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%A7%D7%A9%D7%95%D7%A8%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים רשות תקשורת מקצועית ועצמאית שתחליף את ההסדרים המפוצלים של מועצת הכבלים והלוויין והרשות השנייה לטלוויזיה ולרדיו. נחייב במסגרת החוק הפרדה מבנית בין חברת החדשות לגוף המשדר ולבעלי השליטה שמחזיקים בו.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%A7%D7%A9%D7%95%D7%A8%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אנחנו נחיל את אותם עקרונות שוויוניים על כלל גופי החדשות והתקשורת ונבטל את ההטבות והפטורים שניתנו לכלי תקשורת מקורבים. נבטיח שהממשלה לא תוכל לעשות שימוש פוליטי בתקציבי פרסום ממשלתיים.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%A7%D7%A9%D7%95%D7%A8%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם רגולציה מתקדמת שלא מתערבת במה מותר להגיד - אבל מסדירה את כללי המשחק. נוביל הסדרה למניעת התחזות והפעלת בוטים, ונחייב שקיפות במימון תכנים פוליטיים וסימון תכנים שנוצרו בבינה מלאכותית.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%A7%D7%A9%D7%95%D7%A8%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
     ],
     "equality": [
-      {
-        "text": "נקדם שוויון זכויות מלא בחוק לקהילה הגאה, כולל שוויון בזכות להורות, למשפחה ולנישואים",
-        "aspect": "lgbtq-specific-policy-mechanisms",
-        "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נאסור טיפולי המרה, נחזק את האכיפה נגד אפליה, נכיר בנפגעי פשעי שנאה ונפסיק את התמיכה הציבורית בארגונים להט\"בופוביים",
-        "aspect": "lgbtq-specific-policy-mechanisms",
-        "sourceUrl": "https://yes.democrats.org.il/topics/lgbtq-equality",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-06-22",
-        "contrary": "תמיכה ציבורית בארגונים להט\"בופוביים",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
       {
         "text": "שקידה על עקרונות השוויון וזכויות האדם ללא הבדל מוצא, דת, עדה ומין; חלוקה צודקת של ההכנסה הלאומית, צמצום הפער הכלכלי, המקצועי, ההשכלתי והחברתי בין השכבות השונות.",
         "aspect": "demographic-and-citizenship-policy",
@@ -452,6 +990,225 @@
         "dateRetrieved": "2026-07-08",
         "provenance": "official-current",
         "concreteness": "generic"
+      },
+      {
+        "text": "נקדם שוויון זכויות מלא בחוק. נוביל חקיקה שתבטיח נישואים אזרחיים ושוויוניים לכל זוג בישראל, לצד רישום הורות שוויוני ללא אפליה. נמפה ונתקן כל חוק שיוצר אפליה פסולה למען שוויון זכויות מלא בזכות להקמת משפחה ולהורות. זאת נעשה ע״י הסדרת שוויון בפונדקאות ובאימוץ ללא תלות במין ובמגדר, הכרה בזוגיות להט״בית במוסדות המדינה כגון השוואת הזכאות בביטוח לאומי ובמס הכנסה, הסדרה של הורות משותפת ועוד.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9C%D7%94%D7%98%D7%91+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם חבילת חקיקה למאבק באלימות ובהסתה. נחוקק חוק איסור טיפולי המרה לקטינים וחוק הכרה בנפגעי פשעי שנאה. נתקן את חוק העונשין כך שיכלול איסור הסתה נגד להט״ב ויסדיר את החמרת הענישה כנגד פשעי שנאה על בסיס זהות מגדרית. נרחיב את האיסור על אפליה כך שיחול באופן ברור על נטייה מינית וזהות מגדרית. במקביל, נאסור על תמיכה ממשלתית ישירה ועקיפה בגופים שמקדמים אפליה על רקע זהות מגדרית ונטייה מינית.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9C%D7%94%D7%98%D7%91+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים רשות לאומית לקידום זכויות להט״ב בעלת סמכויות נרחבות, שיאפשרו לה להוביל שינוי חברתי משמעותי. לצורך כך נקצה תקציב של 100 מיליון ש״ח בשנה לפחות, שייכנסו לבסיס התקציב, כדי להבטיח יציבות ארוכת טווח ולא תקציבים זמניים שתלויים בפוליטיקה.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9C%D7%94%D7%98%D7%91+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נרחיב את תקציבי החינוך לסובלנות וכן את המענים לנוער גאה, נטמיע חוזר מנכ״ל להתאמה ולנגישות של מערכת החינוך ללהט״ב, נשלב תכנים ומערכי שיעור בנושאי להט״ב וקידום הסובלנות במערכת החינוך הממלכתית.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9C%D7%94%D7%98%D7%91+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תוכנית לאומית למאבק בלהט״בופוביה: נשפר את המענה המשטרתי והחברתי לפשעי שנאה, בין השאר באמצעות הקפדה על סיווג פשעי שנאה נגד הקהילה הגאה ודיווח שוטף. נקים מסגרות חירום ותמיכה לנוער ולצעירים מקהילת להט״ב בסיכון, כולל מסגרות חוץ ביתיות.",
+        "aspect": "lgbtq-specific-policy-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9C%D7%94%D7%98%D7%91+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "הוספת מדריכי מוגנות לכל בתי הספר בחברה הערבית. לוקחים את העיריות בחזרה: עיריות נגועות בארגוני פשיעה ינוהלו על-ידי ועדה קרואה עד השבת הסדר על כנו.",
+        "aspect": "arab-minority-specific-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%99%D7%A1%D7%95%D7%9C+%D7%94%D7%A4%D7%A9%D7%A2+%D7%94%D7%9E%D7%90%D7%95%D7%A8%D7%92%D7%9F+(1).pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל תוכנית חומש חדשה לצמצום פערים ופיתוח כלכלי. נגבש תוכנית חומש חדשה שתציב יעד ברור של צמצום פערים כלכליים וחברתיים בין החברה הערבית לבין כלל אזרחי ישראל. נגדיל את ההשקעה בתשתיות, בתעסוקה, בתחבורה ובקהילה. נחזק את מנגנוני הבקרה והפיקוח כדי להבטיח שהכספים הציבוריים יגיעו ליעדם.",
+        "aspect": "arab-minority-specific-mechanisms",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%91%D7%A8%D7%94+%D7%A2%D7%A8%D7%91%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעגן את עקרון השוויון בחוק יסוד ונתקן את חוק הלאום. נקדם ייצוג הולם של אזרחים ערבים במשרדי הממשלה, בחברות הממשלתיות ובמוקדי קבלת ההחלטות, ונפעל בנחישות נגד גילויי גזענות ואפליה.",
+        "aspect": "arab-minority-specific-mechanisms",
+        "secondaryAspects": [
+          "demographic-and-citizenship-policy"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%97%D7%91%D7%A8%D7%94+%D7%A2%D7%A8%D7%91%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעגן את הזכות לשוויון בחוק יסוד ונקבע חובת ייצוג של לפחות 40% נשים במוקדי קבלת ההחלטות. נקבע חובת ייצוג נשים בכנסת, לפיהן מפלגות שלא יעמדו ביעד של 40% נשים יגרע חלק מהמימון הציבורי שלהן. בנוסף נקבע בחוק חובה למינוי 40% נשים בתפקידי מנכ״ל ובתפקידים בכירים בשירות הציבורי ובמוסדות המדינה.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%A9%D7%99%D7%95%D7%95%D7%99%D7%95%D7%9F+%D7%9E%D7%92%D7%93%D7%A8%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקים רשות לאומית למאבק באלימות נגד נשים. אנחנו נקים רשות עצמאית למאבק באלימות נגד נשים. הרשות תרכז את המדיניות, התקציבים, איסוף הנתונים, המניעה, ההגנה, האכיפה והשיקום. נפעל להרחבת ההגדרה של אלימות כך שתכלול גם אלימות כלכלית, נפשית, מינית ודיגיטלית.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%A9%D7%99%D7%95%D7%95%D7%99%D7%95%D7%9F+%D7%9E%D7%92%D7%93%D7%A8%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאריך את תקופת הלידה וההורות בתשלום ונקבע תקופת הורות ייעודית להורה השני, שאינה ניתנת להעברה, כדי לעודד חלוקה שוויונית של האחריות ההורית כבר מראשית הדרך.",
+        "aspect": "gender-equality",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%A9%D7%99%D7%95%D7%95%D7%99%D7%95%D7%9F+%D7%9E%D7%92%D7%93%D7%A8%D7%99.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "מפלגת הדמוקרטים תעמוד על הענקת נקודת זיכוי נוספת ממס לאזרחים ותיקים שמשלמים מס על הפנסיה ותפעל להגדלה של ההנחות הניתנות לאזרחים ותיקים על ארנונה למגורים, תרופות, חשמל, מים וביטוח בריאות.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעניק תמריצי מס ומענקי עידוד למעסיקים שיקלטו וימשיכו להעסיק עובדים מעל גיל הפרישה, ונרחיב תוכניות להכשרה, השמה ותעסוקה מותאמת לאזרחים ותיקים המעוניינים להמשיך לעבוד.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל לחוקק את חוק ביטוח סיעוד ממלכתי. נקדם את חוק ביטוח סיעוד ממלכתי, שיבטיח לכל אדם הזקוק לטיפול סיעודי מענה ראוי בהתאם לצרכיו, ללא תלות ביכולתו הכלכלית. נרחיב את ההכרה והתמיכה בבני ובנות משפחה ובמתנדבים המטפלים באזרחים ותיקים.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נרחיב באופן משמעותי את תכנית ״קהילה תומכת״ לכלל האזרחים והאזרחיות הוותיקים הערירים ונפחית את דמי ההשתתפות החודשיים בתוכנית. בנוסף נפעל להכפלת מספר מרכזי היום לקשיש הפועלים ברחבי הארץ.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נפעל להטמעת מהלך אסטרטגי בביטוח הלאומי וביתר הרשויות המופקדות על זכויות אזרחיות ואזרחים ותיקים להענקה אוטומטית של הזכויות, ההטבות וההנחות להם זכאים וזכאיות האזרחיות והאזרחים הוותיקים.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נמנה מתכלל לאומי (בדרגת שר) לכל הזכויות והשירותים המוענקים לשורדי השואה. נעלה את בסיס הקצבה המיוחדת לה זכאים שורדי השואה המוכרים, ונעניק קצבה חודשית לפליטי השואה יוצאי ברה״מ לשעבר.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%9D+%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשלים את המעבר לחיים בקהילה ונבטיח שירותי רווחה איכותיים, מותאמים ומבוססי בחירה. נפעל להשלים את המעבר ממסגרות מוסדיות לחיים בקהילה בהתאם להמלצות ועדת דותן. נרחיב את מגוון חלופות הדיור בהתאם לתפיסה אוטונומית של האדם.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נפעל להעלאה הדרגתית של קצבת הנכות. נעודד מעסיקים לקלוט ולקדם עובדים עם מוגבלות באמצעות סיוע בהתאמת סביבת העבודה וליווי מקצועי, ונפעל להסרת חסמים להשתלבות ולהתקדמות בשוק העבודה תוך חיזוק היישום והאכיפה של חובת הייצוג ההולם במגזר הציבורי והפרטי.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשלים את התקנת תקנות נגישות הדרכים ונפעל להנגשה רציפה של כלל שרשרת התחבורה הציבורית. נחזק את נציבות שוויון זכויות לאנשים עם מוגבלות, נרחיב את יכולות הפיקוח והאכיפה שלה ונבטיח שימוש אפקטיבי בסנקציות כלפי גופים המפרים את חובות הנגישות.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נשלים את התקנת תקנות הנגישות החסרות בתחום הבריאות, נחזק את אכיפת התקנות הקיימות ונגדיל את זמינות שירותי השיקום.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם תוכנית לאומית להנגשת מקלטים ציבוריים ולהסדרת פתרונות מיגון נגישים לאנשים עם מוגבלות לרבות בבתיהם ובסביבת חייהם השוטפים.",
+        "aspect": "disability-and-elderly-inclusion",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%90%D7%A0%D7%A9%D7%99%D7%9D+%D7%A2%D7%9D+%D7%9E%D7%95%D7%92%D7%91%D7%9C%D7%95%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעגן את חוק השבות בחוק יסוד ונגן על זכויותיהם של נכדי יהודים מכוחו. לא נאפשר כל צימצום בהיקפי הזכות לעליה לארץ ונתנגד לכל ניסיון להעניק לממסד הרבני האורתודוקסי מונופול על הגיורים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%A2%D7%9C%D7%99%D7%99%D7%94+%D7%95%D7%A7%D7%9C%D7%99%D7%98%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאיץ את הטיפול במשפחות הזכאיות לעלות לישראל ועדיין ממתינות לכך, לרבות באתיופיה, ונפעל למימוש החלטות הממשלה הנוגעות להעלאת הממתינים לעלייה.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA+%D7%A2%D7%9C%D7%99%D7%99%D7%94+%D7%95%D7%A7%D7%9C%D7%99%D7%98%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
       }
     ],
     "ecology": [
@@ -483,42 +1240,6 @@
         "concreteness": "specific-stance"
       },
       {
-        "text": "נעגן זכויות בסיסיות לסביבה בריאה בחוק יסוד - הסביבה ובחוק האקלים",
-        "aspect": "state-responsibility-framing",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נוביל התייעלות באנרגיה ומעבר מואץ לאנרגיה מתחדשת",
-        "aspect": "state-responsibility-framing",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
-        "text": "נשפר את איכות האוויר דרך מהפכה בתחבורה, מעבר צודק לתעשיות נקיות, תוך הגברת האכיפה והענישה על מזהמים",
-        "aspect": "local-environmental-enforcement",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "text": "נעודד ונתמרץ כלכלה מעגלית, מקומית, חדשנות סביבתית, צריכה מקיימת וטיפול במשבר הפסולת",
-        "aspect": "local-environmental-enforcement",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
-        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
-      },
-      {
         "text": "נתקן את חוק התכנון והבנייה ונחזק את איכות ועצמאות מערכות התכנון, שיתוף הציבור וסמכויות הרשויות המקומיות",
         "aspect": "local-environmental-enforcement",
         "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
@@ -528,22 +1249,70 @@
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נתקן חקיקה ונגדיל משאבים להגנה על בעלי החיים, הצומח והשטחים הפתוחים",
-        "aspect": "local-environmental-enforcement",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "text": "נעגן זכויות בסיסיות לסביבה בריאה בחוק יסוד - הסביבה ובחוק האקלים. חוק יסוד: הסביבה, יעגן את הזכות לסביבה בריאה ואת חובת המדינה לשמור על משאבי הטבע. בנוסף נקים מחדש את נציבות הדורות הבאים.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       },
       {
-        "text": "נקדם שיתופי פעולה אזוריים לניהול משאבי הטבע",
-        "aspect": "international-and-regional-climate-cooperation",
-        "sourceUrl": "https://yes.democrats.org.il/topics/environment-animals",
+        "text": "נשפר את איכות האוויר דרך מהפכה בתחבורה, מעבר צודק לתעשיות נקיות, תוך הגברת האכיפה והענישה על מזהמים. נוודא מעבר לתעשיות נקיות: סגירת תחנות כוח הפועלות על פחם, יישום מואץ של התוכנית להבראת מפרץ חיפה, פינוי בז״ן ותעשיות מזהמות אחרות, תוך מתן ודאות כלכלית לעובדי המפעלים ויצירת הזדמנויות תעסוקה חדשות.",
+        "aspect": "local-environmental-enforcement",
+        "secondaryAspects": [
+          "state-responsibility-framing"
+        ],
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
         "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
-        "dateRetrieved": "2026-08-07",
+        "dateRetrieved": "2026-10-11",
         "provenance": "official-current",
-        "concreteness": "specific-stance"
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נוביל התייעלות באנרגיה ומעבר מואץ לאנרגיה מתחדשת. נעודד פריסת אנרגיה סולארית על גבי מבנים, גגות, ומסדרוני תשתיות. נעודד חדשנות, אמצעי אגירת אנרגיה מתקדמים ונמצב את ישראל כמובילה טכנולוגית תוך השקעה מסיבית במחקר ופיתוח ישראלי בתחום האנרגיה והאקלים.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נעודד ונתמרץ כלכלה מעגלית, מקומית, חדשנות סביבתית, צריכה מקיימת וטיפול במשבר הפסולת. נטפל בדחיפות במשבר הפסולת על ידי רפורמה משמעותית אשר תכלול בין השאר הקמת רשות לאומית ייעודית לפסולת, הקמת תשתיות ועידוד הפחתה ומיחזור לצמצום היקפי ההטמנה וכן חקיקה לאחריות יצרן מורחבת והפחתת שימוש בחד פעמי.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם שיתופי פעולה אזוריים לניהול משאבי הטבע. נקדם שיתופי פעולה אזוריים וניישם אמנות בינלאומיות והסכמים קיימים, בין השאר עם ירדן והרשות הפלסטינית לניהול משתף של המים, כולל שיקום נהר הירדן הדרומי וים המלח.",
+        "aspect": "international-and-regional-climate-cooperation",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נתקן חקיקה ונגדיל משאבים להגנה על בעלי החיים, הצומח והשטחים הפתוחים. נחזק אכיפה וענישה מחמירה על פשעי טבע: נילחם בסחר לא חוקי בחיות וצמחי בר גם דרך תיקון חוק איסור הלבנת ההון, ונתקן את חוק צער בעלי חיים.",
+        "aspect": "local-environmental-enforcement",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%9E%D7%A6%D7%A2+%D7%A1%D7%91%D7%99%D7%91%D7%94.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נאיץ את המעבר לאנרגיה מתחדשת ולאגירת אנרגיה, בדגש על דו-שימוש. נתמוך בפיתוח מתקנים אגרו-וולטאיים ובהסרת החסמים להקמתם, תוך הבטחת המשך העיבוד החקלאי.",
+        "aspect": "state-responsibility-framing",
+        "sourceUrl": "https://democrats-media.s3.us-east-1.amazonaws.com/%D7%94%D7%9E%D7%A8%D7%97%D7%91+%D7%94%D7%9B%D7%A4%D7%A8%D7%99+%D7%95%D7%A9%D7%9E%D7%99%D7%A8%D7%94+%D7%A2%D7%9C+%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%95%D7%AA+%D7%94%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99%D7%AA.pdf",
+        "archivePath": "docs/sources/democrats/2026-06-22-yes-democrats-commitments.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
       }
     ]
   }

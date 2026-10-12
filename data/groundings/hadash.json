@@ -3,7 +3,7 @@
   "platformLabel": "עקרונות חד\"ש — hadash.org.il",
   "sourceUrl": "https://hadash.org.il/#values",
   "archiveDir": "docs/sources/hadash/",
-  "_note": "Hadash is a joint front uniting Maki (Israeli Communist Party) and other groups. As of 2026-08-19 the 2026 electoral list is הרשימה המשותפת — a technical reunification of חד\"ש, תע\"ל (Ahmad Tibi), and בל\"ד (Sami Abu Shehadeh), confirmed by Balad's own statement that no unified platform was agreed — see docs/sources/hadash/2026-09-16-balad-joint-list.md. This file covers Hadash/Maki positions as primary; Taal positions not separately documented; two Balad-sourced entries added 2026-09-16 (third-party provenance — Balad's own official platform site, altajamoa.org, is currently unreachable — confirmed dead site, not just 'no page yet'; re-check when the site or Wayback Machine is back up). Balad's one-state 'מדינת כל אזרחיה' position directly contradicts this file's existing Hadash-sourced two-state entries under security/territorial-endgame-specifics — both are kept as distinct, individually-flagged entries reflecting the technical (not ideological) nature of the alliance, not reconciled into one. Three original sources: (1) hadash.org.il/#values — full detailed values page collected 2026-06-27, treated as party platform; (2) maki.org.il foundational principles; (3) zoha.org.il economic analysis. platformAvailable set to true 2026-06-27 after full values page collected. Re-checked all three sources 2026-08-07 (no removals/contradictions; a few previously-uncaptured items added — see docs/sources/hadash/2026-08-07-refresh-check.md). Two maki.org.il commitments remain uncovered by the current TOPIC_KEY_DIMENSIONS taxonomy and were NOT added as scored entries: Mizrahi/Eastern-Jewish-community equality (no equality-topic bucket fits) and children's/youth rights (no fitting topic). Fixed 2026-08-07: 34 entries cited archivePath docs/sources/hadash/2026-06-27-hadash-values-full.md, a file that was never actually created — the 2026-06-27 commit appended that content into 2026-06-23-hadash-principles.md (under a dated '## עדכון 2026-06-27' section) instead. Corrected all 34 archivePath references to point to the real file. 2026-09-16 re-check (post candidacy-submission review) of hadash.org.il/#values: content matches what's already captured — no new items found.",
+  "_note": "Hadash is a joint front uniting Maki (Israeli Communist Party) and other groups. As of 2026-08-19 the 2026 electoral list is הרשימה המשותפת — a technical reunification of חד\"ש, תע\"ל (Ahmad Tibi), and בל\"ד (Sami Abu Shehadeh), confirmed by Balad's own statement that no unified platform was agreed — see docs/sources/hadash/2026-09-16-balad-joint-list.md. This file covers Hadash/Maki positions as primary; Taal positions not separately documented; two Balad-sourced entries added 2026-09-16 (third-party provenance — Balad's own official platform site, altajamoa.org, is currently unreachable — confirmed dead site, not just 'no page yet'; re-check when the site or Wayback Machine is back up). Balad's one-state 'מדינת כל אזרחיה' position directly contradicts this file's existing Hadash-sourced two-state entries under security/territorial-endgame-specifics — both are kept as distinct, individually-flagged entries reflecting the technical (not ideological) nature of the alliance, not reconciled into one. Three original sources: (1) hadash.org.il/#values — full detailed values page collected 2026-06-27, treated as party platform; (2) maki.org.il foundational principles; (3) zoha.org.il economic analysis. platformAvailable set to true 2026-06-27 after full values page collected. Re-checked all three sources 2026-08-07 (no removals/contradictions; a few previously-uncaptured items added — see docs/sources/hadash/2026-08-07-refresh-check.md). Two maki.org.il commitments remain uncovered by the current TOPIC_KEY_DIMENSIONS taxonomy and were NOT added as scored entries: Mizrahi/Eastern-Jewish-community equality (no equality-topic bucket fits) and children's/youth rights (no fitting topic). Fixed 2026-08-07: 34 entries cited archivePath docs/sources/hadash/2026-06-27-hadash-values-full.md, a file that was never actually created — the 2026-06-27 commit appended that content into 2026-06-23-hadash-principles.md (under a dated '## עדכון 2026-06-27' section) instead. Corrected all 34 archivePath references to point to the real file. 2026-09-16 re-check (post candidacy-submission review) of hadash.org.il/#values: content matches what's already captured — no new items found. Re-checked 2026-10-11: hadash.org.il/#values shows the same 8 principle headings; no 2026 platform or Joint List platform document published. No change.",
   "topics": {
     "security": [
       {
@@ -19,6 +19,9 @@
       {
         "text": "נסיגת ישראל מכל השטחים שכבשה מאז 1967: הגדה המערבית, רצועת עזה וירושלים הערבית, שהם שטחיה של מדינת פלסטין, רמת הגולן הסורית ודרום לבנון. קווי ה-4 ביוני 1967 יהיו גבולות השלום המוכרים והבטוחים.",
         "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "lebanon-framework-and-hezbollah-disarmament"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -119,6 +122,9 @@
       {
         "text": "התנגדות להפרטה ולנאו-ליברליזם. הגנת ענייניהם וזכויותיהם של העובדים.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
         "sourceUrl": "https://hadash.org.il",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -129,6 +135,9 @@
       {
         "text": "קביעת סדר עדיפויות חדש החותר לצדק חברתי, על יסוד חלוקה צודקת של ההכנסה הלאומית. הקטנה מהותית של ההוצאות הצבאיות וביטול כל ההוצאות להתנחלויות.",
         "aspect": "social-safety-net-and-labor-protections",
+        "secondaryAspects": [
+          "fiscal-discipline-and-efficiency"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -237,6 +246,9 @@
       {
         "text": "חינוך חינם מהגן ועד האוניברסיטה.",
         "aspect": "sector-specific-equity",
+        "secondaryAspects": [
+          "higher-education-and-vocational-training"
+        ],
         "sourceUrl": "https://zoha.org.il/116306/",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-23",
@@ -249,16 +261,6 @@
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "independent-school-funding-and-autonomy",
-        "dateRetrieved": "2026-06-27",
-        "text": "תמיכה במערכת חינוך ממלכתית אחידה עם תקצוב שוויוני. התנגדות למימון ציבורי של מוסדות שאינם מיישמים תוכנית לימודים ממלכתית — לרבות מתמטיקה, מדעים ואנגלית.",
-        "sourceUrl": "https://hadash.org.il",
-        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
-        "contrary": "תקצוב ממשלתי של חינוך חרדי ולאומי מחוץ לפיקוח ממלכתי",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
       }
@@ -282,16 +284,6 @@
         "dateRetrieved": "2026-06-27",
         "provenance": "official-current",
         "concreteness": "named-mechanism"
-      },
-      {
-        "aspect": "private-sector-regulation-mechanics",
-        "dateRetrieved": "2026-06-27",
-        "text": "בריאות היא זכות, לא סחורה. התנגדות להרחבת הרפואה הפרטית על חשבון המערכת הציבורית; חיזוק קופות החולים כספק ציבורי עיקרי ושמירה על שוויון גישה.",
-        "sourceUrl": "https://hadash.org.il",
-        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
-        "contrary": "רפואה פרטית מקבילה המייצרת מדרגיות בגישה לטיפול",
-        "provenance": "official-current",
-        "concreteness": "specific-stance"
       }
     ],
     "religion": [
@@ -348,6 +340,9 @@
       {
         "text": "אישור חוקה דמוקרטית שתגן על זכויות האדם והאזרח הבסיסיות.",
         "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "constitutional-and-minority-language-rights"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -391,16 +386,6 @@
         "_note": "Broader than the existing occupied-territories-scoped entry — states conscientious objection as a general right, not limited to service in the occupied territories.",
         "provenance": "joint-list",
         "concreteness": "generic"
-      },
-      {
-        "aspect": "judicial-appointments-mechanism-specifics",
-        "dateRetrieved": "2026-06-27",
-        "text": "עצמאות מערכת השפיטה מהמינויים הפוליטיים היא עמוד תווך של הדמוקרטיה; ועדת המינויים לשפיטה תהיה מקצועית, לא קואליציונית.",
-        "sourceUrl": "https://hadash.org.il",
-        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
-        "contrary": "מינוי שופטים על ידי הפוליטיקאים",
-        "provenance": "official-current",
-        "concreteness": "named-mechanism"
       }
     ],
     "equality": [
@@ -417,6 +402,9 @@
       {
         "text": "הכרה באוכלוסייה הערבית-הפלסטינית בישראל כמיעוט לאומי. שוויון מלא לאזרחים הערבים, הפסקת הפקעת הקרקעות והריסת הבתים, הכרה בכל היישובים הערביים הקיימים.",
         "aspect": "arab-minority-specific-mechanisms",
+        "secondaryAspects": [
+          "demographic-and-citizenship-policy"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",
@@ -481,14 +469,26 @@
         "concreteness": "generic"
       },
       {
-        "text": "מדינת כל אזרחיה — המדינה היהודית-דמוקרטית כפי שהיא מוגדרת כיום יוצרת הפליה מובנית נגד האזרחים הערבים; הפתרון הוא מדינה אזרחית שוויונית לכלל אזרחיה, יהודים וערבים כאחד.",
+        "text": "יו״ר בל״ד ח״כ סאמי אבו שחאדה: הרעיון של מדינת כל אזרחיה הוא הפתרון הדמוקרטי והחשוב ביותר שהוצג בעשרות השנים האחרונות בישראל.",
         "aspect": "demographic-and-citizenship-policy",
+        "secondaryAspects": [
+          "arab-minority-specific-mechanisms"
+        ],
         "sourceUrl": "https://www.srugim.co.il/712881-בלד-רצה-לבד-הפתרון-שלנו-מדינת-כל-אזרחיה",
         "archivePath": "docs/sources/hadash/2026-09-16-balad-joint-list.md",
-        "dateRetrieved": "2026-09-16",
+        "dateRetrieved": "2026-10-11",
         "contrary": "מדינת הלאום היהודי; שימור אופייה היהודי של המדינה",
-        "_note": "בל\"ד (שותפה בהרשימה המשותפת מ-2026) — עמדת הדגל המזוהה ביותר עם בל\"ד. מקור עיתונאי מצטט (לא מהמצע הרשמי ישירות) — אתר המצע הרשמי (altajamoa.org) אינו זמין נכון ל-2026-09-16.",
+        "_note": "נוסח עודכן בבדיקת מקורות צד ג׳ 2026-10-11: הרשומה צומצמה למה שמופיע במקור המצוטט.",
         "provenance": "third-party",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "הבטחת שוויון הזדמנויות לכל, ללא הבדל מין, לאום, עדה, גיל או מקום מגורים.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://hadash.org.il/#values",
+        "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
         "concreteness": "specific-stance"
       }
     ],
@@ -505,6 +505,9 @@
       {
         "text": "הקצאת תקציבים הולמים למניעת זיהום האוויר והסביבה ולטיפול במפגעים אקולוגיים.",
         "aspect": "local-environmental-enforcement",
+        "secondaryAspects": [
+          "state-responsibility-framing"
+        ],
         "sourceUrl": "https://hadash.org.il/#values",
         "archivePath": "docs/sources/hadash/2026-06-23-hadash-principles.md",
         "dateRetrieved": "2026-06-27",

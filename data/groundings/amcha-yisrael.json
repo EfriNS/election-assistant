@@ -1,9 +1,9 @@
 {
-  "platformAvailable": false,
-  "platformLabel": "אין מצע — עמוד גיוס/היכרות בלבד",
-  "sourceUrl": "https://amchaisrael.co.il/",
+  "platformAvailable": true,
+  "platformLabel": "אבני היסוד + תכנית 18 הנקודות לביטחון + מנגנון חקירת 7 באוקטובר (amchaisrael.co.il)",
+  "sourceUrl": "https://amchaisrael.co.il/foundations",
   "archiveDir": "docs/sources/amcha-yisrael/",
-  "_note": "Brand-new party launched 2026-08-25 by תא\"ל (מיל') עופר וינטר. Genuinely different from every other 'no official platform' party in this dataset (likud/shas/yahadut-hatorah/raam) — those have decades of coalition history, IDI analysis, and public record to draw on; this party has three weeks of a recruitment landing page and no other public record at all. Polling above threshold (~4 mandates) in most post-list-closing polls, explicitly self-identifies with 'מחנה הימין... ממשלת ימין רחבה' (the Netanyahu bloc), which is the only concrete signal used for the lib/questions.ts score estimate — user approved a rough right-bloc-lane estimate across all 9 topics (2026-09-16), security leaning closer to Otzma/Religious Zionism (Winter's military background + explicit bloc alignment), other topics closer to Likud/Beitenu's more moderate right lane, since no specific commitments exist to justify a sharper estimate anywhere. This is below even this file's own usual 'rough estimate, not verified' bar — re-check once the party publishes actual policy content or gives substantive interviews. See docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md for full reasoning.",
+  "_note": "2026-10-11 (cont.): remaining source pages read in full — 10 verbatim entries added, 0 merged into existing entries (37 in total). 2026-10-11 re-check: the party now publishes real policy content — a 'תוכניות' menu with four pages (אבני היסוד = a full cross-topic platform incl. 'המשימות שלנו' commitments; תכנית 18 הנקודות לביטחון; a detailed Oct-7 inquiry-mechanism proposal; and תכנית המשרתים, which is 4 video titles only, no text). 26 official-current entries added across security/economy/housing/education/religion/justice/equality — see docs/sources/amcha-yisrael/2026-10-11-programs.md. Still no health or ecology content (energy appears only as national-infrastructure independence, not environmental policy). The foundations page itself says detailed work plans 'יפורסמו בנפרד' for decisive-victory/emigration, service status, and judicial trust — re-check for those. RESCORED 2026-10-11 (user-approved): the lib/questions.ts column was re-read option by option against this content. Four scores moved (economy/market 1→2, economy/growth 1→2, education/equal 0→1, justice/oversight 1→2); every other score was kept — either confirmed by the platform (security, settlement, service-linked housing, Jewish-identity education) or still an estimate because the platform is silent (all of health, ecology, LGBTQ, religious pluralism, welfare/redistribution). Several positions here (חוק יסוד: השירות with universal service, 'יהדות מזמינה ולא כופה', core curriculum for every child, state-commission-level Oct-7 inquiry) are more specific than, and in places different from, the generic right-bloc lane assumed. The single older third-party entry (c14 launch coverage) is kept. Previous note (2026-09-16): Brand-new party launched 2026-08-25 by תא\"ל (מיל') עופר וינטר. Genuinely different from every other 'no official platform' party in this dataset (likud/shas/yahadut-hatorah/raam) — those have decades of coalition history, IDI analysis, and public record to draw on; this party has three weeks of a recruitment landing page and no other public record at all. Polling above threshold (~4 mandates) in most post-list-closing polls, explicitly self-identifies with 'מחנה הימין... ממשלת ימין רחבה' (the Netanyahu bloc), which is the only concrete signal used for the lib/questions.ts score estimate — user approved a rough right-bloc-lane estimate across all 9 topics (2026-09-16), security leaning closer to Otzma/Religious Zionism (Winter's military background + explicit bloc alignment), other topics closer to Likud/Beitenu's more moderate right lane, since no specific commitments exist to justify a sharper estimate anywhere. This is below even this file's own usual 'rough estimate, not verified' bar — re-check once the party publishes actual policy content or gives substantive interviews. See docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md for full reasoning.",
   "topics": {
     "security": [
       {
@@ -12,18 +12,380 @@
         "sourceUrl": "https://www.c14.co.il/article/1677258",
         "archivePath": "docs/sources/amcha-yisrael/2026-09-16-launch-coverage.md",
         "dateRetrieved": "2026-09-16",
-        "_note": "היחיד ה'ציטוט' הזמין כרגע — הצהרת מיצוב גושי כללית, לא עמדת מדיניות ביטחונית קונקרטית. וינטר עצמו מפקד צבאי בכיר לשעבר (חטיבת גבעתי), ידוע במיוחד ב'מכתב הפקודה' הדתי-לאומי השנוי במחלוקת ממלחמת עזה 2014 — נתון זיהוי, לא עמדת מדיניות מצוטטת.",
+        "_note": "ציטוט עיתונאי מהשקת המפלגה (ספטמבר 2026) — הצהרת מיצוב גושי כללית, לא עמדת מדיניות ביטחונית. עד 2026-10-11 זה היה הציטוט היחיד שנאסף; מאז פורסמו באתר המפלגה תוכניות רשמיות, והן שמשמשות לניקוד ולציטוט בנושא הביטחון. הרשומה נשמרת כרקע בלבד.",
         "provenance": "third-party",
+        "concreteness": "generic"
+      },
+      {
+        "text": "אויב שיוצא למלחמה נגד ישראל מאבד שטח. מחיר טריטוריאלי הינו חלק מרכזי בבניית ההרתעה. מרחב ששימש בסיס למתקפה על ישראל יעבור לשליטה ביטחונית ישראלית ולא יחזור אוטומטית לידי האויב.",
+        "aspect": "territorial-endgame-specifics",
+        "secondaryAspects": [
+          "military-doctrine"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance",
+        "contrary": "הקמת מדינה פלסטינית; נסיגה ישראלית או הישג מדיני בעקבות טרור"
+      },
+      {
+        "text": "בעזה: אין הכרעה בלי הגירה. רק בניתוק חמאס מהאוכלוסייה ניתן יהיה להכריע את חמאס. מי שיישאר ויילחם בנו – נילחם בו בכל הכוח. אבל חייבים להפריד בין האוכלוסייה לחמאס : שליטה ביטחונית, גריעת שטח ומניעת שיקום.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "חובה לפרז את הרשות הפלסטינית מנשקה למעט נשק קל לצרכי שיטור, ולחזור לממש את ההסכמים. נוכחות ביטחונית רציפה, חופש פעולה מלא, חיסול תשתיות טרור, משילות והעמקת ההתיישבות ימנעו את התעצמותו של איום המסכן את ליבה של מדינת ישראל.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "בלבנון: חופש פעולה לצה״ל כל עוד יש זכר לחיזבאללה. שאיפתנו כמו תמיד היא לשלום אמיתי. אבל כל עוד ממשלת לבנון וצבאה לא מסוגלים להכריע בעצמם את ארגון חיזבאללה, מדינת ישראל תשמור על חופש פעולה בכל לבנון, כולל גביית מחיר טריטוריאלי והעברת אוכלוסייה מאזורי הלחימה.",
+        "aspect": "lebanon-framework-and-hezbollah-disarmament",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "איראן היא ראש הנחש ועלינו לסיים את מה שהתחלנו במבצעי ״שאגת הארי״ ו-״עם כלביא״: סיכול היכולת הגרעינית, סיכול תעשיית הטילים ארוכי הטווח ופעילות רב מימדית אינטנסיבית להפלת משטר הרפובליקה האיסלמית.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "עצמאות ביטחונית - אל לנו להיות תלויים במי ממדינות העולם בקבלת אספקת תחמושת וחימושים. עלינו לקיים זאת באמצעות מקסימום עצמאות בייצור, בתחמושת ובבניית מלאים אסטרטגיים, וגיוון מקורות האספקה של כל מה שאנחנו לא יכולים לייצר עצמאית.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המדינה חייבת לשלוט בשטח: ביהודה בשומרון, בנגב, בגליל בערים המעורבות ובכל מקום. למנוע הברחות, להילחם בפרוטקשן ובפשיעה הכלכלית, לחזק התיישבות ומשילות ולשבור תשתיות טרור ופשיעה.",
+        "aspect": "hardline-enforcement",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "כל קבוצה של עשרה חברי כנסת תוכל להציע מועמד לתפקיד יושב ראש הגוף. כלל 120 חברי הכנסת יצביעו בהצבעה חשאית. המועמד שיזכה במספר הקולות הגבוה ביותר יכהן כיושב ראש, והמועמד שיגיע למקום השני יכהן כסגנו.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://amchaisrael.co.il/inquiry",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified",
+        "contrary": "מנגנון חקירה הנשען על מינוי של גורם פוליטי יחיד"
+      },
+      {
+        "text": "הגוף יתחיל לפעול בתוך 60 ימים ממועד השבעת הממשלה החדשה. בתוך שישה חודשים מתחילת פעילותו יפרסם הגוף מסקנות ראשוניות, שיציגו את תמונת המצב ואת הממצאים המרכזיים שנאספו עד אותו שלב.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://amchaisrael.co.il/inquiry",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "quantified"
+      },
+      {
+        "text": "נקים ועדת חקירה עצמאית לטבח 7 באוקטובר, שיוענקו לה מלוא סמכויותיה של ועדת חקירה ממלכתית, ולצידן סמכות לאכוף את מסקנותיה.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בסוריה: שומרים על ההישגים. לא מוותרים על שטחי המפתח בהם שולט צה״ל, חונקים את חיזבאללה בלבנון, מונעים התבססות טורקית עוינת ומגינים על בני העדה הדרוזית ממעשי הטבח של המיליציות המוסלמיות הקיצוניות במדינה.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "secondaryAspects": [
+          "territorial-endgame-specifics"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "מדינת ישראל תשאף להכרעה מהירה של האויב. מכיוון שצה״ל בנוי על מערך מילואים רחב, תפקידם של אנשי המילואים הוא לא לשרת שירות קבע, אלא לבנות את הכלכלה של מדינת ישראל.",
+        "aspect": "military-doctrine",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המנדט יכלול את בחינת התהליכים וההחלטות שהובילו לאירועי 7 באוקטובר, ובכלל זה בחינת הלקחים והכשלים שנצברו לאורך השנים שקדמו להם, החל ממבצע צוק איתן.",
+        "aspect": "accountability-oct7",
+        "sourceUrl": "https://amchaisrael.co.il/inquiry",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נדרוש להוביל תכנית הגירה מרצון עבור מי שמבקש לעזוב את הרצועה ולהשתקם, ונפעל במסגרת הסכמות בין-לאומיות ובשיתוף מדינות שיסכימו לקלוט מהגרים.",
+        "aspect": "territorial-endgame-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "בזירה הבין-לאומית, ישראל תפעיל מערך דיפלומטיה ציבורית יוזמת ואסרטיבית, תחזק את מעמדה ואת בריתותיה, ותפעל להרחבת חופש הפעולה המדיני והביטחוני שלה באמצעות מערך תודעה והסברה יוזם ולא מתנצל.",
+        "aspect": "foreign-policy-and-nonproliferation",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "economy": [
+      {
+        "text": "נוביל מהלך להורדת יוקר המחיה באמצעות פירוק מוקדי ריכוזיות וכוח מונופוליסטיים, פתיחת השווקים לתחרות אמיתית, הסרת חסמי יבוא ורגולציה מיותרת - כדי להחזיר את הכוח מהמערכות הריכוזיות אל הצרכן הישראלי.",
+        "aspect": "cost-of-living-and-affordability",
+        "secondaryAspects": [
+          "market-structure-and-competition"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נחתור לשוק חופשי ולשבירת מונופולים. המדינה תתגמל עבודה, שירות ותרומה באמצעות הטבות מס ותמרוץ עסקים המעסיקים ומתגמלים משרתים .",
+        "aspect": "market-structure-and-competition",
+        "secondaryAspects": [
+          "social-safety-net-and-labor-protections"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נפעל לחיזוק אזורי עדיפות באמצעות תכנית כוללת של קידום תעסוקה באמצעות תמריצים מיסויים, חינוך איכותי, קידום תחבורה יעילה ומשילות.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "לצד חובת השירות, המדינה תקדם מערך תגמולים דיפרנציאלי, שיתבסס על סוג השירות, אופיו, משכו ומידת הסיכון והמאמץ הכרוכים בו, כך שלוחמים, תומכי לחימה ומשרתי מילואים בהיקפים משמעותיים יתוגמלו בהתאם לתרומתם.",
+        "aspect": "social-safety-net-and-labor-protections",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "המדינה תקבע תכנית רב-שנתית לאנרגיה, מים, תחבורה, תקשורת ונמלים, עם יעדים ברורים ואחריות מוגדרת. המדינה תזהה טכנולוגיות בעלות חשיבות אסטרטגית ותשקיע בהן בזמן, כדי להבטיח את יתרונה ועצמאותה של ישראל.",
+        "aspect": "regional-and-sector-development",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "housing": [
+      {
+        "text": "נרחיב התחדשות עירונית בערים וביישובים בקצוות הארץ, תוך שילוב בין הגדלת היצע הדיור לבין מיגון וחיזוק התשתיות.",
+        "aspect": "sector-and-geographic-equity",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "המדינה תעניק עדיפות למי שתורם לביטחונה ולחוסנה הלאומי, ובכלל זה באמצעות הקצאת קרקעות והטבות שיחזקו את ההתיישבות, יעודדו שירות ותרומה למדינה וימשכו הון אנושי איכותי למרחבי הגבול ולאזורים בעדיפות לאומית.",
+        "aspect": "service-linked-benefit-mechanics",
+        "secondaryAspects": [
+          "settlement-and-territorial-specifics"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נקדם התיישבות יהודית איתנה במרחבי הגבול ובאזורים מאוימים, טיפוח ההון האנושי, עיבוד הקרקע ופיתוח החקלאות - שהם חלק בלתי נפרד מביסוס הריבונות, מחיזוק אחיזתה של מדינת ישראל בכל מרחביה.",
+        "aspect": "settlement-and-territorial-specifics",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "education": [
+      {
+        "text": "נשאף להעניק לכל ילד בישראל לימודי ליבה איכותיים, לצד חינוך לערכים יהודים, לציונות ואחריות אזרחית ולא נתקצב בתי ספר שיועברו בהם ערכים ו/או תוכניות אנטי ציוניות.",
+        "aspect": "independent-school-funding-and-autonomy",
+        "secondaryAspects": [
+          "core-curriculum-and-teacher-standards"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "בתחום החינוך, נבזר את סמכויות ההפעלה אל הרשות המקומית ולמוסד החינוכי, ונשאיר בידי משרד החינוך את קביעת הליבה, הרגולציה והמדידה.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נפעל להחזרת העצמאות למנהלי בתי הספר באמצעות העברת האחריות והסמכות בקבלת החלטות, בגיוס ובניהול כוח האדם ובבניית תכניות חינוכיות, תוך הצבת פרמטרים למדידה ערכית ולהישגים.",
+        "aspect": "core-curriculum-and-teacher-standards",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "health": [],
+    "religion": [
+      {
+        "text": "נחוקק חוק יסוד: השירות, לפיו כל אזרח במדינת ישראל ישרת את המדינה, נקים את מנהלת השירות, ונבנה את מערך המיון למצטיינים, לרבות הפרמטרים לבחינה אובייקטיבית של מכסות לומדי התורה.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "אנו מכירים בערך לימוד התורה כערך יסודי בעם ישראל במשך אלפי שנים, לכן תישמר האפשרות למסלולים ייחודיים למצוינות תורנית , אך האחריות המשותפת והשירות תהיה הכלל ולא החריג.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "אנו מאמינים במדינה שזהותה ברורה: יהודית, ציונית וריבונית. מדינה שהיהדות בה מזמינה ולא כופה, משתפת ולא מכתיבה.",
+        "aspect": "national-religious-symbolism",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "generic"
+      },
+      {
+        "text": "עלינו להכניס אל ציבור המשרתים את האוכלוסייה החרדית בצורה משמעותית. אנחנו נעשה את זה בשום שכל, בהסכמה ובכבוד.",
+        "aspect": "haredi-draft-and-service-burden",
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-12",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      }
+    ],
+    "justice": [
+      {
+        "text": "עצמאות משפטית: לא נאפשר למשפטנים לכבול את ידי הלוחמים שלנו בדרך להכרעת האויב. מדינת ישראל חייבת לפעול בהתאם למציאות ולתנאים בשטח. נפעל לצמצם את ההשפעה המזיקה של מערכת המשפט על כוחות הביטחון.",
+        "aspect": "emergency-powers-and-security-law",
+        "secondaryAspects": [
+          "international-law-and-accountability"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "חיי חיילי צה״ל לפני הכול. גם לפני חיי אזרחי האויב ולפני נורמות מופרכות - שהן מוסר כפול. לא נאמץ כללי משחק מנותקים שאנחנו המדינה היחידה שמשחקת לפיהם.",
+        "aspect": "international-law-and-accountability",
+        "secondaryAspects": [
+          "emergency-powers-and-security-law"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/security",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "specific-stance"
+      },
+      {
+        "text": "נחתור לאיזונים ובלמים במערכת המשפט, לרבות זכות ערעור על החלטות שיפוטיות של בג״ץ באמצעות הקמת ערכאת ערעור עליונה.",
+        "aspect": "judicial-appointments-mechanism-specifics",
+        "secondaryAspects": [
+          "separation-of-powers-and-democratic-norms"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקדם את חלוקת תפקיד היועץ המשפטי לממשלה - לתובע כללי עצמאי ולייעוץ המשפטי לממשלה, שיסייע לה לקדם את מדיניותה במסגרת החוק.",
+        "aspect": "separation-of-powers-and-democratic-norms",
+        "secondaryAspects": [
+          "anti-corruption-and-rule-of-law"
+        ],
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      },
+      {
+        "text": "נקים גוף לאומי מתכלל למאבק בפשיעה, שירכז מודיעין, אכיפה וסנקציות כלכליות תחת תמונת מצב אחת.",
+        "aspect": "anti-corruption-and-rule-of-law",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
+        "concreteness": "named-mechanism"
+      }
+    ],
+    "equality": [
+      {
+        "text": "מדינה המבטאת את זכותו של העם היהודי להגדרה עצמית במולדתו, לצד שותפות גורל בין המשרתים מכלל המגזרים ומחויבות מלאה לביטחונם, לכבודם ולזכויותיהם של כלל האזרחים בה.",
+        "aspect": "demographic-and-citizenship-policy",
+        "sourceUrl": "https://amchaisrael.co.il/foundations",
+        "archivePath": "docs/sources/amcha-yisrael/2026-10-11-programs.md",
+        "dateRetrieved": "2026-10-11",
+        "provenance": "official-current",
         "concreteness": "generic"
       }
     ],
-    "economy": [],
-    "housing": [],
-    "education": [],
-    "health": [],
-    "religion": [],
-    "justice": [],
-    "equality": [],
     "ecology": []
   }
 }
