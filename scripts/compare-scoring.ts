@@ -21,7 +21,7 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { readFileSync, writeFileSync } from "fs";
-import { buildScoringPrompt, buildScoreResponseSchema, getScoringEntries } from "@/lib/score-topics-prompt";
+import { buildScoringPrompt, buildScoreResponseSchema, getScoringEntries, scoreOutputTokenBudget } from "@/lib/score-topics-prompt";
 import { calcResults, type TopicQA } from "@/lib/scoring";
 import { QUESTIONS_FORMAL } from "@/lib/questions";
 import { TOPICS } from "@/lib/topics";
@@ -223,6 +223,9 @@ type Profile = {
   label: string;
   // topicId → [opener option id, pick for follow-up 1, pick for follow-up 2]
   answers: Record<string, [string, 0 | 1 | 2, 0 | 1 | 2]>;
+  // topicId → free-text opener answer ("אחר — פרט"), replacing the opener option above.
+  // The options are sent in QUESTIONS_FORMAL order, so number references use that order.
+  freeText?: Record<string, string>;
 };
 
 const PROFILES: Profile[] = [
@@ -290,6 +293,42 @@ const PROFILES: Profile[] = [
       justice: ["independence", 0, 1], equality: ["law", 0, 0], ecology: ["green", 0, 0],
     },
   },
+  // ── Free-text openers ──────────────────────────────────────────────────────
+  // On these topics the AI score is the whole topic score (no preset opener score),
+  // and the whole topic's text is sent. Security options: 1 control, 2 peace, 3 west;
+  // economy: 1 welfare, 2 free market, 3 progressive tax, 4 growth first;
+  // religion: 1 religious freedom, 2 Jewish identity, 3 pluralism.
+  {
+    id: "left-free-numbers", label: "שמאל חילוני — טקסט חופשי במספרים",
+    answers: {
+      security: ["peace", 0, 0], economy: ["minwage", 0, 0], housing: ["public", 0, 0],
+      education: ["equal", 0, 0], health: ["basket", 0, 0], religion: ["freedom", 0, 0],
+      justice: ["independence", 0, 0], equality: ["law", 0, 0], ecology: ["green", 0, 0],
+    },
+    freeText: { security: "2+3", economy: "1+3", religion: "1+3" },
+  },
+  {
+    id: "left-free-prose", label: "שמאל חילוני — טקסט חופשי במילים",
+    answers: {
+      security: ["peace", 0, 0], economy: ["minwage", 0, 0], housing: ["public", 0, 0],
+      education: ["equal", 0, 0], health: ["basket", 0, 0], religion: ["freedom", 0, 0],
+      justice: ["independence", 0, 0], equality: ["law", 0, 0], ecology: ["green", 0, 0],
+    },
+    freeText: {
+      security: "סיום הכיבוש והקמת מדינה פלסטינית בגבולות מוסכמים, בתיאום עם ארצות הברית",
+      economy: "מדינת רווחה חזקה, במימון מיסוי גבוה יותר על עשירים ותאגידים",
+      religion: "הפרדה מלאה של דת ממדינה, ושוויון לכל הזרמים והדתות",
+    },
+  },
+  {
+    id: "right-free-numbers", label: "ימין דתי-לאומי — טקסט חופשי במספרים",
+    answers: {
+      security: ["control", 2, 2], economy: ["market", 2, 2], housing: ["settlement", 2, 2],
+      education: ["values", 1, 2], health: ["geography", 0, 0], religion: ["jewish_state", 1, 2],
+      justice: ["oversight", 2, 2], equality: ["character", 2, 2], ecology: ["deregulation", 2, 2],
+    },
+    freeText: { security: "1, ובשום אופן לא 2", economy: "2+4", religion: "2" },
+  },
 ];
 
 type RunRecord = {
@@ -334,14 +373,21 @@ function buildInputs(profile: Profile) {
       targetedAspect: fu.aspect,
       answer: fu.options[i === 0 ? pick1 : pick2],
     }));
-    topicQA[topic.id] = { openerAnswerId: openerId, openerAnswerText: opener.text, followUps };
+    const freeText = profile.freeText?.[topic.id];
+    topicQA[topic.id] = freeText
+      ? { openerAnswerId: "other", openerAnswerText: freeText, followUps }
+      : { openerAnswerId: openerId, openerAnswerText: opener.text, followUps };
     buckets[topic.id] = TOPIC_WEIGHT;
     return {
       topicId: topic.id,
       topicLabel: topic.label,
       openerQuestion: QUESTIONS_FORMAL[topic.id].question,
-      openerAnswer: opener.text,
-      followUpQA: followUps.map(({ question, answer, targetedAspect }) => ({ question, answer, targetedAspect })),
+      openerAnswer: freeText ?? opener.text,
+      // Same payload the quiz sends: options as shown, and the free-text flag + opener options.
+      followUpQA: followUps.map(({ question, answer, targetedAspect, options }) => ({ question, answer, targetedAspect, options })),
+      ...(freeText
+        ? { openerIsFreeText: true, openerOptions: QUESTIONS_FORMAL[topic.id].options.map((o) => o.text) }
+        : {}),
     };
   });
   return { topicQA, buckets, scoringTopics };
@@ -374,7 +420,7 @@ async function collect() {
         contents: prompt,
         config: {
           temperature: 0.2,
-          maxOutputTokens: 1500,
+          maxOutputTokens: scoreOutputTokenBudget(scoringTopics),
           responseMimeType: "application/json",
           responseJsonSchema: buildScoreResponseSchema(scoringTopics),
         },
