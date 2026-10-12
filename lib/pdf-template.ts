@@ -91,6 +91,14 @@ function e(s: string | undefined | null): string {
 
 // ─── Sub-renderers ────────────────────────────────────────────────────────────
 
+function scoreChipStyle(pct: number) {
+  return pct >= 60
+    ? { cls: "bg-green-50 border-green-200 text-green-700", symbol: "v" }
+    : pct < 40
+    ? { cls: "bg-red-50 border-red-200 text-red-600", symbol: "x" }
+    : { cls: "bg-gray-50 border-gray-200 text-gray-400", symbol: "~" };
+}
+
 function renderChips(
   answeredTopicIds: string[],
   partyTopicScores: Record<string, number> | undefined
@@ -103,13 +111,7 @@ function renderChips(
       if (pct === undefined) {
         return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none bg-gray-50 border-gray-200 text-gray-300">${shortLabel} —</span>`;
       }
-      const cls =
-        pct >= 60
-          ? "bg-green-50 border-green-200 text-green-700"
-          : pct < 40
-          ? "bg-red-50 border-red-200 text-red-600"
-          : "bg-gray-50 border-gray-200 text-gray-400";
-      const symbol = pct >= 60 ? "v" : pct < 40 ? "x" : "~";
+      const { cls, symbol } = scoreChipStyle(pct);
       return `<span class="px-1.5 py-0.5 rounded border text-xs leading-none ${cls}">${shortLabel} ${symbol} ${pct}%</span>`;
     })
     .join("\n");
@@ -119,7 +121,8 @@ function renderGrounding(
   groundingData: PartyGroundingResult,
   sourceLinkLabel: string,
   topicAnswerTexts: Record<string, string> | undefined,
-  criticalConflicts: string[] | undefined
+  criticalConflicts: string[] | undefined,
+  partyTopicScores: Record<string, number> | undefined
 ): string {
   const lastVerified = groundingData.topics
     .flatMap((tg) => tg.entries.map((entry) => entry.dateRetrieved))
@@ -153,49 +156,66 @@ function renderGrounding(
     .map((tg) => {
       const isGateTopic = criticalConflicts?.includes(tg.topicId);
       const userAnswer = topicAnswerTexts?.[tg.topicId];
+      // Labels, the user's answer and the quotes share one px-3 inset so their
+      // text lines up — same block layout as PartyResultCard.
       const userAnswerHtml = userAnswer
-        ? `<p class="text-xs text-gray-400 italic mb-1.5 border-r-2 border-teal-200 pr-2">ענית: ${e(userAnswer)}</p>`
+        ? `<div class="mb-3">
+            <p class="px-3 text-xs font-semibold text-gray-500 mb-1">ענית</p>
+            <p class="px-3 py-2 text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100" : "bg-gray-50"}">${e(userAnswer)}</p>
+          </div>`
         : "";
       const gateLabelHtml = isGateTopic
         ? `<p class="text-xs font-semibold text-red-600 mb-1">נושא קריטי שגרם להגבלת הציון</p>`
         : "";
+      const topicPct = partyTopicScores?.[tg.topicId];
+      const scoreChipHtml = topicPct !== undefined
+        ? `<span class="shrink-0 px-1.5 py-0.5 rounded border text-xs leading-none ${scoreChipStyle(topicPct).cls}">${scoreChipStyle(topicPct).symbol} ${topicPct}%</span>`
+        : "";
 
       // A PDF can't expand, so it states how many quotes it left out.
       const cappedNote = tg.entries.length > QUOTES_SHOWN_PER_TOPIC
-        ? `<p class="text-xs text-gray-400 mt-2">מוצגים ${QUOTES_SHOWN_PER_TOPIC} מתוך ${tg.entries.length} הציטוטים שנאספו בנושא זה.</p>`
+        ? `<p class="px-3 text-xs text-gray-400 mt-1">מוצגים ${QUOTES_SHOWN_PER_TOPIC} מתוך ${tg.entries.length} הציטוטים שנאספו בנושא זה.</p>`
         : "";
 
       const entries = tg.entries
         .slice(0, QUOTES_SHOWN_PER_TOPIC)
-        .map(
-          (entry) => `
-          <div class="border-r-2 pr-3 ${entry.matched ? "border-teal-300" : "border-gray-200"}">
-            ${entry.matched ? `<p class="text-xs text-teal-500 font-medium mb-0.5">↲ קשור לשאלת ההמשך שענית עליה</p>` : ""}
-            ${entry.contrary ? `<p class="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת ל: ${e(entry.contrary)}</p>` : ""}
-            <p class="text-xs text-gray-700 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
-            <div class="flex items-center gap-2 mt-1 flex-wrap">
-              <a href="${e(entry.sourceUrl)}" class="text-xs text-gray-400">מקור — ${e(sourceLinkLabel)}</a>
-              ${GROUNDING_ARCHIVE_PUBLIC ? `<a href="${e(ARCHIVE_BASE_URL + entry.archivePath)}" class="text-xs text-gray-400">ארכיון</a>` : ""}
-              <span class="text-xs text-gray-400">${e(formatHebrewDate(entry.dateRetrieved))}</span>
+        .map((entry) => {
+          const tags = [
+            entry.matched ? `<span class="text-[11px] leading-none px-2 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>` : "",
+            entry.contrary ? `<span class="text-[11px] leading-none px-2 py-1 rounded-full bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: ${e(entry.contrary)}</span>` : "",
+          ].join("");
+          return `
+          <div class="py-2.5 first:pt-1">
+            ${tags ? `<div class="flex flex-wrap gap-1 mb-1.5">${tags}</div>` : ""}
+            <p class="text-sm text-gray-900 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
+            <div class="flex items-center gap-x-2 mt-1 flex-wrap text-xs text-gray-400">
+              <a href="${e(entry.sourceUrl)}">מקור — ${e(sourceLinkLabel)}</a>
+              ${GROUNDING_ARCHIVE_PUBLIC ? `<span>·</span><a href="${e(ARCHIVE_BASE_URL + entry.archivePath)}">ארכיון</a>` : ""}
+              <span>·</span><span>${e(formatHebrewDate(entry.dateRetrieved))}</span>
             </div>
-          </div>`
-        )
+          </div>`;
+        })
         .join("\n");
 
       return `
-        <div class="break-inside-avoid${isGateTopic ? " bg-red-50 border border-red-200 rounded-lg p-2" : ""}">
-          ${gateLabelHtml}
-          <p class="text-xs font-semibold ${isGateTopic ? "text-red-700" : "text-gray-600"} mb-1 uppercase tracking-wide">${e(tg.topicLabel)}</p>
+        <div class="break-inside-avoid rounded-xl border py-3 ${isGateTopic ? "bg-red-50 border-red-200" : "bg-white border-gray-200"}">
+          <div class="px-3 pb-2.5 mb-3 border-b ${isGateTopic ? "border-red-200" : "border-gray-100"}">
+            ${gateLabelHtml}
+            <div class="flex items-center justify-between gap-2">
+              <p class="text-sm font-semibold ${isGateTopic ? "text-red-700" : "text-gray-900"}">${e(tg.topicLabel)}</p>
+              ${scoreChipHtml}
+            </div>
+          </div>
           ${userAnswerHtml}
-          <p class="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
-          <div class="space-y-2">${entries}</div>
+          <p class="px-3 text-xs font-semibold text-gray-500 mb-1">עמדת המפלגה במסמכיה</p>
+          <div class="px-3 divide-y ${isGateTopic ? "divide-red-200" : "divide-gray-100"}">${entries}</div>
           ${cappedNote}
         </div>`;
     })
     .join("\n");
 
   return `
-    <div class="mt-2 border-t border-gray-100 pt-2 space-y-4">
+    <div class="mt-2 border-t border-gray-100 pt-2 space-y-3">
       ${lastVerifiedHtml}
       ${outdatedWarning}
       ${topics}
@@ -267,7 +287,7 @@ function renderPartyCard(
 
   const groundingHtml =
     hasGrounding && groundingData
-      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts, party.criticalConflicts)
+      ? renderGrounding(groundingData, sourceLinkLabel, topicAnswerTexts, party.criticalConflicts, partyTopicScores)
       : "";
 
   return `

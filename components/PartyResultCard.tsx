@@ -27,6 +27,14 @@ type Props = {
 // with no Israeli political-party association; don't reintroduce a color prop.
 const BRAND = { highlight: "bg-teal-50 border-teal-300", bar: "bg-teal-500", score: "text-teal-700", link: "text-teal-600" };
 
+function scoreChipStyle(pct: number) {
+  return pct >= 60
+    ? { cls: "bg-green-50 border-green-200 text-green-700", symbol: "✓" }
+    : pct < 40
+    ? { cls: "bg-red-50 border-red-200 text-red-600", symbol: "✕" }
+    : { cls: "bg-gray-50 border-gray-200 text-gray-400", symbol: "~" };
+}
+
 export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groundingData, topicAnswerTexts, partyTopicScores, answeredTopicIds, showTopicBreakdown }: Props) {
   const c = BRAND;
   const isTop = rank === 0;
@@ -161,12 +169,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                 </span>
               );
             }
-            const chip =
-              pct >= 60
-                ? { cls: "bg-green-50 border-green-200 text-green-700", symbol: "✓" }
-                : pct < 40
-                ? { cls: "bg-red-50 border-red-200 text-red-600", symbol: "✕" }
-                : { cls: "bg-gray-50 border-gray-200 text-gray-400", symbol: "~" };
+            const chip = scoreChipStyle(pct);
             if (topicIdsWithQuotes.has(topicId)) {
               return (
                 <button
@@ -262,7 +265,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
           )}
 
           {groundingOpen && (
-            <div className="mt-3 space-y-4">
+            <div className="mt-3 space-y-3">
               {/* Low-reliability source warning — accurate per reason, not just "outdated" */}
               {isLowQualitySource && (
                 <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800 leading-relaxed flex items-start gap-1.5">
@@ -283,40 +286,56 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                 </div>
               )}
 
-              {/* Topic-grouped quotes — critical-conflict topics sort first and get a highlight */}
+              {/* One block per topic — critical-conflict topics sort first and get a highlight.
+                  Labels, the user's answer and the quotes share one px-3 inset so their text lines up. */}
               {sortedTopicGroups.map((tg) => {
                 const isGateTopic = party.criticalConflicts?.includes(tg.topicId);
+                const topicPct = showTopicBreakdown ? partyTopicScores?.[tg.topicId] : undefined;
+                const showingAll = fullyShownTopics.has(tg.topicId);
                 return (
                 <div
                   key={tg.topicId}
                   ref={(el) => { topicSectionRefs.current[tg.topicId] = el; }}
-                  className={`scroll-mt-4 rounded-lg transition-shadow ${isGateTopic ? "bg-red-50 border border-red-200 p-2" : ""} ${highlightTopic === tg.topicId ? "ring-2 ring-teal-300 ring-offset-4" : ""}`}
+                  className={`scroll-mt-4 rounded-xl border py-3 transition-shadow ${isGateTopic ? "bg-red-50 border-red-200" : "bg-white border-gray-200"} ${highlightTopic === tg.topicId ? "ring-2 ring-teal-300 ring-offset-2" : ""}`}
                 >
-                  {isGateTopic && (
-                    <p className="text-xs font-semibold text-red-600 mb-1 flex items-center gap-1"><WarningIcon className="w-3.5 h-3.5" />נושא קריטי שגרם להגבלת הציון</p>
-                  )}
-                  <p className={`text-xs font-semibold mb-1 uppercase tracking-wide ${isGateTopic ? "text-red-700" : "text-gray-600"}`}>
-                    {tg.topicLabel}
-                  </p>
+                  <div className={`px-3 pb-2.5 mb-3 border-b ${isGateTopic ? "border-red-200" : "border-gray-100"}`}>
+                    {isGateTopic && (
+                      <p className="text-xs font-semibold text-red-600 mb-1 flex items-center gap-1"><WarningIcon className="w-3.5 h-3.5" />נושא קריטי שגרם להגבלת הציון</p>
+                    )}
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className={`text-sm font-semibold ${isGateTopic ? "text-red-700" : "text-gray-900"}`}>{tg.topicLabel}</h3>
+                      {topicPct !== undefined && (
+                        <span className={`shrink-0 px-1.5 py-0.5 rounded border text-xs leading-none ${scoreChipStyle(topicPct).cls}`}>
+                          {scoreChipStyle(topicPct).symbol} {topicPct}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
                   {topicAnswerTexts?.[tg.topicId] && (
-                    <p className="text-xs text-gray-400 italic mb-1.5 border-r-2 border-teal-200 pr-2">
-                      ענית: {topicAnswerTexts[tg.topicId]}
-                    </p>
+                    <div className="mb-3">
+                      <p className="px-3 text-xs font-semibold text-gray-500 mb-1">ענית</p>
+                      <p className={`px-3 py-2 text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100/60" : "bg-gray-50"}`}>
+                        {topicAnswerTexts[tg.topicId]}
+                      </p>
+                    </div>
                   )}
-                  <p className="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
-                  <div className="space-y-2">
-                    {(fullyShownTopics.has(tg.topicId) ? tg.entries : tg.entries.slice(0, QUOTES_SHOWN_PER_TOPIC)).map((e, i) => (
-                      <div
-                        key={i}
-                        className={`border-r-2 pr-3 ${e.matched ? "border-teal-300" : "border-gray-200"}`}
-                      >
-                        {e.matched && (
-                          <p className="text-xs text-teal-500 font-medium mb-0.5">↲ קשור לשאלת ההמשך שענית עליה</p>
+
+                  <p className="px-3 text-xs font-semibold text-gray-500 mb-1">עמדת המפלגה במסמכיה</p>
+                  <div className={`px-3 divide-y ${isGateTopic ? "divide-red-200" : "divide-gray-100"}`}>
+                    {(showingAll ? tg.entries : tg.entries.slice(0, QUOTES_SHOWN_PER_TOPIC)).map((e, i) => (
+                      <div key={i} className="py-2.5 first:pt-1">
+                        {(e.matched || e.contrary) && (
+                          <div className="flex flex-wrap gap-1 mb-1.5">
+                            {e.matched && (
+                              <span className="text-[11px] leading-none px-2 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>
+                            )}
+                            {e.contrary && (
+                              <span className="text-[11px] leading-none px-2 py-1 rounded-full bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: {e.contrary}</span>
+                            )}
+                          </div>
                         )}
-                        {e.contrary && (
-                          <p className="text-xs text-red-400 font-medium mb-0.5">המפלגה מתנגדת ל: {e.contrary}</p>
-                        )}
-                        <p className="text-xs text-gray-700 leading-relaxed">
+                        <p className="text-sm text-gray-900 leading-relaxed">
                           &ldquo;{e.text}&rdquo;
                         </p>
                         {e.provenance === "official-outdated" && (
@@ -324,47 +343,42 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                             המקור הרשמי העדכני ביותר שאיתרנו למפלגה בנושא זה — עלול שלא לשקף את עמדתה הנוכחית.
                           </p>
                         )}
-                        <div className="flex items-center gap-2 mt-1 flex-wrap">
-                          <a
-                            href={e.sourceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
-                          >
+                        <div className="flex items-center gap-x-2 mt-1 flex-wrap text-xs text-gray-400">
+                          <a href={e.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 hover:underline">
                             מקור — {sourceLinkLabel} ↗
                           </a>
                           {GROUNDING_ARCHIVE_PUBLIC && (
-                            <a
-                              href={`${ARCHIVE_BASE_URL}${e.archivePath}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
-                            >
-                              ארכיון ↗
-                            </a>
+                            <>
+                              <span aria-hidden="true">·</span>
+                              <a href={`${ARCHIVE_BASE_URL}${e.archivePath}`} target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 hover:underline">
+                                ארכיון ↗
+                              </a>
+                            </>
                           )}
-                          <span className="text-xs text-gray-400">{formatHebrewDate(e.dateRetrieved)}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{formatHebrewDate(e.dateRetrieved)}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                   {tg.entries.length > QUOTES_SHOWN_PER_TOPIC && (
-                    <button
-                      onClick={() => {
-                        const showingAll = fullyShownTopics.has(tg.topicId);
-                        if (!showingAll) mpTrack("results_interaction", { action: "grounding_topic_show_all", party_id: party.id, party_rank: rank + 1, topic_id: tg.topicId });
-                        setFullyShownTopics((prev) => {
-                          const next = new Set(prev);
-                          if (showingAll) next.delete(tg.topicId);
-                          else next.add(tg.topicId);
-                          return next;
-                        });
-                      }}
-                      className={`mt-2 text-xs ${c.link} hover:underline focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded`}
-                      aria-expanded={fullyShownTopics.has(tg.topicId)}
-                    >
-                      {fullyShownTopics.has(tg.topicId) ? "הצגת פחות" : `הצגת כל הציטוטים בנושא (${tg.entries.length})`}
-                    </button>
+                    <div className="px-3 mt-1">
+                      <button
+                        onClick={() => {
+                          if (!showingAll) mpTrack("results_interaction", { action: "grounding_topic_show_all", party_id: party.id, party_rank: rank + 1, topic_id: tg.topicId });
+                          setFullyShownTopics((prev) => {
+                            const next = new Set(prev);
+                            if (showingAll) next.delete(tg.topicId);
+                            else next.add(tg.topicId);
+                            return next;
+                          });
+                        }}
+                        className={`w-full border rounded-lg py-2 text-xs ${c.link} ${isGateTopic ? "border-red-200 bg-white/60" : "border-gray-200 hover:bg-gray-50"} focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none`}
+                        aria-expanded={showingAll}
+                      >
+                        {showingAll ? "הצגת פחות" : `הצגת כל הציטוטים בנושא (${tg.entries.length})`}
+                      </button>
+                    </div>
                   )}
                 </div>
                 );
