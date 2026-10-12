@@ -85,6 +85,16 @@ export function buildScoreResponseSchema(topics: TopicQAForScoring[]) {
   };
 }
 
+// Output budget for the scores JSON, derived from the number of topic×party keys.
+// Measured 2026-10-12: a pretty-printed nine-topic response (117 keys) takes
+// 1,450–1,500+ tokens, about 12.7 per key — the previous fixed cap of 1,500 cut
+// it off mid-JSON in 2 of 3 calls. 20 per key leaves ~1.5x headroom (2,340 for
+// nine topics). Gemini bills tokens used, not the cap.
+const OUTPUT_TOKENS_PER_SCORE_KEY = 20;
+export function scoreOutputTokenBudget(topics: TopicQAForScoring[]): number {
+  return topics.length * PARTIES.length * OUTPUT_TOKENS_PER_SCORE_KEY;
+}
+
 export function buildScoringPrompt(topics: TopicQAForScoring[]): string {
   const userBlock = topics
     .map((t) => {

@@ -14,6 +14,7 @@ import {
   buildScoringPrompt,
   getScoringAspects,
   getScoringEntries,
+  scoreOutputTokenBudget,
   type ScoreTopicsResult,
   type TopicQAForScoring,
 } from "@/lib/score-topics-prompt";
@@ -79,6 +80,7 @@ export async function POST(req: NextRequest) {
 
   const model = "gemini-3.1-flash-lite";
   const prompt = buildScoringPrompt(topics);
+  const maxOutputTokens = scoreOutputTokenBudget(topics);
 
   const topicsWithGroundings = topics.filter((t) =>
     PARTIES.some((p) => getTopicGroundings(p.id, t.topicId).some((e) => !e.absent && e.text))
@@ -130,7 +132,7 @@ export async function POST(req: NextRequest) {
             contents: prompt,
             config: {
               temperature: 0.2,
-              maxOutputTokens: 1500,
+              maxOutputTokens: maxOutputTokens,
               responseMimeType: "application/json",
               responseJsonSchema: buildScoreResponseSchema(topics),
             },
@@ -168,7 +170,7 @@ export async function POST(req: NextRequest) {
       const msg = err instanceof Error ? err.message : String(err);
       const isQuota = msg.includes("429") || msg.toLowerCase().includes("quota");
       const errorCode = isQuota ? "QUOTA_EXCEEDED" : "SERVER_ERROR";
-      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/1500, retried=${retried}`;
+      const diagnostics = `finishReason=${finishReason || "unknown"}, outputTokens=${outputTokens}/${maxOutputTokens}, retried=${retried}`;
       const langfuseOutput = rawText ? `${msg}\n\n${diagnostics}\n\nRAW:\n${rawText}` : `${msg}\n\n${diagnostics}`;
       generation.update({ output: langfuseOutput, level: "ERROR" });
       generation.end();
