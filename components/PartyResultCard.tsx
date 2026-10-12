@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Party } from "@/lib/parties";
-import { PartyGroundingResult } from "@/lib/grounding-types";
+import { PartyGroundingResult, QUOTES_SHOWN_PER_TOPIC } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { formatHebrewDate } from "@/lib/format-date";
@@ -31,6 +31,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
   const c = BRAND;
   const isTop = rank === 0;
   const [groundingOpen, setGroundingOpen] = useState(false);
+  const [fullyShownTopics, setFullyShownTopics] = useState<Set<string>>(new Set());
 
   const hasGrounding = (groundingData?.topics?.length ?? 0) > 0;
   const sourceQuality = groundingData?.sourceQuality;
@@ -259,7 +260,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                   )}
                   <p className="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
                   <div className="space-y-2">
-                    {tg.entries.map((e, i) => (
+                    {(fullyShownTopics.has(tg.topicId) ? tg.entries : tg.entries.slice(0, QUOTES_SHOWN_PER_TOPIC)).map((e, i) => (
                       <div
                         key={i}
                         className={`border-r-2 pr-3 ${e.matched ? "border-teal-300" : "border-gray-200"}`}
@@ -302,6 +303,24 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                       </div>
                     ))}
                   </div>
+                  {tg.entries.length > QUOTES_SHOWN_PER_TOPIC && (
+                    <button
+                      onClick={() => {
+                        const showingAll = fullyShownTopics.has(tg.topicId);
+                        if (!showingAll) mpTrack("results_interaction", { action: "grounding_topic_show_all", party_id: party.id, party_rank: rank + 1, topic_id: tg.topicId });
+                        setFullyShownTopics((prev) => {
+                          const next = new Set(prev);
+                          if (showingAll) next.delete(tg.topicId);
+                          else next.add(tg.topicId);
+                          return next;
+                        });
+                      }}
+                      className={`mt-2 text-xs ${c.link} hover:underline focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded`}
+                      aria-expanded={fullyShownTopics.has(tg.topicId)}
+                    >
+                      {fullyShownTopics.has(tg.topicId) ? "הצגת פחות" : `הצגת כל הציטוטים בנושא (${tg.entries.length})`}
+                    </button>
+                  )}
                 </div>
                 );
               })}

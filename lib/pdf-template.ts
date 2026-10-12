@@ -2,7 +2,7 @@
 // This avoids Next.js/Turbopack restrictions on react-dom/server in route handlers.
 
 import type { Party } from "@/lib/parties";
-import type { PartyGroundingResult } from "@/lib/grounding-types";
+import { QUOTES_SHOWN_PER_TOPIC, type PartyGroundingResult } from "@/lib/grounding-types";
 import { TOPIC_LABELS, MAX_CRITICAL_TOPICS } from "@/lib/topics";
 import { GROUNDING_ARCHIVE_PUBLIC } from "@/lib/groundings";
 import { GATE_SCORE_CAP } from "@/lib/scoring";
@@ -160,7 +160,13 @@ function renderGrounding(
         ? `<p class="text-xs font-semibold text-red-600 mb-1">נושא קריטי שגרם להגבלת הציון</p>`
         : "";
 
+      // A PDF can't expand, so it states how many quotes it left out.
+      const cappedNote = tg.entries.length > QUOTES_SHOWN_PER_TOPIC
+        ? `<p class="text-xs text-gray-400 mt-2">מוצגים ${QUOTES_SHOWN_PER_TOPIC} מתוך ${tg.entries.length} הציטוטים שנאספו בנושא זה.</p>`
+        : "";
+
       const entries = tg.entries
+        .slice(0, QUOTES_SHOWN_PER_TOPIC)
         .map(
           (entry) => `
           <div class="border-r-2 pr-3 ${entry.matched ? "border-teal-300" : "border-gray-200"}">
@@ -183,6 +189,7 @@ function renderGrounding(
           ${userAnswerHtml}
           <p class="text-xs text-gray-400 mb-1">עמדת המפלגה במסמכיה:</p>
           <div class="space-y-2">${entries}</div>
+          ${cappedNote}
         </div>`;
     })
     .join("\n");
