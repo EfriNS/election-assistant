@@ -156,12 +156,12 @@ function renderGrounding(
     .map((tg) => {
       const isGateTopic = criticalConflicts?.includes(tg.topicId);
       const userAnswer = topicAnswerTexts?.[tg.topicId];
-      // Labels, the user's answer and the quotes share one px-3 inset so their
-      // text lines up — same block layout as PartyResultCard.
+      // The user's answer (filled) and each quote (outlined) are separate framed
+      // items with the same inset — same block layout as PartyResultCard.
       const userAnswerHtml = userAnswer
         ? `<div class="mb-3">
             <p class="px-3 text-xs font-semibold text-gray-500 mb-1">ענית</p>
-            <p class="px-3 py-2 text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100" : "bg-gray-50"}">${e(userAnswer)}</p>
+            <p class="mx-3 px-3 py-2 rounded-lg text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100" : "bg-gray-100"}">${e(userAnswer)}</p>
           </div>`
         : "";
       const gateLabelHtml = isGateTopic
@@ -174,18 +174,18 @@ function renderGrounding(
 
       // A PDF can't expand, so it states how many quotes it left out.
       const cappedNote = tg.entries.length > QUOTES_SHOWN_PER_TOPIC
-        ? `<p class="px-3 text-xs text-gray-400 mt-1">מוצגים ${QUOTES_SHOWN_PER_TOPIC} מתוך ${tg.entries.length} הציטוטים שנאספו בנושא זה.</p>`
+        ? `<p class="px-3 text-xs text-gray-400 mt-2">מוצגים ${QUOTES_SHOWN_PER_TOPIC} מתוך ${tg.entries.length} הציטוטים שנאספו בנושא זה.</p>`
         : "";
 
       const entries = tg.entries
         .slice(0, QUOTES_SHOWN_PER_TOPIC)
         .map((entry) => {
           const tags = [
-            entry.matched ? `<span class="text-[11px] leading-none px-2 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>` : "",
-            entry.contrary ? `<span class="text-[11px] leading-none px-2 py-1 rounded-full bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: ${e(entry.contrary)}</span>` : "",
+            entry.matched ? `<span class="text-[11px] leading-snug px-2 py-0.5 rounded-md bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>` : "",
+            entry.contrary ? `<span class="text-[11px] leading-snug px-2 py-0.5 rounded-md bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: ${e(entry.contrary)}</span>` : "",
           ].join("");
           return `
-          <div class="py-2.5 first:pt-1">
+          <div class="px-3 py-2.5 rounded-lg border bg-white ${isGateTopic ? "border-red-200" : "border-gray-200"}">
             ${tags ? `<div class="flex flex-wrap gap-1 mb-1.5">${tags}</div>` : ""}
             <p class="text-sm text-gray-900 leading-relaxed">&ldquo;${e(entry.text)}&rdquo;</p>
             <div class="flex items-center gap-x-2 mt-1 flex-wrap text-xs text-gray-400">
@@ -208,7 +208,7 @@ function renderGrounding(
           </div>
           ${userAnswerHtml}
           <p class="px-3 text-xs font-semibold text-gray-500 mb-1">עמדת המפלגה במסמכיה</p>
-          <div class="px-3 divide-y ${isGateTopic ? "divide-red-200" : "divide-gray-100"}">${entries}</div>
+          <div class="px-3 space-y-2">${entries}</div>
           ${cappedNote}
         </div>`;
     })

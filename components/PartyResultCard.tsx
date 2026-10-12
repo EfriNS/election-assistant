@@ -287,7 +287,8 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
               )}
 
               {/* One block per topic — critical-conflict topics sort first and get a highlight.
-                  Labels, the user's answer and the quotes share one px-3 inset so their text lines up. */}
+                  The user's answer (filled) and each quote (outlined) are separate framed items
+                  with the same inset, so labels line up with labels and text with text. */}
               {sortedTopicGroups.map((tg) => {
                 const isGateTopic = party.criticalConflicts?.includes(tg.topicId);
                 const topicPct = showTopicBreakdown ? partyTopicScores?.[tg.topicId] : undefined;
@@ -315,23 +316,23 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                   {topicAnswerTexts?.[tg.topicId] && (
                     <div className="mb-3">
                       <p className="px-3 text-xs font-semibold text-gray-500 mb-1">ענית</p>
-                      <p className={`px-3 py-2 text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100/60" : "bg-gray-50"}`}>
+                      <p className={`mx-3 px-3 py-2 rounded-lg text-sm text-gray-700 leading-relaxed ${isGateTopic ? "bg-red-100/70" : "bg-gray-100"}`}>
                         {topicAnswerTexts[tg.topicId]}
                       </p>
                     </div>
                   )}
 
                   <p className="px-3 text-xs font-semibold text-gray-500 mb-1">עמדת המפלגה במסמכיה</p>
-                  <div className={`px-3 divide-y ${isGateTopic ? "divide-red-200" : "divide-gray-100"}`}>
+                  <div className="px-3 space-y-2">
                     {(showingAll ? tg.entries : tg.entries.slice(0, QUOTES_SHOWN_PER_TOPIC)).map((e, i) => (
-                      <div key={i} className="py-2.5 first:pt-1">
+                      <div key={i} className={`px-3 py-2.5 rounded-lg border bg-white ${isGateTopic ? "border-red-200" : "border-gray-200"}`}>
                         {(e.matched || e.contrary) && (
                           <div className="flex flex-wrap gap-1 mb-1.5">
                             {e.matched && (
-                              <span className="text-[11px] leading-none px-2 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>
+                              <span className="text-[11px] leading-snug px-2 py-0.5 rounded-md bg-teal-50 border border-teal-200 text-teal-700">קשור לשאלת ההמשך שענית עליה</span>
                             )}
                             {e.contrary && (
-                              <span className="text-[11px] leading-none px-2 py-1 rounded-full bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: {e.contrary}</span>
+                              <span className="text-[11px] leading-snug px-2 py-0.5 rounded-md bg-red-50 border border-red-200 text-red-600">המפלגה מתנגדת ל: {e.contrary}</span>
                             )}
                           </div>
                         )}
@@ -362,7 +363,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                     ))}
                   </div>
                   {tg.entries.length > QUOTES_SHOWN_PER_TOPIC && (
-                    <div className="px-3 mt-1">
+                    <div className="px-3 mt-2">
                       <button
                         onClick={() => {
                           if (!showingAll) mpTrack("results_interaction", { action: "grounding_topic_show_all", party_id: party.id, party_rank: rank + 1, topic_id: tg.topicId });
@@ -373,7 +374,7 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                             return next;
                           });
                         }}
-                        className={`w-full border rounded-lg py-2 text-xs ${c.link} ${isGateTopic ? "border-red-200 bg-white/60" : "border-gray-200 hover:bg-gray-50"} focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none`}
+                        className={`w-full py-1.5 text-xs ${c.link} hover:underline rounded focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none`}
                         aria-expanded={showingAll}
                       >
                         {showingAll ? "הצגת פחות" : `הצגת כל הציטוטים בנושא (${tg.entries.length})`}
