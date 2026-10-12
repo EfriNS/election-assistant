@@ -3,6 +3,10 @@
 
 import type { Provenance } from "./groundings";
 
+// Quotes shown per topic before "show all" — a party with a full platform has
+// up to ~30 on one topic. Shared by the results card and the PDF export.
+export const QUOTES_SHOWN_PER_TOPIC = 2;
+
 export type GroundingEntryLite = {
   text: string;
   aspect: string;
