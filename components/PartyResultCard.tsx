@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Party } from "@/lib/parties";
 import { PartyGroundingResult, QUOTES_SHOWN_PER_TOPIC } from "@/lib/grounding-types";
 import { TOPIC_LABELS } from "@/lib/topics";
@@ -32,6 +32,16 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
   const isTop = rank === 0;
   const [groundingOpen, setGroundingOpen] = useState(false);
   const [fullyShownTopics, setFullyShownTopics] = useState<Set<string>>(new Set());
+  // Set by tapping a topic chip: the panel opens scrolled to that topic.
+  const [highlightTopic, setHighlightTopic] = useState<string | null>(null);
+  const topicSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    if (!highlightTopic) return;
+    topicSectionRefs.current[highlightTopic]?.scrollIntoView({ block: "start", behavior: "smooth" });
+    const timer = setTimeout(() => setHighlightTopic(null), 2000);
+    return () => clearTimeout(timer);
+  }, [highlightTopic]);
 
   const hasGrounding = (groundingData?.topics?.length ?? 0) > 0;
   const sourceQuality = groundingData?.sourceQuality;
@@ -70,6 +80,19 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
         return aGated - bGated;
       })
     : [];
+
+  const quoteCount = sortedTopicGroups.reduce((n, tg) => n + tg.entries.length, 0);
+  const topicIdsWithQuotes = new Set(sortedTopicGroups.map((tg) => tg.topicId));
+
+  // The "see details" discoverability problem from user testing — expand-rate
+  // per party/rank is the signal that it's been solved; `via` tells which
+  // entry point (the button or a topic chip) earned the open.
+  const openGrounding = (via: "button" | "chip", topicId?: string) => {
+    if (!groundingOpen) {
+      mpTrack("results_interaction", { action: "grounding_expanded", party_id: party.id, party_rank: rank + 1, via, ...(topicId ? { topic_id: topicId } : {}) });
+    }
+    setGroundingOpen(true);
+  };
 
   const accordionLabel =
     sourceQuality === "official" && groundingData?.platformAvailable === true
@@ -144,6 +167,23 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
                 : pct < 40
                 ? { cls: "bg-red-50 border-red-200 text-red-600", symbol: "✕" }
                 : { cls: "bg-gray-50 border-gray-200 text-gray-400", symbol: "~" };
+            if (topicIdsWithQuotes.has(topicId)) {
+              return (
+                <button
+                  key={topicId}
+                  onClick={() => {
+                    openGrounding("chip", topicId);
+                    setHighlightTopic(topicId);
+                  }}
+                  className={`px-2 py-1 rounded border text-xs leading-none flex items-center gap-0.5 hover:brightness-95 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${chip.cls}`}
+                  title={`${TOPIC_LABELS[topicId]}: ${pct}%`}
+                  aria-label={`${TOPIC_LABELS[topicId]}: ${pct}% — הצגת ציטוטים מהמצע`}
+                >
+                  {shortLabel} {chip.symbol} {pct}%
+                  <ChevronIcon className="w-3 h-3 rotate-90 opacity-60" />
+                </button>
+              );
+            }
             return (
               <span
                 key={topicId}
@@ -204,20 +244,21 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
         <div className="mt-2 border-t border-gray-100 pt-2">
           <button
             onClick={() => {
-              // The "see details" discoverability problem from user testing —
-              // expand-rate per party/rank is the signal that it's been solved.
-              if (!groundingOpen) mpTrack("results_interaction", { action: "grounding_expanded", party_id: party.id, party_rank: rank + 1 });
-              setGroundingOpen((o) => !o);
+              if (groundingOpen) setGroundingOpen(false);
+              else openGrounding("button");
             }}
-            className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors w-full text-right focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none rounded"
+            className="flex items-center gap-2 w-full text-right border border-teal-200 bg-teal-50/50 hover:bg-teal-50 transition-colors rounded-lg px-3 py-2 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none"
             aria-expanded={groundingOpen}
             aria-label={`${party.name} — ${accordionLabel}`}
           >
-            <span className="flex-1 text-right">{accordionLabel}</span>
-            <ChevronIcon className={`w-3.5 h-3.5 text-gray-300 transition-transform ${groundingOpen ? "-rotate-90" : "rotate-90"}`} />
+            <span className="flex-1 text-right">
+              <span className="block text-sm font-medium text-teal-700">{accordionLabel}</span>
+              <span className="block text-xs text-gray-500 mt-0.5">ציטוטים: {quoteCount} · נושאים: {sortedTopicGroups.length}</span>
+            </span>
+            <ChevronIcon className={`w-4 h-4 text-teal-500 transition-transform ${groundingOpen ? "-rotate-90" : "rotate-90"}`} />
           </button>
           {lastVerified && (
-            <p className="text-xs text-gray-400 mt-0.5">מקורות עודכנו לאחרונה: {formatHebrewDate(lastVerified)}</p>
+            <p className="text-xs text-gray-400 mt-1">מקורות עודכנו לאחרונה: {formatHebrewDate(lastVerified)}</p>
           )}
 
           {groundingOpen && (
@@ -246,7 +287,11 @@ export default function PartyResultCard({ party, rank, aiBlurb, aiLoading, groun
               {sortedTopicGroups.map((tg) => {
                 const isGateTopic = party.criticalConflicts?.includes(tg.topicId);
                 return (
-                <div key={tg.topicId} className={isGateTopic ? "bg-red-50 border border-red-200 rounded-lg p-2" : undefined}>
+                <div
+                  key={tg.topicId}
+                  ref={(el) => { topicSectionRefs.current[tg.topicId] = el; }}
+                  className={`scroll-mt-4 rounded-lg transition-shadow ${isGateTopic ? "bg-red-50 border border-red-200 p-2" : ""} ${highlightTopic === tg.topicId ? "ring-2 ring-teal-300 ring-offset-4" : ""}`}
+                >
                   {isGateTopic && (
                     <p className="text-xs font-semibold text-red-600 mb-1 flex items-center gap-1"><WarningIcon className="w-3.5 h-3.5" />נושא קריטי שגרם להגבלת הציון</p>
                   )}
