@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-11-03 — Security dependency fixes (`/dep-triage`)
+
+Merge `fe06867` (branch `chore/deps-2026-11-03`).
+
+- **`next` 16.3.8 → 16.4.4**: fixes GHSA-673q-mjm6-r5xr (critical RCE, `use cache` + typed arrays), GHSA-2464-fhr4-w9xw (critical RCE, image optimization + SVG), GHSA-p3m5-59mp-jv5r (high DoS, server actions). Supersedes Dependabot PR #40.
+- **`zod` 4.6.5 → 4.6.7** (transitive top-level copy: eslint plugin + scripts-only Anthropic SDK; app code doesn't import zod): fixes GHSA-mrhx-c7xc-m3w5.
+- **Still open — alert #40 for `zod@3.25.76` nested in `puppeteer-core` → `chromium-bidi`**: the fix needs puppeteer ≥25.13 (Chrome 154+), held with #23 until `@sparticuz/chromium` 154 ships. Low exposure: chromium-bidi is only used in WebDriver BiDi mode; PDF export uses CDP. **PR #41 not applied**: it also leaves the old top-level `puppeteer-core` in place, so it wouldn't clear the alert.
+- **Not addressed**: 17 moderate dev-only audit findings, which Dependabot raised after the merge as alerts #41 (`postcss-selector-parser` <6.1.5, via tailwind; PR #36) and #42 (`minimatch` <11.0.1, eslint toolchain; needs an eslint major). Non-security PRs #36–#39 untouched.
+- **Production**: Vercel deploy succeeded; `voteassist.me` 200, `/apple-icon` 200 PNG. Next.js alerts #37–#39 closed automatically.
+
+**Verified**: 583/583 tests, `tsc`, `eslint`, `next build`; local prod server smoke (`/` 200, `/apple-icon` 200 PNG, `/api/follow-up` real Gemini call 200 with a Hebrew question).
+
 ## 2026-10-12 — "מה כתוב במצע?" made visible and digestible (TODO 29)
 
 Merge `22bd758` (branch `feature/platform-quotes-visibility`, 4 commits).
