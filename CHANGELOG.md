@@ -2,6 +2,12 @@
 
 ## 2026-11-03 — Security dependency fixes (`/dep-triage`)
 
+**Follow-up (same day)** — merge `b2f4726` (branch `chore/deps-2026-11-03b`):
+- **`postcss-selector-parser` 6.1.4 → 6.1.5** (alert #41, GHSA-rj75-hqrm-r3gf; in-range patch under Tailwind 3). Supersedes PR #42. Correction to the entry below: PR #36 is a Tailwind 4 major, not the fix; it stays open as the TODO #23 migration reminder. Verified: 583/583 tests, `tsc`, `eslint`, `next build`, built CSS byte-identical to main.
+- **Alert #40 (zod in chromium-bidi) dismissed as "not used"**: puppeteer-core loads chromium-bidi only via dynamic import in WebDriver BiDi mode (`BrowserLauncher.js`); PDF export runs CDP. Real fix stays in TODO #19 (now needs `@sparticuz/chromium` 155, since puppeteer 25.13 pins Chrome 155).
+- **Alert #42 (minimatch, dev-only) dismissed as "tolerable risk"**: the fix is only in minimatch 11, which no eslint package accepts yet. Recheck = TODO #32.
+- PR #41 was closed by Dependabot ("no longer updatable").
+
 Merge `fe06867` (branch `chore/deps-2026-11-03`).
 
 - **`next` 16.3.8 → 16.4.4**: fixes GHSA-673q-mjm6-r5xr (critical RCE, `use cache` + typed arrays), GHSA-2464-fhr4-w9xw (critical RCE, image optimization + SVG), GHSA-p3m5-59mp-jv5r (high DoS, server actions). Supersedes Dependabot PR #40.
