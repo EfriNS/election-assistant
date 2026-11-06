@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-06 — next 16.4.5 security release + routine dependency bumps (`/dep-triage`)
+
+Merge `3cb231c` (branch `chore/deps-2026-11-06`).
+
+- **`next` 16.4.4 → 16.4.5**: Vercel's November security release, 7 moderate advisories (GHSA-mfr8-8qww-v76h, -vc7v-qv4w-wrv8, -vvgp-ww4w-46vf, -rhh4-g77r-r9qj, -pc58-hwjq-p385, -7qx7-33qx-rqx2, -f3mh-rxg3-f5g2). Applied before Dependabot raised alerts. None of the affected features are used here (`use cache`/`unstable_cache`, Cache Components, Edge runtime, `next/image` SVG, self-hosted response forwarding).
+- **`eslint-config-next` 16.3.5 → 16.4.5** (kept in step with `next`; supersedes #43), **`@upstash/redis` 1.38.4 → 1.41.0** (#44; ratelimit peer `^1.38.2`), **`mixpanel-browser` 2.83 → 2.84** (#39), **`vitest` + `@vitest/coverage-v8` 5.0.3 → 5.1.0** (#37; npm 10 `edgesOut` crash again → installed with `npx npm@11`, lockfile v3, `npm ci` OK).
+- **Verified**: 583/583 tests, `tsc`, `eslint`, `next build`; local prod smoke (`/`, `/quiz`, `/apple-icon`, a JS chunk all 200; `/api/follow-up` real Gemini call 200 with a Hebrew question). Production after deploy: `/`, `/quiz`, `/apple-icon` 200, CSP header present; `/prototype-e` (a rate-limited path, so it exercises Upstash `limit()`) returns 404 rather than a middleware 500. Rate limiting itself was not exercised locally (KV env unset).
+- **Dependabot**: minimatch alert #42 was withdrawn when GHSA-g3hv-75wg-m249's range changed to `>=7 <11.0.1` (3.x copies no longer affected) and re-raised as #43 against the `minimatch@10.2.6` under `@typescript-eslint/typescript-estree`. Still no fix: typescript-eslint (incl. canary) requires `^10.2.2`. Tracked in TODO #32. Tailwind 4 PR #36 was closed by Dependabot.
+- **Noticed**: `/prototype-e` no longer exists as a page but is still in `RATE_LIMIT_RULES` (`middleware.ts`).
+
 ## 2026-11-03 — Security dependency fixes (`/dep-triage`)
 
 **Follow-up (same day)** — merge `b2f4726` (branch `chore/deps-2026-11-03b`):
