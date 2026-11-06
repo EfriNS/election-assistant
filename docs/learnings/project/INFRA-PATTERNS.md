@@ -182,6 +182,8 @@ When the user has a stored memory/feedback note like "never run `vercel deploy` 
 
 **Rule**: when an alert survives `npm audit fix`, check whether the *direct* parent's own `package.json` range excludes the patched version (`npm view <parent>@<installed-version> dependencies` / `optionalDependencies`) before assuming something's broken. If so, add an `overrides` entry (`package.json`) pinning the sub-dependency to the patched version — this is the standard, non-hacky npm mechanism for exactly this case (a parent that hasn't bumped its own bound yet), not a workaround. Verify with `npm ls <pkg>` afterward — it should show `overridden`.
 
+**Superseded 2026-11-06 — overrides are now off the table for transitive security fixes.** A scoped override (minimatch 11 under `@typescript-eslint/typescript-estree`, verified safe: its only call is unchanged in 11, and the code path isn't enabled in our eslint config) was rejected by the user as a workaround: it pins a version the parent never approved and has to be remembered and removed. The policy now: assess reachability, track the upstream condition in TODO, dismiss the alert with a reason after the user OKs it (`/dep-triage` encodes this). The `sharp` override above became redundant once `next` 16.4.x declared `^0.35.5` itself — see TODO.
+
 ### GitHub's "enable Dependabot" button can leave an incomplete config (#first:2026-08-07)
 
 The auto-generated `.github/dependabot.yml` from GitHub's UI had `package-ecosystem: ""` (the doc-comment placeholder, never filled in) — syntactically present but functionally inert, so scheduled version-update PRs were never actually configured. This is separate from Dependabot *alerts* (security scanning via the dependency graph, which runs regardless of this file) — it only affects routine version-bump PRs.
@@ -237,6 +239,12 @@ This repo has no GitHub Actions CI; a PR's checks are CodeQL (neutral) plus the 
 With 0 open Dependabot alerts, `npm audit` reported `next` 16.3.6 (six advisories published four days earlier, fixed in 16.3.8) and `sharp` <0.35.5. No alert or PR existed for either. **Rule**: "0 open alerts" is not "nothing to patch" — run `npm audit` in every dependency pass (now step 1 of `/dep-triage`).
 
 Minutes after that push, Dependabot opened security PR #36 (Tailwind 3 → 4, to drop `postcss-selector-parser`) although Tailwind's major had been ignored via `@dependabot ignore this major version` on PR #7: ignores apply to version updates, not security updates. A security PR whose only fix is a major migration fails its build by design — leave it open as the reminder and track the migration in TODO.
+
+### The security fix can be newer than the Dependabot PR; GHSA revisions re-number alerts (#first:2026-11-06)
+
+`next` PR #40 targeted 16.4.3. 16.4.4's release notes said "the announced security release for November will be published tomorrow", and 16.4.5 shipped with 7 advisories before GitHub raised a single alert for them, so applying it early meant no alerts ever opened. Separately, minimatch alert #42 (dismissed) was withdrawn (API returns 410) when GHSA-g3hv-75wg-m249's range was revised to `>=7 <11.0.1`, and re-raised as #43 for the remaining copy; the dismissal did not carry over.
+
+**Rule**: in a dependency pass, check `npm view <pkg> time` for a patch newer than the PR, and read the release notes for pre-announced security releases. After any push or dismissal, re-list alerts, since a withdrawn-and-re-raised alert needs its own decision.
 
 ### npm 10 can crash resolving a peer-locked pair; Node 20 locally vs 24 on Vercel (#first:2026-10-11)
 
@@ -295,6 +303,8 @@ The enforced Content-Security-Policy (`buildCspHeader()` in `middleware.ts`) use
 Two Gemini/Slack routes (`/api/results`, `/api/feedback`) shipped uncapped because the rate-limit dispatch was a hand-maintained if/else chain whose comment said "the two AI-calling routes" while there were three. The matcher also had to broaden to all pages for the CSP nonce, so it can no longer serve as the coverage list.
 
 **Rule**: rate-limit rules live in the exported `RATE_LIMIT_RULES` table (path → limiter → on-limit action), and `tests/middlewareRateLimit.test.ts` asserts every resource-spending route is in it. Any new route that spends a metered/external resource (Gemini quota, headless browser, Slack webhook) must be added there — the test, not a prose comment, is the guard.
+
+The table can rot the other way too: `app/prototype-e` → `app/quiz` (2026-06-30) left the page rule on `/prototype-e`, so `/quiz` had no page limit for four months while the rule matched a 404 (found 2026-11-06 by smoke-testing production). The same test now asserts every rule path maps to a real `app/` route — **rename a route, and the test fails until its rule follows**.
 
 ### `RATE_LIMIT_RULES` (app-level) and Vercel Firewall (platform-level) solve different problems (#first:2026-07-09)
 

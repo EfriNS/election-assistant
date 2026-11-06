@@ -19,6 +19,7 @@ For each: `gh pr view <n> --json body -q .body` (release notes), then decide.
 - **Already on main?** Compare the PR's target version with `npm ls <package>` on main. Already there → verdict "superseded", nothing to do (Dependabot closes it on its own).
 
 - **Security fix?** (GHSA/CVE in notes) → apply, and say so first in the report.
+- **Newer patch than the PR targets?** `npm view <pkg> time --json` — a PR can be days old, and release notes may announce an upcoming security release (`next` 16.4.4's notes pre-announced 16.4.5, published a day later with 7 advisories before any alert existed). Take the latest patch of the same minor.
 - **Major bump or breaking changes?** → read the breaking-change list; usually hold for a user decision.
 - **Do we use what changed?** `grep -rn "<package>" app lib components middleware.ts scripts` — map each fix/feature to our actual usage (e.g. a rate-limit fix in an algorithm `middleware.ts` doesn't use = no impact). Scripts-only deps (e.g. `@anthropic-ai/sdk` → `scripts/auto-score.ts`) are low risk.
 - **Known coupling rules** (see `docs/learnings/project/INFRA-PATTERNS.md` and `.github/dependabot.yml`):
@@ -28,6 +29,8 @@ For each: `gh pr view <n> --json body -q .body` (release notes), then decide.
   - `@langfuse/client`, `@langfuse/otel`, `@langfuse/tracing` move together (not grouped in `dependabot.yml`): a PR bumping one leaves a second `@langfuse/core`/`tracing` copy nested under it. Bump all three to the same version.
 
 Verdict per PR: **superseded** / **apply** / **hold** (with the blocking condition) / **close** (with reason) / **ask** (needs a user decision).
+
+**Transitive alert with no fix inside its parent's declared range** (e.g. zod under `chromium-bidi`, minimatch under `typescript-estree`, 2026-11-03/06): **no npm `overrides`** — the user rejected a scoped, verified-safe one as a workaround (2026-11-06). Instead: (1) check reachability — is the vulnerable code path actually loaded in our usage? (read the parent's call sites); (2) name the upstream condition in a TODO item; (3) propose a GitHub dismissal (`not_used` / `tolerable_risk`, comment ≤280 chars, pointing at the TODO). Dismiss only after the user confirms that specific alert number.
 
 ## 3. Apply
 
@@ -54,4 +57,4 @@ Verdict per PR: **superseded** / **apply** / **hold** (with the blocking conditi
 
 A table: PR | update | verdict | risk / why | how verified. Then held PRs with their blockers, then open security alerts. End by asking the user whether to merge (merge = production deploy).
 
-**After approval (next turn)**: merge `--no-ff` to main, push main + branch, wait for the Vercel commit status to succeed and spot-check production. Dependabot closes superseded PRs on its own once main has the versions. Re-run `gh pr list` after the push: the dependency-graph update can open a new security PR within minutes (#36, 2026-10-11). Add a CHANGELOG entry.
+**After approval (next turn)**: merge `--no-ff` to main, push main + branch, wait for the Vercel commit status to succeed and spot-check production. Dependabot closes superseded PRs on its own once main has the versions. Re-run `gh pr list` and the alert list after the push: the dependency-graph update can open a new security PR within minutes (#36, 2026-10-11), and a revised GHSA range can withdraw an alert (API 410) and re-raise it under a new number (minimatch #42 → #43, 2026-11-06) — a dismissal doesn't carry over. Add a CHANGELOG entry.
