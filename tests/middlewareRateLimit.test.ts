@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { RATE_LIMIT_RULES } from "@/middleware";
 
 // Regression guard for the 2026-07-07 security review: /api/results (a Gemini
@@ -31,4 +33,15 @@ describe("middleware rate-limit coverage", () => {
       expect(onLimitKinds).toContain(rule.onLimit);
     }
   });
+
+  // Regression guard: app/prototype-e was renamed to app/quiz (2026-06-30) but
+  // its rule kept the old path, so the quiz page went unlimited for four months
+  // while /prototype-e 404'd. A rule must point at a route that exists.
+  for (const rule of RATE_LIMIT_RULES) {
+    it(`rule path ${rule.path} matches a real route in app/`, () => {
+      const dir = path.join(process.cwd(), "app", rule.path);
+      const routeFile = rule.path.startsWith("/api/") ? "route.ts" : "page.tsx";
+      expect(existsSync(path.join(dir, routeFile))).toBe(true);
+    });
+  }
 });

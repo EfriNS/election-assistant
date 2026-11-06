@@ -75,7 +75,7 @@ const limiters = makeLimiters();
 // uncapped public endpoint. Exported so tests can assert coverage; the matcher
 // below is now broad (for CSP), so this list — not the matcher — is the guard.
 export const RATE_LIMIT_RULES = [
-  { path: "/prototype-e",      limiter: "page",     onLimit: "redirect" },
+  { path: "/quiz",             limiter: "page",     onLimit: "redirect" },
   { path: "/api/follow-up",    limiter: "followUp", onLimit: "errorCode" },
   { path: "/api/score-topics", limiter: "score",    onLimit: "errorCode" },
   { path: "/api/results",      limiter: "results",  onLimit: "errorCode" },
