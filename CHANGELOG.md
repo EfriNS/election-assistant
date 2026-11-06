@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-06 — Redundant `sharp` override removed
+
+Branch `chore/remove-sharp-override`. The `overrides: { sharp: ^0.35.0 }` entry (added 2026-08-07, when `next` capped sharp below the libvips fix) changed nothing any more: `next` 16.4.5 declares `sharp: ^0.35.5` itself. Removed per the no-overrides decision. `sharp` stays 0.35.5 (no longer `overridden`); the lockfile is unchanged when written by npm 11 (npm 10 strips the `libc` fields from `@img/sharp-*` entries — lockfile churn, not a real change). Verified: `npm ci`, 589/589 tests, `tsc`, `eslint`, `next build`, local prod `/`, `/quiz`, `/apple-icon` 200.
+
 ## 2026-11-06 — `/quiz` page rate limit restored
 
 Merge `c345e09` (branch `fix/quiz-rate-limit-rule`).
